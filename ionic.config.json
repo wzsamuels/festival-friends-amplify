@@ -1,0 +1,7 @@
+{
+  "name": "festival-friends-amplify",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
+}
