@@ -1,0 +1,13 @@
+{
+  "resourceName": "s3festivalfriendsstorage2dfb2266",
+  "bucketName": "festivalfriends-storage-2dfb2266",
+  "policyUUID": "8855a43f",
+  "storageAccess": "authAndGuest",
+  "guestAccess": [
+    "READ"
+  ],
+  "authAccess": [
+    "READ",
+    "CREATE_AND_UPDATE"
+  ]
+}

@@ -8,7 +8,7 @@ type Inputs = {
   username: string,
   password: string,
 };
-const LoginPage = () => {
+const Login = () => {
   const router = useIonRouter();
   const { route } = useAuthenticator((context) => [context.route]);
   const [message, setMessage] = useState("");
@@ -30,4 +30,4 @@ const LoginPage = () => {
   )
 }
 
-export default LoginPage
+export default Login

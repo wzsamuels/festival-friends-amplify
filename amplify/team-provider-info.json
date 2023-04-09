@@ -12,8 +12,12 @@
       "AmplifyAppId": "d2roywvsx7rezb"
     },
     "categories": {
+      "storage": {
+        "s3festivalfriendsstorageevents": {},
+        "s3festivalfriendsstorage2dfb2266": {}
+      },
       "auth": {
-        "festivalfriendsd086856a": {}
+        "festivalfriends": {}
       }
     }
   }

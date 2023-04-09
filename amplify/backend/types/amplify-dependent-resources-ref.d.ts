@@ -1,13 +1,27 @@
 export type AmplifyDependentResourcesAttributes = {
+  "api": {
+    "festivalfriends": {
+      "GraphQLAPIEndpointOutput": "string",
+      "GraphQLAPIIdOutput": "string",
+      "GraphQLAPIKeyOutput": "string"
+    }
+  },
   "auth": {
-    "festivalfriendsd086856a": {
+    "festivalfriends": {
       "AppClientID": "string",
       "AppClientIDWeb": "string",
+      "CreatedSNSRole": "string",
       "IdentityPoolId": "string",
       "IdentityPoolName": "string",
       "UserPoolArn": "string",
       "UserPoolId": "string",
       "UserPoolName": "string"
+    }
+  },
+  "storage": {
+    "s3festivalfriendsstorage2dfb2266": {
+      "BucketName": "string",
+      "Region": "string"
     }
   }
 }

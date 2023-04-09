@@ -1,0 +1,6 @@
+{
+  "AppSyncApiName": "festivalfriends",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthModeLastUpdated": "2023-04-09T18:59:27.617Z"
+}
