@@ -18,6 +18,7 @@
     "@capacitor/haptics": "4.1.0",
     "@capacitor/keyboard": "4.1.1",
     "@capacitor/status-bar": "4.1.1",
+    "@clerk/clerk-react": "^4.14.2",
     "@ionic/react": "^7.0.0",
     "@ionic/react-router": "^7.0.0",
     "@types/react-router": "^5.1.20",
@@ -28,7 +29,8 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.43.9",
     "react-router": "^5.3.4",
-    "react-router-dom": "^5.3.4"
+    "react-router-dom": "^5.3.4",
+    "styled-components": "^5.3.9"
   },
   "devDependencies": {
     "@capacitor/cli": "4.7.3",
@@ -37,10 +39,12 @@
     "@testing-library/user-event": "^14.4.3",
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
+    "@typescript-eslint/eslint-plugin": "^5.58.0",
+    "@typescript-eslint/parser": "^5.58.0",
     "@vitejs/plugin-react": "^3.1.0",
     "autoprefixer": "^10.4.14",
     "cypress": "^12.7.0",
-    "eslint": "^8.35.0",
+    "eslint": "^8.38.0",
     "eslint-plugin-react": "^7.32.2",
     "jsdom": "^21.1.0",
     "postcss": "^8.4.21",

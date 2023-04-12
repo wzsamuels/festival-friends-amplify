@@ -1,3 +1,21 @@
+type Message {
+  toUser: String!
+  fromUser: String!
+  messageText: String!
+  conversationID: String!
+}
+
+type Conversation @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  messages: [Message]
+  userIDs: [String!]
+}
+
+type FriendsList @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  userIDs: [String!]
+}
+
 type Festival @model @auth(rules: [{allow: public}]) {
   id: ID!
   name: String!
@@ -6,14 +24,16 @@ type Festival @model @auth(rules: [{allow: public}]) {
   location: String!
   startDate: AWSDate!
   endDate: AWSDate!
-  UserProfiles: [UserProfile] @manyToMany(relationName: "FestivalUserProfile")
+  userIDs: [String!]
 }
 
 type UserProfile @model @auth(rules: [{allow: public}]) {
   id: ID!
   firstName: String!
   lastName: String!
-  user: ID!
-  festivals: [Festival] @manyToMany(relationName: "FestivalUserProfile")
+  userID: ID!
+  verified: Boolean!
+  verifySubmitted: Boolean!
+  profileImage: String
 }
  

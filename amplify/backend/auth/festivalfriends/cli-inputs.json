@@ -3,18 +3,18 @@
   "cognitoConfig": {
     "identityPoolName": "testAuthIdentityPool",
     "allowUnauthenticatedIdentities": true,
-    "resourceNameTruncated": "festiv8c4209ef",
+    "resourceNameTruncated": "festiv4f500a99",
     "userPoolName": "festivalfriends",
     "autoVerifiedAttributes": [
       "email"
     ],
-    "mfaConfiguration": "OFF",
+    "mfaConfiguration": "OPTIONAL",
     "mfaTypes": [
-      "SMS Text Message"
+      "TOTP"
     ],
-    "smsAuthenticationMessage": "Your authentication code is {####}",
+    "smsAuthenticationMessage": "message {####}",
     "smsVerificationMessage": "Your verification code is {####}",
-    "emailVerificationSubject": "Festival Friends Sign Up Verification code: {####}",
+    "emailVerificationSubject": "Festival Friends Sign Up Verification Code",
     "emailVerificationMessage": "Verification code: {####}",
     "defaultPasswordPolicy": false,
     "passwordPolicyMinLength": 8,
@@ -24,19 +24,15 @@
       "Requires Symbols",
       "Requires Uppercase"
     ],
-    "requiredAttributes": [
-      "family_name",
-      "given_name",
-      "phone_number"
-    ],
+    "requiredAttributes": [],
     "aliasAttributes": [],
     "userpoolClientGenerateSecret": false,
     "userpoolClientRefreshTokenValidity": 30,
     "userpoolClientWriteAttributes": [],
     "userpoolClientReadAttributes": [],
-    "userpoolClientLambdaRole": "festiv8c4209ef_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "festiv4f500a99_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "8c4209ef",
+    "sharedId": "4f500a99",
     "resourceName": "festivalfriends",
     "authSelections": "identityPoolAndUserPool",
     "serviceName": "Cognito",
@@ -64,6 +60,7 @@
       ]
     },
     "breakCircularDependency": true,
-    "dependsOn": []
+    "dependsOn": [],
+    "hostedUI": false
   }
 }

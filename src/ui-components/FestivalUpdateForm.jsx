@@ -6,11 +6,180 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
+import {
+  Badge,
+  Button,
+  Divider,
+  Flex,
+  Grid,
+  Icon,
+  ScrollView,
+  Text,
+  TextField,
+  useTheme,
+} from "@aws-amplify/ui-react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import { Festival } from "../models";
 import { fetchByPath, validateField } from "./utils";
 import { DataStore } from "aws-amplify";
+function ArrayField({
+  items = [],
+  onChange,
+  label,
+  inputFieldRef,
+  children,
+  hasError,
+  setFieldValue,
+  currentFieldValue,
+  defaultFieldValue,
+  lengthLimit,
+  getBadgeText,
+  errorMessage,
+}) {
+  const labelElement = <Text>{label}</Text>;
+  const {
+    tokens: {
+      components: {
+        fieldmessages: { error: errorStyles },
+      },
+    },
+  } = useTheme();
+  const [selectedBadgeIndex, setSelectedBadgeIndex] = React.useState();
+  const [isEditing, setIsEditing] = React.useState();
+  React.useEffect(() => {
+    if (isEditing) {
+      inputFieldRef?.current?.focus();
+    }
+  }, [isEditing]);
+  const removeItem = async (removeIndex) => {
+    const newItems = items.filter((value, index) => index !== removeIndex);
+    await onChange(newItems);
+    setSelectedBadgeIndex(undefined);
+  };
+  const addItem = async () => {
+    if (
+      currentFieldValue !== undefined &&
+      currentFieldValue !== null &&
+      currentFieldValue !== "" &&
+      !hasError
+    ) {
+      const newItems = [...items];
+      if (selectedBadgeIndex !== undefined) {
+        newItems[selectedBadgeIndex] = currentFieldValue;
+        setSelectedBadgeIndex(undefined);
+      } else {
+        newItems.push(currentFieldValue);
+      }
+      await onChange(newItems);
+      setIsEditing(false);
+    }
+  };
+  const arraySection = (
+    <React.Fragment>
+      {!!items?.length && (
+        <ScrollView height="inherit" width="inherit" maxHeight={"7rem"}>
+          {items.map((value, index) => {
+            return (
+              <Badge
+                key={index}
+                style={{
+                  cursor: "pointer",
+                  alignItems: "center",
+                  marginRight: 3,
+                  marginTop: 3,
+                  backgroundColor:
+                    index === selectedBadgeIndex ? "#B8CEF9" : "",
+                }}
+                onClick={() => {
+                  setSelectedBadgeIndex(index);
+                  setFieldValue(items[index]);
+                  setIsEditing(true);
+                }}
+              >
+                {getBadgeText ? getBadgeText(value) : value.toString()}
+                <Icon
+                  style={{
+                    cursor: "pointer",
+                    paddingLeft: 3,
+                    width: 20,
+                    height: 20,
+                  }}
+                  viewBox={{ width: 20, height: 20 }}
+                  paths={[
+                    {
+                      d: "M10 10l5.09-5.09L10 10l5.09 5.09L10 10zm0 0L4.91 4.91 10 10l-5.09 5.09L10 10z",
+                      stroke: "black",
+                    },
+                  ]}
+                  ariaLabel="button"
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    removeItem(index);
+                  }}
+                />
+              </Badge>
+            );
+          })}
+        </ScrollView>
+      )}
+      <Divider orientation="horizontal" marginTop={5} />
+    </React.Fragment>
+  );
+  if (lengthLimit !== undefined && items.length >= lengthLimit && !isEditing) {
+    return (
+      <React.Fragment>
+        {labelElement}
+        {arraySection}
+      </React.Fragment>
+    );
+  }
+  return (
+    <React.Fragment>
+      {labelElement}
+      {isEditing && children}
+      {!isEditing ? (
+        <>
+          <Button
+            onClick={() => {
+              setIsEditing(true);
+            }}
+          >
+            Add item
+          </Button>
+          {errorMessage && hasError && (
+            <Text color={errorStyles.color} fontSize={errorStyles.fontSize}>
+              {errorMessage}
+            </Text>
+          )}
+        </>
+      ) : (
+        <Flex justifyContent="flex-end">
+          {(currentFieldValue || isEditing) && (
+            <Button
+              children="Cancel"
+              type="button"
+              size="small"
+              onClick={() => {
+                setFieldValue(defaultFieldValue);
+                setIsEditing(false);
+                setSelectedBadgeIndex(undefined);
+              }}
+            ></Button>
+          )}
+          <Button
+            size="small"
+            variation="link"
+            isDisabled={hasError}
+            onClick={addItem}
+          >
+            {selectedBadgeIndex !== undefined ? "Save" : "Add"}
+          </Button>
+        </Flex>
+      )}
+      {arraySection}
+    </React.Fragment>
+  );
+}
 export default function FestivalUpdateForm(props) {
   const {
     id: idProp,
@@ -30,6 +199,7 @@ export default function FestivalUpdateForm(props) {
     location: "",
     startDate: "",
     endDate: "",
+    userIDs: [],
   };
   const [name, setName] = React.useState(initialValues.name);
   const [genre, setGenre] = React.useState(initialValues.genre);
@@ -37,6 +207,7 @@ export default function FestivalUpdateForm(props) {
   const [location, setLocation] = React.useState(initialValues.location);
   const [startDate, setStartDate] = React.useState(initialValues.startDate);
   const [endDate, setEndDate] = React.useState(initialValues.endDate);
+  const [userIDs, setUserIDs] = React.useState(initialValues.userIDs);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = festivalRecord
@@ -48,6 +219,8 @@ export default function FestivalUpdateForm(props) {
     setLocation(cleanValues.location);
     setStartDate(cleanValues.startDate);
     setEndDate(cleanValues.endDate);
+    setUserIDs(cleanValues.userIDs ?? []);
+    setCurrentUserIDsValue("");
     setErrors({});
   };
   const [festivalRecord, setFestivalRecord] = React.useState(festivalModelProp);
@@ -61,6 +234,8 @@ export default function FestivalUpdateForm(props) {
     queryData();
   }, [idProp, festivalModelProp]);
   React.useEffect(resetStateValues, [festivalRecord]);
+  const [currentUserIDsValue, setCurrentUserIDsValue] = React.useState("");
+  const userIDsRef = React.createRef();
   const validations = {
     name: [{ type: "Required" }],
     genre: [{ type: "Required" }],
@@ -68,6 +243,7 @@ export default function FestivalUpdateForm(props) {
     location: [{ type: "Required" }],
     startDate: [{ type: "Required" }],
     endDate: [{ type: "Required" }],
+    userIDs: [{ type: "Required" }],
   };
   const runValidationTasks = async (
     fieldName,
@@ -101,6 +277,7 @@ export default function FestivalUpdateForm(props) {
           location,
           startDate,
           endDate,
+          userIDs,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -162,6 +339,7 @@ export default function FestivalUpdateForm(props) {
               location,
               startDate,
               endDate,
+              userIDs,
             };
             const result = onChange(modelFields);
             value = result?.name ?? value;
@@ -191,6 +369,7 @@ export default function FestivalUpdateForm(props) {
               location,
               startDate,
               endDate,
+              userIDs,
             };
             const result = onChange(modelFields);
             value = result?.genre ?? value;
@@ -220,6 +399,7 @@ export default function FestivalUpdateForm(props) {
               location,
               startDate,
               endDate,
+              userIDs,
             };
             const result = onChange(modelFields);
             value = result?.image ?? value;
@@ -249,6 +429,7 @@ export default function FestivalUpdateForm(props) {
               location: value,
               startDate,
               endDate,
+              userIDs,
             };
             const result = onChange(modelFields);
             value = result?.location ?? value;
@@ -279,6 +460,7 @@ export default function FestivalUpdateForm(props) {
               location,
               startDate: value,
               endDate,
+              userIDs,
             };
             const result = onChange(modelFields);
             value = result?.startDate ?? value;
@@ -309,6 +491,7 @@ export default function FestivalUpdateForm(props) {
               location,
               startDate,
               endDate: value,
+              userIDs,
             };
             const result = onChange(modelFields);
             value = result?.endDate ?? value;
@@ -323,6 +506,54 @@ export default function FestivalUpdateForm(props) {
         hasError={errors.endDate?.hasError}
         {...getOverrideProps(overrides, "endDate")}
       ></TextField>
+      <ArrayField
+        onChange={async (items) => {
+          let values = items;
+          if (onChange) {
+            const modelFields = {
+              name,
+              genre,
+              image,
+              location,
+              startDate,
+              endDate,
+              userIDs: values,
+            };
+            const result = onChange(modelFields);
+            values = result?.userIDs ?? values;
+          }
+          setUserIDs(values);
+          setCurrentUserIDsValue("");
+        }}
+        currentFieldValue={currentUserIDsValue}
+        label={"User i ds"}
+        items={userIDs}
+        hasError={errors?.userIDs?.hasError}
+        errorMessage={errors?.userIDs?.errorMessage}
+        setFieldValue={setCurrentUserIDsValue}
+        inputFieldRef={userIDsRef}
+        defaultFieldValue={""}
+      >
+        <TextField
+          label="User i ds"
+          isRequired={true}
+          isReadOnly={false}
+          value={currentUserIDsValue}
+          onChange={(e) => {
+            let { value } = e.target;
+            if (errors.userIDs?.hasError) {
+              runValidationTasks("userIDs", value);
+            }
+            setCurrentUserIDsValue(value);
+          }}
+          onBlur={() => runValidationTasks("userIDs", currentUserIDsValue)}
+          errorMessage={errors.userIDs?.errorMessage}
+          hasError={errors.userIDs?.hasError}
+          ref={userIDsRef}
+          labelHidden={true}
+          {...getOverrideProps(overrides, "userIDs")}
+        ></TextField>
+      </ArrayField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}

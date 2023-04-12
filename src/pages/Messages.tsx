@@ -1,5 +1,7 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import userData from '../data/mock-user-data.json'
+import { SubmitHandler, useForm } from 'react-hook-form';
+import React from "react";
 
 const conversation = {
   person1: '642a0d84fc13ae2815c88e4e',
@@ -28,7 +30,14 @@ const conversation = {
   ]
 }
 
+type MessageInputs = {
+  userID: string,
+};
+
 const MessagePage: React.FC = () => {
+  const { register, handleSubmit, formState: { errors } } = useForm<MessageInputs>();
+
+
   return (
     <IonPage>
       <IonHeader>
@@ -42,6 +51,12 @@ const MessagePage: React.FC = () => {
             <IonTitle size="large">Tab 3</IonTitle>
           </IonToolbar>
         </IonHeader>
+        <div>
+          <h1>Start Coversation</h1>
+          <form>
+
+          </form>
+        </div>
         <div>
           <h1 className={'text-3xl m-8 pt-8'}>Conversation between you and {userData[1].first_name} </h1>
           <div className={'flex flex-col w-full p-4'}>

@@ -1,67 +1,70 @@
 import { DataStore } from '@aws-amplify/datastore';
-import { Storage } from "@aws-amplify/storage"
-import { UserProfile, Festival } from '../models';
-import { useEffect, useState } from 'react';
-import { useAuthenticator } from '@aws-amplify/ui-react';
-import { IonContent, IonHeader, IonPage, IonRouterOutlet, IonTitle, IonToolbar, useIonRouter } from '@ionic/react';
-import Login from '../components/Login';
-import { SubmitHandler, useForm } from 'react-hook-form';
-
-type ProfileInputs = {
-  firstName: string,
-  lastName: string,
-};
-
-type FestivalInputs = {
-  name: string,
-  genre: string,
-  image: string,
-  location: string,
-  startDate: string,
-  endDate: string
-}
+import { UserProfile } from '../models';
+import {FormEvent, useEffect, useState} from 'react';
+import {Authenticator, useAuthenticator} from '@aws-amplify/ui-react';
+import {IonAlert, IonButton, IonContent, IonHeader, IonPage, IonTitle, IonToolbar} from '@ionic/react';
+import { Storage } from 'aws-amplify';
+import React from "react";
+import FestivalForm from "../components/FestivalForm";
+import '@aws-amplify/ui-react/styles.css';
+import ProfileUnverified from "../components/ProfileUnverified";
 
 const AccountPage = () => {
-  const { user } = useAuthenticator((context) => [context.user]);
-  const { route } = useAuthenticator((context) => [context.route]);
+  const { authStatus } = useAuthenticator(context => [context.authStatus]);
+  const { user, signOut } = useAuthenticator((context) => [context.user]);
+  const [profile, setProfile] = useState<UserProfile[] | null>(null)
 
-  console.log(user?.username)
-
+  const renderPage = () => {
+    if(authStatus === 'authenticated') {
+      console.log(user)
+      if (profile && user.attributes?.email_verified) {
+        if (profile.length && profile[0].verified) {
+          console.log("Profile verified")
+          return <Profile username={user.username ? user.username : ""}/>
+        } else {
+          console.log("Profile unverified")
+          return <ProfileUnverified username={user.username ? user.username : ""}/>;
+        }
+      }
+    } else {
+      return (
+        <div className='my-8'>
+          <Authenticator/>
+        </div>
+      )
+    }
+  }
 
   useEffect(() => {
-    async function fetchProfiles() {
-      const profiles = await DataStore.query(UserProfile)
-      console.log("Profiles: ", profiles)
+    async function fetchProfile(userName: string) {
+      const profile = await DataStore.query(UserProfile, c => c.userID.eq(userName))
+      console.log("Profiles: ", profile)
+      setProfile(profile)
     }
 
-    const fetchFestivals = async () => {
-      const festivals = await DataStore.query(Festival)
-      console.log("Festivals", festivals)
-    
+    if(user?.username) {
+      fetchProfile(user.username)
     }
-
-    fetchProfiles();
-    fetchFestivals();
-  }, [])
+  }, [user])
 
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Account</IonTitle>
+          <IonTitle>
+            <div className='w-full flex justify-between'>
+              <span>Account</span>
+              <span> {user ? user?.username : ""}</span>
+              <button onClick={() => signOut()}>Sign Out</button>
+              </div></IonTitle>
         </IonToolbar>
       </IonHeader>
     
       <IonContent fullscreen>
       {
-        route !== 'authenticated' ?
-        <Login/> :
-        <div className='flex flex-col items-center'>
-          <img src=""/>
-          <ProfileForm/>
-          <FestivalForm/>
-        </div>
+        renderPage()
       }
+      
       </IonContent>
     </IonPage>
   )
@@ -69,98 +72,89 @@ const AccountPage = () => {
 
 
 
-const ProfileForm = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm<ProfileInputs>();
-  const { user } = useAuthenticator((context) => [context.user]);
-  const createProfile: SubmitHandler<ProfileInputs> = async (data) => {
+const Profile = ({username} : {username: string}) => {
+  const [profileImage, setProfileImage] = useState("")
+  const [profile, setProfile] = useState<UserProfile>()
+  const [selectedFile, setSelectedFile] = useState<File>()
 
-    try {
-      console.log("Creating profile from data:", data)
-      const newProfile = await DataStore.save(
-        new UserProfile({
-          "firstName": data.firstName,
-          "lastName": data.lastName,
-          "user": user.username as string
-        })
-      );
-      console.log(newProfile);
-    } catch(err) {
-      console.error("Error saving profile:", err)
+  const handleFileSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    if(selectedFile) {
+      console.log(selectedFile)
+      try {
+        await Storage.put(`${username}/${selectedFile.name}`, selectedFile, {contentType: selectedFile.type});
+        // Delete old image if it exists
+        if(profile?.profileImage) {
+          await Storage.remove(profile?.profileImage)
+        }
+        // Profile should always exist, but let's make Typescript happy
+        if(profile) {
+          await DataStore.save(UserProfile.copyOf(profile, updated => {
+            updated.profileImage = `${username}/${selectedFile.name}`
+          }))
+        }
+      } catch (error) {
+        console.log("Error uploading file: ", error);
+      }
+    }
+    else {
+      alert("No file selected!")
     }
   }
 
-  return (
-    <form className='w-full max-w-2xl my-4 p-4 ' onSubmit={handleSubmit(createProfile)}>
-      <h2 className='my-4 text-xl'>Add Profile</h2>
-      <div className='flex my-4 items-center [&>*]:mx-2 w-full justify-between flex-wrap'>
-        <label className='basis-[200px] shrink-0'>First Name</label>
-        <input className='px-4 py-2 border border-black flex-1' {...register("firstName", { required: true })} />
-      </div>
-      <div className='flex my-4 items-center [&>*]:mx-2 w-full justify-between flex-wrap'>
-        <label className='basis-[200px] shrink-0'>Last Name</label>
-        <input className='px-4 py-2 border border-black flex-1' {...register("lastName", { required: true })} />
-      </div>
-      <div className='flex justify-center w-full my-6'>
-        <input type='submit' className='px-4 py-2 border border-black rounded-xl  hover:bg-gray-500 hover:text-white'/>
-      </div>
-    </form>
-  )
-}
+  useEffect(() => {
 
-const FestivalForm = () => {
+    const profileSub = DataStore.observeQuery(UserProfile, c => c.userID.eq(username))
+      .subscribe(( {items}) => {
+        console.log(items[0])
+        setProfile(items[0])
+      })
 
-  const { register, handleSubmit, watch, formState: { errors } } = useForm<FestivalInputs>();
-  const saveFestival: SubmitHandler<FestivalInputs> = async (data) => {
-    console.log("Creating festival from data:", data)
-    try {
-      const newFest = await DataStore.save(
-        new Festival({
-          "name": data.name,
-          "genre": data.genre,
-          "image": data.image,
-          "location": data.location,
-          "startDate": data.startDate,
-          "endDate": data.endDate,
-          "UserProfiles": []
-        })
-      );  
-      console.log(newFest);
-    } catch(err) {
-      console.error("Error saving festival:", err)
+    return () => {
+      profileSub.unsubscribe();
+    };
+  }, [])
+
+  useEffect(() => {
+    const fetchProfileImage = async () => {
+      if (profile) {
+        const image = await Storage.get(`${profile.profileImage}`, {
+          level: "public"
+        });
+
+        setProfileImage(image);
+      }
     }
-  }
-
+    fetchProfileImage()
+  }, [profile])
+  
   return (
-    <form className='w-full max-w-2xl my-4 p-4' onSubmit={handleSubmit(saveFestival)}>
-      <h2 className='my-4 text-xl'>Add Festival</h2>
-      <div className='flex my-4 items-center [&>*]:mx-2 w-full justify-between flex-wrap'>
-        <label className='basis-[200px] shrink-0'>Name</label>
-        <input className='px-4 py-2 border border-black flex-1' {...register("name", { required: true })} />
-      </div>
-      <div className='flex my-4 items-center [&>*]:mx-2 w-full justify-between flex-wrap'>
-        <label className='basis-[200px] shrink-0'>Genre</label>
-        <input className='px-4 py-2 border border-black flex-1' {...register("genre", { required: true })} />
-      </div>
-      <div className='flex my-4 items-center [&>*]:mx-2 w-full justify-between flex-wrap'>
-        <label className='basis-[200px] shrink-0'>Image</label>
-        <input className='px-4 py-2 border border-black flex-1' {...register("image", { required: true })} />
-      </div>
-      <div className='flex my-4 items-center [&>*]:mx-2 w-full justify-between flex-wrap'>
-        <label className='basis-[200px] shrink-0'>Location</label>
-        <input className='px-4 py-2 border border-black flex-1' {...register("location", { required: true })} />
-      </div>
-      <div className='flex my-4 items-center [&>*]:mx-2 w-full justify-between flex-wrap'>
-        <label className='basis-[200px] shrink-0'>Start Date</label>
-        <input type='date' className='px-4 py-2 border border-black flex-1' {...register("startDate", { required: true })} />
-      </div>
-      <div className='flex my-4 items-center [&>*]:mx-2 w-full justify-between flex-wrap'>
-        <label className='basis-[200px] shrink-0'>End Date</label>
-        <input type='date' className='px-4 py-2 border border-black flex-1' {...register("endDate", { required: true })} />
-      </div>
-      <div className='flex justify-center w-full my-6'>
-        <input type='submit' className='px-4 py-2 border border-black rounded-xl  hover:bg-gray-500 hover:text-white'/>
-      </div>
-    </form>
+    <div className='flex flex-col items-center p-4'>
+      <section className={'my-8 flex justify-center flex-col'}>
+        <img id='change-alert' className='max-w-[350px] rounded-full cursor-pointer' src={profileImage} alt="Profile Image"/>
+        <IonAlert
+          header='Change Profile Picture'
+          trigger='change-alert'
+          buttons={[
+            {
+              text: 'Cancel',
+              role: 'cancel',
+            },
+            {
+              text: 'Upload Photo',
+              role: 'confirm'
+            }
+          ]}
+        >
+
+        </IonAlert>
+        <form onSubmit={handleFileSubmit}>
+          <input type='file' accept="image/png, image/jpeg" onChange={e => e?.target?.files && setSelectedFile(e.target.files[0])} />
+          <IonButton type="submit">Update Profile Image</IonButton>
+        </form>
+      </section>
+      <FestivalForm/>
+    </div>
   )
 }
 

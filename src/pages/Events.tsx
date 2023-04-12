@@ -1,14 +1,24 @@
-import { IonContent, IonHeader, IonImg, IonNavLink, IonPage, IonRouterLink, IonSpinner, IonTitle, IonToolbar } from '@ionic/react';
-//import { festivalData } from '../data/mock-festival-data';
-import userData from '../data/mock-user-data.json'
+import {
+  IonButton, IonButtons,
+  IonContent,
+  IonHeader, IonIcon,
+  IonImg, IonItem,
+  IonPage, IonPopover, IonRouterLink,
+  IonSpinner,
+  IonTitle,
+  IonToolbar
+} from '@ionic/react';
+
+import {personCircle, search} from "ionicons/icons";
 import { useAuthenticator } from '@aws-amplify/ui-react';
 import { DataStore, Predicates } from 'aws-amplify';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Storage } from "@aws-amplify/storage"
 import { Festival, LazyFestival } from '../models';
+import './events.css'
 
 const EventPage: React.FC = () => {
-  const { user, signOut } = useAuthenticator((context) => [context.user]);
+  const { user } = useAuthenticator((context) => [context.user]);
   const [festivalData, setFestivalData] = useState<LazyFestival[]>([]);
 
   useEffect(() => {
@@ -25,27 +35,32 @@ const EventPage: React.FC = () => {
       
   }, [])
 
-  
-
   console.log(user?.attributes)
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <div className='flex justify-between'>
-            <IonTitle className='basis-[200px]'>Festivals & Events</IonTitle>
-            <div className='flex-1'>{ user ? user.username : "Not logged in"}</div>
-            <div>{ user ? <button onClick={() => {signOut(); DataStore.clear();}} className='px-2 py-4'>Logout</button> : <a className='px-2 py-4' href='/login'>Login</a>  }</div>
-          </div>
+          <IonTitle>Festivals & Events</IonTitle>
+          <IonButtons slot='end'>
+            <IonButton>
+              <IonIcon icon={search}/>
+            </IonButton>
+            <IonButton id="click-trigger">
+              <IonIcon icon={personCircle} id="click-trigger"/>
+            </IonButton>
+
+            <IonPopover trigger="click-trigger" showBackdrop={false} dismissOnSelect={true}  triggerAction="hover">
+              <IonItem>
+                <IonRouterLink className='w-full cursor-pointer' routerLink='/account'>Account</IonRouterLink>
+              </IonItem>
+              <IonItem className='w-full cursor-pointer' routerLink='/account'>Account</IonItem>
+            </IonPopover>
+          </IonButtons>
         </IonToolbar>
+
       </IonHeader>
       <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Events</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <div className='flex flex-col items-center p-4'>
+        <div className='grid gap-4 justify-items-center grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 items-center p-4'>
           { festivalData?.map(festival =>
             <FestivalCard festival={festival} key={festival.id}/>
           )}
@@ -56,7 +71,6 @@ const EventPage: React.FC = () => {
 };
 
 const FestivalCard = ({festival}: {festival: LazyFestival}) => {
-
   const [festivalImage, setFestivalImage] = useState("")
 
   useEffect(() => {
@@ -68,38 +82,26 @@ const FestivalCard = ({festival}: {festival: LazyFestival}) => {
   })
 
   return (
-    <div className='w-auto m-4 rounded-xl shadow-md max-w-4xl'>
+    <div className='m-4 rounded-xl shadow-md w-full max-w-[350px] bg-light-default'>
       <div className='relative'>
-        <div className='full h-[650px] flex items-center justify-center'>
+        <div className='w-full max-w-[350px] h-full max-h-[350px] object-cover flex items-center justify-center'>
           {
             festivalImage ? 
-              <IonImg className='w-full h-full rounded-t-xl' src={festivalImage} alt={festival.name}/>
+              <IonImg className='w-full h-full' src={festivalImage} alt={festival.name}/>
             :
               <IonSpinner></IonSpinner>
           }
         </div>
-        <div className='absolute bottom-4 left-4 rounded-xl z-10 max-w-[300px] w-full p-4 font-bold bg-white'>
-          <div className='bold'>{festival.name}</div>
-          <div>{festival.location}</div>
+        <div className=' bottom-4 left-4 rounded-xl z-10 max-w-[300px] w-full p-4 font-bold '>
+          <div className='bold'>{festival.name} - {festival.location}</div>
+          <div></div>
           <div>{festival.startDate}</div>
         </div>
       </div>
       <div>
-        <h2 className='text-xl m-2'>Attending</h2>
-        <div className='flex flex-wrap'>
-          { [...Array( Math.floor(Math.random() * 4) + 4)].map((item, index) => {
-              let user_number = Math.floor(Math.random() * userData.length);
-              return (
-                <IonRouterLink href={`/profile/${user_number}`} className='flex max-w-[300px] items-center m-4 border border-black p-2 rounded-xl hover:border-gray-500' key={index}>
-                  <div className='mx-4'>
-                    <img className='rounded-full' width={50} height={50} src={userData[user_number].avatar} alt={userData[0].first_name}/>
-                  </div>
-                  <div>{userData[user_number].first_name} {userData[user_number].last_name}</div>
-                </IonRouterLink>
-              )
-            }
-          )}
-        </div>
+        <h2 className='text-base md:text-lg m-2'>Plan on Attending? Let your friends know!</h2>
+        <IonButton>I&apos;ll be there!</IonButton>
+
       </div>
     </div>
   )

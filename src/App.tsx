@@ -1,19 +1,16 @@
 import { Redirect, Route } from 'react-router-dom';
 import {
   IonApp,
-  IonHeader,
   IonIcon,
   IonLabel,
   IonRouterOutlet,
   IonTabBar,
   IonTabButton,
   IonTabs,
-  IonTitle,
-  IonToolbar,
   setupIonicReact
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { ellipse, square, triangle, musicalNotes, people, chatboxEllipses, person } from 'ionicons/icons';
+import { musicalNotes, people, chatboxEllipses, person } from 'ionicons/icons';
 import Tab1 from './pages/Events';
 import Tab2 from './pages/Friends';
 import MessagePage from './pages/Messages';
@@ -28,17 +25,14 @@ import '@ionic/react/css/structure.css';
 import '@ionic/react/css/typography.css';
 
 /* Theme variables */
-//import './theme/variables.css';
+import './theme/variables.css';
 
 import './index.css';
 import ProfilePage from './pages/Profile';
-import LoginPage from './pages/Login';
-import { useAuthenticator } from '@aws-amplify/ui-react';
-
+import React from "react";
 setupIonicReact();
 
 const App: React.FC = () => {
-  const { user } = useAuthenticator((context) => [context.user]);
 
   return (
     <IonApp>

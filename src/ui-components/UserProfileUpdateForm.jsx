@@ -6,7 +6,13 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
+import {
+  Button,
+  Flex,
+  Grid,
+  SwitchField,
+  TextField,
+} from "@aws-amplify/ui-react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import { UserProfile } from "../models";
 import { fetchByPath, validateField } from "./utils";
@@ -26,11 +32,21 @@ export default function UserProfileUpdateForm(props) {
   const initialValues = {
     firstName: "",
     lastName: "",
-    user: "",
+    userID: "",
+    verified: false,
+    verifySubmitted: false,
+    profileImage: "",
   };
   const [firstName, setFirstName] = React.useState(initialValues.firstName);
   const [lastName, setLastName] = React.useState(initialValues.lastName);
-  const [user, setUser] = React.useState(initialValues.user);
+  const [userID, setUserID] = React.useState(initialValues.userID);
+  const [verified, setVerified] = React.useState(initialValues.verified);
+  const [verifySubmitted, setVerifySubmitted] = React.useState(
+    initialValues.verifySubmitted
+  );
+  const [profileImage, setProfileImage] = React.useState(
+    initialValues.profileImage
+  );
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = userProfileRecord
@@ -38,7 +54,10 @@ export default function UserProfileUpdateForm(props) {
       : initialValues;
     setFirstName(cleanValues.firstName);
     setLastName(cleanValues.lastName);
-    setUser(cleanValues.user);
+    setUserID(cleanValues.userID);
+    setVerified(cleanValues.verified);
+    setVerifySubmitted(cleanValues.verifySubmitted);
+    setProfileImage(cleanValues.profileImage);
     setErrors({});
   };
   const [userProfileRecord, setUserProfileRecord] =
@@ -56,7 +75,10 @@ export default function UserProfileUpdateForm(props) {
   const validations = {
     firstName: [{ type: "Required" }],
     lastName: [{ type: "Required" }],
-    user: [{ type: "Required" }],
+    userID: [{ type: "Required" }],
+    verified: [{ type: "Required" }],
+    verifySubmitted: [{ type: "Required" }],
+    profileImage: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -86,7 +108,10 @@ export default function UserProfileUpdateForm(props) {
         let modelFields = {
           firstName,
           lastName,
-          user,
+          userID,
+          verified,
+          verifySubmitted,
+          profileImage,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -144,7 +169,10 @@ export default function UserProfileUpdateForm(props) {
             const modelFields = {
               firstName: value,
               lastName,
-              user,
+              userID,
+              verified,
+              verifySubmitted,
+              profileImage,
             };
             const result = onChange(modelFields);
             value = result?.firstName ?? value;
@@ -170,7 +198,10 @@ export default function UserProfileUpdateForm(props) {
             const modelFields = {
               firstName,
               lastName: value,
-              user,
+              userID,
+              verified,
+              verifySubmitted,
+              profileImage,
             };
             const result = onChange(modelFields);
             value = result?.lastName ?? value;
@@ -186,30 +217,120 @@ export default function UserProfileUpdateForm(props) {
         {...getOverrideProps(overrides, "lastName")}
       ></TextField>
       <TextField
-        label="User"
+        label="User id"
         isRequired={true}
         isReadOnly={false}
-        value={user}
+        value={userID}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
               firstName,
               lastName,
-              user: value,
+              userID: value,
+              verified,
+              verifySubmitted,
+              profileImage,
             };
             const result = onChange(modelFields);
-            value = result?.user ?? value;
+            value = result?.userID ?? value;
           }
-          if (errors.user?.hasError) {
-            runValidationTasks("user", value);
+          if (errors.userID?.hasError) {
+            runValidationTasks("userID", value);
           }
-          setUser(value);
+          setUserID(value);
         }}
-        onBlur={() => runValidationTasks("user", user)}
-        errorMessage={errors.user?.errorMessage}
-        hasError={errors.user?.hasError}
-        {...getOverrideProps(overrides, "user")}
+        onBlur={() => runValidationTasks("userID", userID)}
+        errorMessage={errors.userID?.errorMessage}
+        hasError={errors.userID?.hasError}
+        {...getOverrideProps(overrides, "userID")}
+      ></TextField>
+      <SwitchField
+        label="Verified"
+        defaultChecked={false}
+        isDisabled={false}
+        isChecked={verified}
+        onChange={(e) => {
+          let value = e.target.checked;
+          if (onChange) {
+            const modelFields = {
+              firstName,
+              lastName,
+              userID,
+              verified: value,
+              verifySubmitted,
+              profileImage,
+            };
+            const result = onChange(modelFields);
+            value = result?.verified ?? value;
+          }
+          if (errors.verified?.hasError) {
+            runValidationTasks("verified", value);
+          }
+          setVerified(value);
+        }}
+        onBlur={() => runValidationTasks("verified", verified)}
+        errorMessage={errors.verified?.errorMessage}
+        hasError={errors.verified?.hasError}
+        {...getOverrideProps(overrides, "verified")}
+      ></SwitchField>
+      <SwitchField
+        label="Verify submitted"
+        defaultChecked={false}
+        isDisabled={false}
+        isChecked={verifySubmitted}
+        onChange={(e) => {
+          let value = e.target.checked;
+          if (onChange) {
+            const modelFields = {
+              firstName,
+              lastName,
+              userID,
+              verified,
+              verifySubmitted: value,
+              profileImage,
+            };
+            const result = onChange(modelFields);
+            value = result?.verifySubmitted ?? value;
+          }
+          if (errors.verifySubmitted?.hasError) {
+            runValidationTasks("verifySubmitted", value);
+          }
+          setVerifySubmitted(value);
+        }}
+        onBlur={() => runValidationTasks("verifySubmitted", verifySubmitted)}
+        errorMessage={errors.verifySubmitted?.errorMessage}
+        hasError={errors.verifySubmitted?.hasError}
+        {...getOverrideProps(overrides, "verifySubmitted")}
+      ></SwitchField>
+      <TextField
+        label="Profile image"
+        isRequired={false}
+        isReadOnly={false}
+        value={profileImage}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              firstName,
+              lastName,
+              userID,
+              verified,
+              verifySubmitted,
+              profileImage: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.profileImage ?? value;
+          }
+          if (errors.profileImage?.hasError) {
+            runValidationTasks("profileImage", value);
+          }
+          setProfileImage(value);
+        }}
+        onBlur={() => runValidationTasks("profileImage", profileImage)}
+        errorMessage={errors.profileImage?.errorMessage}
+        hasError={errors.profileImage?.hasError}
+        {...getOverrideProps(overrides, "profileImage")}
       ></TextField>
       <Flex
         justifyContent="space-between"
