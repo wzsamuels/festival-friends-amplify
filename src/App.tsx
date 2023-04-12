@@ -10,7 +10,7 @@ import {
   setupIonicReact
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { musicalNotes, people, chatboxEllipses, person } from 'ionicons/icons';
+import {musicalNotes, people, chatboxEllipses, person, settings} from 'ionicons/icons';
 import Tab1 from './pages/Events';
 import Tab2 from './pages/Friends';
 import MessagePage from './pages/Messages';
@@ -30,6 +30,7 @@ import './theme/variables.css';
 import './index.css';
 import ProfilePage from './pages/Profile';
 import React from "react";
+import Admin from "./pages/Admin";
 setupIonicReact();
 
 const App: React.FC = () => {
@@ -50,6 +51,9 @@ const App: React.FC = () => {
             </Route>
             <Route exact path='/account'>
               <AccountPage/>
+            </Route>
+            <Route exact path='/admin'>
+              <Admin/>
             </Route>
             <Route path='/profile/:id' component={ProfilePage}/>          
             <Route exact path="/">
@@ -72,6 +76,10 @@ const App: React.FC = () => {
             <IonTabButton tab="tab4" href="/messages">
               <IonIcon aria-hidden="true" icon={chatboxEllipses} />
               <IonLabel>Messages</IonLabel>
+            </IonTabButton>
+            <IonTabButton tab="tab5" href="/admin">
+              <IonIcon aria-hidden="true" icon={settings} />
+              <IonLabel>Admin</IonLabel>
             </IonTabButton>
           </IonTabBar>
         </IonTabs>
