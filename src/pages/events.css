@@ -1,0 +1,5 @@
+ion-img::part(image) {
+  border-top-left-radius: .75em;
+  border-top-right-radius: .75em;
+  /* you can set the height value too */
+}
