@@ -1,15 +1,15 @@
 import {
   IonButton, IonButtons,
-  IonContent,
+  IonContent, IonFooter,
   IonHeader, IonIcon,
-  IonImg, IonItem,
+  IonImg, IonItem, IonLabel,
   IonPage, IonPopover, IonRouterLink,
   IonSpinner,
   IonTitle,
   IonToolbar
 } from '@ionic/react';
 
-import {personCircle, search} from "ionicons/icons";
+import {chatboxEllipses, musicalNotes, people, person, personCircle, search, settings} from "ionicons/icons";
 import { useAuthenticator } from '@aws-amplify/ui-react';
 import { DataStore, Predicates } from 'aws-amplify';
 import React, { useEffect, useState } from 'react';
@@ -43,10 +43,10 @@ const EventPage: React.FC = () => {
           <IonTitle>Festivals & Events</IonTitle>
           <IonButtons slot='end'>
             <IonButton>
-              <IonIcon icon={search}/>
+              <IonIcon size='large' icon={search}/>
             </IonButton>
             <IonButton id="click-trigger">
-              <IonIcon icon={personCircle} id="click-trigger"/>
+              <IonIcon size='large' icon={personCircle} id="click-trigger"/>
             </IonButton>
 
             <IonPopover trigger="click-trigger" showBackdrop={false} dismissOnSelect={true}  triggerAction="hover">
@@ -66,6 +66,7 @@ const EventPage: React.FC = () => {
           )}
         </div>
       </IonContent>
+
     </IonPage>
   );
 };
@@ -92,7 +93,7 @@ const FestivalCard = ({festival}: {festival: LazyFestival}) => {
               <IonSpinner></IonSpinner>
           }
         </div>
-        <div className=' bottom-4 left-4 rounded-xl z-10 max-w-[300px] w-full p-4 font-bold '>
+        <div className=' bottom-4 left-4 rounded-xl z-10 w-full p-4 font-bold '>
           <div className='bold'>{festival.name} - {festival.location}</div>
           <div></div>
           <div>{festival.startDate}</div>

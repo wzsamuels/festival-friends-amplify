@@ -1,7 +1,7 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import userData from '../data/mock-user-data.json'
-
-const Tab2: React.FC = () => {
+import React from "react";
+const FriendsPage: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
@@ -17,7 +17,7 @@ const Tab2: React.FC = () => {
         </IonHeader>
         <div className={'flex flex-col flex-wrap'}>
           { userData.map((user, index) =>
-            <a href={`/profile/${index}`} className={'flex max-w-[300px] items-center m-4 border border-white p-2 rounded-xl hover:border-gray-500'} key={user.id.$oid}>
+            <a href={`/friends/profile/${index}`} className={'flex max-w-[300px] items-center m-4 border border-white p-2 rounded-xl hover:border-gray-500'} key={user.id.$oid}>
               <div className={'mx-4'}>
                 <img className={'rounded-full'} width={50} height={50} src={user.avatar} alt={user.first_name}/>
               </div>
@@ -30,4 +30,4 @@ const Tab2: React.FC = () => {
   );
 };
 
-export default Tab2;
+export default FriendsPage;
