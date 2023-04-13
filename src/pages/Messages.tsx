@@ -1,27 +1,20 @@
 import {
   IonButton,
-  IonButtons,
   IonContent,
   IonHeader,
-  IonInput, IonItem, IonLabel,
+  IonInput, IonItem,
   IonModal,
   IonPage,
   IonTitle,
   IonToolbar
 } from '@ionic/react';
-import userData from '../data/mock-user-data.json'
-import { SubmitHandler, useForm } from 'react-hook-form';
-import React, {useEffect, useRef, useState} from "react";
+import React, {FormEvent, useEffect, useRef, useState} from "react";
 import {DataStore, Storage} from "aws-amplify";
 import {Conversation, Message, UserProfile} from "../models";
 import {useAuthenticator} from "@aws-amplify/ui-react";
 
-type MessageInputs = {
-  userID: string,
-};
 
 const MessagePage: React.FC = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm<MessageInputs>();
   const { user } = useAuthenticator();
   const [conversations, setConversations] = useState<Conversation[]>()
 
@@ -78,7 +71,7 @@ type ProfileImage = {
   user: string
 }
 
-const ConversationCard = ({conversation, username} : {conversation: Conversation, username: string}) => {
+const ConversationCard = ({conversation, username} : {conversation: Conversation, username: string | undefined}) => {
   const [profiles, setProfiles] = useState<UserProfile[]>()
   const [profileImages, setProfileImages] = useState<ProfileImage[]>()
   const [messages, setMessages] = useState<Message[]>([])
@@ -97,7 +90,7 @@ const ConversationCard = ({conversation, username} : {conversation: Conversation
         setProfiles(profilesFiltered)
         const imagePromises =  profilesFiltered
           .map(async profile => {
-            const result = await Storage.get(profile.profileImage)
+            const result = await Storage.get(profile.profileImage as string)
             return {user: profile.userID, src: result}
           })
         if(imagePromises) {
@@ -123,10 +116,17 @@ const ConversationCard = ({conversation, username} : {conversation: Conversation
 
   }, [])
 
-  const sendData = async (e) => {
+  const sendData = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const message = await DataStore.save(new Message({messageText: input.current?.value, conversationID: conversation.id, fromUser: username, toUser: profiles[0].userID}))
-    console.log(message)
+    if(input.current?.value && profiles) {
+      const message = await DataStore.save(new Message({
+        messageText: input.current?.value as string,
+        conversationID: conversation.id,
+        fromUser: username as string,
+        toUser: profiles[0].userID
+      }))
+      console.log(message)
+    }
   }
 
   return (
@@ -172,14 +172,6 @@ const ConversationCard = ({conversation, username} : {conversation: Conversation
           </div>
         </IonContent>
       </IonModal>
-    </div>
-  )
-}
-
-const ConversationDetail = () => {
-  return (
-    <div>
-
     </div>
   )
 }
