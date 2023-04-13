@@ -1,18 +1,15 @@
 import { Redirect, Route } from 'react-router-dom';
 import {
-  IonApp, IonButton, IonButtons, IonFooter,
+  IonApp,
   IonIcon,
   IonLabel,
   IonRouterOutlet,
   IonTabBar,
   IonTabButton,
-  IonTabs, IonTitle, IonToolbar,
+  IonTabs,
   setupIonicReact
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import {musicalNotes, people, chatboxEllipses, person, settings} from 'ionicons/icons';
-import Tab1 from './pages/Events';
-import Tab2 from './pages/Friends';
 import MessagePage from './pages/Messages';
 import AccountPage from './pages/Account'
 
@@ -24,6 +21,14 @@ import '@ionic/react/css/normalize.css';
 import '@ionic/react/css/structure.css';
 import '@ionic/react/css/typography.css';
 
+/* Optional CSS utils that can be commented out */
+import '@ionic/react/css/padding.css';
+import '@ionic/react/css/float-elements.css';
+import '@ionic/react/css/text-alignment.css';
+import '@ionic/react/css/text-transformation.css';
+import '@ionic/react/css/flex-utils.css';
+import '@ionic/react/css/display.css';
+
 /* Theme variables */
 import './theme/variables.css';
 
@@ -31,9 +36,10 @@ import './index.css';
 import ProfilePage from './pages/Profile';
 import React from "react";
 import Admin from "./pages/Admin";
-import Layout from "./pages/Layout";
 import FriendsPage from "./pages/Friends";
 import Events from "./pages/Events";
+import {chatboxEllipses, musicalNotes, people, settings} from "ionicons/icons";
+
 setupIonicReact();
 
 const App: React.FC = () => {
@@ -41,7 +47,10 @@ const App: React.FC = () => {
   return (
     <IonApp>
       <IonReactRouter>
+        <IonTabs>
           <IonRouterOutlet>
+            <Route path="/events" render={() => <Events/>}>
+            </Route>
             <Route path="/friends">
               <FriendsPage />
             </Route>
@@ -55,10 +64,27 @@ const App: React.FC = () => {
               <Admin/>
             </Route>
             <Route path='/friends/profile/:id' component={ProfilePage}/>
-            <Route exact path="/">
-              <Events/>
-            </Route>
+            <Redirect exact from="/" to="/events"  />
           </IonRouterOutlet>
+          <IonTabBar slot="bottom">
+            <IonTabButton tab="tab1" href="/events">
+              <IonIcon aria-hidden="true" icon={musicalNotes} />
+              <IonLabel>Events</IonLabel>
+            </IonTabButton>
+            <IonTabButton tab="tab2" href="/friends">
+              <IonIcon aria-hidden="true" icon={people} />
+              <IonLabel>Friends</IonLabel>
+            </IonTabButton>
+            <IonTabButton tab="tab3" href="/messages">
+              <IonIcon aria-hidden="true" icon={chatboxEllipses} />
+              <IonLabel>Messages</IonLabel>
+            </IonTabButton>
+            <IonTabButton tab="tab4" href="/admin">
+              <IonIcon aria-hidden="true" icon={settings} />
+              <IonLabel>Admin</IonLabel>
+            </IonTabButton>
+          </IonTabBar>
+        </IonTabs>
       </IonReactRouter>
     </IonApp>
   );

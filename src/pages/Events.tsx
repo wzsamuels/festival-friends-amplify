@@ -78,7 +78,6 @@ const EventPage: React.FC = () => {
           )}
         </div>
       </IonContent>
-      <Footer/>
     </IonPage>
   );
 };
@@ -114,7 +113,6 @@ const FestivalCard = ({festival}: {festival: LazyFestival}) => {
       <div>
         <h2 className='text-base md:text-lg m-2'>Plan on Attending? Let your friends know!</h2>
         <IonButton>I&apos;ll be there!</IonButton>
-
       </div>
     </div>
   )

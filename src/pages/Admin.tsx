@@ -13,13 +13,10 @@ const Admin = () => {
             <h2>Create Conversation</h2>
             <ConversationCreateForm/>
           </section>
-
           <FestivalCreateForm/>
         </div>
       </IonContent>
-      <Footer/>
     </IonPage>
-
   )
 }
 

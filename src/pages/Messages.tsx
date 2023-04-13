@@ -63,7 +63,6 @@ const MessagePage: React.FC = () => {
         }
         </div>
       </IonContent>
-      <Footer/>
     </IonPage>
   );
 };

@@ -4,10 +4,9 @@ import { RouteComponentProps } from "react-router"
 import Footer from "../components/Footer";
 import React from "react";
 
-interface ProfilePageProps
-  extends RouteComponentProps<{
+type ProfilePageProps = RouteComponentProps<{
     id: string;
-  }> {}
+  }>
 
 const ProfilePage: React.FC<ProfilePageProps> = ({match}) => {
   const id = Number(match.params.id);
@@ -16,7 +15,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({match}) => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-            <IonTitle>Tab 3</IonTitle>
+            <IonTitle>{userData[id]?.first_name} {userData[id]?.last_name}&apos;s Profile</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>

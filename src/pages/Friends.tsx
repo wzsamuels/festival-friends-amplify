@@ -27,7 +27,6 @@ const FriendsPage: React.FC = () => {
           ) }
         </div>
       </IonContent>
-      <Footer/>
     </IonPage>
   );
 };
