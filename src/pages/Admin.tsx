@@ -2,7 +2,6 @@ import ConversationCreateForm from "../ui-components/ConversationCreateForm";
 import React from "react";
 import {FestivalCreateForm} from "../ui-components";
 import {IonContent, IonPage} from "@ionic/react";
-import Footer from "../components/Footer";
 
 const Admin = () => {
   return (

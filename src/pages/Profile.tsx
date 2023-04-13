@@ -1,7 +1,6 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from "@ionic/react"
 import userData from '../data/mock-user-data.json'
 import { RouteComponentProps } from "react-router"
-import Footer from "../components/Footer";
 import React from "react";
 
 type ProfilePageProps = RouteComponentProps<{
@@ -29,7 +28,6 @@ const ProfilePage: React.FC<ProfilePageProps> = ({match}) => {
           </div>
         </div>
       </IonContent>
-      <Footer/>
     </IonPage>
   )
 }

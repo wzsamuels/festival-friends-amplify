@@ -1,7 +1,8 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import userData from '../data/mock-user-data.json'
 import React from "react";
-import Footer from "../components/Footer";
+
+
 const FriendsPage: React.FC = () => {
   return (
     <IonPage>

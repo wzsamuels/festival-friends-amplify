@@ -14,9 +14,8 @@ import { useAuthenticator } from '@aws-amplify/ui-react';
 import {DataStore, Hub, Predicates} from 'aws-amplify';
 import React, { useEffect, useState } from 'react';
 import { Storage } from "@aws-amplify/storage"
-import { Festival, LazyFestival } from '../models';
-import './events.css'
-import Footer from "../components/Footer";
+import {Festival, LazyFestival, Message} from '../models';
+//import './events.css'
 
 const EventPage: React.FC = () => {
   const { user } = useAuthenticator((context) => [context.user]);
@@ -24,27 +23,17 @@ const EventPage: React.FC = () => {
 
   useEffect(() => {
 
-    const removeListener = Hub.listen("datastore", async (capsule) => {
-      const {
-        payload: { event, data },
-      } = capsule;
-
-      console.log("DataStore event", event, data);
-
-      if (event === "ready") {
-        const festivals = await DataStore.query(Festival, Predicates.ALL, {
-          page: 0,
-          limit: 15,
-        });
-        setFestivalData(festivals);
-        console.log("Festivals", festivals)
-      }
-    });
-    DataStore.start();
+    const profileSub = DataStore.observeQuery(Festival)
+      .subscribe(( {items}) => {
+        console.log(items)
+        setFestivalData(items)
+      })
 
     return () => {
-      removeListener();
+      profileSub.unsubscribe();
     };
+
+
   }, [])
 
   console.log(user?.attributes)

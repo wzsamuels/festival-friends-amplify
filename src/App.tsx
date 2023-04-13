@@ -39,7 +39,8 @@ import Admin from "./pages/Admin";
 import FriendsPage from "./pages/Friends";
 import Events from "./pages/Events";
 import {chatboxEllipses, musicalNotes, people, settings} from "ionicons/icons";
-
+import {Authenticator} from "@aws-amplify/ui-react";
+//import './index.css'
 setupIonicReact();
 
 const App: React.FC = () => {
@@ -49,6 +50,7 @@ const App: React.FC = () => {
       <IonReactRouter>
         <IonTabs>
           <IonRouterOutlet>
+            <Authenticator.Provider>
             <Route path="/events" render={() => <Events/>}>
             </Route>
             <Route path="/friends">
@@ -65,6 +67,7 @@ const App: React.FC = () => {
             </Route>
             <Route path='/friends/profile/:id' component={ProfilePage}/>
             <Redirect exact from="/" to="/events"  />
+            </Authenticator.Provider>
           </IonRouterOutlet>
           <IonTabBar slot="bottom">
             <IonTabButton tab="tab1" href="/events">

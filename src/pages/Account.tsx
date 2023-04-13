@@ -8,7 +8,7 @@ import React from "react";
 import FestivalForm from "../components/FestivalForm";
 import '@aws-amplify/ui-react/styles.css';
 import ProfileUnverified from "../components/ProfileUnverified";
-import Footer from "../components/Footer";
+
 
 const AccountPage = () => {
   const { authStatus } = useAuthenticator(context => [context.authStatus]);

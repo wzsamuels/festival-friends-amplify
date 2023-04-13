@@ -15,8 +15,6 @@ const container = document.getElementById('root');
 const root = createRoot(container!);
 root.render(
   <React.StrictMode>
-    <Authenticator.Provider>
-      <App />
-    </Authenticator.Provider>
+    <App />
   </React.StrictMode>
 );
