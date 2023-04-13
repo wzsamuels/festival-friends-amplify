@@ -12,6 +12,7 @@ import React, {FormEvent, useEffect, useRef, useState} from "react";
 import {DataStore, Storage} from "aws-amplify";
 import {Conversation, Message, UserProfile} from "../models";
 import {useAuthenticator} from "@aws-amplify/ui-react";
+import Footer from "../components/Footer";
 
 
 const MessagePage: React.FC = () => {
@@ -62,6 +63,7 @@ const MessagePage: React.FC = () => {
         }
         </div>
       </IonContent>
+      <Footer/>
     </IonPage>
   );
 };

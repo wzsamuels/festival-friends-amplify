@@ -8,6 +8,7 @@ import React from "react";
 import FestivalForm from "../components/FestivalForm";
 import '@aws-amplify/ui-react/styles.css';
 import ProfileUnverified from "../components/ProfileUnverified";
+import Footer from "../components/Footer";
 
 const AccountPage = () => {
   const { authStatus } = useAuthenticator(context => [context.authStatus]);
@@ -129,32 +130,37 @@ const Profile = ({username} : {username: string}) => {
   }, [profile])
   
   return (
-    <div className='flex flex-col items-center p-4'>
-      <section className={'my-8 flex justify-center flex-col'}>
-        <img id='change-alert' className='max-w-[350px] rounded-full cursor-pointer' src={profileImage} alt="Profile Image"/>
-        <IonAlert
-          header='Change Profile Picture'
-          trigger='change-alert'
-          buttons={[
-            {
-              text: 'Cancel',
-              role: 'cancel',
-            },
-            {
-              text: 'Upload Photo',
-              role: 'confirm'
-            }
-          ]}
-        >
+    <IonPage>
+      <IonContent>
+        <div className='flex flex-col items-center p-4 mt-8'>
+          <section className={'my-8 flex justify-center flex-col'}>
+            <img id='change-alert' className='max-w-[350px] rounded-full cursor-pointer' src={profileImage} alt="Profile Image"/>
+            <IonAlert
+              header='Change Profile Picture'
+              trigger='change-alert'
+              buttons={[
+                {
+                  text: 'Cancel',
+                  role: 'cancel',
+                },
+                {
+                  text: 'Upload Photo',
+                  role: 'confirm'
+                }
+              ]}
+            >
 
-        </IonAlert>
-        <form onSubmit={handleFileSubmit}>
-          <input type='file' accept="image/png, image/jpeg" onChange={e => e?.target?.files && setSelectedFile(e.target.files[0])} />
-          <IonButton type="submit">Update Profile Image</IonButton>
-        </form>
-      </section>
-      <FestivalForm/>
-    </div>
+            </IonAlert>
+            <form onSubmit={handleFileSubmit}>
+              <input type='file' accept="image/png, image/jpeg" onChange={e => e?.target?.files && setSelectedFile(e.target.files[0])} />
+              <IonButton type="submit">Update Profile Image</IonButton>
+            </form>
+          </section>
+          <FestivalForm/>
+        </div>
+      </IonContent>
+      <Footer/>
+    </IonPage>
   )
 }
 

@@ -1,38 +1,50 @@
 import {
   IonButton, IonButtons,
-  IonContent, IonFooter,
+  IonContent,
   IonHeader, IonIcon,
-  IonImg, IonItem, IonLabel,
+  IonImg, IonItem,
   IonPage, IonPopover, IonRouterLink,
   IonSpinner,
   IonTitle,
   IonToolbar
 } from '@ionic/react';
 
-import {chatboxEllipses, musicalNotes, people, person, personCircle, search, settings} from "ionicons/icons";
+import {personCircle, search } from "ionicons/icons";
 import { useAuthenticator } from '@aws-amplify/ui-react';
-import { DataStore, Predicates } from 'aws-amplify';
+import {DataStore, Hub, Predicates} from 'aws-amplify';
 import React, { useEffect, useState } from 'react';
 import { Storage } from "@aws-amplify/storage"
 import { Festival, LazyFestival } from '../models';
 import './events.css'
+import Footer from "../components/Footer";
 
 const EventPage: React.FC = () => {
   const { user } = useAuthenticator((context) => [context.user]);
   const [festivalData, setFestivalData] = useState<LazyFestival[]>([]);
 
   useEffect(() => {
-    const fetchFestivals = async () => {
-      const festivals = await DataStore.query(Festival, Predicates.ALL, {
-        page: 0,
-        limit: 100
-      });
-      setFestivalData(festivals);
-      console.log("Festivals", festivals)
-    }
 
-    fetchFestivals()
-      
+    const removeListener = Hub.listen("datastore", async (capsule) => {
+      const {
+        payload: { event, data },
+      } = capsule;
+
+      console.log("DataStore event", event, data);
+
+      if (event === "ready") {
+        const festivals = await DataStore.query(Festival, Predicates.ALL, {
+          page: 0,
+          limit: 15,
+        });
+        setFestivalData(festivals);
+        console.log("Festivals", festivals)
+      }
+    });
+    DataStore.start();
+
+    return () => {
+      removeListener();
+    };
   }, [])
 
   console.log(user?.attributes)
@@ -66,7 +78,7 @@ const EventPage: React.FC = () => {
           )}
         </div>
       </IonContent>
-
+      <Footer/>
     </IonPage>
   );
 };

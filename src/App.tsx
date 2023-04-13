@@ -32,6 +32,8 @@ import ProfilePage from './pages/Profile';
 import React from "react";
 import Admin from "./pages/Admin";
 import Layout from "./pages/Layout";
+import FriendsPage from "./pages/Friends";
+import Events from "./pages/Events";
 setupIonicReact();
 
 const App: React.FC = () => {
@@ -39,11 +41,24 @@ const App: React.FC = () => {
   return (
     <IonApp>
       <IonReactRouter>
-        <IonRouterOutlet>
-          <Route path='/'>
-            <Layout/>
-          </Route>
-        </IonRouterOutlet>
+          <IonRouterOutlet>
+            <Route path="/friends">
+              <FriendsPage />
+            </Route>
+            <Route path="/messages">
+              <MessagePage />
+            </Route>
+            <Route path='/account'>
+              <AccountPage/>
+            </Route>
+            <Route path='/admin'>
+              <Admin/>
+            </Route>
+            <Route path='/friends/profile/:id' component={ProfilePage}/>
+            <Route exact path="/">
+              <Events/>
+            </Route>
+          </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>
   );
