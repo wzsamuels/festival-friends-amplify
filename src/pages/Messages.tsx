@@ -1,34 +1,20 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import {
+  IonButton,
+  IonButtons,
+  IonContent,
+  IonHeader,
+  IonInput, IonItem, IonLabel,
+  IonModal,
+  IonPage,
+  IonTitle,
+  IonToolbar
+} from '@ionic/react';
 import userData from '../data/mock-user-data.json'
 import { SubmitHandler, useForm } from 'react-hook-form';
-import React from "react";
-
-const conversation = {
-  person1: '642a0d84fc13ae2815c88e4e',
-  person2: '642a0d84fc13ae2815c88e4f',
-  messages: [
-    {
-      text: "Hello!",
-      sender: '642a0d84fc13ae2815c88e4f'
-    },
-    {
-      text: 'Hey, how are you doing?',
-      sender: '642a0d84fc13ae2815c88e4e'
-    },
-    {
-      text: "Great! Are you going to Amplified Fest this year?",
-      sender: '642a0d84fc13ae2815c88e4f'
-    },
-    {
-      text: "Maybe. I need to get time off from work first.",
-      sender: '642a0d84fc13ae2815c88e4e'
-    },
-    {
-      text: "Cool, let me know if you decide to go.",
-      sender: '642a0d84fc13ae2815c88e4f'
-    },
-  ]
-}
+import React, {useEffect, useRef, useState} from "react";
+import {DataStore, Storage} from "aws-amplify";
+import {Conversation, Message, UserProfile} from "../models";
+import {useAuthenticator} from "@aws-amplify/ui-react";
 
 type MessageInputs = {
   userID: string,
@@ -36,13 +22,27 @@ type MessageInputs = {
 
 const MessagePage: React.FC = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<MessageInputs>();
+  const { user } = useAuthenticator();
+  const [conversations, setConversations] = useState<Conversation[]>()
 
+  useEffect(() => {
+    const fetchConversations = async () => {
+      const conversations = await DataStore.query(Conversation, c => c.userIDs.contains(user.username))
+      console.log(conversations)
+      setConversations(conversations)
+    }
+
+    if(user) {
+      fetchConversations()
+    }
+
+  }, [user])
 
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Tab 3</IonTitle>
+          <IonTitle>Messages {user?.username}</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
@@ -51,28 +51,137 @@ const MessagePage: React.FC = () => {
             <IonTitle size="large">Tab 3</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <div>
-          <h1>Start Coversation</h1>
-          <form>
-
-          </form>
-        </div>
-        <div>
-          <h1 className={'text-3xl m-8 pt-8'}>Conversation between you and {userData[1].first_name} </h1>
-          <div className={'flex flex-col w-full p-4'}>
-            {
-              conversation.messages.map((message, index) =>
-                <div key={index} className={`my-4 p-4 text-white flex ${message.sender === userData[0].id.$oid ? 'bg-blue-800 self-start rounded-tr-xl rounded-tl-xl rounded-bl-xl' : 'bg-green-800 self-end rounded-tr-xl rounded-tl-xl rounded-br-xl'}`}>
-                  <img width={50} height={50} className={'rounded-full'} src={`${message.sender === userData[0].id.$oid ? userData[0].avatar : userData[1].avatar }`} alt={''}/>
-                  <div>{message.text}</div>
-                </div>
-              )
-            }
-          </div>
+        <div className='p-4 h-full'>
+        {
+          user ?
+            <>
+              <h1>Start Conversation</h1>
+              <section className='h-full'>
+                <h2>Conversations</h2>
+                {
+                  conversations?.map(conversation =>
+                    <ConversationCard key={conversation.id} conversation={conversation} username={user.username}/>)
+                }
+              </section>
+            </>
+          :
+          <div>Not Logged in</div>
+        }
         </div>
       </IonContent>
     </IonPage>
   );
 };
+
+type ProfileImage = {
+  src: string,
+  user: string
+}
+
+const ConversationCard = ({conversation, username} : {conversation: Conversation, username: string}) => {
+  const [profiles, setProfiles] = useState<UserProfile[]>()
+  const [profileImages, setProfileImages] = useState<ProfileImage[]>()
+  const [messages, setMessages] = useState<Message[]>([])
+  const modal = useRef<HTMLIonModalElement>(null);
+  const input = useRef<HTMLIonInputElement>(null);
+
+  useEffect(() => {
+    const fetchProfiles = async () => {
+      const profilePromises = conversation.userIDs?.map(async userID=> {
+        const result = await DataStore.query(UserProfile, c => c.userID.eq(userID))
+        return result[0]
+      })
+      if(profilePromises) {
+        const profileData = await Promise.all(profilePromises);
+        const profilesFiltered = profileData.filter(profile => profile.userID !== username);
+        setProfiles(profilesFiltered)
+        const imagePromises =  profilesFiltered
+          .map(async profile => {
+            const result = await Storage.get(profile.profileImage)
+            return {user: profile.userID, src: result}
+          })
+        if(imagePromises) {
+          const imageData = await Promise.all(imagePromises)
+          setProfileImages(imageData)
+        }
+      }
+    }
+
+
+
+    fetchProfiles()
+
+    const profileSub = DataStore.observeQuery(Message, c => c.conversationID.eq(conversation.id))
+      .subscribe(( {items}) => {
+        console.log(items)
+        setMessages(items)
+      })
+
+    return () => {
+      profileSub.unsubscribe();
+    };
+
+  }, [])
+
+  const sendData = async (e) => {
+    e.preventDefault()
+    const message = await DataStore.save(new Message({messageText: input.current?.value, conversationID: conversation.id, fromUser: username, toUser: profiles[0].userID}))
+    console.log(message)
+  }
+
+  return (
+    <div className='shadow-xl p-4 flex justify-between my-4'>
+      <div className='flex items-center justify-between w-full'>
+        <div className='flex items-center'>
+        {
+          profileImages?.map(profileImage =>
+            <img className="rounded-full mx-4 max-w-[75px] w-full max-h-[75px] aspect-square" src={profileImage.src} key={profileImage.user} alt={profileImage.user}/>
+          )
+        }
+        {
+          profiles?.map(profile =>
+            <span key={profile.userID}>{profile.firstName}</span>)
+        }
+        </div>
+        <IonButton id="open-modal" expand="block">
+          Open
+        </IonButton>
+      </div>
+
+      <IonModal ref={modal} trigger="open-modal">
+        <IonHeader>
+          <IonToolbar>
+            <IonTitle>Conversation with {profiles?.map(profile => profile.firstName)}</IonTitle>
+          </IonToolbar>
+        </IonHeader>
+        <IonContent className="ion-padding">
+          {
+            messages.map(message =>
+              <div key={message.id} className={`flex my-4 w-full ${message.fromUser !== username ? 'justify-start' : 'justify-end'}`}>
+                <div className={`p-4 ${message.fromUser === username ? 'bg-secondary-default' : 'bg-secondary-shade'} w-1/2`}>{message.messageText}</div>
+              </div>
+            )
+          }
+          <div className='fixed bottom-0 w-full'>
+            <form onSubmit={sendData}>
+              <IonItem>
+                <IonInput ref={input} type="text" label="Message" labelPlacement="stacked" enterkeyhint='send' />
+                <IonButton type='submit'>Send</IonButton>
+              </IonItem>
+            </form>
+          </div>
+        </IonContent>
+      </IonModal>
+    </div>
+  )
+}
+
+const ConversationDetail = () => {
+  return (
+    <div>
+
+    </div>
+  )
+}
 
 export default MessagePage;

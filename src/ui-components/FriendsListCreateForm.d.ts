@@ -14,14 +14,17 @@ export declare type ValidationResponse = {
 export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
 export declare type FriendsListCreateFormInputValues = {
     userIDs?: string[];
+    untitledfield?: string;
 };
 export declare type FriendsListCreateFormValidationValues = {
     userIDs?: ValidationFunction<string>;
+    untitledfield?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type FriendsListCreateFormOverridesProps = {
     FriendsListCreateFormGrid?: PrimitiveOverrideProps<GridProps>;
     userIDs?: PrimitiveOverrideProps<TextFieldProps>;
+    untitledfield?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type FriendsListCreateFormProps = React.PropsWithChildren<{
     overrides?: FriendsListCreateFormOverridesProps | undefined | null;

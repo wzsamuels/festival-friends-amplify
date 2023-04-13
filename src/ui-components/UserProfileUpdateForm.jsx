@@ -36,6 +36,9 @@ export default function UserProfileUpdateForm(props) {
     verified: false,
     verifySubmitted: false,
     profileImage: "",
+    city: "",
+    state: "",
+    school: "",
   };
   const [firstName, setFirstName] = React.useState(initialValues.firstName);
   const [lastName, setLastName] = React.useState(initialValues.lastName);
@@ -47,6 +50,9 @@ export default function UserProfileUpdateForm(props) {
   const [profileImage, setProfileImage] = React.useState(
     initialValues.profileImage
   );
+  const [city, setCity] = React.useState(initialValues.city);
+  const [state, setState] = React.useState(initialValues.state);
+  const [school, setSchool] = React.useState(initialValues.school);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = userProfileRecord
@@ -58,6 +64,9 @@ export default function UserProfileUpdateForm(props) {
     setVerified(cleanValues.verified);
     setVerifySubmitted(cleanValues.verifySubmitted);
     setProfileImage(cleanValues.profileImage);
+    setCity(cleanValues.city);
+    setState(cleanValues.state);
+    setSchool(cleanValues.school);
     setErrors({});
   };
   const [userProfileRecord, setUserProfileRecord] =
@@ -79,6 +88,9 @@ export default function UserProfileUpdateForm(props) {
     verified: [{ type: "Required" }],
     verifySubmitted: [{ type: "Required" }],
     profileImage: [],
+    city: [],
+    state: [],
+    school: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -112,6 +124,9 @@ export default function UserProfileUpdateForm(props) {
           verified,
           verifySubmitted,
           profileImage,
+          city,
+          state,
+          school,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -173,6 +188,9 @@ export default function UserProfileUpdateForm(props) {
               verified,
               verifySubmitted,
               profileImage,
+              city,
+              state,
+              school,
             };
             const result = onChange(modelFields);
             value = result?.firstName ?? value;
@@ -202,6 +220,9 @@ export default function UserProfileUpdateForm(props) {
               verified,
               verifySubmitted,
               profileImage,
+              city,
+              state,
+              school,
             };
             const result = onChange(modelFields);
             value = result?.lastName ?? value;
@@ -231,6 +252,9 @@ export default function UserProfileUpdateForm(props) {
               verified,
               verifySubmitted,
               profileImage,
+              city,
+              state,
+              school,
             };
             const result = onChange(modelFields);
             value = result?.userID ?? value;
@@ -260,6 +284,9 @@ export default function UserProfileUpdateForm(props) {
               verified: value,
               verifySubmitted,
               profileImage,
+              city,
+              state,
+              school,
             };
             const result = onChange(modelFields);
             value = result?.verified ?? value;
@@ -289,6 +316,9 @@ export default function UserProfileUpdateForm(props) {
               verified,
               verifySubmitted: value,
               profileImage,
+              city,
+              state,
+              school,
             };
             const result = onChange(modelFields);
             value = result?.verifySubmitted ?? value;
@@ -318,6 +348,9 @@ export default function UserProfileUpdateForm(props) {
               verified,
               verifySubmitted,
               profileImage: value,
+              city,
+              state,
+              school,
             };
             const result = onChange(modelFields);
             value = result?.profileImage ?? value;
@@ -331,6 +364,102 @@ export default function UserProfileUpdateForm(props) {
         errorMessage={errors.profileImage?.errorMessage}
         hasError={errors.profileImage?.hasError}
         {...getOverrideProps(overrides, "profileImage")}
+      ></TextField>
+      <TextField
+        label="City"
+        isRequired={false}
+        isReadOnly={false}
+        value={city}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              firstName,
+              lastName,
+              userID,
+              verified,
+              verifySubmitted,
+              profileImage,
+              city: value,
+              state,
+              school,
+            };
+            const result = onChange(modelFields);
+            value = result?.city ?? value;
+          }
+          if (errors.city?.hasError) {
+            runValidationTasks("city", value);
+          }
+          setCity(value);
+        }}
+        onBlur={() => runValidationTasks("city", city)}
+        errorMessage={errors.city?.errorMessage}
+        hasError={errors.city?.hasError}
+        {...getOverrideProps(overrides, "city")}
+      ></TextField>
+      <TextField
+        label="State"
+        isRequired={false}
+        isReadOnly={false}
+        value={state}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              firstName,
+              lastName,
+              userID,
+              verified,
+              verifySubmitted,
+              profileImage,
+              city,
+              state: value,
+              school,
+            };
+            const result = onChange(modelFields);
+            value = result?.state ?? value;
+          }
+          if (errors.state?.hasError) {
+            runValidationTasks("state", value);
+          }
+          setState(value);
+        }}
+        onBlur={() => runValidationTasks("state", state)}
+        errorMessage={errors.state?.errorMessage}
+        hasError={errors.state?.hasError}
+        {...getOverrideProps(overrides, "state")}
+      ></TextField>
+      <TextField
+        label="School"
+        isRequired={false}
+        isReadOnly={false}
+        value={school}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              firstName,
+              lastName,
+              userID,
+              verified,
+              verifySubmitted,
+              profileImage,
+              city,
+              state,
+              school: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.school ?? value;
+          }
+          if (errors.school?.hasError) {
+            runValidationTasks("school", value);
+          }
+          setSchool(value);
+        }}
+        onBlur={() => runValidationTasks("school", school)}
+        errorMessage={errors.school?.errorMessage}
+        hasError={errors.school?.hasError}
+        {...getOverrideProps(overrides, "school")}
       ></TextField>
       <Flex
         justifyContent="space-between"

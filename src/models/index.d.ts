@@ -1,26 +1,44 @@
 import { ModelInit, MutableModel, __modelMeta__, ManagedIdentifier } from "@aws-amplify/datastore";
 // @ts-ignore
-import { LazyLoading, LazyLoadingDisabled } from "@aws-amplify/datastore";
+import { LazyLoading, LazyLoadingDisabled, AsyncCollection } from "@aws-amplify/datastore";
+
+
 
 
 
 type EagerMessage = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Message, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly messageText: string;
   readonly toUser: string;
   readonly fromUser: string;
-  readonly messageText: string;
   readonly conversationID: string;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
 }
 
 type LazyMessage = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Message, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly messageText: string;
   readonly toUser: string;
   readonly fromUser: string;
-  readonly messageText: string;
   readonly conversationID: string;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
 }
 
 export declare type Message = LazyLoading extends LazyLoadingDisabled ? EagerMessage : LazyMessage
 
-export declare const Message: (new (init: ModelInit<Message>) => Message)
+export declare const Message: (new (init: ModelInit<Message>) => Message) & {
+  copyOf(source: Message, mutator: (draft: MutableModel<Message>) => MutableModel<Message> | void): Message;
+}
 
 type EagerConversation = {
   readonly [__modelMeta__]: {
@@ -28,8 +46,8 @@ type EagerConversation = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly messages?: (Message | null)[] | null;
   readonly userIDs?: string[] | null;
+  readonly Messages?: (Message | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -40,8 +58,8 @@ type LazyConversation = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly messages?: (Message | null)[] | null;
   readonly userIDs?: string[] | null;
+  readonly Messages: AsyncCollection<Message>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -59,6 +77,7 @@ type EagerFriendsList = {
   };
   readonly id: string;
   readonly userIDs?: string[] | null;
+  readonly untitledfield?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -70,6 +89,7 @@ type LazyFriendsList = {
   };
   readonly id: string;
   readonly userIDs?: string[] | null;
+  readonly untitledfield?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -132,6 +152,9 @@ type EagerUserProfile = {
   readonly verified: boolean;
   readonly verifySubmitted: boolean;
   readonly profileImage?: string | null;
+  readonly city?: string | null;
+  readonly state?: string | null;
+  readonly school?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -148,6 +171,9 @@ type LazyUserProfile = {
   readonly verified: boolean;
   readonly verifySubmitted: boolean;
   readonly profileImage?: string | null;
+  readonly city?: string | null;
+  readonly state?: string | null;
+  readonly school?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

@@ -194,8 +194,12 @@ export default function FriendsListUpdateForm(props) {
   } = props;
   const initialValues = {
     userIDs: [],
+    untitledfield: "",
   };
   const [userIDs, setUserIDs] = React.useState(initialValues.userIDs);
+  const [untitledfield, setUntitledfield] = React.useState(
+    initialValues.untitledfield
+  );
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = friendsListRecord
@@ -203,6 +207,7 @@ export default function FriendsListUpdateForm(props) {
       : initialValues;
     setUserIDs(cleanValues.userIDs ?? []);
     setCurrentUserIDsValue("");
+    setUntitledfield(cleanValues.untitledfield);
     setErrors({});
   };
   const [friendsListRecord, setFriendsListRecord] =
@@ -221,6 +226,7 @@ export default function FriendsListUpdateForm(props) {
   const userIDsRef = React.createRef();
   const validations = {
     userIDs: [{ type: "Required" }],
+    untitledfield: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -249,6 +255,7 @@ export default function FriendsListUpdateForm(props) {
         event.preventDefault();
         let modelFields = {
           userIDs,
+          untitledfield,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -301,6 +308,7 @@ export default function FriendsListUpdateForm(props) {
           if (onChange) {
             const modelFields = {
               userIDs: values,
+              untitledfield,
             };
             const result = onChange(modelFields);
             values = result?.userIDs ?? values;
@@ -337,6 +345,31 @@ export default function FriendsListUpdateForm(props) {
           {...getOverrideProps(overrides, "userIDs")}
         ></TextField>
       </ArrayField>
+      <TextField
+        label="Untitledfield"
+        isRequired={false}
+        isReadOnly={false}
+        value={untitledfield}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              userIDs,
+              untitledfield: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.untitledfield ?? value;
+          }
+          if (errors.untitledfield?.hasError) {
+            runValidationTasks("untitledfield", value);
+          }
+          setUntitledfield(value);
+        }}
+        onBlur={() => runValidationTasks("untitledfield", untitledfield)}
+        errorMessage={errors.untitledfield?.errorMessage}
+        hasError={errors.untitledfield?.hasError}
+        {...getOverrideProps(overrides, "untitledfield")}
+      ></TextField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}

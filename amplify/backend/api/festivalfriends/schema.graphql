@@ -1,19 +1,21 @@
-type Message {
+type Message @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  messageText: String!
   toUser: String!
   fromUser: String!
-  messageText: String!
-  conversationID: String!
+  conversationID: ID! @index(name: "byConversation")
 }
 
 type Conversation @model @auth(rules: [{allow: public}]) {
   id: ID!
-  messages: [Message]
   userIDs: [String!]
+  Messages: [Message] @hasMany(indexName: "byConversation", fields: ["id"])
 }
 
 type FriendsList @model @auth(rules: [{allow: public}]) {
   id: ID!
   userIDs: [String!]
+  untitledfield: String
 }
 
 type Festival @model @auth(rules: [{allow: public}]) {
@@ -35,5 +37,8 @@ type UserProfile @model @auth(rules: [{allow: public}]) {
   verified: Boolean!
   verifySubmitted: Boolean!
   profileImage: String
+  city: String
+  state: String
+  school: String
 }
  
