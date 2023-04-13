@@ -6,7 +6,7 @@ import {IonAlert, IonButton, IonContent, IonHeader, IonPage, IonTitle, IonToolba
 import { Storage } from 'aws-amplify';
 import React from "react";
 import FestivalForm from "../components/FestivalForm";
-import '@aws-amplify/ui-react/styles.css';
+//import '@aws-amplify/ui-react/styles.css';
 import ProfileUnverified from "../components/ProfileUnverified";
 
 
