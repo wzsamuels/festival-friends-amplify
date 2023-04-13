@@ -32,7 +32,7 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 
-import './index.css';
+
 import ProfilePage from './pages/Profile';
 import React from "react";
 import Admin from "./pages/Admin";
