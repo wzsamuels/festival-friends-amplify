@@ -10,22 +10,15 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "messageText": {
-                    "name": "messageText",
+                "text": {
+                    "name": "text",
                     "isArray": false,
                     "type": "String",
                     "isRequired": true,
                     "attributes": []
                 },
-                "toUser": {
-                    "name": "toUser",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "fromUser": {
-                    "name": "fromUser",
+                "senderID": {
+                    "name": "senderID",
                     "isArray": false,
                     "type": "String",
                     "isRequired": true,
@@ -99,8 +92,8 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "userIDs": {
-                    "name": "userIDs",
+                "participants": {
+                    "name": "participants",
                     "isArray": true,
                     "type": "String",
                     "isRequired": true,
@@ -122,6 +115,20 @@ export const schema = {
                             "conversationID"
                         ]
                     }
+                },
+                "lastMessage": {
+                    "name": "lastMessage",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "lastMessageCreatedAt": {
+                    "name": "lastMessageCreatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": []
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -165,8 +172,8 @@ export const schema = {
                 }
             ]
         },
-        "FriendsList": {
-            "name": "FriendsList",
+        "Friends": {
+            "name": "Friends",
             "fields": {
                 "id": {
                     "name": "id",
@@ -175,19 +182,25 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "userIDs": {
-                    "name": "userIDs",
-                    "isArray": true,
-                    "type": "String",
-                    "isRequired": true,
-                    "attributes": [],
-                    "isArrayNullable": true
-                },
-                "untitledfield": {
-                    "name": "untitledfield",
+                "userID": {
+                    "name": "userID",
                     "isArray": false,
                     "type": "String",
-                    "isRequired": false,
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "friendID": {
+                    "name": "friendID",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "status": {
+                    "name": "status",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
                     "attributes": []
                 },
                 "createdAt": {
@@ -208,7 +221,7 @@ export const schema = {
                 }
             },
             "syncable": true,
-            "pluralName": "FriendsLists",
+            "pluralName": "Friends",
             "attributes": [
                 {
                     "type": "model",
@@ -453,5 +466,5 @@ export const schema = {
     "enums": {},
     "nonModels": {},
     "codegenVersion": "3.4.0",
-    "version": "bc55117d974424e82b4693d0cdad0b36"
+    "version": "606db7c1abafdad96d24bd992e420114"
 };

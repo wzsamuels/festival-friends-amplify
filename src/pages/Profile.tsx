@@ -1,30 +1,43 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from "@ionic/react"
-import userData from '../data/mock-user-data.json'
 import { RouteComponentProps } from "react-router"
-import React from "react";
+import React, {useEffect, useState} from "react";
+import {UserProfile} from "../models";
+import {DataStore, Storage} from "aws-amplify";
 
 type ProfilePageProps = RouteComponentProps<{
     id: string;
   }>
 
 const ProfilePage: React.FC<ProfilePageProps> = ({match}) => {
-  const id = Number(match.params.id);
+  const [profile, setProfile] = useState<UserProfile>();
+  const [profileImage, setProfileImage] = useState("");
+  const id = match.params.id;
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const profileData = await DataStore.query(UserProfile, c => c.userID.eq(id))
+      setProfile(profileData[0]);
+      const imageData = await Storage.get(profileData[0].profileImage as string);
+      setProfileImage(imageData)
+    }
+    fetchProfile();
+  }, [])
 
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-            <IonTitle>{userData[id]?.first_name} {userData[id]?.last_name}&apos;s Profile</IonTitle>
+            <IonTitle>{profile?.firstName} {profile?.lastName}&apos;s Profile</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
         <div className={'p-4 flex flex-col sm:flex-row'}>
-          <img width={200} height={200} src={userData[id]?.avatar} alt={userData[id]?.first_name}/>
+          <img width={200} height={200} src={profileImage} alt={profile?.id}/>
           <div className={'p-4'}>
-            <div className={'text-xl my-4'}>{userData[id]?.first_name} {userData[id]?.last_name}</div>
-            <div className={'text-lg my-2'}>Email: {userData[id]?.email}</div>
-            <div className={'text-lg my-2'}>Gender: {userData[id]?.gender}</div>
-            <div className={'text-lg my-2'}>Location: {userData[id]?.city}</div>
+            <div className={'text-xl my-4'}>{profile?.firstName} {profile?.lastName}</div>
+            <div className={'text-lg my-2'}>City: {profile?.city}</div>
+            <div className={'text-lg my-2'}>School: {profile?.school}</div>
+            <div className={'text-lg my-2'}>State: {profile?.state}</div>
           </div>
         </div>
       </IonContent>

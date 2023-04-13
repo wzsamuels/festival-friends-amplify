@@ -11,10 +11,10 @@ import {
 
 import {personCircle, search } from "ionicons/icons";
 import { useAuthenticator } from '@aws-amplify/ui-react';
-import {DataStore, Hub, Predicates} from 'aws-amplify';
+import {DataStore} from 'aws-amplify';
 import React, { useEffect, useState } from 'react';
 import { Storage } from "@aws-amplify/storage"
-import {Festival, LazyFestival, Message} from '../models';
+import {Festival, LazyFestival} from '../models';
 //import './events.css'
 
 const EventPage: React.FC = () => {

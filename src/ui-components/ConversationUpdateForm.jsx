@@ -193,16 +193,28 @@ export default function ConversationUpdateForm(props) {
     ...rest
   } = props;
   const initialValues = {
-    userIDs: [],
+    participants: [],
+    lastMessage: "",
+    lastMessageCreatedAt: "",
   };
-  const [userIDs, setUserIDs] = React.useState(initialValues.userIDs);
+  const [participants, setParticipants] = React.useState(
+    initialValues.participants
+  );
+  const [lastMessage, setLastMessage] = React.useState(
+    initialValues.lastMessage
+  );
+  const [lastMessageCreatedAt, setLastMessageCreatedAt] = React.useState(
+    initialValues.lastMessageCreatedAt
+  );
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = conversationRecord
       ? { ...initialValues, ...conversationRecord }
       : initialValues;
-    setUserIDs(cleanValues.userIDs ?? []);
-    setCurrentUserIDsValue("");
+    setParticipants(cleanValues.participants ?? []);
+    setCurrentParticipantsValue("");
+    setLastMessage(cleanValues.lastMessage);
+    setLastMessageCreatedAt(cleanValues.lastMessageCreatedAt);
     setErrors({});
   };
   const [conversationRecord, setConversationRecord] = React.useState(
@@ -218,10 +230,13 @@ export default function ConversationUpdateForm(props) {
     queryData();
   }, [idProp, conversationModelProp]);
   React.useEffect(resetStateValues, [conversationRecord]);
-  const [currentUserIDsValue, setCurrentUserIDsValue] = React.useState("");
-  const userIDsRef = React.createRef();
+  const [currentParticipantsValue, setCurrentParticipantsValue] =
+    React.useState("");
+  const participantsRef = React.createRef();
   const validations = {
-    userIDs: [{ type: "Required" }],
+    participants: [{ type: "Required" }],
+    lastMessage: [],
+    lastMessageCreatedAt: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -240,6 +255,23 @@ export default function ConversationUpdateForm(props) {
     setErrors((errors) => ({ ...errors, [fieldName]: validationResponse }));
     return validationResponse;
   };
+  const convertToLocal = (date) => {
+    const df = new Intl.DateTimeFormat("default", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      calendar: "iso8601",
+      numberingSystem: "latn",
+      hourCycle: "h23",
+    });
+    const parts = df.formatToParts(date).reduce((acc, part) => {
+      acc[part.type] = part.value;
+      return acc;
+    }, {});
+    return `${parts.year}-${parts.month}-${parts.day}T${parts.hour}:${parts.minute}`;
+  };
   return (
     <Grid
       as="form"
@@ -249,7 +281,9 @@ export default function ConversationUpdateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          userIDs,
+          participants,
+          lastMessage,
+          lastMessageCreatedAt,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -301,43 +335,105 @@ export default function ConversationUpdateForm(props) {
           let values = items;
           if (onChange) {
             const modelFields = {
-              userIDs: values,
+              participants: values,
+              lastMessage,
+              lastMessageCreatedAt,
             };
             const result = onChange(modelFields);
-            values = result?.userIDs ?? values;
+            values = result?.participants ?? values;
           }
-          setUserIDs(values);
-          setCurrentUserIDsValue("");
+          setParticipants(values);
+          setCurrentParticipantsValue("");
         }}
-        currentFieldValue={currentUserIDsValue}
-        label={"User i ds"}
-        items={userIDs}
-        hasError={errors?.userIDs?.hasError}
-        errorMessage={errors?.userIDs?.errorMessage}
-        setFieldValue={setCurrentUserIDsValue}
-        inputFieldRef={userIDsRef}
+        currentFieldValue={currentParticipantsValue}
+        label={"Participants"}
+        items={participants}
+        hasError={errors?.participants?.hasError}
+        errorMessage={errors?.participants?.errorMessage}
+        setFieldValue={setCurrentParticipantsValue}
+        inputFieldRef={participantsRef}
         defaultFieldValue={""}
       >
         <TextField
-          label="User i ds"
+          label="Participants"
           isRequired={true}
           isReadOnly={false}
-          value={currentUserIDsValue}
+          value={currentParticipantsValue}
           onChange={(e) => {
             let { value } = e.target;
-            if (errors.userIDs?.hasError) {
-              runValidationTasks("userIDs", value);
+            if (errors.participants?.hasError) {
+              runValidationTasks("participants", value);
             }
-            setCurrentUserIDsValue(value);
+            setCurrentParticipantsValue(value);
           }}
-          onBlur={() => runValidationTasks("userIDs", currentUserIDsValue)}
-          errorMessage={errors.userIDs?.errorMessage}
-          hasError={errors.userIDs?.hasError}
-          ref={userIDsRef}
+          onBlur={() =>
+            runValidationTasks("participants", currentParticipantsValue)
+          }
+          errorMessage={errors.participants?.errorMessage}
+          hasError={errors.participants?.hasError}
+          ref={participantsRef}
           labelHidden={true}
-          {...getOverrideProps(overrides, "userIDs")}
+          {...getOverrideProps(overrides, "participants")}
         ></TextField>
       </ArrayField>
+      <TextField
+        label="Last message"
+        isRequired={false}
+        isReadOnly={false}
+        value={lastMessage}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              participants,
+              lastMessage: value,
+              lastMessageCreatedAt,
+            };
+            const result = onChange(modelFields);
+            value = result?.lastMessage ?? value;
+          }
+          if (errors.lastMessage?.hasError) {
+            runValidationTasks("lastMessage", value);
+          }
+          setLastMessage(value);
+        }}
+        onBlur={() => runValidationTasks("lastMessage", lastMessage)}
+        errorMessage={errors.lastMessage?.errorMessage}
+        hasError={errors.lastMessage?.hasError}
+        {...getOverrideProps(overrides, "lastMessage")}
+      ></TextField>
+      <TextField
+        label="Last message created at"
+        isRequired={false}
+        isReadOnly={false}
+        type="datetime-local"
+        value={
+          lastMessageCreatedAt && convertToLocal(new Date(lastMessageCreatedAt))
+        }
+        onChange={(e) => {
+          let value =
+            e.target.value === "" ? "" : new Date(e.target.value).toISOString();
+          if (onChange) {
+            const modelFields = {
+              participants,
+              lastMessage,
+              lastMessageCreatedAt: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.lastMessageCreatedAt ?? value;
+          }
+          if (errors.lastMessageCreatedAt?.hasError) {
+            runValidationTasks("lastMessageCreatedAt", value);
+          }
+          setLastMessageCreatedAt(value);
+        }}
+        onBlur={() =>
+          runValidationTasks("lastMessageCreatedAt", lastMessageCreatedAt)
+        }
+        errorMessage={errors.lastMessageCreatedAt?.errorMessage}
+        hasError={errors.lastMessageCreatedAt?.hasError}
+        {...getOverrideProps(overrides, "lastMessageCreatedAt")}
+      ></TextField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}

@@ -13,15 +13,21 @@ export declare type ValidationResponse = {
 };
 export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
 export declare type ConversationCreateFormInputValues = {
-    userIDs?: string[];
+    participants?: string[];
+    lastMessage?: string;
+    lastMessageCreatedAt?: string;
 };
 export declare type ConversationCreateFormValidationValues = {
-    userIDs?: ValidationFunction<string>;
+    participants?: ValidationFunction<string>;
+    lastMessage?: ValidationFunction<string>;
+    lastMessageCreatedAt?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type ConversationCreateFormOverridesProps = {
     ConversationCreateFormGrid?: PrimitiveOverrideProps<GridProps>;
-    userIDs?: PrimitiveOverrideProps<TextFieldProps>;
+    participants?: PrimitiveOverrideProps<TextFieldProps>;
+    lastMessage?: PrimitiveOverrideProps<TextFieldProps>;
+    lastMessageCreatedAt?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type ConversationCreateFormProps = React.PropsWithChildren<{
     overrides?: ConversationCreateFormOverridesProps | undefined | null;

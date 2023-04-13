@@ -1,21 +1,23 @@
 type Message @model @auth(rules: [{allow: public}]) {
   id: ID!
-  messageText: String!
-  toUser: String!
-  fromUser: String!
+  text: String!
+  senderID: String!
   conversationID: ID! @index(name: "byConversation")
 }
 
 type Conversation @model @auth(rules: [{allow: public}]) {
   id: ID!
-  userIDs: [String!]
+  participants: [String!]
   Messages: [Message] @hasMany(indexName: "byConversation", fields: ["id"])
+  lastMessage: String
+  lastMessageCreatedAt: AWSDateTime
 }
 
-type FriendsList @model @auth(rules: [{allow: public}]) {
+type Friends @model @auth(rules: [{allow: public}]) {
   id: ID!
-  userIDs: [String!]
-  untitledfield: String
+  userID: String!
+  friendID: String!
+  status: String!
 }
 
 type Festival @model @auth(rules: [{allow: public}]) {

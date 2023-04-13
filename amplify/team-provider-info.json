@@ -14,7 +14,16 @@
     "categories": {
       "storage": {
         "s3festivalfriendsstorageevents": {},
-        "s3festivalfriendsstorage2dfb2266": {}
+        "s3festivalfriendsstorage2dfb2266": {},
+        "festivalfriendsmessages": {
+          "tableName": "festival-friends-messages",
+          "region": "us-east-1",
+          "arn": "arn:aws:dynamodb:us-east-1:642956558393:table/festival-friends-messages",
+          "partitionKeyName": "conversationId",
+          "partitionKeyType": "S",
+          "sortKeyName": "createdAt",
+          "sortKeyType": "S"
+        }
       },
       "auth": {
         "festivalfriends": {}

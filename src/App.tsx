@@ -32,6 +32,8 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 
+// Tailwind CSS
+import './index.css'
 
 import ProfilePage from './pages/Profile';
 import React from "react";
@@ -39,8 +41,7 @@ import Admin from "./pages/Admin";
 import FriendsPage from "./pages/Friends";
 import Events from "./pages/Events";
 import {chatboxEllipses, musicalNotes, people, settings} from "ionicons/icons";
-import {Authenticator} from "@aws-amplify/ui-react";
-//import './index.css'
+
 setupIonicReact();
 
 const App: React.FC = () => {
@@ -50,13 +51,12 @@ const App: React.FC = () => {
       <IonReactRouter>
         <IonTabs>
           <IonRouterOutlet>
-            <Authenticator.Provider>
             <Route path="/events" render={() => <Events/>}>
             </Route>
-            <Route path="/friends">
+            <Route exact path="/friends">
               <FriendsPage />
             </Route>
-            <Route path="/messages">
+            <Route exact path="/messages">
               <MessagePage />
             </Route>
             <Route path='/account'>
@@ -67,7 +67,7 @@ const App: React.FC = () => {
             </Route>
             <Route path='/friends/profile/:id' component={ProfilePage}/>
             <Redirect exact from="/" to="/events"  />
-            </Authenticator.Provider>
+
           </IonRouterOutlet>
           <IonTabBar slot="bottom">
             <IonTabButton tab="tab1" href="/events">

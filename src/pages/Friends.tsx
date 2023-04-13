@@ -1,9 +1,26 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import userData from '../data/mock-user-data.json'
-import React from "react";
-
+import {IonContent, IonHeader, IonItem, IonPage, IonTitle, IonToolbar} from '@ionic/react';
+import React, {useEffect, useState} from "react";
+import {useAuthenticator} from "@aws-amplify/ui-react";
+import {DataStore, Storage} from "aws-amplify";
+import {Friends, UserProfile} from "../models";
 
 const FriendsPage: React.FC = () => {
+  const { user } = useAuthenticator();
+  const [friends, setFriends ] = useState<UserProfile[]>([])
+
+  useEffect(() => {
+    const fetchFriends = async () => {
+      const friendData = await DataStore.query(Friends, c => c.userID.eq(user.username as string))
+      const friendPromises = friendData.map(async friend => {
+        const result = await DataStore.query(UserProfile, c => c.userID.eq(friend.friendID))
+        return result[0];
+      })
+      const friendProfiles = await Promise.all(friendPromises)
+      setFriends(friendProfiles)
+    }
+    fetchFriends()
+  }, [user])
+
   return (
     <IonPage>
       <IonHeader>
@@ -17,19 +34,45 @@ const FriendsPage: React.FC = () => {
             <IonTitle size="large">Tab 2</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <div className={'flex flex-col flex-wrap'}>
-          { userData.map((user, index) =>
-            <a href={`/friends/profile/${index}`} className={'flex max-w-[300px] items-center m-4 border border-white p-2 rounded-xl hover:border-gray-500'} key={user.id.$oid}>
-              <div className={'mx-4'}>
-                <img className={'rounded-full'} width={50} height={50} src={user.avatar} alt={user.first_name}/>
-              </div>
-              <div>{user.first_name} {user.last_name}</div>
-            </a>
-          ) }
-        </div>
+        {
+          user ?
+            <div className={'flex flex-col flex-wrap'}>
+              { friends.map((friend) =>
+                <FriendCard key={friend.id} profile={friend}/>
+              )}
+            </div>
+            :
+            <div>
+              Account Required to Festivals Friends
+            </div>
+
+        }
+
       </IonContent>
     </IonPage>
   );
 };
+
+const FriendCard = ({profile} : {profile: UserProfile}) => {
+
+  const [profileImage, setProfileImage] = useState("")
+
+  useEffect(() => {
+    const fetchProfileImage = async () => {
+      const imageData = await Storage.get(profile.profileImage as string)
+      setProfileImage(imageData)
+    }
+    fetchProfileImage();
+  })
+
+  return (
+    <IonItem routerLink={`/friends/profile/${profile.userID}`} className={'flex max-w-[300px] items-center m-4 border border-white p-2 rounded-xl hover:border-gray-500'}>
+      <div className={'mx-4'}>
+        <img className={'rounded-full'} width={50} height={50} src={profileImage} alt={`${profile.firstName} ${profile.lastName}'s Profile Image`}/>
+      </div>
+      <div>{profile.firstName} {profile.lastName}</div>
+    </IonItem>
+  )
+}
 
 export default FriendsPage;

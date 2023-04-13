@@ -19,7 +19,8 @@ const MessagePage: React.FC = () => {
 
   useEffect(() => {
     const fetchConversations = async () => {
-      const conversations = await DataStore.query(Conversation, c => c.userIDs.contains(user.username))
+      console.log(user.username)
+      const conversations = await DataStore.query(Conversation, c => c.participants.contains(user.username as string))
       console.log(conversations)
       setConversations(conversations)
     }
@@ -79,7 +80,7 @@ const ConversationCard = ({conversation, username} : {conversation: Conversation
 
   useEffect(() => {
     const fetchProfiles = async () => {
-      const profilePromises = conversation.userIDs?.map(async userID=> {
+      const profilePromises = conversation.participants?.map(async userID=> {
         const result = await DataStore.query(UserProfile, c => c.userID.eq(userID))
         return result[0]
       })
@@ -99,8 +100,6 @@ const ConversationCard = ({conversation, username} : {conversation: Conversation
       }
     }
 
-
-
     fetchProfiles()
 
     const profileSub = DataStore.observeQuery(Message, c => c.conversationID.eq(conversation.id))
@@ -119,10 +118,9 @@ const ConversationCard = ({conversation, username} : {conversation: Conversation
     e.preventDefault()
     if(input.current?.value && profiles) {
       const message = await DataStore.save(new Message({
-        messageText: input.current?.value as string,
+        text: input.current?.value as string,
         conversationID: conversation.id,
-        fromUser: username as string,
-        toUser: profiles[0].userID
+        senderID: username as string,
       }))
       console.log(message)
     }
@@ -156,8 +154,11 @@ const ConversationCard = ({conversation, username} : {conversation: Conversation
         <IonContent className="ion-padding">
           {
             messages.map(message =>
-              <div key={message.id} className={`flex my-4 w-full ${message.fromUser !== username ? 'justify-start' : 'justify-end'}`}>
-                <div className={`p-4 ${message.fromUser === username ? 'bg-secondary-default' : 'bg-secondary-shade'} w-1/2`}>{message.messageText}</div>
+              <div
+                key={message.id}
+                className={`flex my-4 w-full ${message.senderID !== username ? 'justify-start' : 'justify-end'}`}
+              >
+                <div className={`p-4 ${message.senderID === username ? 'bg-secondary-default' : 'bg-secondary-shade'} w-1/2`}>{message.text}</div>
               </div>
             )
           }
