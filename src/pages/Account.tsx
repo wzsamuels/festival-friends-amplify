@@ -2,30 +2,30 @@ import { DataStore } from '@aws-amplify/datastore';
 import { UserProfile } from '../models';
 import {FormEvent, useEffect, useState} from 'react';
 import {Authenticator, useAuthenticator} from '@aws-amplify/ui-react';
-import {IonAlert, IonButton, IonContent, IonHeader, IonPage, IonTitle, IonToolbar} from '@ionic/react';
+import {IonAlert, IonButton, IonContent, IonHeader, IonInput, IonPage, IonTitle, IonToolbar} from '@ionic/react';
 import { Storage } from 'aws-amplify';
 import React from "react";
 import FestivalForm from "../components/FestivalForm";
 //import '@aws-amplify/ui-react/styles.css';
 import ProfileUnverified from "../components/ProfileUnverified";
+import {SubmitHandler, useForm} from "react-hook-form";
+import getErrorMessage from "../lib/getErrorMessage";
 
 
 const AccountPage = () => {
   const { authStatus } = useAuthenticator(context => [context.authStatus]);
   const { user, signOut } = useAuthenticator((context) => [context.user]);
-  const [profile, setProfile] = useState<UserProfile[] | null>(null)
+  const [profile, setProfile] = useState<UserProfile>()
 
   const renderPage = () => {
     if(authStatus === 'authenticated') {
       console.log(user)
-      if (profile && user.attributes?.email_verified) {
-        if (profile.length && profile[0].verified) {
-          console.log("Profile verified")
-          return <Profile username={user.username ? user.username : ""}/>
-        } else {
-          console.log("Profile unverified")
-          return <ProfileUnverified username={user.username ? user.username : ""}/>;
-        }
+      if (profile?.verified) {
+        console.log("Profile verified")
+        return <Profile profile={profile} username={user.username ? user.username : ""}/>
+      } else {
+        console.log("Profile unverified")
+        return <ProfileUnverified username={user.username ? user.username : ""}/>;
       }
     } else {
       return (
@@ -37,15 +37,15 @@ const AccountPage = () => {
   }
 
   useEffect(() => {
-    async function fetchProfile(userName: string) {
-      const profile = await DataStore.query(UserProfile, c => c.userID.eq(userName))
-      console.log("Profiles: ", profile)
-      setProfile(profile)
-    }
+    const profileSub = DataStore.observeQuery(UserProfile, c => c.userID.eq(user?.username || ""))
+      .subscribe(( {items}) => {
+        console.log(items[0])
+        setProfile(items[0])
+      })
 
-    if(user?.username) {
-      fetchProfile(user.username)
-    }
+    return () => {
+      profileSub.unsubscribe();
+    };
   }, [user])
 
   return (
@@ -57,7 +57,8 @@ const AccountPage = () => {
               <span>Account</span>
               <span> {user ? user?.username : ""}</span>
               <button onClick={() => signOut()}>Sign Out</button>
-              </div></IonTitle>
+              </div>
+          </IonTitle>
         </IonToolbar>
       </IonHeader>
     
@@ -72,11 +73,26 @@ const AccountPage = () => {
 }
 
 
+type ProfileInputs = {
+  firstName: string,
+  lastName: string,
+  school: string,
+  city: string,
+  state: string
+}
 
-const Profile = ({username} : {username: string}) => {
+const Profile = ({username, profile} : {username: string, profile: UserProfile}) => {
   const [profileImage, setProfileImage] = useState("")
-  const [profile, setProfile] = useState<UserProfile>()
   const [selectedFile, setSelectedFile] = useState<File>()
+  const [message, setMessage] = useState("")
+  const { register, handleSubmit} = useForm<ProfileInputs>({
+    defaultValues: {
+      firstName: profile?.firstName,
+      lastName: profile?.lastName,
+      school: profile?.school || "",
+      city: profile?.city || "",
+    }
+  })
 
   const handleFileSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -104,19 +120,6 @@ const Profile = ({username} : {username: string}) => {
   }
 
   useEffect(() => {
-
-    const profileSub = DataStore.observeQuery(UserProfile, c => c.userID.eq(username))
-      .subscribe(( {items}) => {
-        console.log(items[0])
-        setProfile(items[0])
-      })
-
-    return () => {
-      profileSub.unsubscribe();
-    };
-  }, [])
-
-  useEffect(() => {
     const fetchProfileImage = async () => {
       if (profile) {
         const image = await Storage.get(`${profile.profileImage}`, {
@@ -128,9 +131,26 @@ const Profile = ({username} : {username: string}) => {
     }
     fetchProfileImage()
   }, [profile])
-  
+
+  const handleProfileUpdate: SubmitHandler<ProfileInputs> = async (data) => {
+    console.log(data)
+    try {
+      await DataStore.save(UserProfile.copyOf(profile, updated => {
+        updated.firstName = data.firstName
+        updated.lastName = data.lastName
+        updated.city = data.city
+        updated.state = data.state
+        updated.school = data.school
+      }))
+      setMessage("Profile successfully updated!")
+    } catch (error) {
+      setMessage(`Error updating profile: ${getErrorMessage(error)}`)
+    }
+  }
+
   return (
-    <div className='flex flex-col items-center p-4 mt-8'>
+    <div className='flex flex-col items-center p-4 mt-8 w-full'>
+      <h2 className='text-2xl md:text-3xl'>Update Profile</h2>
       <section className={'my-8 flex justify-center flex-col'}>
         <img id='change-alert' className='max-w-[350px] rounded-full cursor-pointer' src={profileImage} alt="Profile Image"/>
         <IonAlert
@@ -149,12 +169,27 @@ const Profile = ({username} : {username: string}) => {
         >
 
         </IonAlert>
-        <form onSubmit={handleFileSubmit}>
-          <input type='file' accept="image/png, image/jpeg" onChange={e => e?.target?.files && setSelectedFile(e.target.files[0])} />
+        <form className='flex flex-col justify-center w-full' onSubmit={handleFileSubmit}>
+          <input
+            type='file'
+            accept="image/png, image/jpeg"
+            onChange={e => e?.target?.files && setSelectedFile(e.target.files[0])}
+            className='my-4'
+          />
           <IonButton type="submit">Update Profile Image</IonButton>
         </form>
       </section>
-      <FestivalForm/>
+      <section >
+        <form onSubmit={handleSubmit(handleProfileUpdate)} className={'my-8 flex justify-center flex-col'}>
+          <IonInput labelPlacement='fixed' label='First Name' {...register("firstName")} />
+          <IonInput labelPlacement='fixed' label='Last Name' {...register("lastName")} />
+          <IonInput labelPlacement='fixed' label='School' {...register("school")} />
+          <IonInput labelPlacement='fixed' label='City' {...register("city")} />
+          <IonInput labelPlacement='fixed' label='State' {...register("state")} />
+          <IonButton type='submit' className='my-4'>Update Profile</IonButton>
+          { message }
+        </form>
+      </section>
     </div>
   )
 }

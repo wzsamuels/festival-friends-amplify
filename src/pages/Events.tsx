@@ -12,16 +12,17 @@ import {
 import {personCircle, search } from "ionicons/icons";
 import { useAuthenticator } from '@aws-amplify/ui-react';
 import {DataStore} from 'aws-amplify';
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useLayoutEffect, useState} from 'react';
 import { Storage } from "@aws-amplify/storage"
 import {Festival, LazyFestival} from '../models';
+import AccountButton from "../components/AccountButton";
 //import './events.css'
 
 const EventPage: React.FC = () => {
   const { user } = useAuthenticator((context) => [context.user]);
   const [festivalData, setFestivalData] = useState<LazyFestival[]>([]);
 
-  useEffect(() => {
+  useLayoutEffect (() => {
 
     const profileSub = DataStore.observeQuery(Festival)
       .subscribe(( {items}) => {
@@ -46,16 +47,7 @@ const EventPage: React.FC = () => {
             <IonButton>
               <IonIcon size='large' icon={search}/>
             </IonButton>
-            <IonButton id="click-trigger">
-              <IonIcon size='large' icon={personCircle} id="click-trigger"/>
-            </IonButton>
-
-            <IonPopover trigger="click-trigger" showBackdrop={false} dismissOnSelect={true}  triggerAction="hover">
-              <IonItem>
-                <IonRouterLink className='w-full cursor-pointer' routerLink='/account'>Account</IonRouterLink>
-              </IonItem>
-              <IonItem className='w-full cursor-pointer' routerLink='/account'>Account</IonItem>
-            </IonPopover>
+            <AccountButton/>
           </IonButtons>
         </IonToolbar>
       </IonHeader>
@@ -79,15 +71,15 @@ const FestivalCard = ({festival}: {festival: LazyFestival}) => {
       setFestivalImage(imageSrc);
     }
     fetchFestivalImage()
-  })
+  }, [])
 
   return (
-    <div className='m-4 rounded-xl shadow-md w-full max-w-[350px] bg-light-default'>
+    <div className='m-4 rounded-xl shadow-md w-full  max-w-[350px] bg-light-default'>
       <div className='relative'>
-        <div className='w-full max-w-[350px] h-full max-h-[350px] object-cover flex items-center justify-center'>
+        <div className='w-full max-w-[350px] min-h-[350px] h-full max-h-[350px] object-cover flex items-center justify-center'>
           {
             festivalImage ? 
-              <IonImg className='w-full h-full' src={festivalImage} alt={festival.name}/>
+              <img className='w-full h-full' src={festivalImage} alt={festival.name}/>
             :
               <IonSpinner></IonSpinner>
           }

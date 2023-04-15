@@ -1,8 +1,8 @@
 import {
-  IonButton,
-  IonContent,
-  IonHeader,
-  IonInput, IonItem,
+  IonButton, IonButtons,
+  IonContent, IonFab, IonFabButton,
+  IonHeader, IonIcon,
+  IonInput, IonItem, IonLabel,
   IonModal,
   IonPage,
   IonTitle,
@@ -12,10 +12,14 @@ import React, {FormEvent, useEffect, useRef, useState} from "react";
 import {DataStore, Storage} from "aws-amplify";
 import {Conversation, Message, UserProfile} from "../models";
 import {useAuthenticator} from "@aws-amplify/ui-react";
+import {addCircle, search} from "ionicons/icons";
+import AccountButton from "../components/AccountButton";
 
 const MessagePage: React.FC = () => {
   const { user } = useAuthenticator();
   const [conversations, setConversations] = useState<Conversation[]>()
+  const modal = useRef<HTMLIonModalElement>(null);
+  const input = useRef<HTMLIonInputElement>(null);
 
   useEffect(() => {
     const fetchConversations = async () => {
@@ -31,11 +35,21 @@ const MessagePage: React.FC = () => {
 
   }, [user])
 
+  const handleNewConversation = () => {
+
+  }
+
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
           <IonTitle>Messages {user?.username}</IonTitle>
+          <IonButtons slot='end'>
+            <IonButton>
+              <IonIcon size='large' icon={search}/>
+            </IonButton>
+            <AccountButton/>
+          </IonButtons>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
@@ -56,11 +70,38 @@ const MessagePage: React.FC = () => {
                     <ConversationCard key={conversation.id} conversation={conversation} username={user.username}/>)
                 }
               </section>
+              <IonFab edge={true} slot="fixed" vertical="bottom" horizontal="end">
+                <IonFabButton id="open-modal" >
+                  <IonIcon onClick={handleNewConversation} icon={addCircle}></IonIcon>
+                </IonFabButton>
+              </IonFab>
+              <IonModal ref={modal} trigger="open-modal" >
+                <IonHeader>
+                  <IonToolbar>
+                    <IonButtons slot="start">
+                      <IonButton onClick={() => modal.current?.dismiss()}>Cancel</IonButton>
+                    </IonButtons>
+                    <IonTitle>Welcome</IonTitle>
+                    <IonButtons slot="end">
+                      <IonButton strong={true} onClick={() => confirm()}>
+                        Confirm
+                      </IonButton>
+                    </IonButtons>
+                  </IonToolbar>
+                </IonHeader>
+                <IonContent className="ion-padding">
+                  <IonItem>
+                    <IonLabel position="stacked">Enter your name</IonLabel>
+                    <IonInput ref={input} type="text" placeholder="Your name" />
+                  </IonItem>
+                </IonContent>
+              </IonModal>
             </>
           :
           <div>Not Logged in</div>
         }
         </div>
+
       </IonContent>
     </IonPage>
   );
