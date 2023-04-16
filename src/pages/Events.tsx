@@ -19,7 +19,7 @@ import AccountButton from "../components/AccountButton";
 //import './events.css'
 
 const EventPage: React.FC = () => {
-  const { user } = useAuthenticator((context) => [context.user]);
+  const { user, signOut } = useAuthenticator((context) => [context.user]);
   const [festivalData, setFestivalData] = useState<LazyFestival[]>([]);
 
   useLayoutEffect (() => {
@@ -47,7 +47,22 @@ const EventPage: React.FC = () => {
             <IonButton>
               <IonIcon size='large' icon={search}/>
             </IonButton>
-            <AccountButton/>
+            <IonButton id="click-trigger">
+              <IonIcon size='large' icon={personCircle}/>
+            </IonButton>
+            <IonPopover trigger="click-trigger" showBackdrop={false} dismissOnSelect={true}  triggerAction="hover">
+              {
+                user ?
+                  <>
+                    <IonItem className='w-full cursor-pointer' routerLink='/account'>Account</IonItem>
+                    <IonItem className='w-full cursor-pointer' onClick={signOut}>Sign Out</IonItem>
+                  </>
+                  :
+                  <>
+                    <IonItem className='w-full cursor-pointer' routerLink='/account'>Login In / Sign Up</IonItem>
+                  </>
+              }
+            </IonPopover>
           </IonButtons>
         </IonToolbar>
       </IonHeader>

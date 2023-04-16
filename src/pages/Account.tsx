@@ -2,7 +2,17 @@ import { DataStore } from '@aws-amplify/datastore';
 import { UserProfile } from '../models';
 import {FormEvent, useEffect, useState} from 'react';
 import {Authenticator, useAuthenticator} from '@aws-amplify/ui-react';
-import {IonAlert, IonButton, IonContent, IonHeader, IonInput, IonPage, IonTitle, IonToolbar} from '@ionic/react';
+import {
+  IonAlert,
+  IonButton,
+  IonButtons,
+  IonContent,
+  IonHeader, IonIcon,
+  IonInput, IonItem,
+  IonPage, IonPopover,
+  IonTitle,
+  IonToolbar
+} from '@ionic/react';
 import { Storage } from 'aws-amplify';
 import React from "react";
 import FestivalForm from "../components/FestivalForm";
@@ -10,6 +20,8 @@ import FestivalForm from "../components/FestivalForm";
 import ProfileUnverified from "../components/ProfileUnverified";
 import {SubmitHandler, useForm} from "react-hook-form";
 import getErrorMessage from "../lib/getErrorMessage";
+import {personCircle, search} from "ionicons/icons";
+import AccountButton from "../components/AccountButton";
 
 
 const AccountPage = () => {
@@ -19,7 +31,6 @@ const AccountPage = () => {
 
   const renderPage = () => {
     if(authStatus === 'authenticated') {
-      console.log(user)
       if (profile?.verified) {
         console.log("Profile verified")
         return <Profile profile={profile} username={user.username ? user.username : ""}/>
@@ -39,7 +50,6 @@ const AccountPage = () => {
   useEffect(() => {
     const profileSub = DataStore.observeQuery(UserProfile, c => c.userID.eq(user?.username || ""))
       .subscribe(( {items}) => {
-        console.log(items[0])
         setProfile(items[0])
       })
 
@@ -52,13 +62,13 @@ const AccountPage = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>
-            <div className='w-full flex justify-between'>
-              <span>Account</span>
-              <span> {user ? user?.username : ""}</span>
-              <button onClick={() => signOut()}>Sign Out</button>
-              </div>
-          </IonTitle>
+          <IonTitle>Account {user?.attributes?.email}</IonTitle>
+          <IonButtons slot='end'>
+            <IonButton>
+              <IonIcon size='large' icon={search}/>
+            </IonButton>
+            <AccountButton id='account'/>
+          </IonButtons>
         </IonToolbar>
       </IonHeader>
     
@@ -91,6 +101,7 @@ const Profile = ({username, profile} : {username: string, profile: UserProfile})
       lastName: profile?.lastName,
       school: profile?.school || "",
       city: profile?.city || "",
+      state: profile?.state || ""
     }
   })
 
@@ -135,13 +146,14 @@ const Profile = ({username, profile} : {username: string, profile: UserProfile})
   const handleProfileUpdate: SubmitHandler<ProfileInputs> = async (data) => {
     console.log(data)
     try {
-      await DataStore.save(UserProfile.copyOf(profile, updated => {
+     const results = await DataStore.save(UserProfile.copyOf(profile, updated => {
         updated.firstName = data.firstName
         updated.lastName = data.lastName
         updated.city = data.city
         updated.state = data.state
         updated.school = data.school
       }))
+      console.log(results)
       setMessage("Profile successfully updated!")
     } catch (error) {
       setMessage(`Error updating profile: ${getErrorMessage(error)}`)

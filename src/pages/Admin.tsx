@@ -12,7 +12,7 @@ const Admin = () => {
         <IonToolbar>
           <IonTitle>Admin - Testing Only</IonTitle>
           <IonButtons slot='end'>
-            <AccountButton/>
+            <AccountButton id='admin'/>
           </IonButtons>
         </IonToolbar>
       </IonHeader>

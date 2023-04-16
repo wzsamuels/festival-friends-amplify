@@ -3,14 +3,14 @@ import {personCircle} from "ionicons/icons";
 import React from "react";
 import {useAuthenticator} from "@aws-amplify/ui-react";
 
-const AccountButton = () => {
+const AccountButton = ({id} : {id: string}) => {
   const { signOut, user } = useAuthenticator()
   return (
     <>
-      <IonButton id="click-trigger">
-        <IonIcon size='large' icon={personCircle} id="click-trigger"/>
+      <IonButton id={id}>
+        <IonIcon size='large' icon={personCircle}/>
       </IonButton>
-      <IonPopover trigger="click-trigger" showBackdrop={false} dismissOnSelect={true}  triggerAction="hover">
+      <IonPopover trigger={id} showBackdrop={false} dismissOnSelect={true}  triggerAction="hover">
         {
           user ?
             <>
