@@ -19,7 +19,7 @@ const FriendCard = ({profile, link, onClick} : FriendCardProps) => {
       setProfileImage(imageData)
     }
     fetchProfileImage();
-  })
+  }, [])
 
   return (
     <IonItem onClick={onClick} button={true} lines='none' {...(link ? profileUrl : {})} className={'flex max-w-[400px] items-center m-4  p-2 rounded-xl hover:border-gray-500 shadow-xl'}>
