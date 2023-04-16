@@ -5,16 +5,16 @@ import {
   IonContent,
   IonHeader,
   IonIcon, IonInput,
-  IonItem, IonModal,
+  IonModal,
   IonPage,
   IonTitle, IonToast,
   IonToolbar
 } from '@ionic/react';
 import React, {useEffect, useRef, useState} from "react";
 import {useAuthenticator} from "@aws-amplify/ui-react";
-import {DataStore, Predicates, Storage} from "aws-amplify";
+import {DataStore} from "aws-amplify";
 import {Friends, UserProfile} from "../models";
-import {checkmark, close, search, thumbsDown, thumbsUp} from "ionicons/icons";
+import {checkmark, close, search } from "ionicons/icons";
 import AccountButton from "../components/AccountButton";
 import {SubmitHandler, useForm} from "react-hook-form";
 import { ZenObservable } from 'zen-observable-ts';

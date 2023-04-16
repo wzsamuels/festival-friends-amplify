@@ -6,7 +6,7 @@ import {IonItem} from "@ionic/react";
 interface FriendCardProps {
   profile: UserProfile,
   link: boolean,
-  onClick: () => void
+  onClick?: () => void
 }
 
 const FriendCard = ({profile, link, onClick} : FriendCardProps) => {

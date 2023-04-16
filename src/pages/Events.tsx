@@ -2,8 +2,8 @@ import {
   IonButton, IonButtons,
   IonContent,
   IonHeader, IonIcon,
-  IonImg, IonItem,
-  IonPage, IonPopover, IonRouterLink,
+  IonItem,
+  IonPage, IonPopover,
   IonSpinner,
   IonTitle,
   IonToolbar
@@ -15,8 +15,6 @@ import {DataStore} from 'aws-amplify';
 import React, {useEffect, useLayoutEffect, useState} from 'react';
 import { Storage } from "@aws-amplify/storage"
 import {Festival, LazyFestival} from '../models';
-import AccountButton from "../components/AccountButton";
-//import './events.css'
 
 const EventPage: React.FC = () => {
   const { user, signOut } = useAuthenticator((context) => [context.user]);

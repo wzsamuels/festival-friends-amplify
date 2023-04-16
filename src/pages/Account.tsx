@@ -8,25 +8,22 @@ import {
   IonButtons,
   IonContent,
   IonHeader, IonIcon,
-  IonInput, IonItem,
-  IonPage, IonPopover,
+  IonInput, IonPage,
   IonTitle,
   IonToolbar
 } from '@ionic/react';
 import { Storage } from 'aws-amplify';
 import React from "react";
-import FestivalForm from "../components/FestivalForm";
-//import '@aws-amplify/ui-react/styles.css';
 import ProfileUnverified from "../components/ProfileUnverified";
 import {SubmitHandler, useForm} from "react-hook-form";
 import getErrorMessage from "../lib/getErrorMessage";
-import {personCircle, search} from "ionicons/icons";
+import { search} from "ionicons/icons";
 import AccountButton from "../components/AccountButton";
 
 
 const AccountPage = () => {
   const { authStatus } = useAuthenticator(context => [context.authStatus]);
-  const { user, signOut } = useAuthenticator((context) => [context.user]);
+  const { user } = useAuthenticator((context) => [context.user]);
   const [profile, setProfile] = useState<UserProfile>()
 
   const renderPage = () => {

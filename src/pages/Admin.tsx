@@ -1,8 +1,7 @@
 import ConversationCreateForm from "../ui-components/ConversationCreateForm";
 import React from "react";
 import {FestivalCreateForm} from "../ui-components";
-import {IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonPage, IonTitle, IonToolbar} from "@ionic/react";
-import {search} from "ionicons/icons";
+import { IonButtons, IonContent, IonHeader, IonPage, IonTitle, IonToolbar} from "@ionic/react";
 import AccountButton from "../components/AccountButton";
 
 const Admin = () => {
