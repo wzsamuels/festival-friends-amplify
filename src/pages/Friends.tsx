@@ -63,9 +63,12 @@ const FriendsPage: React.FC = () => {
         }
         return result;
       }, [])
+      // Filter friend requests sent to the user
       const pendingFriends = friends.filter(friend => friend.friendID === username && friend.status === 'pending' );
+      // Filter friend requests sent from the user
       const sentFriends = friends.filter(friend => friend.userID === username && friend.status === 'pending')
 
+      // Fetch UserProfiles for accepted friends
       const acceptedPromises = acceptedFriendIDs.map(async friendID => {
         const result = await DataStore.query(UserProfile, c => c.userID.eq(friendID))
         return result[0];
@@ -115,9 +118,10 @@ const FriendsPage: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
+        <div className={'flex flex-col flex-wrap p-4'}>
         {
           user ?
-            <div className={'flex flex-col flex-wrap p-4'}>
+            <>
               {
                 acceptedProfiles.length ?
                   acceptedProfiles.map((profile) =>
@@ -131,14 +135,16 @@ const FriendsPage: React.FC = () => {
                     <h2 className='text-xl'>Pending Friend Requests</h2>
                     {
                       pendingFriends.map(friend =>
-                        <div className='flex justify-between' key={friend.id}>
+                        <div className='flex items-center' key={friend.id}>
                           <FriendCard profile={friend} link={true}/>
-                          <IonButton onClick={() => handleFriendAccept({friendID: friend.userID, status: 'accepted'})}>
-                            <IonIcon size='large' icon={checkmark}/>
-                          </IonButton>
-                          <IonButton>
-                            <IonIcon size='large' icon={close} onClick={() => handleFriendAccept({friendID: friend.userID, status: 'rejected'})}/>
-                          </IonButton>
+                          <div>
+                            <IonButton onClick={() => handleFriendAccept({friendID: friend.userID, status: 'accepted'})}>
+                              <IonIcon size='large' icon={checkmark}/>
+                            </IonButton>
+                            <IonButton>
+                              <IonIcon size='large' icon={close} onClick={() => handleFriendAccept({friendID: friend.userID, status: 'rejected'})}/>
+                            </IonButton>
+                          </div>
                         </div>
                       )
                     }
@@ -166,13 +172,18 @@ const FriendsPage: React.FC = () => {
                   :
                   null
               }
-            </div>
+            </>
             :
             <div>
-              Account Required to Festivals Friends
+              <h1 className='text-xl md:text-2xl my-4'>
+                Festival Friends Account Required.
+              </h1>
+              <IonButton routerLink='/account'>Sign In</IonButton>
             </div>
 
         }
+
+        </div>
         <IonModal ref={modal} trigger="friend-search">
           <FriendSearch modal={modal.current}/>
         </IonModal>

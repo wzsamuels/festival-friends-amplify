@@ -199,7 +199,7 @@ export default function FestivalUpdateForm(props) {
     location: "",
     startDate: "",
     endDate: "",
-    userIDs: [],
+    attendants: [],
   };
   const [name, setName] = React.useState(initialValues.name);
   const [genre, setGenre] = React.useState(initialValues.genre);
@@ -207,7 +207,7 @@ export default function FestivalUpdateForm(props) {
   const [location, setLocation] = React.useState(initialValues.location);
   const [startDate, setStartDate] = React.useState(initialValues.startDate);
   const [endDate, setEndDate] = React.useState(initialValues.endDate);
-  const [userIDs, setUserIDs] = React.useState(initialValues.userIDs);
+  const [attendants, setAttendants] = React.useState(initialValues.attendants);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = festivalRecord
@@ -219,8 +219,8 @@ export default function FestivalUpdateForm(props) {
     setLocation(cleanValues.location);
     setStartDate(cleanValues.startDate);
     setEndDate(cleanValues.endDate);
-    setUserIDs(cleanValues.userIDs ?? []);
-    setCurrentUserIDsValue("");
+    setAttendants(cleanValues.attendants ?? []);
+    setCurrentAttendantsValue("");
     setErrors({});
   };
   const [festivalRecord, setFestivalRecord] = React.useState(festivalModelProp);
@@ -234,8 +234,9 @@ export default function FestivalUpdateForm(props) {
     queryData();
   }, [idProp, festivalModelProp]);
   React.useEffect(resetStateValues, [festivalRecord]);
-  const [currentUserIDsValue, setCurrentUserIDsValue] = React.useState("");
-  const userIDsRef = React.createRef();
+  const [currentAttendantsValue, setCurrentAttendantsValue] =
+    React.useState("");
+  const attendantsRef = React.createRef();
   const validations = {
     name: [{ type: "Required" }],
     genre: [{ type: "Required" }],
@@ -243,7 +244,7 @@ export default function FestivalUpdateForm(props) {
     location: [{ type: "Required" }],
     startDate: [{ type: "Required" }],
     endDate: [{ type: "Required" }],
-    userIDs: [{ type: "Required" }],
+    attendants: [{ type: "Required" }],
   };
   const runValidationTasks = async (
     fieldName,
@@ -277,7 +278,7 @@ export default function FestivalUpdateForm(props) {
           location,
           startDate,
           endDate,
-          userIDs,
+          attendants,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -339,7 +340,7 @@ export default function FestivalUpdateForm(props) {
               location,
               startDate,
               endDate,
-              userIDs,
+              attendants,
             };
             const result = onChange(modelFields);
             value = result?.name ?? value;
@@ -369,7 +370,7 @@ export default function FestivalUpdateForm(props) {
               location,
               startDate,
               endDate,
-              userIDs,
+              attendants,
             };
             const result = onChange(modelFields);
             value = result?.genre ?? value;
@@ -399,7 +400,7 @@ export default function FestivalUpdateForm(props) {
               location,
               startDate,
               endDate,
-              userIDs,
+              attendants,
             };
             const result = onChange(modelFields);
             value = result?.image ?? value;
@@ -429,7 +430,7 @@ export default function FestivalUpdateForm(props) {
               location: value,
               startDate,
               endDate,
-              userIDs,
+              attendants,
             };
             const result = onChange(modelFields);
             value = result?.location ?? value;
@@ -460,7 +461,7 @@ export default function FestivalUpdateForm(props) {
               location,
               startDate: value,
               endDate,
-              userIDs,
+              attendants,
             };
             const result = onChange(modelFields);
             value = result?.startDate ?? value;
@@ -491,7 +492,7 @@ export default function FestivalUpdateForm(props) {
               location,
               startDate,
               endDate: value,
-              userIDs,
+              attendants,
             };
             const result = onChange(modelFields);
             value = result?.endDate ?? value;
@@ -517,41 +518,43 @@ export default function FestivalUpdateForm(props) {
               location,
               startDate,
               endDate,
-              userIDs: values,
+              attendants: values,
             };
             const result = onChange(modelFields);
-            values = result?.userIDs ?? values;
+            values = result?.attendants ?? values;
           }
-          setUserIDs(values);
-          setCurrentUserIDsValue("");
+          setAttendants(values);
+          setCurrentAttendantsValue("");
         }}
-        currentFieldValue={currentUserIDsValue}
-        label={"User i ds"}
-        items={userIDs}
-        hasError={errors?.userIDs?.hasError}
-        errorMessage={errors?.userIDs?.errorMessage}
-        setFieldValue={setCurrentUserIDsValue}
-        inputFieldRef={userIDsRef}
+        currentFieldValue={currentAttendantsValue}
+        label={"Attendants"}
+        items={attendants}
+        hasError={errors?.attendants?.hasError}
+        errorMessage={errors?.attendants?.errorMessage}
+        setFieldValue={setCurrentAttendantsValue}
+        inputFieldRef={attendantsRef}
         defaultFieldValue={""}
       >
         <TextField
-          label="User i ds"
+          label="Attendants"
           isRequired={true}
           isReadOnly={false}
-          value={currentUserIDsValue}
+          value={currentAttendantsValue}
           onChange={(e) => {
             let { value } = e.target;
-            if (errors.userIDs?.hasError) {
-              runValidationTasks("userIDs", value);
+            if (errors.attendants?.hasError) {
+              runValidationTasks("attendants", value);
             }
-            setCurrentUserIDsValue(value);
+            setCurrentAttendantsValue(value);
           }}
-          onBlur={() => runValidationTasks("userIDs", currentUserIDsValue)}
-          errorMessage={errors.userIDs?.errorMessage}
-          hasError={errors.userIDs?.hasError}
-          ref={userIDsRef}
+          onBlur={() =>
+            runValidationTasks("attendants", currentAttendantsValue)
+          }
+          errorMessage={errors.attendants?.errorMessage}
+          hasError={errors.attendants?.hasError}
+          ref={attendantsRef}
           labelHidden={true}
-          {...getOverrideProps(overrides, "userIDs")}
+          {...getOverrideProps(overrides, "attendants")}
         ></TextField>
       </ArrayField>
       <Flex

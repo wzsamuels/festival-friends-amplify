@@ -116,7 +116,7 @@ type EagerFestival = {
   readonly location: string;
   readonly startDate: string;
   readonly endDate: string;
-  readonly userIDs?: string[] | null;
+  readonly attendants?: string[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -133,7 +133,7 @@ type LazyFestival = {
   readonly location: string;
   readonly startDate: string;
   readonly endDate: string;
-  readonly userIDs?: string[] | null;
+  readonly attendants?: string[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -159,6 +159,8 @@ type EagerUserProfile = {
   readonly city?: string | null;
   readonly state?: string | null;
   readonly school?: string | null;
+  readonly festivalsAttending?: string[] | null;
+  readonly festivalsAttended?: string[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -178,6 +180,8 @@ type LazyUserProfile = {
   readonly city?: string | null;
   readonly state?: string | null;
   readonly school?: string | null;
+  readonly festivalsAttending?: string[] | null;
+  readonly festivalsAttended?: string[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

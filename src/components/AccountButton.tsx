@@ -10,7 +10,7 @@ const AccountButton = ({id} : {id: string}) => {
       <IonButton id={id}>
         <IonIcon size='large' icon={personCircle}/>
       </IonButton>
-      <IonPopover trigger={id} showBackdrop={false} dismissOnSelect={true}  triggerAction="hover">
+      <IonPopover trigger={id} showBackdrop={false} dismissOnSelect={true} triggerAction="click">
         {
           user ?
             <>

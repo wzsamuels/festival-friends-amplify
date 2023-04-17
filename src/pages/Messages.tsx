@@ -85,6 +85,7 @@ const MessagePage: React.FC = () => {
         {
           user ?
             <>
+              {/* Conversations */}
               <section className='h-full my-4'>
                 {
                   conversations?.length ? conversations.map(conversation =>
@@ -97,6 +98,8 @@ const MessagePage: React.FC = () => {
                   <IonIcon  icon={addCircle}></IonIcon>
                 </IonButton>
               </section>
+
+              {/* New conversation modal */}
               <IonModal isOpen={isNewConversationOpen} onDidDismiss={() => setIsNewConversationOpen(false)}  >
                 <IonHeader>
                   <IonToolbar>
@@ -123,7 +126,12 @@ const MessagePage: React.FC = () => {
               </IonModal>
             </>
           :
-          <div>Not Logged in</div>
+            <div>
+              <h1 className='text-xl md:text-2xl my-4'>
+                Festival Friends Account Required.
+              </h1>
+              <IonButton routerLink='/account'>Sign In</IonButton>
+            </div>
         }
         </div>
 
@@ -152,7 +160,9 @@ const ConversationCard = ({conversation, username, onClick} : ConversationCardPr
   const input = useRef<HTMLIonInputElement>(null);
 
   useEffect(() => {
-    const fetchProfiles = async () => {
+
+      // Fetch the profiles of the participants of the conversation
+      const fetchProfiles = async () => {
       const profilePromises = conversation.participants?.map(async userID=> {
         const result = await DataStore.query(UserProfile, c => c.userID.eq(userID))
         return result[0]
@@ -161,6 +171,7 @@ const ConversationCard = ({conversation, username, onClick} : ConversationCardPr
         const profileData = await Promise.all(profilePromises);
         const profilesFiltered = profileData.filter(profile => profile.userID !== username);
         setProfiles(profilesFiltered)
+        // Fetch the profile images of the participants of the conversation
         const imagePromises =  profilesFiltered
           .map(async profile => {
             const result = await Storage.get(profile.profileImage as string)
@@ -175,6 +186,7 @@ const ConversationCard = ({conversation, username, onClick} : ConversationCardPr
 
     fetchProfiles()
 
+    // Fetch the messages of the conversation
     const profileSub = DataStore.observeQuery(Message, c => c.conversationID.eq(conversation.id))
       .subscribe(( {items}) => {
         console.log(items)
@@ -187,6 +199,7 @@ const ConversationCard = ({conversation, username, onClick} : ConversationCardPr
 
   }, [])
 
+  // Create a new message
   const sendData = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if(input.current?.value && profiles) {
@@ -218,6 +231,7 @@ const ConversationCard = ({conversation, username, onClick} : ConversationCardPr
         </IonButton>
       </div>
 
+      {/* Conversation Modal */}
       <IonModal ref={modal} trigger="open-modal">
         <IonHeader>
           <IonToolbar>

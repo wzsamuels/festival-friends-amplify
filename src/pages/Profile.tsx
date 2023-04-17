@@ -1,4 +1,14 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from "@ionic/react"
+import {
+  IonContent,
+  IonHeader,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonListHeader,
+  IonPage,
+  IonTitle,
+  IonToolbar
+} from "@ionic/react"
 import { RouteComponentProps } from "react-router"
 import React, {useEffect, useState} from "react";
 import {UserProfile} from "../models";
@@ -31,14 +41,16 @@ const ProfilePage: React.FC<ProfilePageProps> = ({match}) => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <div className={'p-4 flex flex-col sm:flex-row'}>
-          <img width={200} height={200} src={profileImage} alt={profile?.id}/>
-          <div className={'p-4'}>
-            <div className={'text-xl my-4'}>{profile?.firstName} {profile?.lastName}</div>
-            <div className={'text-lg my-2'}>City: {profile?.city}</div>
-            <div className={'text-lg my-2'}>School: {profile?.school}</div>
-            <div className={'text-lg my-2'}>State: {profile?.state}</div>
-          </div>
+        <div className={'p-4 flex flex-col items-center justify-center'}>
+          <img width={350} height={350} src={profileImage} alt={profile?.id} className='rounded-full'/>
+          <IonList className={'p-4'}>
+            <IonListHeader>
+              <IonLabel className={'text-xl my-4'}>{profile?.firstName} {profile?.lastName}</IonLabel>
+            </IonListHeader>
+            <IonItem className={'text-lg my-2 flex flex-col'}>City: {profile?.city}</IonItem>
+            <IonItem className={'text-lg my-2'}>School: {profile?.school}</IonItem>
+            <IonItem className={'text-lg my-2'}>State: {profile?.state}</IonItem>
+          </IonList>
         </div>
       </IonContent>
     </IonPage>

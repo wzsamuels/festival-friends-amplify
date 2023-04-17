@@ -20,7 +20,7 @@ export declare type FestivalUpdateFormInputValues = {
     location?: string;
     startDate?: string;
     endDate?: string;
-    userIDs?: string[];
+    attendants?: string[];
 };
 export declare type FestivalUpdateFormValidationValues = {
     name?: ValidationFunction<string>;
@@ -29,7 +29,7 @@ export declare type FestivalUpdateFormValidationValues = {
     location?: ValidationFunction<string>;
     startDate?: ValidationFunction<string>;
     endDate?: ValidationFunction<string>;
-    userIDs?: ValidationFunction<string>;
+    attendants?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type FestivalUpdateFormOverridesProps = {
@@ -40,7 +40,7 @@ export declare type FestivalUpdateFormOverridesProps = {
     location?: PrimitiveOverrideProps<TextFieldProps>;
     startDate?: PrimitiveOverrideProps<TextFieldProps>;
     endDate?: PrimitiveOverrideProps<TextFieldProps>;
-    userIDs?: PrimitiveOverrideProps<TextFieldProps>;
+    attendants?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type FestivalUpdateFormProps = React.PropsWithChildren<{
     overrides?: FestivalUpdateFormOverridesProps | undefined | null;
