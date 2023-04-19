@@ -2,14 +2,19 @@
 import { initSchema } from '@aws-amplify/datastore';
 import { schema } from './schema';
 
+const FriendshipStatus = {
+  "REQUESTED": "REQUESTED",
+  "ACCEPTED": "ACCEPTED"
+};
 
-
-const { Message, Conversation, Friends, Festival, UserProfile } = initSchema(schema);
+const { Message, Festival, UserProfile, Friendship, EventProfile, Conversation } = initSchema(schema);
 
 export {
   Message,
-  Conversation,
-  Friends,
   Festival,
-  UserProfile
+  UserProfile,
+  Friendship,
+  EventProfile,
+  Conversation,
+  FriendshipStatus
 };

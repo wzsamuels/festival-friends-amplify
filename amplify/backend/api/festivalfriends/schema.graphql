@@ -1,23 +1,13 @@
-type Message @model @auth(rules: [{allow: public}]) {
+type Message @model @auth(rules: [{allow: public}])
+{
   id: ID!
-  text: String!
-  senderID: String!
+  content: String!
+  senderID: ID! @index(name: "bySender")
+  receiverID: ID! @index(name: "byReceiver")
   conversationID: ID! @index(name: "byConversation")
-}
-
-type Conversation @model @auth(rules: [{allow: public}]) {
-  id: ID!
-  participants: [String!]
-  Messages: [Message] @hasMany(indexName: "byConversation", fields: ["id"])
-  lastMessage: String
-  lastMessageCreatedAt: AWSDateTime
-}
-
-type Friends @model @auth(rules: [{allow: public}]) {
-  id: ID!
-  userID: String!
-  friendID: String!
-  status: String!
+  sender: UserProfile! @belongsTo(fields: ["senderID"])
+  receiver: UserProfile! @belongsTo(fields: ["receiverID"])
+  conversation: Conversation! @belongsTo(fields: ["conversationID"])
 }
 
 type Festival @model @auth(rules: [{allow: public}]) {
@@ -28,7 +18,7 @@ type Festival @model @auth(rules: [{allow: public}]) {
   location: String!
   startDate: AWSDate!
   endDate: AWSDate!
-  attendants: [String!]
+  attendees: [EventProfile] @hasMany(fields: ["id"])
 }
 
 type UserProfile @model @auth(rules: [{allow: public}]) {
@@ -42,7 +32,49 @@ type UserProfile @model @auth(rules: [{allow: public}]) {
   city: String
   state: String
   school: String
-  festivalsAttending: [String!]
-  festivalsAttended: [String!]
+  address: String
+  address2: String
+  phone: String
+  username: String
+  email: String
+  zipcode: String
+  attendingEvents: [EventProfile] @hasMany(indexName: "byUserProfile", fields: ["id"])
+  friends: [Friendship] @hasMany(indexName: "byUserProfile", fields: ["id"])
+  conversations: [Conversation] @hasMany(indexName: "byUserProfile", fields: ["id"])
+  sentMessages: [Message] @hasMany(indexName: "bySender", fields: ["id"])
+  receivedMessages: [Message] @hasMany(indexName: "byReceiver", fields: ["id"])
 }
- 
+
+type Friendship @model @auth(rules: [{allow: public}])
+{
+  id: ID!
+  userProfileID: ID! @index(name: "byUserProfile")
+  friendProfileID: ID! @index(name: "byFriend")
+  isAccepted: Boolean!
+  userProfile: UserProfile! @belongsTo(fields: ["userProfileID"])
+  friendProfile: UserProfile! @belongsTo(fields: ["friendProfileID"])
+}
+
+enum FriendshipStatus {
+  REQUESTED
+  ACCEPTED
+}
+
+type EventProfile @model @auth(rules: [{allow: public}])
+{
+  id: ID!
+  userProfileID: ID! @index(name: "byUserProfile")
+  eventID: ID! @index(name: "byEvent")
+  userProfile: UserProfile! @belongsTo(fields: ["userProfileID"])
+  event: Festival! @belongsTo(fields: ["eventID"])
+}
+
+type Conversation @model @auth(rules: [{allow: public}])
+{
+  id: ID!
+  userProfileID: ID! @index(name: "byUserProfile")
+  friendProfileID: ID! @index(name: "friendProfile")
+  userProfile: UserProfile! @belongsTo(fields: ["userProfileID"])
+  friendProfile: UserProfile! @belongsTo(fields: ["friendProfileID"])
+  messages: [Message] @hasMany(indexName: "byConversation", fields: ["id"])
+}

@@ -1,10 +1,24 @@
-import {IonButton, IonIcon, IonItem, IonPopover, IonRouterLink} from "@ionic/react";
+import {IonAlert, IonButton, IonIcon, IonItem, IonPopover, IonRouterLink} from "@ionic/react";
 import {personCircle} from "ionicons/icons";
-import React from "react";
+import React, {useContext} from "react";
 import {useAuthenticator} from "@aws-amplify/ui-react";
+import {DataStore} from "aws-amplify";
+import DataStoreContext, {DataStoreContextType} from "../context/DataStoreContext";
 
 const AccountButton = ({id} : {id: string}) => {
   const { signOut, user } = useAuthenticator()
+  const { saveDataStoreCleared } = useContext(DataStoreContext) as DataStoreContextType;
+  const [alertIsOpen, setAlertIsOpen] = React.useState(false);
+
+  const handleSignOut = async () => {
+    signOut()
+    saveDataStoreCleared(false);
+    setAlertIsOpen(true);
+    await DataStore.clear();
+    setAlertIsOpen(false)
+    saveDataStoreCleared(true);
+  }
+
   return (
     <>
       <IonButton id={id}>
@@ -15,7 +29,7 @@ const AccountButton = ({id} : {id: string}) => {
           user ?
             <>
               <IonItem className='w-full cursor-pointer' routerLink='/account'>Account</IonItem>
-              <IonItem className='w-full cursor-pointer' onClick={signOut}>Sign Out</IonItem>
+              <IonItem className='w-full cursor-pointer' onClick={handleSignOut}>Sign Out</IonItem>
             </>
             :
             <>
@@ -23,6 +37,7 @@ const AccountButton = ({id} : {id: string}) => {
             </>
         }
       </IonPopover>
+      <IonAlert isOpen={alertIsOpen} onDidDismiss={() => setAlertIsOpen(false)} header={'Logging out...'}></IonAlert>
     </>
   )
 }

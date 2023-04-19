@@ -5,10 +5,6 @@
  **************************************************************************/
 
 export { default as studioTheme } from "./studioTheme";
-export { default as ConversationCreateForm } from "./ConversationCreateForm";
-export { default as ConversationUpdateForm } from "./ConversationUpdateForm";
-export { default as FriendsCreateForm } from "./FriendsCreateForm";
-export { default as FriendsUpdateForm } from "./FriendsUpdateForm";
 export { default as FestivalCreateForm } from "./FestivalCreateForm";
 export { default as FestivalUpdateForm } from "./FestivalUpdateForm";
 export { default as UserProfileCreateForm } from "./UserProfileCreateForm";

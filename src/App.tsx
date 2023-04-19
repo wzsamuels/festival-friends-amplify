@@ -36,17 +36,24 @@ import './theme/variables.css';
 import './index.css'
 
 import ProfilePage from './pages/Profile';
-import React from "react";
+import React, {useState} from "react";
 import Admin from "./pages/Admin";
 import FriendsPage from "./pages/Friends";
 import Events from "./pages/Events";
 import {chatboxEllipses, musicalNotes, people, settings} from "ionicons/icons";
+import DataStoreContext from './context/DataStoreContext';
 
 setupIonicReact();
 
 const App: React.FC = () => {
+  const [dataStoreCleared, setDataStoreCleared] = useState(true);
+
+  const saveDataStoreCleared = (value: boolean) => {
+    setDataStoreCleared(value)
+  }
 
   return (
+    <DataStoreContext.Provider value={{ dataStoreCleared, saveDataStoreCleared }}>
     <IonApp>
       <IonReactRouter>
         <IonTabs>
@@ -90,6 +97,7 @@ const App: React.FC = () => {
         </IonTabs>
       </IonReactRouter>
     </IonApp>
+    </DataStoreContext.Provider>
   );
 }
 

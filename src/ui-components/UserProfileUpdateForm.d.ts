@@ -23,8 +23,12 @@ export declare type UserProfileUpdateFormInputValues = {
     city?: string;
     state?: string;
     school?: string;
-    festivalsAttending?: string[];
-    festivalsAttended?: string[];
+    address?: string;
+    address2?: string;
+    phone?: string;
+    username?: string;
+    email?: string;
+    zipcode?: string;
 };
 export declare type UserProfileUpdateFormValidationValues = {
     firstName?: ValidationFunction<string>;
@@ -36,8 +40,12 @@ export declare type UserProfileUpdateFormValidationValues = {
     city?: ValidationFunction<string>;
     state?: ValidationFunction<string>;
     school?: ValidationFunction<string>;
-    festivalsAttending?: ValidationFunction<string>;
-    festivalsAttended?: ValidationFunction<string>;
+    address?: ValidationFunction<string>;
+    address2?: ValidationFunction<string>;
+    phone?: ValidationFunction<string>;
+    username?: ValidationFunction<string>;
+    email?: ValidationFunction<string>;
+    zipcode?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type UserProfileUpdateFormOverridesProps = {
@@ -51,8 +59,12 @@ export declare type UserProfileUpdateFormOverridesProps = {
     city?: PrimitiveOverrideProps<TextFieldProps>;
     state?: PrimitiveOverrideProps<TextFieldProps>;
     school?: PrimitiveOverrideProps<TextFieldProps>;
-    festivalsAttending?: PrimitiveOverrideProps<TextFieldProps>;
-    festivalsAttended?: PrimitiveOverrideProps<TextFieldProps>;
+    address?: PrimitiveOverrideProps<TextFieldProps>;
+    address2?: PrimitiveOverrideProps<TextFieldProps>;
+    phone?: PrimitiveOverrideProps<TextFieldProps>;
+    username?: PrimitiveOverrideProps<TextFieldProps>;
+    email?: PrimitiveOverrideProps<TextFieldProps>;
+    zipcode?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type UserProfileUpdateFormProps = React.PropsWithChildren<{
     overrides?: UserProfileUpdateFormOverridesProps | undefined | null;

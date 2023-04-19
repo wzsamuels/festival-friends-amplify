@@ -7,180 +7,16 @@
 /* eslint-disable */
 import * as React from "react";
 import {
-  Badge,
   Button,
-  Divider,
   Flex,
   Grid,
-  Icon,
-  ScrollView,
   SwitchField,
-  Text,
   TextField,
-  useTheme,
 } from "@aws-amplify/ui-react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import { UserProfile } from "../models";
 import { fetchByPath, validateField } from "./utils";
 import { DataStore } from "aws-amplify";
-function ArrayField({
-  items = [],
-  onChange,
-  label,
-  inputFieldRef,
-  children,
-  hasError,
-  setFieldValue,
-  currentFieldValue,
-  defaultFieldValue,
-  lengthLimit,
-  getBadgeText,
-  errorMessage,
-}) {
-  const labelElement = <Text>{label}</Text>;
-  const {
-    tokens: {
-      components: {
-        fieldmessages: { error: errorStyles },
-      },
-    },
-  } = useTheme();
-  const [selectedBadgeIndex, setSelectedBadgeIndex] = React.useState();
-  const [isEditing, setIsEditing] = React.useState();
-  React.useEffect(() => {
-    if (isEditing) {
-      inputFieldRef?.current?.focus();
-    }
-  }, [isEditing]);
-  const removeItem = async (removeIndex) => {
-    const newItems = items.filter((value, index) => index !== removeIndex);
-    await onChange(newItems);
-    setSelectedBadgeIndex(undefined);
-  };
-  const addItem = async () => {
-    if (
-      currentFieldValue !== undefined &&
-      currentFieldValue !== null &&
-      currentFieldValue !== "" &&
-      !hasError
-    ) {
-      const newItems = [...items];
-      if (selectedBadgeIndex !== undefined) {
-        newItems[selectedBadgeIndex] = currentFieldValue;
-        setSelectedBadgeIndex(undefined);
-      } else {
-        newItems.push(currentFieldValue);
-      }
-      await onChange(newItems);
-      setIsEditing(false);
-    }
-  };
-  const arraySection = (
-    <React.Fragment>
-      {!!items?.length && (
-        <ScrollView height="inherit" width="inherit" maxHeight={"7rem"}>
-          {items.map((value, index) => {
-            return (
-              <Badge
-                key={index}
-                style={{
-                  cursor: "pointer",
-                  alignItems: "center",
-                  marginRight: 3,
-                  marginTop: 3,
-                  backgroundColor:
-                    index === selectedBadgeIndex ? "#B8CEF9" : "",
-                }}
-                onClick={() => {
-                  setSelectedBadgeIndex(index);
-                  setFieldValue(items[index]);
-                  setIsEditing(true);
-                }}
-              >
-                {getBadgeText ? getBadgeText(value) : value.toString()}
-                <Icon
-                  style={{
-                    cursor: "pointer",
-                    paddingLeft: 3,
-                    width: 20,
-                    height: 20,
-                  }}
-                  viewBox={{ width: 20, height: 20 }}
-                  paths={[
-                    {
-                      d: "M10 10l5.09-5.09L10 10l5.09 5.09L10 10zm0 0L4.91 4.91 10 10l-5.09 5.09L10 10z",
-                      stroke: "black",
-                    },
-                  ]}
-                  ariaLabel="button"
-                  onClick={(event) => {
-                    event.stopPropagation();
-                    removeItem(index);
-                  }}
-                />
-              </Badge>
-            );
-          })}
-        </ScrollView>
-      )}
-      <Divider orientation="horizontal" marginTop={5} />
-    </React.Fragment>
-  );
-  if (lengthLimit !== undefined && items.length >= lengthLimit && !isEditing) {
-    return (
-      <React.Fragment>
-        {labelElement}
-        {arraySection}
-      </React.Fragment>
-    );
-  }
-  return (
-    <React.Fragment>
-      {labelElement}
-      {isEditing && children}
-      {!isEditing ? (
-        <>
-          <Button
-            onClick={() => {
-              setIsEditing(true);
-            }}
-          >
-            Add item
-          </Button>
-          {errorMessage && hasError && (
-            <Text color={errorStyles.color} fontSize={errorStyles.fontSize}>
-              {errorMessage}
-            </Text>
-          )}
-        </>
-      ) : (
-        <Flex justifyContent="flex-end">
-          {(currentFieldValue || isEditing) && (
-            <Button
-              children="Cancel"
-              type="button"
-              size="small"
-              onClick={() => {
-                setFieldValue(defaultFieldValue);
-                setIsEditing(false);
-                setSelectedBadgeIndex(undefined);
-              }}
-            ></Button>
-          )}
-          <Button
-            size="small"
-            variation="link"
-            isDisabled={hasError}
-            onClick={addItem}
-          >
-            {selectedBadgeIndex !== undefined ? "Save" : "Add"}
-          </Button>
-        </Flex>
-      )}
-      {arraySection}
-    </React.Fragment>
-  );
-}
 export default function UserProfileCreateForm(props) {
   const {
     clearOnSuccess = true,
@@ -202,8 +38,12 @@ export default function UserProfileCreateForm(props) {
     city: "",
     state: "",
     school: "",
-    festivalsAttending: [],
-    festivalsAttended: [],
+    address: "",
+    address2: "",
+    phone: "",
+    username: "",
+    email: "",
+    zipcode: "",
   };
   const [firstName, setFirstName] = React.useState(initialValues.firstName);
   const [lastName, setLastName] = React.useState(initialValues.lastName);
@@ -218,12 +58,12 @@ export default function UserProfileCreateForm(props) {
   const [city, setCity] = React.useState(initialValues.city);
   const [state, setState] = React.useState(initialValues.state);
   const [school, setSchool] = React.useState(initialValues.school);
-  const [festivalsAttending, setFestivalsAttending] = React.useState(
-    initialValues.festivalsAttending
-  );
-  const [festivalsAttended, setFestivalsAttended] = React.useState(
-    initialValues.festivalsAttended
-  );
+  const [address, setAddress] = React.useState(initialValues.address);
+  const [address2, setAddress2] = React.useState(initialValues.address2);
+  const [phone, setPhone] = React.useState(initialValues.phone);
+  const [username, setUsername] = React.useState(initialValues.username);
+  const [email, setEmail] = React.useState(initialValues.email);
+  const [zipcode, setZipcode] = React.useState(initialValues.zipcode);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setFirstName(initialValues.firstName);
@@ -235,18 +75,14 @@ export default function UserProfileCreateForm(props) {
     setCity(initialValues.city);
     setState(initialValues.state);
     setSchool(initialValues.school);
-    setFestivalsAttending(initialValues.festivalsAttending);
-    setCurrentFestivalsAttendingValue("");
-    setFestivalsAttended(initialValues.festivalsAttended);
-    setCurrentFestivalsAttendedValue("");
+    setAddress(initialValues.address);
+    setAddress2(initialValues.address2);
+    setPhone(initialValues.phone);
+    setUsername(initialValues.username);
+    setEmail(initialValues.email);
+    setZipcode(initialValues.zipcode);
     setErrors({});
   };
-  const [currentFestivalsAttendingValue, setCurrentFestivalsAttendingValue] =
-    React.useState("");
-  const festivalsAttendingRef = React.createRef();
-  const [currentFestivalsAttendedValue, setCurrentFestivalsAttendedValue] =
-    React.useState("");
-  const festivalsAttendedRef = React.createRef();
   const validations = {
     firstName: [{ type: "Required" }],
     lastName: [{ type: "Required" }],
@@ -257,8 +93,12 @@ export default function UserProfileCreateForm(props) {
     city: [],
     state: [],
     school: [],
-    festivalsAttending: [{ type: "Required" }],
-    festivalsAttended: [{ type: "Required" }],
+    address: [],
+    address2: [],
+    phone: [],
+    username: [],
+    email: [],
+    zipcode: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -295,8 +135,12 @@ export default function UserProfileCreateForm(props) {
           city,
           state,
           school,
-          festivalsAttending,
-          festivalsAttended,
+          address,
+          address2,
+          phone,
+          username,
+          email,
+          zipcode,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -360,8 +204,12 @@ export default function UserProfileCreateForm(props) {
               city,
               state,
               school,
-              festivalsAttending,
-              festivalsAttended,
+              address,
+              address2,
+              phone,
+              username,
+              email,
+              zipcode,
             };
             const result = onChange(modelFields);
             value = result?.firstName ?? value;
@@ -394,8 +242,12 @@ export default function UserProfileCreateForm(props) {
               city,
               state,
               school,
-              festivalsAttending,
-              festivalsAttended,
+              address,
+              address2,
+              phone,
+              username,
+              email,
+              zipcode,
             };
             const result = onChange(modelFields);
             value = result?.lastName ?? value;
@@ -428,8 +280,12 @@ export default function UserProfileCreateForm(props) {
               city,
               state,
               school,
-              festivalsAttending,
-              festivalsAttended,
+              address,
+              address2,
+              phone,
+              username,
+              email,
+              zipcode,
             };
             const result = onChange(modelFields);
             value = result?.userID ?? value;
@@ -462,8 +318,12 @@ export default function UserProfileCreateForm(props) {
               city,
               state,
               school,
-              festivalsAttending,
-              festivalsAttended,
+              address,
+              address2,
+              phone,
+              username,
+              email,
+              zipcode,
             };
             const result = onChange(modelFields);
             value = result?.verified ?? value;
@@ -496,8 +356,12 @@ export default function UserProfileCreateForm(props) {
               city,
               state,
               school,
-              festivalsAttending,
-              festivalsAttended,
+              address,
+              address2,
+              phone,
+              username,
+              email,
+              zipcode,
             };
             const result = onChange(modelFields);
             value = result?.verifySubmitted ?? value;
@@ -530,8 +394,12 @@ export default function UserProfileCreateForm(props) {
               city,
               state,
               school,
-              festivalsAttending,
-              festivalsAttended,
+              address,
+              address2,
+              phone,
+              username,
+              email,
+              zipcode,
             };
             const result = onChange(modelFields);
             value = result?.profileImage ?? value;
@@ -564,8 +432,12 @@ export default function UserProfileCreateForm(props) {
               city: value,
               state,
               school,
-              festivalsAttending,
-              festivalsAttended,
+              address,
+              address2,
+              phone,
+              username,
+              email,
+              zipcode,
             };
             const result = onChange(modelFields);
             value = result?.city ?? value;
@@ -598,8 +470,12 @@ export default function UserProfileCreateForm(props) {
               city,
               state: value,
               school,
-              festivalsAttending,
-              festivalsAttended,
+              address,
+              address2,
+              phone,
+              username,
+              email,
+              zipcode,
             };
             const result = onChange(modelFields);
             value = result?.state ?? value;
@@ -632,8 +508,12 @@ export default function UserProfileCreateForm(props) {
               city,
               state,
               school: value,
-              festivalsAttending,
-              festivalsAttended,
+              address,
+              address2,
+              phone,
+              username,
+              email,
+              zipcode,
             };
             const result = onChange(modelFields);
             value = result?.school ?? value;
@@ -648,9 +528,13 @@ export default function UserProfileCreateForm(props) {
         hasError={errors.school?.hasError}
         {...getOverrideProps(overrides, "school")}
       ></TextField>
-      <ArrayField
-        onChange={async (items) => {
-          let values = items;
+      <TextField
+        label="Address"
+        isRequired={false}
+        isReadOnly={false}
+        value={address}
+        onChange={(e) => {
+          let { value } = e.target;
           if (onChange) {
             const modelFields = {
               firstName,
@@ -662,52 +546,33 @@ export default function UserProfileCreateForm(props) {
               city,
               state,
               school,
-              festivalsAttending: values,
-              festivalsAttended,
+              address: value,
+              address2,
+              phone,
+              username,
+              email,
+              zipcode,
             };
             const result = onChange(modelFields);
-            values = result?.festivalsAttending ?? values;
+            value = result?.address ?? value;
           }
-          setFestivalsAttending(values);
-          setCurrentFestivalsAttendingValue("");
+          if (errors.address?.hasError) {
+            runValidationTasks("address", value);
+          }
+          setAddress(value);
         }}
-        currentFieldValue={currentFestivalsAttendingValue}
-        label={"Festivals attending"}
-        items={festivalsAttending}
-        hasError={errors?.festivalsAttending?.hasError}
-        errorMessage={errors?.festivalsAttending?.errorMessage}
-        setFieldValue={setCurrentFestivalsAttendingValue}
-        inputFieldRef={festivalsAttendingRef}
-        defaultFieldValue={""}
-      >
-        <TextField
-          label="Festivals attending"
-          isRequired={true}
-          isReadOnly={false}
-          value={currentFestivalsAttendingValue}
-          onChange={(e) => {
-            let { value } = e.target;
-            if (errors.festivalsAttending?.hasError) {
-              runValidationTasks("festivalsAttending", value);
-            }
-            setCurrentFestivalsAttendingValue(value);
-          }}
-          onBlur={() =>
-            runValidationTasks(
-              "festivalsAttending",
-              currentFestivalsAttendingValue
-            )
-          }
-          errorMessage={errors.festivalsAttending?.errorMessage}
-          hasError={errors.festivalsAttending?.hasError}
-          ref={festivalsAttendingRef}
-          labelHidden={true}
-          {...getOverrideProps(overrides, "festivalsAttending")}
-        ></TextField>
-      </ArrayField>
-      <ArrayField
-        onChange={async (items) => {
-          let values = items;
+        onBlur={() => runValidationTasks("address", address)}
+        errorMessage={errors.address?.errorMessage}
+        hasError={errors.address?.hasError}
+        {...getOverrideProps(overrides, "address")}
+      ></TextField>
+      <TextField
+        label="Address2"
+        isRequired={false}
+        isReadOnly={false}
+        value={address2}
+        onChange={(e) => {
+          let { value } = e.target;
           if (onChange) {
             const modelFields = {
               firstName,
@@ -719,49 +584,178 @@ export default function UserProfileCreateForm(props) {
               city,
               state,
               school,
-              festivalsAttending,
-              festivalsAttended: values,
+              address,
+              address2: value,
+              phone,
+              username,
+              email,
+              zipcode,
             };
             const result = onChange(modelFields);
-            values = result?.festivalsAttended ?? values;
+            value = result?.address2 ?? value;
           }
-          setFestivalsAttended(values);
-          setCurrentFestivalsAttendedValue("");
+          if (errors.address2?.hasError) {
+            runValidationTasks("address2", value);
+          }
+          setAddress2(value);
         }}
-        currentFieldValue={currentFestivalsAttendedValue}
-        label={"Festivals attended"}
-        items={festivalsAttended}
-        hasError={errors?.festivalsAttended?.hasError}
-        errorMessage={errors?.festivalsAttended?.errorMessage}
-        setFieldValue={setCurrentFestivalsAttendedValue}
-        inputFieldRef={festivalsAttendedRef}
-        defaultFieldValue={""}
-      >
-        <TextField
-          label="Festivals attended"
-          isRequired={true}
-          isReadOnly={false}
-          value={currentFestivalsAttendedValue}
-          onChange={(e) => {
-            let { value } = e.target;
-            if (errors.festivalsAttended?.hasError) {
-              runValidationTasks("festivalsAttended", value);
-            }
-            setCurrentFestivalsAttendedValue(value);
-          }}
-          onBlur={() =>
-            runValidationTasks(
-              "festivalsAttended",
-              currentFestivalsAttendedValue
-            )
+        onBlur={() => runValidationTasks("address2", address2)}
+        errorMessage={errors.address2?.errorMessage}
+        hasError={errors.address2?.hasError}
+        {...getOverrideProps(overrides, "address2")}
+      ></TextField>
+      <TextField
+        label="Phone"
+        isRequired={false}
+        isReadOnly={false}
+        value={phone}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              firstName,
+              lastName,
+              userID,
+              verified,
+              verifySubmitted,
+              profileImage,
+              city,
+              state,
+              school,
+              address,
+              address2,
+              phone: value,
+              username,
+              email,
+              zipcode,
+            };
+            const result = onChange(modelFields);
+            value = result?.phone ?? value;
           }
-          errorMessage={errors.festivalsAttended?.errorMessage}
-          hasError={errors.festivalsAttended?.hasError}
-          ref={festivalsAttendedRef}
-          labelHidden={true}
-          {...getOverrideProps(overrides, "festivalsAttended")}
-        ></TextField>
-      </ArrayField>
+          if (errors.phone?.hasError) {
+            runValidationTasks("phone", value);
+          }
+          setPhone(value);
+        }}
+        onBlur={() => runValidationTasks("phone", phone)}
+        errorMessage={errors.phone?.errorMessage}
+        hasError={errors.phone?.hasError}
+        {...getOverrideProps(overrides, "phone")}
+      ></TextField>
+      <TextField
+        label="Username"
+        isRequired={false}
+        isReadOnly={false}
+        value={username}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              firstName,
+              lastName,
+              userID,
+              verified,
+              verifySubmitted,
+              profileImage,
+              city,
+              state,
+              school,
+              address,
+              address2,
+              phone,
+              username: value,
+              email,
+              zipcode,
+            };
+            const result = onChange(modelFields);
+            value = result?.username ?? value;
+          }
+          if (errors.username?.hasError) {
+            runValidationTasks("username", value);
+          }
+          setUsername(value);
+        }}
+        onBlur={() => runValidationTasks("username", username)}
+        errorMessage={errors.username?.errorMessage}
+        hasError={errors.username?.hasError}
+        {...getOverrideProps(overrides, "username")}
+      ></TextField>
+      <TextField
+        label="Email"
+        isRequired={false}
+        isReadOnly={false}
+        value={email}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              firstName,
+              lastName,
+              userID,
+              verified,
+              verifySubmitted,
+              profileImage,
+              city,
+              state,
+              school,
+              address,
+              address2,
+              phone,
+              username,
+              email: value,
+              zipcode,
+            };
+            const result = onChange(modelFields);
+            value = result?.email ?? value;
+          }
+          if (errors.email?.hasError) {
+            runValidationTasks("email", value);
+          }
+          setEmail(value);
+        }}
+        onBlur={() => runValidationTasks("email", email)}
+        errorMessage={errors.email?.errorMessage}
+        hasError={errors.email?.hasError}
+        {...getOverrideProps(overrides, "email")}
+      ></TextField>
+      <TextField
+        label="Zipcode"
+        isRequired={false}
+        isReadOnly={false}
+        value={zipcode}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              firstName,
+              lastName,
+              userID,
+              verified,
+              verifySubmitted,
+              profileImage,
+              city,
+              state,
+              school,
+              address,
+              address2,
+              phone,
+              username,
+              email,
+              zipcode: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.zipcode ?? value;
+          }
+          if (errors.zipcode?.hasError) {
+            runValidationTasks("zipcode", value);
+          }
+          setZipcode(value);
+        }}
+        onBlur={() => runValidationTasks("zipcode", zipcode)}
+        errorMessage={errors.zipcode?.errorMessage}
+        hasError={errors.zipcode?.hasError}
+        {...getOverrideProps(overrides, "zipcode")}
+      ></TextField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}

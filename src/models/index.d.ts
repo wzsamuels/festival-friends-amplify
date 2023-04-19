@@ -1,8 +1,11 @@
 import { ModelInit, MutableModel, __modelMeta__, ManagedIdentifier } from "@aws-amplify/datastore";
 // @ts-ignore
-import { LazyLoading, LazyLoadingDisabled, AsyncCollection } from "@aws-amplify/datastore";
+import { LazyLoading, LazyLoadingDisabled, AsyncItem, AsyncCollection } from "@aws-amplify/datastore";
 
-
+export enum FriendshipStatus {
+  REQUESTED = "REQUESTED",
+  ACCEPTED = "ACCEPTED"
+}
 
 
 
@@ -12,9 +15,13 @@ type EagerMessage = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly text: string;
+  readonly content: string;
   readonly senderID: string;
+  readonly receiverID: string;
   readonly conversationID: string;
+  readonly sender: UserProfile;
+  readonly receiver: UserProfile;
+  readonly conversation: Conversation;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -25,9 +32,13 @@ type LazyMessage = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly text: string;
+  readonly content: string;
   readonly senderID: string;
+  readonly receiverID: string;
   readonly conversationID: string;
+  readonly sender: AsyncItem<UserProfile>;
+  readonly receiver: AsyncItem<UserProfile>;
+  readonly conversation: AsyncItem<Conversation>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -36,72 +47,6 @@ export declare type Message = LazyLoading extends LazyLoadingDisabled ? EagerMes
 
 export declare const Message: (new (init: ModelInit<Message>) => Message) & {
   copyOf(source: Message, mutator: (draft: MutableModel<Message>) => MutableModel<Message> | void): Message;
-}
-
-type EagerConversation = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Conversation, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly participants?: string[] | null;
-  readonly Messages?: (Message | null)[] | null;
-  readonly lastMessage?: string | null;
-  readonly lastMessageCreatedAt?: string | null;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-type LazyConversation = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Conversation, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly participants?: string[] | null;
-  readonly Messages: AsyncCollection<Message>;
-  readonly lastMessage?: string | null;
-  readonly lastMessageCreatedAt?: string | null;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-export declare type Conversation = LazyLoading extends LazyLoadingDisabled ? EagerConversation : LazyConversation
-
-export declare const Conversation: (new (init: ModelInit<Conversation>) => Conversation) & {
-  copyOf(source: Conversation, mutator: (draft: MutableModel<Conversation>) => MutableModel<Conversation> | void): Conversation;
-}
-
-type EagerFriends = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Friends, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly userID: string;
-  readonly friendID: string;
-  readonly status: string;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-type LazyFriends = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Friends, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly userID: string;
-  readonly friendID: string;
-  readonly status: string;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-export declare type Friends = LazyLoading extends LazyLoadingDisabled ? EagerFriends : LazyFriends
-
-export declare const Friends: (new (init: ModelInit<Friends>) => Friends) & {
-  copyOf(source: Friends, mutator: (draft: MutableModel<Friends>) => MutableModel<Friends> | void): Friends;
 }
 
 type EagerFestival = {
@@ -116,7 +61,7 @@ type EagerFestival = {
   readonly location: string;
   readonly startDate: string;
   readonly endDate: string;
-  readonly attendants?: string[] | null;
+  readonly attendees?: (EventProfile | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -133,7 +78,7 @@ type LazyFestival = {
   readonly location: string;
   readonly startDate: string;
   readonly endDate: string;
-  readonly attendants?: string[] | null;
+  readonly attendees: AsyncCollection<EventProfile>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -159,8 +104,17 @@ type EagerUserProfile = {
   readonly city?: string | null;
   readonly state?: string | null;
   readonly school?: string | null;
-  readonly festivalsAttending?: string[] | null;
-  readonly festivalsAttended?: string[] | null;
+  readonly address?: string | null;
+  readonly address2?: string | null;
+  readonly phone?: string | null;
+  readonly username?: string | null;
+  readonly email?: string | null;
+  readonly zipcode?: string | null;
+  readonly attendingEvents?: (EventProfile | null)[] | null;
+  readonly friends?: (Friendship | null)[] | null;
+  readonly conversations?: (Conversation | null)[] | null;
+  readonly sentMessages?: (Message | null)[] | null;
+  readonly receivedMessages?: (Message | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -180,8 +134,17 @@ type LazyUserProfile = {
   readonly city?: string | null;
   readonly state?: string | null;
   readonly school?: string | null;
-  readonly festivalsAttending?: string[] | null;
-  readonly festivalsAttended?: string[] | null;
+  readonly address?: string | null;
+  readonly address2?: string | null;
+  readonly phone?: string | null;
+  readonly username?: string | null;
+  readonly email?: string | null;
+  readonly zipcode?: string | null;
+  readonly attendingEvents: AsyncCollection<EventProfile>;
+  readonly friends: AsyncCollection<Friendship>;
+  readonly conversations: AsyncCollection<Conversation>;
+  readonly sentMessages: AsyncCollection<Message>;
+  readonly receivedMessages: AsyncCollection<Message>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -190,4 +153,110 @@ export declare type UserProfile = LazyLoading extends LazyLoadingDisabled ? Eage
 
 export declare const UserProfile: (new (init: ModelInit<UserProfile>) => UserProfile) & {
   copyOf(source: UserProfile, mutator: (draft: MutableModel<UserProfile>) => MutableModel<UserProfile> | void): UserProfile;
+}
+
+type EagerFriendship = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Friendship, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly userProfileID: string;
+  readonly friendProfileID: string;
+  readonly isAccepted: boolean;
+  readonly userProfile: UserProfile;
+  readonly friendProfile: UserProfile;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyFriendship = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Friendship, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly userProfileID: string;
+  readonly friendProfileID: string;
+  readonly isAccepted: boolean;
+  readonly userProfile: AsyncItem<UserProfile>;
+  readonly friendProfile: AsyncItem<UserProfile>;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type Friendship = LazyLoading extends LazyLoadingDisabled ? EagerFriendship : LazyFriendship
+
+export declare const Friendship: (new (init: ModelInit<Friendship>) => Friendship) & {
+  copyOf(source: Friendship, mutator: (draft: MutableModel<Friendship>) => MutableModel<Friendship> | void): Friendship;
+}
+
+type EagerEventProfile = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<EventProfile, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly userProfileID: string;
+  readonly eventID: string;
+  readonly userProfile: UserProfile;
+  readonly event: Festival;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyEventProfile = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<EventProfile, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly userProfileID: string;
+  readonly eventID: string;
+  readonly userProfile: AsyncItem<UserProfile>;
+  readonly event: AsyncItem<Festival>;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type EventProfile = LazyLoading extends LazyLoadingDisabled ? EagerEventProfile : LazyEventProfile
+
+export declare const EventProfile: (new (init: ModelInit<EventProfile>) => EventProfile) & {
+  copyOf(source: EventProfile, mutator: (draft: MutableModel<EventProfile>) => MutableModel<EventProfile> | void): EventProfile;
+}
+
+type EagerConversation = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Conversation, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly userProfileID: string;
+  readonly friendProfileID: string;
+  readonly userProfile: UserProfile;
+  readonly friendProfile: UserProfile;
+  readonly messages?: (Message | null)[] | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyConversation = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Conversation, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly userProfileID: string;
+  readonly friendProfileID: string;
+  readonly userProfile: AsyncItem<UserProfile>;
+  readonly friendProfile: AsyncItem<UserProfile>;
+  readonly messages: AsyncCollection<Message>;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type Conversation = LazyLoading extends LazyLoadingDisabled ? EagerConversation : LazyConversation
+
+export declare const Conversation: (new (init: ModelInit<Conversation>) => Conversation) & {
+  copyOf(source: Conversation, mutator: (draft: MutableModel<Conversation>) => MutableModel<Conversation> | void): Conversation;
 }

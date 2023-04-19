@@ -1,80 +1,81 @@
 import {
   IonButton, IonButtons,
-  IonContent, IonFab, IonFabButton,
+  IonContent,
   IonHeader, IonIcon,
-  IonInput, IonItem, IonLabel,
+  IonInput, IonItem,
   IonModal,
-  IonPage, IonPopover,
+  IonPage,
   IonTitle,
   IonToolbar
 } from '@ionic/react';
-import React, {ComponentProps, FormEvent, PropsWithoutRef, useEffect, useRef, useState} from "react";
+import React, {ComponentProps, FormEvent,  useEffect, useRef, useState} from "react";
 import {DataStore, Storage} from "aws-amplify";
-import {Conversation, Friends, Message, UserProfile} from "../models";
+import {Conversation, Friendship, Message, UserProfile} from "../models";
 import {useAuthenticator} from "@aws-amplify/ui-react";
-import {addCircle, personCircle, search} from "ionicons/icons";
+import {addCircle,  search} from "ionicons/icons";
 import AccountButton from "../components/AccountButton";
 import {ZenObservable} from "zen-observable-ts";
 import FriendCard from "../components/FriendCard";
 
 const MessagePage: React.FC = () => {
-  const { user, signOut } = useAuthenticator();
-  const [conversations, setConversations] = useState<Conversation[]>()
+  const { user } = useAuthenticator();
   const [friendProfiles, setFriendProfiles] = useState<UserProfile[]>([])
-  const newConversationModal = useRef<HTMLIonModalElement>(null);
+  const searchConversationModal = useRef<HTMLIonModalElement>(null);
   const [isNewConversationOpen, setIsNewConversationOpen] = useState(false);
   const [isConversationOpen, setIsConversationOpen ] = useState(false);
   const input = useRef<HTMLIonInputElement>(null);
   const username = user?.username as string;
+  const [userProfile, setUserProfile] = useState<UserProfile>()
+
+  const handleNewConversation = async ({friendProfile} : {friendProfile: UserProfile}) => {
+    setIsNewConversationOpen(false);
+    if (userProfile) {
+      const result = await DataStore.save(new Conversation({
+        userProfileID: userProfile?.id,
+        friendProfileID: friendProfile.id,
+        messages: [],
+        userProfile: userProfile,
+        friendProfile: friendProfile
+      }))
+      console.log(result)
+    }
+  }
 
   useEffect(() => {
-    const fetchConversations = async () => {
-      console.log(user.username)
-      const conversations = await DataStore.query(Conversation, c => c.participants.contains(username))
-      console.log(conversations)
-      setConversations(conversations)
-    }
-
-    // TODO: Refactor this code common with Friends page
     const fetchFriends = async () => {
-      const friends = await DataStore.query(Friends, c => c.or(c => [
-        c.userID.eq(username),
-        c.friendID.eq(username)
+      const profile = await DataStore.query(UserProfile, c => c.userID.eq(username))
+      setUserProfile(profile[0])
+      const friends = await DataStore.query(Friendship, f => f.or(f => [
+        f.friendProfileID.eq(profile[0].id),
+        f.userProfileID.eq(profile[0].id)
       ]))
-      const friendIDs = friends.reduce((result: string[], friend) => {
-        if(friend.status === 'accepted') {
-          result.push(friend.friendID === username ? friend.userID : friend.friendID);
-        }
-        return result;
-      }, [])
-      const friendPromises = friendIDs.map(async friendID => {
-        const result = await DataStore.query(UserProfile, c => c.userID.eq(friendID))
-        return result[0];
+
+      // Fetch profiles from Friends instead?
+
+      const friendProfileIDs = friends.map(friend =>
+        friend.friendProfileID === profile[0].id ? friend.userProfileID : friend.friendProfileID)
+      const friendPromises = friendProfileIDs.map(async friendID => {
+        const result = await DataStore.query(UserProfile, c => c.id.eq(friendID))
+        return result[0]
       })
-      const promiseResult = await Promise.all(friendPromises);
-      setFriendProfiles(promiseResult)
+      const friendProfiles = await Promise.all(friendPromises)
+      console.log(friendProfiles)
+
+      setFriendProfiles(friendProfiles)
     }
-
-
     if(user) {
-      fetchFriends();
-      fetchConversations();
+      fetchFriends()
     }
   }, [user])
 
-  const handleNewConversation = async ({friendID} : {friendID: string}) => {
-    setIsNewConversationOpen(false);
-    const result = await DataStore.save(new Conversation({participants: [username, friendID], Messages: []}))
-    console.log(result)
-  }
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
           <IonTitle>Messages</IonTitle>
           <IonButtons slot='end'>
-            <IonButton>
-              <IonIcon size='large' icon={search}/>
+            <IonButton id='search-modal'>
+              <IonIcon size='large' icon={search} />
             </IonButton>
             <AccountButton id={'message'}/>
           </IonButtons>
@@ -83,16 +84,11 @@ const MessagePage: React.FC = () => {
       <IonContent fullscreen>
         <div className='p-4 h-full'>
         {
-          user ?
+          user && userProfile?.verified ?
             <>
               {/* Conversations */}
               <section className='h-full my-4'>
-                {
-                  conversations?.length ? conversations.map(conversation =>
-                    <ConversationCard key={conversation.id} conversation={conversation} username={username}/>)
-                    :
-                    <h1 className='text-2xl'>No conversations found.</h1>
-                }
+                <ConversationList userProfile={userProfile} />
                 <IonButton onClick={() => setIsNewConversationOpen(true)} className='my-6' >
                   <span className='mx-4'>New Conversation</span>
                   <IonIcon  icon={addCircle}></IonIcon>
@@ -103,24 +99,19 @@ const MessagePage: React.FC = () => {
               <IonModal isOpen={isNewConversationOpen} onDidDismiss={() => setIsNewConversationOpen(false)}  >
                 <IonHeader>
                   <IonToolbar>
-                    <IonButtons slot="start">
-                      <IonButton onClick={() => newConversationModal.current?.dismiss()}>Cancel</IonButton>
-                    </IonButtons>
                     <IonTitle className='ion-text-center'>New Conversation</IonTitle>
                     <IonButtons slot="end">
-                      <IonButton strong={true} onClick={() => confirm()}>
-                        Confirm
-                      </IonButton>
+                      <IonButton onClick={() => setIsNewConversationOpen(false)}>Cancel</IonButton>
                     </IonButtons>
                   </IonToolbar>
                 </IonHeader>
                 <IonContent className="ion-padding">
                   {
                     friendProfiles.map(profile =>
-                      <FriendCard key={profile.id} profile={profile} onClick={() => handleNewConversation({friendID: profile.userID})} link={false}/>
+                      <FriendCard key={profile.id} profile={profile} onClick={() => handleNewConversation({friendProfile: profile})} link={false}/>
                     )}
                   <IonItem>
-                    <IonInput label="Fi" ref={input} type="text" placeholder="Your name" />
+                    <IonInput label="Friend's Name" ref={input} type="text" placeholder="" />
                   </IonItem>
                 </IonContent>
               </IonModal>
@@ -134,7 +125,19 @@ const MessagePage: React.FC = () => {
             </div>
         }
         </div>
-
+        <IonModal ref={searchConversationModal} trigger='search-modal'>
+            <IonHeader>
+              <IonToolbar>
+                <IonTitle className='ion-text-center'>Search Conversations</IonTitle>
+                <IonButtons slot="end">
+                  <IonButton onClick={() => searchConversationModal.current?.dismiss()}>Cancel</IonButton>
+                </IonButtons>
+              </IonToolbar>
+            </IonHeader>
+          <IonContent className='ion-padding'>
+            <div>Not yet implemented.</div>
+          </IonContent>
+        </IonModal>
       </IonContent>
     </IonPage>
   );
@@ -145,43 +148,83 @@ type ProfileImage = {
   user: string
 }
 
+
+
+const ConversationList = ({userProfile}: {userProfile: UserProfile}) => {
+  const [conversations, setConversations] = useState<Conversation[]>([]);
+  const { user, signOut } = useAuthenticator();
+
+  useEffect(() => {
+    const fetchConversations = async () => {
+      try {
+        if (userProfile) {
+          const fetchedConversations = await DataStore.query(Conversation, c => c.or(c => [
+              c.userProfileID.eq(userProfile.id),
+              c.friendProfileID.eq(userProfile.id)
+            ]
+          ));
+
+
+
+          setConversations(fetchedConversations);
+        }
+      } catch (error) {
+        console.error('Error fetching conversations:', error);
+      }
+    };
+
+    fetchConversations();
+
+    const subscription = DataStore.observe(Conversation).subscribe(() => fetchConversations());
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, []);
+
+  return (
+    <div>
+      <h2>Conversations</h2>
+      <ul>
+        {conversations.map((conversation) => (
+          <li key={conversation.id}>
+            {conversation.userProfileID} - {conversation.friendProfileID}
+            <ConversationCard conversation={conversation} userProfile={userProfile}/>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
 interface ConversationCardProps extends ComponentProps<'div'> {
   conversation: Conversation,
-  username: string
+  userProfile: UserProfile | undefined,
 }
-
-
-// TODO: Pass profiles instead of fetching again
-const ConversationCard = ({conversation, username, onClick} : ConversationCardProps) => {
-  const [profiles, setProfiles] = useState<UserProfile[]>()
-  const [profileImages, setProfileImages] = useState<ProfileImage[]>()
+const ConversationCard = ({conversation, userProfile, onClick} : ConversationCardProps) => {
+  const [friendProfile, setFriendProfile] = useState<UserProfile>();
+  const [friendProfileImage, setFriendProfileImage] = useState<string>();
+  const [userProfileImage, setUserProfileImage] = useState<string>();
   const [messages, setMessages] = useState<Message[]>([])
   const modal = useRef<HTMLIonModalElement>(null);
   const input = useRef<HTMLIonInputElement>(null);
 
   useEffect(() => {
-
       // Fetch the profiles of the participants of the conversation
-      const fetchProfiles = async () => {
-      const profilePromises = conversation.participants?.map(async userID=> {
-        const result = await DataStore.query(UserProfile, c => c.userID.eq(userID))
-        return result[0]
-      })
-      if(profilePromises) {
-        const profileData = await Promise.all(profilePromises);
-        const profilesFiltered = profileData.filter(profile => profile.userID !== username);
-        setProfiles(profilesFiltered)
-        // Fetch the profile images of the participants of the conversation
-        const imagePromises =  profilesFiltered
-          .map(async profile => {
-            const result = await Storage.get(profile.profileImage as string)
-            return {user: profile.userID, src: result}
-          })
-        if(imagePromises) {
-          const imageData = await Promise.all(imagePromises)
-          setProfileImages(imageData)
-        }
+    const fetchProfiles = async () => {
+      if(!userProfile) {
+        return;
       }
+      const friend = await DataStore.query(UserProfile, c =>
+        c.id.eq(userProfile.id === conversation.userProfileID ? conversation.friendProfileID : conversation.userProfileID)
+      )
+
+      setFriendProfile(friend[0])
+
+      // Fetch the profile images of the participants of the conversation
+      const userImage = await Storage.get(userProfile.profileImage as string)
+      const friendImage = await Storage.get(friend[0].profileImage as string)
+      setFriendProfileImage(friendImage)
+      setUserProfileImage(userImage)
     }
 
     fetchProfiles()
@@ -202,11 +245,15 @@ const ConversationCard = ({conversation, username, onClick} : ConversationCardPr
   // Create a new message
   const sendData = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if(input.current?.value && profiles) {
+    if(input.current?.value && friendProfile && userProfile) {
       const message = await DataStore.save(new Message({
-        text: input.current?.value as string,
+        content: input.current?.value as string,
+        conversation: conversation,
         conversationID: conversation.id,
-        senderID: username as string,
+        senderID: userProfile.id,
+        sender: userProfile,
+        receiverID: friendProfile.id,
+        receiver: friendProfile ,
       }))
       console.log(message)
     }
@@ -216,26 +263,19 @@ const ConversationCard = ({conversation, username, onClick} : ConversationCardPr
     <div onClick={onClick} className='shadow-xl p-4 flex justify-between my-4'>
       <div className='flex items-center justify-between w-full'>
         <div className='flex items-center'>
-        {
-          profileImages?.map(profileImage =>
-            <img className="rounded-full mx-4 max-w-[75px] w-full max-h-[75px] aspect-square" src={profileImage.src} key={profileImage.user} alt={profileImage.user}/>
-          )
-        }
-        {
-          profiles?.map(profile =>
-            <span key={profile.userID}>{profile.firstName}</span>)
-        }
+          <img className="rounded-full mx-4 max-w-[75px] w-full max-h-[75px] aspect-square" src={friendProfileImage} alt={friendProfile?.firstName} />
+          <span >{friendProfile?.firstName}</span>
         </div>
-        <IonButton id="open-modal" expand="block">
+        <IonButton id={`open-modal-${conversation.id}`} expand="block">
           Open
         </IonButton>
       </div>
 
       {/* Conversation Modal */}
-      <IonModal ref={modal} trigger="open-modal">
+      <IonModal ref={modal} trigger={`open-modal-${conversation.id}`}>
         <IonHeader>
           <IonToolbar>
-            <IonTitle>Conversation with {profiles?.map(profile => profile.firstName)}</IonTitle>
+            <IonTitle>Conversation with {friendProfile?.firstName}</IonTitle>
           </IonToolbar>
         </IonHeader>
         <IonContent className="ion-padding">
@@ -243,9 +283,10 @@ const ConversationCard = ({conversation, username, onClick} : ConversationCardPr
             messages.map(message =>
               <div
                 key={message.id}
-                className={`flex my-4 w-full ${message.senderID !== username ? 'justify-start' : 'justify-end'}`}
+                className={`flex my-4 w-full ${message.senderID !== userProfile?.id ? 'justify-start' : 'justify-end'}`}
               >
-                <div className={`p-4 ${message.senderID === username ? 'bg-secondary-default' : 'bg-secondary-shade'} w-1/2`}>{message.text}</div>
+                {message.senderID !== userProfile?.id && <img className="rounded-full mx-4 max-w-[75px] w-full max-h-[75px] aspect-square" src={friendProfileImage} alt={friendProfile?.firstName}  />}
+                <div className={`p-4 rounded-xl ${message.senderID === userProfile?.id ? 'bg-primary-default text-light-default' : 'bg-secondary-default'} w-1/2`}>{message.content}</div>
               </div>
             )
           }

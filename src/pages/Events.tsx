@@ -12,30 +12,34 @@ import {
 import {checkmarkCircleOutline, search} from "ionicons/icons";
 import { useAuthenticator } from '@aws-amplify/ui-react';
 import {DataStore} from 'aws-amplify';
-import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
+import React, {useContext, useEffect, useLayoutEffect, useRef, useState} from 'react';
 import { Storage } from "@aws-amplify/storage"
-import {Festival, LazyFestival, UserProfile} from '../models';
+import {EventProfile, Festival, LazyFestival, UserProfile} from '../models';
 import AccountButton from "../components/AccountButton";
+import DataStoreContext, {DataStoreContextType} from "../context/DataStoreContext";
 
 const EventPage: React.FC = () => {
   const { user } = useAuthenticator((context) => [context.user]);
   const [festivalData, setFestivalData] = useState<LazyFestival[]>([]);
   const [profile, setProfile] = useState<UserProfile>();
   const username = user?.username as string;
-  const [alertIsOpen, setAlertIsOpen] = useState(false);
+
   const festivalModal = useRef<HTMLIonModalElement>(null);
+  const { dataStoreCleared } = useContext(DataStoreContext) as DataStoreContextType;
 
-  useEffect (() => {
-    const festivalSub = DataStore.observeQuery(Festival)
-      .subscribe(( {items}) => {
-        console.log(items)
-        setFestivalData(items)
-      })
+  useLayoutEffect (() => {
+    if(dataStoreCleared) {
+      const festivalSub = DataStore.observeQuery(Festival)
+        .subscribe(({items}) => {
+          console.log(items)
+          setFestivalData(items)
+        })
 
-    return () => {
-      festivalSub.unsubscribe();
-    };
-  }, []);
+      return () => {
+        festivalSub.unsubscribe();
+      };
+    }
+  }, [dataStoreCleared]);
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -44,6 +48,8 @@ const EventPage: React.FC = () => {
     }
     if(user) {
       fetchProfile();
+    } else {
+      setProfile(undefined);
     }
   }, [user])
 
@@ -52,39 +58,7 @@ const EventPage: React.FC = () => {
     setFestivalData(searchQuery)
   }
 
-  const handleAttendFestival = async (festival: Festival, action: string = 'attend') => {
-    const latestProfile = await DataStore.query(UserProfile, c => c.userID.eq(username));
-    const profile = latestProfile[0];
-    if (profile) {
-      if (action === 'attend') {
-        const updatedFestival = Festival.copyOf(festival, updated => {
-          updated.attendants = updated.attendants ?? [];
-          updated.attendants.push(profile.userID);
-        })
-        await DataStore.save(updatedFestival);
 
-        const updatedAttending = UserProfile.copyOf(profile, updated => {
-          updated.festivalsAttending = updated.festivalsAttending ?? [];
-          updated.festivalsAttending.push(festival.id);
-        })
-        await DataStore.save(updatedAttending);
-      } else if(action === 'unattend') {
-        const updatedFestival = Festival.copyOf(festival, updated => {
-          updated.attendants = updated.attendants ?? [];
-          updated.attendants = updated.attendants.filter(attendant => attendant !== profile.userID);
-        })
-        await DataStore.save(updatedFestival);
-
-        const updatedAttending = UserProfile.copyOf(profile, updated => {
-          updated.festivalsAttending = updated.festivalsAttending ?? [];
-          updated.festivalsAttending = updated.festivalsAttending.filter(attending => attending !== festival.id);
-        })
-        await DataStore.save(updatedAttending);
-      }
-    } else {
-      setAlertIsOpen(true);
-    }
-  }
 
   return (
     <IonPage>
@@ -102,17 +76,11 @@ const EventPage: React.FC = () => {
       <IonContent fullscreen>
         <div className='grid gap-4 justify-items-center grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 items-center p-4'>
           { festivalData?.map(festival =>
-            <FestivalCard onClick={handleAttendFestival} festival={festival} userProfile={profile} key={festival.id}/>
+            <FestivalCard festival={festival} userProfile={profile} key={festival.id}/>
           )}
         </div>
       </IonContent>
-      <IonAlert
-        isOpen={alertIsOpen}
-        header="Not logged in!"
-        message="Please log in to use this feature"
-        buttons={['OK']}
-        onDidDismiss={() => setAlertIsOpen(false)}
-      ></IonAlert>
+
       <IonModal ref={festivalModal} trigger='search-festivals'>
         <IonHeader>
           <IonToolbar>
@@ -135,19 +103,69 @@ const EventPage: React.FC = () => {
 interface FestivalCardProps {
   festival: LazyFestival;
   userProfile: UserProfile | undefined;
-  onClick: (festival: Festival, action?: string) => void;
 }
 
-const FestivalCard = ({festival, onClick, userProfile}: FestivalCardProps) => {
+const FestivalCard = ({festival, userProfile}: FestivalCardProps) => {
   const [festivalImage, setFestivalImage] = useState("")
-
+  const [attendingEvent, setAttendingEvent] = useState(false)
+  const [eventProfile, setEventProfile] = useState<EventProfile>();
+  const { dataStoreCleared } = useContext(DataStoreContext) as DataStoreContextType;
+  const [alertIsOpen, setAlertIsOpen] = useState(false);
   useEffect(() => {
     const fetchFestivalImage = async () => {
       const imageSrc = await Storage.get(festival.image, {level: 'public'})
       setFestivalImage(imageSrc);
     }
+
     fetchFestivalImage()
-  }, [])
+  }, [userProfile])
+
+  useEffect(() => {
+    if(dataStoreCleared) {
+      const eventProfileSub = DataStore.observeQuery(EventProfile, c => c.eventID.eq(festival.id))
+        .subscribe(({items}) => {
+          console.log("EP", items)
+          if(userProfile && items.length > 0) {
+            const ep = items.filter(item => item.userProfileID === userProfile.id)
+            if(ep.length > 0) {
+              setAttendingEvent(true)
+              setEventProfile(ep[0])
+            }
+          } else {
+            setAttendingEvent(false)
+            setEventProfile(undefined)
+          }
+        })
+
+      return () => {
+        eventProfileSub.unsubscribe();
+      }
+    }
+  }, [dataStoreCleared, userProfile])
+
+  const handleAttendFestival = async () => {
+    if (userProfile) {
+      if (attendingEvent && eventProfile) {
+        // If the user is already attending, remove them from the attendees list
+        await DataStore.delete(eventProfile);
+        setAttendingEvent(false)
+        console.log('User removed from the festival attendees list');
+      } else {
+        // If the user is not attending, add them to the attendees list
+        await DataStore.save(
+          new EventProfile({
+            userProfileID: userProfile.id,
+            eventID: festival.id,
+            userProfile: userProfile,
+            event: festival,
+          })
+        );
+        console.log('User added to the festival attendees list');
+      }
+    } else {
+      setAlertIsOpen(true);
+    }
+  }
 
   return (
     <div className='m-4 rounded-xl shadow-md w-full  max-w-[350px] bg-light-default'>
@@ -169,14 +187,19 @@ const FestivalCard = ({festival, onClick, userProfile}: FestivalCardProps) => {
       <div>
         <h2 className='text-base md:text-lg m-2'>Plan on Attending? Let your friends know!</h2>
         {
-          festival.attendants?.includes(userProfile?.userID as string)  ?
-            <IonButton onClick={() => onClick(festival, 'unattend')}>I&apos;ll be there! <IonIcon icon={checkmarkCircleOutline}/></IonButton>
+          attendingEvent  ?
+            <IonButton onClick={handleAttendFestival}>I&apos;ll be there! <IonIcon icon={checkmarkCircleOutline}/></IonButton>
             :
-            <IonButton   onClick={() => onClick(festival, 'attend')} fill='outline'>I&apos;ll be there!</IonButton>
+            <IonButton   onClick={handleAttendFestival} fill='outline'>I&apos;ll be there!</IonButton>
         }
-
-
       </div>
+      <IonAlert
+        isOpen={alertIsOpen}
+        header="Not logged in!"
+        message="Please log in to use this feature"
+        buttons={['OK']}
+        onDidDismiss={() => setAlertIsOpen(false)}
+      ></IonAlert>
     </div>
   )
 }
