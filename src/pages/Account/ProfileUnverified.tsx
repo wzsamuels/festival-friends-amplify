@@ -1,11 +1,9 @@
 import { SubmitHandler} from "react-hook-form";
-import React, {useEffect, useState} from "react";
+import React from "react";
 import { UserProfile} from "../../models";
 import {DataStore} from "@aws-amplify/datastore";
 import ProfileForm from "../../components/ProfileForm";
 import {ProfileInputs} from "../../types";
-import {IonButton} from "@ionic/react";
-
 
 interface ProfileUnverifiedProps {
   username: string,
@@ -31,8 +29,6 @@ const ProfileUnverified = ({username, email, profile} : ProfileUnverifiedProps) 
       console.error("Error saving profile:", err)
     }
   }
-
-
 
   return (
     <div className='flex flex-col justify-center items-center w-full my-4 p-4'>
