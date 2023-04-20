@@ -1,12 +1,12 @@
 import { DataStore } from '@aws-amplify/datastore';
 import { UserProfile } from '../../models';
 import { useEffect, useState} from 'react';
-import {Authenticator, useAuthenticator, withAuthenticator} from '@aws-amplify/ui-react';
+import {Authenticator, useAuthenticator} from '@aws-amplify/ui-react';
 import {
   IonButton,
   IonButtons,
   IonContent,
-  IonHeader, IonIcon,
+  IonHeader,
   IonPage,
   IonTitle,
   IonToolbar
