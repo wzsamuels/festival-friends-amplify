@@ -1,13 +1,14 @@
 import {UserProfile} from "../../models";
 import React, {FormEvent, useEffect, useState} from "react";
-import {Controller, SubmitHandler, useForm} from "react-hook-form";
+import { SubmitHandler} from "react-hook-form";
 import {Storage} from "aws-amplify";
 import {DataStore} from "@aws-amplify/datastore";
 import getErrorMessage from "../../lib/getErrorMessage";
-import {IonAlert, IonButton} from "@ionic/react";
+import {IonAlert, IonButton, IonIcon} from "@ionic/react";
 import {AccountSettings} from "@aws-amplify/ui-react";
 import ProfileForm from "../../components/ProfileForm";
 import {ProfileInputs} from "../../types";
+import {personCircle} from "ionicons/icons";
 
 const ProfileVerified = ({username, profile} : {username: string, profile: UserProfile}) => {
   const [profileImage, setProfileImage] = useState("")
@@ -81,7 +82,9 @@ const ProfileVerified = ({username, profile} : {username: string, profile: UserP
           profile.profileImage ?
             <img id='change-alert' className='max-w-[350px] rounded-full cursor-pointer rounded-xl' src={profileImage} alt="Profile Image"/>
             :
-            <div className='w-[350px] h-[350px] border border-medium-default rounded-xl'></div>
+            <div className='w-[350px] h-[350px] border border-medium-default rounded-xl'>
+              <IonIcon icon={personCircle} className='w-full h-full text-medium-default'/>
+              </div>
         }
         <IonAlert
           header='Change Profile Picture'
@@ -97,7 +100,6 @@ const ProfileVerified = ({username, profile} : {username: string, profile: UserP
             }
           ]}
         >
-
         </IonAlert>
         <form className='flex flex-col justify-center w-full' onSubmit={handleFileSubmit}>
           <input
