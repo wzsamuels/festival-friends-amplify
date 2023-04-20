@@ -31,6 +31,7 @@ const AccountPage = () => {
 
   const renderPage = () => {
     if(authStatus === 'authenticated') {
+      {/* Return nothing when profile is loading to prevent the page from rendering before the profile is loaded*/}
       if(loading) {
         return null
       }
@@ -61,18 +62,13 @@ const AccountPage = () => {
       .subscribe(( {items, isSynced}) => {
         console.log(`Is synced: ${isSynced}`)
         setProfile(items[0])
+        setLoading(false);
       })
 
     return () => {
       profileSub.unsubscribe();
     };
   }, [user])
-
-  useEffect(() => {
-    if(profile) {
-      setLoading(false);
-    }
-  }, [profile])
 
   return (
     <IonPage>
