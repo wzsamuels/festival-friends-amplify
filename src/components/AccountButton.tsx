@@ -1,4 +1,4 @@
-import {IonAlert, IonButton, IonIcon, IonItem, IonPopover, IonRouterLink} from "@ionic/react";
+import {IonAlert, IonButton, IonIcon, IonItem, IonLabel, IonPopover, IonRouterLink} from "@ionic/react";
 import {personCircle} from "ionicons/icons";
 import React, {useContext} from "react";
 import {useAuthenticator} from "@aws-amplify/ui-react";
@@ -28,7 +28,8 @@ const AccountButton = ({id} : {id: string}) => {
         {
           user ?
             <>
-              <IonItem className='w-full cursor-pointer' routerLink='/account'>Account</IonItem>
+              <IonItem><IonLabel>{user?.attributes?.email}</IonLabel></IonItem>
+              <IonItem className='w-full cursor-pointer' routerLink='/account'><IonLabel>Account</IonLabel></IonItem>
               <IonItem className='w-full cursor-pointer' onClick={handleSignOut}>Sign Out</IonItem>
             </>
             :
