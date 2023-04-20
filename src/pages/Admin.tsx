@@ -1,6 +1,5 @@
-import ConversationCreateForm from "../ui-components/ConversationCreateForm";
 import React, {useEffect, useState} from "react";
-import {FestivalCreateForm, FestivalUpdateForm} from "../ui-components";
+import {FestivalCreateForm } from "../ui-components";
 import {
   IonButton,
   IonButtons,
@@ -62,6 +61,7 @@ const VerifyAccounts = () => {
     const latestProfile = await DataStore.query(UserProfile, c => c.id.eq(profile.id))
     await DataStore.save(UserProfile.copyOf(latestProfile[0], updated => {updated.verified = true}))
     setUnverifiedProfiles(unverifiedProfiles.filter(p => p.id !== profile.id))
+    setMessage('Profile verified');
   }
 
   return (
