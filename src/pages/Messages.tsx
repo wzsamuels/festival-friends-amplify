@@ -14,7 +14,6 @@ import {Conversation, Friendship, Message, UserProfile} from "../models";
 import {useAuthenticator} from "@aws-amplify/ui-react";
 import {addCircle,  search} from "ionicons/icons";
 import AccountButton from "../components/AccountButton";
-import {ZenObservable} from "zen-observable-ts";
 import FriendCard from "../components/FriendCard";
 
 const MessagePage: React.FC = () => {
@@ -22,8 +21,6 @@ const MessagePage: React.FC = () => {
   const [friendProfiles, setFriendProfiles] = useState<UserProfile[]>([])
   const searchConversationModal = useRef<HTMLIonModalElement>(null);
   const [isNewConversationOpen, setIsNewConversationOpen] = useState(false);
-  const [isConversationOpen, setIsConversationOpen ] = useState(false);
-  const input = useRef<HTMLIonInputElement>(null);
   const username = user?.username as string;
   const [userProfile, setUserProfile] = useState<UserProfile>()
 
@@ -44,6 +41,10 @@ const MessagePage: React.FC = () => {
   useEffect(() => {
     const fetchFriends = async () => {
       const profile = await DataStore.query(UserProfile, c => c.userID.eq(username))
+
+      if(profile.length === 0) {
+        return
+      }
       setUserProfile(profile[0])
       const friends = await DataStore.query(Friendship, f => f.or(f => [
         f.friendProfileID.eq(profile[0].id),
@@ -107,12 +108,19 @@ const MessagePage: React.FC = () => {
                 </IonHeader>
                 <IonContent className="ion-padding">
                   {
-                    friendProfiles.map(profile =>
-                      <FriendCard key={profile.id} profile={profile} onClick={() => handleNewConversation({friendProfile: profile})} link={false}/>
-                    )}
-                  <IonItem>
-                    <IonInput label="Friend's Name" ref={input} type="text" placeholder="" />
-                  </IonItem>
+                    friendProfiles.length > 0 ? friendProfiles.map(profile =>
+                      <FriendCard
+                        key={profile.id}
+                        profile={profile}
+                        onClick={() => handleNewConversation({friendProfile: profile})}
+                        link={false}/>)
+                    :
+                    <div>
+                      <h1 className='text-xl md:text-2xl my-4'>
+                        No Friends found. Add some friends to start a conversation.
+                      </h1>
+                    </div>
+                  }
                 </IonContent>
               </IonModal>
             </>
@@ -143,16 +151,8 @@ const MessagePage: React.FC = () => {
   );
 };
 
-type ProfileImage = {
-  src: string,
-  user: string
-}
-
-
-
 const ConversationList = ({userProfile}: {userProfile: UserProfile}) => {
   const [conversations, setConversations] = useState<Conversation[]>([]);
-  const { user, signOut } = useAuthenticator();
 
   useEffect(() => {
     const fetchConversations = async () => {
@@ -163,9 +163,6 @@ const ConversationList = ({userProfile}: {userProfile: UserProfile}) => {
               c.friendProfileID.eq(userProfile.id)
             ]
           ));
-
-
-
           setConversations(fetchedConversations);
         }
       } catch (error) {
@@ -183,14 +180,18 @@ const ConversationList = ({userProfile}: {userProfile: UserProfile}) => {
 
   return (
     <div>
-      <h2>Conversations</h2>
       <ul>
-        {conversations.map((conversation) => (
+        { conversations.length > 0 ? conversations.map((conversation) => (
           <li key={conversation.id}>
             {conversation.userProfileID} - {conversation.friendProfileID}
             <ConversationCard conversation={conversation} userProfile={userProfile}/>
           </li>
-        ))}
+        ))
+        :
+          <div>
+            No Conversations found!
+          </div>
+        }
       </ul>
     </div>
   );
