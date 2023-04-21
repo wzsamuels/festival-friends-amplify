@@ -2,8 +2,8 @@ import {
   IonAlert,
   IonButton, IonButtons,
   IonContent,
-  IonHeader, IonIcon, IonModal,
-  IonPage,
+  IonHeader, IonIcon, IonLabel, IonModal,
+  IonPage, IonSegment, IonSegmentButton,
   IonSpinner,
   IonTitle,
   IonToolbar
@@ -64,10 +64,20 @@ const EventPage: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Festivals & Events</IonTitle>
+          <IonSegment value='festival' scrollable>
+            <IonSegmentButton value='festival'>
+              <IonLabel>Music</IonLabel>
+            </IonSegmentButton>
+            <IonSegmentButton>
+              <IonLabel>Sports</IonLabel>
+            </IonSegmentButton>
+            <IonSegmentButton>
+              Events
+            </IonSegmentButton>
+          </IonSegment>
           <IonButtons slot='end'>
             <IonButton id='search-festivals'>
-              <IonIcon size='large' icon={search}/>
+              <IonIcon icon={search}/>
             </IonButton>
             <AccountButton id='events'/>
           </IonButtons>
@@ -84,7 +94,7 @@ const EventPage: React.FC = () => {
       <IonModal ref={festivalModal} trigger='search-festivals'>
         <IonHeader>
           <IonToolbar>
-            <IonButtons slot="start">
+            <IonButtons slot="end">
               <IonButton onClick={() => festivalModal.current?.dismiss()}>Cancel</IonButton>
             </IonButtons>
             <IonTitle className='ion-justify-content-center'>Festival Search</IonTitle>
