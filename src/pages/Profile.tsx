@@ -1,4 +1,6 @@
 import {
+  IonBackButton,
+  IonButtons,
   IonContent,
   IonHeader,
   IonItem,
@@ -13,6 +15,7 @@ import { RouteComponentProps } from "react-router"
 import React, {useEffect, useState} from "react";
 import {UserProfile} from "../models";
 import {DataStore, Storage} from "aws-amplify";
+import ProfileForm from "../components/ProfileForm";
 
 type ProfilePageProps = RouteComponentProps<{
     id: string;
@@ -37,20 +40,27 @@ const ProfilePage: React.FC<ProfilePageProps> = ({match}) => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
+          <IonButtons>
+            <IonBackButton/>
+          </IonButtons>
             <IonTitle>{profile?.firstName} {profile?.lastName}&apos;s Profile</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
         <div className={'p-4 flex flex-col items-center justify-center'}>
           <img width={350} height={350} src={profileImage} alt={profile?.id} className='rounded-full'/>
-          <IonList className={'p-4'}>
-            <IonListHeader>
-              <IonLabel className={'text-xl my-4'}>{profile?.firstName} {profile?.lastName}</IonLabel>
-            </IonListHeader>
-            <IonItem className={'text-lg my-2 flex flex-col'}>City: {profile?.city}</IonItem>
-            <IonItem className={'text-lg my-2'}>School: {profile?.school}</IonItem>
+          <div className={'p-4 w-full max-w-lg'}>
+            <h1 className={'text-xl my-4'}>{profile?.firstName} {profile?.lastName}</h1>
+            <div className={'text-lg my-2 flex flex-wrap'}>
+              <span className='basis-[120px]'>City:</span>
+              <span>{profile?.city}</span>
+            </div>
+            <div className={'text-lg my-2 flex flex-wrap'}>
+              <span className='basis-[120px]'>School:</span>
+              <span>{profile?.school}</span>
+            </div>
             <IonItem className={'text-lg my-2'}>State: {profile?.state}</IonItem>
-          </IonList>
+          </div>
         </div>
       </IonContent>
     </IonPage>
