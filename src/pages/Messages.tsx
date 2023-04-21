@@ -1,18 +1,21 @@
 import {
-  IonButton, IonButtons,
+  IonButton,
+  IonButtons,
   IonContent,
-  IonHeader, IonIcon,
-  IonInput, IonItem,
+  IonHeader,
+  IonIcon,
+  IonInput,
+  IonItem,
   IonModal,
   IonPage,
   IonTitle,
   IonToolbar
 } from '@ionic/react';
-import React, {ComponentProps, FormEvent,  useEffect, useRef, useState} from "react";
+import React, {ComponentProps, FormEvent, useEffect, useRef, useState} from "react";
 import {DataStore, Storage} from "aws-amplify";
 import {Conversation, Friendship, Message, UserProfile} from "../models";
 import {useAuthenticator} from "@aws-amplify/ui-react";
-import {addCircle,  search} from "ionicons/icons";
+import {addCircle, search} from "ionicons/icons";
 import AccountButton from "../components/AccountButton";
 import FriendCard from "../components/FriendCard";
 
@@ -42,7 +45,8 @@ const MessagePage: React.FC = () => {
     const fetchFriends = async () => {
       const profile = await DataStore.query(UserProfile, c => c.userID.eq(username))
 
-      if(profile.length === 0) {
+      // User has to have a verified profile to send messages
+      if(profile.length === 0 || profile[0].verified === false) {
         return
       }
       setUserProfile(profile[0])
@@ -50,19 +54,12 @@ const MessagePage: React.FC = () => {
         f.friendProfileID.eq(profile[0].id),
         f.userProfileID.eq(profile[0].id)
       ]))
+      const friendProfiles = friends.filter(friend => friend.isAccepted).map(friend =>
+        friend.friendProfileID === profile[0].id ? friend.userProfile : friend.friendProfile)
 
-      // Fetch profiles from Friends instead?
+      const result = await Promise.all(friendProfiles.map(async friendProfile => await friendProfile))
+      setFriendProfiles(result)
 
-      const friendProfileIDs = friends.map(friend =>
-        friend.friendProfileID === profile[0].id ? friend.userProfileID : friend.friendProfileID)
-      const friendPromises = friendProfileIDs.map(async friendID => {
-        const result = await DataStore.query(UserProfile, c => c.id.eq(friendID))
-        return result[0]
-      })
-      const friendProfiles = await Promise.all(friendPromises)
-      console.log(friendProfiles)
-
-      setFriendProfiles(friendProfiles)
     }
     if(user) {
       fetchFriends()
