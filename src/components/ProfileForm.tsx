@@ -1,4 +1,4 @@
-import {IonButton, IonInput, IonItem, IonSelect, IonSelectOption} from "@ionic/react";
+import {IonButton, IonInput, IonItem, IonLabel, IonSelect, IonSelectOption} from "@ionic/react";
 import {Controller, SubmitHandler, useForm} from "react-hook-form";
 import {ErrorMessage} from "@hookform/error-message";
 import React, {useState} from "react";
@@ -38,39 +38,49 @@ const ProfileForm = ({onSubmit, profile}: ProfileFormProps) => {
     }
   })
 
+  console.log(profile)
+
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)} className={'w-full'}>
-        <IonItem>
-          <IonInputStyled labelPlacement='fixed' label='First Name' {...register("firstName", {required: true})} />
+        <IonItem lines='inset'>
+          <IonLabel position='fixed' slot='start'>First Name</IonLabel>
+          <IonInputStyled {...register("firstName", {required: true})} />
         </IonItem>
-        <IonItem>
-          <IonInputStyled labelPlacement='fixed' label='Last Name' {...register("lastName", {required: true})}/>
+        <IonItem lines='inset'>
+          <IonLabel position='fixed' slot='start'>Last Name</IonLabel>
+          <IonInput {...register("lastName", {required: true})}/>
         </IonItem>
-        <IonItem>
-          <IonInputStyled labelPlacement='fixed' label='Phone' {...register("phone", {required: true})} type='tel'/>
+        <IonItem lines='inset'>
+          <IonLabel position='fixed' slot='start'>Phone</IonLabel>
+          <IonInput {...register("phone", {required: true})} type='tel'/>
         </IonItem>
-        <IonItem lines='none'>
-          <IonInputStyled labelPlacement='fixed' label='School' {...register("school")} helperText='(optional)'/>
+        <IonItem lines='inset'>
+          <IonLabel position='fixed' slot='start'>School</IonLabel>
+          <IonInput {...register("school")} helperText='(optional)'/>
         </IonItem>
-        <IonItem lines='none'>
-          <IonInputStyled labelPlacement='fixed' label='Address' {...register("address")} helperText='Street address'/>
+        <IonItem lines='inset'>
+          <IonLabel position='fixed' slot='start'>Address</IonLabel>
+          <IonInput legacy={true} {...register("address")} helperText='Street address'/>
+          <div slot='helper'>Street address</div>
         </IonItem>
-        <IonItem lines='none'>
-          <IonInputStyled labelPlacement='fixed' label='Address Line 2' helperText='Apartment, suite, etc. (optional)' {...register("address2")} />
+        <IonItem lines='inset'>
+          <IonLabel className='ion-text-wrap' position='fixed' slot='start'>Address Line 2</IonLabel>
+          <IonInput legacy={true}  {...register("address2")} />
+          <div slot='helper'>Apartment, suite, unit etc</div>
         </IonItem>
-        <IonItem>
-          <IonInputStyled labelPlacement='fixed' label='City' {...register("city", {required: true})}/>
+        <IonItem lines='inset'>
+          <IonLabel position='fixed' slot='start'>City</IonLabel>
+          <IonInput {...register("city", {required: true})}/>
         </IonItem>
-        <IonItem>
+        <IonItem lines='inset'>
+          <IonLabel position='fixed' slot='start'>State</IonLabel>
           <Controller
             render={({ field }) => (
             <IonSelect
               placeholder="Select One"
           value={field.value}
           onIonChange={e => setValue('state', e.detail.value)}
-          labelPlacement='fixed'
-          label='State'
             >
             {states.map((state) => (
                 <IonSelectOption key={state} value={state}>{state}</IonSelectOption>
@@ -87,8 +97,10 @@ const ProfileForm = ({onSubmit, profile}: ProfileFormProps) => {
           as={<div className='text-danger-default' />}
           />
         </IonItem>
-        <IonItem lines='none'>
-          <IonInputStyled labelPlacement='fixed' label='Zip Code' helperText='5 digit zip code' {...register("zipcode")} />
+        <IonItem lines='inset'>
+
+          <IonLabel position='fixed' slot='start'>Zip Code</IonLabel>
+          <IonInput {...register("zipcode")} />
         </IonItem>
 
         <div className='my-6 flex justify-center'>
