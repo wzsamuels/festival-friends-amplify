@@ -3,19 +3,14 @@ import {
   IonButtons,
   IonContent,
   IonHeader,
-  IonItem,
-  IonLabel,
-  IonList,
-  IonListHeader,
   IonPage,
-  IonTitle,
   IonToolbar
 } from "@ionic/react"
 import { RouteComponentProps } from "react-router"
 import React, {useEffect, useState} from "react";
 import {UserProfile} from "../models";
 import {DataStore, Storage} from "aws-amplify";
-import ProfileForm from "../components/ProfileForm";
+import AccountButton from "../components/AccountButton";
 
 type ProfilePageProps = RouteComponentProps<{
     id: string;
@@ -43,7 +38,9 @@ const ProfilePage: React.FC<ProfilePageProps> = ({match}) => {
           <IonButtons>
             <IonBackButton/>
           </IonButtons>
-            <IonTitle>{profile?.firstName} {profile?.lastName}&apos;s Profile</IonTitle>
+          <IonButtons slot="end">
+            <AccountButton id='profile'/>
+          </IonButtons>
         </IonToolbar>
       </IonHeader>
       <IonContent>
@@ -59,7 +56,8 @@ const ProfilePage: React.FC<ProfilePageProps> = ({match}) => {
               <span className='basis-[120px]'>School:</span>
               <span>{profile?.school}</span>
             </div>
-            <IonItem className={'text-lg my-2'}>State: {profile?.state}</IonItem>
+            <div className={'text-lg my-2 flex flex-wrap'}>
+              <span className='basis-[120px]'>State:</span><span>{profile?.state}</span></div>
           </div>
         </div>
       </IonContent>
