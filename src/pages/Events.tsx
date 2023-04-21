@@ -132,7 +132,6 @@ const FestivalCard = ({festival, userProfile}: FestivalCardProps) => {
     if(dataStoreCleared) {
       const eventProfileSub = DataStore.observeQuery(EventProfile, c => c.eventID.eq(festival.id))
         .subscribe(({items}) => {
-          console.log("EP", items)
           if(userProfile && items.length > 0) {
             const ep = items.filter(item => item.userProfileID === userProfile.id)
             if(ep.length > 0) {
@@ -196,7 +195,7 @@ const FestivalCard = ({festival, userProfile}: FestivalCardProps) => {
         <h2 className='text-base md:text-lg m-2'>Plan on Attending? Let your friends know!</h2>
         {
           attendingEvent  ?
-            <IonButton onClick={handleAttendFestival}>I&apos;ll be there! <IonIcon icon={checkmarkCircleOutline}/></IonButton>
+            <IonButton onClick={handleAttendFestival}>I&apos;ll be there! <IonIcon className='ml-2' icon={checkmarkCircleOutline}/></IonButton>
             :
             <IonButton   onClick={handleAttendFestival} fill='outline'>I&apos;ll be there!</IonButton>
         }
