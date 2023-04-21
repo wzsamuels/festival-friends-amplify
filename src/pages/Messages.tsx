@@ -73,7 +73,7 @@ const MessagePage: React.FC = () => {
           <IonTitle>Messages</IonTitle>
           <IonButtons slot='end'>
             <IonButton id='search-modal'>
-              <IonIcon size='large' icon={search} />
+              <IonIcon icon={search} />
             </IonButton>
             <AccountButton id={'message'}/>
           </IonButtons>

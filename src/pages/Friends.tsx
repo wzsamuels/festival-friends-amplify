@@ -13,7 +13,7 @@ import {
 import React, {RefObject, useEffect, useRef, useState} from "react";
 import {useAuthenticator} from "@aws-amplify/ui-react";
 import {DataStore} from "aws-amplify";
-import {Conversation, Friendship, UserProfile} from "../models";
+import { Friendship, UserProfile} from "../models";
 import {checkmark, close, search } from "ionicons/icons";
 import AccountButton from "../components/AccountButton";
 import {SubmitHandler, useForm} from "react-hook-form";
@@ -106,7 +106,7 @@ const FriendsPage: React.FC = () => {
           <IonTitle>Friends - {user?.attributes?.email}</IonTitle>
           <IonButtons slot='end'>
             <IonButton id="friend-search">
-              <IonIcon size='large'  icon={search}/>
+              <IonIcon icon={search}/>
             </IonButton>
             <AccountButton id='friends'/>
           </IonButtons>
