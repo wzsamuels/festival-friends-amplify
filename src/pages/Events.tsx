@@ -65,13 +65,13 @@ const EventPage: React.FC = () => {
       <IonHeader>
         <IonToolbar>
           <IonSegment value='festival' scrollable>
-            <IonSegmentButton value='festival'>
+            <IonSegmentButton value='music'>
               <IonLabel>Music</IonLabel>
             </IonSegmentButton>
-            <IonSegmentButton>
+            <IonSegmentButton value='sports'>
               <IonLabel>Sports</IonLabel>
             </IonSegmentButton>
-            <IonSegmentButton>
+            <IonSegmentButton value='events'>
               Events
             </IonSegmentButton>
           </IonSegment>
