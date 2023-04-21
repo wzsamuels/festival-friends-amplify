@@ -10,7 +10,7 @@ import {
   IonTitle, IonToast,
   IonToolbar
 } from '@ionic/react';
-import React, {useEffect, useRef, useState} from "react";
+import React, {RefObject, useEffect, useRef, useState} from "react";
 import {useAuthenticator} from "@aws-amplify/ui-react";
 import {DataStore} from "aws-amplify";
 import {Conversation, Friendship, UserProfile} from "../models";
@@ -189,14 +189,14 @@ const FriendsPage: React.FC = () => {
 
         </div>
         <IonModal ref={modal} trigger="friend-search">
-          <FriendSearch modal={modal.current}/>
+          <FriendSearch modal={modal}/>
         </IonModal>
       </IonContent>
     </IonPage>
   );
 };
 
-const FriendSearch = ({modal} : {modal: HTMLIonModalElement | null}) => {
+const FriendSearch = ({modal} : {modal: RefObject<HTMLIonModalElement> | null}) => {
   const { register, handleSubmit } = useForm<SearchInput>()
   const [results, setResults] = useState<UserProfile[]>([])
   const { user } = useAuthenticator();
@@ -262,9 +262,9 @@ const FriendSearch = ({modal} : {modal: HTMLIonModalElement | null}) => {
     <>
       <IonHeader>
         <IonToolbar>
-          <IonTitle className='ion-text-center' >Friend Search</IonTitle>
+          <IonTitle>Friend Search</IonTitle>
           <IonButtons slot="end">
-            <IonButton strong={true} onClick={() => modal?.dismiss()}>
+            <IonButton onClick={() => modal?.current?.dismiss()}>
               Cancel
             </IonButton>
           </IonButtons>
