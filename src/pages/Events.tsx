@@ -58,13 +58,11 @@ const EventPage: React.FC = () => {
     setFestivalData(searchQuery)
   }
 
-
-
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonSegment value='festival' scrollable>
+          <IonSegment value='music' scrollable>
             <IonSegmentButton value='music'>
               <IonLabel>Music</IonLabel>
             </IonSegmentButton>
