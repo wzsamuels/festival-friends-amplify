@@ -4,7 +4,12 @@ import {Storage} from "aws-amplify";
 import {DataStore} from "@aws-amplify/datastore";
 import {Photo} from "../../models";
 import {IonButton, IonButtons, IonContent, IonHeader, IonModal, IonTitle, IonToolbar} from "@ionic/react";
-import {PhotoUploadModalProps} from "../../@types/profile";
+import {ProfileModalProps} from "../../@types/profile";
+
+export interface PhotoUploadModalProps extends ProfileModalProps {
+  photoFile: File | null
+  setPhotoFile: (file: File | null) => void
+}
 
 const PhotoUploadModal = ({profile, username, isOpen, setIsOpen, photoFile, setPhotoFile}: PhotoUploadModalProps) => {
   const [preview, setPreview] = useState('')
