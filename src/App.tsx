@@ -42,6 +42,7 @@ import FriendsPage from "./pages/Friends";
 import Events from "./pages/Events";
 import {chatboxEllipses, musicalNotes, people, settings} from "ionicons/icons";
 import DataStoreContext from './context/DataStoreContext';
+import AccountSettingsPage from "./pages/Account/AccountSettings";
 
 setupIonicReact();
 
@@ -66,8 +67,11 @@ const App: React.FC = () => {
             <Route exact path="/messages">
               <MessagePage />
             </Route>
-            <Route path='/account'>
+            <Route exact path='/account'>
               <AccountPage/>
+            </Route>
+            <Route path='/account/settings'>
+              <AccountSettingsPage/>
             </Route>
             <Route path='/admin'>
               <Admin/>
