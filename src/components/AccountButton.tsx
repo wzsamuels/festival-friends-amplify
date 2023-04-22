@@ -28,8 +28,15 @@ const AccountButton = ({id} : {id: string}) => {
         {
           user ?
             <>
-              <IonItem><IonLabel>{user?.attributes?.email}</IonLabel></IonItem>
-              <IonItem className='w-full cursor-pointer' routerLink='/account'><IonLabel>Account</IonLabel></IonItem>
+              <IonItem>
+                <IonLabel>{user?.attributes?.email}</IonLabel>
+              </IonItem>
+              <IonItem className='w-full cursor-pointer' routerLink='/account'>
+                <IonLabel>Profile</IonLabel>
+              </IonItem>
+              <IonItem className='w-full cursor-pointer' routerLink='/account/settings'>
+                <IonLabel>Account Settings</IonLabel>
+              </IonItem>
               <IonItem className='w-full cursor-pointer' button onClick={handleSignOut}>Sign Out</IonItem>
             </>
             :
