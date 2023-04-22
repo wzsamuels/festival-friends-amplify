@@ -180,7 +180,6 @@ const ConversationList = ({userProfile}: {userProfile: UserProfile}) => {
       <ul>
         { conversations.length > 0 ? conversations.map((conversation) => (
           <li key={conversation.id}>
-            {conversation.userProfileID} - {conversation.friendProfileID}
             <ConversationCard conversation={conversation} userProfile={userProfile}/>
           </li>
         ))
