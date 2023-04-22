@@ -7,12 +7,14 @@ const FriendshipStatus = {
   "ACCEPTED": "ACCEPTED"
 };
 
-const { Message, Festival, UserProfile, Friendship, EventProfile, Conversation } = initSchema(schema);
+const { Message, Festival, UserProfile, Photo, PhotoComment, Friendship, EventProfile, Conversation } = initSchema(schema);
 
 export {
   Message,
   Festival,
   UserProfile,
+  Photo,
+  PhotoComment,
   Friendship,
   EventProfile,
   Conversation,

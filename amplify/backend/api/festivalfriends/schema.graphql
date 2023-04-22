@@ -43,6 +43,26 @@ type UserProfile @model @auth(rules: [{allow: public}]) {
   conversations: [Conversation] @hasMany(indexName: "byUserProfile", fields: ["id"])
   sentMessages: [Message] @hasMany(indexName: "bySender", fields: ["id"])
   receivedMessages: [Message] @hasMany(indexName: "byReceiver", fields: ["id"])
+  photos: [Photo] @hasMany(indexName: "byUserProfile", fields: ["id"])
+}
+
+type Photo
+@model @auth(rules: [{allow: public}])
+{
+  id: ID!
+  userProfileID: ID! @index(name: "byUserProfile")
+  userProfile: UserProfile! @belongsTo(fields: ["userProfileID"])
+  s3Key: String!
+  isPrivate: Boolean!
+  description: String
+  comments: [PhotoComment] @hasMany(indexName: "byPhoto", fields: ["id"])
+}
+
+type PhotoComment @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  content: String!
+  photoID: ID! @index(name: "byPhoto")
+  photo: Photo! @belongsTo(fields: ["photoID"])
 }
 
 type Friendship @model @auth(rules: [{allow: public}])

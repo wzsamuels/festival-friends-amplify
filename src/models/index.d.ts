@@ -115,6 +115,7 @@ type EagerUserProfile = {
   readonly conversations?: (Conversation | null)[] | null;
   readonly sentMessages?: (Message | null)[] | null;
   readonly receivedMessages?: (Message | null)[] | null;
+  readonly photos?: (Photo | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -145,6 +146,7 @@ type LazyUserProfile = {
   readonly conversations: AsyncCollection<Conversation>;
   readonly sentMessages: AsyncCollection<Message>;
   readonly receivedMessages: AsyncCollection<Message>;
+  readonly photos: AsyncCollection<Photo>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -153,6 +155,76 @@ export declare type UserProfile = LazyLoading extends LazyLoadingDisabled ? Eage
 
 export declare const UserProfile: (new (init: ModelInit<UserProfile>) => UserProfile) & {
   copyOf(source: UserProfile, mutator: (draft: MutableModel<UserProfile>) => MutableModel<UserProfile> | void): UserProfile;
+}
+
+type EagerPhoto = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Photo, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly userProfileID: string;
+  readonly userProfile: UserProfile;
+  readonly s3Key: string;
+  readonly isPrivate: boolean;
+  readonly description?: string | null;
+  readonly comments?: (PhotoComment | null)[] | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyPhoto = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Photo, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly userProfileID: string;
+  readonly userProfile: AsyncItem<UserProfile>;
+  readonly s3Key: string;
+  readonly isPrivate: boolean;
+  readonly description?: string | null;
+  readonly comments: AsyncCollection<PhotoComment>;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type Photo = LazyLoading extends LazyLoadingDisabled ? EagerPhoto : LazyPhoto
+
+export declare const Photo: (new (init: ModelInit<Photo>) => Photo) & {
+  copyOf(source: Photo, mutator: (draft: MutableModel<Photo>) => MutableModel<Photo> | void): Photo;
+}
+
+type EagerPhotoComment = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<PhotoComment, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly content: string;
+  readonly photoID: string;
+  readonly photo: Photo;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyPhotoComment = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<PhotoComment, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly content: string;
+  readonly photoID: string;
+  readonly photo: AsyncItem<Photo>;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type PhotoComment = LazyLoading extends LazyLoadingDisabled ? EagerPhotoComment : LazyPhotoComment
+
+export declare const PhotoComment: (new (init: ModelInit<PhotoComment>) => PhotoComment) & {
+  copyOf(source: PhotoComment, mutator: (draft: MutableModel<PhotoComment>) => MutableModel<PhotoComment> | void): PhotoComment;
 }
 
 type EagerFriendship = {
