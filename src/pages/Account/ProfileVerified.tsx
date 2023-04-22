@@ -1,4 +1,4 @@
-import {UserProfile} from "../../models";
+import {Photo, UserProfile} from "../../models";
 import React, {FormEvent, useEffect, useState} from "react";
 import { SubmitHandler} from "react-hook-form";
 import {Storage} from "aws-amplify";
@@ -8,12 +8,14 @@ import {IonAlert, IonButton, IonIcon} from "@ionic/react";
 import {AccountSettings} from "@aws-amplify/ui-react";
 import ProfileForm from "../../components/ProfileForm";
 import {ProfileInputs} from "../../types";
+import { v4 as uuidv4 } from 'uuid';
 import {personCircle} from "ionicons/icons";
 
 const ProfileVerified = ({username, profile} : {username: string, profile: UserProfile}) => {
   const [profileImage, setProfileImage] = useState("")
   const [selectedFile, setSelectedFile] = useState<File>()
   const [message, setMessage] = useState("")
+  const [photos, setPhotos] = useState<Photo[]>([])
 
   const handleFileSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -43,6 +45,7 @@ const ProfileVerified = ({username, profile} : {username: string, profile: UserP
   useEffect(() => {
     const fetchProfileImage = async () => {
       if (profile) {
+        console.log(profile.profileImage)
         const image = await Storage.get(`${profile.profileImage}`, {
           level: "public"
         });
@@ -51,7 +54,39 @@ const ProfileVerified = ({username, profile} : {username: string, profile: UserP
       }
     }
     fetchProfileImage()
+    const fetchPhotos = async () => {
+      const photos = await DataStore.query(Photo, photo => photo.userProfileID.eq(profile.id))
+      console.log(photos)
+      setPhotos(photos)
+    }
+    const photoSub = DataStore.observeQuery(Photo, photo => photo.userProfileID.eq(profile.id)).subscribe(({items}) => {
+      setPhotos(items)
+    })
+    return () => {
+      photoSub.unsubscribe()
+    }
+
   }, [profile])
+
+  const handlePhotoUpload = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    console.log(selectedFile)
+    if(selectedFile) {
+      const id = uuidv4()
+      try {
+        await Storage.put(`${username}/${id}`, selectedFile, {contentType: selectedFile.type});
+        // Profile should always exist, but let's make Typescript happy
+        if(profile) {
+          await DataStore.save(new Photo({userProfile: profile, s3Key: `${username}/${id}`, isPrivate: false, userProfileID: profile.id}))
+        }
+      } catch (error) {
+        console.log("Error uploading file: ", error);
+      }
+    }
+    else {
+      alert("No file selected!")
+    }
+  }
 
   const handleProfileUpdate: SubmitHandler<ProfileInputs> = async (data) => {
     console.log(data)
@@ -118,6 +153,21 @@ const ProfileVerified = ({username, profile} : {username: string, profile: UserP
         <ProfileForm onSubmit={handleProfileUpdate} profile={profile}/>
         { message }
       </section>
+      <section>
+        <h2>Photos</h2>
+        <form onSubmit={handlePhotoUpload}>
+
+          <input type="file" accept="image/png, image/jpeg"
+                 onChange={e => e?.target?.files && setSelectedFile(e.target.files[0])}
+                 className='my-4'/>
+          <IonButton type='submit'>Upload Photo</IonButton>
+        </form>
+        <div>
+          {
+            photos?.map(photo => <PhotoImage key={photo.id} photo={photo}/>)
+          }
+        </div>
+      </section>
       <section className='my-8 min-w-4xl  max-w-[600px] w-full'>
         <h2 className='text-2xl md:text-3xl my-6'>Change Password</h2>
         <AccountSettings.ChangePassword/>
@@ -130,6 +180,28 @@ const ProfileVerified = ({username, profile} : {username: string, profile: UserP
         <h3 className='text-danger-default my-4 text-xl text-center'>This action cannot be undone!</h3>
       </section>
     </div>
+  )
+}
+
+const PhotoImage = ({photo} : {photo: Photo}) => {
+  const [photoUrl, setPhotoUrl] = useState('')
+  console.log(photo)
+
+  useEffect(() => {
+    if(photo) {
+      Storage.get(photo.s3Key, {
+        level: "public"
+      }).then(url => {
+        setPhotoUrl(url)
+      })
+    }
+  }, [photo])
+
+  if(!photo) {
+    return null;
+  }
+  return (
+    <img className='max-w-[350px] rounded-full cursor-pointer rounded-xl' src={photoUrl} alt={`${photo.description ? photo.description : "Photo"}`}/>
   )
 }
 
