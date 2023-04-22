@@ -1,8 +1,4 @@
-import {Photo, UserProfile} from "../models";
-
-
-
-
+import { UserProfile} from "../models";
 
 export interface ProfileModalProps {
   profile: UserProfile
