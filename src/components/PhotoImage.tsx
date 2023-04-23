@@ -24,7 +24,7 @@ const PhotoImage = ({photo, className, onClick} : PhotoProps) => {
     return null;
   }
   return (
-    <img onClick={onClick} className={`w-full h-full ${className}`} src={photoUrl} alt={`${photo.description ? photo.description : "Photo"}`}/>
+    <img onClick={onClick} className={`w-full ${className}`} src={photoUrl} alt={`${photo.description ? photo.description : "Photo"}`}/>
   )
 }
 
