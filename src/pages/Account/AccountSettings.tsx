@@ -17,6 +17,15 @@ const AccountSettingsPage = () => {
       <IonContent>
         <div className='flex flex-col items-center p-4'>
           <section className='my-8 min-w-4xl  max-w-[600px] w-full'>
+            <h1 className='text-2xl md:text-3xl my-6'>Privacy Settings</h1>
+            <h2>Profile</h2>
+            <div>
+              <form>
+
+              </form>
+            </div>
+          </section>
+          <section className='my-8 min-w-4xl  max-w-[600px] w-full'>
             <h1 className='text-2xl md:text-3xl my-6'>Change Password</h1>
             <AccountSettings.ChangePassword/>
           </section>
