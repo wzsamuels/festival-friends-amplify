@@ -4,7 +4,7 @@ import {
   IonButtons,
   IonContent,
   IonHeader,
-  IonIcon,
+  IonIcon, IonItem,
   IonLabel,
   IonModal,
   IonPage, IonSearchbar,
@@ -20,9 +20,9 @@ import {useAuthenticator} from '@aws-amplify/ui-react';
 import {DataStore} from 'aws-amplify';
 import React, {useContext, useEffect, useLayoutEffect, useRef, useState} from 'react';
 import {Storage} from "@aws-amplify/storage"
-import {EventProfile, EventType, Festival, LazyFestival, UserProfile} from '../models';
-import AccountButton from "../components/AccountButton";
-import DataStoreContext, {DataStoreContextType} from "../context/DataStoreContext";
+import {EventProfile, EventType, Festival, LazyFestival, UserProfile} from '../../models';
+import AccountButton from "../../components/AccountButton";
+import DataStoreContext, {DataStoreContextType} from "../../context/DataStoreContext";
 import styled from "styled-components";
 
 const IonSearchbarStyled = styled(IonSearchbar)`
@@ -224,8 +224,10 @@ const FestivalCard = ({festival, userProfile}: FestivalCardProps) => {
       <div className='relative'>
         <div className='w-full max-w-[350px] min-h-[350px] h-full max-h-[350px] object-cover flex items-center justify-center'>
           {
-            festivalImage ? 
-              <img className='w-full h-full' src={festivalImage} alt={festival.name}/>
+            festivalImage ?
+              <IonItem routerLink={`/events/${festival.id}`} lines='none'>
+                <img className='w-full h-full' src={festivalImage} alt={festival.name}/>
+              </IonItem>
             :
               <IonSpinner></IonSpinner>
           }

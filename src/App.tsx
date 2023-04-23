@@ -43,6 +43,7 @@ import Events from "./pages/Events";
 import {chatboxEllipses, musicalNotes, people, settings} from "ionicons/icons";
 import DataStoreContext from './context/DataStoreContext';
 import AccountSettingsPage from "./pages/Account/AccountSettings";
+import EventDetailPage from "./pages/Events/EventDetail";
 
 setupIonicReact();
 
@@ -59,8 +60,9 @@ const App: React.FC = () => {
       <IonReactRouter>
         <IonTabs>
           <IonRouterOutlet>
-            <Route path="/events" render={() => <Events/>}>
+            <Route exact path="/events" render={() => <Events/>}>
             </Route>
+            <Route path='/events/:id' component={EventDetailPage}/>
             <Route exact path="/friends">
               <FriendsPage />
             </Route>
