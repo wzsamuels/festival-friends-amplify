@@ -4,22 +4,25 @@ import {Storage} from "aws-amplify";
 import {DataStore} from "@aws-amplify/datastore";
 import {
   IonAlert,
-  IonButton,
-  IonIcon
+  IonButton, IonButtons, IonContent, IonHeader,
+  IonIcon, IonModal, IonTitle, IonToolbar
 } from "@ionic/react";
 import {personCircle} from "ionicons/icons";
 import ProfileEditModal from "./ProfileEditModal";
 import ProfileImageModal from "./ProfileImageModal";
 import PhotoUploadModal from "./PhotoUploadModal";
 import PhotoImage from "../../components/PhotoImage";
+import {ProfileModalProps} from "../../@types/profile";
 
 const ProfileVerified = ({username, profile} : {username: string, profile: UserProfile}) => {
   const [profileImage, setProfileImage] = useState("")
   const [photos, setPhotos] = useState<Photo[]>([])
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
+  const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null)
   const [isProfileModalOpen, setProfileModalOpen] = useState(false)
-  const [isPhotoModalOpen, setPhotoModalOpen] = useState(false)
+  const [isPhotoUploadModalOpen, setPhotoUploadModalOpen] = useState(false)
   const [isProfileImageModalOpen, setIsProfileImageModalOpen] = useState(false)
+  const [isPhotoModalOpen, setPhotoModalOpen] = useState(false)
   const [isAlertOpen, setAlertOpen] = useState(false)
   const [alertMessage, setAlertMessage] = useState("")
 
@@ -52,7 +55,7 @@ const ProfileVerified = ({username, profile} : {username: string, profile: UserP
     if (!selectedFile) {
       return
     }
-    setPhotoModalOpen(true);
+    setPhotoUploadModalOpen(true);
   }, [selectedFile])
 
 
@@ -61,38 +64,21 @@ const ProfileVerified = ({username, profile} : {username: string, profile: UserP
       <section className={'flex justify-center flex flex-col'}>
         {
           profile.profileImage ?
-            <img id='change-alert' className='max-w-[350px] rounded-full cursor-pointer' src={profileImage} alt="Profile Image"/>
+            <img onClick={() => setIsProfileImageModalOpen(true)} className='max-w-[350px] w-full rounded-full cursor-pointer' src={profileImage} alt="Profile Image"/>
             :
             <div className='w-[350px] h-[350px] border border-medium-default'>
               <IonIcon icon={personCircle} className='w-full h-full text-medium-default'/>
             </div>
         }
-        <IonAlert
-          header='Change Profile Picture'
-          trigger='change-alert'
-          buttons={[
-            {
-              text: 'Cancel',
-              role: 'cancel',
-            },
-            {
-              text: 'Upload Photo',
-              role: 'confirm'
-            }
-          ]}
-        >
-        </IonAlert>
-
         <div className='flex justify-center my-2'>
           <IonButton onClick={() => setProfileModalOpen(true)}>
             Edit Profile
           </IonButton>
         </div>
-
       </section>
       <hr className='my-8 border border-primary-default w-full'/>
-      <section >
-        <div className='flex items-center justify-between my-4'>
+      <section className='flex flex-col items-center jusify-content my-4 w-full'>
+        <div className='flex justify-between w-full max-w-xl'>
           <h2 className='text-2xl'>Photos</h2>
           <label htmlFor="upload-photo" className='block'><IonButton class='pointer-events-none'>Upload Photo</IonButton></label>
           <input type="file" accept="image/png, image/jpeg"
@@ -103,7 +89,7 @@ const ProfileVerified = ({username, profile} : {username: string, profile: UserP
         <div className='flex justify-center gap-4 flex-wrap w-full my-8'>
           {
             photos?.map(photo =>
-              <div className='max-w-[200px] max-h-[200px]' key={photo.id}>
+              <div className='max-w-[200px] max-h-[200px]' onClick={() => {setPhotoModalOpen(true); setSelectedPhoto(photo)}} key={photo.id}>
                 <PhotoImage className='object-cover cursor-pointer'  photo={photo}/>
               </div>
             )
@@ -119,8 +105,8 @@ const ProfileVerified = ({username, profile} : {username: string, profile: UserP
       <PhotoUploadModal
         profile={profile}
         username={username}
-        isOpen={isPhotoModalOpen}
-        setIsOpen={setPhotoModalOpen}
+        isOpen={isPhotoUploadModalOpen}
+        setIsOpen={setPhotoUploadModalOpen}
         photoFile={selectedFile}
         setPhotoFile={setSelectedFile}
       />
@@ -141,7 +127,51 @@ const ProfileVerified = ({username, profile} : {username: string, profile: UserP
           setIsProfileImageModalOpen(true);
         }}
       />
+      <PhotoModal profile={profile} photo={selectedPhoto} isOpen={isPhotoModalOpen} setIsOpen={setPhotoModalOpen}/>
     </div>
+  )
+}
+
+interface ModalProps {
+  isOpen: boolean
+  setIsOpen: (isOpen: boolean) => void
+}
+
+interface PhotoModalProps extends ModalProps {
+  profile: UserProfile
+  photo: Photo | null
+}
+
+const PhotoModal = ({profile, isOpen, setIsOpen, photo} : PhotoModalProps) => {
+  const handleDeletePhoto = async () => {
+    if(photo) {
+      await DataStore.delete(photo)
+      await Storage.remove(`${photo.s3Key}`)
+    }
+    setIsOpen(false)
+  }
+  return (
+    <IonModal isOpen={isOpen} onDidDismiss={() => setIsOpen(false)}>
+      <IonHeader>
+        <IonToolbar>
+
+        <IonButtons slot='end'>
+          <IonButton onClick={() => setIsOpen(false)}>
+            Close
+          </IonButton>
+        </IonButtons>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent>
+        { photo &&<PhotoImage className='w-full' photo={photo}/>}
+        <div className='flex justify-center my-4'>
+          <IonButton onClick={handleDeletePhoto}>
+            Delete
+          </IonButton>
+        </div>
+      </IonContent>
+
+    </IonModal>
   )
 }
 
