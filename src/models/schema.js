@@ -204,6 +204,15 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
+                "type": {
+                    "name": "type",
+                    "isArray": false,
+                    "type": {
+                        "enum": "EventType"
+                    },
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "attendees": {
                     "name": "attendees",
                     "isArray": true,
@@ -1098,9 +1107,21 @@ export const schema = {
                 "REQUESTED",
                 "ACCEPTED"
             ]
+        },
+        "EventType": {
+            "name": "EventType",
+            "values": [
+                "CONCERT",
+                "FESTIVAL",
+                "SPORT",
+                "BUSINESS",
+                "COLLEGE",
+                "MUSIC",
+                "ALL"
+            ]
         }
     },
     "nonModels": {},
     "codegenVersion": "3.4.0",
-    "version": "c7cc9b3e4b6da33129d32ae79bada5d3"
+    "version": "78a460fbf14687f8c21ffd41dce1eb83"
 };

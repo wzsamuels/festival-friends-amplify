@@ -18,6 +18,7 @@ type Festival @model @auth(rules: [{allow: public}]) {
   location: String!
   startDate: AWSDate!
   endDate: AWSDate!
+  type: EventType
   attendees: [EventProfile] @hasMany(fields: ["id"])
 }
 
@@ -78,6 +79,16 @@ type Friendship @model @auth(rules: [{allow: public}])
 enum FriendshipStatus {
   REQUESTED
   ACCEPTED
+}
+
+enum EventType {
+  CONCERT
+  FESTIVAL
+  SPORT
+  BUSINESS
+  COLLEGE
+  MUSIC
+  ALL
 }
 
 type EventProfile @model @auth(rules: [{allow: public}])

@@ -6,7 +6,13 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
+import {
+  Button,
+  Flex,
+  Grid,
+  SelectField,
+  TextField,
+} from "@aws-amplify/ui-react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import { Festival } from "../models";
 import { fetchByPath, validateField } from "./utils";
@@ -29,6 +35,7 @@ export default function FestivalCreateForm(props) {
     location: "",
     startDate: "",
     endDate: "",
+    type: "",
   };
   const [name, setName] = React.useState(initialValues.name);
   const [genre, setGenre] = React.useState(initialValues.genre);
@@ -36,6 +43,7 @@ export default function FestivalCreateForm(props) {
   const [location, setLocation] = React.useState(initialValues.location);
   const [startDate, setStartDate] = React.useState(initialValues.startDate);
   const [endDate, setEndDate] = React.useState(initialValues.endDate);
+  const [type, setType] = React.useState(initialValues.type);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setName(initialValues.name);
@@ -44,6 +52,7 @@ export default function FestivalCreateForm(props) {
     setLocation(initialValues.location);
     setStartDate(initialValues.startDate);
     setEndDate(initialValues.endDate);
+    setType(initialValues.type);
     setErrors({});
   };
   const validations = {
@@ -53,6 +62,7 @@ export default function FestivalCreateForm(props) {
     location: [{ type: "Required" }],
     startDate: [{ type: "Required" }],
     endDate: [{ type: "Required" }],
+    type: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -86,6 +96,7 @@ export default function FestivalCreateForm(props) {
           location,
           startDate,
           endDate,
+          type,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -146,6 +157,7 @@ export default function FestivalCreateForm(props) {
               location,
               startDate,
               endDate,
+              type,
             };
             const result = onChange(modelFields);
             value = result?.name ?? value;
@@ -175,6 +187,7 @@ export default function FestivalCreateForm(props) {
               location,
               startDate,
               endDate,
+              type,
             };
             const result = onChange(modelFields);
             value = result?.genre ?? value;
@@ -204,6 +217,7 @@ export default function FestivalCreateForm(props) {
               location,
               startDate,
               endDate,
+              type,
             };
             const result = onChange(modelFields);
             value = result?.image ?? value;
@@ -233,6 +247,7 @@ export default function FestivalCreateForm(props) {
               location: value,
               startDate,
               endDate,
+              type,
             };
             const result = onChange(modelFields);
             value = result?.location ?? value;
@@ -263,6 +278,7 @@ export default function FestivalCreateForm(props) {
               location,
               startDate: value,
               endDate,
+              type,
             };
             const result = onChange(modelFields);
             value = result?.startDate ?? value;
@@ -293,6 +309,7 @@ export default function FestivalCreateForm(props) {
               location,
               startDate,
               endDate: value,
+              type,
             };
             const result = onChange(modelFields);
             value = result?.endDate ?? value;
@@ -307,6 +324,72 @@ export default function FestivalCreateForm(props) {
         hasError={errors.endDate?.hasError}
         {...getOverrideProps(overrides, "endDate")}
       ></TextField>
+      <SelectField
+        label="Type"
+        placeholder="Please select an option"
+        isDisabled={false}
+        value={type}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              genre,
+              image,
+              location,
+              startDate,
+              endDate,
+              type: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.type ?? value;
+          }
+          if (errors.type?.hasError) {
+            runValidationTasks("type", value);
+          }
+          setType(value);
+        }}
+        onBlur={() => runValidationTasks("type", type)}
+        errorMessage={errors.type?.errorMessage}
+        hasError={errors.type?.hasError}
+        {...getOverrideProps(overrides, "type")}
+      >
+        <option
+          children="Concert"
+          value="CONCERT"
+          {...getOverrideProps(overrides, "typeoption0")}
+        ></option>
+        <option
+          children="Festival"
+          value="FESTIVAL"
+          {...getOverrideProps(overrides, "typeoption1")}
+        ></option>
+        <option
+          children="Sport"
+          value="SPORT"
+          {...getOverrideProps(overrides, "typeoption2")}
+        ></option>
+        <option
+          children="Business"
+          value="BUSINESS"
+          {...getOverrideProps(overrides, "typeoption3")}
+        ></option>
+        <option
+          children="College"
+          value="COLLEGE"
+          {...getOverrideProps(overrides, "typeoption4")}
+        ></option>
+        <option
+          children="Music"
+          value="MUSIC"
+          {...getOverrideProps(overrides, "typeoption5")}
+        ></option>
+        <option
+          children="All"
+          value="ALL"
+          {...getOverrideProps(overrides, "typeoption6")}
+        ></option>
+      </SelectField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}

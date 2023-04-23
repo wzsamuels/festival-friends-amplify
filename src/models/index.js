@@ -7,6 +7,16 @@ const FriendshipStatus = {
   "ACCEPTED": "ACCEPTED"
 };
 
+const EventType = {
+  "CONCERT": "CONCERT",
+  "FESTIVAL": "FESTIVAL",
+  "SPORT": "SPORT",
+  "BUSINESS": "BUSINESS",
+  "COLLEGE": "COLLEGE",
+  "MUSIC": "MUSIC",
+  "ALL": "ALL"
+};
+
 const { Message, Festival, UserProfile, Photo, PhotoComment, Friendship, EventProfile, Conversation } = initSchema(schema);
 
 export {
@@ -18,5 +28,6 @@ export {
   Friendship,
   EventProfile,
   Conversation,
-  FriendshipStatus
+  FriendshipStatus,
+  EventType
 };

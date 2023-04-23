@@ -7,6 +7,16 @@ export enum FriendshipStatus {
   ACCEPTED = "ACCEPTED"
 }
 
+export enum EventType {
+  CONCERT = "CONCERT",
+  FESTIVAL = "FESTIVAL",
+  SPORT = "SPORT",
+  BUSINESS = "BUSINESS",
+  COLLEGE = "COLLEGE",
+  MUSIC = "MUSIC",
+  ALL = "ALL"
+}
+
 
 
 type EagerMessage = {
@@ -61,6 +71,7 @@ type EagerFestival = {
   readonly location: string;
   readonly startDate: string;
   readonly endDate: string;
+  readonly type?: EventType | keyof typeof EventType | null;
   readonly attendees?: (EventProfile | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
@@ -78,6 +89,7 @@ type LazyFestival = {
   readonly location: string;
   readonly startDate: string;
   readonly endDate: string;
+  readonly type?: EventType | keyof typeof EventType | null;
   readonly attendees: AsyncCollection<EventProfile>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
