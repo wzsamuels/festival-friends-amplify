@@ -1,42 +1,60 @@
 import {
   IonAlert,
-  IonButton, IonButtons,
+  IonButton,
+  IonButtons,
   IonContent,
-  IonHeader, IonIcon, IonLabel, IonModal,
-  IonPage, IonSegment, IonSegmentButton,
+  IonHeader,
+  IonIcon,
+  IonLabel,
+  IonModal,
+  IonPage, IonSearchbar,
+  IonSegment,
+  IonSegmentButton,
   IonSpinner,
   IonTitle,
-  IonToolbar
+  IonToolbar, SegmentChangeEventDetail
 } from '@ionic/react';
 
 import {checkmarkCircleOutline, search} from "ionicons/icons";
-import { useAuthenticator } from '@aws-amplify/ui-react';
+import {useAuthenticator} from '@aws-amplify/ui-react';
 import {DataStore} from 'aws-amplify';
 import React, {useContext, useEffect, useLayoutEffect, useRef, useState} from 'react';
-import { Storage } from "@aws-amplify/storage"
-import {EventProfile, Festival, LazyFestival, UserProfile} from '../models';
+import {Storage} from "@aws-amplify/storage"
+import {EventProfile, EventType, Festival, LazyFestival, UserProfile} from '../models';
 import AccountButton from "../components/AccountButton";
 import DataStoreContext, {DataStoreContextType} from "../context/DataStoreContext";
+import styled from "styled-components";
+
+const IonSearchbarStyled = styled(IonSearchbar)`
+  --box-shadow: none;
+  max-width: 500px;
+`
+
 
 const EventPage: React.FC = () => {
   const { user } = useAuthenticator((context) => [context.user]);
-  const [festivalData, setFestivalData] = useState<LazyFestival[]>([]);
+  const [events, setEvents] = useState<LazyFestival[]>([]);
   const [profile, setProfile] = useState<UserProfile>();
   const username = user?.username as string;
+  const sportEvents = events.filter(event => event.type === EventType.SPORT);
+  const musicEvent = events.filter(event => event.type === EventType.MUSIC);
+  const collegeEvent = events.filter(event => event.type === EventType.COLLEGE);
+  const businessEvent = events.filter(event => event.type === EventType.BUSINESS);
+  const [eventType, setEventType] = useState('all')
 
   const festivalModal = useRef<HTMLIonModalElement>(null);
   const { dataStoreCleared } = useContext(DataStoreContext) as DataStoreContextType;
 
   useLayoutEffect (() => {
     if(dataStoreCleared) {
-      const festivalSub = DataStore.observeQuery(Festival)
+      const eventSub = DataStore.observeQuery(Festival)
         .subscribe(({items}) => {
           console.log(items)
-          setFestivalData(items)
+          setEvents(items)
         })
 
       return () => {
-        festivalSub.unsubscribe();
+        eventSub.unsubscribe();
       };
     }
   }, [dataStoreCleared]);
@@ -55,22 +73,36 @@ const EventPage: React.FC = () => {
 
   const handleSearch = async () => {
     const searchQuery = await DataStore.query(Festival, (festival) => festival.name.contains('test'))
-    setFestivalData(searchQuery)
+    setEvents(searchQuery)
+  }
+
+  console.log(eventType)
+  const handleSegmentChange = (e: CustomEvent<SegmentChangeEventDetail>) => {
+    console.log(e.detail.value)
+    if(e.detail.value) {
+      setEventType(e.detail.value)
+    }
   }
 
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonSegment value='music' scrollable>
+          <IonSegment value={eventType} scrollable onIonChange={handleSegmentChange}>
+            <IonSegmentButton value='all'>
+              <IonLabel>All</IonLabel>
+            </IonSegmentButton>
             <IonSegmentButton value='music'>
               <IonLabel>Music</IonLabel>
             </IonSegmentButton>
-            <IonSegmentButton value='sports'>
+            <IonSegmentButton value='sport'>
               <IonLabel>Sports</IonLabel>
             </IonSegmentButton>
-            <IonSegmentButton value='events'>
-              Events
+            <IonSegmentButton value='business'>
+              <IonLabel>Business</IonLabel>
+            </IonSegmentButton>
+            <IonSegmentButton value='college'>
+              <IonLabel>College</IonLabel>
             </IonSegmentButton>
           </IonSegment>
           <IonButtons slot='end'>
@@ -83,8 +115,9 @@ const EventPage: React.FC = () => {
       </IonHeader>
       <IonContent fullscreen>
         <div className='grid gap-4 justify-items-center grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 items-center p-4'>
-          { festivalData?.map(festival =>
-            <FestivalCard festival={festival} userProfile={profile} key={festival.id}/>
+          { (eventType === 'music' || eventType === 'all')
+            && musicEvent?.map(event =>
+            <FestivalCard festival={event} userProfile={profile} key={event.id}/>
           )}
         </div>
       </IonContent>
