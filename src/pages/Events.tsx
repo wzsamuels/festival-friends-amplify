@@ -119,6 +119,18 @@ const EventPage: React.FC = () => {
             && musicEvent?.map(event =>
             <FestivalCard festival={event} userProfile={profile} key={event.id}/>
           )}
+          { (eventType === 'sport' || eventType === 'all')
+            && sportEvents?.map(event =>
+              <FestivalCard festival={event} userProfile={profile} key={event.id}/>
+            )}
+          { (eventType === 'business' || eventType === 'all')
+            && businessEvent?.map(event =>
+              <FestivalCard festival={event} userProfile={profile} key={event.id}/>
+            )}
+          {(eventType === 'college' || eventType === 'all')
+            && collegeEvent?.map(event =>
+              <FestivalCard festival={event} userProfile={profile} key={event.id}/>
+            )}
         </div>
       </IonContent>
 
