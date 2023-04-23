@@ -8,9 +8,10 @@ import {
 } from "@ionic/react"
 import { RouteComponentProps } from "react-router"
 import React, {useEffect, useState} from "react";
-import {UserProfile} from "../models";
+import {Photo, UserProfile} from "../models";
 import {DataStore, Storage} from "aws-amplify";
 import AccountButton from "../components/AccountButton";
+import PhotoImage from "../components/PhotoImage";
 
 type ProfilePageProps = RouteComponentProps<{
     id: string;
@@ -19,6 +20,7 @@ type ProfilePageProps = RouteComponentProps<{
 const ProfilePage: React.FC<ProfilePageProps> = ({match}) => {
   const [profile, setProfile] = useState<UserProfile>();
   const [profileImage, setProfileImage] = useState("");
+  const [photos, setPhotos] = useState<Photo[]>([]);
   const id = match.params.id;
 
   useEffect(() => {
@@ -27,6 +29,9 @@ const ProfilePage: React.FC<ProfilePageProps> = ({match}) => {
       setProfile(profileData[0]);
       const imageData = await Storage.get(profileData[0].profileImage as string);
       setProfileImage(imageData)
+      const photoData = await DataStore.query(Photo, c => c.userProfileID.eq(profileData[0].id))
+      console.log(photoData)
+      setPhotos(photoData)
     }
     fetchProfile();
   }, [])
@@ -59,6 +64,15 @@ const ProfilePage: React.FC<ProfilePageProps> = ({match}) => {
             <div className={'text-lg my-2 flex flex-wrap'}>
               <span className='basis-[120px]'>State:</span><span>{profile?.state}</span></div>
           </div>
+          <section className='flex flex-wrap  gap-4' >
+            {
+              photos?.map(photo =>
+                <div className='max-w-[200px] max-h-[200px]' key={photo.id}>
+                  <PhotoImage photo={photo} key={photo.id}/>
+                </div>
+              )
+            }
+          </section>
         </div>
       </IonContent>
     </IonPage>
