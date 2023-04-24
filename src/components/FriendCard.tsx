@@ -1,7 +1,7 @@
 import { UserProfile} from "../models";
-import React,{ useEffect, useState} from "react";
-import {Storage} from "aws-amplify";
+import React, {useContext, useEffect, useState} from "react";
 import {IonButton, IonItem} from "@ionic/react";
+import ImageContext from "../context/ImageContext";
 
 interface FriendCardProps {
   profile: UserProfile,
@@ -14,14 +14,17 @@ interface FriendCardProps {
 const FriendCard = ({profile, link, onClick, onConfirm, onCancel} : FriendCardProps) => {
   const [profileImage, setProfileImage] = useState("")
   const profileUrl = {routerLink: `/friends/profile/${profile.userID}`}
+  const { getSignedURL } = useContext(ImageContext);
 
   useEffect(() => {
-    const fetchProfileImage = async () => {
-      const imageData = await Storage.get(profile.profileImage as string)
-      setProfileImage(imageData)
-    }
-    fetchProfileImage();
-  }, [])
+    const fetchSignedURL = async () => {
+      const url = await getSignedURL(profile.profileImage as string);
+      setProfileImage(url);
+    };
+
+    fetchSignedURL();
+  }, [profile.profileImage, getSignedURL]);
+
 
   return (
     <div className={'m-4 p-2 rounded-xl hover:border-gray-500 shadow-xl w-full max-w-[300px]  flex flex-col items-center'}>

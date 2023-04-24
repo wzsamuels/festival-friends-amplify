@@ -1,6 +1,6 @@
-import React, {ComponentProps, useEffect, useState} from "react";
+import React, {ComponentProps, useContext, useEffect, useState} from "react";
 import {Photo} from "../models";
-import {Storage} from "aws-amplify";
+import ImageContext from "../context/ImageContext";
 
 interface PhotoProps extends ComponentProps<'img'> {
   photo: Photo
@@ -8,17 +8,16 @@ interface PhotoProps extends ComponentProps<'img'> {
 
 const PhotoImage = ({photo, className, onClick} : PhotoProps) => {
   const [photoUrl, setPhotoUrl] = useState('')
-  console.log(photo)
+  const { getSignedURL } = useContext(ImageContext);
 
   useEffect(() => {
-    if(photo) {
-      Storage.get(photo.s3Key, {
-        level: "public"
-      }).then(url => {
-        setPhotoUrl(url)
-      })
-    }
-  }, [photo])
+    const fetchSignedURL = async () => {
+      const url = await getSignedURL(photo.s3Key);
+      setPhotoUrl(url);
+    };
+
+    fetchSignedURL();
+  }, [photo.s3Key, getSignedURL]);
 
   if(!photo) {
     return null;
