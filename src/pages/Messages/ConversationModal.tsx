@@ -79,7 +79,7 @@ const ConversationModal = ({conversation, isOpen, setIsOpen, userProfile, friend
       <IonHeader>
         <IonToolbar>
           <IonButtons slot='end'>
-            <IonButton onClick={() => setIsOpen(false)}>
+            <IonButton onClick={() => {console.log("click");setIsOpen(false);}}>
               <IonIcon icon={close}/>
             </IonButton>
           </IonButtons>

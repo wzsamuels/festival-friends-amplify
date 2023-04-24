@@ -89,9 +89,6 @@ const MessagePage: React.FC = () => {
       setFriendProfiles(result)
     }
 
-    const fetchProfile = async () => {
-
-    }
     if(user) {
       fetchFriends()
     }
@@ -135,7 +132,7 @@ const MessagePage: React.FC = () => {
                 <ul>
                   { conversations.length > 0 ? conversations.map((conversation) => (
                       <li key={conversation.id}>
-                        <ConversationCard conversation={conversation} userProfile={userProfile}/>
+                        <ConversationCard isConversationModalOpen={isConversationModalOpen} setConversationModalOpen={setConversationModalOpen} conversation={conversation} userProfile={userProfile}/>
                       </li>
                     ))
                     :
@@ -213,12 +210,12 @@ const MessagePage: React.FC = () => {
 interface ConversationCardProps extends ComponentProps<'div'> {
   conversation: Conversation,
   userProfile: UserProfile | undefined,
+  isConversationModalOpen: boolean,
+  setConversationModalOpen: (arg: boolean) => void
 }
-const ConversationCard = ({conversation, userProfile, onClick} : ConversationCardProps) => {
+const ConversationCard = ({conversation, userProfile, onClick, isConversationModalOpen, setConversationModalOpen} : ConversationCardProps) => {
   const [friendProfile, setFriendProfile] = useState<UserProfile>();
   const [friendProfileImage, setFriendProfileImage] = useState<string>();
-  const [isConversationModalOpen, setConversationModalOpen] = useState(false);
-
   useEffect(() => {
       // Fetch the profiles of the participants of the conversation
     const fetchProfiles = async () => {
@@ -243,15 +240,12 @@ const ConversationCard = ({conversation, userProfile, onClick} : ConversationCar
 
 
   return (
-    <div onClick={onClick} className='shadow-xl p-4 flex justify-between my-4'>
-      <div className='flex items-center justify-between w-full'>
+    <IonItem lines='none' button onClick={() => setConversationModalOpen(true)} className='shadow-xl  flex justify-between w-full max-w-[400px] my-4'>
+      <div className='flex items-center justify-between w-full p-4'>
         <div className='flex items-center'>
           <img className="rounded-full mx-4 max-w-[75px] w-full max-h-[75px] aspect-square" src={friendProfileImage} alt={friendProfile?.firstName} />
           <span >{friendProfile?.firstName}</span>
         </div>
-        <IonButton onClick={() => setConversationModalOpen(true)} expand="block">
-          Open
-        </IonButton>
       </div>
       <ConversationModal
         conversation={conversation}
@@ -261,7 +255,7 @@ const ConversationCard = ({conversation, userProfile, onClick} : ConversationCar
         isOpen={isConversationModalOpen}
         setIsOpen={setConversationModalOpen}
       />
-    </div>
+    </IonItem>
   )
 }
 
