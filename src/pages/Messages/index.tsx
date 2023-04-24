@@ -12,28 +12,21 @@ import {
   IonTitle,
   IonToolbar
 } from '@ionic/react';
-import React, {ComponentProps, FormEvent, useEffect, useRef, useState} from "react";
+import React, { useEffect, useRef, useState} from "react";
 import {DataStore, Storage} from "aws-amplify";
-import {Conversation, Friendship, Message, UserProfile} from "../../models";
+import {Conversation, Friendship, UserProfile} from "../../models";
 import {useAuthenticator} from "@aws-amplify/ui-react";
-import {addCircle, close, search} from "ionicons/icons";
-import AccountButton from "../../components/AccountButton";
+import {addCircle, search} from "ionicons/icons";
+import AccountButton from "../../components/Profile/AccountButton";
 import FriendCard from "../../components/FriendCard";
-import {ModalProps} from "../../@types/modal";
 import ConversationModal from "./ConversationModal";
-
-type ConversationWithFriendProfile = {
-
-  conversation: Conversation,
-  friendProfile: UserProfile
-}
 
 const MessagePage: React.FC = () => {
   const { user } = useAuthenticator();
   const [userProfile, setUserProfile] = useState<UserProfile>()
   const [friendProfiles, setFriendProfiles] = useState<UserProfile[]>([])
   const [conversations, setConversations] = useState<Conversation[]>([]);
-  const [currentConversation, setCurrentConversation] = useState<ConversationWithFriendProfile | null>(null);
+  const [currentConversation, setCurrentConversation] = useState<Conversation>();
   const searchConversationModal = useRef<HTMLIonModalElement>(null);
   const [isNewConversationModalOpen, setNewConversationModalOpen] = useState(false);
   const [isConversationModalOpen, setConversationModalOpen] = useState(false);
@@ -61,13 +54,18 @@ const MessagePage: React.FC = () => {
         userProfile: userProfile,
         friendProfile: friendProfile
       }))
-      setCurrentConversation({conversation: newConversation, friendProfile})
+      setCurrentConversation(newConversation)
       setConversationModalOpen(true)
     } else {
-      setCurrentConversation({conversation: existingConversations[0], friendProfile})
+      setCurrentConversation(existingConversations[0])
       setConversationModalOpen(true)
     }
   }
+
+  const openConversationModal = (conversation: Conversation) => {
+    setCurrentConversation(conversation);
+    setConversationModalOpen(true);
+  };
 
   useEffect(() => {
     const fetchFriends = async () => {
@@ -132,7 +130,10 @@ const MessagePage: React.FC = () => {
                 <ul>
                   { conversations.length > 0 ? conversations.map((conversation) => (
                       <li key={conversation.id}>
-                        <ConversationCard isConversationModalOpen={isConversationModalOpen} setConversationModalOpen={setConversationModalOpen} conversation={conversation} userProfile={userProfile}/>
+                        <ConversationCard
+                          isConversationModalOpen={isConversationModalOpen}
+                          setConversationModalOpen={setConversationModalOpen} conversation={conversation} userProfile={userProfile}
+                          onClick={() => openConversationModal(conversation)}/>
                       </li>
                     ))
                     :
@@ -171,11 +172,10 @@ const MessagePage: React.FC = () => {
         </IonModal>
       </IonContent>
       <ConversationModal
-        conversation={currentConversation?.conversation}
+        conversation={currentConversation}
         userProfile={userProfile}
-        friendProfile={currentConversation?.friendProfile}
-        friendProfileImage={undefined}
-        isOpen={isConversationModalOpen} setIsOpen={setConversationModalOpen} />
+        isOpen={isConversationModalOpen}
+        setIsOpen={setConversationModalOpen} />
 
       <IonModal isOpen={isNewConversationModalOpen} onDidDismiss={() => setNewConversationModalOpen(false)}  >
         <IonHeader>
@@ -207,11 +207,12 @@ const MessagePage: React.FC = () => {
   );
 };
 
-interface ConversationCardProps extends ComponentProps<'div'> {
+interface ConversationCardProps {
   conversation: Conversation,
   userProfile: UserProfile | undefined,
   isConversationModalOpen: boolean,
   setConversationModalOpen: (arg: boolean) => void
+  onClick: (arg: Conversation) => void
 }
 const ConversationCard = ({conversation, userProfile, onClick, isConversationModalOpen, setConversationModalOpen} : ConversationCardProps) => {
   const [friendProfile, setFriendProfile] = useState<UserProfile>();
@@ -240,21 +241,13 @@ const ConversationCard = ({conversation, userProfile, onClick, isConversationMod
 
 
   return (
-    <IonItem lines='none' button onClick={() => setConversationModalOpen(true)} className='shadow-xl  flex justify-between w-full max-w-[400px] my-4'>
+    <IonItem lines='none' button onClick={() => onClick(conversation)} className='shadow-xl  flex justify-between w-full max-w-[400px] my-4'>
       <div className='flex items-center justify-between w-full p-4'>
         <div className='flex items-center'>
           <img className="rounded-full mx-4 max-w-[75px] w-full max-h-[75px] aspect-square" src={friendProfileImage} alt={friendProfile?.firstName} />
-          <span >{friendProfile?.firstName}</span>
+          <span>{friendProfile?.firstName}</span>
         </div>
       </div>
-      <ConversationModal
-        conversation={conversation}
-        userProfile={userProfile}
-        friendProfile={friendProfile}
-        friendProfileImage={friendProfileImage}
-        isOpen={isConversationModalOpen}
-        setIsOpen={setConversationModalOpen}
-      />
     </IonItem>
   )
 }
