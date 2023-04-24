@@ -5,14 +5,13 @@ import {DataStore} from "@aws-amplify/datastore";
 import {
   IonAlert,
   IonButton, IonButtons, IonContent, IonHeader,
-  IonIcon, IonModal, IonTitle, IonToolbar
+  IonIcon, IonModal,  IonToolbar
 } from "@ionic/react";
 import {personCircle} from "ionicons/icons";
 import ProfileEditModal from "./ProfileEditModal";
 import ProfileImageModal from "./ProfileImageModal";
 import PhotoUploadModal from "./PhotoUploadModal";
 import PhotoImage from "../PhotoImage";
-import {ProfileModalProps} from "../../@types/profile";
 
 const ProfileVerified = ({username, profile} : {username: string, profile: UserProfile}) => {
   const [profileImage, setProfileImage] = useState("")

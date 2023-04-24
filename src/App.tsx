@@ -44,7 +44,6 @@ import {chatboxEllipses, musicalNotes, people, settings} from "ionicons/icons";
 import DataStoreContext from './context/DataStoreContext';
 import AccountSettingsPage from "./pages/Account/AccountSettings";
 import EventDetailPage from "./pages/Events/EventDetail";
-import ImageContext from "./context/ImageContext";
 import ImageProvider from "./context/ImageProvider";
 
 setupIonicReact();
