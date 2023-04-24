@@ -1,57 +1,58 @@
+// Ionic imports
 import {
-  IonAlert,
   IonButton,
   IonButtons,
   IonContent,
   IonHeader,
-  IonIcon, IonItem,
+  IonIcon,
   IonLabel,
   IonModal,
-  IonPage, IonSearchbar,
+  IonPage,
   IonSegment,
   IonSegmentButton,
-  IonSpinner,
   IonTitle,
-  IonToolbar, SegmentChangeEventDetail
-} from '@ionic/react';
+  IonToolbar,
+  SegmentChangeEventDetail,
+} from "@ionic/react";
+import { search } from "ionicons/icons";
 
-import {checkmarkCircleOutline, search} from "ionicons/icons";
-import {useAuthenticator} from '@aws-amplify/ui-react';
-import {DataStore} from 'aws-amplify';
-import React, {useContext, useEffect, useLayoutEffect, useRef, useState} from 'react';
-import {Storage} from "@aws-amplify/storage"
-import {EventProfile, EventType, Festival, LazyFestival, UserProfile} from '../../models';
-import AccountButton from "../../components/AccountButton";
-import DataStoreContext, {DataStoreContextType} from "../../context/DataStoreContext";
-import styled from "styled-components";
+// AWS imports
+import { useAuthenticator } from "@aws-amplify/ui-react";
+import { DataStore } from "aws-amplify";
 
-const IonSearchbarStyled = styled(IonSearchbar)`
-  --box-shadow: none;
-  max-width: 500px;
-`
+// React imports
+import React, { useContext, useEffect, useLayoutEffect, useRef, useState } from "react";
 
+// Local imports
+import { EventType, Festival, LazyFestival, UserProfile } from "../../models";
+import AccountButton from "../../components/Profile/AccountButton";
+import DataStoreContext, { DataStoreContextType } from "../../context/DataStoreContext";
+import FestivalCard from "../../components/Events/FestivalCard";
 
 const EventPage: React.FC = () => {
   const { user } = useAuthenticator((context) => [context.user]);
   const [events, setEvents] = useState<LazyFestival[]>([]);
   const [profile, setProfile] = useState<UserProfile>();
   const username = user?.username as string;
-  const sportEvents = events.filter(event => event.type === EventType.SPORT);
-  const musicEvent = events.filter(event => event.type === EventType.MUSIC);
-  const collegeEvent = events.filter(event => event.type === EventType.COLLEGE);
-  const businessEvent = events.filter(event => event.type === EventType.BUSINESS);
-  const [eventType, setEventType] = useState('all')
+
+  // Filter events by type
+  const sportEvents = events.filter((event) => event.type === EventType.SPORT);
+  const musicEvents = events.filter((event) => event.type === EventType.MUSIC);
+  const collegeEvent = events.filter((event) => event.type === EventType.COLLEGE);
+  const businessEvent = events.filter((event) => event.type === EventType.BUSINESS);
+
+  const [eventType, setEventType] = useState("all");
 
   const festivalModal = useRef<HTMLIonModalElement>(null);
   const { dataStoreCleared } = useContext(DataStoreContext) as DataStoreContextType;
 
-  useLayoutEffect (() => {
-    if(dataStoreCleared) {
-      const eventSub = DataStore.observeQuery(Festival)
-        .subscribe(({items}) => {
-          console.log(items)
-          setEvents(items)
-        })
+  // Observe the Festival data from DataStore
+  useLayoutEffect(() => {
+    if (dataStoreCleared) {
+      const eventSub = DataStore.observeQuery(Festival).subscribe(({ items }) => {
+        console.log(items);
+        setEvents(items);
+      });
 
       return () => {
         eventSub.unsubscribe();
@@ -59,30 +60,28 @@ const EventPage: React.FC = () => {
     }
   }, [dataStoreCleared]);
 
+  // Fetch user profile
   useEffect(() => {
     const fetchProfile = async () => {
-      const profile = await DataStore.query(UserProfile, c => c.userID.eq(username));
+      const profile = await DataStore.query(UserProfile, (c) => c.userID.eq(username));
       setProfile(profile[0]);
-    }
-    if(user) {
+    };
+    if (user) {
       fetchProfile();
     } else {
       setProfile(undefined);
     }
-  }, [user])
+  }, [user]);
 
-  const handleSearch = async () => {
-    const searchQuery = await DataStore.query(Festival, (festival) => festival.name.contains('test'))
-    setEvents(searchQuery)
-  }
+  console.log(eventType);
 
-  console.log(eventType)
+  // Handle segment change
   const handleSegmentChange = (e: CustomEvent<SegmentChangeEventDetail>) => {
-    console.log(e.detail.value)
-    if(e.detail.value) {
-      setEventType(e.detail.value)
+    console.log(e.detail.value);
+    if (e.detail.value) {
+      setEventType(e.detail.value);
     }
-  }
+  };
 
   return (
     <IonPage>
@@ -115,15 +114,15 @@ const EventPage: React.FC = () => {
       </IonHeader>
       <IonContent fullscreen>
         <div className='grid gap-4 justify-items-center grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 items-center p-4'>
-          { (eventType === 'music' || eventType === 'all')
-            && musicEvent?.map(event =>
+          {(eventType === 'music' || eventType === 'all')
+            && musicEvents?.map(event =>
             <FestivalCard festival={event} userProfile={profile} key={event.id}/>
           )}
-          { (eventType === 'sport' || eventType === 'all')
+          {(eventType === 'sport' || eventType === 'all')
             && sportEvents?.map(event =>
               <FestivalCard festival={event} userProfile={profile} key={event.id}/>
             )}
-          { (eventType === 'business' || eventType === 'all')
+          {(eventType === 'business' || eventType === 'all')
             && businessEvent?.map(event =>
               <FestivalCard festival={event} userProfile={profile} key={event.id}/>
             )}
@@ -152,110 +151,5 @@ const EventPage: React.FC = () => {
     </IonPage>
   );
 };
-
-interface FestivalCardProps {
-  festival: LazyFestival;
-  userProfile: UserProfile | undefined;
-}
-
-const FestivalCard = ({festival, userProfile}: FestivalCardProps) => {
-  const [festivalImage, setFestivalImage] = useState("")
-  const [attendingEvent, setAttendingEvent] = useState(false)
-  const [eventProfile, setEventProfile] = useState<EventProfile>();
-  const { dataStoreCleared } = useContext(DataStoreContext) as DataStoreContextType;
-  const [alertIsOpen, setAlertIsOpen] = useState(false);
-  useEffect(() => {
-    const fetchFestivalImage = async () => {
-      const imageSrc = await Storage.get(festival.image, {level: 'public'})
-      setFestivalImage(imageSrc);
-    }
-
-    fetchFestivalImage()
-  }, [userProfile])
-
-  useEffect(() => {
-    if(dataStoreCleared) {
-      const eventProfileSub = DataStore.observeQuery(EventProfile, c => c.eventID.eq(festival.id))
-        .subscribe(({items}) => {
-          if(userProfile && items.length > 0) {
-            const ep = items.filter(item => item.userProfileID === userProfile.id)
-            if(ep.length > 0) {
-              setAttendingEvent(true)
-              setEventProfile(ep[0])
-            }
-          } else {
-            setAttendingEvent(false)
-            setEventProfile(undefined)
-          }
-        })
-
-      return () => {
-        eventProfileSub.unsubscribe();
-      }
-    }
-  }, [dataStoreCleared, userProfile])
-
-  const handleAttendFestival = async () => {
-    if (userProfile) {
-      if (attendingEvent && eventProfile) {
-        // If the user is already attending, remove them from the attendees list
-        await DataStore.delete(eventProfile);
-        setAttendingEvent(false)
-        console.log('User removed from the festival attendees list');
-      } else {
-        // If the user is not attending, add them to the attendees list
-        await DataStore.save(
-          new EventProfile({
-            userProfileID: userProfile.id,
-            eventID: festival.id,
-            userProfile: userProfile,
-            event: festival,
-          })
-        );
-        console.log('User added to the festival attendees list');
-      }
-    } else {
-      setAlertIsOpen(true);
-    }
-  }
-
-  return (
-    <div className='m-4 rounded-xl shadow-md w-full  max-w-[350px] bg-light-default'>
-      <div className='relative'>
-        <div className='w-full max-w-[350px] min-h-[350px] h-full max-h-[350px] object-cover flex items-center justify-center'>
-          {
-            festivalImage ?
-              <IonItem routerLink={`/events/${festival.id}`} lines='none'>
-                <img className='w-full h-full' src={festivalImage} alt={festival.name}/>
-              </IonItem>
-            :
-              <IonSpinner></IonSpinner>
-          }
-        </div>
-        <div className=' bottom-4 left-4 rounded-xl z-10 w-full p-4 font-bold '>
-          <div className='bold'>{festival.name} - {festival.location}</div>
-          <div></div>
-          <div>{festival.startDate}</div>
-        </div>
-      </div>
-      <div>
-        <h2 className='text-base md:text-lg m-2'>Plan on Attending? Let your friends know!</h2>
-        {
-          attendingEvent  ?
-            <IonButton onClick={handleAttendFestival}>I&apos;ll be there! <IonIcon className='ml-2' icon={checkmarkCircleOutline}/></IonButton>
-            :
-            <IonButton   onClick={handleAttendFestival} fill='outline'>I&apos;ll be there!</IonButton>
-        }
-      </div>
-      <IonAlert
-        isOpen={alertIsOpen}
-        header="Not logged in!"
-        message="Please log in to use this feature"
-        buttons={['OK']}
-        onDidDismiss={() => setAlertIsOpen(false)}
-      ></IonAlert>
-    </div>
-  )
-}
 
 export default EventPage;
