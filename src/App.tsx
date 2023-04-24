@@ -44,6 +44,8 @@ import {chatboxEllipses, musicalNotes, people, settings} from "ionicons/icons";
 import DataStoreContext from './context/DataStoreContext';
 import AccountSettingsPage from "./pages/Account/AccountSettings";
 import EventDetailPage from "./pages/Events/EventDetail";
+import ImageContext from "./context/ImageContext";
+import ImageProvider from "./context/ImageProvider";
 
 setupIonicReact();
 
@@ -56,53 +58,55 @@ const App: React.FC = () => {
 
   return (
     <DataStoreContext.Provider value={{ dataStoreCleared, saveDataStoreCleared }}>
-    <IonApp>
-      <IonReactRouter>
-        <IonTabs>
-          <IonRouterOutlet>
-            <Route exact path="/events" render={() => <Events/>}>
-            </Route>
-            <Route path='/events/:id' component={EventDetailPage}/>
-            <Route exact path="/friends">
-              <FriendsPage />
-            </Route>
-            <Route exact path="/messages">
-              <MessagePage />
-            </Route>
-            <Route exact path='/account'>
-              <AccountPage/>
-            </Route>
-            <Route path='/account/settings'>
-              <AccountSettingsPage/>
-            </Route>
-            <Route path='/admin'>
-              <Admin/>
-            </Route>
-            <Route path='/friends/profile/:id' component={ProfilePage}/>
-            <Redirect exact from="/" to="/events"  />
+      <ImageProvider>
+        <IonApp>
+          <IonReactRouter>
+            <IonTabs>
+              <IonRouterOutlet>
+                <Route exact path="/events" render={() => <Events/>}>
+                </Route>
+                <Route path='/events/:id' component={EventDetailPage}/>
+                <Route exact path="/friends">
+                  <FriendsPage />
+                </Route>
+                <Route exact path="/messages">
+                  <MessagePage />
+                </Route>
+                <Route exact path='/account'>
+                  <AccountPage/>
+                </Route>
+                <Route path='/account/settings'>
+                  <AccountSettingsPage/>
+                </Route>
+                <Route path='/admin'>
+                  <Admin/>
+                </Route>
+                <Route path='/friends/profile/:id' component={ProfilePage}/>
+                <Redirect exact from="/" to="/events"  />
 
-          </IonRouterOutlet>
-          <IonTabBar slot="bottom">
-            <IonTabButton tab="tab1" href="/events">
-              <IonIcon aria-hidden="true" icon={musicalNotes} />
-              <IonLabel>Events</IonLabel>
-            </IonTabButton>
-            <IonTabButton tab="tab2" href="/friends">
-              <IonIcon aria-hidden="true" icon={people} />
-              <IonLabel>Friends</IonLabel>
-            </IonTabButton>
-            <IonTabButton tab="tab3" href="/messages">
-              <IonIcon aria-hidden="true" icon={chatboxEllipses} />
-              <IonLabel>Messages</IonLabel>
-            </IonTabButton>
-            <IonTabButton tab="tab4" href="/admin">
-              <IonIcon aria-hidden="true" icon={settings} />
-              <IonLabel>Admin</IonLabel>
-            </IonTabButton>
-          </IonTabBar>
-        </IonTabs>
-      </IonReactRouter>
-    </IonApp>
+              </IonRouterOutlet>
+              <IonTabBar slot="bottom">
+                <IonTabButton tab="tab1" href="/events">
+                  <IonIcon aria-hidden="true" icon={musicalNotes} />
+                  <IonLabel>Events</IonLabel>
+                </IonTabButton>
+                <IonTabButton tab="tab2" href="/friends">
+                  <IonIcon aria-hidden="true" icon={people} />
+                  <IonLabel>Friends</IonLabel>
+                </IonTabButton>
+                <IonTabButton tab="tab3" href="/messages">
+                  <IonIcon aria-hidden="true" icon={chatboxEllipses} />
+                  <IonLabel>Messages</IonLabel>
+                </IonTabButton>
+                <IonTabButton tab="tab4" href="/admin">
+                  <IonIcon aria-hidden="true" icon={settings} />
+                  <IonLabel>Admin</IonLabel>
+                </IonTabButton>
+              </IonTabBar>
+            </IonTabs>
+          </IonReactRouter>
+        </IonApp>
+      </ImageProvider>
     </DataStoreContext.Provider>
   );
 }
