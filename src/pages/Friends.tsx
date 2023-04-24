@@ -4,11 +4,11 @@ import {
   IonButtons,
   IonContent,
   IonHeader,
-  IonIcon, IonInput,
+  IonIcon, IonInput, IonLabel,
   IonModal,
-  IonPage,
+  IonPage, IonSegment, IonSegmentButton,
   IonTitle, IonToast,
-  IonToolbar
+  IonToolbar, SegmentChangeEventDetail
 } from '@ionic/react';
 import React, {RefObject, useEffect, useRef, useState} from "react";
 import {useAuthenticator} from "@aws-amplify/ui-react";
@@ -27,12 +27,15 @@ type SearchInput = {
   school: string
 }
 
+type FriendType = "accepted" | "sent" | "pending";
+
 const FriendsPage: React.FC = () => {
   const {user} = useAuthenticator();
   const [allFriends, setFriends] = useState<Friendship[]>([]);
   const [acceptedProfiles, setAcceptedProfiles] = useState<UserProfile[]>([]);
   const [sentFriends, setSentFriends] = useState<UserProfile[]>([]);
   const [pendingFriends, setPendingFriends] = useState<UserProfile[]>([]);
+  const [friendType, setFriendType] = useState<string>("accepted");
   const modal = useRef<HTMLIonModalElement>(null);
   const username = user?.username as string;
 
@@ -99,11 +102,31 @@ const FriendsPage: React.FC = () => {
     await DataStore.delete(friendShip[0]);
   }
 
+  const handleSegmentChange = (e: CustomEvent<SegmentChangeEventDetail>) => {
+    console.log(e.detail.value)
+    if(e.detail.value) {
+      setFriendType(e.detail.value)
+    }
+  }
+
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Friends - {user?.attributes?.email}</IonTitle>
+          <IonSegment value={friendType} scrollable onIonChange={handleSegmentChange}>
+            <IonSegmentButton value='accepted'>
+              <IonLabel>Friends</IonLabel>
+            </IonSegmentButton>
+            <IonSegmentButton value='pending'>
+                <div className='flex justify-center items-center'>
+                  <div>Requests</div>
+                  {pendingFriends.length > 0 ? <div className='bg-primary-default text-light-default rounded-full mx-2 w-[20px] p-2 h-[20px] flex justify-center items-center'>{pendingFriends.length}</div> : null}
+                </div>
+            </IonSegmentButton>
+            <IonSegmentButton value='sent'>
+              <IonLabel>Suggestions</IonLabel>
+            </IonSegmentButton>
+          </IonSegment>
           <IonButtons slot='end'>
             <IonButton id="friend-search">
               <IonIcon icon={search}/>
@@ -113,60 +136,33 @@ const FriendsPage: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <div className={'flex flex-col flex-wrap p-4'}>
+        <div className={'flex flex-wrap p-4'}>
         {
           user ?
             <>
               {
-                acceptedProfiles.length ?
+                friendType === 'pending' && pendingFriends.length ?
+                  <>
+                    {
+                      pendingFriends.map(friend =>
+                          <FriendCard
+                            key={friend.id}
+                            profile={friend}
+                            link={true}
+                            onConfirm={() => handleFriendAccept({friendShipID: friend.id})}
+                            onCancel={() => handleFriendshipReject({friendShipID: friend.id})}
+                          />
+                      )}
+                  </>
+                  :
+                  null
+              }
+              {
+                friendType === 'accepted' && acceptedProfiles.length ?
                   acceptedProfiles.map((profile) =>
                     <>
                       <FriendCard key={profile.id} profile={profile} link={true}/>
-                      <hr/>
                     </>)
-                  :
-                  null
-              }
-              {
-                pendingFriends.length ?
-                  <>
-                    <h2 className='text-xl my-4'>Pending Friend Requests</h2>
-                    {
-                      pendingFriends.map(friend =>
-                        <div className='flex items-center' key={friend.id}>
-                          <FriendCard profile={friend} link={true}/>
-                          <div>
-                            <IonButton onClick={() => handleFriendAccept({friendShipID: friend.id})}>
-                              <IonIcon size='large' icon={checkmark}/>
-                            </IonButton>
-                            <IonButton onClick={() => handleFriendshipReject({friendShipID: friend.id})}>
-                              <IonIcon size='large' icon={close}/>
-                            </IonButton>
-                          </div>
-                        </div>
-                      )
-                    }
-                    <hr/>
-                  </>
-                  :
-                  null
-              }
-              {
-                sentFriends.length ?
-                  <>
-                    <h2 className='text-xl my-4'>Sent Friend Requests</h2>
-                    {
-                      sentFriends.map(friend =>
-                        <div key={friend.id} className='flex items-center'>
-                          <FriendCard profile={friend} link={true}/>
-                          <IonButton onClick={() => handleFriendshipReject({friendShipID: friend.id})}>
-                            <IonIcon size='large' icon={close}/>
-                          </IonButton>
-                        </div>
-                      )
-                    }
-                    <hr/>
-                  </>
                   :
                   null
               }
