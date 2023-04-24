@@ -5,7 +5,7 @@ import {DataStore} from "@aws-amplify/datastore";
 import {UserProfile} from "../../models";
 import getErrorMessage from "../../lib/getErrorMessage";
 import {IonButton, IonButtons, IonContent, IonHeader, IonModal, IonTitle, IonToolbar} from "@ionic/react";
-import ProfileForm from "../../components/ProfileForm";
+import ProfileForm from "./ProfileForm";
 import {ProfileModalProps} from "../../@types/profile";
 
 const ProfileEditModal = ({profile, profileImage, isOpen, setIsOpen, callback} : ProfileModalProps) => {

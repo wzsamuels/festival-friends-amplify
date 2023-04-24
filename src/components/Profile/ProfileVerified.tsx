@@ -11,7 +11,7 @@ import {personCircle} from "ionicons/icons";
 import ProfileEditModal from "./ProfileEditModal";
 import ProfileImageModal from "./ProfileImageModal";
 import PhotoUploadModal from "./PhotoUploadModal";
-import PhotoImage from "../../components/PhotoImage";
+import PhotoImage from "../PhotoImage";
 import {ProfileModalProps} from "../../@types/profile";
 
 const ProfileVerified = ({username, profile} : {username: string, profile: UserProfile}) => {

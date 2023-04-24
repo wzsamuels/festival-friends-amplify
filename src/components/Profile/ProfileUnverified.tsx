@@ -2,7 +2,7 @@ import { SubmitHandler} from "react-hook-form";
 import React from "react";
 import { UserProfile} from "../../models";
 import {DataStore} from "@aws-amplify/datastore";
-import ProfileForm from "../../components/ProfileForm";
+import ProfileForm from "./ProfileForm";
 import {ProfileInputs} from "../../types";
 
 interface ProfileUnverifiedProps {

@@ -5,7 +5,7 @@ import {DataStore} from "@aws-amplify/datastore";
 import {Photo, UserProfile} from "../../models";
 import {IonButton, IonButtons, IonContent, IonHeader, IonModal, IonToolbar} from "@ionic/react";
 import {ProfileModalProps} from "../../@types/profile";
-import PhotoImage from "../../components/PhotoImage";
+import PhotoImage from "../PhotoImage";
 import getErrorMessage from "../../lib/getErrorMessage";
 
 export interface ProfileImageModalProps extends ProfileModalProps {

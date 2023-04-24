@@ -3,7 +3,7 @@ import {personCircle} from "ionicons/icons";
 import React, {useContext} from "react";
 import {useAuthenticator} from "@aws-amplify/ui-react";
 import {DataStore} from "aws-amplify";
-import DataStoreContext, {DataStoreContextType} from "../context/DataStoreContext";
+import DataStoreContext, {DataStoreContextType} from "../../context/DataStoreContext";
 
 const AccountButton = ({id} : {id: string}) => {
   const { signOut, user } = useAuthenticator()

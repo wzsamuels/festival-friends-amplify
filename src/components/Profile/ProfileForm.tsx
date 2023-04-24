@@ -3,8 +3,8 @@ import {Controller, SubmitHandler, useForm} from "react-hook-form";
 import {ErrorMessage} from "@hookform/error-message";
 import React, {useState} from "react";
 import styled from "styled-components";
-import {UserProfile} from "../models";
-import {ProfileInputs} from "../types";
+import {UserProfile} from "../../models";
+import {ProfileInputs} from "../../types";
 
 const states = [
   'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'
