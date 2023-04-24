@@ -18,15 +18,14 @@ import {close} from "ionicons/icons";
 interface ConversationModalProps extends ModalProps {
   conversation: Conversation | undefined,
   userProfile: UserProfile | undefined,
-  friendProfile: UserProfile | undefined,
-  friendProfileImage: string | undefined,
 }
 
-const ConversationModal = ({conversation, isOpen, setIsOpen, userProfile, friendProfile} : ConversationModalProps) => {
+const ConversationModal = ({conversation, isOpen, setIsOpen, userProfile} : ConversationModalProps) => {
 
   const [messages, setMessages] = useState<Message[]>([])
   const input = useRef<HTMLIonInputElement>(null);
   const [friendProfileImage, setFriendProfileImage] = useState<string | undefined>()
+  const [friendProfile, setFriendProfile] = useState<UserProfile | undefined>()
 
   const sendData = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -56,7 +55,7 @@ const ConversationModal = ({conversation, isOpen, setIsOpen, userProfile, friend
       // Fetch the profile images of the participants of the conversation
       const friendImage = await Storage.get(friend[0].profileImage as string)
       setFriendProfileImage(friendImage)
-
+      setFriendProfile(friend[0])
     }
 
     fetchProfiles()
@@ -72,7 +71,7 @@ const ConversationModal = ({conversation, isOpen, setIsOpen, userProfile, friend
       profileSub.unsubscribe();
     };
 
-  }, [conversation, friendProfile, userProfile])
+  }, [conversation, userProfile])
 
   return (
     <IonModal isOpen={isOpen} onDidDismiss={() => setIsOpen(false)}>

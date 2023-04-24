@@ -1,7 +1,7 @@
 import {IonButtons, IonContent, IonHeader, IonPage, IonTitle, IonToolbar} from "@ionic/react";
 import React from "react";
 import {AccountSettings} from "@aws-amplify/ui-react";
-import AccountButton from "../../components/AccountButton";
+import AccountButton from "../../components/Profile/AccountButton";
 
 const AccountSettingsPage = () => {
   return (

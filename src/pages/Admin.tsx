@@ -11,7 +11,7 @@ import {
   IonTitle,
   IonToolbar
 } from "@ionic/react";
-import AccountButton from "../components/AccountButton";
+import AccountButton from "../components/Profile/AccountButton";
 import {UserProfile} from "../models";
 import {DataStore} from "aws-amplify";
 

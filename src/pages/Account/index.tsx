@@ -12,9 +12,9 @@ import {
   IonToolbar
 } from '@ionic/react';
 import React from "react";
-import ProfileUnverified from "./ProfileUnverified";
-import AccountButton from "../../components/AccountButton";
-import ProfileVerified from "./ProfileVerified";
+import ProfileUnverified from "../../components/Profile/ProfileUnverified";
+import AccountButton from "../../components/Profile/AccountButton";
+import ProfileVerified from "../../components/Profile/ProfileVerified";
 
 const AccountPage = () => {
   const { authStatus } = useAuthenticator(context => [context.authStatus]);

@@ -10,7 +10,7 @@ import { RouteComponentProps } from "react-router"
 import React, {useEffect, useState} from "react";
 import {Photo, UserProfile} from "../models";
 import {DataStore, Storage} from "aws-amplify";
-import AccountButton from "../components/AccountButton";
+import AccountButton from "../components/Profile/AccountButton";
 import PhotoImage from "../components/PhotoImage";
 
 type ProfilePageProps = RouteComponentProps<{
