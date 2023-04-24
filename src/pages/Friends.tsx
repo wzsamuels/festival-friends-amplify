@@ -1,33 +1,23 @@
 import {
-  IonAlert,
   IonButton,
   IonButtons,
   IonContent,
   IonHeader,
-  IonIcon, IonInput, IonLabel,
-  IonModal,
+  IonIcon, IonLabel,
   IonPage, IonSegment, IonSegmentButton,
-  IonTitle, IonToast,
   IonToolbar, SegmentChangeEventDetail
 } from '@ionic/react';
-import React, {RefObject, useEffect, useRef, useState} from "react";
+import React, { useEffect, useRef, useState} from "react";
 import {useAuthenticator} from "@aws-amplify/ui-react";
 import {DataStore} from "aws-amplify";
 import { Friendship, UserProfile} from "../models";
-import {checkmark, close, search } from "ionicons/icons";
-import AccountButton from "../components/AccountButton";
-import {SubmitHandler, useForm} from "react-hook-form";
+
+
+import { search } from "ionicons/icons";
+import AccountButton from "../components/Profile/AccountButton";
 import FriendCard from "../components/FriendCard";
+import FriendSearchModal from "../components/Friends/FriendSearchModal";
 
-type SearchInput = {
-  firstName: string,
-  lastName: string,
-  city: string,
-  state: string,
-  school: string
-}
-
-type FriendType = "accepted" | "sent" | "pending";
 
 const FriendsPage: React.FC = () => {
   const {user} = useAuthenticator();
@@ -35,8 +25,8 @@ const FriendsPage: React.FC = () => {
   const [acceptedProfiles, setAcceptedProfiles] = useState<UserProfile[]>([]);
   const [sentFriends, setSentFriends] = useState<UserProfile[]>([]);
   const [pendingFriends, setPendingFriends] = useState<UserProfile[]>([]);
-  const [friendType, setFriendType] = useState<string>("accepted");
-  const modal = useRef<HTMLIonModalElement>(null);
+  const [friendType, setFriendType] = useState("accepted");
+  const [isFriendsModalOpen, setIsFriendsModalOpen] = useState(false);
   const username = user?.username as string;
 
   useEffect(() => {
@@ -128,7 +118,7 @@ const FriendsPage: React.FC = () => {
             </IonSegmentButton>
           </IonSegment>
           <IonButtons slot='end'>
-            <IonButton id="friend-search">
+            <IonButton onClick={() => setIsFriendsModalOpen(true)}>
               <IonIcon icon={search}/>
             </IonButton>
             <AccountButton id='friends'/>
@@ -182,133 +172,11 @@ const FriendsPage: React.FC = () => {
             </div>
 
         }
-
         </div>
-        <IonModal ref={modal} trigger="friend-search">
-          <FriendSearch modal={modal}/>
-        </IonModal>
+        <FriendSearchModal isOpen={isFriendsModalOpen} setIsOpen={setIsFriendsModalOpen}/>
       </IonContent>
     </IonPage>
   );
 };
-
-const FriendSearch = ({modal} : {modal: RefObject<HTMLIonModalElement> | null}) => {
-  const { register, handleSubmit } = useForm<SearchInput>()
-  const [results, setResults] = useState<UserProfile[]>([])
-  const { user } = useAuthenticator();
-  const [toastIsOpen, setToastIsOpen] = useState(false);
-
-  const searchFriends: SubmitHandler<SearchInput> = async data => {
-    console.log(data)
-    // Remove empty
-    const filteredData: { field: string; value: string; }[] = []
-    for (const [key, value] of Object.entries(data)) {
-      if(value) {
-        filteredData.push({field: key, value: value})
-      }
-    }
-
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const criteria = (c) => {
-      const query: any[] = []
-      filteredData.forEach(item => {
-        query.push(c[item.field].eq(item.value));
-      })
-      return query;
-    }
-
-    const results = await DataStore.query(UserProfile, c =>
-      c.or(criteria))
-    setResults(results)
-  }
-
-  const createFriendRequest = async (friendProfile: UserProfile) => {
-    const profile = await DataStore.query(UserProfile, c => c.userID.eq(user?.username as string));
-    const userProfile = profile[0];
-
-    if(userProfile.id === friendProfile.id) {
-      alert('You cannot send a friend request to yourself')
-      return;
-    }
-
-    const existingFriendships1 = await DataStore.query(Friendship, c => c.and( c => [
-        c.userProfileID.eq(userProfile.id),
-        c.friendProfileID.eq(friendProfile.id)
-    ]));
-
-    const existingFriendships2 = await DataStore.query(Friendship, c => c.and( c => [
-      c.userProfileID.eq(friendProfile.id),
-      c.friendProfileID.eq(userProfile.id)
-    ]));
-
-    const existingFriendships = [...existingFriendships1, ...existingFriendships2];
-
-    if(existingFriendships.length > 0) {
-      alert('You already have a friend request pending')
-      return;
-    }
-
-    const result = await DataStore.save(new Friendship({userProfileID: userProfile.id, friendProfileID: friendProfile.id, isAccepted: false, friendProfile: friendProfile, userProfile: profile[0]}) )
-    console.log(result)
-    setToastIsOpen(true);
-  }
-
-  return (
-    <>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Friend Search</IonTitle>
-          <IonButtons slot="end">
-            <IonButton onClick={() => modal?.current?.dismiss()}>
-              Cancel
-            </IonButton>
-          </IonButtons>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent className="ion-padding">
-        <form onSubmit={handleSubmit(searchFriends)}>
-          <IonInput label='First Name' labelPlacement='stacked' {...register('firstName')} type="text"  />
-          <IonInput label='Last Name' labelPlacement='stacked' {...register('lastName')} type="text" />
-          <IonInput label='City' labelPlacement='stacked' {...register('city')} type="text" />
-          <IonInput label='School' labelPlacement='stacked' {...register('school')} type="text"  />
-          <IonButton type='submit'>Search</IonButton>
-        </form>
-        {
-          results.map(result =>
-            <React.Fragment key={result.id}>
-              <button id={`open-${result.id}`}>
-                <FriendCard profile={result} key={result.id} link={false}/>
-              </button>
-              <IonAlert
-                trigger={`open-${result.id}`}
-                header="Send Friend Request"
-                buttons={[
-                  {
-                    text: 'Cancel',
-                    role: 'cancel',
-                  },
-                  {
-                    text: 'OK',
-                    role: 'confirm',
-                    handler: () => {
-                      createFriendRequest(result);
-                    },
-                  },
-                ]}
-              ></IonAlert>
-            </React.Fragment>
-          )
-        }
-        <IonToast
-          isOpen={toastIsOpen}
-          message="Friend request sent!"
-          onDidDismiss={() => setToastIsOpen(false)}
-          duration={5000}
-        ></IonToast>
-      </IonContent>
-    </>
-  )
-}
 
 export default FriendsPage;
