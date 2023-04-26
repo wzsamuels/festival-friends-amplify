@@ -45,6 +45,8 @@ type UserProfile @model @auth(rules: [{allow: public}]) {
   sentMessages: [Message] @hasMany(indexName: "bySender", fields: ["id"])
   receivedMessages: [Message] @hasMany(indexName: "byReceiver", fields: ["id"])
   photos: [Photo] @hasMany(indexName: "byUserProfile", fields: ["id"])
+  collegeGroupId: ID @index(name: "byCollegeGroup")
+  collegeGroup: CollegeGroup @belongsTo(fields: ["collegeGroupId"])
 }
 
 type Photo
@@ -108,4 +110,13 @@ type Conversation @model @auth(rules: [{allow: public}])
   userProfile: UserProfile! @belongsTo(fields: ["userProfileID"])
   friendProfile: UserProfile! @belongsTo(fields: ["friendProfileID"])
   messages: [Message] @hasMany(indexName: "byConversation", fields: ["id"])
+}
+
+type CollegeGroup @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String!
+  domain: String!
+  webPage: String
+  countryCode: String
+  members: [UserProfile] @hasMany(indexName: "byCollegeGroup", fields: ["id"])
 }
