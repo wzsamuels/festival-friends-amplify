@@ -128,6 +128,8 @@ type EagerUserProfile = {
   readonly sentMessages?: (Message | null)[] | null;
   readonly receivedMessages?: (Message | null)[] | null;
   readonly photos?: (Photo | null)[] | null;
+  readonly collegeGroupId?: string | null;
+  readonly collegeGroup?: CollegeGroup | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -159,6 +161,8 @@ type LazyUserProfile = {
   readonly sentMessages: AsyncCollection<Message>;
   readonly receivedMessages: AsyncCollection<Message>;
   readonly photos: AsyncCollection<Photo>;
+  readonly collegeGroupId?: string | null;
+  readonly collegeGroup: AsyncItem<CollegeGroup | undefined>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -343,4 +347,40 @@ export declare type Conversation = LazyLoading extends LazyLoadingDisabled ? Eag
 
 export declare const Conversation: (new (init: ModelInit<Conversation>) => Conversation) & {
   copyOf(source: Conversation, mutator: (draft: MutableModel<Conversation>) => MutableModel<Conversation> | void): Conversation;
+}
+
+type EagerCollegeGroup = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<CollegeGroup, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly name: string;
+  readonly domain: string;
+  readonly webPage?: string | null;
+  readonly countryCode?: string | null;
+  readonly members?: (UserProfile | null)[] | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyCollegeGroup = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<CollegeGroup, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly name: string;
+  readonly domain: string;
+  readonly webPage?: string | null;
+  readonly countryCode?: string | null;
+  readonly members: AsyncCollection<UserProfile>;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type CollegeGroup = LazyLoading extends LazyLoadingDisabled ? EagerCollegeGroup : LazyCollegeGroup
+
+export declare const CollegeGroup: (new (init: ModelInit<CollegeGroup>) => CollegeGroup) & {
+  copyOf(source: CollegeGroup, mutator: (draft: MutableModel<CollegeGroup>) => MutableModel<CollegeGroup> | void): CollegeGroup;
 }

@@ -17,7 +17,7 @@ const EventType = {
   "ALL": "ALL"
 };
 
-const { Message, Festival, UserProfile, Photo, PhotoComment, Friendship, EventProfile, Conversation } = initSchema(schema);
+const { Message, Festival, UserProfile, Photo, PhotoComment, Friendship, EventProfile, Conversation, CollegeGroup } = initSchema(schema);
 
 export {
   Message,
@@ -28,6 +28,7 @@ export {
   Friendship,
   EventProfile,
   Conversation,
+  CollegeGroup,
   FriendshipStatus,
   EventType
 };
