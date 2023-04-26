@@ -1,18 +1,16 @@
 import {
-  IonBackButton,
   IonButton,
   IonButtons,
   IonContent,
   IonHeader,
   IonIcon,
-  IonInput,
   IonItem,
   IonModal,
   IonPage,
   IonTitle,
   IonToolbar
 } from '@ionic/react';
-import React, { useEffect, useRef, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import {DataStore, Storage} from "aws-amplify";
 import {Conversation, Friendship, UserProfile} from "../../models";
 import {useAuthenticator} from "@aws-amplify/ui-react";
@@ -20,17 +18,17 @@ import {addCircle, search} from "ionicons/icons";
 import AccountButton from "../../components/Profile/AccountButton";
 import FriendCard from "../../components/FriendCard";
 import ConversationModal from "./ConversationModal";
+import UserProfileContext from "../../context/UserProfileContext";
 
 const MessagePage: React.FC = () => {
-  const { user } = useAuthenticator();
-  const [userProfile, setUserProfile] = useState<UserProfile>()
   const [friendProfiles, setFriendProfiles] = useState<UserProfile[]>([])
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [currentConversation, setCurrentConversation] = useState<Conversation>();
   const searchConversationModal = useRef<HTMLIonModalElement>(null);
   const [isNewConversationModalOpen, setNewConversationModalOpen] = useState(false);
   const [isConversationModalOpen, setConversationModalOpen] = useState(false);
-  const username = user?.username as string;
+  const { user } = useAuthenticator();
+  const { userProfile } = useContext(UserProfileContext)
 
   const handleNewConversation = async ({friendProfile} : {friendProfile: UserProfile}) => {
     setNewConversationModalOpen(false);
@@ -69,19 +67,17 @@ const MessagePage: React.FC = () => {
 
   useEffect(() => {
     const fetchFriends = async () => {
-      const profile = await DataStore.query(UserProfile, c => c.userID.eq(username))
-
       // User has to have a verified profile to send messages
-      if(profile.length === 0 || profile[0].verified === false) {
+      if(!userProfile || !userProfile.verified) {
         return
       }
-      setUserProfile(profile[0])
+
       const friends = await DataStore.query(Friendship, f => f.or(f => [
-        f.friendProfileID.eq(profile[0].id),
-        f.userProfileID.eq(profile[0].id)
+        f.friendProfileID.eq(userProfile.id),
+        f.userProfileID.eq(userProfile.id)
       ]))
       const friendProfiles = friends.filter(friend => friend.isAccepted).map(friend =>
-        friend.friendProfileID === profile[0].id ? friend.userProfile : friend.friendProfile)
+        friend.friendProfileID === userProfile.id ? friend.userProfile : friend.friendProfile)
 
       const result = await Promise.all(friendProfiles.map(async friendProfile => await friendProfile))
       setFriendProfiles(result)
@@ -214,7 +210,7 @@ interface ConversationCardProps {
   setConversationModalOpen: (arg: boolean) => void
   onClick: (arg: Conversation) => void
 }
-const ConversationCard = ({conversation, userProfile, onClick, isConversationModalOpen, setConversationModalOpen} : ConversationCardProps) => {
+const ConversationCard = ({conversation, userProfile, onClick} : ConversationCardProps) => {
   const [friendProfile, setFriendProfile] = useState<UserProfile>();
   const [friendProfileImage, setFriendProfileImage] = useState<string>();
   useEffect(() => {
