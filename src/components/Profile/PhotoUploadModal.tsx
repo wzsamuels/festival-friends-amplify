@@ -3,8 +3,8 @@ import {v4 as uuidv4} from "uuid";
 import {Storage} from "aws-amplify";
 import {DataStore} from "@aws-amplify/datastore";
 import {Photo} from "../../models";
-import {IonButton, IonButtons, IonContent, IonHeader, IonModal, IonTitle, IonToolbar} from "@ionic/react";
 import {ProfileModalProps} from "../../@types/profile";
+import {Dialog} from "@headlessui/react";
 
 export interface PhotoUploadModalProps extends ProfileModalProps {
   photoFile: File | null
@@ -51,21 +51,17 @@ const PhotoUploadModal = ({profile, username, isOpen, setIsOpen, photoFile, setP
   }, [photoFile])
 
   return (
-    <IonModal isOpen={isOpen} onDidDismiss={dismissModal}>
-      <IonHeader>
-        <IonToolbar>
-          <IonButtons slot='end'>
-            <IonButton onClick={dismissModal}>Close</IonButton>
-          </IonButtons>
-          <IonTitle>Upload Photo</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent>
+    <Dialog open={isOpen} onClose={() => setIsOpen(false)}>
+      <Dialog.Panel>
+        <Dialog.Title>
+            Upload Photo
+            <button onClick={dismissModal}>Close</button>
+        </Dialog.Title>
         {preview && <img className='w-full' src={preview} alt="Preview"/> }
-        <IonButton onClick={() => setIsOpen(false)}>Close</IonButton>
-        <IonButton onClick={handlePhotoUpload}>Upload</IonButton>
-      </IonContent>
-    </IonModal>
+        <button onClick={() => setIsOpen(false)}>Close</button>
+        <button onClick={handlePhotoUpload}>Upload</button>
+      </Dialog.Panel>
+    </Dialog>
   )
 }
 

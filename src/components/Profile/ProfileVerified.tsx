@@ -2,18 +2,15 @@ import {Photo, UserProfile} from "../../models";
 import React, {useEffect, useState} from "react";
 import {Storage} from "aws-amplify";
 import {DataStore} from "@aws-amplify/datastore";
-import {
-  IonAlert,
-  IonButton, IonButtons, IonContent, IonHeader,
-  IonIcon, IonModal,  IonToolbar
-} from "@ionic/react";
 import {personCircle} from "ionicons/icons";
 import ProfileEditModal from "./ProfileEditModal";
 import ProfileImageModal from "./ProfileImageModal";
 import PhotoUploadModal from "./PhotoUploadModal";
 import PhotoImage from "../PhotoImage";
+import {BsPerson} from "react-icons/all";
+import {Dialog} from "@headlessui/react";
 
-const ProfileVerified = ({username, profile} : {username: string, profile: UserProfile}) => {
+const ProfileVerified = ({user, userProfile} : {user: any, userProfile: UserProfile}) => {
   const [profileImage, setProfileImage] = useState("")
   const [photos, setPhotos] = useState<Photo[]>([])
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
@@ -24,12 +21,13 @@ const ProfileVerified = ({username, profile} : {username: string, profile: UserP
   const [isPhotoModalOpen, setPhotoModalOpen] = useState(false)
   const [isAlertOpen, setAlertOpen] = useState(false)
   const [alertMessage, setAlertMessage] = useState("")
+  const username = user.username as string;
 
   useEffect(() => {
     const fetchProfileImage = async () => {
-      if (profile) {
-        console.log(profile.profileImage)
-        const image = await Storage.get(`${profile.profileImage}`, {
+      if (userProfile) {
+        console.log(userProfile.profileImage)
+        const image = await Storage.get(`${userProfile.profileImage}`, {
           level: "public"
         });
 
@@ -39,14 +37,14 @@ const ProfileVerified = ({username, profile} : {username: string, profile: UserP
 
     fetchProfileImage()
 
-    const photoSub = DataStore.observeQuery(Photo, photo => photo.userProfileID.eq(profile.id)).subscribe(({items}) => {
+    const photoSub = DataStore.observeQuery(Photo, photo => photo.userProfileID.eq(userProfile.id)).subscribe(({items}) => {
       setPhotos(items)
     })
     return () => {
       photoSub.unsubscribe()
     }
 
-  }, [profile])
+  }, [userProfile])
 
 
 
@@ -62,24 +60,24 @@ const ProfileVerified = ({username, profile} : {username: string, profile: UserP
     <div className='flex flex-col items-center p-4 mt-8 w-full'>
       <section className={'flex justify-center flex flex-col'}>
         {
-          profile.profileImage ?
+          userProfile.profileImage ?
             <img onClick={() => setIsProfileImageModalOpen(true)} className='max-w-[350px] w-full rounded-full cursor-pointer' src={profileImage} alt="Profile Image"/>
             :
             <div className='w-[350px] h-[350px] border border-medium-default'>
-              <IonIcon icon={personCircle} className='w-full h-full text-medium-default'/>
+              <BsPerson/>
             </div>
         }
         <div className='flex justify-center my-2'>
-          <IonButton onClick={() => setProfileModalOpen(true)}>
+          <button onClick={() => setProfileModalOpen(true)}>
             Edit Profile
-          </IonButton>
+          </button>
         </div>
       </section>
       <hr className='my-8 border border-primary-default w-full'/>
       <section className='flex flex-col items-center jusify-content my-4 w-full'>
         <div className='flex justify-between w-full max-w-xl'>
           <h2 className='text-2xl'>Photos</h2>
-          <label htmlFor="upload-photo" className='block'><IonButton class='pointer-events-none'>Upload Photo</IonButton></label>
+          <label htmlFor="upload-photo" className='block'><button>Upload Photo</button></label>
           <input type="file" accept="image/png, image/jpeg"
                  onChange={e => e?.target?.files && setSelectedFile(e.target.files[0])}
                  className='my-4 hidden'
@@ -95,14 +93,8 @@ const ProfileVerified = ({username, profile} : {username: string, profile: UserP
           }
         </div>
       </section>
-      <IonAlert
-        isOpen={isAlertOpen}
-        header={alertMessage}
-        buttons={['OK']}
-        onDidDismiss={() => setAlertOpen(false)}
-      ></IonAlert>
       <PhotoUploadModal
-        profile={profile}
+        profile={userProfile}
         username={username}
         isOpen={isPhotoUploadModalOpen}
         setIsOpen={setPhotoUploadModalOpen}
@@ -110,13 +102,13 @@ const ProfileVerified = ({username, profile} : {username: string, profile: UserP
         setPhotoFile={setSelectedFile}
       />
       <ProfileImageModal
-        profile={profile}
+        profile={userProfile}
         username={username}
         isOpen={isProfileImageModalOpen}
         setIsOpen={setIsProfileImageModalOpen}
         photos={photos}/>
       <ProfileEditModal
-        profile={profile}
+        profile={userProfile}
         profileImage={profileImage}
         isOpen={isProfileModalOpen}
         setIsOpen={setProfileModalOpen}
@@ -126,7 +118,7 @@ const ProfileVerified = ({username, profile} : {username: string, profile: UserP
           setIsProfileImageModalOpen(true);
         }}
       />
-      <PhotoModal profile={profile} photo={selectedPhoto} isOpen={isPhotoModalOpen} setIsOpen={setPhotoModalOpen}/>
+      <PhotoModal profile={userProfile} photo={selectedPhoto} isOpen={isPhotoModalOpen} setIsOpen={setPhotoModalOpen}/>
     </div>
   )
 }
@@ -150,27 +142,21 @@ const PhotoModal = ({profile, isOpen, setIsOpen, photo} : PhotoModalProps) => {
     setIsOpen(false)
   }
   return (
-    <IonModal isOpen={isOpen} onDidDismiss={() => setIsOpen(false)}>
-      <IonHeader>
-        <IonToolbar>
-
-        <IonButtons slot='end'>
-          <IonButton onClick={() => setIsOpen(false)}>
+    <Dialog open={isOpen} onClose={() => setIsOpen(false)}>
+      <Dialog.Panel>
+        <Dialog.Title>
+          <button onClick={() => setIsOpen(false)}>
             Close
-          </IonButton>
-        </IonButtons>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent>
+          </button>
+        </Dialog.Title>
         { photo &&<PhotoImage className='w-full' photo={photo}/>}
         <div className='flex justify-center my-4'>
-          <IonButton onClick={handleDeletePhoto}>
+          <button onClick={handleDeletePhoto}>
             Delete
-          </IonButton>
+          </button>
         </div>
-      </IonContent>
-
-    </IonModal>
+      </Dialog.Panel>
+    </Dialog>
   )
 }
 

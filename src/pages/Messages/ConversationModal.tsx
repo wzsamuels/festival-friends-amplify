@@ -2,36 +2,30 @@ import {ModalProps} from "../../@types/modal";
 import {Conversation, Message, UserProfile} from "../../models";
 import React, {FormEvent, useEffect, useRef, useState} from "react";
 import {DataStore, Storage} from "aws-amplify";
-import {
-  IonButton,
-  IonButtons,
-  IonContent,
-  IonHeader,
-  IonIcon, IonInput,
-  IonItem,
-  IonModal,
-  IonTitle,
-  IonToolbar
-} from "@ionic/react";
-import {close} from "ionicons/icons";
+import {Dialog} from "@headlessui/react";
+import Modal from "../../components/Modal";
+import {SubmitHandler, useForm} from "react-hook-form";
 
 interface ConversationModalProps extends ModalProps {
   conversation: Conversation | undefined,
   userProfile: UserProfile | undefined,
 }
 
+
+interface MessageInput {
+  message: string
+}
 const ConversationModal = ({conversation, isOpen, setIsOpen, userProfile} : ConversationModalProps) => {
 
   const [messages, setMessages] = useState<Message[]>([])
-  const input = useRef<HTMLIonInputElement>(null);
+  const {register, handleSubmit, reset} = useForm<MessageInput>();
   const [friendProfileImage, setFriendProfileImage] = useState<string | undefined>()
   const [friendProfile, setFriendProfile] = useState<UserProfile | undefined>()
 
-  const sendData = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    if(input.current?.value && friendProfile && userProfile && conversation) {
+  const handleSendMessage: SubmitHandler<MessageInput> = async (data) => {
+    if(data.message && friendProfile && userProfile && conversation) {
       const message = await DataStore.save(new Message({
-        content: input.current?.value as string,
+        content: data.message,
         conversation: conversation,
         conversationID: conversation.id,
         senderID: userProfile.id,
@@ -40,6 +34,7 @@ const ConversationModal = ({conversation, isOpen, setIsOpen, userProfile} : Conv
         receiver: friendProfile ,
       }))
       console.log(message)
+      reset()
     }
   }
 
@@ -74,41 +69,33 @@ const ConversationModal = ({conversation, isOpen, setIsOpen, userProfile} : Conv
   }, [conversation, userProfile])
 
   return (
-    <IonModal isOpen={isOpen} onDidDismiss={() => setIsOpen(false)}>
-      <IonHeader>
-        <IonToolbar>
-          <IonButtons slot='end'>
-            <IonButton onClick={() => {console.log("click");setIsOpen(false);}}>
-              <IonIcon icon={close}/>
-            </IonButton>
-          </IonButtons>
-          <IonTitle>Conversation with {friendProfile?.firstName}</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent>
-        <div className='p-4'>
-          {
-            messages.map(message =>
-              <div
-                key={message.id}
-                className={`flex my-4 w-full ${message.senderID !== userProfile?.id ? 'justify-start' : 'justify-end'}`}
-              >
-                {message.senderID !== userProfile?.id && <img className="rounded-full mx-4 max-w-[75px] w-full max-h-[75px] aspect-square" src={friendProfileImage} alt={friendProfile?.firstName}  />}
-                <div className={`p-4 rounded-xl ${message.senderID === userProfile?.id ? 'bg-primary-default text-light-default' : 'bg-secondary-default'} w-1/2`}>{message.content}</div>
-              </div>
-            )
-          }
-        </div>
-        <div className='fixed bottom-0 w-full'>
-          <form onSubmit={sendData}>
-            <IonItem className='border-t border-t-primary-default'>
-              <IonInput ref={input} type="text" label="Message" labelPlacement="floating" enterkeyhint='send' />
-              <IonButton type='submit'>Send</IonButton>
-            </IonItem>
-          </form>
-        </div>
-      </IonContent>
-    </IonModal>
+    <Modal
+      isOpen={isOpen}
+      setIsOpen={setIsOpen}
+      title={
+        <div>Conversation with {friendProfile?.firstName}</div>
+      }
+    >
+      <div className='p-4'>
+        {
+          messages.map(message =>
+            <div
+              key={message.id}
+              className={`flex my-4 w-full ${message.senderID !== userProfile?.id ? 'justify-start' : 'justify-end'}`}
+            >
+              {message.senderID !== userProfile?.id && <img className="rounded-full mx-4 max-w-[75px] w-full max-h-[75px] aspect-square" src={friendProfileImage} alt={friendProfile?.firstName}  />}
+              <div className={`p-4 rounded-xl ${message.senderID === userProfile?.id ? 'bg-primary-default text-light-default' : 'bg-secondary-default'} w-1/2`}>{message.content}</div>
+            </div>
+          )
+        }
+      </div>
+      <div className='fixed bottom-0 left-0 w-full p-4'>
+        <form className='pt-4 border-t border-t-primary-default flex justify-between' onSubmit={handleSubmit(handleSendMessage)}>
+          <input className='w-full p-2 outline-0' placeholder="Message" {...register('message')} type="text"/>
+          <button className='bg-primary-default text-light-default py-2 px-4 rounded-xl' type='submit'>Send</button>
+      </form>
+      </div>
+    </Modal>
   )
 }
 

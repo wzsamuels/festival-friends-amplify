@@ -3,19 +3,9 @@ import {SubmitHandler, useForm} from "react-hook-form";
 import {Friendship, UserProfile} from "../../models";
 import {useAuthenticator} from "@aws-amplify/ui-react";
 import {DataStore} from "aws-amplify";
-import {
-  IonAlert,
-  IonButton,
-  IonButtons,
-  IonContent,
-  IonHeader,
-  IonInput, IonModal,
-  IonTitle,
-  IonToast,
-  IonToolbar
-} from "@ionic/react";
-import FriendCard from "../FriendCard";
+import FriendCard from "./FriendCard";
 import styled from "styled-components";
+import {Dialog} from "@headlessui/react";
 
 interface SearchInput {
   firstName?: string;
@@ -28,11 +18,6 @@ type FriendSearchModalProps = {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
 }
-
-const IonModalStyled = styled(IonModal)`
-  --max-width: 800px;
-  --width: 800px;
-`
 
 const FriendSearchModal = ({isOpen, setIsOpen}: FriendSearchModalProps) => {
   const { register, handleSubmit } = useForm<SearchInput>()
@@ -98,24 +83,19 @@ const FriendSearchModal = ({isOpen, setIsOpen}: FriendSearchModalProps) => {
   }
 
   return (
-    <IonModalStyled isOpen={isOpen} onDidDismiss={() => setIsOpen(false)}>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Friend Search</IonTitle>
-          <IonButtons slot="end">
-            <IonButton onClick={() => setIsOpen(false)}>
+    <Dialog open={isOpen} onClose={() => setIsOpen(false)}>
+      <Dialog.Panel>
+        <Dialog.Title>Friend Search
+            <button onClick={() => setIsOpen(false)}>
               Cancel
-            </IonButton>
-          </IonButtons>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent className="ion-padding">
+            </button>
+        </Dialog.Title>
         <form onSubmit={handleSubmit(searchFriends)}>
-          <IonInput label='First Name' labelPlacement='stacked' {...register('firstName')} type="text"  />
-          <IonInput label='Last Name' labelPlacement='stacked' {...register('lastName')} type="text" />
-          <IonInput label='City' labelPlacement='stacked'  {...register('city')} type="text" />
-          <IonInput label='School' labelPlacement='stacked' {...register('school')} type="text"  />
-          <IonButton type='submit'>Search</IonButton>
+          <input  {...register('firstName')} type="text"  />
+          <input  {...register('lastName')} type="text" />
+          <input  {...register('city')} type="text" />
+          <input {...register('school')} type="text"  />
+          <button type='submit'>Search</button>
         </form>
         <div className='flex flex-wrap' >
         {
@@ -124,6 +104,7 @@ const FriendSearchModal = ({isOpen, setIsOpen}: FriendSearchModalProps) => {
               <button id={`open-${result.id}`}>
                 <FriendCard profile={result} key={result.id} link={false}/>
               </button>
+              {/*
               <IonAlert
                 trigger={`open-${result.id}`}
                 header="Send Friend Request"
@@ -141,18 +122,21 @@ const FriendSearchModal = ({isOpen, setIsOpen}: FriendSearchModalProps) => {
                   },
                 ]}
               ></IonAlert>
+              */}
             </Fragment>
           )
         }
         </div>
+        {/*
         <IonToast
           isOpen={toastIsOpen}
           message="Friend request sent!"
           onDidDismiss={() => setToastIsOpen(false)}
           duration={5000}
         ></IonToast>
-      </IonContent>
-      </IonModalStyled>
+        */}
+      </Dialog.Panel>
+    </Dialog>
   )
 }
 

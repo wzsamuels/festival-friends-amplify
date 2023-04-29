@@ -1,4 +1,3 @@
-import {IonButton, IonButtons, IonContent, IonHeader, IonImg, IonPage, IonTitle, IonToolbar} from "@ionic/react";
 import AccountButton from "../../components/Profile/AccountButton";
 import React, {useContext, useEffect, useState} from "react";
 import groupImage from "../../images/group.png";
@@ -6,6 +5,7 @@ import {useAuthenticator} from "@aws-amplify/ui-react";
 import UserProfileContext from "../../context/UserProfileContext";
 import {DataStore} from "@aws-amplify/datastore";
 import {CollegeGroup} from "../../models";
+import {Link} from "react-router-dom";
 
 const GroupsPage = () => {
   const [collegeGroup, setCollegeGroup] = useState<CollegeGroup>();
@@ -27,18 +27,6 @@ const GroupsPage = () => {
   }, [userProfile])
 
   return (
-    <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonButtons slot='end'>
-            <AccountButton id={'groups-page'}/>
-          </IonButtons>
-          <IonTitle>
-            Groups
-          </IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent>
         <div className='bg-[url("/src/images/group.png")] h-screen w-full bg-cover flex flex-col items-center justify-center h-full'>
           <div className='text-primary-default font-bold flex flex-col items-center justify-center text-3xl bg-light-default p-4 rounded-xl'>
             { collegeGroup && authStatus === 'authenticated' &&
@@ -56,14 +44,12 @@ const GroupsPage = () => {
               authStatus === 'unauthenticated' &&
               <>
                 <div className='my-4'>Connect with your Community</div>
-                <IonButton routerLink='/account' className='my-4'>Sign In</IonButton>
+                <Link to='/account'><button className='my-4'>Sign In</button></Link>
               </>
             }
 
           </div>
         </div>
-      </IonContent>
-    </IonPage>
   )
 }
 

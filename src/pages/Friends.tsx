@@ -1,13 +1,5 @@
-import {
-  IonButton,
-  IonButtons,
-  IonContent,
-  IonHeader,
-  IonIcon, IonLabel,
-  IonPage, IonSegment, IonSegmentButton,
-  IonToolbar, SegmentChangeEventDetail
-} from '@ionic/react';
-import React, { useEffect, useRef, useState} from "react";
+
+import React, {useContext, useEffect, useRef, useState} from "react";
 import {useAuthenticator} from "@aws-amplify/ui-react";
 import {DataStore} from "aws-amplify";
 import { Friendship, UserProfile} from "../models";
@@ -15,28 +7,30 @@ import { Friendship, UserProfile} from "../models";
 
 import { search } from "ionicons/icons";
 import AccountButton from "../components/Profile/AccountButton";
-import FriendCard from "../components/FriendCard";
+import FriendCard from "../components/Friends/FriendCard";
 import FriendSearchModal from "../components/Friends/FriendSearchModal";
+import UserProfileContext from "../context/UserProfileContext";
+import {Link} from "react-router-dom";
+import {Tab} from "@headlessui/react";
+import Header from "../components/Header";
+import useUserFriends from "../hooks/useUserFriends";
 
 
 const FriendsPage: React.FC = () => {
-  const {user} = useAuthenticator();
+  const { route } = useAuthenticator(context => [context.route]);
+  const { userProfile } = useContext(UserProfileContext);
   const [allFriends, setFriends] = useState<Friendship[]>([]);
   const [acceptedProfiles, setAcceptedProfiles] = useState<UserProfile[]>([]);
   const [sentFriends, setSentFriends] = useState<UserProfile[]>([]);
   const [pendingFriends, setPendingFriends] = useState<UserProfile[]>([]);
   const [friendType, setFriendType] = useState("accepted");
   const [isFriendsModalOpen, setIsFriendsModalOpen] = useState(false);
-  const username = user?.username as string;
 
   useEffect(() => {
 
     const fetchFriends = async () => {
-      if (user) {
-        const profile = await DataStore.query(UserProfile, (userProfile) =>
-          userProfile.userID.eq(username)
-        );
-        const profileID = profile[0].id;
+      if (route === 'authenticated' && userProfile) {
+        const profileID = userProfile.id;
         const allFriends = await DataStore.query(Friendship, c => c.or(c => [
           c.userProfileID.eq(profileID),
           c.friendProfileID.eq(profileID)
@@ -75,7 +69,12 @@ const FriendsPage: React.FC = () => {
     return () => {
       subscription.unsubscribe();
     };
-  }, [user])
+  }, [route, userProfile])
+
+  const findSuggestions = async () => {
+    const allUsers = await DataStore.query(UserProfile);
+
+  }
 
   const handleFriendAccept = async ({friendShipID} : {friendShipID: string}) => {
     console.log(allFriends, friendShipID)
@@ -92,70 +91,62 @@ const FriendsPage: React.FC = () => {
     await DataStore.delete(friendShip[0]);
   }
 
-  const handleSegmentChange = (e: CustomEvent<SegmentChangeEventDetail>) => {
-    console.log(e.detail.value)
-    if(e.detail.value) {
-      setFriendType(e.detail.value)
-    }
-  }
-
   return (
-    <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonSegment value={friendType} scrollable onIonChange={handleSegmentChange}>
-            <IonSegmentButton value='accepted'>
-              <IonLabel>Friends</IonLabel>
-            </IonSegmentButton>
-            <IonSegmentButton value='pending'>
-                <div className='flex justify-center items-center'>
-                  <div>Requests</div>
-                  {pendingFriends.length > 0 ? <div className='bg-primary-default text-light-default rounded-full mx-2 w-[20px] p-2 h-[20px] flex justify-center items-center'>{pendingFriends.length}</div> : null}
-                </div>
-            </IonSegmentButton>
-            <IonSegmentButton value='sent'>
-              <IonLabel>Suggestions</IonLabel>
-            </IonSegmentButton>
-          </IonSegment>
-          <IonButtons slot='end'>
-            <IonButton onClick={() => setIsFriendsModalOpen(true)}>
-              <IonIcon icon={search}/>
-            </IonButton>
-            <AccountButton id='friends'/>
-          </IonButtons>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent fullscreen>
+    <div className='flex flex-wrap w-full pt-16'>
+        <Header>
+          <div className='w-full flex justify-between h-full'>
+            <button
+              className={`${friendType === "accepted" ? "" : "after:scale-x-0"} hover:bg-light-default flex-1 p-4 relative after:transition after:absolute after:w-full after:h-[2px] after:bottom-0 after:left-0  after:bg-primary-default after:origin-left`}
+              onClick={() => setFriendType("accepted")}
+            >
+              Friends
+            </button>
+            <button
+              className={`${friendType === "pending" ? "" : "after:scale-x-0"} hover:bg-light-default flex-1 p-4 relative after:transition after:absolute after:w-full after:h-[2px] after:bottom-0 after:left-0  after:bg-primary-default after:origin-left`}
+              onClick={() => setFriendType("pending")}
+            >
+              <div className='flex justify-center items-center'>
+                <div>Requests</div>
+                {pendingFriends.length > 0 ? <div className='bg-primary-default text-light-default rounded-full mx-2 w-[20px] p-2 h-[20px] flex justify-center items-center'>{pendingFriends.length}</div> : null}
+              </div>
+            </button>
+            <button
+              className={`${friendType === "suggestions" ? "" : "after:scale-x-0"} hover:bg-light-default flex-1 p-4 relative after:transition after:absolute after:w-full after:h-[2px] after:bottom-0 after:left-0  after:bg-primary-default after:origin-left`}
+              onClick={() => setFriendType("suggestions")}
+            >
+              Suggestions
+            </button>
+          </div>
+        </Header>
         <div className={'flex flex-wrap p-4'}>
         {
-          user ?
+          route === 'authenticated' && userProfile?.verified?
             <>
+              {
+                friendType === 'accepted' && acceptedProfiles.length ?
+                  acceptedProfiles.map((profile) =>
+                      <FriendCard className='m-4' key={profile.id} profile={profile} link={true}/>)
+                  :
+                  null
+              }
               {
                 friendType === 'pending' && pendingFriends.length ?
                   <>
                     {
                       pendingFriends.map(friend =>
-                          <FriendCard
-                            key={friend.id}
-                            profile={friend}
-                            link={true}
-                            onConfirm={() => handleFriendAccept({friendShipID: friend.id})}
-                            onCancel={() => handleFriendshipReject({friendShipID: friend.id})}
-                          />
+                        <FriendCard
+                          key={friend.id}
+                          profile={friend}
+                          link={true}
+                          onConfirm={() => handleFriendAccept({friendShipID: friend.id})}
+                          onCancel={() => handleFriendshipReject({friendShipID: friend.id})}
+                        />
                       )}
                   </>
                   :
                   null
               }
-              {
-                friendType === 'accepted' && acceptedProfiles.length ?
-                  acceptedProfiles.map((profile) =>
-                    <>
-                      <FriendCard key={profile.id} profile={profile} link={true}/>
-                    </>)
-                  :
-                  null
-              }
+
               {
                 !(acceptedProfiles.length || sentFriends.length || pendingFriends.length) ?
                   <h1 className='text-xl md:text-2xl'>No friends yet! How about searching for some people you might know?</h1>
@@ -164,18 +155,17 @@ const FriendsPage: React.FC = () => {
               }
             </>
             :
-            <div>
-              <h1 className='text-xl md:text-2xl my-4'>
-                Festival Friends Account Required.
-              </h1>
-              <IonButton routerLink='/account'>Sign In</IonButton>
+            <div className='bg-[url("/src/images/friends.png")] h-screen w-full bg-cover flex flex-col items-center justify-center h-full'>
+              <div className='text-primary-default font-bold flex flex-col items-center justify-center text-3xl bg-light-default p-4 rounded-xl'>
+                <div className='my-4'>Find New Friends</div>
+                <Link to='/account' className='my-4'>Sign In</Link>
+              </div>
             </div>
 
         }
         </div>
         <FriendSearchModal isOpen={isFriendsModalOpen} setIsOpen={setIsFriendsModalOpen}/>
-      </IonContent>
-    </IonPage>
+    </div>
   );
 };
 

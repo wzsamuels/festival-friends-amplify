@@ -1,56 +1,37 @@
-// Ionic imports
-import {
-  IonButton,
-  IonButtons,
-  IonContent,
-  IonHeader,
-  IonIcon,
-  IonLabel,
-  IonModal,
-  IonPage,
-  IonSegment,
-  IonSegmentButton,
-  IonTitle,
-  IonToolbar,
-  SegmentChangeEventDetail,
-} from "@ionic/react";
-import { search } from "ionicons/icons";
-
 // AWS imports
-import { useAuthenticator } from "@aws-amplify/ui-react";
 import { DataStore } from "aws-amplify";
 
 // React imports
-import React, { useContext, useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
 
 // Local imports
-import { EventType, Festival, LazyFestival, UserProfile } from "../../models";
-import AccountButton from "../../components/Profile/AccountButton";
+import {EventProfile, EventType, Festival, Friendship, LazyFestival, UserProfile} from "../../models";
 import DataStoreContext, { DataStoreContextType } from "../../context/DataStoreContext";
 import FestivalCard from "../../components/Events/FestivalCard";
+import UserProfileContext from "../../context/UserProfileContext";
+import {Dialog, Tab} from "@headlessui/react";
+import Header from "../../components/Header";
 
-const EventPage: React.FC = () => {
-  const { user } = useAuthenticator((context) => [context.user]);
+const EventPage = () => {
+  const { userProfile } = useContext(UserProfileContext)
   const [events, setEvents] = useState<LazyFestival[]>([]);
-  const [profile, setProfile] = useState<UserProfile>();
-  const username = user?.username as string;
+  const [friendProfiles, setFriendProfiles] = useState<UserProfile[]>([]);
+  const [eventAttendees, setEventAttendees] = useState<Map<string, UserProfile[]>>(new Map());
 
   // Filter events by type
   const sportEvents = events.filter((event) => event.type === EventType.SPORT);
   const musicEvents = events.filter((event) => event.type === EventType.MUSIC);
   const collegeEvent = events.filter((event) => event.type === EventType.COLLEGE);
   const businessEvent = events.filter((event) => event.type === EventType.BUSINESS);
-
+  const [isOpen, setIsOpen] = useState(false)
   const [eventType, setEventType] = useState("all");
 
-  const festivalModal = useRef<HTMLIonModalElement>(null);
   const { dataStoreCleared } = useContext(DataStoreContext) as DataStoreContextType;
 
   // Observe the Festival data from DataStore
   useLayoutEffect(() => {
     if (dataStoreCleared) {
       const eventSub = DataStore.observeQuery(Festival).subscribe(({ items }) => {
-        console.log(items);
         setEvents(items);
       });
 
@@ -60,95 +41,112 @@ const EventPage: React.FC = () => {
     }
   }, [dataStoreCleared]);
 
-  // Fetch user profile
   useEffect(() => {
-    const fetchProfile = async () => {
-      const profile = await DataStore.query(UserProfile, (c) => c.userID.eq(username));
-      setProfile(profile[0]);
-    };
-    if (user) {
-      fetchProfile();
-    } else {
-      setProfile(undefined);
+    if(userProfile) {
+      // Query all friends and watch for changes
+      const friendsSub = DataStore.observeQuery(Friendship,  (c) => c.or( c => [
+        c.friendProfileID.eq(userProfile?.id),
+        c.userProfileID.eq(userProfile?.id)
+      ])).subscribe(async({ items }) => {
+        // Fetch friend profiles
+        const friendPromises = items.map(async (item) => item.userProfileID === userProfile.id ? await item.friendProfile : await item.userProfile);
+        const friendProfiles = await Promise.all(friendPromises);
+        setFriendProfiles(friendProfiles);
+      })
+      return () => {
+        friendsSub.unsubscribe();
+      }
     }
-  }, [user]);
+  }, [userProfile])
 
-  console.log(eventType);
+  useEffect(() => {
+    const fetchEventAttendees = async () => {
+      const eventAttendeesMap = new Map<string, UserProfile[]>();
+
+      for (const event of events) {
+        const attendees = (await DataStore.query(EventProfile, (ep) => ep.eventID.eq(event.id))).map(
+          (eventProfile: EventProfile) => eventProfile.userProfile
+        );
+        const attendeeProfiles = await Promise.all(
+          attendees.map(async (attendee) => await attendee)
+        );
+        eventAttendeesMap.set(event.id, attendeeProfiles);
+      }
+      setEventAttendees(eventAttendeesMap);
+    };
+
+    fetchEventAttendees();
+  }, [events]);
 
   // Handle segment change
-  const handleSegmentChange = (e: CustomEvent<SegmentChangeEventDetail>) => {
-    console.log(e.detail.value);
-    if (e.detail.value) {
-      setEventType(e.detail.value);
-    }
+
+  const getAttendingFriends = (eventId: string): UserProfile[] => {
+    const attendees = eventAttendees.get(eventId) || [];
+    return friendProfiles.filter((friend) => attendees.some((attendee) => attendee.id === friend.id));
   };
 
-  return (
-    <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonSegment value={eventType} scrollable onIonChange={handleSegmentChange}>
-            <IonSegmentButton value='all'>
-              <IonLabel>All</IonLabel>
-            </IonSegmentButton>
-            <IonSegmentButton value='music'>
-              <IonLabel>Music</IonLabel>
-            </IonSegmentButton>
-            <IonSegmentButton value='sport'>
-              <IonLabel>Sports</IonLabel>
-            </IonSegmentButton>
-            <IonSegmentButton value='business'>
-              <IonLabel>Business</IonLabel>
-            </IonSegmentButton>
-            <IonSegmentButton value='college'>
-              <IonLabel>College</IonLabel>
-            </IonSegmentButton>
-          </IonSegment>
-          <IonButtons slot='end'>
-            <IonButton id='search-festivals'>
-              <IonIcon icon={search}/>
-            </IonButton>
-            <AccountButton id='events'/>
-          </IonButtons>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent fullscreen>
-        <div className='grid gap-4 justify-items-center grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 items-center p-4'>
-          {(eventType === 'music' || eventType === 'all')
-            && musicEvents?.map(event =>
-            <FestivalCard festival={event} userProfile={profile} key={event.id}/>
-          )}
-          {(eventType === 'sport' || eventType === 'all')
-            && sportEvents?.map(event =>
-              <FestivalCard festival={event} userProfile={profile} key={event.id}/>
-            )}
-          {(eventType === 'business' || eventType === 'all')
-            && businessEvent?.map(event =>
-              <FestivalCard festival={event} userProfile={profile} key={event.id}/>
-            )}
-          {(eventType === 'college' || eventType === 'all')
-            && collegeEvent?.map(event =>
-              <FestivalCard festival={event} userProfile={profile} key={event.id}/>
-            )}
-        </div>
-      </IonContent>
+  // Render festival cards
+  const renderFestivalCards = (events:  LazyFestival[]) => {
+    return events?.map((event) => (
+      <FestivalCard festival={event} key={event.id} attendingFriends={getAttendingFriends(event.id)} />
+    ));
+  };
 
-      <IonModal ref={festivalModal} trigger='search-festivals'>
-        <IonHeader>
-          <IonToolbar>
-            <IonButtons slot="end">
-              <IonButton onClick={() => festivalModal.current?.dismiss()}>Cancel</IonButton>
-            </IonButtons>
-            <IonTitle className='ion-justify-content-center'>Festival Search</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <IonContent>
+  // Event mapping
+  const eventMapping = {
+    music: musicEvents,
+    sport: sportEvents,
+    business: businessEvent,
+    college: collegeEvent,
+  };
+
+  // Filter events by type, map to array, and flatten
+  const filteredEvents = Object.entries(eventMapping)
+    .filter(([key, events]) => eventType === key || eventType === "all")
+    .map(([_, events]) => events)
+    .flat();
+
+  return (
+    <div>
+      <Header>
+        <div className='w-full flex justify-between h-full'>
+          <button
+            className={`${eventType === "all" ? "" : "after:scale-x-0"} hover:bg-light-default flex-1 p-4 relative after:transition after:absolute after:w-full after:h-[2px] after:bottom-0 after:left-0  after:bg-primary-default after:origin-left`}
+            onClick={() => setEventType("all")}
+          >
+            All
+          </button>
+          <button
+            className={`${eventType === "music" ? "" : "after:scale-x-0"} hover:bg-light-default flex-1 p-4 relative after:transition after:absolute after:w-full after:h-[2px] after:bottom-0 after:left-0  after:bg-primary-default after:origin-left`}
+            onClick={() => setEventType("music")}
+          >
+            Music
+          </button>
+          <button
+            className={`${eventType === "sport" ? "" : "after:scale-x-0"} hover:bg-light-default flex-1 p-4 relative after:transition after:absolute after:w-full after:h-[2px] after:bottom-0 after:left-0  after:bg-primary-default after:origin-left`}
+            onClick={() => setEventType("sport")}
+          >
+            Sports
+          </button>
+          <button
+            className={`${eventType === "business" ? "" : "after:scale-x-0"}  hover:bg-light-default flex-1 p-4 relative after:transition after:absolute after:w-full after:h-[2px] after:bottom-0 after:left-0  after:bg-primary-default after:origin-left`}
+            onClick={() => setEventType("business")}>Business</button>
+        </div>
+      </Header>
+      <div className='grid gap-4 justify-items-center grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 items-center px-4 pt-16'>
+        {renderFestivalCards(filteredEvents)}
+      </div>
+      <Dialog open={isOpen} onClose={() => setIsOpen(false)}>
+        <Dialog.Panel>
+          <Dialog.Title className='flex'>
+            <div>Search Festivals</div>
+            <button className='ml-auto' onClick={() => setIsOpen(false)}>Close</button></Dialog.Title>
           <div className='p-4'>
             Not yet implemented!
           </div>
-        </IonContent>
-      </IonModal>
-    </IonPage>
+        </Dialog.Panel>
+      </Dialog>
+    </div>
   );
 };
 

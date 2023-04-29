@@ -3,10 +3,10 @@ import {v4 as uuidv4} from "uuid";
 import {Storage} from "aws-amplify";
 import {DataStore} from "@aws-amplify/datastore";
 import {Photo, UserProfile} from "../../models";
-import {IonButton, IonButtons, IonContent, IonHeader, IonModal, IonToolbar} from "@ionic/react";
 import {ProfileModalProps} from "../../@types/profile";
 import PhotoImage from "../PhotoImage";
 import getErrorMessage from "../../lib/getErrorMessage";
+import {Dialog} from "@headlessui/react";
 
 export interface ProfileImageModalProps extends ProfileModalProps {
   photos: Photo[];
@@ -63,22 +63,17 @@ const ProfileImageModal = ({profile, username, isOpen, setIsOpen, photos} : Prof
   }
 
   return (
-    <>
-      <IonModal isOpen={isOpen} onDidDismiss={dismissModal}>
-        <IonHeader>
-          <IonToolbar>
-            <IonButtons slot='end'>
-              <IonButton onClick={dismissModal}>Close</IonButton>
-            </IonButtons>
-          </IonToolbar>
-        </IonHeader>
-        <IonContent>
+    <Dialog open={isOpen} onClose={() => setIsOpen(false)}>
+      <Dialog.Panel>
+        <Dialog.Title>
+              <button onClick={dismissModal}>Close</button>
+        </Dialog.Title>
           { preview ?
             <div className='flex flex-col items-center justify-center w-full p-4'>
               <img className='w-full rounded-full ' src={preview} alt="Preview"/>
               <div className='mt-6 flex justify-center w-full'>
-                <IonButton onClick={() => setSelectedFile(null)}>Cancel</IonButton>
-                <IonButton onClick={() => handleProfileImageUpdate()}>Update Profile Image</IonButton>
+                <button onClick={() => setSelectedFile(null)}>Cancel</button>
+                <button onClick={() => handleProfileImageUpdate()}>Update Profile Image</button>
               </div>
             </div>
             :
@@ -106,9 +101,8 @@ const ProfileImageModal = ({profile, username, isOpen, setIsOpen, photos} : Prof
               </div>
             </div>
           }
-        </IonContent>
-      </IonModal>
-    </>
+      </Dialog.Panel>
+    </Dialog>
   )
 }
 

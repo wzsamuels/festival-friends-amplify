@@ -3,20 +3,25 @@ import React, {useContext, useEffect, useState} from "react";
 import DataStoreContext, {DataStoreContextType} from "../../context/DataStoreContext";
 import ImageContext from "../../context/ImageContext";
 import {DataStore} from "aws-amplify";
-import {IonAlert, IonButton, IonIcon, IonItem, IonSpinner} from "@ionic/react";
 import {checkmarkCircleOutline} from "ionicons/icons";
+import {useAuthenticator} from "@aws-amplify/ui-react";
+import UserProfileContext from "../../context/UserProfileContext";
+import {BsCheck} from "react-icons/all";
+import {Link} from "react-router-dom";
 
 interface FestivalCardProps {
   festival: LazyFestival;
-  userProfile: UserProfile | undefined;
+  attendingFriends: UserProfile[];
 }
 
-const FestivalCard = ({festival, userProfile}: FestivalCardProps) => {
+const FestivalCard = ({festival, attendingFriends}: FestivalCardProps) => {
   const [festivalImage, setFestivalImage] = useState('')
   const [attendingEvent, setAttendingEvent] = useState(false)
   const [eventProfile, setEventProfile] = useState<EventProfile>();
   const { dataStoreCleared } = useContext(DataStoreContext) as DataStoreContextType;
   const [alertIsOpen, setAlertIsOpen] = useState(false);
+  const { user } = useAuthenticator((context) => [context.user]);
+  const { userProfile } = useContext(UserProfileContext)
 
   const { getSignedURL } = useContext(ImageContext);
   useEffect(() => {
@@ -80,35 +85,41 @@ const FestivalCard = ({festival, userProfile}: FestivalCardProps) => {
         <div className='w-full max-w-[350px] min-h-[350px] h-full max-h-[350px] object-cover flex items-center justify-center'>
           {
             festivalImage ?
-              <IonItem routerLink={`/events/${festival.id}`} lines='none'>
+              <Link to={`/events/${festival.id}`}>
                 <img className='w-full h-full' src={festivalImage} alt={festival.name}/>
-              </IonItem>
+              </Link>
               :
-              <IonSpinner></IonSpinner>
+              null
           }
         </div>
         <div className=' bottom-4 left-4 rounded-xl z-10 w-full p-4 font-bold '>
-          <div className='bold'>{festival.name} - {festival.location}</div>
-          <div></div>
+          <div className='bold min-h-[3rem]'>{festival.name} - {festival.location}</div>
+
           <div>{festival.startDate}</div>
         </div>
       </div>
-      <div>
-        <h2 className='text-base md:text-lg m-2'>Plan on Attending? Let your friends know!</h2>
+      <div className='p-2 text-base md:text-lg'>
         {
-          attendingEvent  ?
-            <IonButton onClick={handleAttendFestival}>I&apos;ll be there! <IonIcon className='ml-2' icon={checkmarkCircleOutline}/></IonButton>
+          user ?
+            <>
+              <div className='my-2'>
+                {attendingFriends.length > 0 ? <span>{attendingFriends.length} friend{attendingFriends.length > 1 ? 's' : ''} {attendingFriends.length > 1 ? 'are' : 'is'} attending</span> : <span>&nbsp;</span>}
+              </div>
+              {
+                attendingEvent  ?
+                  <button onClick={handleAttendFestival} className='bg-primary-default text-light-default flex items-center rounded-xl space-x-2 py-2 px-4'>
+                    <span>I&apos;ll be there!</span>
+                    <BsCheck/>
+                  </button>
+                  :
+                  <button onClick={handleAttendFestival} className='bg-light-default text-primary-default border border-primary-default flex items-center rounded-xl space-x-2 py-2 px-4'>I&apos;ll be there!</button>
+              }
+            </>
             :
-            <IonButton onClick={handleAttendFestival} fill='outline'>I&apos;ll be there!</IonButton>
+            <>
+            </>
         }
       </div>
-      <IonAlert
-        isOpen={alertIsOpen}
-        header="Not logged in!"
-        message="Please log in to use this feature"
-        buttons={['OK']}
-        onDidDismiss={() => setAlertIsOpen(false)}
-      ></IonAlert>
     </div>
   )
 }

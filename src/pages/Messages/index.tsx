@@ -1,34 +1,26 @@
-import {
-  IonButton,
-  IonButtons,
-  IonContent,
-  IonHeader,
-  IonIcon,
-  IonItem,
-  IonModal,
-  IonPage,
-  IonTitle,
-  IonToolbar
-} from '@ionic/react';
 import React, {useContext, useEffect, useRef, useState} from "react";
 import {DataStore, Storage} from "aws-amplify";
 import {Conversation, Friendship, UserProfile} from "../../models";
 import {useAuthenticator} from "@aws-amplify/ui-react";
-import {addCircle, search} from "ionicons/icons";
-import AccountButton from "../../components/Profile/AccountButton";
-import FriendCard from "../../components/FriendCard";
+import FriendCard from "../../components/Friends/FriendCard";
 import ConversationModal from "./ConversationModal";
 import UserProfileContext from "../../context/UserProfileContext";
+import { Dialog } from '@headlessui/react'
+import {BsPlus, BsSearch, FaSearch} from "react-icons/all";
+import {Link} from "react-router-dom";
+import Modal from "../../components/Modal";
+import Header from "../../components/Header";
+import useUserFriends from "../../hooks/useUserFriends";
 
 const MessagePage: React.FC = () => {
-  const [friendProfiles, setFriendProfiles] = useState<UserProfile[]>([])
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [currentConversation, setCurrentConversation] = useState<Conversation>();
-  const searchConversationModal = useRef<HTMLIonModalElement>(null);
   const [isNewConversationModalOpen, setNewConversationModalOpen] = useState(false);
   const [isConversationModalOpen, setConversationModalOpen] = useState(false);
   const { user } = useAuthenticator();
   const { userProfile } = useContext(UserProfileContext)
+  const { friendProfiles } = useUserFriends()
+  const [searchTerm, setSearchTerm] = useState("");
 
   const handleNewConversation = async ({friendProfile} : {friendProfile: UserProfile}) => {
     setNewConversationModalOpen(false);
@@ -66,29 +58,6 @@ const MessagePage: React.FC = () => {
   };
 
   useEffect(() => {
-    const fetchFriends = async () => {
-      // User has to have a verified profile to send messages
-      if(!userProfile || !userProfile.verified) {
-        return
-      }
-
-      const friends = await DataStore.query(Friendship, f => f.or(f => [
-        f.friendProfileID.eq(userProfile.id),
-        f.userProfileID.eq(userProfile.id)
-      ]))
-      const friendProfiles = friends.filter(friend => friend.isAccepted).map(friend =>
-        friend.friendProfileID === userProfile.id ? friend.userProfile : friend.friendProfile)
-
-      const result = await Promise.all(friendProfiles.map(async friendProfile => await friendProfile))
-      setFriendProfiles(result)
-    }
-
-    if(user) {
-      fetchFriends()
-    }
-  }, [user])
-
-  useEffect(() => {
     if(userProfile) {
       const conversationSub = DataStore.observeQuery(Conversation, c => c.or(c => [
         c.userProfileID.eq(userProfile.id),
@@ -104,44 +73,29 @@ const MessagePage: React.FC = () => {
   }, [userProfile])
 
   return (
-    <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Messages</IonTitle>
-          <IonButtons slot='end'>
-            <IonButton id='search-modal'>
-              <IonIcon icon={search} />
-            </IonButton>
-            <AccountButton id={'message'}/>
-          </IonButtons>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent fullscreen>
-        <div className='p-4 h-full'>
+    <>
+      <Header>
+        <button><FaSearch/></button>
+      </Header>
+      <div className='p-4 min-h-full h-full relative mt-header'>
         {
           user && userProfile?.verified ?
             <>
               {/* Conversations */}
-              <section className='h-full my-4'>
-                <ul>
+              <section className='my-4 flex flex-wrap'>
                   { conversations.length > 0 ? conversations.map((conversation) => (
-                      <li key={conversation.id}>
                         <ConversationCard
+                          key={conversation.id}
+                          className='my-4 cursor-pointer'
                           isConversationModalOpen={isConversationModalOpen}
                           setConversationModalOpen={setConversationModalOpen} conversation={conversation} userProfile={userProfile}
                           onClick={() => openConversationModal(conversation)}/>
-                      </li>
                     ))
                     :
                     <div>
                       No Conversations found!
                     </div>
                   }
-                </ul>
-                <IonButton onClick={() => setNewConversationModalOpen(true)} className='my-6' >
-                  <span className='mx-4'>New Conversation</span>
-                  <IonIcon icon={addCircle}></IonIcon>
-                </IonButton>
               </section>
             </>
           :
@@ -149,40 +103,18 @@ const MessagePage: React.FC = () => {
               <h1 className='text-xl md:text-2xl my-4'>
                 Verified Festival Friends Account Required.
               </h1>
-              <IonButton routerLink='/account'>Sign In</IonButton>
+              <Link to='/account'>
+                <button>Sign In</button>
+              </Link>
             </div>
         }
+        <div className='absolute bottom-16 right-4'>
+          <button className='flex flex-col items-center rounded-full bg-primary-default text-light-default p-2' onClick={() => setNewConversationModalOpen(true)}  >
+            <span className='mx-4'>New</span>
+            <BsPlus/>
+          </button>
         </div>
-        <IonModal ref={searchConversationModal} trigger='search-modal'>
-          <IonHeader>
-            <IonToolbar>
-              <IonTitle className='ion-text-center'>Search Conversations</IonTitle>
-              <IonButtons slot="end">
-                <IonButton onClick={() => searchConversationModal.current?.dismiss()}>Cancel</IonButton>
-              </IonButtons>
-            </IonToolbar>
-          </IonHeader>
-          <IonContent className='ion-padding'>
-            <div>Not yet implemented.</div>
-          </IonContent>
-        </IonModal>
-      </IonContent>
-      <ConversationModal
-        conversation={currentConversation}
-        userProfile={userProfile}
-        isOpen={isConversationModalOpen}
-        setIsOpen={setConversationModalOpen} />
-
-      <IonModal isOpen={isNewConversationModalOpen} onDidDismiss={() => setNewConversationModalOpen(false)}  >
-        <IonHeader>
-          <IonToolbar>
-            <IonTitle className='ion-text-center'>New Conversation</IonTitle>
-            <IonButtons slot="end">
-              <IonButton onClick={() => setNewConversationModalOpen(false)}>Cancel</IonButton>
-            </IonButtons>
-          </IonToolbar>
-        </IonHeader>
-        <IonContent className="ion-padding">
+        <Modal isOpen={isNewConversationModalOpen} setIsOpen={setNewConversationModalOpen} title={<div>Start New Conversation</div>}>
           {
             friendProfiles.length > 0 ? friendProfiles.map(profile =>
                 <FriendCard
@@ -197,11 +129,19 @@ const MessagePage: React.FC = () => {
                 </h1>
               </div>
           }
-        </IonContent>
-      </IonModal>
-    </IonPage>
+        </Modal>
+        <ConversationModal
+          conversation={currentConversation}
+          userProfile={userProfile}
+          isOpen={isConversationModalOpen}
+          setIsOpen={setConversationModalOpen} />
+      </div>
+    </>
   );
-};
+}
+
+
+
 
 interface ConversationCardProps {
   conversation: Conversation,
@@ -209,10 +149,13 @@ interface ConversationCardProps {
   isConversationModalOpen: boolean,
   setConversationModalOpen: (arg: boolean) => void
   onClick: (arg: Conversation) => void
+  className: string
 }
-const ConversationCard = ({conversation, userProfile, onClick} : ConversationCardProps) => {
+const ConversationCard = ({conversation, userProfile, onClick, className} : ConversationCardProps) => {
   const [friendProfile, setFriendProfile] = useState<UserProfile>();
   const [friendProfileImage, setFriendProfileImage] = useState<string>();
+  const [lastMessage, setLastMessage] = useState<string>();
+
   useEffect(() => {
       // Fetch the profiles of the participants of the conversation
     const fetchProfiles = async () => {
@@ -222,7 +165,9 @@ const ConversationCard = ({conversation, userProfile, onClick} : ConversationCar
       const friend = await DataStore.query(UserProfile, c =>
         c.id.eq(userProfile.id === conversation.userProfileID ? conversation.friendProfileID : conversation.userProfileID)
       )
-
+      const messages = await conversation.messages.toArray();
+      const message = messages[messages.length - 1].senderID === userProfile.id ? "You" : friend[0].firstName;
+      setLastMessage(message + ": " + messages[messages.length - 1].content);
       setFriendProfile(friend[0])
 
       // Fetch the profile images of the participants of the conversation
@@ -237,14 +182,18 @@ const ConversationCard = ({conversation, userProfile, onClick} : ConversationCar
 
 
   return (
-    <IonItem lines='none' button onClick={() => onClick(conversation)} className='shadow-xl  flex justify-between w-full max-w-[400px] my-4'>
+    <div onClick={() => onClick(conversation)} className={`shadow-xl  flex justify-between max-w-[400px] min-w-[400px] ${className}`}>
       <div className='flex items-center justify-between w-full p-4'>
         <div className='flex items-center'>
           <img className="rounded-full mx-4 max-w-[75px] w-full max-h-[75px] aspect-square" src={friendProfileImage} alt={friendProfile?.firstName} />
-          <span>{friendProfile?.firstName}</span>
+          <div className='flex flex-col'>
+            <span className='text-lg font-bold'>{friendProfile?.firstName} {friendProfile?.lastName}</span>
+            <span className='my-2 truncate'>{lastMessage}</span>
+          </div>
+
         </div>
       </div>
-    </IonItem>
+    </div>
   )
 }
 

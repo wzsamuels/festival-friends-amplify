@@ -1,44 +1,36 @@
 import { DataStore } from '@aws-amplify/datastore';
-import { UserProfile } from '../../models';
-import { useEffect, useState} from 'react';
+import {useContext} from 'react';
 import {Authenticator, useAuthenticator} from '@aws-amplify/ui-react';
-import {
-  IonButton,
-  IonButtons,
-  IonContent,
-  IonHeader,
-  IonPage,
-  IonTitle,
-  IonToolbar
-} from '@ionic/react';
 import React from "react";
 import ProfileUnverified from "../../components/Profile/ProfileUnverified";
 import AccountButton from "../../components/Profile/AccountButton";
 import ProfileVerified from "../../components/Profile/ProfileVerified";
+import UserProfileContext from "../../context/UserProfileContext";
 
 const AccountPage = () => {
-  const { authStatus } = useAuthenticator(context => [context.authStatus]);
   const { user } = useAuthenticator((context) => [context.user]);
-  const [profile, setProfile] = useState<UserProfile>()
-  const [loading, setLoading] = useState(true)
-  const username = user?.username as string;
+  const { route } = useAuthenticator(context => [context.route]);
+  const { userProfile, loadingUserProfile} = useContext(UserProfileContext)
 
-  console.log(profile)
   const refresh = () => {
     DataStore.clear();
     location.reload()
   }
 
   const renderPage = () => {
-    if(authStatus === 'authenticated') {
+    if(route === 'authenticated') {
       {/* Return nothing when profile is loading to prevent the page from rendering before the profile is loaded*/}
-      if(loading) {
-        return null
+      if(loadingUserProfile) {
+        return (
+          <div className='w-full max-w-lg p-4 flex justify-center items-center text-primary-default'>
+            {/* TODO: Add spinner */}
+          </div>
+        )
       }
-      if (profile?.verified) {
+      if (userProfile?.verified) {
         console.log("Profile verified")
-        return <ProfileVerified profile={profile} username={user.username ? user.username : ""}/>
-      } else if(!profile?.verified && profile?.verifySubmitted) {
+        return <ProfileVerified userProfile={userProfile} user={user}/>
+      } else if(!userProfile?.verified && userProfile?.verifySubmitted) {
         console.log("Profile unverified and submitted")
         return (
           <div className='w-full max-w-lg p-4'>
@@ -46,48 +38,27 @@ const AccountPage = () => {
             <div className='my-4'>
               If you&apos;ve received confirmation that your profile has been verified but are still seeing this message, press the button below to refresh the status of your profile.
             </div>
-            <IonButton onClick={refresh}>Refresh Profile</IonButton>
+            <button onClick={refresh}>Refresh Profile</button>
           </div>
         )
       } else {
-        return <ProfileUnverified username={username} email={user.attributes?.email as string} profile={profile}/>;
+        return <ProfileUnverified/>;
       }
     } else {
-      return <Authenticator/>
+      return (
+        <div className='w-screen h-screen translate-y-[-15%] flex justify-center items-center'>
+          <Authenticator/>
+        </div>
+      )
     }
   }
 
-  useEffect(() => {
-    const profileSub = DataStore.observeQuery(UserProfile, c => c.userID.eq(user?.username || ""))
-      .subscribe(( {items, isSynced}) => {
-        console.log(`Is synced: ${isSynced}`)
-        setProfile(items[0])
-        setLoading(false);
-      })
-
-    return () => {
-      profileSub.unsubscribe();
-    };
-  }, [user])
-
   return (
-    <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Account {user?.attributes?.email}</IonTitle>
-          <IonButtons slot='end'>
-            <AccountButton id='account'/>
-          </IonButtons>
-        </IonToolbar>
-      </IonHeader>
-    
-      <IonContent fullscreen>
+      <div >
       {
         renderPage()
       }
-      
-      </IonContent>
-    </IonPage>
+      </div>
   )
 }
 

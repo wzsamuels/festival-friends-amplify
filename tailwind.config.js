@@ -12,6 +12,16 @@ export default {
         'xl': '1200px',
     },
     colors: {
+      transparent: 'transparent',
+      current: 'currentColor',
+      black: '#000',
+      white: '#fff',
+      gray: {
+        50: '#fafafa',
+        100: '#f5f5f5',
+        200: '#eeeeee',
+        300: '#e0e0e0',
+      },
       primary: {
           default: 'var(--ion-color-primary)',
           contrast: 'var(--ion-color-primary-contrast)',
@@ -86,6 +96,29 @@ export default {
           '850': 'var(--ion-color-step-850)',
           '900': 'var(--ion-color-step-900)',
           '950': 'var(--ion-color-step-950)',
+      },
+    },
+    extend: {
+      spacing : {
+        header: '50px'
+      },
+      boxShadow: {
+        dropdown: '0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12)'
+      },
+      animation: {
+        'pulse-effect': 'pulse 400ms',
+      },
+      keyframes: {
+        pulse: {
+          '0%': {
+            transform: 'scaleX(0)',
+            opacity: '0',
+          },
+          '100%': {
+            transform: 'scaleX(1.1)',
+            opacity: '.2',
+          },
+        },
       },
     }
   },

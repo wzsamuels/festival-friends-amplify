@@ -1,32 +1,11 @@
 import React, {useEffect, useState} from "react";
-import {FestivalCreateForm } from "../ui-components";
-import {
-  IonButton,
-  IonButtons,
-  IonContent,
-  IonHeader,
-  IonItem, IonLabel,
-  IonList,
-  IonPage,
-  IonTitle,
-  IonToolbar
-} from "@ionic/react";
-import AccountButton from "../components/Profile/AccountButton";
-import {UserProfile} from "../models";
+import {FestivalCreateForm} from "../ui-components";
+import {CollegeGroup, UserProfile} from "../models";
 import {DataStore} from "aws-amplify";
+import colleges from "../data/colleges.json"
 
 const Admin = () => {
   return (
-    <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Admin - Testing Only</IonTitle>
-          <IonButtons slot='end'>
-            <AccountButton id='admin'/>
-          </IonButtons>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent>
         <div className='flex flex-col items-center justify-center w-full p-4'>
           <section className='w-full max-w-xl flex flex-col'>
             <h1 className='text-xl md:text-2xl'>Verify Profiles</h1>
@@ -37,8 +16,6 @@ const Admin = () => {
             <FestivalCreateForm/>
           </section>
         </div>
-      </IonContent>
-    </IonPage>
   )
 }
 
@@ -57,6 +34,19 @@ const VerifyAccounts = () => {
     fetchProfiles()
   }, [])
 
+  const seedDatabase = async () => {
+    const newColleges = await Promise.all( colleges.map(async (college) => {
+      return await DataStore.save(new CollegeGroup({
+        name: college.name,
+        members: [],
+        domain: college.domains[0],
+        webPage: college.web_pages[0],
+        countryCode: college.alpha_two_code
+      }));
+    }))
+    alert(`Database seeded with ${newColleges.length} colleges`)
+  }
+
   const verifyProfile = async (profile: UserProfile) => {
     const latestProfile = await DataStore.query(UserProfile, c => c.id.eq(profile.id))
     await DataStore.save(UserProfile.copyOf(latestProfile[0], updated => {updated.verified = true}))
@@ -68,42 +58,43 @@ const VerifyAccounts = () => {
     <div>
       {
         unverifiedProfiles.map(profile =>
-          <IonList key={profile.id}>
-            <IonItem lines='inset'>
-              <IonLabel slot='start' class='ion-text-wrap'>Email</IonLabel>
-              <IonLabel class='ion-text-wrap'>{profile.email}</IonLabel>
-            </IonItem>
-            <IonItem>
-              <IonLabel slot='start' class='ion-text-wrap'>Phone Number</IonLabel>
-              <IonLabel class='ion-text-wrap'>{profile.phone}</IonLabel>
-            </IonItem>
-            <IonItem>
-              <IonLabel slot='start' class='ion-text-wrap'>City</IonLabel>
-              <IonLabel class='ion-text-wrap'>{profile.city}</IonLabel>
-            </IonItem>
-            <IonItem>
-              <IonLabel slot='start' class='ion-text-wrap'>State</IonLabel>
-              <IonLabel class='ion-text-wrap'>{profile.state}</IonLabel>
-            </IonItem>
-            <IonItem>
-              <IonLabel slot='start' class='ion-text-wrap'>Zip Code</IonLabel>
-              <IonLabel class='ion-text-wrap'>{profile.zipcode}</IonLabel>
-            </IonItem>
-            <IonItem>
-              <IonLabel slot='start' class='ion-text-wrap'>Address</IonLabel>
-              <IonLabel class='ion-text-wrap'>{profile.address}</IonLabel></IonItem>
-            <IonItem>
-              <IonLabel  slot='start' class='ion-text-wrap'>School</IonLabel><IonLabel class='ion-text-wrap'>
-              {profile.school}
-              </IonLabel></IonItem>
-            <div className='w-full flex justify-end my-4'>
-              <IonButton onClick={() => verifyProfile(profile)}>Verify Profile</IonButton>
+          <ul key={profile.id}>
+            <div>
+              <div slot='start' className='text-wrap'>Email</div>
+              <div className='text-wrap'>{profile.email}</div>
             </div>
-          </IonList>
+            <div>
+              <div slot='start' className='text-wrap'>Phone Number</div>
+              <div className='text-wrap'>{profile.phone}</div>
+            </div>
+            <div>
+              <div slot='start' className='text-wrap'>City</div>
+              <div className='text-wrap'>{profile.city}</div>
+            </div>
+            <div>
+              <div slot='start' className='text-wrap'>State</div>
+              <div className='text-wrap'>{profile.state}</div>
+            </div>
+            <div>
+              <div slot='start' className='text-wrap'>Zip Code</div>
+              <div className='text-wrap'>{profile.zipcode}</div>
+            </div>
+            <div>
+              <div slot='start' className='text-wrap'>Address</div>
+              <div className='text-wrap'>{profile.address}</div></div>
+            <div>
+              <div  slot='start' className='text-wrap'>School</div><div className='text-wrap'>
+              {profile.school}
+              </div></div>
+            <div className='w-full flex justify-end my-4'>
+              <button onClick={() => verifyProfile(profile)}>Verify Profile</button>
+            </div>
+          </ul>
         )
       }
       <h2 className='text-lg text-center my-4'>{unverifiedProfiles.length} profiles to verify</h2>
       <h3 className='text-center my-4'>{message}</h3>
+      {/*<IonButton onClick={seedDatabase}>Seed Database</IonButton>*/}
     </div>
   )
 }
