@@ -83,6 +83,13 @@ export const schema = {
                         ]
                     }
                 },
+                "unreadMessage": {
+                    "name": "unreadMessage",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -323,6 +330,24 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "bannerPhoto": {
+                    "name": "bannerPhoto",
+                    "isArray": false,
+                    "type": {
+                        "model": "Photo"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "HAS_ONE",
+                        "associatedWith": [
+                            "id"
+                        ],
+                        "targetNames": [
+                            "userProfileBannerPhotoId"
+                        ]
+                    }
+                },
                 "city": {
                     "name": "city",
                     "isArray": false,
@@ -519,6 +544,13 @@ export const schema = {
                     "isRequired": false,
                     "attributes": [],
                     "isReadOnly": true
+                },
+                "userProfileBannerPhotoId": {
+                    "name": "userProfileBannerPhotoId",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
                 }
             },
             "syncable": true,
@@ -1070,6 +1102,13 @@ export const schema = {
                         ]
                     }
                 },
+                "unreadMessage": {
+                    "name": "unreadMessage",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -1250,5 +1289,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.0",
-    "version": "de78e96b2484f594d99a0226d971b2cf"
+    "version": "22937431fa33c574996f85fc80de0147"
 };

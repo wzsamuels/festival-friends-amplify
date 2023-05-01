@@ -2,7 +2,7 @@ import {
   createBrowserRouter,
   RouterProvider, useLocation,
 } from "react-router-dom";
-import MessagePage from './pages/Messages';
+import MessagePage from './components/pages/MessagePage/MessagePage';
 import UserProfileProvider from "./context/UserProfileProvider";
 import DataStoreContext from "./context/DataStoreContext";
 import ImageProvider from "./context/ImageProvider";
@@ -12,19 +12,19 @@ import './theme/variables.css';
 // Tailwind CSS
 import './index.css'
 
-import ProfilePage from './pages/Profile';
+import ProfilePage from './components/pages/Profile/Profile';
 import React, {useEffect, useState} from "react";
-import Admin from "./pages/Admin";
-import FriendsPage from "./pages/Friends";
-import Events from "./pages/Events";
+import Admin from "./components/pages/AdminPage/Admin";
+import FriendsPage from "./components/pages/FriendPage/Friends";
+import Events from "./components/pages/EventPage";
 
-import AccountSettingsPage from "./pages/Account/AccountSettings";
-import EventDetailPage from "./pages/Events/EventDetail";
+import AccountSettingsPage from "./components/pages/AccountPage/AccountSettings";
+import EventDetailPage from "./components/pages/EventPage/EventDetail";
 
-import RidesPage from "./pages/Rides";
-import GroupsPage from "./pages/Groups";
-import Layout from "./pages/Layout";
-import Account from "./pages/Account";
+import RidesPage from "./components/pages/RidePage/RidePage";
+import GroupsPage from "./components/pages/GroupPage/GroupPage";
+import Layout from "./components/layout/Layout";
+import Account from "./components/pages/AccountPage";
 
 const App = () => {
 

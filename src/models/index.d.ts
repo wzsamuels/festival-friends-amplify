@@ -32,6 +32,7 @@ type EagerMessage = {
   readonly sender: UserProfile;
   readonly receiver: UserProfile;
   readonly conversation: Conversation;
+  readonly unreadMessage?: boolean | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -49,6 +50,7 @@ type LazyMessage = {
   readonly sender: AsyncItem<UserProfile>;
   readonly receiver: AsyncItem<UserProfile>;
   readonly conversation: AsyncItem<Conversation>;
+  readonly unreadMessage?: boolean | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -113,6 +115,7 @@ type EagerUserProfile = {
   readonly verified: boolean;
   readonly verifySubmitted: boolean;
   readonly profileImage?: string | null;
+  readonly bannerPhoto?: Photo | null;
   readonly city?: string | null;
   readonly state?: string | null;
   readonly school?: string | null;
@@ -132,6 +135,7 @@ type EagerUserProfile = {
   readonly collegeGroup?: CollegeGroup | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
+  readonly userProfileBannerPhotoId?: string | null;
 }
 
 type LazyUserProfile = {
@@ -146,6 +150,7 @@ type LazyUserProfile = {
   readonly verified: boolean;
   readonly verifySubmitted: boolean;
   readonly profileImage?: string | null;
+  readonly bannerPhoto: AsyncItem<Photo | undefined>;
   readonly city?: string | null;
   readonly state?: string | null;
   readonly school?: string | null;
@@ -165,6 +170,7 @@ type LazyUserProfile = {
   readonly collegeGroup: AsyncItem<CollegeGroup | undefined>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
+  readonly userProfileBannerPhotoId?: string | null;
 }
 
 export declare type UserProfile = LazyLoading extends LazyLoadingDisabled ? EagerUserProfile : LazyUserProfile
@@ -324,6 +330,7 @@ type EagerConversation = {
   readonly userProfile: UserProfile;
   readonly friendProfile: UserProfile;
   readonly messages?: (Message | null)[] | null;
+  readonly unreadMessage?: boolean | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -339,6 +346,7 @@ type LazyConversation = {
   readonly userProfile: AsyncItem<UserProfile>;
   readonly friendProfile: AsyncItem<UserProfile>;
   readonly messages: AsyncCollection<Message>;
+  readonly unreadMessage?: boolean | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

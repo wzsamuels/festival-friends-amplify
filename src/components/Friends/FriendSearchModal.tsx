@@ -4,14 +4,20 @@ import {Friendship, UserProfile} from "../../models";
 import {useAuthenticator} from "@aws-amplify/ui-react";
 import {DataStore} from "aws-amplify";
 import FriendCard from "./FriendCard";
-import styled from "styled-components";
-import {Dialog} from "@headlessui/react";
+import {Dialog, Popover} from "@headlessui/react";
+import Modal from "../common/Modal";
+import Label from "../common/Label";
+import Input from "../common/Input";
+import Button from "../common/Button";
+import PopoverTransition from "../PopoverTransition";
+import CustomAlert from "../common/Alert";
 
 interface SearchInput {
   firstName?: string;
   lastName?: string;
   city?: string;
   school?: string;
+  state?: string;
 }
 
 type FriendSearchModalProps = {
@@ -20,10 +26,12 @@ type FriendSearchModalProps = {
 }
 
 const FriendSearchModal = ({isOpen, setIsOpen}: FriendSearchModalProps) => {
-  const { register, handleSubmit } = useForm<SearchInput>()
+  const { register, handleSubmit, reset } = useForm<SearchInput>()
   const [results, setResults] = useState<UserProfile[]>([])
   const { user } = useAuthenticator();
   const [toastIsOpen, setToastIsOpen] = useState(false);
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+  const [currentResult, setCurrentResult] = useState<UserProfile | null>(null);
 
   const searchFriends: SubmitHandler<SearchInput> = async data => {
     console.log(data)
@@ -83,60 +91,64 @@ const FriendSearchModal = ({isOpen, setIsOpen}: FriendSearchModalProps) => {
   }
 
   return (
-    <Dialog open={isOpen} onClose={() => setIsOpen(false)}>
-      <Dialog.Panel>
-        <Dialog.Title>Friend Search
-            <button onClick={() => setIsOpen(false)}>
-              Cancel
-            </button>
-        </Dialog.Title>
-        <form onSubmit={handleSubmit(searchFriends)}>
-          <input  {...register('firstName')} type="text"  />
-          <input  {...register('lastName')} type="text" />
-          <input  {...register('city')} type="text" />
-          <input {...register('school')} type="text"  />
-          <button type='submit'>Search</button>
-        </form>
-        <div className='flex flex-wrap' >
+    <>
+    <Modal isOpen={isOpen} setIsOpen={setIsOpen} onClose={() => {reset();setResults([]);}} title='Friend Search'>
+      <form onSubmit={handleSubmit(searchFriends)} className='[&>*]:m-4'>
+        <div className='flex flex-wrap '>
+          <Label>First Name</Label>
+          <Input {...register('firstName')} type="text"  />
+        </div>
+        <div className='flex flex-wrap'>
+          <Label>Last Name</Label>
+          <Input  {...register('lastName')} type="text" />
+        </div>
+        <div className='flex flex-wrap'>
+          <Label>City</Label>
+          <Input {...register('city')} type="text" />
+        </div>
+        <div className='flex flex-wrap'>
+          <Label>State</Label>
+          <Input {...register('state')} type="text" />
+        </div>
+        <div className='flex flex-wrap'>
+          <Label>School</Label>
+          <Input {...register('school')} type="text" />
+        </div>
+        <Button type='submit'>Search</Button>
+      </form>
+      <div className='flex flex-wrap' >
         {
           results.map(result =>
             <Fragment key={result.id}>
-              <button id={`open-${result.id}`}>
-                <FriendCard profile={result} key={result.id} link={false}/>
-              </button>
-              {/*
-              <IonAlert
-                trigger={`open-${result.id}`}
-                header="Send Friend Request"
-                buttons={[
-                  {
-                    text: 'Cancel',
-                    role: 'cancel',
-                  },
-                  {
-                    text: 'OK',
-                    role: 'confirm',
-                    handler: () => {
-                      createFriendRequest(result);
-                    },
-                  },
-                ]}
-              ></IonAlert>
-              */}
+
+              <FriendCard onClick={() => { setCurrentResult(result);setIsConfirmModalOpen(true)}} className='m-4 cursor-pointer' profile={result}  link={false}/>
             </Fragment>
+
           )
         }
-        </div>
-        {/*
-        <IonToast
-          isOpen={toastIsOpen}
-          message="Friend request sent!"
-          onDidDismiss={() => setToastIsOpen(false)}
-          duration={5000}
-        ></IonToast>
-        */}
-      </Dialog.Panel>
-    </Dialog>
+      </div>
+    </Modal>
+      <CustomAlert
+        title="Alert Title"
+        message="Send Friend Request?"
+        isOpen={isConfirmModalOpen}
+        setIsOpen={setIsConfirmModalOpen}
+        buttons={[
+          {
+            text: 'Cancel',
+            role: 'cancel'
+          },
+          {
+            text: 'OK',
+            role: 'confirm',
+            handler: () => {
+              alert(currentResult?.firstName + ' ' +currentResult?.lastName)
+              createFriendRequest(currentResult as UserProfile);
+            },
+          },
+        ]}
+      />
+    </>
   )
 }
 
