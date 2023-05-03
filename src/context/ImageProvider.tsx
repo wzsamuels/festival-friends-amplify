@@ -13,7 +13,7 @@ const ImageProvider = ({ children } : ImageProviderProps) => {
   // Only fetch the signed URL once per image
   const getSignedURL = async (s3Key: string) => {
     if (!imageURLs[s3Key]) {
-      const signedURL = await Storage.get(s3Key, { level: 'public' });
+      const signedURL = await Storage.get(s3Key, { level: 'public', expires: 60 * 60 * 24});
       setImageURLs((prevState) => ({ ...prevState, [s3Key]: signedURL }));
       return signedURL;
     }
