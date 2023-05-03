@@ -1,5 +1,5 @@
 
-import {useParams} from "react-router-dom"
+import {Link, useParams} from "react-router-dom"
 import React, {useEffect, useState} from "react";
 import {Photo, UserProfile} from "../../../models";
 import {DataStore, Storage} from "aws-amplify";
@@ -29,7 +29,9 @@ const ProfilePage = () => {
 
   return (
     <>
-      <Header/>
+      <Header>
+        <div><Link to ={'/friends'}>Friends</Link></div>
+      </Header>
       <div className={'p-4 flex flex-col items-center justify-center mt-header'}>
         <img width={350} height={350} src={profileImage} alt={profile?.id} className='rounded-full'/>
         <div className={'p-4 w-full max-w-lg'}>

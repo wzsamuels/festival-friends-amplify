@@ -12,8 +12,9 @@ import {Dialog} from "@headlessui/react";
 import Modal from "../../common/Modal";
 import BannerPhotoModal from "./Modals/BannerPhotoModal";
 import Button from "../../common/Button";
+import {useUserProfileStore} from "../../../stores/friendProfilesStore";
 
-const ProfileVerified = ({user, userProfile} : {user: any, userProfile: UserProfile}) => {
+const ProfileVerified = ({user } : {user: any}) => {
   const [profileImage, setProfileImage] = useState("")
   const [bannerImage, setBannerImage] = useState("")
   const [photos, setPhotos] = useState<Photo[]>([])
@@ -27,30 +28,35 @@ const ProfileVerified = ({user, userProfile} : {user: any, userProfile: UserProf
   const [isAlertOpen, setAlertOpen] = useState(false)
   const [alertMessage, setAlertMessage] = useState("")
   const username = user.username as string;
+  const userProfile= useUserProfileStore((state) => state.userProfile);
 
   useEffect(() => {
-    const fetchProfileImage = async () => {
-      if (userProfile) {
-        console.log(userProfile.profileImage)
-        const image = await Storage.get(`${userProfile.profileImage}`, {
-          level: "public"
-        });
-        setProfileImage(image);
-        const banner = await userProfile.bannerPhoto;
-        const bannerFile = await Storage.get(`${banner?.s3Key}`, {
-          level: "public"
+    if (userProfile) {
+      const fetchProfileImage = async () => {
+        if (userProfile.profileImage) {
+          const image = await Storage.get(`${userProfile.profileImage}`, {
+            level: "public"
           });
-        setBannerImage(bannerFile);
+          setProfileImage(image);
+        }
+
+        const banner = await userProfile.bannerPhoto;
+        if (banner) {
+          const bannerFile = await Storage.get(`${banner?.s3Key}`, {
+            level: "public"
+          });
+          setBannerImage(bannerFile);
+        }
       }
-    }
 
-    fetchProfileImage()
+      fetchProfileImage()
 
-    const photoSub = DataStore.observeQuery(Photo, photo => photo.userProfileID.eq(userProfile.id)).subscribe(({items}) => {
-      setPhotos(items)
-    })
-    return () => {
-      photoSub.unsubscribe()
+      const photoSub = DataStore.observeQuery(Photo, photo => photo.userProfileID.eq(userProfile.id)).subscribe(({items}) => {
+        setPhotos(items)
+      })
+      return () => {
+        photoSub.unsubscribe()
+      }
     }
 
   }, [userProfile])
@@ -64,19 +70,23 @@ const ProfileVerified = ({user, userProfile} : {user: any, userProfile: UserProf
     setPhotoUploadModalOpen(true);
   }, [selectedFile])
 
-
   return (
-    <div className='flex flex-col items-center mt-8 w-full'>
-      <section className={'flex justify-center flex-col relative w-full'}>
-        <img src={bannerImage} alt="Banner" className='w-full h-full max-h-[50vh] object-cover top-0 left-0'/>
+    <div className='flex flex-col items-center w-full'>
+      <section className={'flex justify-center flex-col relative w-full h-screen max-h-[500px]'}>
+        {
+          bannerImage ?
+            <img src={bannerImage} alt="Banner" className='w-full h-full  object-cover top-0 left-0'/>
+            :
+            <div className='w-full h-full  object-cover top-0 left-0 bg-light-default'/>
+        }
         <div className='flex flex-col justify-center items-center w-full h-full absolute top-0 left-0'>
-          <div className='bg-light-default rounded-2xl p-4'>
+          <div className='bg-light-default rounded-2xl p-4 flex-1 max-h-[450px] '>
             {
-              userProfile.profileImage ?
-                <img onClick={() => setIsProfileImageModalOpen(true)} className='max-w-[350px] w-full rounded-full cursor-pointer' src={profileImage} alt="Profile Image"/>
+              userProfile?.profileImage ?
+                <img onClick={() => setIsProfileImageModalOpen(true)} className='aspect-square max-w-[350px] w-full rounded-full cursor-pointer' src={profileImage} alt="Profile Image"/>
                 :
-                <div className='w-[350px] h-[350px] border border-medium-default'>
-                  <BsPerson/>
+                <div className='flex justify-center items-center w-full h-full max-w-[350px] max-h-[350px] border border-medium-default'>
+                  <BsPerson className='w-3/4 h-3/4 text-medium-default text-center'/>
                 </div>
             }
             <div className='flex justify-center my-2'>
@@ -91,7 +101,7 @@ const ProfileVerified = ({user, userProfile} : {user: any, userProfile: UserProf
         </div>
       </section>
       <hr className='my-8 border border-primary-default w-full'/>
-      <section className='flex flex-col items-center jusify-content my-4 w-full'>
+      <section className='flex flex-col items-center jusify-content my-4 w-full p-4'>
         <div className='flex justify-between w-full max-w-xl'>
           <h2 className='text-2xl'>Photos</h2>
           <label htmlFor="upload-photo" className='block bg-primary-default text-light-default rounded-md uppercase py-2 px-4 cursor-pointer'>Upload Photo</label>
@@ -110,6 +120,8 @@ const ProfileVerified = ({user, userProfile} : {user: any, userProfile: UserProf
           }
         </div>
       </section>
+      { userProfile &&
+        <>
       <BannerPhotoModal photos={photos} username={username} isOpen={isBannerModalOpen} setIsOpen={setIsBannerModalOpen} profile={userProfile}/>
       <PhotoUploadModal
         profile={userProfile}
@@ -137,6 +149,8 @@ const ProfileVerified = ({user, userProfile} : {user: any, userProfile: UserProf
         }}
       />
       <PhotoModal profile={userProfile} photo={selectedPhoto} isOpen={isPhotoModalOpen} setIsOpen={setPhotoModalOpen}/>
+        </>
+      }
     </div>
   )
 }
@@ -165,9 +179,9 @@ const PhotoModal = ({profile, isOpen, setIsOpen, photo} : PhotoModalProps) => {
     <Modal isOpen={isOpen} setIsOpen={setIsOpen} title='Photo'>
       {photo &&<PhotoImage className='w-full' photo={photo}/>}
         <div className='flex justify-center my-4'>
-          <button onClick={handleDeletePhoto}>
+          <Button onClick={handleDeletePhoto}>
             Delete
-          </button>
+          </Button>
         </div>
     </Modal>
   )

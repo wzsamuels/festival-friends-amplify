@@ -6,19 +6,21 @@ import UserProfileContext from "../../context/UserProfileContext";
 import {BsPerson} from "react-icons/all";
 import {Link} from "react-router-dom";
 import {Menu, Transition} from '@headlessui/react'
+import {useUserProfileStore} from "../../stores/friendProfilesStore";
+import Modal from "../common/Modal";
 const AccountButton = () => {
   const { user, signOut } = useAuthenticator((context) => [context.user]);
   const { saveDataStoreCleared } = useContext(DataStoreContext) as DataStoreContextType;
   const [alertIsOpen, setAlertIsOpen] = React.useState(false);
   const { authStatus } = useAuthenticator(context => [context.authStatus]);
-  const { clearUserProfile } = useContext(UserProfileContext)
 
   const handleSignOut = async () => {
+
     signOut()
-    clearUserProfile();
     saveDataStoreCleared(false);
     setAlertIsOpen(true);
     await DataStore.clear();
+
     setAlertIsOpen(false)
     saveDataStoreCleared(true);
   }
@@ -28,6 +30,7 @@ const AccountButton = () => {
   }, [authStatus])
 
   return (
+    <>
     <Menu as='div' className='relative'>
       <Menu.Button className='p-4 hover:bg-light-default'>
         <BsPerson />
@@ -73,6 +76,9 @@ const AccountButton = () => {
       </Menu.Items>
       </Transition>
     </Menu>
+      <Modal isOpen={alertIsOpen} setIsOpen={setAlertIsOpen} title='Logging Out...'>
+      </Modal>
+    </>
   )
 }
 

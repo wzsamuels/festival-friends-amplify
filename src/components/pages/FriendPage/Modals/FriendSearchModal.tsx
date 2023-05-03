@@ -1,16 +1,16 @@
 import React, {Fragment, RefObject, useState} from "react";
 import {SubmitHandler, useForm} from "react-hook-form";
-import {Friendship, UserProfile} from "../../models";
+import {Friendship, UserProfile} from "../../../../models";
 import {useAuthenticator} from "@aws-amplify/ui-react";
 import {DataStore} from "aws-amplify";
-import FriendCard from "./FriendCard";
+import FriendCard from "../../../ui/FriendCard";
 import {Dialog, Popover} from "@headlessui/react";
-import Modal from "../common/Modal";
-import Label from "../common/Label";
-import Input from "../common/Input";
-import Button from "../common/Button";
-import PopoverTransition from "../PopoverTransition";
-import CustomAlert from "../common/Alert";
+import Modal from "../../../common/Modal";
+import Label from "../../../common/Label";
+import Input from "../../../common/Input";
+import Button from "../../../common/Button";
+import PopoverTransition from "../../../PopoverTransition";
+import CustomAlert from "../../../common/Alert";
 
 interface SearchInput {
   firstName?: string;
@@ -96,23 +96,23 @@ const FriendSearchModal = ({isOpen, setIsOpen}: FriendSearchModalProps) => {
       <form onSubmit={handleSubmit(searchFriends)} className='[&>*]:m-4'>
         <div className='flex flex-wrap '>
           <Label>First Name</Label>
-          <Input {...register('firstName')} type="text"  />
+          <Input className='w-[calc(100%-150px)]' {...register('firstName')} type="text"  />
         </div>
         <div className='flex flex-wrap'>
           <Label>Last Name</Label>
-          <Input  {...register('lastName')} type="text" />
+          <Input className='w-[calc(100%-150px)]' {...register('lastName')} type="text" />
         </div>
         <div className='flex flex-wrap'>
           <Label>City</Label>
-          <Input {...register('city')} type="text" />
+          <Input className='w-[calc(100%-150px)]' {...register('city')} type="text" />
         </div>
         <div className='flex flex-wrap'>
           <Label>State</Label>
-          <Input {...register('state')} type="text" />
+          <Input className='w-[calc(100%-150px)]' {...register('state')} type="text" />
         </div>
         <div className='flex flex-wrap'>
           <Label>School</Label>
-          <Input {...register('school')} type="text" />
+          <Input className='w-[calc(100%-150px)]' {...register('school')} type="text" />
         </div>
         <Button type='submit'>Search</Button>
       </form>
@@ -120,10 +120,8 @@ const FriendSearchModal = ({isOpen, setIsOpen}: FriendSearchModalProps) => {
         {
           results.map(result =>
             <Fragment key={result.id}>
-
               <FriendCard onClick={() => { setCurrentResult(result);setIsConfirmModalOpen(true)}} className='m-4 cursor-pointer' profile={result}  link={false}/>
             </Fragment>
-
           )
         }
       </div>

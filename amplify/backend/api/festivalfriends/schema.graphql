@@ -25,8 +25,8 @@ type Festival @model @auth(rules: [{allow: public}]) {
 
 type UserProfile @model @auth(rules: [{allow: public}]) {
   id: ID!
-  firstName: String!
-  lastName: String!
+  firstName: String
+  lastName: String
   userID: ID!
   verified: Boolean!
   verifySubmitted: Boolean!
@@ -122,4 +122,8 @@ type CollegeGroup @model @auth(rules: [{allow: public}]) {
   webPage: String
   countryCode: String
   members: [UserProfile] @hasMany(indexName: "byCollegeGroup", fields: ["id"])
+}
+
+type Query {
+  findSuggestedFriends(school: String, city: String, state: String): [UserProfile]
 }

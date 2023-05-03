@@ -1,8 +1,8 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import {DataStore, Storage} from "aws-amplify";
-import {Conversation, Friendship, UserProfile} from "../../../models";
+import {Conversation, Friendship, Message, UserProfile} from "../../../models";
 import {useAuthenticator} from "@aws-amplify/ui-react";
-import FriendCard from "../../Friends/FriendCard";
+import FriendCard from "../../ui/FriendCard";
 import ConversationModal from "./ConversationModal";
 import UserProfileContext from "../../../context/UserProfileContext";
 import {BsPlus, FaSearch} from "react-icons/all";
@@ -11,6 +11,8 @@ import Modal from "../../common/Modal";
 import Header from "../../layout/Header";
 import useUserFriends from "../../../hooks/useUserFriends";
 import ConservationSearchModal from "./ConservationSearchModal";
+import Button from "../../common/Button";
+import {useUserProfileStore} from "../../../stores/friendProfilesStore";
 
 const MessagePage: React.FC = () => {
   const [conversations, setConversations] = useState<Conversation[]>([]);
@@ -18,10 +20,15 @@ const MessagePage: React.FC = () => {
   const [isNewConversationModalOpen, setNewConversationModalOpen] = useState(false);
   const [isConversationSearchModalOpen, setConversationSearchModalOpen] = useState(false);
   const [isConversationModalOpen, setConversationModalOpen] = useState(false);
-  const { user } = useAuthenticator();
-  const { userProfile } = useContext(UserProfileContext);
-  const { friendProfiles } = useUserFriends();
+  const { user } = useAuthenticator(context => [context.user]);
+  const { route } = useAuthenticator(context => [context.route]);
+  const userProfile = useUserProfileStore(state => state.userProfile);
+  const friendProfiles = useUserProfileStore(state => state.friendProfiles);
   const [searchTerm, setSearchTerm] = useState("");
+
+  console.log(friendProfiles)
+  console.log(userProfile)
+  console.log(route)
 
   const handleNewConversation = async ({friendProfile} : {friendProfile: UserProfile}) => {
     setNewConversationModalOpen(false);
@@ -53,6 +60,24 @@ const MessagePage: React.FC = () => {
     }
   }
 
+  useEffect(() => {
+    if (userProfile) {
+      const conversationSub = DataStore.observeQuery(Conversation, c => c.or(c => [
+        c.userProfileID.eq(userProfile.id),
+        c.friendProfileID.eq(userProfile.id)
+      ]))
+        .subscribe(({ items }) => {
+          setConversations(items);
+        });
+
+      return () => {
+        conversationSub.unsubscribe();
+      };
+    } else {
+      // Clear the conversations state when the user logs out
+      setConversations([]);
+    }
+  }, [userProfile]);
   const openConversationModal = (conversation: Conversation) => {
     setCurrentConversation(conversation);
     setConversationModalOpen(true);
@@ -77,13 +102,12 @@ const MessagePage: React.FC = () => {
     <>
       <Header>
         <div className='w-full flex justify-end'>
-          <div>{user?.attributes?.email}&apos;s Messages | </div>
           <button onClick={() => setConversationSearchModalOpen(true)}><FaSearch/></button>
         </div>
       </Header>
       <div className='p-4 min-h-full h-full relative mt-header'>
         {
-          user && userProfile?.verified ?
+          route === 'authenticated' && userProfile?.verified ?
             <>
               {/* Conversations */}
               <section className='my-4 grid grid-cols-1 md:grid-cols-2 gap-4 items-stretch justify-items-center'>
@@ -108,7 +132,7 @@ const MessagePage: React.FC = () => {
                 Verified Festival Friends Account Required.
               </h1>
               <Link to='/account'>
-                <button>Sign In</button>
+                <Button>Sign In</Button>
               </Link>
             </div>
         }
@@ -135,7 +159,6 @@ const MessagePage: React.FC = () => {
         </Modal>
         <ConversationModal
           conversation={currentConversation}
-          userProfile={userProfile}
           isOpen={isConversationModalOpen}
           setIsOpen={setConversationModalOpen} />
         <ConservationSearchModal isOpen={isConversationSearchModalOpen} setIsOpen={setConversationSearchModalOpen} conversations={conversations}/>
@@ -155,40 +178,46 @@ interface ConversationCardProps {
   onClick: (arg: Conversation) => void
   className: string
 }
-const ConversationCard = ({conversation, userProfile, onClick, className} : ConversationCardProps) => {
-  const [friendProfile, setFriendProfile] = useState<UserProfile>();
+const ConversationCard = ({ conversation, onClick, className }: ConversationCardProps) => {
   const [friendProfileImage, setFriendProfileImage] = useState<string>();
   const [lastMessage, setLastMessage] = useState<string>();
+  const [unreadMessage, setUnreadMessage] = useState<boolean>(false);
+  const userProfile = useUserProfileStore((state) => state.userProfile);
+  const friendProfiles = useUserProfileStore((state) => state.friendProfiles);
 
+  const friendProfile = friendProfiles.find((profile) =>
+    profile.id === (userProfile?.id === conversation.userProfileID ? conversation.friendProfileID : conversation.userProfileID)
+  );
 
-  // TODO - Refetch the last message when the conversation changes
   useEffect(() => {
-      // Fetch the profiles of the participants of the conversation
-    const fetchProfiles = async () => {
-      if(!userProfile) {
+    const fetchProfileImageAndLastMessage = async () => {
+      if (!userProfile || !friendProfile) {
         return;
       }
-      const friend = await DataStore.query(UserProfile, c =>
-        c.id.eq(userProfile.id === conversation.userProfileID ? conversation.friendProfileID : conversation.userProfileID)
-      )
+      const friendImage = await Storage.get(friendProfile.profileImage as string);
+      setFriendProfileImage(friendImage);
+
       const messages = await conversation.messages.toArray();
-      const message = messages[messages.length - 1].senderID === userProfile.id ? "You" : friend[0].firstName;
-      setLastMessage(message + ": " + messages[messages.length - 1].content);
-      setFriendProfile(friend[0])
+      const lastMessage = messages[messages.length - 1];
+      setUnreadMessage(lastMessage.unreadMessage === true && lastMessage.senderID !== userProfile.id)
+      const message = lastMessage.senderID === userProfile.id ? 'You' : friendProfile.firstName;
+      setLastMessage(message + ': ' + lastMessage.content);
+    };
 
-      // Fetch the profile images of the participants of the conversation
-      const friendImage = await Storage.get(friend[0].profileImage as string)
-      setFriendProfileImage(friendImage)
-    }
 
-    fetchProfiles()
-  }, [])
+    fetchProfileImageAndLastMessage();
+  }, [userProfile, friendProfiles, conversation]);
 
-  // Create a new message
-
+  const handleOnClick = async () => {
+    const messages = await conversation.messages.toArray();
+    const lastMessage = messages[messages.length - 1];
+    await DataStore.save(Message.copyOf(lastMessage, updated => {updated.unreadMessage = false}));
+    setUnreadMessage(false);
+    onClick(conversation);
+  }
 
   return (
-    <div onClick={() => onClick(conversation)} className={`shadow-xl w-full max-w-[600px] flex justify-between  ${className}`}>
+    <div onClick={handleOnClick} className={`shadow-xl w-full max-w-[600px] flex justify-between  ${className}`}>
       <div className='flex items-center justify-between w-full p-4'>
         <div className='flex items-center'>
           <img className="rounded-full mx-4 max-w-[75px] w-full max-h-[75px] aspect-square" src={friendProfileImage} alt={friendProfile?.firstName} />
@@ -196,12 +225,14 @@ const ConversationCard = ({conversation, userProfile, onClick, className} : Conv
             <span className='text-lg font-bold'>{friendProfile?.firstName} {friendProfile?.lastName}</span>
             <span className='my-2 truncate'>{lastMessage}</span>
           </div>
-
+        </div>
+        <div>
+          {unreadMessage ? <span className='text-primary-default text-sm'>New</span> : <span className='text-primary-default text-sm'>No New</span> }
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 
 export default MessagePage;

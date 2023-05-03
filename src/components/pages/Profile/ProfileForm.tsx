@@ -30,71 +30,69 @@ const ProfileForm = ({onSubmit, profile}: ProfileFormProps) => {
     }
   })
   return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmit)} className={'w-full [&>*]:my-4'}>
-        <div className='flex flex-wrap'>
-          <Label>First Name</Label>
-          <Input {...register("firstName", {required: true})} />
-        </div>
-        <div className='flex flex-wrap'>
-          <Label>Last Name</Label>
-          <Input {...register("lastName", {required: true})}/>
-        </div>
-        <div className='flex flex-wrap'>
-          <Label>Phone</Label>
-          <Input {...register("phone", {required: true})} type='tel'/>
-        </div>
-        <div className='flex flex-wrap'>
-          <Label>School</Label>
-          <Input {...register("school")}/>
-        </div>
-        <div className='flex flex-wrap'>
-          <Label>Address</Label>
-          <Input {...register("address")}/>
-        </div>
-        <div className='flex flex-wrap'>
-          <Label className='ion-text-wrap'>Address Line 2</Label>
-          <Input  {...register("address2")} />
-        </div>
-        <div className='flex flex-wrap'>
-          <Label>City</Label>
-          <Input {...register("city", {required: true})}/>
-        </div>
-        <div className='flex flex-wrap'>
-          <Label>State</Label>
-          <Controller
-            render={({ field }) => (
-            <select
-              placeholder="Select One"
-          value={field.value}
-          onChange={e => setValue('state', e.target.value)}
-            >
-            {states.map((state) => (
-                <option key={state} value={state}>{state}</option>
-        ))}
-          </select>
-        )}
-          control={control}
-          name="state"
-          rules={{ required: 'This is a required field' }}
-          />
-          <ErrorMessage
-          errors={errors}
-          name="state"
-          as={<div className='text-danger-default' />}
-          />
-        </div>
-        <div className='flex flex-wrap'>
-          <Label>Zip Code</Label>
-          <Input {...register("zipcode")} />
-        </div>
+    <form onSubmit={handleSubmit(onSubmit)} className={' [&>*]:my-4 w-full max-w-[400px]'}>
+      <div className='flex flex-wrap'>
+        <Label>First Name</Label>
+        <Input {...register("firstName", {required: true})} />
+      </div>
+      <div className='flex flex-wrap'>
+        <Label>Last Name</Label>
+        <Input {...register("lastName", {required: true})}/>
+      </div>
+      <div className='flex flex-wrap'>
+        <Label>Phone</Label>
+        <Input {...register("phone", {required: true})} type='tel'/>
+      </div>
+      <div className='flex flex-wrap'>
+        <Label>School</Label>
+        <Input {...register("school")}/>
+      </div>
+      <div className='flex flex-wrap'>
+        <Label>Address</Label>
+        <Input {...register("address")}/>
+      </div>
+      <div className='flex flex-wrap'>
+        <Label className='ion-text-wrap'>Address Line 2</Label>
+        <Input  {...register("address2")} />
+      </div>
+      <div className='flex flex-wrap'>
+        <Label>City</Label>
+        <Input {...register("city", {required: true})}/>
+      </div>
+      <div className='flex flex-wrap'>
+        <Label>State</Label>
+        <Controller
+          render={({ field }) => (
+          <select
+            placeholder="Select One"
+        value={field.value}
+        onChange={e => setValue('state', e.target.value)}
+          >
+          {states.map((state) => (
+              <option key={state} value={state}>{state}</option>
+      ))}
+        </select>
+      )}
+        control={control}
+        name="state"
+        rules={{ required: 'This is a required field' }}
+        />
+        <ErrorMessage
+        errors={errors}
+        name="state"
+        as={<div className='text-danger-default' />}
+        />
+      </div>
+      <div className='flex flex-wrap'>
+        <Label>Zip Code</Label>
+        <Input {...register("zipcode")} />
+      </div>
 
-        <div className='my-6 flex justify-center'>
-          <button type='submit' className='my-4'>Update Profile</button>
-        </div>
-        { message }
-      </form>
-    </div>
+      <div className='my-6 flex justify-center'>
+        <button type='submit' className='my-4'>Update Profile</button>
+      </div>
+      { message }
+    </form>
   )
 }
 

@@ -8,6 +8,7 @@ import {useAuthenticator} from "@aws-amplify/ui-react";
 import UserProfileContext from "../../context/UserProfileContext";
 import {BsCheck} from "react-icons/all";
 import {Link} from "react-router-dom";
+import {useUserProfileStore} from "../../stores/friendProfilesStore";
 
 interface FestivalCardProps {
   festival: LazyFestival;
@@ -20,8 +21,7 @@ const FestivalCard = ({festival, attendingFriends}: FestivalCardProps) => {
   const [eventProfile, setEventProfile] = useState<EventProfile>();
   const { dataStoreCleared } = useContext(DataStoreContext) as DataStoreContextType;
   const [alertIsOpen, setAlertIsOpen] = useState(false);
-  const { user } = useAuthenticator((context) => [context.user]);
-  const { userProfile } = useContext(UserProfileContext)
+  const { userProfile} = useUserProfileStore()
 
   const { getSignedURL } = useContext(ImageContext);
   useEffect(() => {
@@ -100,7 +100,7 @@ const FestivalCard = ({festival, attendingFriends}: FestivalCardProps) => {
       </div>
       <div className='p-2 text-base md:text-lg'>
         {
-          user ?
+          userProfile ?
             <>
               <div className='my-2'>
                 {attendingFriends.length > 0 ? <span>{attendingFriends.length} friend{attendingFriends.length > 1 ? 's' : ''} {attendingFriends.length > 1 ? 'are' : 'is'} attending</span> : <span>&nbsp;</span>}

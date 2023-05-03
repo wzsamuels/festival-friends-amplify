@@ -9,6 +9,11 @@ import ImageProvider from "./context/ImageProvider";
 /* Theme variables */
 import './theme/variables.css';
 
+import { Auth } from "aws-amplify";
+import { Hub } from "@aws-amplify/core";
+import { useUserProfileStore} from "./stores/friendProfilesStore";
+
+
 // Tailwind CSS
 import './index.css'
 
@@ -24,7 +29,8 @@ import EventDetailPage from "./components/pages/EventPage/EventDetail";
 import RidesPage from "./components/pages/RidePage/RidePage";
 import GroupsPage from "./components/pages/GroupPage/GroupPage";
 import Layout from "./components/layout/Layout";
-import Account from "./components/pages/AccountPage";
+import AccountPage from "./components/pages/AccountPage";
+import {useAuthenticator} from "@aws-amplify/ui-react";
 
 const App = () => {
 
@@ -32,7 +38,19 @@ const App = () => {
   const saveDataStoreCleared = (value: boolean) => {
     setDataStoreCleared(value)
   }
+  const { user } = useAuthenticator((context) => [context.user]);
+  const { route } = useAuthenticator((context) => [context.route]);
+  const { fetchAndObserveUserProfile, userProfile } = useUserProfileStore();
 
+  useEffect(() => {
+    if(route === 'authenticated' ) {
+      fetchAndObserveUserProfile(user);
+    }
+  }, [user, route, fetchAndObserveUserProfile]);
+
+  useEffect(() => {
+    console.log(userProfile)
+  }, [userProfile])
 
 
   const router = createBrowserRouter([
@@ -65,7 +83,7 @@ const App = () => {
         },
         {
           path: 'account',
-          element: <Account/>
+          element: <AccountPage />
         },
         {
           path: 'admin',
@@ -85,11 +103,9 @@ const App = () => {
 
   return (
     <DataStoreContext.Provider value={{ dataStoreCleared, saveDataStoreCleared }}>
-      <UserProfileProvider>
-        <ImageProvider>
-          <RouterProvider router={router} />
-        </ImageProvider>
-      </UserProfileProvider>
+      <ImageProvider>
+        <RouterProvider router={router} />
+      </ImageProvider>
     </DataStoreContext.Provider>
   );
 }

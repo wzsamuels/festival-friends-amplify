@@ -5,22 +5,24 @@ import {DataStore, Storage} from "aws-amplify";
 import {Dialog} from "@headlessui/react";
 import Modal from "../../common/Modal";
 import {SubmitHandler, useForm} from "react-hook-form";
+import {useUserProfileStore} from "../../../stores/friendProfilesStore";
 
 interface ConversationModalProps extends ModalProps {
-  conversation: Conversation | undefined,
-  userProfile: UserProfile | undefined,
+  conversation: Conversation | undefined
 }
 
 
 interface MessageInput {
   message: string
 }
-const ConversationModal = ({conversation, isOpen, setIsOpen, userProfile} : ConversationModalProps) => {
+const ConversationModal = ({conversation, isOpen, setIsOpen} : ConversationModalProps) => {
 
   const [messages, setMessages] = useState<Message[]>([])
   const {register, handleSubmit, reset} = useForm<MessageInput>();
   const [friendProfileImage, setFriendProfileImage] = useState<string | undefined>()
   const [friendProfile, setFriendProfile] = useState<UserProfile | undefined>()
+  const userProfile = useUserProfileStore(state => state.userProfile)
+
 
   const handleSendMessage: SubmitHandler<MessageInput> = async (data) => {
     if(data.message && friendProfile && userProfile && conversation) {
@@ -32,6 +34,7 @@ const ConversationModal = ({conversation, isOpen, setIsOpen, userProfile} : Conv
         sender: userProfile,
         receiverID: friendProfile.id,
         receiver: friendProfile,
+        unreadMessage: true,
       }))
       console.log(message)
       reset()
@@ -76,7 +79,7 @@ const ConversationModal = ({conversation, isOpen, setIsOpen, userProfile} : Conv
         <div>Conversation with {friendProfile?.firstName}</div>
       }
     >
-      <div className='p-4'>
+      <div className='px-4 pt-4 pb-16'>
         {
           messages.map(message =>
             <div

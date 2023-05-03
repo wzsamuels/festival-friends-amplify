@@ -6,10 +6,14 @@ import ProfileForm from "./ProfileForm";
 import {ProfileInputs} from "../../../types";
 import {useAuthenticator} from "@aws-amplify/ui-react";
 import UserProfileContext from "../../../context/UserProfileContext";
+import InputWrapper from "../../common/InputWrapper";
+import Input from "../../common/Input";
+import Label from "../../common/Label";
+import {useUserProfileStore} from "../../../stores/friendProfilesStore";
 
 const ProfileUnverified = () => {
   const { user } = useAuthenticator((context) => [context.user]);
-  const { userProfile} = useContext(UserProfileContext)
+  const userProfile = useUserProfileStore(state => state.userProfile)
   const { register, handleSubmit} = useForm<ProfileInputs>({
     defaultValues: {
       firstName: userProfile?.firstName,
@@ -37,7 +41,6 @@ const ProfileUnverified = () => {
       const collegeGroups = await DataStore.query(CollegeGroup, c => c.domain.eq(emailDomain))
       collegeGroup = collegeGroups[0];
     }
-
     try {
       console.log("Creating profile from data:", data)
       const newProfile = await DataStore.save(
@@ -63,7 +66,7 @@ const ProfileUnverified = () => {
       <form className='flex flex-col w-full' onSubmit={handleSubmit(createNewProfile)}>
         <div className='flex flex-wrap'>
           <label className='basis-[150px]'>First Name</label>
-          <input className='border-b border-b-medium-tint focus:border-b-primary-default focus:outline-0' {...register("firstName")}/>
+          <input className='border-b  border-b-medium-tint focus:border-b-primary-default focus:outline-0' {...register("firstName")}/>
         </div>
         <div className='flex flex-wrap'>
           <label className='basis-[150px]'>Last Name</label>
@@ -71,15 +74,23 @@ const ProfileUnverified = () => {
         </div>
         <div className='flex flex-wrap'>
           <label className='basis-[150px]'>Phone</label>
-          <input className='border-b border-b-medium-tint focus:border-b-primary-default focus:outline-0' {...register("lastName")}/>
+          <input className='border-b border-b-medium-tint focus:border-b-primary-default focus:outline-0' {...register("phone")}/>
         </div>
+        <InputWrapper>
+          <Label>City</Label>
+          <Input {...register('city')} name="city"/>
+        </InputWrapper>
+        <InputWrapper>
+          <Label>State</Label>
+          <Input {...register('state')} name="state"/>
+        </InputWrapper>
         <div className='flex flex-wrap'>
           <label className='basis-[150px]'>Address</label>
-          <input className='border-b border-b-medium-tint focus:border-b-primary-default focus:outline-0' {...register("lastName")}/>
+          <input className='border-b border-b-medium-tint focus:border-b-primary-default focus:outline-0' {...register("address")}/>
         </div>
         <div className='flex flex-wrap'>
           <label className='basis-[150px]'>Address 2</label>
-          <input className='border-b border-b-medium-tint focus:border-b-primary-default focus:outline-0' {...register("lastName")}/>
+          <input className='border-b border-b-medium-tint focus:border-b-primary-default focus:outline-0' {...register("address2")}/>
         </div>
         <div className='flex justify-center items-center my-6'>
           <button className='bg-primary-default text-light-default rounded-md px-8 py-2' type="submit">Submit</button>

@@ -7,15 +7,16 @@ import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
 // Local imports
 import {EventProfile, EventType, Festival, Friendship, LazyFestival, UserProfile} from "../../../models";
 import DataStoreContext, { DataStoreContextType } from "../../../context/DataStoreContext";
-import FestivalCard from "../../Events/FestivalCard";
+import FestivalCard from "../../ui/FestivalCard";
 import UserProfileContext from "../../../context/UserProfileContext";
 import {Dialog} from "@headlessui/react";
 import Header from "../../layout/Header";
+import Modal from "../../common/Modal";
+import {useUserProfileStore} from "../../../stores/friendProfilesStore";
 
 const EventPage = () => {
-  const { userProfile } = useContext(UserProfileContext)
+  const { userProfile, friendProfiles } = useUserProfileStore();
   const [events, setEvents] = useState<LazyFestival[]>([]);
-  const [friendProfiles, setFriendProfiles] = useState<UserProfile[]>([]);
   const [eventAttendees, setEventAttendees] = useState<Map<string, UserProfile[]>>(new Map());
 
   // Filter events by type
@@ -40,24 +41,6 @@ const EventPage = () => {
       };
     }
   }, [dataStoreCleared]);
-
-  useEffect(() => {
-    if(userProfile) {
-      // Query all friends and watch for changes
-      const friendsSub = DataStore.observeQuery(Friendship,  (c) => c.or( c => [
-        c.friendProfileID.eq(userProfile?.id),
-        c.userProfileID.eq(userProfile?.id)
-      ])).subscribe(async({ items }) => {
-        // Fetch friend profiles
-        const friendPromises = items.map(async (item) => item.userProfileID === userProfile.id ? await item.friendProfile : await item.userProfile);
-        const friendProfiles = await Promise.all(friendPromises);
-        setFriendProfiles(friendProfiles);
-      })
-      return () => {
-        friendsSub.unsubscribe();
-      }
-    }
-  }, [userProfile])
 
   useEffect(() => {
     const fetchEventAttendees = async () => {
@@ -133,19 +116,14 @@ const EventPage = () => {
             onClick={() => setEventType("business")}>Business</button>
         </div>
       </Header>
-      <div className='grid gap-4 justify-items-center grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 items-center px-4 pt-16'>
+      <div className='grid gap-4 justify-items-center grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 items-center px-4'>
         {renderFestivalCards(filteredEvents)}
       </div>
-      <Dialog open={isOpen} onClose={() => setIsOpen(false)}>
-        <Dialog.Panel>
-          <Dialog.Title className='flex'>
-            <div>Search Festivals</div>
-            <button className='ml-auto' onClick={() => setIsOpen(false)}>Close</button></Dialog.Title>
-          <div className='p-4'>
-            Not yet implemented!
-          </div>
-        </Dialog.Panel>
-      </Dialog>
+      <Modal isOpen={isOpen} setIsOpen={setIsOpen} title='Search Festivals'>
+        <div className='p-4'>
+          Not yet implemented!
+        </div>
+    </Modal>
     </div>
   );
 };

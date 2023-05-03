@@ -17,8 +17,10 @@ const Layout = () => {
     document.body.focus();
   }, []);
   return (
-    <div className='min-h-screen h-screen'>
-      <Outlet/>
+    <div className='relative min-h-screen max-w-[100vw] overflow-hidden'>
+      <div className='pt-header pb-footer'>
+        <Outlet/>
+      </div>
       <footer className="shadow-dropdown fixed bg-white bottom-0 left-0 right-0 flex justify-around items-center">
         <NavLink
           to="/"
