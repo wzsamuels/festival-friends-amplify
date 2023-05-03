@@ -2,11 +2,9 @@ import React, {Fragment, useContext, useEffect} from "react";
 import {useAuthenticator} from "@aws-amplify/ui-react";
 import {DataStore} from "aws-amplify";
 import DataStoreContext, {DataStoreContextType} from "../../context/DataStoreContext";
-import UserProfileContext from "../../context/UserProfileContext";
 import {BsPerson} from "react-icons/all";
 import {Link} from "react-router-dom";
 import {Menu, Transition} from '@headlessui/react'
-import {useUserProfileStore} from "../../stores/friendProfilesStore";
 import Modal from "../common/Modal";
 const AccountButton = () => {
   const { user, signOut } = useAuthenticator((context) => [context.user]);

@@ -1,11 +1,9 @@
 import {SubmitHandler, useForm} from "react-hook-form";
-import React, {useContext} from "react";
+import React from "react";
 import {CollegeGroup, UserProfile} from "../../../models";
 import {DataStore} from "@aws-amplify/datastore";
-import ProfileForm from "./ProfileForm";
 import {ProfileInputs} from "../../../types";
 import {useAuthenticator} from "@aws-amplify/ui-react";
-import UserProfileContext from "../../../context/UserProfileContext";
 import InputWrapper from "../../common/InputWrapper";
 import Input from "../../common/Input";
 import Label from "../../common/Label";

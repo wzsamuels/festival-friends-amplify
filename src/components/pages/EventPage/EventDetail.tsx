@@ -2,17 +2,17 @@ import React, {useContext, useEffect, useState} from 'react'
 import {Festival, UserProfile} from "../../../models";
 import {DataStore} from "@aws-amplify/datastore";
 import ImageContext from "../../../context/ImageContext";
-import useFriendProfiles from "../../../hooks/useUserFriends";
 import FriendCard from "../../ui/FriendCard";
 import {Link, useParams} from "react-router-dom";
 import Header from "../../layout/Header";
+import {useUserProfileStore} from "../../../stores/friendProfilesStore";
 
 const EventDetailPage = () => {
   const [event, setEvent] = useState<Festival>();
   const [eventImage, setEventImage] =  React.useState('');
   const [attendees, setAttendees] = useState<UserProfile[]>([]);
   const [attendeeFriends, setAttendeeFriends] = useState<UserProfile[]>([]);
-  const { friendProfiles, friendsAreLoading } = useFriendProfiles()
+  const { friendProfiles, loadingFriendProfiles } = useUserProfileStore()
   const {id} = useParams()
   const { getSignedURL } = useContext(ImageContext);
 
@@ -50,7 +50,7 @@ const EventDetailPage = () => {
   return (
     <>
       <Header>
-        <span><Link className='underline text-primary-default' to='/'>Events</Link> / {event?.name}</span>
+        <span className='mx-4'><Link className='underline text-primary-default' to='/'>Events</Link> / {event?.name}</span>
       </Header>
         <div className='w-screen max-h-[75vh] h-full relative overflow-hidden'>
           <img className='w-full h-full object-cover' src={eventImage} alt={event?.name}/>

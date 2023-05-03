@@ -25,8 +25,6 @@ const ProfileVerified = ({user } : {user: any}) => {
   const [isProfileImageModalOpen, setIsProfileImageModalOpen] = useState(false)
   const [isPhotoModalOpen, setPhotoModalOpen] = useState(false)
   const [isBannerModalOpen, setIsBannerModalOpen] = useState(false)
-  const [isAlertOpen, setAlertOpen] = useState(false)
-  const [alertMessage, setAlertMessage] = useState("")
   const username = user.username as string;
   const userProfile= useUserProfileStore((state) => state.userProfile);
 
@@ -119,6 +117,10 @@ const ProfileVerified = ({user } : {user: any}) => {
             )
           }
         </div>
+      </section>
+      <section>
+        <h1>Event Attending</h1>
+        {}
       </section>
       { userProfile &&
         <>

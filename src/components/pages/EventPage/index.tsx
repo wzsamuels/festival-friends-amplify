@@ -5,11 +5,9 @@ import { DataStore } from "aws-amplify";
 import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
 
 // Local imports
-import {EventProfile, EventType, Festival, Friendship, LazyFestival, UserProfile} from "../../../models";
+import {EventProfile, EventType, Festival, LazyFestival, UserProfile} from "../../../models";
 import DataStoreContext, { DataStoreContextType } from "../../../context/DataStoreContext";
-import FestivalCard from "../../ui/FestivalCard";
-import UserProfileContext from "../../../context/UserProfileContext";
-import {Dialog} from "@headlessui/react";
+import EventCard from "../../ui/EventCard";
 import Header from "../../layout/Header";
 import Modal from "../../common/Modal";
 import {useUserProfileStore} from "../../../stores/friendProfilesStore";
@@ -71,7 +69,7 @@ const EventPage = () => {
   // Render festival cards
   const renderFestivalCards = (events:  LazyFestival[]) => {
     return events?.map((event) => (
-      <FestivalCard festival={event} key={event.id} attendingFriends={getAttendingFriends(event.id)} />
+      <EventCard festival={event} key={event.id} attendingFriends={getAttendingFriends(event.id)} />
     ));
   };
 

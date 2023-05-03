@@ -13,6 +13,11 @@ interface FriendCardProps {
 }
 
 const FriendCard = ({profile, link, onClick, onConfirm, onCancel, className} : FriendCardProps) => {
+
+  if(!profile) {
+    return null;
+  }
+
   const [profileImage, setProfileImage] = useState("")
   const profileUrl = `/friends/profile/${profile.userID}`
   const { getSignedURL } = useContext(ImageContext);

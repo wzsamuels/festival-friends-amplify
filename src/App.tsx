@@ -1,16 +1,12 @@
 import {
   createBrowserRouter,
-  RouterProvider, useLocation,
+  RouterProvider,
 } from "react-router-dom";
 import MessagePage from './components/pages/MessagePage/MessagePage';
-import UserProfileProvider from "./context/UserProfileProvider";
 import DataStoreContext from "./context/DataStoreContext";
 import ImageProvider from "./context/ImageProvider";
 /* Theme variables */
 import './theme/variables.css';
-
-import { Auth } from "aws-amplify";
-import { Hub } from "@aws-amplify/core";
 import { useUserProfileStore} from "./stores/friendProfilesStore";
 
 

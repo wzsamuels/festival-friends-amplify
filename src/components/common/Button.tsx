@@ -11,7 +11,7 @@ const Button = ({children, className, variation,...props}: ButtonProps) => {
   return (
     <button
       {...props}
-      className={`px-4 py-2 rounded-md uppercase ${className} ${variation === 'outline' ? 'bg-light-default text-primary-default' : 'bg-primary-default text-light-default'}`}
+      className={`px-4 py-2 rounded-md uppercase border border-primary-default ${className} ${variation === 'outline' ? 'bg-light-default text-primary-default' : 'bg-primary-default text-light-default'}`}
     >
       {children}
     </button>

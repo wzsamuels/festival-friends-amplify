@@ -1,13 +1,10 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, { useEffect, useState} from "react";
 import Modal from "../../../common/Modal";
-import {ModalProps} from "../../../../@types/modal";
 import {v4 as uuidv4} from "uuid";
 import {Storage} from "aws-amplify";
 import {DataStore} from "@aws-amplify/datastore";
 import {Photo, UserProfile} from "../../../../models";
 import getErrorMessage from "../../../../lib/getErrorMessage";
-import {useAuthenticator} from "@aws-amplify/ui-react";
-import userProfileContext from "../../../../context/UserProfileContext";
 import PhotoImage from "../../../ui/PhotoImage";
 import {ProfileModalProps} from "../../../../@types/profile";
 

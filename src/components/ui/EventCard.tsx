@@ -3,19 +3,17 @@ import React, {useContext, useEffect, useState} from "react";
 import DataStoreContext, {DataStoreContextType} from "../../context/DataStoreContext";
 import ImageContext from "../../context/ImageContext";
 import {DataStore} from "aws-amplify";
-import {checkmarkCircleOutline} from "ionicons/icons";
-import {useAuthenticator} from "@aws-amplify/ui-react";
-import UserProfileContext from "../../context/UserProfileContext";
 import {BsCheck} from "react-icons/all";
 import {Link} from "react-router-dom";
 import {useUserProfileStore} from "../../stores/friendProfilesStore";
+import Button from "../common/Button";
 
 interface FestivalCardProps {
   festival: LazyFestival;
   attendingFriends: UserProfile[];
 }
 
-const FestivalCard = ({festival, attendingFriends}: FestivalCardProps) => {
+const EventCard = ({festival, attendingFriends}: FestivalCardProps) => {
   const [festivalImage, setFestivalImage] = useState('')
   const [attendingEvent, setAttendingEvent] = useState(false)
   const [eventProfile, setEventProfile] = useState<EventProfile>();
@@ -107,12 +105,12 @@ const FestivalCard = ({festival, attendingFriends}: FestivalCardProps) => {
               </div>
               {
                 attendingEvent  ?
-                  <button onClick={handleAttendFestival} className='bg-primary-default text-light-default flex items-center rounded-xl space-x-2 py-2 px-4'>
+                  <Button onClick={handleAttendFestival} className='flex items-center'>
                     <span>I&apos;ll be there!</span>
                     <BsCheck/>
-                  </button>
+                  </Button>
                   :
-                  <button onClick={handleAttendFestival} className='bg-light-default text-primary-default border border-primary-default flex items-center rounded-xl space-x-2 py-2 px-4'>I&apos;ll be there!</button>
+                  <Button onClick={handleAttendFestival} variation='outline' className='flex items-center'><span>I&apos;ll be there!</span></Button>
               }
             </>
             :
@@ -124,4 +122,4 @@ const FestivalCard = ({festival, attendingFriends}: FestivalCardProps) => {
   )
 }
 
-export default FestivalCard;
+export default EventCard;

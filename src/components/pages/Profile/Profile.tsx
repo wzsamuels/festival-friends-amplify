@@ -30,7 +30,7 @@ const ProfilePage = () => {
   return (
     <>
       <Header>
-        <div><Link to ={'/friends'}>Friends</Link></div>
+        <div><Link to={'/friends'}>Friends</Link></div>
       </Header>
       <div className={'p-4 flex flex-col items-center justify-center mt-header'}>
         <img width={350} height={350} src={profileImage} alt={profile?.id} className='rounded-full'/>

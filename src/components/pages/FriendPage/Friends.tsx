@@ -120,7 +120,7 @@ const FriendsPage: React.FC = () => {
         <>
           {
             sentFriends.map((profile) =>
-              <FriendCard className='m-4' key={profile.id} profile={profile} link={true}/>)
+              <FriendCard className='m-4' key={profile?.id} profile={profile} link={true}/>)
           }
         </>
       )
