@@ -17,10 +17,10 @@ import ProfilePage from './components/pages/Profile/Profile';
 import React, {useEffect, useState} from "react";
 import Admin from "./components/pages/AdminPage/Admin";
 import FriendsPage from "./components/pages/FriendPage/Friends";
-import Events from "./components/pages/EventPage";
+import Events from "./components/pages/EventPage/EventPage";
 
 import AccountSettingsPage from "./components/pages/AccountPage/AccountSettings";
-import EventDetailPage from "./components/pages/EventPage/EventDetail";
+import EventDetailPage from "./components/pages/EventPage/EventDetailPage";
 
 import RidesPage from "./components/pages/RidePage/RidePage";
 import GroupsPage from "./components/pages/GroupPage/GroupPage";

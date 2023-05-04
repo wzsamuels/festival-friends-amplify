@@ -135,7 +135,7 @@ const MessagePage: React.FC = () => {
             </div>
         }
         <div className='fixed bottom-20 right-16'>
-          <button className='flex flex-col items-center rounded-[100%] bg-primary-default text-light-default p-3' onClick={() => setNewConversationModalOpen(true)}  >
+          <button className='flex flex-col items-center rounded-[100%] bg-green-950 text-white p-3' onClick={() => setNewConversationModalOpen(true)}  >
             <BsPlus className='text-3xl'/>
           </button>
         </div>

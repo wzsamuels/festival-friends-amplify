@@ -2,7 +2,7 @@ import React, {Fragment, useContext, useEffect} from "react";
 import {useAuthenticator} from "@aws-amplify/ui-react";
 import {DataStore} from "aws-amplify";
 import DataStoreContext, {DataStoreContextType} from "../../context/DataStoreContext";
-import {BsPerson} from "react-icons/all";
+import {BsPerson, FaUser} from "react-icons/all";
 import {Link} from "react-router-dom";
 import {Menu, Transition} from '@headlessui/react'
 import Modal from "../common/Modal";
@@ -30,8 +30,8 @@ const AccountButton = () => {
   return (
     <>
     <Menu as='div' className='relative'>
-      <Menu.Button className='p-4 hover:bg-light-default'>
-        <BsPerson />
+      <Menu.Button className='hover:bg-gray-100 text-green-950'>
+        <FaUser />
       </Menu.Button>
       <Transition
         as={Fragment}

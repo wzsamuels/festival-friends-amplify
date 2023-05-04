@@ -2,6 +2,7 @@ import { UserProfile} from "../../models";
 import React, {ReactElement, ReactNode, useContext, useEffect, useState} from "react";
 import ImageContext from "../../context/ImageContext";
 import {Link} from "react-router-dom";
+import Button from "../common/Button";
 
 interface FriendCardProps {
   profile: UserProfile,
@@ -41,8 +42,8 @@ const FriendCard = ({profile, link, onClick, onConfirm, onCancel, className} : F
         </div>
       </ConditionalWrapper>
       <div className='w-full'>
-        { onConfirm && <button onClick={onConfirm} className='w-full bg-primary-default text-light-default py-2 mb-1'>Confirm</button> }
-        { onCancel && <button onClick={onCancel} className='w-full bg-primary-default text-light-default py-2' >Cancel</button> }
+        { onConfirm && <Button onClick={onConfirm} className='w-full mb-1'>Confirm</Button> }
+        { onCancel && <Button onClick={onCancel} className='w-full' >Cancel</Button> }
       </div>
     </div>
   )

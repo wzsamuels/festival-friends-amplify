@@ -38,7 +38,7 @@ const EventDetailPage = () => {
   },[id] );
 
   useEffect(() => {
-    console.log("Friend Proiles", friendProfiles)
+    console.log("Friend Profiles", friendProfiles)
     if(friendProfiles.length === 0) {
       return;
     }
@@ -50,7 +50,9 @@ const EventDetailPage = () => {
   return (
     <>
       <Header>
-        <span className='mx-4'><Link className='underline text-primary-default' to='/'>Events</Link> / {event?.name}</span>
+        <span className='mx-4 '>
+          <Link className='underline text-primary-default ' to='/'>Events</Link> / {event?.name}
+        </span>
       </Header>
         <div className='w-screen max-h-[75vh] h-full relative overflow-hidden'>
           <img className='w-full h-full object-cover' src={eventImage} alt={event?.name}/>
@@ -72,17 +74,17 @@ const EventDetailPage = () => {
               </div>
             </>
           }
+          <h2 className='text-2xl my-4'>People Attending</h2>
           {
-            attendees.length > 0 &&
-            <>
-              <h2 className='text-2xl my-4'>People Attending</h2>
-              <div className='flex flex-wrap w-full'>
+            attendees.length > 0 ?
+            <div className='flex flex-wrap w-full'>
 
-                { attendees.map(attendee =>
-                  <FriendCard profile={attendee} link={true} key={attendee.id} className='m-4'/>
-                )}
-              </div>
-            </>
+              { attendees.map(attendee =>
+                <FriendCard profile={attendee} link={true} key={attendee.id} className='m-4'/>
+              )}
+            </div>:
+
+            <p>No one is attending this event</p>
           }
 
         </div>

@@ -11,6 +11,8 @@ import Input from "../../../common/Input";
 import Button from "../../../common/Button";
 import PopoverTransition from "../../../PopoverTransition";
 import CustomAlert from "../../../common/Alert";
+import {useUserProfileStore} from "../../../../stores/friendProfilesStore";
+import Toast from "../../../common/Toast";
 
 interface SearchInput {
   firstName?: string;
@@ -29,13 +31,25 @@ const FriendSearchModal = ({isOpen, setIsOpen}: FriendSearchModalProps) => {
   const { register, handleSubmit, reset } = useForm<SearchInput>()
   const [results, setResults] = useState<UserProfile[]>([])
   const { user } = useAuthenticator();
-  const [toastIsOpen, setToastIsOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [currentResult, setCurrentResult] = useState<UserProfile | null>(null);
+  const { userProfile } = useUserProfileStore()
+
+  const showToast = (type: 'info' | 'success' | 'warning' | 'error') => {
+    if(type === 'info') {
+      setToastMessage(`Friend already sent!`);
+    } else if(type === 'success') {
+      setToastMessage(`Friend request sent!`);
+    }
+    setToastType(type);
+  };
+
+  const [toastType, setToastType] = useState<'success' | 'error' | 'info' | 'warning'>('info');
 
   const searchFriends: SubmitHandler<SearchInput> = async data => {
     console.log(data)
-    // Remove empty
+    // Remove empty fields from search
     const filteredData: { field: string; value: string; }[] = []
     for (const [key, value] of Object.entries(data)) {
       if(value) {
@@ -51,8 +65,23 @@ const FriendSearchModal = ({isOpen, setIsOpen}: FriendSearchModalProps) => {
       return query;
     };
 
-    const results = await DataStore.query(UserProfile, (c) => c.or(() => criteria(c)))
-    setResults(results)
+    const allProfiles = await DataStore.query(UserProfile, (c) => c.or(() => criteria(c)));
+    // Filter out profiles with the same userProfile.id
+    const otherProfiles = allProfiles.filter((profile) => profile.id !== userProfile?.id);
+
+    const allFriends = await DataStore.query(Friendship);
+
+    // Filter out profiles that are already friends or have a pending request
+    const filteredResults = otherProfiles.filter((profile) => {
+      const friendShip = allFriends.find((friend) => (
+        (friend.userProfileID === userProfile?.id && friend.friendProfileID === profile.id) ||
+        (friend.friendProfileID === userProfile?.id && friend.userProfileID === profile.id)
+      ));
+
+      return !friendShip;
+    });
+
+    setResults(filteredResults);
   }
 
   const createFriendRequest = async (friendProfile: UserProfile) => {
@@ -81,19 +110,19 @@ const FriendSearchModal = ({isOpen, setIsOpen}: FriendSearchModalProps) => {
         alert('You are already friends')
         return;
       }
-      alert('You already have a friend request pending')
+      showToast('info');
       return;
     }
 
     const result = await DataStore.save(new Friendship({userProfileID: userProfile.id, friendProfileID: friendProfile.id, isAccepted: false, friendProfile: friendProfile, userProfile: profile[0]}) )
     console.log(result)
-    setToastIsOpen(true);
+    showToast('success');
   }
 
   return (
     <>
     <Modal isOpen={isOpen} setIsOpen={setIsOpen} onClose={() => {reset();setResults([]);}} title='Friend Search'>
-      <form onSubmit={handleSubmit(searchFriends)} className='[&>*]:m-4'>
+      <form onSubmit={handleSubmit(searchFriends)} className='[&>*]:m-4 max-w-2xl'>
         <div className='flex flex-wrap '>
           <Label>First Name</Label>
           <Input className='w-[calc(100%-150px)]' {...register('firstName')} type="text"  />
@@ -140,12 +169,20 @@ const FriendSearchModal = ({isOpen, setIsOpen}: FriendSearchModalProps) => {
             text: 'OK',
             role: 'confirm',
             handler: () => {
-              alert(currentResult?.firstName + ' ' +currentResult?.lastName)
               createFriendRequest(currentResult as UserProfile);
             },
           },
         ]}
       />
+      {toastMessage && (
+        <Toast
+          message={toastMessage}
+          type={toastType}
+          onClose={() => {
+            setToastMessage('');
+          }}
+        />
+      )}
     </>
   )
 }

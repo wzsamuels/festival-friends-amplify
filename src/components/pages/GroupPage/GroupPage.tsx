@@ -26,9 +26,9 @@ const GroupsPage = () => {
   return (
     <>
       <Header/>
-        <div className='bg-[url("/src/images/group.png")] h-screen w-full bg-cover flex flex-col items-center justify-center h-full'>
-          <div className='text-primary-default font-bold flex flex-col items-center justify-center text-3xl bg-light-default p-4 rounded-xl'>
-            <div className='p-4 m-4 max-w-4xl text-center'>
+        <div className='bg-[url("/src/images/group.png")] w-full bg-cover flex flex-col items-center justify-center h-full min-h-screen p-2'>
+          <div className='text-green-950 font-bold flex flex-col items-center justify-center text-xl md:text-2xl lg:text-3xl bg-white p-4 rounded-xl w-full max-w-4xl '>
+            <div className='p-4 m-4  text-center'>
             { collegeGroup && authStatus === 'authenticated' &&
               <span>You are part of the {collegeGroup.name} Community</span>
             }
