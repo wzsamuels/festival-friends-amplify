@@ -20,7 +20,7 @@ const Header = ({children, onSearch} : HeaderProps) => {
       </div>
       <div className='[&>*]:p-2 [&>*]:md:p-4 flex'>
         {
-          route === 'authenticated' && userProfile?.verified ?
+          route === 'authenticated' && onSearch ?
             <SearchButton onClick={onSearch}/>
             :
             null
