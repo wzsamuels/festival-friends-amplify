@@ -6,7 +6,7 @@ import {Photo} from "../../../../models";
 import {ProfileModalProps} from "../../../../@types/profile";
 import {Dialog} from "@headlessui/react";
 import Modal from "../../../common/Modal";
-import Button from "../../../common/Button";
+import Button from "../../../common/Button/Button";
 
 export interface PhotoUploadModalProps extends ProfileModalProps {
   photoFile: File | null

@@ -9,7 +9,7 @@ import {Link} from "react-router-dom";
 import Modal from "../../common/Modal";
 import Header from "../../layout/Header";
 import ConservationSearchModal from "./ConservationSearchModal";
-import Button from "../../common/Button";
+import Button from "../../common/Button/Button";
 import {useUserProfileStore} from "../../../stores/friendProfilesStore";
 import ConversationCard from "../../ui/ConversationCard";
 

@@ -8,7 +8,7 @@ import {Dialog, Popover} from "@headlessui/react";
 import Modal from "../../../common/Modal";
 import Label from "../../../common/Label";
 import Input from "../../../common/Input";
-import Button from "../../../common/Button";
+import Button from "../../../common/Button/Button";
 import PopoverTransition from "../../../PopoverTransition";
 import CustomAlert from "../../../common/Alert";
 import {useUserProfileStore} from "../../../../stores/friendProfilesStore";

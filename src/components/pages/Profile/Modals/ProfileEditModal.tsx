@@ -7,7 +7,7 @@ import getErrorMessage from "../../../../lib/getErrorMessage";
 import ProfileForm from "../ProfileForm";
 import {ProfileModalProps} from "../../../../@types/profile";
 import {Dialog, Transition} from "@headlessui/react";
-import Button from "../../../common/Button";
+import Button from "../../../common/Button/Button";
 import {BsPerson} from "react-icons/all";
 import Modal from "../../../common/Modal";
 

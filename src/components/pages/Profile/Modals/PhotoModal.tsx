@@ -3,7 +3,7 @@ import {DataStore} from "@aws-amplify/datastore";
 import {Storage} from "aws-amplify";
 import Modal from "../../../common/Modal";
 import PhotoImage from "../../../ui/PhotoImage";
-import Button from "../../../common/Button";
+import Button from "../../../common/Button/Button";
 import React from "react";
 import {ModalProps} from "../../../../@types/modal";
 

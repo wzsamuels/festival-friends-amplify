@@ -7,6 +7,7 @@ import {ProfileInputs} from "../../../types";
 import states from "../../../data/states";
 import Label from "../../common/Label";
 import Input from "../../common/Input";
+import Button from "../../common/Button/Button";
 
 interface ProfileFormProps {
   onSubmit: SubmitHandler<ProfileInputs>,
@@ -14,7 +15,7 @@ interface ProfileFormProps {
 }
 
 const ProfileForm = ({onSubmit, profile}: ProfileFormProps) => {
-  const [message, setMessage] = useState("")
+  const [message, setMessage] = useState("");
   const { register, handleSubmit, control, setValue, formState: { errors }} = useForm<ProfileInputs>({
     defaultValues: {
       firstName: profile?.firstName,
@@ -30,7 +31,7 @@ const ProfileForm = ({onSubmit, profile}: ProfileFormProps) => {
     }
   })
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={' [&>*]:my-4 w-full max-w-[400px]'}>
+    <form onSubmit={handleSubmit(onSubmit)} className={'[&>*]:my-4 w-full max-w-[400px]'}>
       <div className='flex flex-wrap'>
         <Label>First Name</Label>
         <Input {...register("firstName", {required: true})} />
@@ -89,7 +90,7 @@ const ProfileForm = ({onSubmit, profile}: ProfileFormProps) => {
       </div>
 
       <div className='my-6 flex justify-center'>
-        <button type='submit' className='my-4'>Update Profile</button>
+        <Button type='submit' className='my-4'>Update Profile</Button>
       </div>
       { message }
     </form>

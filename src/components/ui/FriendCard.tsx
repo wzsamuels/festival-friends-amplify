@@ -2,7 +2,7 @@ import { UserProfile} from "../../models";
 import React, {ReactElement, ReactNode, useContext, useEffect, useState} from "react";
 import ImageContext from "../../context/ImageContext";
 import {Link} from "react-router-dom";
-import Button from "../common/Button";
+import Button from "../common/Button/Button";
 
 interface FriendCardProps {
   profile: UserProfile,

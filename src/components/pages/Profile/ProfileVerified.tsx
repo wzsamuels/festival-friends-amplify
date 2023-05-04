@@ -8,7 +8,7 @@ import PhotoUploadModal from "./Modals/PhotoUploadModal";
 import PhotoImage from "../../ui/PhotoImage";
 import {BsPerson} from "react-icons/all";
 import BannerPhotoModal from "./Modals/BannerPhotoModal";
-import Button from "../../common/Button";
+import Button from "../../common/Button/Button";
 import {useUserProfileStore} from "../../../stores/friendProfilesStore";
 import PhotoModal from "./Modals/PhotoModal";
 

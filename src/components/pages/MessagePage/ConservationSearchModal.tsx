@@ -5,7 +5,7 @@ import {SubmitHandler, useForm} from "react-hook-form";
 import InputWrapper from "../../common/InputWrapper";
 import Label from "../../common/Label";
 import Input from "../../common/Input";
-import Button from "../../common/Button";
+import Button from "../../common/Button/Button";
 import {ModalProps} from "../../../@types/modal";
 import {Conversation} from "../../../models";
 
