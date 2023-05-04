@@ -34,7 +34,7 @@ const EventPage = () => {
   const collegeEvent = events.filter((event) => event.type === EventType.COLLEGE);
   const businessEvent = events.filter((event) => event.type === EventType.BUSINESS);
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
   const [eventType, setEventType] = useState('all');
 
   const { dataStoreCleared } = useContext(DataStoreContext) as DataStoreContextType;
@@ -114,7 +114,7 @@ const EventPage = () => {
 
   return (
     <div>
-      <Header>
+      <Header onSearch={() => setIsSearchModalOpen(true)}>
         <Segment
           segmentType={eventType}
           setSegmentType={setEventType}
@@ -124,11 +124,7 @@ const EventPage = () => {
       <div className='grid gap-4 justify-items-center grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 items-center px-4'>
         {renderFestivalCards(filteredEvents)}
       </div>
-      <Modal isOpen={isOpen} setIsOpen={setIsOpen} title='Search Festivals'>
-        <div className='p-4'>
-          Not yet implemented!
-        </div>
-    </Modal>
+
     </div>
   );
 };

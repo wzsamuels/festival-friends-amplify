@@ -6,7 +6,7 @@ import {DataStore} from "aws-amplify";
 import {BsCheck} from "react-icons/all";
 import {Link} from "react-router-dom";
 import {useUserProfileStore} from "../../stores/friendProfilesStore";
-import Button from "../common/Button";
+import Button from "../common/Button/Button";
 
 interface FestivalCardProps {
   festival: LazyFestival;
@@ -18,7 +18,6 @@ const EventCard = ({festival, attendingFriends}: FestivalCardProps) => {
   const [attendingEvent, setAttendingEvent] = useState(false)
   const [eventProfile, setEventProfile] = useState<EventProfile>();
   const { dataStoreCleared } = useContext(DataStoreContext) as DataStoreContextType;
-  const [alertIsOpen, setAlertIsOpen] = useState(false);
   const { userProfile} = useUserProfileStore()
 
   const { getSignedURL } = useContext(ImageContext);
@@ -72,8 +71,6 @@ const EventCard = ({festival, attendingFriends}: FestivalCardProps) => {
         );
         console.log('User added to the festival attendees list');
       }
-    } else {
-      setAlertIsOpen(true);
     }
   }
 
