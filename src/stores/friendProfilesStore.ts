@@ -70,6 +70,14 @@ const friendProfilesStore = create(
           set({loadingUserProfile: false })
         }
       },
+      reset: () => {
+        set({
+          userProfile: null,
+          friendProfiles: [],
+          loadingUserProfile: true,
+          loadingFriendProfiles: true,
+        });
+      },
     })
   )
 );

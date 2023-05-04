@@ -32,6 +32,9 @@ const ConversationCard = ({ conversation, onClick, className }: ConversationCard
 
       const messages = await conversation.messages.toArray();
       console.log(messages)
+      if(messages.length === 0) {
+        return;
+      }
       const lastMessage = messages[messages.length - 1];
       setUnreadMessage(lastMessage.unreadMessage === true && lastMessage.senderID !== userProfile.id)
       const message = lastMessage.senderID === userProfile.id ? 'You' : friendProfile.firstName;
@@ -44,8 +47,14 @@ const ConversationCard = ({ conversation, onClick, className }: ConversationCard
 
   const handleOnClick = async () => {
     const messages = await conversation.messages.toArray();
-    const lastMessage = messages[messages.length - 1];
-    await DataStore.save(Message.copyOf(lastMessage, updated => {updated.unreadMessage = false}));
+
+
+    if (messages.length > 0) {
+      const lastMessage = messages[messages.length - 1];
+      await DataStore.save(Message.copyOf(lastMessage, updated => {
+        updated.unreadMessage = false
+      }));
+    }
     setUnreadMessage(false);
     onClick(conversation);
   }

@@ -6,11 +6,13 @@ import {BsPerson, FaUser} from "react-icons/all";
 import {Link} from "react-router-dom";
 import {Menu, Transition} from '@headlessui/react'
 import Modal from "../common/Modal";
+import {useUserProfileStore} from "../../stores/friendProfilesStore";
 const AccountButton = () => {
   const { user, signOut } = useAuthenticator((context) => [context.user]);
   const { saveDataStoreCleared } = useContext(DataStoreContext) as DataStoreContextType;
   const [alertIsOpen, setAlertIsOpen] = React.useState(false);
   const { authStatus } = useAuthenticator(context => [context.authStatus]);
+  const { reset } = useUserProfileStore();
 
   const handleSignOut = async () => {
 
@@ -18,7 +20,7 @@ const AccountButton = () => {
     saveDataStoreCleared(false);
     setAlertIsOpen(true);
     await DataStore.clear();
-
+    reset();
     setAlertIsOpen(false)
     saveDataStoreCleared(true);
   }

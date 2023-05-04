@@ -87,7 +87,7 @@ const ConversationModal = ({conversation, isOpen, setIsOpen} : ConversationModal
               className={`flex my-4 w-full ${message.senderID !== userProfile?.id ? 'justify-start' : 'justify-end'}`}
             >
               {message.senderID !== userProfile?.id && <img className="rounded-full mx-4 max-w-[75px] w-full max-h-[75px] aspect-square" src={friendProfileImage} alt={friendProfile?.firstName}  />}
-              <div className={`p-4 rounded-xl ${message.senderID === userProfile?.id ? 'bg-primary-default text-light-default' : 'bg-secondary-default'} w-1/2`}>{message.content}</div>
+              <div className={`p-4 rounded-xl ${message.senderID === userProfile?.id ? 'bg-green-950 text-white' : 'bg-teal-600'} w-1/2`}>{message.content}</div>
             </div>
           )
         }
