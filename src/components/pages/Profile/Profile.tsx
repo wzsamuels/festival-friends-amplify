@@ -6,12 +6,15 @@ import {DataStore, Storage} from "aws-amplify";
 import AccountButton from "../../ui/AccountButton";
 import PhotoImage from "../../ui/PhotoImage";
 import Header from "../../layout/Header";
+import PhotoModal from "./Modals/PhotoModal";
 
 
 const ProfilePage = () => {
   const [profile, setProfile] = useState<UserProfile>();
   const [profileImage, setProfileImage] = useState("");
   const [photos, setPhotos] = useState<Photo[]>([]);
+  const [isPhotoModalOpen, setIsPhotoModalOpen] = useState(false);
+  const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null)
   const { profileId } = useParams();
 
   useEffect(() => {
@@ -50,12 +53,13 @@ const ProfilePage = () => {
         <section className='flex flex-wrap  gap-4' >
           {
             photos?.map(photo =>
-              <div className='max-w-[200px] max-h-[200px]' key={photo.id}>
+              <div className='max-w-[200px] max-h-[200px] cursor-pointer aspect-square w-full h-full' key={photo.id} onClick={() => {setIsPhotoModalOpen(true);  setSelectedPhoto(photo)}}>
                 <PhotoImage photo={photo} key={photo.id}/>
               </div>
             )
           }
         </section>
+        <PhotoModal photo={selectedPhoto} isOpen={isPhotoModalOpen} setIsOpen={setIsPhotoModalOpen} deletePhoto={false}/>
       </div>
     </>
   )

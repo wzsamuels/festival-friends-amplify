@@ -2,11 +2,12 @@ import React, {Fragment, useContext, useEffect} from "react";
 import {useAuthenticator} from "@aws-amplify/ui-react";
 import {DataStore} from "aws-amplify";
 import DataStoreContext, {DataStoreContextType} from "../../context/DataStoreContext";
-import {BsPerson, FaUser} from "react-icons/all";
+import {FaUser} from "react-icons/all";
 import {Link} from "react-router-dom";
 import {Menu, Transition} from '@headlessui/react'
 import Modal from "../common/Modal";
 import {useUserProfileStore} from "../../stores/friendProfilesStore";
+import Spinner from "../common/Spinner";
 const AccountButton = () => {
   const { user, signOut } = useAuthenticator((context) => [context.user]);
   const { saveDataStoreCleared } = useContext(DataStoreContext) as DataStoreContextType;
@@ -48,35 +49,39 @@ const AccountButton = () => {
           {
             authStatus === 'authenticated' ?
               <>
-                <Menu.Item   className='border-b border-b-primary-default  p-2' as='div'>
+                <Menu.Item   className='border-b border-b-green-950  p-2' as='div'>
                   {user?.attributes?.email}
                 </Menu.Item>
                 <Menu.Item>
-                  <Link className='hover:bg-primary-default hover:text-light-default w-full  p-2 ' to='/account'>
+                  <Link className='hover:bg-green-950 hover:text-light-default w-full  p-2 ' to='/account'>
                     Profile
                   </Link>
                 </Menu.Item>
                 <Menu.Item>
-                  <Link className='w-full cursor-pointer hover:bg-primary-default hover:text-light-default p-2 ' to='/account/settings'>
+                  <Link className='w-full cursor-pointer hover:bg-green-950 hover:text-light-default p-2 ' to='/account/settings'>
                     Account Settings
                   </Link>
                 </Menu.Item>
                 <Menu.Item>
-                  <Link className='w-full cursor-pointer hover:text-light-default hover:bg-primary-default p-2 ' to='/admin'>
+                  <Link className='w-full cursor-pointer hover:text-light-default hover:bg-green-950 p-2 ' to='/admin'>
                     Admin
                   </Link>
                 </Menu.Item>
-                <Menu.Item><div className='w-full cursor-pointer hover:text-light-default hover:bg-primary-default p-2 ' onClick={handleSignOut}>Sign Out</div></Menu.Item>
+                <Menu.Item><div className='w-full cursor-pointer hover:text-light-default hover:bg-green-950 p-2 ' onClick={handleSignOut}>Sign Out</div></Menu.Item>
               </>
               :
               <Menu.Item>
-                <Link className='w-full cursor-pointer hover:text-light-default hover:bg-primary-default p-2 ' to='/account'>Login In / Sign Up</Link>
+                <Link className='w-full cursor-pointer hover:text-light-default hover:bg-green-950 p-2 ' to='/account'>Login In / Sign Up</Link>
               </Menu.Item>
           }
       </Menu.Items>
       </Transition>
     </Menu>
       <Modal isOpen={alertIsOpen} setIsOpen={setAlertIsOpen} title='Logging Out...'>
+        <div className='flex flex-col items-center'>
+          <span>Log Out in Progress</span>
+          <Spinner/>
+        </div>
       </Modal>
     </>
   )

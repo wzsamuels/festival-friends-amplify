@@ -145,7 +145,7 @@ const ProfileVerified = ({user } : {user: any}) => {
               setIsProfileImageModalOpen(true);
             }}
           />
-          <PhotoModal photo={selectedPhoto} isOpen={isPhotoModalOpen} setIsOpen={setPhotoModalOpen}/>
+          <PhotoModal photo={selectedPhoto} isOpen={isPhotoModalOpen} setIsOpen={setPhotoModalOpen} deletePhoto={true}/>
         </>
       }
     </div>

@@ -8,10 +8,11 @@ import React from "react";
 import {ModalProps} from "../../../../@types/modal";
 
 interface PhotoModalProps extends ModalProps {
-  photo: Photo | null
+  photo: Photo | null,
+  deletePhoto: boolean
 }
 
-const PhotoModal = ({isOpen, setIsOpen, photo} : PhotoModalProps) => {
+const PhotoModal = ({isOpen, setIsOpen, photo, deletePhoto} : PhotoModalProps) => {
   const handleDeletePhoto = async () => {
     if(photo) {
       await DataStore.delete(photo)
@@ -25,9 +26,11 @@ const PhotoModal = ({isOpen, setIsOpen, photo} : PhotoModalProps) => {
     <Modal isOpen={isOpen} setIsOpen={setIsOpen} title='Photo'>
       {photo &&<PhotoImage className='w-full' photo={photo}/>}
       <div className='flex justify-center my-4'>
+        { deletePhoto &&
         <Button onClick={handleDeletePhoto}>
           Delete
         </Button>
+        }
       </div>
     </Modal>
   )
