@@ -1,18 +1,16 @@
-import {Photo, UserProfile} from "../../../models";
+import {Photo} from "../../../models";
 import React, {useEffect, useState} from "react";
 import {Storage} from "aws-amplify";
 import {DataStore} from "@aws-amplify/datastore";
-import {personCircle} from "ionicons/icons";
 import ProfileEditModal from "./Modals/ProfileEditModal";
 import ProfileImageModal from "./Modals/ProfileImageModal";
 import PhotoUploadModal from "./Modals/PhotoUploadModal";
 import PhotoImage from "../../ui/PhotoImage";
 import {BsPerson} from "react-icons/all";
-import {Dialog} from "@headlessui/react";
-import Modal from "../../common/Modal";
 import BannerPhotoModal from "./Modals/BannerPhotoModal";
 import Button from "../../common/Button";
 import {useUserProfileStore} from "../../../stores/friendProfilesStore";
+import PhotoModal from "./Modals/PhotoModal";
 
 const ProfileVerified = ({user } : {user: any}) => {
   const [profileImage, setProfileImage] = useState("")
@@ -46,7 +44,6 @@ const ProfileVerified = ({user } : {user: any}) => {
           setBannerImage(bannerFile);
         }
       }
-
       fetchProfileImage()
 
       const photoSub = DataStore.observeQuery(Photo, photo => photo.userProfileID.eq(userProfile.id)).subscribe(({items}) => {
@@ -58,8 +55,6 @@ const ProfileVerified = ({user } : {user: any}) => {
     }
 
   }, [userProfile])
-
-
 
   useEffect(() => {
     if (!selectedFile) {
@@ -102,7 +97,7 @@ const ProfileVerified = ({user } : {user: any}) => {
       <section className='flex flex-col items-center jusify-content my-4 w-full p-4'>
         <div className='flex justify-between w-full max-w-xl'>
           <h2 className='text-2xl'>Photos</h2>
-          <label htmlFor="upload-photo" className='block bg-primary-default text-light-default rounded-md uppercase py-2 px-4 cursor-pointer'>Upload Photo</label>
+          <label htmlFor="upload-photo" className='block bg-green-950 text-white rounded-md uppercase py-2 px-4 cursor-pointer'>Upload Photo</label>
           <input type="file" accept="image/png, image/jpeg"
                  onChange={e => e?.target?.files && setSelectedFile(e.target.files[0])}
                  className='my-4 hidden'
@@ -124,68 +119,36 @@ const ProfileVerified = ({user } : {user: any}) => {
       </section>
       { userProfile &&
         <>
-      <BannerPhotoModal photos={photos} username={username} isOpen={isBannerModalOpen} setIsOpen={setIsBannerModalOpen} profile={userProfile}/>
-      <PhotoUploadModal
-        profile={userProfile}
-        username={username}
-        isOpen={isPhotoUploadModalOpen}
-        setIsOpen={setPhotoUploadModalOpen}
-        photoFile={selectedFile}
-        setPhotoFile={setSelectedFile}
-      />
-      <ProfileImageModal
-        profile={userProfile}
-        username={username}
-        isOpen={isProfileImageModalOpen}
-        setIsOpen={setIsProfileImageModalOpen}
-        photos={photos}/>
-      <ProfileEditModal
-        profile={userProfile}
-        profileImage={profileImage}
-        isOpen={isProfileModalOpen}
-        setIsOpen={setProfileModalOpen}
-        username={username}
-        callback={() => {
-          setProfileModalOpen(false);
-          setIsProfileImageModalOpen(true);
-        }}
-      />
-      <PhotoModal profile={userProfile} photo={selectedPhoto} isOpen={isPhotoModalOpen} setIsOpen={setPhotoModalOpen}/>
+          <BannerPhotoModal photos={photos} username={username} isOpen={isBannerModalOpen} setIsOpen={setIsBannerModalOpen} profile={userProfile}/>
+          <PhotoUploadModal
+            profile={userProfile}
+            username={username}
+            isOpen={isPhotoUploadModalOpen}
+            setIsOpen={setPhotoUploadModalOpen}
+            photoFile={selectedFile}
+            setPhotoFile={setSelectedFile}
+          />
+          <ProfileImageModal
+            profile={userProfile}
+            username={username}
+            isOpen={isProfileImageModalOpen}
+            setIsOpen={setIsProfileImageModalOpen}
+            photos={photos}/>
+          <ProfileEditModal
+            profile={userProfile}
+            profileImage={profileImage}
+            isOpen={isProfileModalOpen}
+            setIsOpen={setProfileModalOpen}
+            username={username}
+            callback={() => {
+              setProfileModalOpen(false);
+              setIsProfileImageModalOpen(true);
+            }}
+          />
+          <PhotoModal photo={selectedPhoto} isOpen={isPhotoModalOpen} setIsOpen={setPhotoModalOpen}/>
         </>
       }
     </div>
-  )
-}
-
-interface ModalProps {
-  isOpen: boolean
-  setIsOpen: (isOpen: boolean) => void
-}
-
-interface PhotoModalProps extends ModalProps {
-  profile: UserProfile
-  photo: Photo | null
-}
-
-const PhotoModal = ({profile, isOpen, setIsOpen, photo} : PhotoModalProps) => {
-  const handleDeletePhoto = async () => {
-    if(photo) {
-      await DataStore.delete(photo)
-      await Storage.remove(`${photo.s3Key}`)
-    }
-    setIsOpen(false)
-  }
-
-  // TODO - Add confirmation before deleting
-  return (
-    <Modal isOpen={isOpen} setIsOpen={setIsOpen} title='Photo'>
-      {photo &&<PhotoImage className='w-full' photo={photo}/>}
-        <div className='flex justify-center my-4'>
-          <Button onClick={handleDeletePhoto}>
-            Delete
-          </Button>
-        </div>
-    </Modal>
   )
 }
 

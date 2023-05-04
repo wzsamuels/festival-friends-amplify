@@ -6,6 +6,7 @@ import {Photo} from "../../../../models";
 import {ProfileModalProps} from "../../../../@types/profile";
 import {Dialog} from "@headlessui/react";
 import Modal from "../../../common/Modal";
+import Button from "../../../common/Button";
 
 export interface PhotoUploadModalProps extends ProfileModalProps {
   photoFile: File | null
@@ -54,8 +55,11 @@ const PhotoUploadModal = ({profile, username, isOpen, setIsOpen, photoFile, setP
   return (
     <Modal isOpen={isOpen} setIsOpen={setIsOpen} title="Upload Photo">
         {preview && <img className='w-full' src={preview} alt="Preview"/> }
-        <button onClick={() => setIsOpen(false)}>Close</button>
-        <button onClick={handlePhotoUpload}>Upload</button>
+      <div className='flex justify-center gap-2 mt-4'>
+        <Button onClick={() => setIsOpen(false)}>Close</Button>
+        <Button onClick={handlePhotoUpload}>Upload</Button>
+      </div>
+
     </Modal>
   )
 }
