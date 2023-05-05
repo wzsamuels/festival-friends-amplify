@@ -37,6 +37,8 @@ export default function FestivalUpdateForm(props) {
     startDate: "",
     endDate: "",
     type: "",
+    tagline: "",
+    description: "",
   };
   const [name, setName] = React.useState(initialValues.name);
   const [genre, setGenre] = React.useState(initialValues.genre);
@@ -45,6 +47,10 @@ export default function FestivalUpdateForm(props) {
   const [startDate, setStartDate] = React.useState(initialValues.startDate);
   const [endDate, setEndDate] = React.useState(initialValues.endDate);
   const [type, setType] = React.useState(initialValues.type);
+  const [tagline, setTagline] = React.useState(initialValues.tagline);
+  const [description, setDescription] = React.useState(
+    initialValues.description
+  );
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = festivalRecord
@@ -57,6 +63,8 @@ export default function FestivalUpdateForm(props) {
     setStartDate(cleanValues.startDate);
     setEndDate(cleanValues.endDate);
     setType(cleanValues.type);
+    setTagline(cleanValues.tagline);
+    setDescription(cleanValues.description);
     setErrors({});
   };
   const [festivalRecord, setFestivalRecord] = React.useState(festivalModelProp);
@@ -78,6 +86,8 @@ export default function FestivalUpdateForm(props) {
     startDate: [{ type: "Required" }],
     endDate: [{ type: "Required" }],
     type: [],
+    tagline: [],
+    description: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -112,6 +122,8 @@ export default function FestivalUpdateForm(props) {
           startDate,
           endDate,
           type,
+          tagline,
+          description,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -174,6 +186,8 @@ export default function FestivalUpdateForm(props) {
               startDate,
               endDate,
               type,
+              tagline,
+              description,
             };
             const result = onChange(modelFields);
             value = result?.name ?? value;
@@ -204,6 +218,8 @@ export default function FestivalUpdateForm(props) {
               startDate,
               endDate,
               type,
+              tagline,
+              description,
             };
             const result = onChange(modelFields);
             value = result?.genre ?? value;
@@ -234,6 +250,8 @@ export default function FestivalUpdateForm(props) {
               startDate,
               endDate,
               type,
+              tagline,
+              description,
             };
             const result = onChange(modelFields);
             value = result?.image ?? value;
@@ -264,6 +282,8 @@ export default function FestivalUpdateForm(props) {
               startDate,
               endDate,
               type,
+              tagline,
+              description,
             };
             const result = onChange(modelFields);
             value = result?.location ?? value;
@@ -295,6 +315,8 @@ export default function FestivalUpdateForm(props) {
               startDate: value,
               endDate,
               type,
+              tagline,
+              description,
             };
             const result = onChange(modelFields);
             value = result?.startDate ?? value;
@@ -326,6 +348,8 @@ export default function FestivalUpdateForm(props) {
               startDate,
               endDate: value,
               type,
+              tagline,
+              description,
             };
             const result = onChange(modelFields);
             value = result?.endDate ?? value;
@@ -356,6 +380,8 @@ export default function FestivalUpdateForm(props) {
               startDate,
               endDate,
               type: value,
+              tagline,
+              description,
             };
             const result = onChange(modelFields);
             value = result?.type ?? value;
@@ -406,6 +432,70 @@ export default function FestivalUpdateForm(props) {
           {...getOverrideProps(overrides, "typeoption6")}
         ></option>
       </SelectField>
+      <TextField
+        label="Tagline"
+        isRequired={false}
+        isReadOnly={false}
+        value={tagline}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              genre,
+              image,
+              location,
+              startDate,
+              endDate,
+              type,
+              tagline: value,
+              description,
+            };
+            const result = onChange(modelFields);
+            value = result?.tagline ?? value;
+          }
+          if (errors.tagline?.hasError) {
+            runValidationTasks("tagline", value);
+          }
+          setTagline(value);
+        }}
+        onBlur={() => runValidationTasks("tagline", tagline)}
+        errorMessage={errors.tagline?.errorMessage}
+        hasError={errors.tagline?.hasError}
+        {...getOverrideProps(overrides, "tagline")}
+      ></TextField>
+      <TextField
+        label="Description"
+        isRequired={false}
+        isReadOnly={false}
+        value={description}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              genre,
+              image,
+              location,
+              startDate,
+              endDate,
+              type,
+              tagline,
+              description: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.description ?? value;
+          }
+          if (errors.description?.hasError) {
+            runValidationTasks("description", value);
+          }
+          setDescription(value);
+        }}
+        onBlur={() => runValidationTasks("description", description)}
+        errorMessage={errors.description?.errorMessage}
+        hasError={errors.description?.hasError}
+        {...getOverrideProps(overrides, "description")}
+      ></TextField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}
