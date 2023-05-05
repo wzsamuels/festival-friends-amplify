@@ -12,7 +12,8 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@aws-amplify/ui-react": "^4.5.1",
+    "@aws-amplify/ui-react": "^4.6.0",
+    "@aws-amplify/ui-react-storage": "^1.1.0",
     "@capacitor/app": "4.1.1",
     "@capacitor/core": "4.7.3",
     "@capacitor/haptics": "4.1.0",

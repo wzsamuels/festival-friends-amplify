@@ -11,6 +11,15 @@ type Message @model @auth(rules: [{allow: public}])
   unreadMessage: Boolean
 }
 
+type EventProfile @model @auth(rules: [{allow: public}])
+{
+  id: ID!
+  userProfileID: ID! @index(name: "byUserProfile")
+  eventID: ID! @index(name: "byEvent")
+  userProfile: UserProfile! @belongsTo(fields: ["userProfileID"])
+  event: Festival! @belongsTo(fields: ["eventID"])
+}
+
 type Festival @model @auth(rules: [{allow: public}]) {
   id: ID!
   name: String!
@@ -20,7 +29,10 @@ type Festival @model @auth(rules: [{allow: public}]) {
   startDate: AWSDate!
   endDate: AWSDate!
   type: EventType
+  tagline: String
+  description: String
   attendees: [EventProfile] @hasMany(fields: ["id"])
+  rides: [Ride] @hasMany(fields: ["id"])
 }
 
 type UserProfile @model @auth(rules: [{allow: public}]) {
@@ -42,6 +54,7 @@ type UserProfile @model @auth(rules: [{allow: public}]) {
   email: String
   zipcode: String
   attendingEvents: [EventProfile] @hasMany(indexName: "byUserProfile", fields: ["id"])
+  rides: [RideUser]! @hasMany(indexName: "byUserProfile", fields: ["id"])
   friends: [Friendship] @hasMany(indexName: "byUserProfile", fields: ["id"])
   conversations: [Conversation] @hasMany(indexName: "byUserProfile", fields: ["id"])
   sentMessages: [Message] @hasMany(indexName: "bySender", fields: ["id"])
@@ -51,8 +64,28 @@ type UserProfile @model @auth(rules: [{allow: public}]) {
   collegeGroup: CollegeGroup @belongsTo(fields: ["collegeGroupId"])
 }
 
-type Photo
-@model @auth(rules: [{allow: public}])
+type Ride @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  event: Festival! @belongsTo(fields: ["eventID"])
+  eventID: ID! @index(name: "byEvent")
+  driver: RideUser! @hasOne
+  passengers: [RideUser]! @hasMany(indexName: "byRide", fields: ["id"])
+  maxPassengers: Int!
+  departureTime: AWSDateTime!
+  startPoint: String!
+  endPoint: String!
+}
+
+type RideUser @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  ride: Ride! @belongsTo(fields: ["rideID"])
+  rideID: ID! @index(name: "byRide")
+  user: UserProfile! @belongsTo(fields: ["userProfileID"])
+  userProfileID: ID!@index(name: "byUserProfile")
+  isDriver: Boolean!
+}
+
+type Photo @model @auth(rules: [{allow: public}])
 {
   id: ID!
   userProfileID: ID! @index(name: "byUserProfile")
@@ -80,29 +113,6 @@ type Friendship @model @auth(rules: [{allow: public}])
   friendProfile: UserProfile! @belongsTo(fields: ["friendProfileID"])
 }
 
-enum FriendshipStatus {
-  REQUESTED
-  ACCEPTED
-}
-
-enum EventType {
-  CONCERT
-  FESTIVAL
-  SPORT
-  BUSINESS
-  COLLEGE
-  MUSIC
-  ALL
-}
-
-type EventProfile @model @auth(rules: [{allow: public}])
-{
-  id: ID!
-  userProfileID: ID! @index(name: "byUserProfile")
-  eventID: ID! @index(name: "byEvent")
-  userProfile: UserProfile! @belongsTo(fields: ["userProfileID"])
-  event: Festival! @belongsTo(fields: ["eventID"])
-}
 
 type Conversation @model @auth(rules: [{allow: public}])
 {
@@ -126,4 +136,19 @@ type CollegeGroup @model @auth(rules: [{allow: public}]) {
 
 type Query {
   findSuggestedFriends(school: String, city: String, state: String): [UserProfile]
+}
+
+enum FriendshipStatus {
+  REQUESTED
+  ACCEPTED
+}
+
+enum EventType {
+  CONCERT
+  FESTIVAL
+  SPORT
+  BUSINESS
+  COLLEGE
+  MUSIC
+  ALL
 }
