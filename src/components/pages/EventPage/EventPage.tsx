@@ -17,9 +17,9 @@ import DataStoreContext, {
 } from '../../../context/DataStoreContext';
 import EventCard from '../../ui/EventCard';
 import Header from '../../layout/Header';
-import Modal from '../../common/Modal';
+import Modal from '../../common/Modal/Modal';
 import { useUserProfileStore } from '../../../stores/friendProfilesStore';
-import Segment from '../../common/Segment';
+import Segment from '../../common/Segment/Segment';
 
 const EventPage = () => {
   const { userProfile, friendProfiles } = useUserProfileStore();

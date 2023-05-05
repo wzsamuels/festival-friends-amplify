@@ -7,7 +7,7 @@ import {ProfileModalProps} from "../../../../@types/profile";
 import PhotoImage from "../../../ui/PhotoImage";
 import getErrorMessage from "../../../../lib/getErrorMessage";
 import {Dialog} from "@headlessui/react";
-import Modal from "../../../common/Modal";
+import Modal from "../../../common/Modal/Modal";
 
 export interface ProfileImageModalProps extends ProfileModalProps {
   photos: Photo[];

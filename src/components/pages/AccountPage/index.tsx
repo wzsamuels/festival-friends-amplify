@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import ProfileUnverified from '../Profile/ProfileUnverified';
 import ProfileVerified from '../Profile/ProfileVerified';
 import { useUserProfileStore} from "../../../stores/friendProfilesStore";
-import Spinner from "../../common/Spinner";
+import Spinner from "../../common/Spinner/Spinner";
 import Header from "../../layout/Header";
 
 const AccountPage = () => {

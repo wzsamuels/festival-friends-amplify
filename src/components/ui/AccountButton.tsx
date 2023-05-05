@@ -5,9 +5,9 @@ import DataStoreContext, {DataStoreContextType} from "../../context/DataStoreCon
 import {FaUser} from "react-icons/all";
 import {Link} from "react-router-dom";
 import {Menu, Transition} from '@headlessui/react'
-import Modal from "../common/Modal";
+import Modal from "../common/Modal/Modal";
 import {useUserProfileStore} from "../../stores/friendProfilesStore";
-import Spinner from "../common/Spinner";
+import Spinner from "../common/Spinner/Spinner";
 const AccountButton = () => {
   const { user, signOut } = useAuthenticator((context) => [context.user]);
   const { saveDataStoreCleared } = useContext(DataStoreContext) as DataStoreContextType;

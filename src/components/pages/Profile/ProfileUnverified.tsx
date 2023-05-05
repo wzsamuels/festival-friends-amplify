@@ -4,9 +4,9 @@ import {CollegeGroup, UserProfile} from "../../../models";
 import {DataStore} from "@aws-amplify/datastore";
 import {ProfileInputs} from "../../../types";
 import {useAuthenticator} from "@aws-amplify/ui-react";
-import InputWrapper from "../../common/InputWrapper";
-import Input from "../../common/Input";
-import Label from "../../common/Label";
+import InputWrapper from "../../common/InputWrapper/InputWrapper";
+import Input from "../../Input/Input";
+import Label from "../../Label/Label";
 import {useUserProfileStore} from "../../../stores/friendProfilesStore";
 
 const ProfileUnverified = () => {

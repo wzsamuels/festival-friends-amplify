@@ -7,7 +7,7 @@ import {
   BsFillPeopleFill,
   BsMusicNoteBeamed
 } from "react-icons/bs";
-import PulseButton from "../common/PulseButton";
+import PulseButton from "../common/PulseButton/PulseButton";
 import classNames from 'classnames';
 
 const Layout = () => {

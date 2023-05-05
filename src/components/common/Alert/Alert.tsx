@@ -1,6 +1,6 @@
 import React, { Fragment, ReactElement } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import Modal from "./Modal";
+import Modal from "../Modal/Modal";
 
 interface Button {
   text: string;

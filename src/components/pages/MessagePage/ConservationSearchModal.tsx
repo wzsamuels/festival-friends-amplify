@@ -1,10 +1,10 @@
 import React from "react";
 import {ProfileModalProps} from "../../../@types/profile";
-import Modal from "../../common/Modal";
+import Modal from "../../common/Modal/Modal";
 import {SubmitHandler, useForm} from "react-hook-form";
-import InputWrapper from "../../common/InputWrapper";
-import Label from "../../common/Label";
-import Input from "../../common/Input";
+import InputWrapper from "../../common/InputWrapper/InputWrapper";
+import Label from "../../Label/Label";
+import Input from "../../Input/Input";
 import Button from "../../common/Button/Button";
 import {ModalProps} from "../../../@types/modal";
 import {Conversation} from "../../../models";

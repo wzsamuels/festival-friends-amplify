@@ -6,7 +6,7 @@ import FriendCard from "../../ui/FriendCard";
 import ConversationModal from "./ConversationModal";
 import {BsPlus, FaSearch} from "react-icons/all";
 import {Link} from "react-router-dom";
-import Modal from "../../common/Modal";
+import Modal from "../../common/Modal/Modal";
 import Header from "../../layout/Header";
 import ConservationSearchModal from "./ConservationSearchModal";
 import Button from "../../common/Button/Button";

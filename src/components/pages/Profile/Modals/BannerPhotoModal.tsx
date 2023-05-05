@@ -1,5 +1,5 @@
 import React, { useEffect, useState} from "react";
-import Modal from "../../../common/Modal";
+import Modal from "../../../common/Modal/Modal";
 import {v4 as uuidv4} from "uuid";
 import {Storage} from "aws-amplify";
 import {DataStore} from "@aws-amplify/datastore";

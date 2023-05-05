@@ -3,7 +3,7 @@ import {Conversation, Message, UserProfile} from "../../../models";
 import React, {FormEvent, useEffect, useRef, useState} from "react";
 import {DataStore, Storage} from "aws-amplify";
 import {Dialog} from "@headlessui/react";
-import Modal from "../../common/Modal";
+import Modal from "../../common/Modal/Modal";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {useUserProfileStore} from "../../../stores/friendProfilesStore";
 

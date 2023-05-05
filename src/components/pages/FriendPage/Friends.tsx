@@ -9,8 +9,8 @@ import Header from "../../layout/Header";
 import {BsSearch} from "react-icons/all";
 import {useUserProfileStore} from "../../../stores/friendProfilesStore";
 import SearchButton from "../../ui/SearchButton";
-import Toast from "../../common/Toast";
-import Segment from "../../common/Segment";
+import Toast from "../../common/Toast/Toast";
+import Segment from "../../common/Segment/Segment";
 
 const FriendsPage: React.FC = () => {
   const { route } = useAuthenticator(context => [context.route]);

@@ -5,8 +5,8 @@ import styled from "styled-components";
 import {UserProfile} from "../../../models";
 import {ProfileInputs} from "../../../types";
 import states from "../../../data/states";
-import Label from "../../common/Label";
-import Input from "../../common/Input";
+import Label from "../../Label/Label";
+import Input from "../../Input/Input";
 import Button from "../../common/Button/Button";
 
 interface ProfileFormProps {

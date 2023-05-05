@@ -9,7 +9,7 @@ import {ProfileModalProps} from "../../../../@types/profile";
 import {Dialog, Transition} from "@headlessui/react";
 import Button from "../../../common/Button/Button";
 import {BsPerson} from "react-icons/all";
-import Modal from "../../../common/Modal";
+import Modal from "../../../common/Modal/Modal";
 
 const ProfileEditModal = ({profile, profileImage, isOpen, setIsOpen, callback} : ProfileModalProps) => {
 

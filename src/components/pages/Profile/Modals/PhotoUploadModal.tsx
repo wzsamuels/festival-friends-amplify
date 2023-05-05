@@ -5,7 +5,7 @@ import {DataStore} from "@aws-amplify/datastore";
 import {Photo} from "../../../../models";
 import {ProfileModalProps} from "../../../../@types/profile";
 import {Dialog} from "@headlessui/react";
-import Modal from "../../../common/Modal";
+import Modal from "../../../common/Modal/Modal";
 import Button from "../../../common/Button/Button";
 
 export interface PhotoUploadModalProps extends ProfileModalProps {

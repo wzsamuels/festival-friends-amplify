@@ -4,15 +4,13 @@ import {Friendship, UserProfile} from "../../../../models";
 import {useAuthenticator} from "@aws-amplify/ui-react";
 import {DataStore} from "aws-amplify";
 import FriendCard from "../../../ui/FriendCard";
-import {Dialog, Popover} from "@headlessui/react";
-import Modal from "../../../common/Modal";
-import Label from "../../../common/Label";
-import Input from "../../../common/Input";
+import Modal from "../../../common/Modal/Modal";
+import Label from "../../../Label/Label";
+import Input from "../../../Input/Input";
 import Button from "../../../common/Button/Button";
-import PopoverTransition from "../../../PopoverTransition";
-import CustomAlert from "../../../common/Alert";
+import CustomAlert from "../../../common/Alert/Alert";
 import {useUserProfileStore} from "../../../../stores/friendProfilesStore";
-import Toast from "../../../common/Toast";
+import Toast from "../../../common/Toast/Toast";
 
 interface SearchInput {
   firstName?: string;
