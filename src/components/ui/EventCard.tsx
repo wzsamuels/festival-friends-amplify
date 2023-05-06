@@ -7,6 +7,7 @@ import {BsCheck} from "react-icons/all";
 import {Link} from "react-router-dom";
 import {useUserProfileStore} from "../../stores/friendProfilesStore";
 import Button from "../common/Button/Button";
+import EventFriendModal from "../pages/EventPage/Modals/EventFriendModal";
 
 interface FestivalCardProps {
   festival: LazyFestival;
@@ -19,6 +20,7 @@ const EventCard = ({festival, attendingFriends}: FestivalCardProps) => {
   const [eventProfile, setEventProfile] = useState<EventProfile>();
   const { dataStoreCleared } = useContext(DataStoreContext) as DataStoreContextType;
   const { userProfile} = useUserProfileStore()
+  const [isEventFriendModalOpen, setIsEventFriendModalOpen] = useState(false)
 
   const { getSignedURL } = useContext(ImageContext);
   useEffect(() => {
@@ -76,13 +78,13 @@ const EventCard = ({festival, attendingFriends}: FestivalCardProps) => {
 
   return (
     <div className='m-4 rounded-xl shadow-md w-full  max-w-[350px] bg-light-default'>
-      <div className='relative'>
+      <Link className='relative' to={`/events/${festival.id}`}>
         <div className='w-full max-w-[350px] min-h-[350px] h-full max-h-[350px] object-cover flex items-center justify-center'>
           {
             festivalImage ?
-              <Link to={`/events/${festival.id}`}>
+
                 <img className='w-full h-full' src={festivalImage} alt={festival.name}/>
-              </Link>
+
               :
               null
           }
@@ -92,14 +94,14 @@ const EventCard = ({festival, attendingFriends}: FestivalCardProps) => {
 
           <div>{festival.startDate}</div>
         </div>
-      </div>
+      </Link>
       <div className='p-2 text-base md:text-lg'>
         {
           userProfile ?
             <>
-              <div className='my-2'>
-                {attendingFriends.length > 0 ? <span>{attendingFriends.length} friend{attendingFriends.length > 1 ? 's' : ''} {attendingFriends.length > 1 ? 'are' : 'is'} attending</span> : <span>&nbsp;</span>}
-              </div>
+              <button className='my-2  text-green-950' disabled={attendingFriends.length === 0} onClick={() => setIsEventFriendModalOpen(true)}>
+                {attendingFriends.length > 0 ? <span className='underline'>{attendingFriends.length} friend{attendingFriends.length > 1 ? 's' : ''} {attendingFriends.length > 1 ? 'are' : 'is'} attending</span> : <span>&nbsp;</span>}
+              </button>
               {
                 attendingEvent  ?
                   <Button onClick={handleAttendFestival} className='flex items-center'>
@@ -111,10 +113,10 @@ const EventCard = ({festival, attendingFriends}: FestivalCardProps) => {
               }
             </>
             :
-            <>
-            </>
+            null
         }
       </div>
+      <EventFriendModal event={festival} attendingFriends={attendingFriends} isOpen={isEventFriendModalOpen} setIsOpen={setIsEventFriendModalOpen}/>
     </div>
   )
 }
