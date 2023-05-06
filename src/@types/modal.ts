@@ -1,4 +1,6 @@
+import {Dispatch, SetStateAction} from "react";
+
 export interface ModalProps {
   isOpen: boolean;
-  setIsOpen: (arg: boolean) => void;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
 }
