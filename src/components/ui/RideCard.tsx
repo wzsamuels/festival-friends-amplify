@@ -5,12 +5,14 @@ import FriendCard from "./FriendCard";
 import {Link} from "react-router-dom";
 import Button from "../common/Button/Button";
 import {useUserProfileStore} from "../../stores/friendProfilesStore";
+import dayjs from "dayjs";
 
 interface RideCardProps {
   ride: Ride
+  className?: string
 }
 
-const RideCard = ({ride} : RideCardProps) => {
+const RideCard = ({ride, className} : RideCardProps) => {
   const [driverProfile, setDriverProfile] = useState<UserProfile>()
   const [passengerProfiles, setPassengerProfiles] = useState<UserProfile[]>()
   const [ridersCount, setRidersCount] = useState<number>(0)
@@ -52,13 +54,13 @@ const RideCard = ({ride} : RideCardProps) => {
   }
 
   return (
-    <div className='flex flex-col shadow-xl p-4 rounded-lg'>
-      <div className='flex  gap-4'>
-        <div className='flex flex-col'>
+    <div className={`flex flex-col shadow-xl p-4 rounded-lg ${className}`}>
+      <div className='flex flex-col md:flex-row gap-4'>
+        <div className='flex flex-col flex-1'>
           <h2>{ride.startPoint} to {ride.endPoint}</h2>
-          <h3>Date: {ride.departureTime}</h3>
+          <h3>Departure: {dayjs(ride.departureTime).format('MMMM D, YYYY h:mm A')}</h3>
         </div>
-        <div>
+        <div className='flex-1'>
           <h4>
             Created by: {driverProfile && <Link to={`/friends/profile/${driverProfile.id}`} className='underline text-green-950'>{driverProfile?.firstName} {driverProfile?.lastName}</Link>}
           </h4>
