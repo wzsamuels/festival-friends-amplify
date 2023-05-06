@@ -14,13 +14,8 @@ interface FriendCardProps {
 }
 
 const FriendCard = ({profile, link, onClick, onConfirm, onCancel, className} : FriendCardProps) => {
-
-  if(!profile) {
-    return null;
-  }
-
   const [profileImage, setProfileImage] = useState("")
-  const profileUrl = `/friends/profile/${profile.userID}`
+  const profileUrl = `/friends/profile/${profile.id}`
   const { getSignedURL } = useContext(ImageContext);
 
   useEffect(() => {
@@ -32,6 +27,9 @@ const FriendCard = ({profile, link, onClick, onConfirm, onCancel, className} : F
     fetchSignedURL();
   }, [profile.profileImage, getSignedURL]);
 
+  if(!profile) {
+    return null;
+  }
 
   return (
     <div className={`${className} bg-white border-2 border-gray-300  m-2m-4 p-2 rounded-xl hover:border-gray-500 shadow-xl flex flex-col items-center`}>

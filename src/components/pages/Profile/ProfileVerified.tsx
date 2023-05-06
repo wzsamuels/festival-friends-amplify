@@ -1,5 +1,5 @@
 import {Photo} from "../../../models";
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {Storage} from "aws-amplify";
 import {DataStore} from "@aws-amplify/datastore";
 import ProfileEditModal from "./Modals/ProfileEditModal";
@@ -11,6 +11,7 @@ import BannerPhotoModal from "./Modals/BannerPhotoModal";
 import Button from "../../common/Button/Button";
 import {useUserProfileStore} from "../../../stores/friendProfilesStore";
 import PhotoModal from "./Modals/PhotoModal";
+import DataStoreContext, {DataStoreContextType} from "../../../context/DataStoreContext";
 
 const ProfileVerified = ({user } : {user: any}) => {
   const [profileImage, setProfileImage] = useState("")
@@ -25,9 +26,10 @@ const ProfileVerified = ({user } : {user: any}) => {
   const [isBannerModalOpen, setIsBannerModalOpen] = useState(false)
   const username = user.username as string;
   const userProfile= useUserProfileStore((state) => state.userProfile);
+  const { dataStoreCleared } = useContext(DataStoreContext) as DataStoreContextType
 
   useEffect(() => {
-    if (userProfile) {
+    if (userProfile && dataStoreCleared) {
       const fetchProfileImage = async () => {
         if (userProfile.profileImage) {
           const image = await Storage.get(`${userProfile.profileImage}`, {
@@ -54,7 +56,7 @@ const ProfileVerified = ({user } : {user: any}) => {
       }
     }
 
-  }, [userProfile])
+  }, [userProfile, dataStoreCleared])
 
   useEffect(() => {
     if (!selectedFile) {

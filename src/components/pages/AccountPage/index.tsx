@@ -1,11 +1,12 @@
 import { DataStore } from '@aws-amplify/datastore';
 import {Authenticator, useAuthenticator} from '@aws-amplify/ui-react';
-import React, { useEffect } from 'react';
+import React, {useContext, useEffect} from 'react';
 import ProfileUnverified from '../Profile/ProfileUnverified';
 import ProfileVerified from '../Profile/ProfileVerified';
 import { useUserProfileStore} from "../../../stores/friendProfilesStore";
 import Spinner from "../../common/Spinner/Spinner";
 import Header from "../../layout/Header";
+import DataStoreContext, {DataStoreContextType} from "../../../context/DataStoreContext";
 
 const AccountPage = () => {
   const { user } = useAuthenticator((context) => [context.user]);
@@ -15,12 +16,13 @@ const AccountPage = () => {
   const fetchAndObserveUserProfile = useUserProfileStore(
     (state) => state.fetchAndObserveUserProfile,
   );
+  const { dataStoreCleared } = useContext(DataStoreContext) as DataStoreContextType
 
   useEffect(() => {
-    if (user) {
+    if (user && dataStoreCleared) {
       fetchAndObserveUserProfile(user);
     }
-  }, [user, fetchAndObserveUserProfile]);
+  }, [user, fetchAndObserveUserProfile, dataStoreCleared]);
 
   useEffect(() => {
     console.log("Loading user profile", loadingUserProfile, "userProfile", userProfile);

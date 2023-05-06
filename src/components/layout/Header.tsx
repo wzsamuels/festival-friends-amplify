@@ -14,7 +14,7 @@ const Header = ({children, onSearch} : HeaderProps) => {
   const { userProfile } = useUserProfileStore();
 
   return (
-    <header className="bg-white shadow-xl w-full flex items-center fixed top-0 z-10">
+    <header className="bg-white shadow-xl w-full flex items-center fixed  top-0 z-10">
       <div className='flex-1 w-full'>
         { children }
       </div>

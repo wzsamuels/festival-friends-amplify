@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {useAuthenticator} from "@aws-amplify/ui-react";
 import {DataStore} from "aws-amplify";
 import {Friendship, UserProfile} from "../../../models";
@@ -11,6 +11,7 @@ import {useUserProfileStore} from "../../../stores/friendProfilesStore";
 import SearchButton from "../../ui/SearchButton";
 import Toast from "../../common/Toast/Toast";
 import Segment from "../../common/Segment/Segment";
+import DataStoreContext, {DataStoreContextType} from "../../../context/DataStoreContext";
 
 const FriendsPage: React.FC = () => {
   const { route } = useAuthenticator(context => [context.route]);
@@ -22,32 +23,10 @@ const FriendsPage: React.FC = () => {
   const [suggestedFriends, setSuggestedFriends] = useState<UserProfile[]>([]);
   const [friendType, setFriendType] = useState("accepted");
   const [isFriendsModalOpen, setIsFriendsModalOpen] = useState(false);
+  const { dataStoreCleared } = useContext(DataStoreContext) as DataStoreContextType
 
   useEffect(() => {
-
-    const fetchSuggestedFriends = async () => {
-      // Fetch all user profiles
-      const allProfiles = await DataStore.query(UserProfile);
-
-      // Filter user profiles based on common attributes
-      return allProfiles.filter(profile => {
-        // Exclude the current user from the suggestions
-        if (profile.id === userProfile?.id) {
-          return false;
-        }
-
-        // Check for common attributes
-        const commonSchool = profile.school === userProfile?.school;
-        const commonCity = profile.city === userProfile?.city;
-        const commonState = profile.state === userProfile?.state;
-
-        return commonSchool || commonCity || commonState;
-      });
-    };
-
-    fetchSuggestedFriends().then(setSuggestedFriends);
-
-    if (route === 'authenticated' && userProfile) {
+    if (route === 'authenticated' && userProfile && dataStoreCleared) {
       const subscription = DataStore.observeQuery(Friendship, c => c.or(c => [
         c.userProfileID.eq(userProfile.id),
         c.friendProfileID.eq(userProfile.id)
@@ -76,13 +55,30 @@ const FriendsPage: React.FC = () => {
         setPendingFriends(incomingFriendRequests);
         setAcceptedProfiles(acceptedFriends)
         setSentFriends(outgoingFriendRequests);
+
+        const allProfiles = await DataStore.query(UserProfile);
+
+        // Filter user profiles based on common attributes
+        return allProfiles.filter(profile => {
+          // Exclude the current user from the suggestions
+          if (profile.id === userProfile?.id) {
+            return false;
+          }
+
+          // Check for common attributes
+          const commonSchool = profile.school === userProfile?.school;
+          const commonCity = profile.city === userProfile?.city;
+          const commonState = profile.state === userProfile?.state;
+
+          return commonSchool || commonCity || commonState;
+        });
       });
 
       return () => {
         subscription.unsubscribe();
       };
     }
-  }, [route, userProfile])
+  }, [route, userProfile, dataStoreCleared])
 
   // Accept friend request
   const handleFriendAccept = async ({friendShipID} : {friendShipID: string}) => {

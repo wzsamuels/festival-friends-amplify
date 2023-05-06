@@ -8,6 +8,7 @@ import PhotoImage from "../../../ui/PhotoImage";
 import getErrorMessage from "../../../../lib/getErrorMessage";
 import {Dialog} from "@headlessui/react";
 import Modal from "../../../common/Modal/Modal";
+import Button from "../../../common/Button/Button";
 
 export interface ProfileImageModalProps extends ProfileModalProps {
   photos: Photo[];
@@ -69,8 +70,8 @@ const ProfileImageModal = ({profile, username, isOpen, setIsOpen, photos} : Prof
             <div className='flex flex-col items-center justify-center w-full p-4'>
               <img className='w-full rounded-full ' src={preview} alt="Preview"/>
               <div className='mt-6 flex justify-center w-full'>
-                <button onClick={() => setSelectedFile(null)}>Cancel</button>
-                <button onClick={() => handleProfileImageUpdate()}>Update Profile Image</button>
+                <Button onClick={() => setSelectedFile(null)}>Cancel</Button>
+                <Button className='ml-2' onClick={() => handleProfileImageUpdate()}>Update Profile Image</Button>
               </div>
             </div>
             :

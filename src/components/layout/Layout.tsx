@@ -22,7 +22,7 @@ const Layout = () => {
       <div className='pt-header pb-footer'>
         <Outlet/>
       </div>
-      <footer className="shadow-dropdown fixed bg-white bottom-0 left-0 right-0 flex justify-around items-center p-2">
+      <footer className="shadow-dropdown max-h-[56px] fixed bg-white bottom-0 left-0 right-0 flex justify-around items-center p-2">
         <div className="flex flex-1 flex-shrink">
           <NavLink
             to="/"
@@ -72,19 +72,6 @@ const Layout = () => {
             <PulseButton className="w-full flex flex-col justify-center items-center">
               <BsFillPeopleFill className="text-base sm:text-lg" aria-hidden="true" />
               <div className="text-xs sm:text-sm md:text-base">Groups</div>
-            </PulseButton>
-          </NavLink>
-        </div>
-        <div className="flex flex-1 flex-shrink">
-          <NavLink
-            to="/rides"
-            className={({ isActive }) =>
-              `${isActive ? 'text-green-950' : 'text-gray-600'} flex-1`
-            }
-          >
-            <PulseButton className="w-full flex flex-col justify-center items-center">
-              <BsFillCarFrontFill className="text-base sm:text-lg" aria-hidden="true" />
-              <div className="text-xs sm:text-sm md:text-base">Rides</div>
             </PulseButton>
           </NavLink>
         </div>

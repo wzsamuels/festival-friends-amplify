@@ -68,8 +68,8 @@ type Ride @model @auth(rules: [{allow: public}]) {
   id: ID!
   event: Festival! @belongsTo(fields: ["eventID"])
   eventID: ID! @index(name: "byEvent")
-  driver: RideUser! @hasOne
-  passengers: [RideUser]! @hasMany(indexName: "byRide", fields: ["id"])
+  driver: RideUser @hasOne
+  passengers: [RideUser] @hasMany(indexName: "byRide", fields: ["id"])
   maxPassengers: Int!
   departureTime: AWSDateTime!
   startPoint: String!
@@ -80,7 +80,7 @@ type RideUser @model @auth(rules: [{allow: public}]) {
   id: ID!
   ride: Ride! @belongsTo(fields: ["rideID"])
   rideID: ID! @index(name: "byRide")
-  user: UserProfile! @belongsTo(fields: ["userProfileID"])
+  userProfile: UserProfile! @belongsTo(fields: ["userProfileID"])
   userProfileID: ID!@index(name: "byUserProfile")
   isDriver: Boolean!
 }

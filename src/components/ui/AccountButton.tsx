@@ -16,14 +16,17 @@ const AccountButton = () => {
   const { reset } = useUserProfileStore();
 
   const handleSignOut = async () => {
-
-    signOut()
-    saveDataStoreCleared(false);
-    setAlertIsOpen(true);
-    await DataStore.clear();
-    reset();
-    setAlertIsOpen(false)
-    saveDataStoreCleared(true);
+    try {
+      signOut()
+      saveDataStoreCleared(false);
+      setAlertIsOpen(true);
+      await DataStore.clear();
+      reset();
+      setAlertIsOpen(false)
+      saveDataStoreCleared(true);
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   useEffect(() => {
@@ -53,25 +56,25 @@ const AccountButton = () => {
                   {user?.attributes?.email}
                 </Menu.Item>
                 <Menu.Item>
-                  <Link className='hover:bg-green-950 hover:text-light-default w-full  p-2 ' to='/account'>
+                  <Link className='hover:bg-green-950 hover:text-white w-full  p-2 ' to='/account'>
                     Profile
                   </Link>
                 </Menu.Item>
                 <Menu.Item>
-                  <Link className='w-full cursor-pointer hover:bg-green-950 hover:text-light-default p-2 ' to='/account/settings'>
+                  <Link className='w-full cursor-pointer hover:bg-green-950 hover:text-white p-2 ' to='/account/settings'>
                     Account Settings
                   </Link>
                 </Menu.Item>
                 <Menu.Item>
-                  <Link className='w-full cursor-pointer hover:text-light-default hover:bg-green-950 p-2 ' to='/admin'>
+                  <Link className='w-full cursor-pointer hover:text-white hover:bg-green-950 p-2 ' to='/admin'>
                     Admin
                   </Link>
                 </Menu.Item>
-                <Menu.Item><div className='w-full cursor-pointer hover:text-light-default hover:bg-green-950 p-2 ' onClick={handleSignOut}>Sign Out</div></Menu.Item>
+                <Menu.Item><div className='w-full cursor-pointer hover:text-white hover:bg-green-950 p-2 ' onClick={handleSignOut}>Sign Out</div></Menu.Item>
               </>
               :
               <Menu.Item>
-                <Link className='w-full cursor-pointer hover:text-light-default hover:bg-green-950 p-2 ' to='/account'>Login In / Sign Up</Link>
+                <Link className='w-full cursor-pointer hover:text-white hover:bg-green-950 p-2 ' to='/account'>Login In / Sign Up</Link>
               </Menu.Item>
           }
       </Menu.Items>

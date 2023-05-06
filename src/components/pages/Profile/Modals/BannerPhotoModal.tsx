@@ -7,6 +7,7 @@ import {Photo, UserProfile} from "../../../../models";
 import getErrorMessage from "../../../../lib/getErrorMessage";
 import PhotoImage from "../../../ui/PhotoImage";
 import {ProfileModalProps} from "../../../../@types/profile";
+import Button from "../../../common/Button/Button";
 
 
 export interface ProfileImageModalProps extends ProfileModalProps {
@@ -67,13 +68,13 @@ const BannerPhotoModal = ({profile, username, isOpen, setIsOpen, photos} : Profi
   }, [selectedFile])
 
   return (
-    <Modal isOpen={isOpen} setIsOpen={setIsOpen} title="Profile Image">
+    <Modal isOpen={isOpen} setIsOpen={setIsOpen} title="Banner Image">
       { preview ?
         <div className='flex flex-col items-center justify-center w-full p-4'>
           <img className='w-full rounded-full ' src={preview} alt="Preview"/>
           <div className='mt-6 flex justify-center w-full'>
-            <button onClick={() => setSelectedFile(null)}>Cancel</button>
-            <button onClick={() => handleProfileBannerUpdate()}>Update Profile Image</button>
+            <Button onClick={() => setSelectedFile(null)}>Cancel</Button>
+            <Button onClick={() => handleProfileBannerUpdate()}>Update Banner Image</Button>
           </div>
         </div>
         :
@@ -81,7 +82,7 @@ const BannerPhotoModal = ({profile, username, isOpen, setIsOpen, photos} : Profi
         <div className=' flex flex-col justify-center p-4' >
           <label
             htmlFor='upload-profile-image-photo'
-            className='my-4 cursor-pointer flex justify-center p-4 border bg-primary-default text-light-default border-primary-default'>
+            className='my-4 cursor-pointer flex justify-center p-4 border bg-green-950 text-white border-primary-default'>
             Upload New Photo
           </label>
           <input

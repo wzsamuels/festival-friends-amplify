@@ -7,7 +7,8 @@ import AccountButton from "../../ui/AccountButton";
 import PhotoImage from "../../ui/PhotoImage";
 import Header from "../../layout/Header";
 import PhotoModal from "./Modals/PhotoModal";
-
+import {useNavigate} from 'react-router-dom'
+import {IoArrowBack} from "react-icons/all";
 
 const ProfilePage = () => {
   const [profile, setProfile] = useState<UserProfile>();
@@ -16,10 +17,11 @@ const ProfilePage = () => {
   const [isPhotoModalOpen, setIsPhotoModalOpen] = useState(false);
   const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null)
   const { profileId } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProfile = async () => {
-      const profileData = await DataStore.query(UserProfile, c => c.userID.eq(profileId as string))
+      const profileData = await DataStore.query(UserProfile, c => c.id.eq(profileId as string))
       setProfile(profileData[0]);
       const imageData = await Storage.get(profileData[0].profileImage as string);
       setProfileImage(imageData)
@@ -33,7 +35,7 @@ const ProfilePage = () => {
   return (
     <>
       <Header>
-        <div><Link to={'/friends'}>Friends</Link></div>
+        <button className='mx-4 text-xl' onClick={() => navigate(-1)}><IoArrowBack /></button>
       </Header>
       <div className={'p-4 flex flex-col items-center justify-center mt-header'}>
         <img width={350} height={350} src={profileImage} alt={profile?.id} className='rounded-full'/>

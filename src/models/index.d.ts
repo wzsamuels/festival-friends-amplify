@@ -61,6 +61,40 @@ export declare const Message: (new (init: ModelInit<Message>) => Message) & {
   copyOf(source: Message, mutator: (draft: MutableModel<Message>) => MutableModel<Message> | void): Message;
 }
 
+type EagerEventProfile = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<EventProfile, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly userProfileID: string;
+  readonly eventID: string;
+  readonly userProfile: UserProfile;
+  readonly event: Festival;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyEventProfile = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<EventProfile, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly userProfileID: string;
+  readonly eventID: string;
+  readonly userProfile: AsyncItem<UserProfile>;
+  readonly event: AsyncItem<Festival>;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type EventProfile = LazyLoading extends LazyLoadingDisabled ? EagerEventProfile : LazyEventProfile
+
+export declare const EventProfile: (new (init: ModelInit<EventProfile>) => EventProfile) & {
+  copyOf(source: EventProfile, mutator: (draft: MutableModel<EventProfile>) => MutableModel<EventProfile> | void): EventProfile;
+}
+
 type EagerFestival = {
   readonly [__modelMeta__]: {
     identifier: ManagedIdentifier<Festival, 'id'>;
@@ -74,7 +108,10 @@ type EagerFestival = {
   readonly startDate: string;
   readonly endDate: string;
   readonly type?: EventType | keyof typeof EventType | null;
+  readonly tagline?: string | null;
+  readonly description?: string | null;
   readonly attendees?: (EventProfile | null)[] | null;
+  readonly rides?: (Ride | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -92,7 +129,10 @@ type LazyFestival = {
   readonly startDate: string;
   readonly endDate: string;
   readonly type?: EventType | keyof typeof EventType | null;
+  readonly tagline?: string | null;
+  readonly description?: string | null;
   readonly attendees: AsyncCollection<EventProfile>;
+  readonly rides: AsyncCollection<Ride>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -109,8 +149,8 @@ type EagerUserProfile = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly firstName: string;
-  readonly lastName: string;
+  readonly firstName?: string | null;
+  readonly lastName?: string | null;
   readonly userID: string;
   readonly verified: boolean;
   readonly verifySubmitted: boolean;
@@ -126,6 +166,7 @@ type EagerUserProfile = {
   readonly email?: string | null;
   readonly zipcode?: string | null;
   readonly attendingEvents?: (EventProfile | null)[] | null;
+  readonly rides: (RideUser | null)[];
   readonly friends?: (Friendship | null)[] | null;
   readonly conversations?: (Conversation | null)[] | null;
   readonly sentMessages?: (Message | null)[] | null;
@@ -144,8 +185,8 @@ type LazyUserProfile = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly firstName: string;
-  readonly lastName: string;
+  readonly firstName?: string | null;
+  readonly lastName?: string | null;
   readonly userID: string;
   readonly verified: boolean;
   readonly verifySubmitted: boolean;
@@ -161,6 +202,7 @@ type LazyUserProfile = {
   readonly email?: string | null;
   readonly zipcode?: string | null;
   readonly attendingEvents: AsyncCollection<EventProfile>;
+  readonly rides: AsyncCollection<RideUser>;
   readonly friends: AsyncCollection<Friendship>;
   readonly conversations: AsyncCollection<Conversation>;
   readonly sentMessages: AsyncCollection<Message>;
@@ -177,6 +219,86 @@ export declare type UserProfile = LazyLoading extends LazyLoadingDisabled ? Eage
 
 export declare const UserProfile: (new (init: ModelInit<UserProfile>) => UserProfile) & {
   copyOf(source: UserProfile, mutator: (draft: MutableModel<UserProfile>) => MutableModel<UserProfile> | void): UserProfile;
+}
+
+type EagerRide = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Ride, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly event: Festival;
+  readonly eventID: string;
+  readonly driver?: RideUser | null;
+  readonly passengers?: (RideUser | null)[] | null;
+  readonly maxPassengers: number;
+  readonly departureTime: string;
+  readonly startPoint: string;
+  readonly endPoint: string;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+  readonly rideDriverId?: string | null;
+}
+
+type LazyRide = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Ride, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly event: AsyncItem<Festival>;
+  readonly eventID: string;
+  readonly driver: AsyncItem<RideUser | undefined>;
+  readonly passengers: AsyncCollection<RideUser>;
+  readonly maxPassengers: number;
+  readonly departureTime: string;
+  readonly startPoint: string;
+  readonly endPoint: string;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+  readonly rideDriverId?: string | null;
+}
+
+export declare type Ride = LazyLoading extends LazyLoadingDisabled ? EagerRide : LazyRide
+
+export declare const Ride: (new (init: ModelInit<Ride>) => Ride) & {
+  copyOf(source: Ride, mutator: (draft: MutableModel<Ride>) => MutableModel<Ride> | void): Ride;
+}
+
+type EagerRideUser = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<RideUser, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly ride: Ride;
+  readonly rideID: string;
+  readonly userProfile: UserProfile;
+  readonly userProfileID: string;
+  readonly isDriver: boolean;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyRideUser = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<RideUser, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly ride: AsyncItem<Ride>;
+  readonly rideID: string;
+  readonly userProfile: AsyncItem<UserProfile>;
+  readonly userProfileID: string;
+  readonly isDriver: boolean;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type RideUser = LazyLoading extends LazyLoadingDisabled ? EagerRideUser : LazyRideUser
+
+export declare const RideUser: (new (init: ModelInit<RideUser>) => RideUser) & {
+  copyOf(source: RideUser, mutator: (draft: MutableModel<RideUser>) => MutableModel<RideUser> | void): RideUser;
 }
 
 type EagerPhoto = {
@@ -283,40 +405,6 @@ export declare type Friendship = LazyLoading extends LazyLoadingDisabled ? Eager
 
 export declare const Friendship: (new (init: ModelInit<Friendship>) => Friendship) & {
   copyOf(source: Friendship, mutator: (draft: MutableModel<Friendship>) => MutableModel<Friendship> | void): Friendship;
-}
-
-type EagerEventProfile = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<EventProfile, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly userProfileID: string;
-  readonly eventID: string;
-  readonly userProfile: UserProfile;
-  readonly event: Festival;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-type LazyEventProfile = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<EventProfile, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly userProfileID: string;
-  readonly eventID: string;
-  readonly userProfile: AsyncItem<UserProfile>;
-  readonly event: AsyncItem<Festival>;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-export declare type EventProfile = LazyLoading extends LazyLoadingDisabled ? EagerEventProfile : LazyEventProfile
-
-export declare const EventProfile: (new (init: ModelInit<EventProfile>) => EventProfile) & {
-  copyOf(source: EventProfile, mutator: (draft: MutableModel<EventProfile>) => MutableModel<EventProfile> | void): EventProfile;
 }
 
 type EagerConversation = {

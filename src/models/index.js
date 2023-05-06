@@ -17,16 +17,18 @@ const EventType = {
   "ALL": "ALL"
 };
 
-const { Message, Festival, UserProfile, Photo, PhotoComment, Friendship, EventProfile, Conversation, CollegeGroup } = initSchema(schema);
+const { Message, EventProfile, Festival, UserProfile, Ride, RideUser, Photo, PhotoComment, Friendship, Conversation, CollegeGroup } = initSchema(schema);
 
 export {
   Message,
+  EventProfile,
   Festival,
   UserProfile,
+  Ride,
+  RideUser,
   Photo,
   PhotoComment,
   Friendship,
-  EventProfile,
   Conversation,
   CollegeGroup,
   FriendshipStatus,

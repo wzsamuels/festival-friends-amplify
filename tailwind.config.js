@@ -7,7 +7,7 @@ export default {
   theme: {
     extend: {
       spacing : {
-        header: '50px',
+        header: '40px',
         footer: '56px'
       },
       boxShadow: {
