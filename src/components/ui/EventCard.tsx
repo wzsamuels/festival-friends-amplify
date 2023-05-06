@@ -82,9 +82,7 @@ const EventCard = ({festival, attendingFriends}: FestivalCardProps) => {
         <div className='w-full max-w-[350px] min-h-[350px] h-full max-h-[350px] object-cover flex items-center justify-center'>
           {
             festivalImage ?
-
                 <img className='w-full h-full' src={festivalImage} alt={festival.name}/>
-
               :
               null
           }

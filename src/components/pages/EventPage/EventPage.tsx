@@ -20,6 +20,7 @@ import Header from '../../layout/Header';
 import Modal from '../../common/Modal/Modal';
 import { useUserProfileStore } from '../../../stores/friendProfilesStore';
 import Segment from '../../common/Segment/Segment';
+import EventSearchModal from "./Modals/EventSearchModal";
 
 const EventPage = () => {
   const { userProfile, friendProfiles } = useUserProfileStore();
@@ -124,7 +125,7 @@ const EventPage = () => {
       <div className='grid gap-4 justify-items-center grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 items-center px-4'>
         {renderFestivalCards(filteredEvents)}
       </div>
-
+      <EventSearchModal isOpen={isSearchModalOpen} setIsOpen={setIsSearchModalOpen}/>
     </div>
   );
 };

@@ -46,7 +46,7 @@ const FriendSearchModal = ({isOpen, setIsOpen}: FriendSearchModalProps) => {
   const [toastType, setToastType] = useState<'success' | 'error' | 'info' | 'warning'>('info');
 
   const searchFriends: SubmitHandler<SearchInput> = async data => {
-    console.log(data)
+
     // Remove empty fields from search
     const filteredData: { field: string; value: string; }[] = []
     for (const [key, value] of Object.entries(data)) {
