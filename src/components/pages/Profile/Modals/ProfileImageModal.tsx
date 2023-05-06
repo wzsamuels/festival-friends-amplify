@@ -79,7 +79,7 @@ const ProfileImageModal = ({profile, username, isOpen, setIsOpen, photos} : Prof
             <div className=' flex flex-col justify-center p-4' >
               <label
                 htmlFor='upload-profile-image-photo'
-                className='my-4 cursor-pointer flex justify-center p-4 border bg-primary-default text-light-default border-primary-default'>
+                className='my-4 cursor-pointer flex justify-center p-4 border bg-green-950 text-white border-primary-default'>
                 Upload New Photo
               </label>
               <input
