@@ -17,12 +17,10 @@ const EventDetailPage = () => {
   const [attendees, setAttendees] = useState<UserProfile[]>([]);
   const [attendeeFriends, setAttendeeFriends] = useState<UserProfile[]>([]);
   const [rides, setRides] = useState<Ride[]>([]);
-  const [currentRide, setCurrentRide] = useState<Ride>();
   const [isNewRideModalOpen, setIsNewRideModalOpen] = useState(false);
   const { friendProfiles, loadingFriendProfiles } = useUserProfileStore()
   const {id} = useParams()
   const { getSignedURL } = useContext(ImageContext);
-  const [toastMessage, setToastMessage] = useState('');
 
   useEffect(() => {
     const fetchEvent = async () => {
@@ -91,7 +89,7 @@ const EventDetailPage = () => {
           rides.length > 0 ?
             <div className='flex flex-wrap w-full'>
               { rides.map(ride =>
-                <RideCard ride={ride} key={ride.id}/>
+                <RideCard ride={ride} key={ride.id} className='w-full max-w-xl'/>
                 )}
             </div>
             :
