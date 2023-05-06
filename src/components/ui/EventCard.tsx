@@ -79,10 +79,10 @@ const EventCard = ({festival, attendingFriends}: FestivalCardProps) => {
   return (
     <div className='m-4 rounded-xl shadow-md w-full  max-w-[350px] bg-light-default'>
       <Link className='relative' to={`/events/${festival.id}`}>
-        <div className='w-full max-w-[350px] min-h-[350px] h-full max-h-[350px] object-cover flex items-center justify-center'>
+        <div className='w-full max-w-[350px] min-h-[350px] h-full max-h-[350px]  flex items-center justify-center'>
           {
             festivalImage ?
-                <img className='w-full h-full' src={festivalImage} alt={festival.name}/>
+                <img className='w-full h-full object-cover aspect-square' src={festivalImage} alt={festival.name}/>
               :
               null
           }
