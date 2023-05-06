@@ -63,7 +63,7 @@ const ConversationCard = ({ conversation, onClick, className }: ConversationCard
     <div onClick={handleOnClick} className={`shadow-xl w-full max-w-[600px] flex justify-between  ${className}`}>
       <div className='flex items-center justify-between w-full p-4'>
         <div className='flex items-center'>
-          <img className="rounded-full mx-4 max-w-[75px] w-full max-h-[75px] aspect-square" src={friendProfileImage} alt={friendProfile?.firstName} />
+          <img className="rounded-full mx-4 max-w-[75px] w-full max-h-[75px] aspect-square" src={friendProfileImage} alt={friendProfile?.firstName ? friendProfile.firstName : ''} />
           <div className='flex flex-col'>
             <span className='text-lg font-bold'>{friendProfile?.firstName} {friendProfile?.lastName}</span>
             <span className='my-2 truncate'>{lastMessage}</span>

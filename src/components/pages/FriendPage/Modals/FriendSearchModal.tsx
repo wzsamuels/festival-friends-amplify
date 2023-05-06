@@ -1,12 +1,12 @@
-import React, {Fragment, RefObject, useState} from "react";
+import React, {Fragment, useState} from "react";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {Friendship, UserProfile} from "../../../../models";
 import {useAuthenticator} from "@aws-amplify/ui-react";
 import {DataStore} from "aws-amplify";
 import FriendCard from "../../../ui/FriendCard";
 import Modal from "../../../common/Modal/Modal";
-import Label from "../../../Label/Label";
-import Input from "../../../Input/Input";
+import Label from "../../../common/Label/Label";
+import Input from "../../../common/Input/Input";
 import Button from "../../../common/Button/Button";
 import CustomAlert from "../../../common/Alert/Alert";
 import {useUserProfileStore} from "../../../../stores/friendProfilesStore";

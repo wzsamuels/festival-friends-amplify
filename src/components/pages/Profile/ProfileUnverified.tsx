@@ -5,8 +5,8 @@ import {DataStore} from "@aws-amplify/datastore";
 import {ProfileInputs} from "../../../types";
 import {useAuthenticator} from "@aws-amplify/ui-react";
 import InputWrapper from "../../common/InputWrapper/InputWrapper";
-import Input from "../../Input/Input";
-import Label from "../../Label/Label";
+import Input from "../../common/Input/Input";
+import Label from "../../common/Label/Label";
 import {useUserProfileStore} from "../../../stores/friendProfilesStore";
 
 const ProfileUnverified = () => {
@@ -14,8 +14,8 @@ const ProfileUnverified = () => {
   const userProfile = useUserProfileStore(state => state.userProfile)
   const { register, handleSubmit} = useForm<ProfileInputs>({
     defaultValues: {
-      firstName: userProfile?.firstName,
-      lastName: userProfile?.lastName,
+      firstName: userProfile?.firstName || "",
+      lastName: userProfile?.lastName || "",
       username: userProfile?.username || "",
       phone: userProfile?.phone || "",
       school: userProfile?.school || "",

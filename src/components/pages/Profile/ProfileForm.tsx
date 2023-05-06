@@ -5,8 +5,8 @@ import styled from "styled-components";
 import {UserProfile} from "../../../models";
 import {ProfileInputs} from "../../../types";
 import states from "../../../data/states";
-import Label from "../../Label/Label";
-import Input from "../../Input/Input";
+import Label from "../../common/Label/Label";
+import Input from "../../common/Input/Input";
 import Button from "../../common/Button/Button";
 
 interface ProfileFormProps {
@@ -18,8 +18,8 @@ const ProfileForm = ({onSubmit, profile}: ProfileFormProps) => {
   const [message, setMessage] = useState("");
   const { register, handleSubmit, control, setValue, formState: { errors }} = useForm<ProfileInputs>({
     defaultValues: {
-      firstName: profile?.firstName,
-      lastName: profile?.lastName,
+      firstName: profile?.firstName || "",
+      lastName: profile?.lastName || "",
       username: profile?.username || "",
       phone: profile?.phone || "",
       school: profile?.school || "",

@@ -3,10 +3,10 @@ import React, {useState} from "react";
 import {ModalProps} from "../../../../@types/modal";
 import {SubmitHandler, useForm} from "react-hook-form";
 import InputWrapper from "../../../common/InputWrapper/InputWrapper";
-import Label from "../../../Label/Label";
-import Input from "../../../Input/Input";
+import Label from "../../../common/Label/Label";
+import Input from "../../../common/Input/Input";
 import {DataStore} from "aws-amplify";
-import {Festival, UserProfile} from "../../../../models";
+import {Festival} from "../../../../models";
 import Button from "../../../common/Button/Button";
 import EventCardBase from "../../../ui/EventCardBase";
 
@@ -18,7 +18,7 @@ interface EventSearchInput {
 
 const EventSearchModal = ({isOpen, setIsOpen} : ModalProps) => {
   const [eventResults, setEventResults] = useState<Festival[]>([])
-  const { register, handleSubmit, reset} = useForm<EventSearchInput>()
+  const { register, handleSubmit} = useForm<EventSearchInput>()
 
   const handleEventSearch: SubmitHandler<EventSearchInput> = async data => {
     const filteredData: { field: string; value: string; }[] = []

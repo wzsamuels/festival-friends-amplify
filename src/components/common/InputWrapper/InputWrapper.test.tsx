@@ -38,6 +38,8 @@ describe('InputWrapper component', () => {
     );
     const wrapperElement = screen.getByText(/click event wrapper/i).parentElement;
 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     fireEvent.click(wrapperElement);
     expect(handleClick).toHaveBeenCalledTimes(1);
   });
