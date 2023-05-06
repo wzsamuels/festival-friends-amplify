@@ -6,7 +6,6 @@ import React, { useContext, useEffect, useLayoutEffect, useState } from 'react';
 
 // Local imports
 import {
-  EventProfile,
   EventType,
   Festival,
   LazyFestival,
@@ -17,13 +16,13 @@ import DataStoreContext, {
 } from '../../../context/DataStoreContext';
 import EventCard from '../../ui/EventCard';
 import Header from '../../layout/Header';
-import Modal from '../../common/Modal/Modal';
 import { useUserProfileStore } from '../../../stores/friendProfilesStore';
 import Segment from '../../common/Segment/Segment';
 import EventSearchModal from "./Modals/EventSearchModal";
+import {fetchEventAttendees, getAttendingFriends} from "../../../lib/eventHelpers";
 
 const EventPage = () => {
-  const { userProfile, friendProfiles } = useUserProfileStore();
+  const { friendProfiles } = useUserProfileStore();
   const [events, setEvents] = useState<LazyFestival[]>([]);
   const [eventAttendees, setEventAttendees] = useState<Map<string, UserProfile[]>>(
     new Map(),
@@ -55,31 +54,11 @@ const EventPage = () => {
 
   // Fetch event attendees
   useEffect(() => {
-    const fetchEventAttendees = async () => {
-      const eventAttendeesMap = new Map<string, UserProfile[]>();
-
-      for (const event of events) {
-        const attendees = (
-          await DataStore.query(EventProfile, (ep) => ep.eventID.eq(event.id))
-        ).map((eventProfile: EventProfile) => eventProfile.userProfile);
-        const attendeeProfiles = await Promise.all(
-          attendees.map(async (attendee) => await attendee),
-        );
-        eventAttendeesMap.set(event.id, attendeeProfiles);
-      }
-      setEventAttendees(eventAttendeesMap);
-    };
-
-    fetchEventAttendees();
+    fetchEventAttendees(events).then(setEventAttendees)
   }, [events]);
 
   // Get attending friends
-  const getAttendingFriends = (eventId: string): UserProfile[] => {
-    const attendees = eventAttendees.get(eventId) || [];
-    return friendProfiles.filter((friend) =>
-      attendees.some((attendee) => attendee.id === friend.id),
-    );
-  };
+
 
   // Render festival cards
   const renderFestivalCards = (events: LazyFestival[]) => {
@@ -87,7 +66,7 @@ const EventPage = () => {
       <EventCard
         festival={event}
         key={event.id}
-        attendingFriends={getAttendingFriends(event.id)}
+        attendingFriends={getAttendingFriends({eventAttendees, friendProfiles, eventId: event.id})}
       />
     ));
   };
