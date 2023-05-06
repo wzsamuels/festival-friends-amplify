@@ -1,19 +1,19 @@
 
 import {Link, useParams} from "react-router-dom"
 import React, {useEffect, useState} from "react";
-import {EventProfile, Festival, Photo, Ride, RideUser, UserProfile} from "../../../models";
+import { Festival, Photo, Ride, UserProfile} from "../../../models";
 import {DataStore, Storage} from "aws-amplify";
-import AccountButton from "../../ui/AccountButton";
 import PhotoImage from "../../ui/PhotoImage";
 import Header from "../../layout/Header";
 import PhotoModal from "./Modals/PhotoModal";
 import {useNavigate} from 'react-router-dom'
-import {IoArrowBack} from "react-icons/all";
-import EventCard from "../../ui/EventCard";
+import {BsPerson, IoArrowBack} from "react-icons/all";
+import RideCardBase from "../../ui/RideCardBase";
 
 const ProfilePage = () => {
   const [profile, setProfile] = useState<UserProfile>();
   const [profileImage, setProfileImage] = useState("");
+  const [bannerImage, setBannerImage] = useState("")
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [isPhotoModalOpen, setIsPhotoModalOpen] = useState(false);
   const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null)
@@ -31,6 +31,14 @@ const ProfilePage = () => {
 
       const imageData = await Storage.get(profile.profileImage as string);
       setProfileImage(imageData)
+
+      const banner = await profile.bannerPhoto;
+      if (banner) {
+        const bannerFile = await Storage.get(`${banner?.s3Key}`, {
+          level: "public"
+        });
+        setBannerImage(bannerFile);
+      }
 
       const photoData = await DataStore.query(Photo, c => c.userProfileID.eq(profile.id))
       setPhotos(photoData)
@@ -51,38 +59,60 @@ const ProfilePage = () => {
       <Header>
         <button className='mx-4 text-xl' onClick={() => navigate(-1)}><IoArrowBack /></button>
       </Header>
+      <section className={'flex justify-center flex-col relative w-full h-screen max-h-[500px]'}>
+        {
+          bannerImage ?
+            <img src={bannerImage} alt="Banner" className='w-full h-full  object-cover top-0 left-0'/>
+            :
+            <div className='w-full h-full  object-cover top-0 left-0 bg-light-default'/>
+        }
+        <div className='flex flex-col justify-center items-center w-full h-full absolute top-0 left-0'>
+            {
+              profile?.profileImage ?
+                <img className='aspect-square max-w-[350px] w-full rounded-full cursor-pointer' src={profileImage} alt="Profile Image"/>
+                :
+                <div className='flex justify-center items-center w-full h-full max-w-[350px] max-h-[350px] border border-medium-default'>
+                  <BsPerson className='w-3/4 h-3/4 text-medium-default text-center'/>
+                </div>
+            }
+        </div>
+      </section>
       <div className='p-4'>
-      <div className={'flex flex-col items-center justify-center mt-header'}>
-        <img width={350} height={350} src={profileImage} alt={profile?.id} className='rounded-full'/>
-        <div className={'p-4 w-full max-w-lg'}>
-          <h1 className={'text-xl my-4'}>{profile?.firstName} {profile?.lastName}</h1>
+        <div className={'w-full max-w-lg'}>
+          <h1 className={'text-2xl my-4'}>{profile?.firstName} {profile?.lastName}</h1>
           <div className={'text-lg my-2 flex flex-wrap'}>
             <span className='basis-[120px]'>City:</span>
             <span>{profile?.city}</span>
           </div>
           <div className={'text-lg my-2 flex flex-wrap'}>
+            <span className='basis-[120px]'>State:</span><span>{profile?.state}</span>
+          </div>
+          <div className={'text-lg my-2 flex flex-wrap'}>
             <span className='basis-[120px]'>School:</span>
             <span>{profile?.school}</span>
           </div>
-          <div className={'text-lg my-2 flex flex-wrap'}>
-            <span className='basis-[120px]'>State:</span><span>{profile?.state}</span></div>
         </div>
-      </div>
         <section>
           <h1 className='text-2xl my-4'>Events Attending</h1>
           {
-            eventsAttending.map((event, index) =>
-              <span key={event.id}><Link className='hover:underline text-green-950' to={`/events/${event.id}`}>{event.name}</Link>{index < eventsAttending.length - 1 ? ", " : ""}</span>
-          )}
+            eventsAttending.length > 0  ?
+              eventsAttending.map((event, index) =>
+                <span key={event.id}><Link className='hover:underline text-green-950' to={`/events/${event.id}`}>{event.name}</Link>{index < eventsAttending.length - 1 ? ", " : ""}</span>)
+            :
+              <span>Not attending any events</span>
+          }
         </section>
         <section>
           <h1 className='text-2xl my-4'>Rides</h1>
           {
-            rides.map(ride =>
-              <div key={ride.id}>Ride to {ride.endPoint} from {ride.startPoint} on {ride.departureTime}</div>
-            )}
+            rides.length > 0 ?
+              rides.map(ride =>
+                <RideCardBase ride={ride} key={ride.id}/>)
+              :
+              <span>Not signed up for any rides</span>
+          }
         </section>
-        <section className='flex flex-wrap  gap-4' >
+        <section>
           <h1 className='text-2xl my-4'>Photos</h1>
           <div className='flex flex-wrap gap-4'>
           {
