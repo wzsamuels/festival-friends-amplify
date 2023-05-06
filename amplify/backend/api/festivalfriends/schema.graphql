@@ -31,6 +31,8 @@ type Festival @model @auth(rules: [{allow: public}]) {
   type: EventType
   tagline: String
   description: String
+  group: CollegeGroup @belongsTo(fields: ["groupID"])
+  groupID: ID @index(name: "byGroup")
   attendees: [EventProfile] @hasMany(fields: ["id"])
   rides: [Ride] @hasMany(fields: ["id"])
 }
@@ -81,7 +83,7 @@ type RideUser @model @auth(rules: [{allow: public}]) {
   ride: Ride! @belongsTo(fields: ["rideID"])
   rideID: ID! @index(name: "byRide")
   userProfile: UserProfile! @belongsTo(fields: ["userProfileID"])
-  userProfileID: ID!@index(name: "byUserProfile")
+  userProfileID: ID! @index(name: "byUserProfile")
   isDriver: Boolean!
 }
 
@@ -131,6 +133,7 @@ type CollegeGroup @model @auth(rules: [{allow: public}]) {
   domain: String!
   webPage: String
   countryCode: String
+  events: [Festival] @hasMany(indexName: "byGroup", fields: ["id"])
   members: [UserProfile] @hasMany(indexName: "byCollegeGroup", fields: ["id"])
 }
 
