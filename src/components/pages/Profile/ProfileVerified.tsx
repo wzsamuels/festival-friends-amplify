@@ -1,4 +1,4 @@
-import {Photo} from "../../../models";
+import {Festival, Photo, Ride} from "../../../models";
 import React, {useContext, useEffect, useState} from "react";
 import {Storage} from "aws-amplify";
 import {DataStore} from "@aws-amplify/datastore";
@@ -12,6 +12,7 @@ import Button from "../../common/Button/Button";
 import {useUserProfileStore} from "../../../stores/friendProfilesStore";
 import PhotoModal from "./Modals/PhotoModal";
 import DataStoreContext, {DataStoreContextType} from "../../../context/DataStoreContext";
+import {Link} from "react-router-dom";
 
 const ProfileVerified = ({user } : {user: any}) => {
   const [profileImage, setProfileImage] = useState("")
@@ -24,6 +25,8 @@ const ProfileVerified = ({user } : {user: any}) => {
   const [isProfileImageModalOpen, setIsProfileImageModalOpen] = useState(false)
   const [isPhotoModalOpen, setPhotoModalOpen] = useState(false)
   const [isBannerModalOpen, setIsBannerModalOpen] = useState(false)
+  const [eventsAttending, setEventsAttending] = useState<Festival[]>([])
+  const [rides, setRides] = useState<Ride[]>([])
   const username = user.username as string;
   const userProfile= useUserProfileStore((state) => state.userProfile);
   const { dataStoreCleared } = useContext(DataStoreContext) as DataStoreContextType
@@ -45,6 +48,14 @@ const ProfileVerified = ({user } : {user: any}) => {
           });
           setBannerImage(bannerFile);
         }
+
+        const eventProfiles = await userProfile.attendingEvents.toArray()
+        const events = await Promise.all(eventProfiles.map(async eventProfile => await eventProfile.event))
+        setEventsAttending(events)
+
+        const rideUsers = await userProfile.rides.toArray();
+        const rides = await Promise.all(rideUsers.map(async rideUser => await rideUser.ride))
+        setRides(rides)
       }
       fetchProfileImage()
 
@@ -66,7 +77,7 @@ const ProfileVerified = ({user } : {user: any}) => {
   }, [selectedFile])
 
   return (
-    <div className='flex flex-col items-center w-full'>
+    <div className='w-full'>
       <section className={'flex justify-center flex-col relative w-full h-screen max-h-[500px]'}>
         {
           bannerImage ?
@@ -95,9 +106,25 @@ const ProfileVerified = ({user } : {user: any}) => {
           </div>
         </div>
       </section>
+
+      <section className='p-4'>
+        <h1 className='text-2xl my-4'>Events Attending</h1>
+        {
+          eventsAttending.map((event, index) =>
+            <span key={event.id}><Link className='hover:underline text-green-950' to={`/events/${event.id}`}>{event.name}</Link>{index < eventsAttending.length - 1 ? ", " : ""}</span>
+          )}
+      </section>
       <hr className='my-8 border border-primary-default w-full'/>
-      <section className='flex flex-col items-center jusify-content my-4 w-full p-4'>
-        <div className='flex justify-between w-full max-w-xl'>
+      <section className='p-4'>
+        <h1 className='text-2xl my-4'>Rides</h1>
+        {
+          rides.map(ride =>
+            <div key={ride.id}>Ride to {ride.endPoint} from {ride.startPoint} on {ride.departureTime}</div>
+          )}
+      </section>
+      <hr className='my-8 border border-primary-default w-full'/>
+      <section className='p-4'>
+        <div className='flex justify-between w-full'>
           <h2 className='text-2xl'>Photos</h2>
           <label htmlFor="upload-photo" className='block bg-green-950 text-white rounded-md uppercase py-2 px-4 cursor-pointer'>Upload Photo</label>
           <input type="file" accept="image/png, image/jpeg"
@@ -114,10 +141,6 @@ const ProfileVerified = ({user } : {user: any}) => {
             )
           }
         </div>
-      </section>
-      <section>
-        <h1>Event Attending</h1>
-        {}
       </section>
       { userProfile &&
         <>
