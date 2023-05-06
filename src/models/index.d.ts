@@ -110,6 +110,8 @@ type EagerFestival = {
   readonly type?: EventType | keyof typeof EventType | null;
   readonly tagline?: string | null;
   readonly description?: string | null;
+  readonly group?: CollegeGroup | null;
+  readonly groupID?: string | null;
   readonly attendees?: (EventProfile | null)[] | null;
   readonly rides?: (Ride | null)[] | null;
   readonly createdAt?: string | null;
@@ -131,6 +133,8 @@ type LazyFestival = {
   readonly type?: EventType | keyof typeof EventType | null;
   readonly tagline?: string | null;
   readonly description?: string | null;
+  readonly group: AsyncItem<CollegeGroup | undefined>;
+  readonly groupID?: string | null;
   readonly attendees: AsyncCollection<EventProfile>;
   readonly rides: AsyncCollection<Ride>;
   readonly createdAt?: string | null;
@@ -455,6 +459,7 @@ type EagerCollegeGroup = {
   readonly domain: string;
   readonly webPage?: string | null;
   readonly countryCode?: string | null;
+  readonly events?: (Festival | null)[] | null;
   readonly members?: (UserProfile | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
@@ -470,6 +475,7 @@ type LazyCollegeGroup = {
   readonly domain: string;
   readonly webPage?: string | null;
   readonly countryCode?: string | null;
+  readonly events: AsyncCollection<Festival>;
   readonly members: AsyncCollection<UserProfile>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
