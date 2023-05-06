@@ -348,6 +348,28 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "group": {
+                    "name": "group",
+                    "isArray": false,
+                    "type": {
+                        "model": "CollegeGroup"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetNames": [
+                            "groupID"
+                        ]
+                    }
+                },
+                "groupID": {
+                    "name": "groupID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "attendees": {
                     "name": "attendees",
                     "isArray": true,
@@ -403,6 +425,15 @@ export const schema = {
                 {
                     "type": "model",
                     "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byGroup",
+                        "fields": [
+                            "groupID"
+                        ]
+                    }
                 },
                 {
                     "type": "auth",
@@ -1526,6 +1557,22 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "events": {
+                    "name": "events",
+                    "isArray": true,
+                    "type": {
+                        "model": "Festival"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": [
+                            "group"
+                        ]
+                    }
+                },
                 "members": {
                     "name": "members",
                     "isArray": true,
@@ -1608,5 +1655,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.2",
-    "version": "b821533db948acae2a390f29fefa56a2"
+    "version": "76ff8b960161f36b51e47be8694b95e7"
 };
