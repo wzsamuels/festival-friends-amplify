@@ -1,8 +1,8 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
-  appName: 'festival-friends-amplify',
+  appId: 'com.twinsilverdesign.www',
+  appName: 'Event Friends',
   webDir: 'dist',
   bundledWebRuntime: false
 };
