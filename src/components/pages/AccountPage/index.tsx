@@ -4,10 +4,9 @@ import React, {useContext, useEffect} from 'react';
 import ProfileUnverified from '../Profile/ProfileUnverified';
 import ProfileVerified from '../Profile/ProfileVerified';
 import { useUserProfileStore} from "../../../stores/friendProfilesStore";
-import Spinner from "../../common/Spinner/Spinner";
 import Header from "../../layout/Header";
 import DataStoreContext, {DataStoreContextType} from "../../../context/DataStoreContext";
-import Loading from "../../common/Loading";
+import LoadingState from "../../ui/LoadingState";
 
 const AccountPage = () => {
   const { user } = useAuthenticator((context) => [context.user]);
@@ -21,17 +20,13 @@ const AccountPage = () => {
 
   useEffect(() => {
     if (user && dataStoreCleared) {
-      fetchAndObserveUserProfile(user);
+      fetchAndObserveUserProfile(user, route);
     }
   }, [user, fetchAndObserveUserProfile, dataStoreCleared]);
 
-  useEffect(() => {
-    console.log("Loading user profile", loadingUserProfile, "userProfile", userProfile);
-  }, [loadingUserProfile, userProfile]);
-
   const renderPage = () => {
     if(loadingUserProfile || route === 'idle') {
-      return <Loading/>
+      return <LoadingState/>
     }
 
     if(route !== 'authenticated')  {
