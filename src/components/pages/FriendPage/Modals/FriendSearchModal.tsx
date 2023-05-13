@@ -36,17 +36,13 @@ const FriendSearchModal = ({isOpen, setIsOpen}: FriendSearchModalProps) => {
   const { userProfile } = useUserProfileStore()
   const [toastData, setToastData] = useState<ToastData | null>(null);
 
-
-
   const searchFriends: SubmitHandler<SearchInput> = async data => {
 
     // Remove empty fields from search
     const filteredData = getFilteredData(data);
-
     const allProfiles = await DataStore.query(UserProfile, (c) => c.or(() => criteria(c,  filteredData)));
     // Filter out profiles with the same userProfile.id
     const otherProfiles = allProfiles.filter((profile) => profile.id !== userProfile?.id);
-
     const allFriends = await DataStore.query(Friendship);
 
     // Filter out profiles that are already friends or have a pending request
