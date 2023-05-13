@@ -10,3 +10,8 @@ export type ProfileInputs = {
   address: string,
   address2: string,
 }
+
+export interface ToastData {
+  message: string;
+  type: 'success' | 'error' | 'info' | 'warning';
+}

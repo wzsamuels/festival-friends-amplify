@@ -1,27 +1,26 @@
 import React, { useEffect, useState } from 'react';
+import {ToastData} from "../../../types";
 
 interface ToastProps {
-  message: string;
-  type?: 'success' | 'error' | 'info' | 'warning';
+  toastData: ToastData
   duration?: number;
   onClose?: () => void;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-function
-const Toast: React.FC<ToastProps> = ({ message, type = 'info', duration = 10000, onClose = () => {} }) => {
+const Toast: React.FC<ToastProps> = ({ toastData, onClose, duration = 3000}) => {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    if (message) {
+    if (toastData.message) {
       setVisible(true);
       const timeout = setTimeout(() => {
         setVisible(false);
-        onClose();
+        onClose && onClose();
       }, duration);
 
       return () => clearTimeout(timeout);
     }
-  }, [message, duration, onClose]);
+  }, [toastData, duration, onClose]);
 
   if (!visible) {
     return null;
@@ -39,15 +38,15 @@ const Toast: React.FC<ToastProps> = ({ message, type = 'info', duration = 10000,
       className={`fixed bottom-4 z-50 left-0 w-full  `}
       role="alert"
     >
-      <div className={`flex justify-between items-center max-w-sm p-4 rounded-lg shadow-lg ${toastColor[type]} text-white`}>
+      <div className={`flex justify-between items-center max-w-sm p-4 rounded-lg shadow-lg ${toastColor[toastData.type]} text-white`}>
         <div>
-          <p>{message}</p>
+          <p>{toastData.message}</p>
         </div>
         <button
           className="ml-4 text-white hover:text-gray-300"
           onClick={() => {
             setVisible(false);
-            onClose();
+            onClose && onClose();
           }}
         >
           &times;
