@@ -3,6 +3,9 @@ import {FestivalCreateForm} from "../../../ui-components";
 import {CollegeGroup, UserProfile} from "../../../models";
 import {DataStore} from "aws-amplify";
 import colleges from "../../../data/colleges.json"
+import InputWrapper from "../../common/InputWrapper/InputWrapper";
+import Label from "../../common/Label/Label";
+import Button from "../../common/Button/Button";
 
 const Admin = () => {
   return (
@@ -59,35 +62,37 @@ const VerifyAccounts = () => {
       {
         unverifiedProfiles.map(profile =>
           <ul key={profile.id}>
-            <div>
-              <div slot='start' className='text-wrap'>Email</div>
+            <InputWrapper className='my-4'>
+              <Label>Email</Label>
               <div className='text-wrap'>{profile.email}</div>
-            </div>
-            <div>
-              <div slot='start' className='text-wrap'>Phone Number</div>
+            </InputWrapper>
+            <InputWrapper className='my-4'>
+              <Label>Phone Number</Label>
               <div className='text-wrap'>{profile.phone}</div>
-            </div>
-            <div>
-              <div slot='start' className='text-wrap'>City</div>
+            </InputWrapper>
+            <InputWrapper className='my-4'>
+              <Label>City</Label>
               <div className='text-wrap'>{profile.city}</div>
-            </div>
-            <div>
-              <div slot='start' className='text-wrap'>State</div>
+            </InputWrapper>
+            <InputWrapper className='my-4'>
+              <Label>State</Label>
               <div className='text-wrap'>{profile.state}</div>
-            </div>
-            <div>
-              <div slot='start' className='text-wrap'>Zip Code</div>
+            </InputWrapper>
+            <InputWrapper className='my-4'>
+              <Label>Zip Code</Label>
               <div className='text-wrap'>{profile.zipcode}</div>
-            </div>
-            <div>
-              <div slot='start' className='text-wrap'>Address</div>
-              <div className='text-wrap'>{profile.address}</div></div>
-            <div>
+            </InputWrapper>
+            <InputWrapper className='my-4'>
+              <Label>Address</Label>
+              <div className='text-wrap'>{profile.address}</div>
+            </InputWrapper>
+            <InputWrapper className='my-4'>
               <div  slot='start' className='text-wrap'>School</div><div className='text-wrap'>
               {profile.school}
-              </div></div>
-            <div className='w-full flex justify-end my-4'>
-              <button onClick={() => verifyProfile(profile)}>Verify Profile</button>
+              </div>
+            </InputWrapper>
+            <div className='flex justify-center my-4'>
+              <Button onClick={() => verifyProfile(profile)}>Verify Profile</Button>
             </div>
           </ul>
         )
