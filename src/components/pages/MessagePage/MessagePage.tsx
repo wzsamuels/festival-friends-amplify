@@ -1,6 +1,6 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
-import {DataStore, Storage} from "aws-amplify";
-import {Conversation, Friendship, Message, UserProfile} from "../../../models";
+import React, { useEffect, useState} from "react";
+import {DataStore} from "aws-amplify";
+import {Conversation, UserProfile} from "../../../models";
 import {useAuthenticator} from "@aws-amplify/ui-react";
 import FriendCard from "../../ui/FriendCard";
 import ConversationModal from "./ConversationModal";
@@ -12,8 +12,7 @@ import ConservationSearchModal from "./ConservationSearchModal";
 import Button from "../../common/Button/Button";
 import {useUserProfileStore} from "../../../stores/friendProfilesStore";
 import ConversationCard from "../../ui/ConversationCard";
-import Spinner from "../../common/Spinner/Spinner";
-import Loading from "../../common/Loading";
+import LoadingState from "../../ui/LoadingState";
 
 const MessagePage: React.FC = () => {
   const [conversations, setConversations] = useState<Conversation[]>([]);
@@ -21,14 +20,8 @@ const MessagePage: React.FC = () => {
   const [isNewConversationModalOpen, setNewConversationModalOpen] = useState(false);
   const [isConversationSearchModalOpen, setConversationSearchModalOpen] = useState(false);
   const [isConversationModalOpen, setConversationModalOpen] = useState(false);
-  const { user } = useAuthenticator(context => [context.user]);
   const { route } = useAuthenticator(context => [context.route]);
   const { userProfile, loadingUserProfile, friendProfiles} = useUserProfileStore();
-  const [searchTerm, setSearchTerm] = useState("");
-
-  console.log(friendProfiles)
-  console.log(userProfile)
-  console.log(route)
 
   const handleNewConversation = async ({friendProfile} : {friendProfile: UserProfile}) => {
     setNewConversationModalOpen(false);
@@ -100,7 +93,7 @@ const MessagePage: React.FC = () => {
 
   const renderMessages = () => {
     if(loadingUserProfile || route === 'idle') {
-      return <Loading/>
+      return <LoadingState/>
     }
 
     if(route !== 'authenticated') {
