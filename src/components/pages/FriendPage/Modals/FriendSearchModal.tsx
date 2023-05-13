@@ -1,4 +1,4 @@
-import React, {Fragment, useState} from "react";
+import React, {useState} from "react";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {Friendship, UserProfile} from "../../../../models";
 import {useAuthenticator} from "@aws-amplify/ui-react";
@@ -11,6 +11,8 @@ import Button from "../../../common/Button/Button";
 import CustomAlert from "../../../common/Alert/Alert";
 import {useUserProfileStore} from "../../../../stores/friendProfilesStore";
 import Toast from "../../../common/Toast/Toast";
+import {ToastData} from "../../../../types";
+import {criteria, getFilteredData} from "../../../../lib/searchHelpers";
 
 interface SearchInput {
   firstName?: string;
@@ -29,41 +31,19 @@ const FriendSearchModal = ({isOpen, setIsOpen}: FriendSearchModalProps) => {
   const { register, handleSubmit, reset } = useForm<SearchInput>()
   const [results, setResults] = useState<UserProfile[]>([])
   const { user } = useAuthenticator();
-  const [toastMessage, setToastMessage] = useState('');
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [currentResult, setCurrentResult] = useState<UserProfile | null>(null);
   const { userProfile } = useUserProfileStore()
+  const [toastData, setToastData] = useState<ToastData | null>(null);
 
-  const showToast = (type: 'info' | 'success' | 'warning' | 'error') => {
-    if(type === 'info') {
-      setToastMessage(`Friend already sent!`);
-    } else if(type === 'success') {
-      setToastMessage(`Friend request sent!`);
-    }
-    setToastType(type);
-  };
 
-  const [toastType, setToastType] = useState<'success' | 'error' | 'info' | 'warning'>('info');
 
   const searchFriends: SubmitHandler<SearchInput> = async data => {
 
     // Remove empty fields from search
-    const filteredData: { field: string; value: string; }[] = []
-    for (const [key, value] of Object.entries(data)) {
-      if(value) {
-        filteredData.push({field: key, value: value})
-      }
-    }
+    const filteredData = getFilteredData(data);
 
-    const criteria = (c: any) => {
-      const query: any[] = [];
-      filteredData.forEach((item) => {
-        query.push(c[item.field].eq(item.value));
-      });
-      return query;
-    };
-
-    const allProfiles = await DataStore.query(UserProfile, (c) => c.or(() => criteria(c)));
+    const allProfiles = await DataStore.query(UserProfile, (c) => c.or(() => criteria(c,  filteredData)));
     // Filter out profiles with the same userProfile.id
     const otherProfiles = allProfiles.filter((profile) => profile.id !== userProfile?.id);
 
@@ -87,34 +67,26 @@ const FriendSearchModal = ({isOpen, setIsOpen}: FriendSearchModalProps) => {
     const userProfile = profile[0];
 
     if(userProfile.id === friendProfile.id) {
-      alert('You cannot send a friend request to yourself')
+      setToastData({message: 'You cannot send a friend request to yourself!', type: 'info'})
       return;
     }
 
-    const existingFriendships1 = await DataStore.query(Friendship, c => c.and( c => [
-      c.userProfileID.eq(userProfile.id),
-      c.friendProfileID.eq(friendProfile.id)
+    const existingFriendships = await DataStore.query(Friendship, c => c.or( c => [
+      c.and( c => [c.userProfileID.eq(userProfile.id), c.friendProfileID.eq(friendProfile.id)]),
+      c.and( c => [c.userProfileID.eq(friendProfile.id), c.friendProfileID.eq(userProfile.id)])
     ]));
-
-    const existingFriendships2 = await DataStore.query(Friendship, c => c.and( c => [
-      c.userProfileID.eq(friendProfile.id),
-      c.friendProfileID.eq(userProfile.id)
-    ]));
-
-    const existingFriendships = [...existingFriendships1, ...existingFriendships2];
 
     if(existingFriendships.length > 0) {
       if(existingFriendships[0].isAccepted) {
-        alert('You are already friends')
+        setToastData({message: 'You are already friends!', type: 'info'})
         return;
       }
-      showToast('info');
+      setToastData({message: 'Friend request already sent!', type: 'info'})
       return;
     }
 
-    const result = await DataStore.save(new Friendship({userProfileID: userProfile.id, friendProfileID: friendProfile.id, isAccepted: false, friendProfile: friendProfile, userProfile: profile[0]}) )
-    console.log(result)
-    showToast('success');
+    await DataStore.save(new Friendship({userProfileID: userProfile.id, friendProfileID: friendProfile.id, isAccepted: false, friendProfile: friendProfile, userProfile: profile[0]}) )
+    setToastData({message: 'Friend request sent!', type: 'success'})
   }
 
   return (
@@ -146,9 +118,12 @@ const FriendSearchModal = ({isOpen, setIsOpen}: FriendSearchModalProps) => {
       <div className='flex flex-wrap' >
         {
           results.map(result =>
-            <Fragment key={result.id}>
-              <FriendCard onClick={() => { setCurrentResult(result);setIsConfirmModalOpen(true)}} className='m-4 cursor-pointer' profile={result}  link={false}/>
-            </Fragment>
+            <FriendCard
+              key={result.id}
+              onClick={() => { setCurrentResult(result);setIsConfirmModalOpen(true)}}
+              className='m-4 cursor-pointer'
+              profile={result}
+              link={false}/>
           )
         }
       </div>
@@ -172,12 +147,11 @@ const FriendSearchModal = ({isOpen, setIsOpen}: FriendSearchModalProps) => {
           },
         ]}
       />
-      {toastMessage && (
+      {toastData && (
         <Toast
-          message={toastMessage}
-          type={toastType}
+          toastData={toastData}
           onClose={() => {
-            setToastMessage('');
+            setToastData(null);
           }}
         />
       )}
