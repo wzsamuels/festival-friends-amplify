@@ -4,16 +4,21 @@ import ImageContext from "../../context/ImageContext";
 import {Link} from "react-router-dom";
 import Button from "../common/Button/Button";
 
-interface FriendCardProps {
-  profile: UserProfile,
-  link: boolean,
-  onClick?: () => void
-  onCancel?: () => void
-  onConfirm?: () => void
+export interface FriendCardButton {
+  label: string
+  onClick: (friendProfileID: string) => void
   className?: string
 }
 
-const FriendCard = ({profile, link, onClick, onConfirm, onCancel, className} : FriendCardProps) => {
+export interface FriendCardProps {
+  profile: UserProfile,
+  link: boolean,
+  onClick?: () => void
+  buttons?: FriendCardButton[]
+  className?: string
+}
+
+const FriendCard = ({profile, link, onClick, className, buttons} : FriendCardProps) => {
   const [profileImage, setProfileImage] = useState("")
   const profileUrl = `/friends/profile/${profile.id}`
   const { getSignedURL } = useContext(ImageContext);
@@ -40,8 +45,10 @@ const FriendCard = ({profile, link, onClick, onConfirm, onCancel, className} : F
         </div>
       </ConditionalWrapper>
       <div className='w-full'>
-        { onConfirm && <Button onClick={onConfirm} className='w-full mb-1'>Confirm</Button> }
-        { onCancel && <Button onClick={onCancel} className='w-full' >Cancel</Button> }
+        {
+          buttons && buttons.map((button, index) =>
+          <Button key={index} onClick={() => button.onClick(profile.id)} className={`${button.className} w-full ${index !== buttons.length - 1 ? 'mb-1' : ''}`}>{button.label}</Button>
+        )}
       </div>
     </div>
   )
