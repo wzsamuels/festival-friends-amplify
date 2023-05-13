@@ -12,6 +12,8 @@ import ConservationSearchModal from "./ConservationSearchModal";
 import Button from "../../common/Button/Button";
 import {useUserProfileStore} from "../../../stores/friendProfilesStore";
 import ConversationCard from "../../ui/ConversationCard";
+import Spinner from "../../common/Spinner/Spinner";
+import Loading from "../../common/Loading";
 
 const MessagePage: React.FC = () => {
   const [conversations, setConversations] = useState<Conversation[]>([]);
@@ -21,8 +23,7 @@ const MessagePage: React.FC = () => {
   const [isConversationModalOpen, setConversationModalOpen] = useState(false);
   const { user } = useAuthenticator(context => [context.user]);
   const { route } = useAuthenticator(context => [context.route]);
-  const userProfile = useUserProfileStore(state => state.userProfile);
-  const friendProfiles = useUserProfileStore(state => state.friendProfiles);
+  const { userProfile, loadingUserProfile, friendProfiles} = useUserProfileStore();
   const [searchTerm, setSearchTerm] = useState("");
 
   console.log(friendProfiles)
@@ -97,6 +98,47 @@ const MessagePage: React.FC = () => {
     }
   }, [userProfile])
 
+  const renderMessages = () => {
+    if(loadingUserProfile || route === 'idle') {
+      return <Loading/>
+    }
+
+    if(!loadingUserProfile && (!userProfile || !userProfile.verified)) {
+      return (
+        <div className='m-4 text-xl'>Your profile is not verified yet. Once your profile has been verified, you will be able to view your messages.</div>
+      )
+    }
+
+    if(route !== 'authenticated') {
+      return (
+        <>
+          <div className='m-4 text-xl'>You must be logged in to view your messages.</div>
+          <Link to='/account'>
+            <Button>Sign In</Button>
+          </Link>
+        </>
+      )
+    }
+
+    return (
+      <section className='my-4 grid grid-cols-1 md:grid-cols-2 gap-4 items-stretch justify-items-center'>
+        { conversations.length > 0 && userProfile ? conversations.map((conversation) => (
+            <ConversationCard
+              key={conversation.id}
+              className='my-4 cursor-pointer '
+              isConversationModalOpen={isConversationModalOpen}
+              setConversationModalOpen={setConversationModalOpen} conversation={conversation} userProfile={userProfile}
+              onClick={() => openConversationModal(conversation)}/>
+          ))
+          :
+          <div>
+            No Conversations found!
+          </div>
+        }
+      </section>
+    )
+  }
+
   return (
     <>
       <Header>
@@ -106,34 +148,7 @@ const MessagePage: React.FC = () => {
       </Header>
       <div className='p-4 min-h-full h-full relative'>
         {
-          route === 'authenticated' && userProfile?.verified ?
-            <>
-              {/* Conversations */}
-              <section className='my-4 grid grid-cols-1 md:grid-cols-2 gap-4 items-stretch justify-items-center'>
-                  { conversations.length > 0 ? conversations.map((conversation) => (
-                    <ConversationCard
-                      key={conversation.id}
-                      className='my-4 cursor-pointer '
-                      isConversationModalOpen={isConversationModalOpen}
-                      setConversationModalOpen={setConversationModalOpen} conversation={conversation} userProfile={userProfile}
-                      onClick={() => openConversationModal(conversation)}/>
-                    ))
-                    :
-                    <div>
-                      No Conversations found!
-                    </div>
-                  }
-              </section>
-            </>
-          :
-            <div>
-              <h1 className='text-xl md:text-2xl my-4'>
-                Verified Festival Friends Account Required.
-              </h1>
-              <Link to='/account'>
-                <Button>Sign In</Button>
-              </Link>
-            </div>
+          renderMessages()
         }
         <div className='fixed bottom-20 right-16'>
           <button className='flex flex-col items-center rounded-[100%] bg-green-950 text-white p-3' onClick={() => setNewConversationModalOpen(true)}  >

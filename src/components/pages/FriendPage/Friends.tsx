@@ -4,14 +4,13 @@ import {DataStore} from "aws-amplify";
 import {Friendship, UserProfile} from "../../../models";
 import FriendCard from "../../ui/FriendCard";
 import FriendSearchModal from "./Modals/FriendSearchModal";
-import {Link} from "react-router-dom";
 import Header from "../../layout/Header";
-import {BsSearch} from "react-icons/all";
 import {useUserProfileStore} from "../../../stores/friendProfilesStore";
-import SearchButton from "../../ui/SearchButton";
-import Toast from "../../common/Toast/Toast";
 import Segment from "../../common/Segment/Segment";
 import DataStoreContext, {DataStoreContextType} from "../../../context/DataStoreContext";
+import Spinner from "../../common/Spinner/Spinner";
+import {Link} from "react-router-dom";
+import Button from "../../common/Button/Button";
 
 const FriendsPage: React.FC = () => {
   const { route } = useAuthenticator(context => [context.route]);
@@ -59,7 +58,7 @@ const FriendsPage: React.FC = () => {
         const allProfiles = await DataStore.query(UserProfile);
 
         // Filter user profiles based on common attributes
-        return allProfiles.filter(profile => {
+        const suggestedFriends = allProfiles.filter(profile => {
           // Exclude the current user from the suggestions
           if (profile.id === userProfile?.id) {
             return false;
@@ -72,6 +71,7 @@ const FriendsPage: React.FC = () => {
 
           return commonSchool || commonCity || commonState;
         });
+        setSuggestedFriends(suggestedFriends);
       });
 
       return () => {
@@ -94,16 +94,40 @@ const FriendsPage: React.FC = () => {
     await DataStore.delete(friendShip[0]);
   }
 
+
+  useEffect(() => {
+    console.log("route: ", route);
+  }, [route])
+
   useEffect(() => {
     console.log("Loading user profile", loadingUserProfile, "userProfile", userProfile);
   }, [loadingUserProfile, userProfile]);
+
   const renderFriends = () => {
+    if(loadingFriendProfiles || loadingUserProfile || route === 'idle') {
+      return (
+        <div className='flex justify-center m-4 h-[50vh] items-center'>
+          <Spinner/>
+        </div>
+      )
+    }
     if(!loadingUserProfile && (!userProfile || !userProfile.verified)) {
-      return (<div>Your profile is not verified yet. Please check back later.</div>)
+      return (
+        <div className='m-4 text-xl '>Your profile is not verified yet. Once your profile has been verified, you will be able to view your friends.</div>
+      )
     }
-    if(loadingFriendProfiles) {
-      return (<div>Loading friends...</div>)
+
+    if(route !== 'authenticated') {
+      return (
+        <>
+          <div className='m-4 text-xl '>You must be logged in to view your friends.</div>
+          <Link to='/account'>
+            <Button>Sign In</Button>
+          </Link>
+        </>
+      )
     }
+
     if(friendType === 'accepted') {
       if(acceptedProfiles.length === 0) {
         return (
@@ -200,7 +224,6 @@ const FriendsPage: React.FC = () => {
     }
   }
 
-  console.log("auth route", route, "Verified: ", userProfile?.verified)
 
   const segmentItems = [
     {
@@ -244,18 +267,8 @@ const FriendsPage: React.FC = () => {
       </Header>
       <div className={'p-4 w-full'}>
       {
-        route === 'authenticated' ?
-          <>
-            {renderFriends()}
-          </>
-          :
-          <div className='bg-[url("/src/images/friends.png")]  w-full bg-cover flex flex-col items-center justify-center h-screen'>
-            <div className='text-primary-default font-bold flex flex-col items-center justify-center text-3xl bg-white p-4 rounded-xl'>
-              <div className='my-4'>Find New Friends</div>
-              <Link to='/account' className='my-4'>Sign In</Link>
-            </div>
-          </div>
-        }
+        renderFriends()
+      }
       </div>
       <FriendSearchModal isOpen={isFriendsModalOpen} setIsOpen={setIsFriendsModalOpen}/>
 
