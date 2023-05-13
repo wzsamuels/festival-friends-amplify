@@ -12,7 +12,11 @@ const friendProfilesStore = create(
       loadingFriendProfiles: true,
     },
     (set) => ({
-      fetchAndObserveUserProfile: async (user: any) => {
+      fetchAndObserveUserProfile: async (user: any, route:  string) => {
+        if(route !== 'authenticated') {
+          set({loadingUserProfile: false, loadingFriendProfiles: false })
+          return;
+        }
         console.log(user)
         const username = user.username as string;
         console.log('fetchAndObserveUserProfile called');
