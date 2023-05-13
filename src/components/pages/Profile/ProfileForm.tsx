@@ -1,7 +1,6 @@
 import {Controller, SubmitHandler, useForm} from "react-hook-form";
 import {ErrorMessage} from "@hookform/error-message";
 import React, {useState} from "react";
-import styled from "styled-components";
 import {UserProfile} from "../../../models";
 import {ProfileInputs} from "../../../types";
 import states from "../../../data/states";
@@ -70,7 +69,7 @@ const ProfileForm = ({onSubmit, profile}: ProfileFormProps) => {
         onChange={e => setValue('state', e.target.value)}
           >
           {states.map((state) => (
-              <option key={state} value={state}>{state}</option>
+              <option key={state.code} value={state.name}>{state.name}</option>
       ))}
         </select>
       )}
