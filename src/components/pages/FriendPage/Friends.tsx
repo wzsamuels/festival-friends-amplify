@@ -111,11 +111,6 @@ const FriendsPage: React.FC = () => {
         </div>
       )
     }
-    if(!loadingUserProfile && (!userProfile || !userProfile.verified)) {
-      return (
-        <div className='m-4 text-xl '>Your profile is not verified yet. Once your profile has been verified, you will be able to view your friends.</div>
-      )
-    }
 
     if(route !== 'authenticated') {
       return (
@@ -125,6 +120,12 @@ const FriendsPage: React.FC = () => {
             <Button>Sign In</Button>
           </Link>
         </>
+      )
+    }
+
+    if(!loadingUserProfile && (!userProfile || !userProfile.verified)) {
+      return (
+        <div className='m-4 text-xl '>Your profile is not verified yet. Once your profile has been verified, you will be able to view your friends.</div>
       )
     }
 
