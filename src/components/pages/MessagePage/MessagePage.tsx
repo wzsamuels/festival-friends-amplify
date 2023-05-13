@@ -103,12 +103,6 @@ const MessagePage: React.FC = () => {
       return <Loading/>
     }
 
-    if(!loadingUserProfile && (!userProfile || !userProfile.verified)) {
-      return (
-        <div className='m-4 text-xl'>Your profile is not verified yet. Once your profile has been verified, you will be able to view your messages.</div>
-      )
-    }
-
     if(route !== 'authenticated') {
       return (
         <>
@@ -117,6 +111,12 @@ const MessagePage: React.FC = () => {
             <Button>Sign In</Button>
           </Link>
         </>
+      )
+    }
+
+    if(!loadingUserProfile && (!userProfile || !userProfile.verified)) {
+      return (
+        <div className='m-4 text-xl'>Your profile is not verified yet. Once your profile has been verified, you will be able to view your messages.</div>
       )
     }
 
