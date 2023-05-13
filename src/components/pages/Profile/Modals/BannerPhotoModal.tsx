@@ -71,9 +71,9 @@ const BannerPhotoModal = ({profile, username, isOpen, setIsOpen, photos} : Profi
     <Modal isOpen={isOpen} setIsOpen={setIsOpen} title="Banner Image">
       { preview ?
         <div className='flex flex-col items-center justify-center w-full p-4'>
-          <img className='w-full rounded-full ' src={preview} alt="Preview"/>
+          <img className='w-full ' src={preview} alt="Preview"/>
           <div className='mt-6 flex justify-center w-full'>
-            <Button onClick={() => setSelectedFile(null)}>Cancel</Button>
+            <Button className='mr-4' onClick={() => setSelectedFile(null)}>Cancel</Button>
             <Button onClick={() => handleProfileBannerUpdate()}>Update Banner Image</Button>
           </div>
         </div>
