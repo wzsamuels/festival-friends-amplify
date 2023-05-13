@@ -67,7 +67,7 @@ const friendProfilesStore = create(
             friendsSub.unsubscribe();
           };
         } else {
-          set({loadingUserProfile: false })
+          set({loadingUserProfile: false, loadingFriendProfiles: false })
         }
       },
       reset: () => {
