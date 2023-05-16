@@ -6,7 +6,7 @@ import Button from "../common/Button/Button";
 
 export interface FriendCardButton {
   label: string
-  onClick: (friendProfileID: string) => void
+  onClick: (friendProfile: UserProfile) => void
   className?: string
 }
 
@@ -47,7 +47,7 @@ const FriendCard = ({profile, link, onClick, className, buttons} : FriendCardPro
       <div className='w-full'>
         {
           buttons && buttons.map((button, index) =>
-          <Button key={index} onClick={() => button.onClick(profile.id)} className={`${button.className} w-full ${index !== buttons.length - 1 ? 'mb-1' : ''}`}>{button.label}</Button>
+          <Button key={index} onClick={() => button.onClick(profile)} className={`${button.className} w-full ${index !== buttons.length - 1 ? 'mb-1' : ''}`}>{button.label}</Button>
         )}
       </div>
     </div>
