@@ -9,6 +9,7 @@ import {DataStore} from "aws-amplify";
 import {Festival} from "../../../../models";
 import Button from "../../../common/Button/Button";
 import EventCardBase from "../../../ui/EventCardBase";
+import {criteria, getFilteredData} from "../../../../lib/searchHelpers";
 
 interface EventSearchInput {
   location: string;
@@ -21,23 +22,10 @@ const EventSearchModal = ({isOpen, setIsOpen} : ModalProps) => {
   const { register, handleSubmit} = useForm<EventSearchInput>()
 
   const handleEventSearch: SubmitHandler<EventSearchInput> = async data => {
-    const filteredData: { field: string; value: string; }[] = []
-    for (const [key, value] of Object.entries(data)) {
-      if(value) {
-        filteredData.push({field: key, value: value})
-      }
-    }
+    const filteredData = getFilteredData(data);
+    const eventResults = await DataStore.query(Festival, (c) => c.or(() => criteria(c, filteredData)));
 
-    const criteria = (c: any) => {
-      const query: any[] = [];
-      filteredData.forEach((item) => {
-        query.push(c[item.field].eq(item.value));
-      });
-      return query;
-    };
-
-    const eventResults = await DataStore.query(Festival, (c) => c.or(() => criteria(c)));
-    setEventResults(eventResults)
+    setEventResults(eventResults);
   }
   return (
     <Modal isOpen={isOpen} setIsOpen={setIsOpen} title='Search Festivals' className='max-w-4xl'>
