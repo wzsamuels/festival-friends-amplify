@@ -7,7 +7,7 @@ import InputWrapper from "../../common/InputWrapper/InputWrapper";
 import Label from "../../common/Label/Label";
 import Button from "../../common/Button/Button";
 
-const Admin = () => {
+const AdminPage = () => {
   return (
         <div className='flex flex-col items-center justify-center w-full p-4'>
           <section className='w-full max-w-xl flex flex-col'>
@@ -22,7 +22,7 @@ const Admin = () => {
   )
 }
 
-export default Admin
+export default AdminPage
 
 const VerifyAccounts = () => {
   const [unverifiedProfiles, setUnverifiedProfiles] = useState<UserProfile[]>([])

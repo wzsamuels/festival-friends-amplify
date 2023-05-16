@@ -1,4 +1,3 @@
-import { DataStore } from '@aws-amplify/datastore';
 import {Authenticator, useAuthenticator} from '@aws-amplify/ui-react';
 import React, {useContext, useEffect} from 'react';
 import ProfileUnverified from '../Profile/ProfileUnverified';
