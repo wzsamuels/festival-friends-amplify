@@ -9,7 +9,7 @@ interface ConversationCardProps {
   isConversationModalOpen: boolean,
   setConversationModalOpen: (arg: boolean) => void
   onClick: (arg: Conversation) => void
-  className: string
+  className?: string
 }
 const ConversationCard = ({ conversation, onClick, className }: ConversationCardProps) => {
   const [friendProfileImage, setFriendProfileImage] = useState<string>();
