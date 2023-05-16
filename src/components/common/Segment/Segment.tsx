@@ -4,13 +4,14 @@ interface SegmentProps {
   segmentType: string;
   setSegmentType: (segmentType: string) => void;
   items: Array<{ type: string; label?: string; children?: ReactNode }>;
+  className?: string;
 }
 
 const Segment: React.FC<SegmentProps> = ({ segmentType, setSegmentType, items }) => {
   const lineRef = useRef<HTMLDivElement>(null);
 
   const generateClassName = (type: string) =>
-    `hover:bg-white flex-1 p-2 md:p-4 relative ${segmentType === type ? 'active' : ''}`;
+    `hover:bg-white flex-1 p-1 sm:p-2 md:p-4 relative text-sm sm:text-base ${segmentType === type ? 'active' : ''}`;
 
   const updateLinePosition = () => {
     const activeButton = document.querySelector<HTMLButtonElement>(
@@ -44,7 +45,7 @@ const Segment: React.FC<SegmentProps> = ({ segmentType, setSegmentType, items })
   };
 
   return (
-    <div className="w-full flex justify-between h-full relative">
+    <div className="w-full flex justify-between h-full relative flex-wrap">
       {items.map((item) => (
         <button
           key={item.type}
