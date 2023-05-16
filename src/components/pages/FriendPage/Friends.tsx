@@ -8,10 +8,13 @@ import Header from "../../layout/Header";
 import {useUserProfileStore} from "../../../stores/friendProfilesStore";
 import Segment from "../../common/Segment/Segment";
 import DataStoreContext, {DataStoreContextType} from "../../../context/DataStoreContext";
-import {acceptFriendRequest, rejectFriendship} from "../../../services/FriendsService";
+import {acceptFriendRequest, createFriendRequest, rejectFriendRequest} from "../../../services/FriendsService";
 import LoggedOutState from "../../ui/LoggedOutState";
 import UnverifiedState from "../../ui/UnverifiedState";
 import LoadingState from "../../ui/LoadingState";
+import {ToastData} from "../../../types";
+import Toast from "../../common/Toast/Toast";
+import Drawer from "../../common/Drawer/Drawer";
 
 type FriendType = 'accepted' | 'sent' | 'suggestions' | 'pending';
 
@@ -26,6 +29,8 @@ const FriendsPage: React.FC = () => {
   const [friendType, setFriendType] = useState("accepted");
   const [isFriendsModalOpen, setIsFriendsModalOpen] = useState(false);
   const { dataStoreCleared } = useContext(DataStoreContext) as DataStoreContextType
+  const [toastData, setToastData] = useState<ToastData | null>(null);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   useEffect(() => {
     if (route !== 'authenticated' || !userProfile || !dataStoreCleared) {
@@ -67,6 +72,20 @@ const FriendsPage: React.FC = () => {
         if (profile.id === userProfile?.id) {
           return false;
         }
+        // Exclude the current user's friends from the suggestions
+        if (acceptedProfiles.find(acceptedProfile => acceptedProfile.id === profile.id)) {
+          return false;
+        }
+
+        // Exclude the current user's pending friend requests from the suggestions
+        if (pendingFriendProfiles.find(pendingFriendProfile => pendingFriendProfile.id === profile.id)) {
+          return false;
+        }
+
+        // Exclude the current user's sent friend requests from the suggestions
+        if (sentFriendProfiles.find(sentFriendProfile => sentFriendProfile.id === profile.id)) {
+          return false;
+        }
 
         // Check for common attributes
         const commonSchool = profile.school === userProfile?.school;
@@ -89,12 +108,16 @@ const FriendsPage: React.FC = () => {
   }, [allFriends, acceptedProfiles, pendingFriendProfiles, sentFriendProfiles])
 
   // Accept friend request
-  const handleFriendAccept = async ({friendProfileID} : {friendProfileID: string}) => {
-    await acceptFriendRequest(friendProfileID, allFriends);
+  const handleFriendAccept = async (friendProfile: UserProfile) => {
+    await acceptFriendRequest(friendProfile, allFriends);
   }
 
-  const handleFriendReject = async ({friendProfileID} : {friendProfileID: string}) => {
-    await rejectFriendship(friendProfileID, allFriends);
+  const handleFriendReject = async (friendProfile: UserProfile) => {
+    await rejectFriendRequest(friendProfile, allFriends);
+  }
+
+  const handleFriendRequest = async (friendProfile: UserProfile) => {
+    await createFriendRequest(userProfile, friendProfile, setToastData);
   }
 
   const FriendsList: React.FC<{friends: UserProfile[], buttons?: FriendCardButton[]}> = ({friends, buttons}) => (
@@ -135,14 +158,21 @@ const FriendsPage: React.FC = () => {
         buttons: [
           {
             label: 'Cancel',
-            onClick: (friendProfileID: string) =>
-              handleFriendReject({friendProfileID})
+            onClick: (friendProfile: UserProfile) =>
+              handleFriendReject(friendProfile)
           }
         ]
       },
       'suggestions': {
         friends: suggestedFriends,
-        noFriendsMessage: 'No suggested friends.'
+        noFriendsMessage: 'No suggested friends.',
+        buttons: [
+          {
+            label: 'Send Request',
+            onClick: (friendProfile: UserProfile) =>
+              handleFriendRequest(friendProfile)
+          }
+        ]
       },
       'pending': {
         friends: pendingFriendProfiles,
@@ -150,13 +180,13 @@ const FriendsPage: React.FC = () => {
         buttons: [
           {
             label: 'Accept',
-            onClick: (friendProfileID: string) =>
-              handleFriendAccept({friendProfileID})
+            onClick: (friendProfile: UserProfile) =>
+              handleFriendAccept(friendProfile)
           },
           {
             label: 'Reject',
-            onClick: (friendProfileID: string) =>
-              handleFriendReject({friendProfileID})
+            onClick: (friendProfile: UserProfile) =>
+              handleFriendReject(friendProfile)
           }
         ]
       },
@@ -186,7 +216,7 @@ const FriendsPage: React.FC = () => {
       children:
           <div className='flex justify-center items-center'>
             <div>Requests</div>
-            {pendingFriendProfiles.length > 0 ? <div className='bg-green-950 text-white rounded-full mx-2 w-[20px] p-2 text-sm h-[20px] flex justify-center items-center'>{pendingFriendProfiles.length}</div> : null}
+            {pendingFriendProfiles.length > 0 ? <div className='bg-green-950 text-white rounded-full mx-2 w-[20px] p-2  h-[20px] justify-center items-center hidden sm:flex'>{pendingFriendProfiles.length}</div> : null}
           </div>
     },
     {
@@ -194,7 +224,7 @@ const FriendsPage: React.FC = () => {
       children:
           <div className='flex justify-center items-center'>
             <div>Suggestions</div>
-            {suggestedFriends.length > 0 ? <div className='bg-green-950 text-white rounded-full mx-2 w-[20px] p-2 h-[20px] flex justify-center items-center'>{suggestedFriends.length}</div> : null}
+            {suggestedFriends.length > 0 ? <div className='bg-green-950 text-white rounded-full mx-2 w-[20px] p-2 h-[20px] justify-center items-center hidden md:flex'>{suggestedFriends.length}</div> : null}
           </div>
     },
     {
@@ -202,7 +232,7 @@ const FriendsPage: React.FC = () => {
       children:
         <div className='flex justify-center items-center'>
           <div>Sent</div>
-          {sentFriendProfiles.length > 0 ? <div className='bg-green-950 text-white rounded-full mx-2 w-[20px] p-2 h-[20px] flex justify-center items-center'>{sentFriendProfiles.length}</div> : null}
+          {sentFriendProfiles.length > 0 ? <div className='bg-green-950 text-white rounded-full mx-2 w-[20px] p-2 h-[20px] justify-center items-center hidden md:flex'>{sentFriendProfiles.length}</div> : null}
         </div>
     },
   ];
@@ -222,7 +252,17 @@ const FriendsPage: React.FC = () => {
       }
       </div>
       <FriendSearchModal isOpen={isFriendsModalOpen} setIsOpen={setIsFriendsModalOpen}/>
+      {toastData && (
+        <Toast
+          toastData={toastData}
+          onClose={() => {
+            setToastData(null);
+          }}
+        />
+      )}
+      <Drawer isOpen={isDrawerOpen} setIsOpen={setIsDrawerOpen}>
 
+      </Drawer>
     </div>
   );
 };
