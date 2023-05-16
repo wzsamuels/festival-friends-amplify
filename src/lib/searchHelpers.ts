@@ -10,7 +10,7 @@ interface QueryCriteria {
 }
 
 export const criteria = (c: any, filteredData: DataItem[]) => {
-  return filteredData.map((item) => c[item.field].eq(item.value));
+  return filteredData.map((item) => c[item.field].contains(item.value));
 };
 
 export const getFilteredData = <T extends object>(data: T) => {
