@@ -1,8 +1,22 @@
+import {useAuthenticator} from "@aws-amplify/ui-react";
+import React, {lazy, useEffect, useState} from "react";
+
+const MessagePage = lazy(() => import('./components/pages/MessagePage/MessagePage'));
+const AdminPage = lazy(() => import("./components/pages/AdminPage/AdminPage"));
+const FriendsPage = lazy(() => import("./components/pages/FriendPage/Friends"));
+const EventPage =  lazy(() => import("./components/pages/EventPage/EventPage"));
+const AccountSettingsPage = lazy(() => import("./components/pages/AccountPage/AccountSettings"));
+const EventDetailPage = lazy(() => import("./components/pages/EventPage/EventDetailPage"));
+const ProfilePage = lazy(() => import('./components/pages/Profile/Profile'));
+const RidesPage = lazy(() => import("./components/pages/RidePage/RidePage"));
+const GroupsPage  = lazy(() => import("./components/pages/GroupPage/GroupPage"));
+const Layout  = lazy(() => import( "./components/layout/Layout"));
+const AccountPage  = lazy(() => import("./components/pages/AccountPage/AccountPage"));
 import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import MessagePage from './components/pages/MessagePage/MessagePage';
+
 import DataStoreContext from "./context/DataStoreContext";
 import ImageProvider from "./context/ImageProvider";
 /* Theme variables */
@@ -20,20 +34,6 @@ Amplify.configure({
 // Tailwind CSS
 import './index.css'
 
-import ProfilePage from './components/pages/Profile/Profile';
-import React, {useEffect, useState} from "react";
-import Admin from "./components/pages/AdminPage/Admin";
-import FriendsPage from "./components/pages/FriendPage/Friends";
-import Events from "./components/pages/EventPage/EventPage";
-
-import AccountSettingsPage from "./components/pages/AccountPage/AccountSettings";
-import EventDetailPage from "./components/pages/EventPage/EventDetailPage";
-
-import RidesPage from "./components/pages/RidePage/RidePage";
-import GroupsPage from "./components/pages/GroupPage/GroupPage";
-import Layout from "./components/layout/Layout";
-import AccountPage from "./components/pages/AccountPage";
-import {useAuthenticator} from "@aws-amplify/ui-react";
 
 const AppWrapper = () => {
 
@@ -46,9 +46,7 @@ const AppWrapper = () => {
   const { fetchAndObserveUserProfile, userProfile } = useUserProfileStore();
 
   useEffect(() => {
-    if(route === 'authenticated' ) {
-      fetchAndObserveUserProfile(user);
-    }
+    fetchAndObserveUserProfile(user, route);
   }, [user, route, fetchAndObserveUserProfile]);
 
   useEffect(() => {
@@ -63,7 +61,7 @@ const AppWrapper = () => {
       children: [
         {
           index: true,
-          element: <Events /> },
+          element: <EventPage /> },
         {
           path: 'events/:id',
           element: <EventDetailPage />
@@ -90,7 +88,7 @@ const AppWrapper = () => {
         },
         {
           path: 'admin',
-          element: <Admin/>
+          element: <AdminPage/>
         },
         {
           path:'/friends/profile/:profileId',
