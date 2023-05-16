@@ -2,6 +2,7 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import rollupNodePolyFill from "rollup-plugin-node-polyfills";
 // https://vitejs.dev/config/
+// @ts-ignore
 export default defineConfig({
   plugins: [react()],
   optimizeDeps: {
@@ -33,6 +34,8 @@ export default defineConfig({
       './runtimeConfig': './runtimeConfig.browser', // <-- Fix from above
     },
   },
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   test: {
     environment: 'jsdom',
     setupFiles: ['./src/setupTests.ts'],
