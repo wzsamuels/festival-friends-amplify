@@ -3,12 +3,6 @@ interface DataItem {
   value: string;
 }
 
-interface QueryCriteria {
-  [key: string]: {
-    eq: (value: string) => void;
-  };
-}
-
 export const criteria = (c: any, filteredData: DataItem[]) => {
   return filteredData.map((item) => c[item.field].contains(item.value));
 };
