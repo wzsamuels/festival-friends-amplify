@@ -1,7 +1,6 @@
 import React, {useState} from "react";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {Friendship, UserProfile} from "../../../../models";
-import {useAuthenticator} from "@aws-amplify/ui-react";
 import {DataStore} from "aws-amplify";
 import FriendCard from "../../../ui/FriendCard";
 import Modal from "../../../common/Modal/Modal";
@@ -13,6 +12,7 @@ import {useUserProfileStore} from "../../../../stores/friendProfilesStore";
 import Toast from "../../../common/Toast/Toast";
 import {ToastData} from "../../../../types";
 import {criteria, getFilteredData} from "../../../../lib/searchHelpers";
+import {createFriendRequest} from "../../../../services/FriendsService";
 
 interface SearchInput {
   firstName?: string;
@@ -30,7 +30,6 @@ type FriendSearchModalProps = {
 const FriendSearchModal = ({isOpen, setIsOpen}: FriendSearchModalProps) => {
   const { register, handleSubmit, reset } = useForm<SearchInput>()
   const [results, setResults] = useState<UserProfile[]>([])
-  const { user } = useAuthenticator();
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [currentResult, setCurrentResult] = useState<UserProfile | null>(null);
   const { userProfile } = useUserProfileStore()
@@ -56,33 +55,6 @@ const FriendSearchModal = ({isOpen, setIsOpen}: FriendSearchModalProps) => {
     });
 
     setResults(filteredResults);
-  }
-
-  const createFriendRequest = async (friendProfile: UserProfile) => {
-    const profile = await DataStore.query(UserProfile, c => c.userID.eq(user?.username as string));
-    const userProfile = profile[0];
-
-    if(userProfile.id === friendProfile.id) {
-      setToastData({message: 'You cannot send a friend request to yourself!', type: 'info'})
-      return;
-    }
-
-    const existingFriendships = await DataStore.query(Friendship, c => c.or( c => [
-      c.and( c => [c.userProfileID.eq(userProfile.id), c.friendProfileID.eq(friendProfile.id)]),
-      c.and( c => [c.userProfileID.eq(friendProfile.id), c.friendProfileID.eq(userProfile.id)])
-    ]));
-
-    if(existingFriendships.length > 0) {
-      if(existingFriendships[0].isAccepted) {
-        setToastData({message: 'You are already friends!', type: 'info'})
-        return;
-      }
-      setToastData({message: 'Friend request already sent!', type: 'info'})
-      return;
-    }
-
-    await DataStore.save(new Friendship({userProfileID: userProfile.id, friendProfileID: friendProfile.id, isAccepted: false, friendProfile: friendProfile, userProfile: profile[0]}) )
-    setToastData({message: 'Friend request sent!', type: 'success'})
   }
 
   return (
@@ -138,7 +110,7 @@ const FriendSearchModal = ({isOpen, setIsOpen}: FriendSearchModalProps) => {
             text: 'OK',
             role: 'confirm',
             handler: () => {
-              createFriendRequest(currentResult as UserProfile);
+              createFriendRequest(userProfile, currentResult as UserProfile, setToastData);
             },
           },
         ]}
