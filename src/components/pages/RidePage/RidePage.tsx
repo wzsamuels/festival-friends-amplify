@@ -5,12 +5,10 @@ import Header from "../../layout/Header";
 const RidesPage = () => {
   return (
     <>
-      <Header>
-
-      </Header>
+      <Header></Header>
       <div>Rides</div>
     </>
-  )
-}
+  );
+};
 
-export default RidesPage
+export default RidesPage;

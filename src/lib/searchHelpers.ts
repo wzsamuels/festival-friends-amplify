@@ -10,5 +10,5 @@ export const criteria = (c: any, filteredData: DataItem[]) => {
 export const getFilteredData = <T extends object>(data: T) => {
   return Object.entries(data)
     .filter(([_, value]) => value)
-    .map(([field, value]) => ({field, value}));
-}
+    .map(([field, value]) => ({ field, value }));
+};

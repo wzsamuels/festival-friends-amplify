@@ -1,13 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import {ToastData} from "../../../types";
+import React, { useEffect, useState } from "react";
+import { ToastData } from "../../../types";
 
 interface ToastProps {
-  toastData: ToastData
+  toastData: ToastData;
   duration?: number;
   onClose?: () => void;
 }
 
-const Toast: React.FC<ToastProps> = ({ toastData, onClose, duration = 3000}) => {
+const Toast: React.FC<ToastProps> = ({
+  toastData,
+  onClose,
+  duration = 3000,
+}) => {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -27,18 +31,19 @@ const Toast: React.FC<ToastProps> = ({ toastData, onClose, duration = 3000}) => 
   }
 
   const toastColor = {
-    success: 'bg-green-950',
-    error: 'bg-red-500',
-    info: 'bg-blue-500',
-    warning: 'bg-yellow-400',
+    success: "bg-green-950",
+    error: "bg-red-500",
+    info: "bg-blue-500",
+    warning: "bg-yellow-400",
   };
 
   return (
-    <div
-      className={`fixed bottom-4 z-50 left-0 w-full  `}
-      role="alert"
-    >
-      <div className={`flex justify-between items-center max-w-sm p-4 rounded-lg shadow-lg ${toastColor[toastData.type]} text-white`}>
+    <div className={`fixed bottom-4 z-50 left-0 w-full  `} role="alert">
+      <div
+        className={`flex justify-between items-center max-w-sm p-4 rounded-lg shadow-lg ${
+          toastColor[toastData.type]
+        } text-white`}
+      >
         <div>
           <p>{toastData.message}</p>
         </div>

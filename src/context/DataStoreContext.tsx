@@ -1,8 +1,11 @@
 // DataStoreContext.js
-import { createContext } from 'react';
+import { createContext } from "react";
 
-export type DataStoreContextType = {dataStoreCleared: boolean, saveDataStoreCleared: (value: boolean) => void}
+export type DataStoreContextType = {
+  dataStoreCleared: boolean;
+  saveDataStoreCleared: (value: boolean) => void;
+};
 
-const DataStoreContext = createContext<DataStoreContextType | null>(null)
+const DataStoreContext = createContext<DataStoreContextType | null>(null);
 
 export default DataStoreContext;

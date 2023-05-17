@@ -1,5 +1,5 @@
 // PulseButton.tsx
-import React, { useRef } from 'react';
+import React, { useRef } from "react";
 
 interface PulseButtonProps {
   children: React.ReactNode;
@@ -8,10 +8,10 @@ interface PulseButtonProps {
 }
 
 const PulseButton: React.FC<PulseButtonProps> = ({
-                                                   children,
-                                                   className = '',
-                                                   onClick,
-                                                 }) => {
+  children,
+  className = "",
+  onClick,
+}) => {
   const pulseEffectRef = useRef<HTMLSpanElement>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -23,11 +23,11 @@ const PulseButton: React.FC<PulseButtonProps> = ({
       const pulseEffect = pulseEffectRef.current;
 
       // Add the animate-pulse-effect class when clicked
-      pulseEffect.classList.add('animate-pulse-effect');
+      pulseEffect.classList.add("animate-pulse-effect");
 
       // Reset the animation to allow multiple clicks
-      pulseEffect.addEventListener('animationend', () => {
-        pulseEffect.classList.remove('animate-pulse-effect');
+      pulseEffect.addEventListener("animationend", () => {
+        pulseEffect.classList.remove("animate-pulse-effect");
       });
     }
   };

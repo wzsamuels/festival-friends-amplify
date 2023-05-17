@@ -8,38 +8,53 @@ import * as React from "react";
 import { GridProps, TextFieldProps } from "@aws-amplify/ui-react";
 import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
 export declare type ValidationResponse = {
-    hasError: boolean;
-    errorMessage?: string;
+  hasError: boolean;
+  errorMessage?: string;
 };
-export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
+export declare type ValidationFunction<T> = (
+  value: T,
+  validationResponse: ValidationResponse
+) => ValidationResponse | Promise<ValidationResponse>;
 export declare type CollegeGroupCreateFormInputValues = {
-    name?: string;
-    domain?: string;
-    webPage?: string;
-    countryCode?: string;
+  name?: string;
+  domain?: string;
+  webPage?: string;
+  countryCode?: string;
 };
 export declare type CollegeGroupCreateFormValidationValues = {
-    name?: ValidationFunction<string>;
-    domain?: ValidationFunction<string>;
-    webPage?: ValidationFunction<string>;
-    countryCode?: ValidationFunction<string>;
+  name?: ValidationFunction<string>;
+  domain?: ValidationFunction<string>;
+  webPage?: ValidationFunction<string>;
+  countryCode?: ValidationFunction<string>;
 };
-export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
+export declare type PrimitiveOverrideProps<T> = Partial<T> &
+  React.DOMAttributes<HTMLDivElement>;
 export declare type CollegeGroupCreateFormOverridesProps = {
-    CollegeGroupCreateFormGrid?: PrimitiveOverrideProps<GridProps>;
-    name?: PrimitiveOverrideProps<TextFieldProps>;
-    domain?: PrimitiveOverrideProps<TextFieldProps>;
-    webPage?: PrimitiveOverrideProps<TextFieldProps>;
-    countryCode?: PrimitiveOverrideProps<TextFieldProps>;
+  CollegeGroupCreateFormGrid?: PrimitiveOverrideProps<GridProps>;
+  name?: PrimitiveOverrideProps<TextFieldProps>;
+  domain?: PrimitiveOverrideProps<TextFieldProps>;
+  webPage?: PrimitiveOverrideProps<TextFieldProps>;
+  countryCode?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
-export declare type CollegeGroupCreateFormProps = React.PropsWithChildren<{
+export declare type CollegeGroupCreateFormProps = React.PropsWithChildren<
+  {
     overrides?: CollegeGroupCreateFormOverridesProps | undefined | null;
-} & {
+  } & {
     clearOnSuccess?: boolean;
-    onSubmit?: (fields: CollegeGroupCreateFormInputValues) => CollegeGroupCreateFormInputValues;
+    onSubmit?: (
+      fields: CollegeGroupCreateFormInputValues
+    ) => CollegeGroupCreateFormInputValues;
     onSuccess?: (fields: CollegeGroupCreateFormInputValues) => void;
-    onError?: (fields: CollegeGroupCreateFormInputValues, errorMessage: string) => void;
-    onChange?: (fields: CollegeGroupCreateFormInputValues) => CollegeGroupCreateFormInputValues;
+    onError?: (
+      fields: CollegeGroupCreateFormInputValues,
+      errorMessage: string
+    ) => void;
+    onChange?: (
+      fields: CollegeGroupCreateFormInputValues
+    ) => CollegeGroupCreateFormInputValues;
     onValidate?: CollegeGroupCreateFormValidationValues;
-} & React.CSSProperties>;
-export default function CollegeGroupCreateForm(props: CollegeGroupCreateFormProps): React.ReactElement;
+  } & React.CSSProperties
+>;
+export default function CollegeGroupCreateForm(
+  props: CollegeGroupCreateFormProps
+): React.ReactElement;

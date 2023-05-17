@@ -1,10 +1,10 @@
-import React, { Fragment, ReactElement } from 'react';
-import { Dialog, Transition } from '@headlessui/react';
+import React, { Fragment, ReactElement } from "react";
+import { Dialog, Transition } from "@headlessui/react";
 import Modal from "../Modal/Modal";
 
 interface Button {
   text: string;
-  role: 'cancel' | 'confirm' | string;
+  role: "cancel" | "confirm" | string;
   handler?: () => void;
 }
 
@@ -17,24 +17,26 @@ interface CustomAlertProps {
 }
 
 const CustomAlert: React.FC<CustomAlertProps> = ({
-                                                   title,
-                                                   message,
-                                                   isOpen,
-                                                   setIsOpen,
-                                                   buttons,
-                                                 }) => {
+  title,
+  message,
+  isOpen,
+  setIsOpen,
+  buttons,
+}) => {
   const renderButtons = (): ReactElement[] => {
     return buttons.map((button, index) => (
       <button
         key={index}
         type="button"
         className={`inline-flex justify-center px-4 py-2 text-sm font-medium border border-transparent rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${
-          button.role === 'confirm'
-            ? 'text-white bg-green-950 focus-visible:ring-green-950'
-            : 'text-gray-700 bg-gray-100 hover:bg-gray-200 focus-visible:ring-gray-500'
+          button.role === "confirm"
+            ? "text-white bg-green-950 focus-visible:ring-green-950"
+            : "text-gray-700 bg-gray-100 hover:bg-gray-200 focus-visible:ring-gray-500"
         }`}
         onClick={() => {
-          { button.handler && button.handler()}
+          {
+            button.handler && button.handler();
+          }
           setIsOpen(false);
         }}
       >
@@ -44,7 +46,11 @@ const CustomAlert: React.FC<CustomAlertProps> = ({
   };
 
   return (
-    <Modal isOpen={isOpen} setIsOpen={setIsOpen} className='w-full max-w-[350px]'>
+    <Modal
+      isOpen={isOpen}
+      setIsOpen={setIsOpen}
+      className="w-full max-w-[350px]"
+    >
       <div className="mb-4">
         <p className="text-xl text-center text-gray-500">{message}</p>
       </div>

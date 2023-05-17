@@ -8,32 +8,47 @@ import * as React from "react";
 import { GridProps, TextFieldProps } from "@aws-amplify/ui-react";
 import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
 export declare type ValidationResponse = {
-    hasError: boolean;
-    errorMessage?: string;
+  hasError: boolean;
+  errorMessage?: string;
 };
-export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
+export declare type ValidationFunction<T> = (
+  value: T,
+  validationResponse: ValidationResponse
+) => ValidationResponse | Promise<ValidationResponse>;
 export declare type MessageCreateFormInputValues = {
-    text?: string;
-    senderID?: string;
+  text?: string;
+  senderID?: string;
 };
 export declare type MessageCreateFormValidationValues = {
-    text?: ValidationFunction<string>;
-    senderID?: ValidationFunction<string>;
+  text?: ValidationFunction<string>;
+  senderID?: ValidationFunction<string>;
 };
-export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
+export declare type PrimitiveOverrideProps<T> = Partial<T> &
+  React.DOMAttributes<HTMLDivElement>;
 export declare type MessageCreateFormOverridesProps = {
-    MessageCreateFormGrid?: PrimitiveOverrideProps<GridProps>;
-    text?: PrimitiveOverrideProps<TextFieldProps>;
-    senderID?: PrimitiveOverrideProps<TextFieldProps>;
+  MessageCreateFormGrid?: PrimitiveOverrideProps<GridProps>;
+  text?: PrimitiveOverrideProps<TextFieldProps>;
+  senderID?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
-export declare type MessageCreateFormProps = React.PropsWithChildren<{
+export declare type MessageCreateFormProps = React.PropsWithChildren<
+  {
     overrides?: MessageCreateFormOverridesProps | undefined | null;
-} & {
+  } & {
     clearOnSuccess?: boolean;
-    onSubmit?: (fields: MessageCreateFormInputValues) => MessageCreateFormInputValues;
+    onSubmit?: (
+      fields: MessageCreateFormInputValues
+    ) => MessageCreateFormInputValues;
     onSuccess?: (fields: MessageCreateFormInputValues) => void;
-    onError?: (fields: MessageCreateFormInputValues, errorMessage: string) => void;
-    onChange?: (fields: MessageCreateFormInputValues) => MessageCreateFormInputValues;
+    onError?: (
+      fields: MessageCreateFormInputValues,
+      errorMessage: string
+    ) => void;
+    onChange?: (
+      fields: MessageCreateFormInputValues
+    ) => MessageCreateFormInputValues;
     onValidate?: MessageCreateFormValidationValues;
-} & React.CSSProperties>;
-export default function MessageCreateForm(props: MessageCreateFormProps): React.ReactElement;
+  } & React.CSSProperties
+>;
+export default function MessageCreateForm(
+  props: MessageCreateFormProps
+): React.ReactElement;

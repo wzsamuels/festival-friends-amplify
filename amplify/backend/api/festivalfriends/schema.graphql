@@ -1,5 +1,4 @@
-type Message @model @auth(rules: [{allow: public}])
-{
+type Message @model @auth(rules: [{ allow: public }]) {
   id: ID!
   content: String!
   senderID: ID! @index(name: "bySender")
@@ -11,8 +10,7 @@ type Message @model @auth(rules: [{allow: public}])
   unreadMessage: Boolean
 }
 
-type EventProfile @model @auth(rules: [{allow: public}])
-{
+type EventProfile @model @auth(rules: [{ allow: public }]) {
   id: ID!
   userProfileID: ID! @index(name: "byUserProfile")
   eventID: ID! @index(name: "byEvent")
@@ -20,7 +18,7 @@ type EventProfile @model @auth(rules: [{allow: public}])
   event: Festival! @belongsTo(fields: ["eventID"])
 }
 
-type Festival @model @auth(rules: [{allow: public}]) {
+type Festival @model @auth(rules: [{ allow: public }]) {
   id: ID!
   name: String!
   genre: String!
@@ -37,7 +35,7 @@ type Festival @model @auth(rules: [{allow: public}]) {
   rides: [Ride] @hasMany(fields: ["id"])
 }
 
-type UserProfile @model @auth(rules: [{allow: public}]) {
+type UserProfile @model @auth(rules: [{ allow: public }]) {
   id: ID!
   firstName: String
   lastName: String
@@ -55,10 +53,12 @@ type UserProfile @model @auth(rules: [{allow: public}]) {
   username: String
   email: String
   zipcode: String
-  attendingEvents: [EventProfile] @hasMany(indexName: "byUserProfile", fields: ["id"])
+  attendingEvents: [EventProfile]
+    @hasMany(indexName: "byUserProfile", fields: ["id"])
   rides: [RideUser]! @hasMany(indexName: "byUserProfile", fields: ["id"])
   friends: [Friendship] @hasMany(indexName: "byUserProfile", fields: ["id"])
-  conversations: [Conversation] @hasMany(indexName: "byUserProfile", fields: ["id"])
+  conversations: [Conversation]
+    @hasMany(indexName: "byUserProfile", fields: ["id"])
   sentMessages: [Message] @hasMany(indexName: "bySender", fields: ["id"])
   receivedMessages: [Message] @hasMany(indexName: "byReceiver", fields: ["id"])
   photos: [Photo] @hasMany(indexName: "byUserProfile", fields: ["id"])
@@ -66,7 +66,7 @@ type UserProfile @model @auth(rules: [{allow: public}]) {
   collegeGroup: CollegeGroup @belongsTo(fields: ["collegeGroupId"])
 }
 
-type Ride @model @auth(rules: [{allow: public}]) {
+type Ride @model @auth(rules: [{ allow: public }]) {
   id: ID!
   event: Festival! @belongsTo(fields: ["eventID"])
   eventID: ID! @index(name: "byEvent")
@@ -78,7 +78,7 @@ type Ride @model @auth(rules: [{allow: public}]) {
   endPoint: String!
 }
 
-type RideUser @model @auth(rules: [{allow: public}]) {
+type RideUser @model @auth(rules: [{ allow: public }]) {
   id: ID!
   ride: Ride! @belongsTo(fields: ["rideID"])
   rideID: ID! @index(name: "byRide")
@@ -87,8 +87,7 @@ type RideUser @model @auth(rules: [{allow: public}]) {
   isDriver: Boolean!
 }
 
-type Photo @model @auth(rules: [{allow: public}])
-{
+type Photo @model @auth(rules: [{ allow: public }]) {
   id: ID!
   userProfileID: ID! @index(name: "byUserProfile")
   userProfile: UserProfile! @belongsTo(fields: ["userProfileID"])
@@ -98,15 +97,14 @@ type Photo @model @auth(rules: [{allow: public}])
   comments: [PhotoComment] @hasMany(indexName: "byPhoto", fields: ["id"])
 }
 
-type PhotoComment @model @auth(rules: [{allow: public}]) {
+type PhotoComment @model @auth(rules: [{ allow: public }]) {
   id: ID!
   content: String!
   photoID: ID! @index(name: "byPhoto")
   photo: Photo! @belongsTo(fields: ["photoID"])
 }
 
-type Friendship @model @auth(rules: [{allow: public}])
-{
+type Friendship @model @auth(rules: [{ allow: public }]) {
   id: ID!
   userProfileID: ID! @index(name: "byUserProfile")
   friendProfileID: ID! @index(name: "byFriend")
@@ -115,9 +113,7 @@ type Friendship @model @auth(rules: [{allow: public}])
   friendProfile: UserProfile! @belongsTo(fields: ["friendProfileID"])
 }
 
-
-type Conversation @model @auth(rules: [{allow: public}])
-{
+type Conversation @model @auth(rules: [{ allow: public }]) {
   id: ID!
   userProfileID: ID! @index(name: "byUserProfile")
   friendProfileID: ID! @index(name: "friendProfile")
@@ -127,7 +123,7 @@ type Conversation @model @auth(rules: [{allow: public}])
   unreadMessage: Boolean
 }
 
-type CollegeGroup @model @auth(rules: [{allow: public}]) {
+type CollegeGroup @model @auth(rules: [{ allow: public }]) {
   id: ID!
   name: String!
   domain: String!
@@ -138,7 +134,11 @@ type CollegeGroup @model @auth(rules: [{allow: public}]) {
 }
 
 type Query {
-  findSuggestedFriends(school: String, city: String, state: String): [UserProfile]
+  findSuggestedFriends(
+    school: String
+    city: String
+    state: String
+  ): [UserProfile]
 }
 
 enum FriendshipStatus {

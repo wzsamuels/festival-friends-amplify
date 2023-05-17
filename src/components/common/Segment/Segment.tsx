@@ -1,4 +1,4 @@
-import React, { ReactNode, useRef, useEffect } from 'react';
+import React, { ReactNode, useRef, useEffect } from "react";
 
 interface SegmentProps {
   segmentType: string;
@@ -7,11 +7,17 @@ interface SegmentProps {
   className?: string;
 }
 
-const Segment: React.FC<SegmentProps> = ({ segmentType, setSegmentType, items }) => {
+const Segment: React.FC<SegmentProps> = ({
+  segmentType,
+  setSegmentType,
+  items,
+}) => {
   const lineRef = useRef<HTMLDivElement>(null);
 
   const generateClassName = (type: string) =>
-    `hover:bg-white flex-1 p-1 sm:p-2 md:p-4 relative text-sm sm:text-base ${segmentType === type ? 'active' : ''}`;
+    `hover:bg-white flex-1 p-1 sm:p-2 md:p-4 relative text-sm sm:text-base ${
+      segmentType === type ? "active" : ""
+    }`;
 
   const updateLinePosition = () => {
     const activeButton = document.querySelector<HTMLButtonElement>(
@@ -33,10 +39,10 @@ const Segment: React.FC<SegmentProps> = ({ segmentType, setSegmentType, items })
       updateLinePosition();
     };
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 

@@ -1,5 +1,5 @@
 // ImageContext.tsx
-import { createContext } from 'react';
+import { createContext } from "react";
 
 interface ImageContextData {
   imageURLs: { [key: string]: string };

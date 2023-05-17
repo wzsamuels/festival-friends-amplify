@@ -12,14 +12,14 @@ const friendProfilesStore = create(
       loadingFriendProfiles: true,
     },
     (set) => ({
-      fetchAndObserveUserProfile: async (user: any, route:  string) => {
-        if(route !== 'authenticated') {
-          set({loadingUserProfile: false, loadingFriendProfiles: false })
+      fetchAndObserveUserProfile: async (user: any, route: string) => {
+        if (route !== "authenticated") {
+          set({ loadingUserProfile: false, loadingFriendProfiles: false });
           return;
         }
-        console.log(user)
+        console.log(user);
         const username = user.username as string;
-        console.log('fetchAndObserveUserProfile called');
+        console.log("fetchAndObserveUserProfile called");
         set({ loadingUserProfile: true });
 
         const userProfiles = await DataStore.query(UserProfile, (c) =>
@@ -30,28 +30,28 @@ const friendProfilesStore = create(
 
         if (userProfiles.length > 0) {
           const userProfile = userProfiles[0];
-          console.log(userProfile)
+          console.log(userProfile);
           set({ userProfile, loadingUserProfile: false });
 
           // Observe user profile
-          const userSub = DataStore.observe(UserProfile, userProfile.id).subscribe((msg) => {
+          const userSub = DataStore.observe(
+            UserProfile,
+            userProfile.id
+          ).subscribe((msg) => {
             if (msg.opType === "UPDATE") {
               set({ userProfile: msg.element });
             }
           });
 
           // Observe friend profiles
-          const friendsSub = DataStore.observeQuery(
-            Friendship,
-            (c) =>
-              c
-                .and((c) => [
-                  c.isAccepted.eq(true),
-                  c.or((c) => [
-                    c.friendProfileID.eq(userProfile.id),
-                    c.userProfileID.eq(userProfile.id),
-                  ]),
-                ])
+          const friendsSub = DataStore.observeQuery(Friendship, (c) =>
+            c.and((c) => [
+              c.isAccepted.eq(true),
+              c.or((c) => [
+                c.friendProfileID.eq(userProfile.id),
+                c.userProfileID.eq(userProfile.id),
+              ]),
+            ])
           ).subscribe(async ({ items }) => {
             set({ loadingFriendProfiles: true });
 
@@ -71,7 +71,7 @@ const friendProfilesStore = create(
             friendsSub.unsubscribe();
           };
         } else {
-          set({loadingUserProfile: false, loadingFriendProfiles: false })
+          set({ loadingUserProfile: false, loadingFriendProfiles: false });
         }
       },
       reset: () => {

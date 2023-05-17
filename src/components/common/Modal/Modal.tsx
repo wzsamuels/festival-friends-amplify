@@ -11,10 +11,21 @@ interface ModalProps {
   className?: string;
 }
 
-const Modal = ({ isOpen, setIsOpen, children, title, onClose, className }: ModalProps) => {
+const Modal = ({
+  isOpen,
+  setIsOpen,
+  children,
+  title,
+  onClose,
+  className,
+}: ModalProps) => {
   return (
     <Transition appear show={isOpen} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={() => setIsOpen(false)}>
+      <Dialog
+        as="div"
+        className="relative z-10"
+        onClose={() => setIsOpen(false)}
+      >
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -38,15 +49,27 @@ const Modal = ({ isOpen, setIsOpen, children, title, onClose, className }: Modal
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className={`w-full h-full transform rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all overflow-y-auto ${className}`}>
+              <Dialog.Panel
+                className={`w-full h-full transform rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all overflow-y-auto ${className}`}
+              >
                 {title && (
-                <Dialog.Title
-                  as="h3"
-                  className="text-lg font-medium leading-6 pb-4 text-gray-900 flex justify-between w-full relative"
-                >
-                  <span className='w-full after:left-0 after:w-full after:absolute after:h-[1px] after:bottom-0 after:bg-primary-default'>{title}</span>
-                  <button onClick={() => { setIsOpen(false); onClose && onClose(); }}><GrClose /></button>
-                </Dialog.Title>)}
+                  <Dialog.Title
+                    as="h3"
+                    className="text-lg font-medium leading-6 pb-4 text-gray-900 flex justify-between w-full relative"
+                  >
+                    <span className="w-full after:left-0 after:w-full after:absolute after:h-[1px] after:bottom-0 after:bg-primary-default">
+                      {title}
+                    </span>
+                    <button
+                      onClick={() => {
+                        setIsOpen(false);
+                        onClose && onClose();
+                      }}
+                    >
+                      <GrClose />
+                    </button>
+                  </Dialog.Title>
+                )}
                 {children}
               </Dialog.Panel>
             </Transition.Child>

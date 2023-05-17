@@ -13,7 +13,11 @@ interface ModalProps {
 const Drawer = ({ isOpen, setIsOpen, children, className }: ModalProps) => {
   return (
     <Transition appear show={isOpen} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={() => setIsOpen(false)}>
+      <Dialog
+        as="div"
+        className="relative z-10"
+        onClose={() => setIsOpen(false)}
+      >
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -27,20 +31,22 @@ const Drawer = ({ isOpen, setIsOpen, children, className }: ModalProps) => {
         </Transition.Child>
 
         <div className="fixed inset-0 overflow-y-auto">
-            <Transition.Child
-              as={Fragment}
-              enter="transition ease-in-out duration-300 transform"
-              enterFrom="-translate-x-full"
-              enterTo="translate-x-0"
-              leave="transition ease-in-out duration-300 transform"
-              leaveFrom="translate-x-0"
-              leaveTo="-translate-x-full"
+          <Transition.Child
+            as={Fragment}
+            enter="transition ease-in-out duration-300 transform"
+            enterFrom="-translate-x-full"
+            enterTo="translate-x-0"
+            leave="transition ease-in-out duration-300 transform"
+            leaveFrom="translate-x-0"
+            leaveTo="-translate-x-full"
+          >
+            <Dialog.Panel
+              className={`w-full max-w-[300px] h-full transform bg-black text-white text-left align-middle shadow-xl transition-all overflow-y-auto ${className}`}
             >
-              <Dialog.Panel className={`w-full max-w-[300px] h-full transform bg-black text-white text-left align-middle shadow-xl transition-all overflow-y-auto ${className}`}>
-                {children}
-              </Dialog.Panel>
-            </Transition.Child>
-          </div>
+              {children}
+            </Dialog.Panel>
+          </Transition.Child>
+        </div>
       </Dialog>
     </Transition>
   );

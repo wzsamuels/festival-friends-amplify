@@ -1,4 +1,4 @@
-import React, {ReactNode} from "react";
+import React, { ReactNode } from "react";
 
 interface LabelProps {
   children?: ReactNode;
@@ -6,11 +6,7 @@ interface LabelProps {
 }
 
 const Label = ({ children, className }: LabelProps) => {
-  return (
-    <label className={`basis-[150px] ${className}`}>
-      {children}
-    </label>
-  )
-}
+  return <label className={`basis-[150px] ${className}`}>{children}</label>;
+};
 
 export default Label;

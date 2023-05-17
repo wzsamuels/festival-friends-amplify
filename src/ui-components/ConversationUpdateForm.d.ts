@@ -9,36 +9,51 @@ import { GridProps, TextFieldProps } from "@aws-amplify/ui-react";
 import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
 import { Conversation } from "../models";
 export declare type ValidationResponse = {
-    hasError: boolean;
-    errorMessage?: string;
+  hasError: boolean;
+  errorMessage?: string;
 };
-export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
+export declare type ValidationFunction<T> = (
+  value: T,
+  validationResponse: ValidationResponse
+) => ValidationResponse | Promise<ValidationResponse>;
 export declare type ConversationUpdateFormInputValues = {
-    participants?: string[];
-    lastMessage?: string;
-    lastMessageCreatedAt?: string;
+  participants?: string[];
+  lastMessage?: string;
+  lastMessageCreatedAt?: string;
 };
 export declare type ConversationUpdateFormValidationValues = {
-    participants?: ValidationFunction<string>;
-    lastMessage?: ValidationFunction<string>;
-    lastMessageCreatedAt?: ValidationFunction<string>;
+  participants?: ValidationFunction<string>;
+  lastMessage?: ValidationFunction<string>;
+  lastMessageCreatedAt?: ValidationFunction<string>;
 };
-export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
+export declare type PrimitiveOverrideProps<T> = Partial<T> &
+  React.DOMAttributes<HTMLDivElement>;
 export declare type ConversationUpdateFormOverridesProps = {
-    ConversationUpdateFormGrid?: PrimitiveOverrideProps<GridProps>;
-    participants?: PrimitiveOverrideProps<TextFieldProps>;
-    lastMessage?: PrimitiveOverrideProps<TextFieldProps>;
-    lastMessageCreatedAt?: PrimitiveOverrideProps<TextFieldProps>;
+  ConversationUpdateFormGrid?: PrimitiveOverrideProps<GridProps>;
+  participants?: PrimitiveOverrideProps<TextFieldProps>;
+  lastMessage?: PrimitiveOverrideProps<TextFieldProps>;
+  lastMessageCreatedAt?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
-export declare type ConversationUpdateFormProps = React.PropsWithChildren<{
+export declare type ConversationUpdateFormProps = React.PropsWithChildren<
+  {
     overrides?: ConversationUpdateFormOverridesProps | undefined | null;
-} & {
+  } & {
     id?: string;
     conversation?: Conversation;
-    onSubmit?: (fields: ConversationUpdateFormInputValues) => ConversationUpdateFormInputValues;
+    onSubmit?: (
+      fields: ConversationUpdateFormInputValues
+    ) => ConversationUpdateFormInputValues;
     onSuccess?: (fields: ConversationUpdateFormInputValues) => void;
-    onError?: (fields: ConversationUpdateFormInputValues, errorMessage: string) => void;
-    onChange?: (fields: ConversationUpdateFormInputValues) => ConversationUpdateFormInputValues;
+    onError?: (
+      fields: ConversationUpdateFormInputValues,
+      errorMessage: string
+    ) => void;
+    onChange?: (
+      fields: ConversationUpdateFormInputValues
+    ) => ConversationUpdateFormInputValues;
     onValidate?: ConversationUpdateFormValidationValues;
-} & React.CSSProperties>;
-export default function ConversationUpdateForm(props: ConversationUpdateFormProps): React.ReactElement;
+  } & React.CSSProperties
+>;
+export default function ConversationUpdateForm(
+  props: ConversationUpdateFormProps
+): React.ReactElement;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 interface InputProps {
   className?: string;
@@ -11,8 +11,10 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       <input
         {...props}
         ref={ref}
-      className={`border-b border-b-gray-400 focus:border-b-green-950 focus:outline-0  ${className}`}/>
-  )
-})
-Input.displayName = 'Input';
-export default Input
+        className={`border-b border-b-gray-400 focus:border-b-green-950 focus:outline-0  ${className}`}
+      />
+    );
+  }
+);
+Input.displayName = "Input";
+export default Input;

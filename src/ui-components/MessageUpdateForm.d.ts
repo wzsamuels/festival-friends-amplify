@@ -9,33 +9,48 @@ import { GridProps, TextFieldProps } from "@aws-amplify/ui-react";
 import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
 import { Message } from "../models";
 export declare type ValidationResponse = {
-    hasError: boolean;
-    errorMessage?: string;
+  hasError: boolean;
+  errorMessage?: string;
 };
-export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
+export declare type ValidationFunction<T> = (
+  value: T,
+  validationResponse: ValidationResponse
+) => ValidationResponse | Promise<ValidationResponse>;
 export declare type MessageUpdateFormInputValues = {
-    text?: string;
-    senderID?: string;
+  text?: string;
+  senderID?: string;
 };
 export declare type MessageUpdateFormValidationValues = {
-    text?: ValidationFunction<string>;
-    senderID?: ValidationFunction<string>;
+  text?: ValidationFunction<string>;
+  senderID?: ValidationFunction<string>;
 };
-export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
+export declare type PrimitiveOverrideProps<T> = Partial<T> &
+  React.DOMAttributes<HTMLDivElement>;
 export declare type MessageUpdateFormOverridesProps = {
-    MessageUpdateFormGrid?: PrimitiveOverrideProps<GridProps>;
-    text?: PrimitiveOverrideProps<TextFieldProps>;
-    senderID?: PrimitiveOverrideProps<TextFieldProps>;
+  MessageUpdateFormGrid?: PrimitiveOverrideProps<GridProps>;
+  text?: PrimitiveOverrideProps<TextFieldProps>;
+  senderID?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
-export declare type MessageUpdateFormProps = React.PropsWithChildren<{
+export declare type MessageUpdateFormProps = React.PropsWithChildren<
+  {
     overrides?: MessageUpdateFormOverridesProps | undefined | null;
-} & {
+  } & {
     id?: string;
     message?: Message;
-    onSubmit?: (fields: MessageUpdateFormInputValues) => MessageUpdateFormInputValues;
+    onSubmit?: (
+      fields: MessageUpdateFormInputValues
+    ) => MessageUpdateFormInputValues;
     onSuccess?: (fields: MessageUpdateFormInputValues) => void;
-    onError?: (fields: MessageUpdateFormInputValues, errorMessage: string) => void;
-    onChange?: (fields: MessageUpdateFormInputValues) => MessageUpdateFormInputValues;
+    onError?: (
+      fields: MessageUpdateFormInputValues,
+      errorMessage: string
+    ) => void;
+    onChange?: (
+      fields: MessageUpdateFormInputValues
+    ) => MessageUpdateFormInputValues;
     onValidate?: MessageUpdateFormValidationValues;
-} & React.CSSProperties>;
-export default function MessageUpdateForm(props: MessageUpdateFormProps): React.ReactElement;
+  } & React.CSSProperties
+>;
+export default function MessageUpdateForm(
+  props: MessageUpdateFormProps
+): React.ReactElement;

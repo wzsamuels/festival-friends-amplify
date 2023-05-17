@@ -3,13 +3,6 @@
   "bucketName": "festivalfriends-storage-2dfb2266",
   "policyUUID": "8855a43f",
   "storageAccess": "authAndGuest",
-  "guestAccess": [
-    "READ",
-    "CREATE_AND_UPDATE"
-  ],
-  "authAccess": [
-    "READ",
-    "CREATE_AND_UPDATE",
-    "DELETE"
-  ]
+  "guestAccess": ["READ", "CREATE_AND_UPDATE"],
+  "authAccess": ["READ", "CREATE_AND_UPDATE", "DELETE"]
 }

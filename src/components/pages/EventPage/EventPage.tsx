@@ -1,8 +1,8 @@
 // AWS imports
-import { DataStore } from 'aws-amplify';
+import { DataStore } from "aws-amplify";
 
 // React imports
-import React, { useContext, useEffect, useLayoutEffect, useState } from 'react';
+import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
 
 // Local imports
 import {
@@ -10,41 +10,52 @@ import {
   Festival,
   LazyFestival,
   UserProfile,
-} from '../../../models';
+} from "../../../models";
 import DataStoreContext, {
   DataStoreContextType,
-} from '../../../context/DataStoreContext';
-import EventCard from '../../ui/EventCard';
-import Header from '../../layout/Header';
-import { useUserProfileStore } from '../../../stores/friendProfilesStore';
-import Segment from '../../common/Segment/Segment';
+} from "../../../context/DataStoreContext";
+import EventCard from "../../ui/EventCard";
+import Header from "../../layout/Header";
+import { useUserProfileStore } from "../../../stores/friendProfilesStore";
+import Segment from "../../common/Segment/Segment";
 import EventSearchModal from "./Modals/EventSearchModal";
-import {fetchEventAttendees, getAttendingFriends} from "../../../lib/eventHelpers";
+import {
+  fetchEventAttendees,
+  getAttendingFriends,
+} from "../../../lib/eventHelpers";
 
 const EventPage = () => {
   const { friendProfiles } = useUserProfileStore();
   const [events, setEvents] = useState<LazyFestival[]>([]);
-  const [eventAttendees, setEventAttendees] = useState<Map<string, UserProfile[]>>(
-    new Map(),
-  );
+  const [eventAttendees, setEventAttendees] = useState<
+    Map<string, UserProfile[]>
+  >(new Map());
 
   // Filter events by type
   const sportEvents = events.filter((event) => event.type === EventType.SPORT);
   const musicEvents = events.filter((event) => event.type === EventType.MUSIC);
-  const collegeEvent = events.filter((event) => event.type === EventType.COLLEGE);
-  const businessEvent = events.filter((event) => event.type === EventType.BUSINESS);
+  const collegeEvent = events.filter(
+    (event) => event.type === EventType.COLLEGE
+  );
+  const businessEvent = events.filter(
+    (event) => event.type === EventType.BUSINESS
+  );
 
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
-  const [eventType, setEventType] = useState('all');
+  const [eventType, setEventType] = useState("all");
 
-  const { dataStoreCleared } = useContext(DataStoreContext) as DataStoreContextType;
+  const { dataStoreCleared } = useContext(
+    DataStoreContext
+  ) as DataStoreContextType;
 
   // Observe the Festival data from DataStore
   useLayoutEffect(() => {
     if (dataStoreCleared) {
-      const eventSub = DataStore.observeQuery(Festival).subscribe(({ items }) => {
-        setEvents(items);
-      });
+      const eventSub = DataStore.observeQuery(Festival).subscribe(
+        ({ items }) => {
+          setEvents(items);
+        }
+      );
 
       return () => {
         eventSub.unsubscribe();
@@ -54,11 +65,10 @@ const EventPage = () => {
 
   // Fetch event attendees
   useEffect(() => {
-    fetchEventAttendees(events).then(setEventAttendees)
+    fetchEventAttendees(events).then(setEventAttendees);
   }, [events]);
 
   // Get attending friends
-
 
   // Render festival cards
   const renderFestivalCards = (events: LazyFestival[]) => {
@@ -66,7 +76,11 @@ const EventPage = () => {
       <EventCard
         festival={event}
         key={event.id}
-        attendingFriends={getAttendingFriends({eventAttendees, friendProfiles, eventId: event.id})}
+        attendingFriends={getAttendingFriends({
+          eventAttendees,
+          friendProfiles,
+          eventId: event.id,
+        })}
       />
     ));
   };
@@ -80,10 +94,10 @@ const EventPage = () => {
   };
 
   const segmentItems = [
-    { type: 'all', label: 'All' },
-    { type: 'music', label: 'Music' },
-    { type: 'sport', label: 'Sports' },
-    { type: 'business', label: 'Business' },
+    { type: "all", label: "All" },
+    { type: "music", label: "Music" },
+    { type: "sport", label: "Sports" },
+    { type: "business", label: "Business" },
   ];
 
   // Filter events by type, map to array, and flatten
@@ -101,10 +115,13 @@ const EventPage = () => {
           items={segmentItems}
         />
       </Header>
-      <div className='grid gap-4 justify-items-center grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 items-center px-4'>
+      <div className="grid gap-4 justify-items-center grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 items-center px-4">
         {renderFestivalCards(filteredEvents)}
       </div>
-      <EventSearchModal isOpen={isSearchModalOpen} setIsOpen={setIsSearchModalOpen}/>
+      <EventSearchModal
+        isOpen={isSearchModalOpen}
+        setIsOpen={setIsSearchModalOpen}
+      />
     </div>
   );
 };
