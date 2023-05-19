@@ -36,7 +36,6 @@ const ProfileUnverified = () => {
   const email = user?.attributes?.email as string;
 
   const createNewProfile: SubmitHandler<ProfileInputs> = async (data) => {
-    if(!userProfile) return;
     //alert(`Email: ${email}\nUsername: ${username}\nData: ${JSON.stringify(data)}`)
     setIsSubmitting(true);
     let collegeGroup: CollegeGroup | null = null;
@@ -49,23 +48,35 @@ const ProfileUnverified = () => {
       alert("Detected college group: " + emailDomain + " " + collegeGroup?.name);
     }
     try {
-      console.log("Creating profile from data:", data);
-      const newProfile = await DataStore.save(UserProfile.copyOf(userProfile, (updated) => {
-        updated.verifySubmitted = true;
-        updated.phone = phone;
-        updated.firstName = data.firstName;
-        updated.lastName = data.lastName;
-        updated.username = data.username;
-        updated.school = data.school;
-        updated.city = data.city;
-        updated.state = data.state;
-        updated.zipcode = data.zipcode;
-        updated.address = data.address;
-        updated.address2 = data.address2;
-        updated.collegeGroup = collegeGroup;
-        })
-      );
-      console.log(newProfile);
+      if (userProfile) {
+        const newProfile = await DataStore.save(UserProfile.copyOf(userProfile, (updated) => {
+            updated.verifySubmitted = true;
+            updated.phone = phone;
+            updated.firstName = data.firstName;
+            updated.lastName = data.lastName;
+            updated.username = data.username;
+            updated.school = data.school;
+            updated.city = data.city;
+            updated.state = data.state;
+            updated.zipcode = data.zipcode;
+            updated.address = data.address;
+            updated.address2 = data.address2;
+            updated.collegeGroup = collegeGroup;
+          }));
+        console.log("Updated existing profile: ", JSON.stringify(newProfile));
+      } else {
+        const newProfile = await DataStore.save(
+          new UserProfile({
+            ...data,
+            verified: false,
+            verifySubmitted: true,
+            userID: username,
+            email: email,
+            phone: phone,
+            ...(collegeGroup && {collegeGroup: collegeGroup}),
+          }))
+        console.log("Created new profile: ", JSON.stringify(newProfile));
+      }
     } catch (err) {
       console.error("Error saving profile:", err);
     } finally {
