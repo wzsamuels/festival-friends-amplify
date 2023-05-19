@@ -43,7 +43,7 @@ const friendProfilesStore = create(
             UserProfile,
             userProfile.id
           ).subscribe((msg) => {
-            if (msg.opType === "UPDATE") {
+            if (msg.opType === 'INSERT' || msg.opType === "UPDATE") {
               set({ userProfile: msg.element });
             }
           });

@@ -43,7 +43,7 @@ const AccountPage = () => {
       );
     }
 
-    if (!userProfile) {
+    if (!userProfile?.verified) {
       return <ProfileUnverified />;
     }
 

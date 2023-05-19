@@ -1,0 +1,27 @@
+{
+  "trigger": true,
+  "modules": [
+    "add-to-group",
+    "custom"
+  ],
+  "parentResource": "festivalfriends",
+  "functionName": "festivalfriendsPostConfirmation",
+  "resourceName": "festivalfriendsPostConfirmation",
+  "parentStack": "auth",
+  "triggerEnvs": "[]",
+  "triggerDir": "C:\\snapshot\\repo\\build\\node_modules\\@aws-amplify\\amplify-category-auth\\provider-utils\\awscloudformation\\triggers\\PostConfirmation",
+  "triggerTemplate": "PostConfirmation.json.ejs",
+  "triggerEventPath": "PostConfirmation.event.json",
+  "roleName": "festivalfriendsPostConfirmation",
+  "skipEdit": true,
+  "environmentVariableList": [
+    {
+      "cloudFormationParameterName": "appsyncApiEndpoint",
+      "environmentVariableName": "APPSYNC_API_ENDPOINT"
+    },
+    {
+      "cloudFormationParameterName": "appsyncApiKey",
+      "environmentVariableName": "APPSYNC_API_KEY"
+    }
+  ]
+}

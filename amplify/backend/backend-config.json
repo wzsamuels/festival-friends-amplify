@@ -1,9 +1,33 @@
 {
   "api": {
+    "AdminQueries": {
+      "authorizationType": "AMAZON_COGNITO_USER_POOLS",
+      "dependsOn": [
+        {
+          "attributes": [
+            "UserPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "festivalfriends"
+        },
+        {
+          "attributes": [
+            "Arn",
+            "Name"
+          ],
+          "category": "function",
+          "resourceName": "AdminQueriese03c7317"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
     "festivalfriends": {
       "dependsOn": [
         {
-          "attributes": ["UserPoolId"],
+          "attributes": [
+            "UserPoolId"
+          ],
           "category": "auth",
           "resourceName": "festivalfriends"
         }
@@ -37,26 +61,172 @@
   "auth": {
     "festivalfriends": {
       "customAuth": false,
-      "dependsOn": [],
+      "dependsOn": [
+        {
+          "attributes": [
+            "Arn",
+            "Name"
+          ],
+          "category": "function",
+          "resourceName": "festivalfriendsPostConfirmation",
+          "triggerProvider": "Cognito"
+        }
+      ],
       "frontendAuthConfig": {
         "mfaConfiguration": "OPTIONAL",
-        "mfaTypes": ["TOTP"],
+        "mfaTypes": [
+          "TOTP"
+        ],
         "passwordProtectionSettings": {
-          "passwordPolicyCharacters": [
-            "REQUIRES_LOWERCASE",
-            "REQUIRES_NUMBERS",
-            "REQUIRES_SYMBOLS",
-            "REQUIRES_UPPERCASE"
-          ],
+          "passwordPolicyCharacters": [],
           "passwordPolicyMinLength": 8
         },
         "signupAttributes": [],
         "socialProviders": [],
-        "usernameAttributes": ["EMAIL"],
-        "verificationMechanisms": ["EMAIL"]
+        "usernameAttributes": [
+          "EMAIL"
+        ],
+        "verificationMechanisms": [
+          "EMAIL"
+        ]
       },
       "providerPlugin": "awscloudformation",
       "service": "Cognito"
+    }
+  },
+  "function": {
+    "AdminQueriese03c7317": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "UserPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "festivalfriends"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "festivalfriendsPostConfirmation": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_AdminQueriese03c7317_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "AdminQueriese03c7317"
+        }
+      ]
+    },
+    "AMPLIFY_function_AdminQueriese03c7317_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "AdminQueriese03c7317"
+        }
+      ]
+    },
+    "AMPLIFY_function_festivalfriendsPostConfirmation_GROUP": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "festivalfriendsPostConfirmation"
+        }
+      ]
+    },
+    "AMPLIFY_function_festivalfriendsPostConfirmation_appsyncApiEndpoint": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "festivalfriendsPostConfirmation"
+        }
+      ]
+    },
+    "AMPLIFY_function_festivalfriendsPostConfirmation_appsyncApiKey": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "festivalfriendsPostConfirmation"
+        }
+      ]
+    },
+    "AMPLIFY_function_festivalfriendsPostConfirmation_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "festivalfriendsPostConfirmation"
+        }
+      ]
+    },
+    "AMPLIFY_function_festivalfriendsPostConfirmation_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "festivalfriendsPostConfirmation"
+        }
+      ]
+    },
+    "AMPLIFY_storage_festivalfriendsmessages_arn": {
+      "usedBy": [
+        {
+          "category": "storage",
+          "resourceName": "festivalfriendsmessages"
+        }
+      ]
+    },
+    "AMPLIFY_storage_festivalfriendsmessages_partitionKeyName": {
+      "usedBy": [
+        {
+          "category": "storage",
+          "resourceName": "festivalfriendsmessages"
+        }
+      ]
+    },
+    "AMPLIFY_storage_festivalfriendsmessages_partitionKeyType": {
+      "usedBy": [
+        {
+          "category": "storage",
+          "resourceName": "festivalfriendsmessages"
+        }
+      ]
+    },
+    "AMPLIFY_storage_festivalfriendsmessages_region": {
+      "usedBy": [
+        {
+          "category": "storage",
+          "resourceName": "festivalfriendsmessages"
+        }
+      ]
+    },
+    "AMPLIFY_storage_festivalfriendsmessages_sortKeyName": {
+      "usedBy": [
+        {
+          "category": "storage",
+          "resourceName": "festivalfriendsmessages"
+        }
+      ]
+    },
+    "AMPLIFY_storage_festivalfriendsmessages_sortKeyType": {
+      "usedBy": [
+        {
+          "category": "storage",
+          "resourceName": "festivalfriendsmessages"
+        }
+      ]
+    },
+    "AMPLIFY_storage_festivalfriendsmessages_tableName": {
+      "usedBy": [
+        {
+          "category": "storage",
+          "resourceName": "festivalfriendsmessages"
+        }
+      ]
     }
   },
   "storage": {

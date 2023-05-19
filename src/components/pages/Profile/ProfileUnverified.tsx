@@ -36,28 +36,33 @@ const ProfileUnverified = () => {
   const email = user?.attributes?.email as string;
 
   const createNewProfile: SubmitHandler<ProfileInputs> = async (data) => {
+    if(!userProfile) return;
     //alert(`Email: ${email}\nUsername: ${username}\nData: ${JSON.stringify(data)}`)
     setIsSubmitting(true);
     let collegeGroup: CollegeGroup | null = null;
     if (email?.endsWith(".edu")) {
       const emailDomain = email.split("@")[1];
-      alert(emailDomain);
       const collegeGroups = await DataStore.query(CollegeGroup, (c) =>
         c.domain.eq(emailDomain)
       );
       collegeGroup = collegeGroups[0];
+      alert("Detected college group: " + emailDomain + " " + collegeGroup?.name);
     }
     try {
       console.log("Creating profile from data:", data);
-      const newProfile = await DataStore.save(
-        new UserProfile({
-          ...data,
-          verified: false,
-          verifySubmitted: true,
-          userID: username,
-          email: email,
-          phone: phone,
-          ...(collegeGroup && { collegeGroup: collegeGroup }),
+      const newProfile = await DataStore.save(UserProfile.copyOf(userProfile, (updated) => {
+        updated.verifySubmitted = true;
+        updated.phone = phone;
+        updated.firstName = data.firstName;
+        updated.lastName = data.lastName;
+        updated.username = data.username;
+        updated.school = data.school;
+        updated.city = data.city;
+        updated.state = data.state;
+        updated.zipcode = data.zipcode;
+        updated.address = data.address;
+        updated.address2 = data.address2;
+        updated.collegeGroup = collegeGroup;
         })
       );
       console.log(newProfile);
@@ -69,17 +74,17 @@ const ProfileUnverified = () => {
     }
   };
 
-  if (isSubmitted) {
+  if (isSubmitted || userProfile?.verifySubmitted) {
     return (
       <div className="flex flex-col justify-center items-center mt-4 p-4">
         <h1 className="text-xl md:text-2xl">Profile Created!</h1>
         <p className="my-6">
-          Your profile has been submitted for verification. You&asop;ll receive
+          Your profile has been submitted for verification. You&apos;ll receive
           an email at the address you used to sign up for this account once the
           process has been completed.
         </p>
         <p>
-          If you&asop;ve received confirmation that your profile has been
+          If you&apos;ve received confirmation that your profile has been
           verified but are still seeing this message, please try refreshing this
           page.
         </p>
@@ -97,7 +102,7 @@ const ProfileUnverified = () => {
       </p>
       <div className="flex justify-center w-full">
         <form
-          className="w-full max-w-4xl"
+          className="w-full max-w-4xl shadow-xl p-4 my-4 rounded"
           onSubmit={handleSubmit(createNewProfile)}
         >
           <div className="flex flex-col md:flex-row">

@@ -9,7 +9,8 @@
       "UnauthRoleName": "amplify-festivalfriends-dev-143122-unauthRole",
       "StackName": "amplify-festivalfriends-dev-143122",
       "StackId": "arn:aws:cloudformation:us-east-1:642956558393:stack/amplify-festivalfriends-dev-143122/6646afd0-d572-11ed-bb5c-1285e1868ec1",
-      "AmplifyAppId": "d2roywvsx7rezb"
+      "AmplifyAppId": "d2roywvsx7rezb",
+      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-festivalfriends-dev-143122-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
     },
     "categories": {
       "storage": {
@@ -29,7 +30,21 @@
         "festivalfriends": {}
       },
       "api": {
-        "festivalfriends": {}
+        "festivalfriends": {},
+        "AdminQueries": {}
+      },
+      "function": {
+        "festivalfriendsPostConfirmation": {
+          "GROUP": "test-group",
+          "deploymentBucketName": "amplify-festivalfriends-dev-143122-deployment",
+          "s3Key": "amplify-builds/festivalfriendsPostConfirmation-4575475079557141685a-build.zip",
+          "appsyncApiEndpoint": "https://h66nzdxupvgrdkudi7pevnzpc4.appsync-api.us-east-1.amazonaws.com/graphql",
+          "appsyncApiKey": "da2-gan3lyomlnfazj2fwpykofcxcq"
+        },
+        "AdminQueriese03c7317": {
+          "deploymentBucketName": "amplify-festivalfriends-dev-143122-deployment",
+          "s3Key": "amplify-builds/AdminQueriese03c7317-692b4e41656565377355-build.zip"
+        }
       }
     }
   }
