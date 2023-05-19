@@ -12,25 +12,27 @@ const friendProfilesStore = create(
       loadingFriendProfiles: true,
     },
     (set) => ({
-      fetchAndObserveUserProfile: async (user: any, route: string) => {
-        console.log("fetchAndObserveUserProfile called");
+      fetchAndObserveUserProfile: async (username: string, route: string) => {
+        console.log("fetchAndObserveUserProfile called\nRoute :", route, "\nUsername: ", username);
 
         if (route !== "authenticated") {
           set({ loadingUserProfile: false, loadingFriendProfiles: false });
           return;
         }
-        const username = user.username as string;
-        console.log("User :", user);
-        console.log("Username :", username);
 
         set({ loadingUserProfile: true });
 
         await DataStore.start();
-        const userProfiles = await DataStore.query(UserProfile, (c) =>
-          c.userID.eq(username)
-        );
-
-        console.log(userProfiles);
+        let userProfiles = [] as UserProfile[];
+        await new Promise(resolve => setTimeout(resolve, 5000));
+        try {
+          userProfiles = await DataStore.query(UserProfile, (c) =>
+            c.userID.eq(username)
+          );
+          console.log(userProfiles);
+        } catch (error) {
+          console.log('Error querying UserProfile', error);
+        }
 
         if (userProfiles.length > 0) {
           const userProfile = userProfiles[0];
