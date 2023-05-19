@@ -144,8 +144,6 @@ const MessagePage: React.FC = () => {
             <ConversationCard
               key={conversation.id}
               className="my-4 cursor-pointer "
-              isConversationModalOpen={isConversationModalOpen}
-              setConversationModalOpen={setConversationModalOpen}
               conversation={conversation}
               onClick={() => openConversationModal(conversation)}
             />

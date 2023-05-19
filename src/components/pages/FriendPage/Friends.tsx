@@ -336,7 +336,6 @@ const FriendsPage: React.FC = () => {
           }}
         />
       )}
-      <Drawer isOpen={isDrawerOpen} setIsOpen={setIsDrawerOpen}></Drawer>
     </div>
   );
 };
