@@ -11,6 +11,7 @@ import LoadingState from "../../ui/LoadingState";
 
 const AccountPage = () => {
   const { user } = useAuthenticator((context) => [context.user]);
+  const username = user?.username as string;
   const { route } = useAuthenticator((context) => [context.route]);
   const loadingUserProfile = useUserProfileStore(
     (state) => state.loadingUserProfile
@@ -25,7 +26,7 @@ const AccountPage = () => {
 
   useEffect(() => {
     if (user && dataStoreCleared) {
-      fetchAndObserveUserProfile(user, route);
+      fetchAndObserveUserProfile(username, route);
     }
   }, [user, fetchAndObserveUserProfile, dataStoreCleared]);
 
