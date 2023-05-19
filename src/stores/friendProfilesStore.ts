@@ -24,7 +24,6 @@ const friendProfilesStore = create(
 
         await DataStore.start();
         let userProfiles = [] as UserProfile[];
-        await new Promise(resolve => setTimeout(resolve, 5000));
         try {
           userProfiles = await DataStore.query(UserProfile, (c) =>
             c.userID.eq(username)

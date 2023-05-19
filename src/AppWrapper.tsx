@@ -47,10 +47,18 @@ const AppWrapper = () => {
   const { user } = useAuthenticator((context) => [context.user]);
   const { route } = useAuthenticator((context) => [context.route]);
   const { fetchAndObserveUserProfile, userProfile } = useUserProfileStore();
+  const username = user?.username as string;
 
   useEffect(() => {
-    fetchAndObserveUserProfile(user, route);
-  }, [user, route, fetchAndObserveUserProfile]);
+    while(!dataStoreCleared) {
+      console.log("Waiting for dataStore to clear...");
+    }
+    fetchAndObserveUserProfile(username, route);
+
+    return () => {
+      fetchAndObserveUserProfile(username, route);
+    }
+  }, [username, route, fetchAndObserveUserProfile]);
 
   useEffect(() => {
     console.log("User profile: ", userProfile);
