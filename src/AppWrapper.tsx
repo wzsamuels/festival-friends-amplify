@@ -53,7 +53,7 @@ const AppWrapper = () => {
   }, [user, route, fetchAndObserveUserProfile]);
 
   useEffect(() => {
-    console.log(userProfile);
+    console.log("User profile: ", userProfile);
   }, [userProfile]);
 
   const router = createBrowserRouter([

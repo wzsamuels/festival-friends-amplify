@@ -21,11 +21,11 @@ const AccountButton = () => {
 
   const handleSignOut = async () => {
     try {
+      reset();
       signOut();
       saveDataStoreCleared(false);
       setAlertIsOpen(true);
       await DataStore.clear();
-      reset();
       setAlertIsOpen(false);
       saveDataStoreCleared(true);
     } catch (e) {

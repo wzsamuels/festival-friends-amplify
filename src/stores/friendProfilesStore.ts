@@ -13,15 +13,19 @@ const friendProfilesStore = create(
     },
     (set) => ({
       fetchAndObserveUserProfile: async (user: any, route: string) => {
+        console.log("fetchAndObserveUserProfile called");
+
         if (route !== "authenticated") {
           set({ loadingUserProfile: false, loadingFriendProfiles: false });
           return;
         }
-        console.log(user);
         const username = user.username as string;
-        console.log("fetchAndObserveUserProfile called");
+        console.log("User :", user);
+        console.log("Username :", username);
+
         set({ loadingUserProfile: true });
 
+        await DataStore.start();
         const userProfiles = await DataStore.query(UserProfile, (c) =>
           c.userID.eq(username)
         );
