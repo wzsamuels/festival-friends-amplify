@@ -9,6 +9,7 @@ import React, {
 import ImageContext from "../../context/ImageContext";
 import { Link } from "react-router-dom";
 import Button from "../common/Button/Button";
+import {BsPerson} from "react-icons/all";
 
 export interface FriendCardButton {
   label: string;
@@ -37,7 +38,10 @@ const FriendCard = ({
 
   useEffect(() => {
     const fetchSignedURL = async () => {
-      const url = await getSignedURL(profile.profileImage as string);
+      let url = ''
+      if (profile.profileImage) {
+        url = await getSignedURL(profile.profileImage as string);
+      }
       setProfileImage(url);
     };
 
@@ -57,14 +61,23 @@ const FriendCard = ({
         wrapper={(children) => <Link to={profileUrl}>{children}</Link>}
       >
         <div className="flex flex-col items-center">
-          <img
-            onClick={onClick}
-            className={"rounded-full"}
-            width={200}
-            height={200}
-            src={profileImage}
-            alt={`${profile.firstName} ${profile.lastName}'s Profile Image`}
-          />
+          {
+            profileImage ?
+              <img
+                onClick={onClick}
+                className={"rounded-full"}
+                width={200}
+                height={200}
+                src={profileImage}
+                alt={`${profile.firstName} ${profile.lastName}'s Profile Image`}
+              />
+              :
+              <div
+                className={"flex justify-center items-center rounded-full bg-gray-300 h-[200px] w-[200px]"}>
+                <BsPerson className="w-1/2 h-1/2 text-medium-default text-center" />
+              </div>
+          }
+
           <div className="my-4">
             {profile.firstName} {profile.lastName}
           </div>
