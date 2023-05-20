@@ -154,4 +154,5 @@ enum EventType {
   COLLEGE
   MUSIC
   ALL
+  TRAVEL
 }

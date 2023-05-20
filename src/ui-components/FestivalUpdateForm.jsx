@@ -431,6 +431,11 @@ export default function FestivalUpdateForm(props) {
           value="ALL"
           {...getOverrideProps(overrides, "typeoption6")}
         ></option>
+        <option
+          children="Travel"
+          value="TRAVEL"
+          {...getOverrideProps(overrides, "typeoption7")}
+        ></option>
       </SelectField>
       <TextField
         label="Tagline"

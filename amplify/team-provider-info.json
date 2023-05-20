@@ -13,38 +13,33 @@
       "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-festivalfriends-dev-143122-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
     },
     "categories": {
-      "storage": {
-        "s3festivalfriendsstorageevents": {},
-        "s3festivalfriendsstorage2dfb2266": {},
-        "festivalfriendsmessages": {
-          "tableName": "festival-friends-messages",
-          "region": "us-east-1",
-          "arn": "arn:aws:dynamodb:us-east-1:642956558393:table/festival-friends-messages",
-          "partitionKeyName": "conversationId",
-          "partitionKeyType": "S",
-          "sortKeyName": "createdAt",
-          "sortKeyType": "S"
-        }
-      },
-      "auth": {
-        "festivalfriends": {}
-      },
-      "api": {
-        "festivalfriends": {},
-        "AdminQueries": {}
-      },
       "function": {
         "festivalfriendsPostConfirmation": {
           "GROUP": "test-group",
-          "deploymentBucketName": "amplify-festivalfriends-dev-143122-deployment",
-          "s3Key": "amplify-builds/festivalfriendsPostConfirmation-4575475079557141685a-build.zip",
           "appsyncApiEndpoint": "https://h66nzdxupvgrdkudi7pevnzpc4.appsync-api.us-east-1.amazonaws.com/graphql",
-          "appsyncApiKey": "da2-gan3lyomlnfazj2fwpykofcxcq"
+          "appsyncApiKey": "da2-gan3lyomlnfazj2fwpykofcxcq",
+          "deploymentBucketName": "amplify-festivalfriends-dev-143122-deployment",
+          "s3Key": "amplify-builds/festivalfriendsPostConfirmation-4575475079557141685a-build.zip"
         },
         "AdminQueriese03c7317": {
           "deploymentBucketName": "amplify-festivalfriends-dev-143122-deployment",
           "s3Key": "amplify-builds/AdminQueriese03c7317-692b4e41656565377355-build.zip"
         }
+      },
+      "storage": {
+        "festivalfriendsmessages": {
+          "arn": "arn:aws:dynamodb:us-east-1:642956558393:table/festival-friends-messages",
+          "partitionKeyName": "conversationId",
+          "partitionKeyType": "S",
+          "region": "us-east-1",
+          "sortKeyName": "createdAt",
+          "sortKeyType": "S",
+          "tableName": "festival-friends-messages"
+        },
+        "s3festivalfriendsstorage2dfb2266": {}
+      },
+      "auth": {
+        "festivalfriends": {}
       }
     }
   }
