@@ -34,15 +34,15 @@ const EventPage = () => {
   // Filter events by type
   const sportEvents = events.filter((event) => event.type === EventType.SPORT);
   const musicEvents = events.filter((event) => event.type === EventType.MUSIC);
-  const collegeEvent = events.filter(
-    (event) => event.type === EventType.COLLEGE
-  );
-  const businessEvent = events.filter(
+  const businessEvents = events.filter(
     (event) => event.type === EventType.BUSINESS
   );
+  const travelEvents = events.filter(
+    (event) => event.type === EventType.TRAVEL
+  )
 
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
-  const [eventType, setEventType] = useState("all");
+  const [eventType, setEventType] = useState("music");
 
   const { dataStoreCleared } = useContext(
     DataStoreContext
@@ -89,15 +89,15 @@ const EventPage = () => {
   const eventMapping = {
     music: musicEvents,
     sport: sportEvents,
-    business: businessEvent,
-    college: collegeEvent,
+    business: businessEvents,
+    travel: travelEvents
   };
 
   const segmentItems = [
-    { type: "all", label: "All" },
     { type: "music", label: "Music" },
     { type: "sport", label: "Sports" },
     { type: "business", label: "Business" },
+    { type: "travel", label: "Travel" }
   ];
 
   // Filter events by type, map to array, and flatten
