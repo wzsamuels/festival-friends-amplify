@@ -76,10 +76,11 @@ const FriendSearchModal = ({ isOpen, setIsOpen }: FriendSearchModalProps) => {
           setResults([]);
         }}
         title="Friend Search"
+        className='max-w-6xl'
       >
         <form
           onSubmit={handleSubmit(searchFriends)}
-          className="[&>*]:m-4 max-w-4xl"
+          className="max-w-4xl p-4 mx-auto"
         >
           <div className="flex flex-col md:flex-row justify-between">
             <InputWrapper className="my-4 flex-1">
@@ -127,14 +128,15 @@ const FriendSearchModal = ({ isOpen, setIsOpen }: FriendSearchModalProps) => {
           <div className="flex flex-wrap">
             <Label>School</Label>
             <Input
-              className="w-[calc(100%-150px)]"
               {...register("school")}
               type="text"
             />
           </div>
-          <Button type="submit">Search</Button>
+          <div className='flex justify-center my-8'>
+            <Button type="submit">Search</Button>
+          </div>
         </form>
-        <div className="flex flex-wrap">
+        <div className="flex flex-wrap justify-center">
           {results.map((result) => (
             <FriendCard
               key={result.id}
