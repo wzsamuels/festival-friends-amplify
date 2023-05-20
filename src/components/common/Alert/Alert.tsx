@@ -49,7 +49,7 @@ const CustomAlert: React.FC<CustomAlertProps> = ({
     <Modal
       isOpen={isOpen}
       setIsOpen={setIsOpen}
-      className="w-full max-w-[350px]"
+      className="w-full max-w-[350px] p-4"
     >
       <div className="mb-4">
         <p className="text-xl text-center text-gray-500">{message}</p>
