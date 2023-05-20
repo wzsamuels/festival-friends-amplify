@@ -163,7 +163,7 @@ const FriendsPage: React.FC = () => {
     buttons?: FriendCardButton[];
   }> = ({ friends, buttons }) => (
     <>
-      <div className="flex flex-wrap">
+      <div className="flex flex-wrap justify-center">
         {friends.map((profile) => (
           <FriendCard
             className="m-4"
@@ -323,7 +323,7 @@ const FriendsPage: React.FC = () => {
           items={segmentItems}
         />
       </Header>
-      <div className={"p-4 w-full"}>{renderFriends()}</div>
+      <div className={"p-4 w-full flex-col items-center justify-center"}>{renderFriends()}</div>
       <FriendSearchModal
         isOpen={isFriendsModalOpen}
         setIsOpen={setIsFriendsModalOpen}
