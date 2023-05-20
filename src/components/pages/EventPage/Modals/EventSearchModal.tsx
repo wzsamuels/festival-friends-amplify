@@ -35,8 +35,8 @@ const EventSearchModal = ({ isOpen, setIsOpen }: ModalProps) => {
       title="Search Festivals"
       className="max-w-4xl"
     >
-      <div className="p-4">
-        <form onSubmit={handleSubmit(handleEventSearch)}>
+      <div>
+        <form className="p-4" onSubmit={handleSubmit(handleEventSearch)}>
           <InputWrapper className="mb-4">
             <Label>Location</Label>
             <Input {...register("location")} />
@@ -61,7 +61,7 @@ const EventSearchModal = ({ isOpen, setIsOpen }: ModalProps) => {
         </form>
         <div className="mt-4 flex flex-wrap justify-center">
           {eventResults.map((event) => (
-            <EventCardBase festival={event} key={event.id} />
+            <EventCardBase className='my-4 md:m-4' festival={event} key={event.id} />
           ))}
         </div>
       </div>
