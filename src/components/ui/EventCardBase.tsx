@@ -3,7 +3,12 @@ import React, { useContext, useEffect, useState } from "react";
 import ImageContext from "../../context/ImageContext";
 import { LazyFestival } from "../../models";
 
-const EventCardBase = ({ festival }: { festival: LazyFestival }) => {
+interface EventCardBaseProps {
+  festival: LazyFestival
+  className?: string
+}
+
+const EventCardBase = ({ festival, className }: EventCardBaseProps) => {
   const { getSignedURL } = useContext(ImageContext);
   const [festivalImage, setFestivalImage] = useState("");
   useEffect(() => {
@@ -16,7 +21,7 @@ const EventCardBase = ({ festival }: { festival: LazyFestival }) => {
   }, [festival.image, getSignedURL]);
 
   return (
-    <div className="m-4 rounded-xl shadow-md w-full  max-w-[350px] bg-light-default">
+    <div className={`rounded-xl shadow-md w-full max-w-[350px] bg-light-default ${className}`}>
       <Link className="relative" to={`/events/${festival.id}`}>
         <div className="w-full max-w-[350px] min-h-[350px] h-full max-h-[350px] object-cover flex items-center justify-center">
           {festivalImage ? (
