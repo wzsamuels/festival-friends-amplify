@@ -11,24 +11,32 @@ exports.handler = async (event, context) => {
 
   console.log(event);
   const createUserProfileMutation = gql`
-      mutation CreateUserProfile($input: CreateUserProfileInput!) {
-          createUserProfile(input: $input) {
-              id
-              username
-              userID
-          }
+    mutation CreateUserProfile($input: CreateUserProfileInput!) {
+      createUserProfile(input: $input) {
+        id
       }
+    }
+  `;
+
+  const createPrivacySettingMutation = gql`
+    mutation CreatePrivacySetting($input: CreatePrivacySettingInput!) {
+      createPrivacySetting(input: $input) {
+        id
+      }
+    }
   `;
 
   const userProfile = {
     id: event.request.userAttributes.sub,
     email:event.request.userAttributes.email,
     userID: event.request.userAttributes.sub,
-    'verified': false,
-    'verifySubmitted':false,
+    verified: false,
+    verifySubmitted: false,
   };
 
-  const graphqlData = await axios({
+
+
+  const userProfileData = await axios({
     url: process.env.APPSYNC_API_ENDPOINT,
     method: 'post',
     headers: {
@@ -41,6 +49,36 @@ exports.handler = async (event, context) => {
       },
     },
   });
+
+  console.log(userProfileData)
+
+  const privacySetting= {
+    userProfileID: event.request.userAttributes.sub,
+    city: true,
+    state: true,
+    school: true,
+    email: true,
+    attendingEvents: true,
+    rides: true,
+    friends: true,
+    photos: true,
+  }
+
+  const privacySettingData = await axios({
+    url: process.env.APPSYNC_API_ENDPOINT,
+    method: 'post',
+    headers: {
+      'x-api-key': process.env.APPSYNC_API_KEY,
+    },
+    data: {
+      query: print(createPrivacySettingMutation),
+      variables: {
+        input: privacySetting,
+      }
+    },
+  });
+
+  console.log(privacySettingData)
 
   return event;
 }

@@ -32,29 +32,30 @@ export default function UserProfileUpdateForm(props) {
   const initialValues = {
     firstName: "",
     lastName: "",
-    userID: "",
     verified: false,
     verifySubmitted: false,
-    profileImage: "",
+    profilePhotoID: "",
+    bannerPhotoID: "",
     city: "",
     state: "",
     school: "",
     address: "",
     address2: "",
     phone: "",
-    username: "",
     email: "",
     zipcode: "",
   };
   const [firstName, setFirstName] = React.useState(initialValues.firstName);
   const [lastName, setLastName] = React.useState(initialValues.lastName);
-  const [userID, setUserID] = React.useState(initialValues.userID);
   const [verified, setVerified] = React.useState(initialValues.verified);
   const [verifySubmitted, setVerifySubmitted] = React.useState(
     initialValues.verifySubmitted
   );
-  const [profileImage, setProfileImage] = React.useState(
-    initialValues.profileImage
+  const [profilePhotoID, setProfilePhotoID] = React.useState(
+    initialValues.profilePhotoID
+  );
+  const [bannerPhotoID, setBannerPhotoID] = React.useState(
+    initialValues.bannerPhotoID
   );
   const [city, setCity] = React.useState(initialValues.city);
   const [state, setState] = React.useState(initialValues.state);
@@ -62,7 +63,6 @@ export default function UserProfileUpdateForm(props) {
   const [address, setAddress] = React.useState(initialValues.address);
   const [address2, setAddress2] = React.useState(initialValues.address2);
   const [phone, setPhone] = React.useState(initialValues.phone);
-  const [username, setUsername] = React.useState(initialValues.username);
   const [email, setEmail] = React.useState(initialValues.email);
   const [zipcode, setZipcode] = React.useState(initialValues.zipcode);
   const [errors, setErrors] = React.useState({});
@@ -72,17 +72,16 @@ export default function UserProfileUpdateForm(props) {
       : initialValues;
     setFirstName(cleanValues.firstName);
     setLastName(cleanValues.lastName);
-    setUserID(cleanValues.userID);
     setVerified(cleanValues.verified);
     setVerifySubmitted(cleanValues.verifySubmitted);
-    setProfileImage(cleanValues.profileImage);
+    setProfilePhotoID(cleanValues.profilePhotoID);
+    setBannerPhotoID(cleanValues.bannerPhotoID);
     setCity(cleanValues.city);
     setState(cleanValues.state);
     setSchool(cleanValues.school);
     setAddress(cleanValues.address);
     setAddress2(cleanValues.address2);
     setPhone(cleanValues.phone);
-    setUsername(cleanValues.username);
     setEmail(cleanValues.email);
     setZipcode(cleanValues.zipcode);
     setErrors({});
@@ -102,17 +101,16 @@ export default function UserProfileUpdateForm(props) {
   const validations = {
     firstName: [],
     lastName: [],
-    userID: [{ type: "Required" }],
     verified: [{ type: "Required" }],
     verifySubmitted: [{ type: "Required" }],
-    profileImage: [],
+    profilePhotoID: [],
+    bannerPhotoID: [],
     city: [],
     state: [],
     school: [],
     address: [],
     address2: [],
     phone: [],
-    username: [],
     email: [],
     zipcode: [],
   };
@@ -144,17 +142,16 @@ export default function UserProfileUpdateForm(props) {
         let modelFields = {
           firstName,
           lastName,
-          userID,
           verified,
           verifySubmitted,
-          profileImage,
+          profilePhotoID,
+          bannerPhotoID,
           city,
           state,
           school,
           address,
           address2,
           phone,
-          username,
           email,
           zipcode,
         };
@@ -214,17 +211,16 @@ export default function UserProfileUpdateForm(props) {
             const modelFields = {
               firstName: value,
               lastName,
-              userID,
               verified,
               verifySubmitted,
-              profileImage,
+              profilePhotoID,
+              bannerPhotoID,
               city,
               state,
               school,
               address,
               address2,
               phone,
-              username,
               email,
               zipcode,
             };
@@ -252,17 +248,16 @@ export default function UserProfileUpdateForm(props) {
             const modelFields = {
               firstName,
               lastName: value,
-              userID,
               verified,
               verifySubmitted,
-              profileImage,
+              profilePhotoID,
+              bannerPhotoID,
               city,
               state,
               school,
               address,
               address2,
               phone,
-              username,
               email,
               zipcode,
             };
@@ -279,44 +274,6 @@ export default function UserProfileUpdateForm(props) {
         hasError={errors.lastName?.hasError}
         {...getOverrideProps(overrides, "lastName")}
       ></TextField>
-      <TextField
-        label="User id"
-        isRequired={true}
-        isReadOnly={false}
-        value={userID}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              firstName,
-              lastName,
-              userID: value,
-              verified,
-              verifySubmitted,
-              profileImage,
-              city,
-              state,
-              school,
-              address,
-              address2,
-              phone,
-              username,
-              email,
-              zipcode,
-            };
-            const result = onChange(modelFields);
-            value = result?.userID ?? value;
-          }
-          if (errors.userID?.hasError) {
-            runValidationTasks("userID", value);
-          }
-          setUserID(value);
-        }}
-        onBlur={() => runValidationTasks("userID", userID)}
-        errorMessage={errors.userID?.errorMessage}
-        hasError={errors.userID?.hasError}
-        {...getOverrideProps(overrides, "userID")}
-      ></TextField>
       <SwitchField
         label="Verified"
         defaultChecked={false}
@@ -328,17 +285,16 @@ export default function UserProfileUpdateForm(props) {
             const modelFields = {
               firstName,
               lastName,
-              userID,
               verified: value,
               verifySubmitted,
-              profileImage,
+              profilePhotoID,
+              bannerPhotoID,
               city,
               state,
               school,
               address,
               address2,
               phone,
-              username,
               email,
               zipcode,
             };
@@ -366,17 +322,16 @@ export default function UserProfileUpdateForm(props) {
             const modelFields = {
               firstName,
               lastName,
-              userID,
               verified,
               verifySubmitted: value,
-              profileImage,
+              profilePhotoID,
+              bannerPhotoID,
               city,
               state,
               school,
               address,
               address2,
               phone,
-              username,
               email,
               zipcode,
             };
@@ -394,42 +349,78 @@ export default function UserProfileUpdateForm(props) {
         {...getOverrideProps(overrides, "verifySubmitted")}
       ></SwitchField>
       <TextField
-        label="Profile image"
+        label="Profile photo id"
         isRequired={false}
         isReadOnly={false}
-        value={profileImage}
+        value={profilePhotoID}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
               firstName,
               lastName,
-              userID,
               verified,
               verifySubmitted,
-              profileImage: value,
+              profilePhotoID: value,
+              bannerPhotoID,
               city,
               state,
               school,
               address,
               address2,
               phone,
-              username,
               email,
               zipcode,
             };
             const result = onChange(modelFields);
-            value = result?.profileImage ?? value;
+            value = result?.profilePhotoID ?? value;
           }
-          if (errors.profileImage?.hasError) {
-            runValidationTasks("profileImage", value);
+          if (errors.profilePhotoID?.hasError) {
+            runValidationTasks("profilePhotoID", value);
           }
-          setProfileImage(value);
+          setProfilePhotoID(value);
         }}
-        onBlur={() => runValidationTasks("profileImage", profileImage)}
-        errorMessage={errors.profileImage?.errorMessage}
-        hasError={errors.profileImage?.hasError}
-        {...getOverrideProps(overrides, "profileImage")}
+        onBlur={() => runValidationTasks("profilePhotoID", profilePhotoID)}
+        errorMessage={errors.profilePhotoID?.errorMessage}
+        hasError={errors.profilePhotoID?.hasError}
+        {...getOverrideProps(overrides, "profilePhotoID")}
+      ></TextField>
+      <TextField
+        label="Banner photo id"
+        isRequired={false}
+        isReadOnly={false}
+        value={bannerPhotoID}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              firstName,
+              lastName,
+              verified,
+              verifySubmitted,
+              profilePhotoID,
+              bannerPhotoID: value,
+              city,
+              state,
+              school,
+              address,
+              address2,
+              phone,
+              email,
+              zipcode,
+            };
+            const result = onChange(modelFields);
+            value = result?.bannerPhotoID ?? value;
+          }
+          if (errors.bannerPhotoID?.hasError) {
+            runValidationTasks("bannerPhotoID", value);
+          }
+          setBannerPhotoID(value);
+        }}
+        onBlur={() => runValidationTasks("bannerPhotoID", bannerPhotoID)}
+        errorMessage={errors.bannerPhotoID?.errorMessage}
+        hasError={errors.bannerPhotoID?.hasError}
+        {...getOverrideProps(overrides, "bannerPhotoID")}
       ></TextField>
       <TextField
         label="City"
@@ -442,17 +433,16 @@ export default function UserProfileUpdateForm(props) {
             const modelFields = {
               firstName,
               lastName,
-              userID,
               verified,
               verifySubmitted,
-              profileImage,
+              profilePhotoID,
+              bannerPhotoID,
               city: value,
               state,
               school,
               address,
               address2,
               phone,
-              username,
               email,
               zipcode,
             };
@@ -480,17 +470,16 @@ export default function UserProfileUpdateForm(props) {
             const modelFields = {
               firstName,
               lastName,
-              userID,
               verified,
               verifySubmitted,
-              profileImage,
+              profilePhotoID,
+              bannerPhotoID,
               city,
               state: value,
               school,
               address,
               address2,
               phone,
-              username,
               email,
               zipcode,
             };
@@ -518,17 +507,16 @@ export default function UserProfileUpdateForm(props) {
             const modelFields = {
               firstName,
               lastName,
-              userID,
               verified,
               verifySubmitted,
-              profileImage,
+              profilePhotoID,
+              bannerPhotoID,
               city,
               state,
               school: value,
               address,
               address2,
               phone,
-              username,
               email,
               zipcode,
             };
@@ -556,17 +544,16 @@ export default function UserProfileUpdateForm(props) {
             const modelFields = {
               firstName,
               lastName,
-              userID,
               verified,
               verifySubmitted,
-              profileImage,
+              profilePhotoID,
+              bannerPhotoID,
               city,
               state,
               school,
               address: value,
               address2,
               phone,
-              username,
               email,
               zipcode,
             };
@@ -594,17 +581,16 @@ export default function UserProfileUpdateForm(props) {
             const modelFields = {
               firstName,
               lastName,
-              userID,
               verified,
               verifySubmitted,
-              profileImage,
+              profilePhotoID,
+              bannerPhotoID,
               city,
               state,
               school,
               address,
               address2: value,
               phone,
-              username,
               email,
               zipcode,
             };
@@ -632,17 +618,16 @@ export default function UserProfileUpdateForm(props) {
             const modelFields = {
               firstName,
               lastName,
-              userID,
               verified,
               verifySubmitted,
-              profileImage,
+              profilePhotoID,
+              bannerPhotoID,
               city,
               state,
               school,
               address,
               address2,
               phone: value,
-              username,
               email,
               zipcode,
             };
@@ -660,44 +645,6 @@ export default function UserProfileUpdateForm(props) {
         {...getOverrideProps(overrides, "phone")}
       ></TextField>
       <TextField
-        label="Username"
-        isRequired={false}
-        isReadOnly={false}
-        value={username}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              firstName,
-              lastName,
-              userID,
-              verified,
-              verifySubmitted,
-              profileImage,
-              city,
-              state,
-              school,
-              address,
-              address2,
-              phone,
-              username: value,
-              email,
-              zipcode,
-            };
-            const result = onChange(modelFields);
-            value = result?.username ?? value;
-          }
-          if (errors.username?.hasError) {
-            runValidationTasks("username", value);
-          }
-          setUsername(value);
-        }}
-        onBlur={() => runValidationTasks("username", username)}
-        errorMessage={errors.username?.errorMessage}
-        hasError={errors.username?.hasError}
-        {...getOverrideProps(overrides, "username")}
-      ></TextField>
-      <TextField
         label="Email"
         isRequired={false}
         isReadOnly={false}
@@ -708,17 +655,16 @@ export default function UserProfileUpdateForm(props) {
             const modelFields = {
               firstName,
               lastName,
-              userID,
               verified,
               verifySubmitted,
-              profileImage,
+              profilePhotoID,
+              bannerPhotoID,
               city,
               state,
               school,
               address,
               address2,
               phone,
-              username,
               email: value,
               zipcode,
             };
@@ -746,17 +692,16 @@ export default function UserProfileUpdateForm(props) {
             const modelFields = {
               firstName,
               lastName,
-              userID,
               verified,
               verifySubmitted,
-              profileImage,
+              profilePhotoID,
+              bannerPhotoID,
               city,
               state,
               school,
               address,
               address2,
               phone,
-              username,
               email,
               zipcode: value,
             };
