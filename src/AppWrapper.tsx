@@ -1,5 +1,5 @@
 import { useAuthenticator } from "@aws-amplify/ui-react";
-import React, {lazy, Suspense, useEffect, useState} from "react";
+import React, {lazy, Suspense, useEffect } from "react";
 
 const MessagePage = lazy(
   () => import("./components/pages/MessagePage/MessagePage")
@@ -14,55 +14,54 @@ const EventDetailPage = lazy(
   () => import("./components/pages/EventPage/EventDetailPage")
 );
 const ProfilePage = lazy(() => import("./components/pages/Profile/Profile"));
-const RidesPage = lazy(() => import("./components/pages/RidePage/RidePage"));
 const GroupsPage = lazy(() => import("./components/pages/GroupPage/GroupPage"));
 const Layout = lazy(() => import("./components/layout/Layout"));
 const AccountPage = lazy(
   () => import("./components/pages/AccountPage/AccountPage")
 );
+
+//Amplify.Logger.LOG_LEVEL = 'DEBUG';
+
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import DataStoreContext from "./context/DataStoreContext";
 import ImageProvider from "./context/ImageProvider";
 /* Theme variables */
 import "./theme/variables.css";
-import { useUserProfileStore } from "./stores/friendProfilesStore";
-import awsExports from "./aws-exports";
-import { Amplify, AuthModeStrategyType } from "aws-amplify";
-Amplify.configure({
-  ...awsExports,
-  DataStore: {
-    authModeStrategyType: AuthModeStrategyType.MULTI_AUTH,
-  },
-});
-
 // Tailwind CSS
 import "./index.css";
+import useDataClearedStore from "./stores/dataClearedStore";
+import useProfileStore from "./stores/profileStore";
+import useFriendStore from "./stores/friendProfileStore";
+
+import useConversationStore from "./stores/conversationStore";
 
 const AppWrapper = () => {
-  const [dataStoreCleared, setDataStoreCleared] = useState(true);
-  const saveDataStoreCleared = (value: boolean) => {
-    setDataStoreCleared(value);
-  };
   const { user } = useAuthenticator((context) => [context.user]);
+  const fetchUserProfile = useProfileStore(state => state.fetchUserProfile)
+  const userProfile = useProfileStore(state => state.userProfile)
+  const fetchFriendProfiles = useFriendStore(state => state.fetchFriends)
+  const fetchConversations = useConversationStore(state => state.fetchConversations)
+  const sub = user?.username as string;
+  const dataCleared = useDataClearedStore(state => state.dataCleared)
   const { route } = useAuthenticator((context) => [context.route]);
-  const { fetchAndObserveUserProfile, userProfile } = useUserProfileStore();
-  const username = user?.username as string;
 
   useEffect(() => {
-    while(!dataStoreCleared) {
-      console.log("Waiting for dataStore to clear...");
-    }
-    fetchAndObserveUserProfile(username, route);
-
-    return () => {
-      fetchAndObserveUserProfile(username, route);
-    }
-  }, [username, route, fetchAndObserveUserProfile]);
+    console.log("AppWrapper mounted")
+  },[])
 
   useEffect(() => {
-    console.log("User profile: ", userProfile);
-  }, [userProfile]);
+    if(!dataCleared || !sub || route !== 'authenticated') return;
+    console.log("sub", sub);
+    console.log("route", route)
+    fetchUserProfile(sub, route)
+  }, [sub, dataCleared, route]);
+
+  useEffect(() => {
+    if(!dataCleared || !userProfile) return;
+
+    fetchConversations(userProfile);
+    fetchFriendProfiles(userProfile);
+  }, [dataCleared, userProfile])
 
   const router = createBrowserRouter([
     {
@@ -105,24 +104,16 @@ const AppWrapper = () => {
           path: "/friends/profile/:profileId",
           element: <ProfilePage />,
         },
-        {
-          path: "rides",
-          element: <RidesPage />,
-        },
       ],
     },
   ]);
 
   return (
-    <DataStoreContext.Provider
-      value={{ dataStoreCleared, saveDataStoreCleared }}
-    >
-      <ImageProvider>
-        <Suspense fallback={<div>Loading...</div>}>
-          <RouterProvider router={router} />
-        </Suspense>
-      </ImageProvider>
-    </DataStoreContext.Provider>
+    <ImageProvider>
+      <Suspense fallback={<div>Loading...</div>}>
+        <RouterProvider router={router} />
+      </Suspense>
+    </ImageProvider>
   );
 };
 
