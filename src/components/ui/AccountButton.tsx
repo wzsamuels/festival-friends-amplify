@@ -1,40 +1,69 @@
-import React, { Fragment, useContext, useEffect } from "react";
+import React, { Fragment, useEffect } from "react";
 import { useAuthenticator } from "@aws-amplify/ui-react";
 import { DataStore } from "aws-amplify";
-import DataStoreContext, {
-  DataStoreContextType,
-} from "../../context/DataStoreContext";
 import { FaUser } from "react-icons/all";
 import { Link } from "react-router-dom";
 import { Menu, Transition } from "@headlessui/react";
 import Modal from "../common/Modal/Modal";
-import { useUserProfileStore } from "../../stores/friendProfilesStore";
 import Spinner from "../common/Spinner/Spinner";
+import useDataClearedStore from "../../stores/dataClearedStore";
+import useProfileStore from "../../stores/profileStore";
+import useFriendStore from "../../stores/friendProfileStore";
+import useConversationStore from "../../stores/conversationStore";
 const AccountButton = () => {
   const { user, signOut } = useAuthenticator((context) => [context.user]);
-  const { saveDataStoreCleared } = useContext(
-    DataStoreContext
-  ) as DataStoreContextType;
+  const setDataCleared = useDataClearedStore(state => state.setDataCleared);
   const [alertIsOpen, setAlertIsOpen] = React.useState(false);
   const { authStatus } = useAuthenticator((context) => [context.authStatus]);
-  const { reset } = useUserProfileStore();
+  const clearProfile = useProfileStore(state => state.clearUserProfile);
+  const clearFriendProfiles = useFriendStore(state => state.clearFriends);
+  const clearConversations = useConversationStore(state => state.clearConversations);
+
+  const clearStores = () => {
+    clearProfile();
+    clearFriendProfiles();
+    clearConversations();
+  }
 
   const handleSignOut = async () => {
     try {
-      signOut();
-      saveDataStoreCleared(false);
+      console.log("Attempting sign out...");
       setAlertIsOpen(true);
-      reset();
-      setAlertIsOpen(false);
-      saveDataStoreCleared(true);
+      setDataCleared(false);
+      await signOut();
+      console.log("Sign out successful.");
     } catch (e) {
-      console.log(e);
+      console.log("Error signing out: ", e);
+      return;
+    }
+
+    try {
+      console.log("Clearing DataStore...");
+      await DataStore.clear();
+      console.log("DataStore cleared.");
+    } catch (e) {
+      console.log("Error clearing DataStore: ", e);
+      return;
+    }
+
+    try {
+      console.log("Clearing stores...");
+      clearStores();
+      console.log("Stores cleared.");
+    } catch (e) {
+      console.log("Error clearing stores: ", e);
+      return;
+    }
+
+    try {
+      console.log("Setting dataCleared to true...");
+      setDataCleared(true);
+      console.log("dataCleared set to true.");
+      setAlertIsOpen(false);
+    } catch (e) {
+      console.log("Error setting dataCleared: ", e);
     }
   };
-
-  useEffect(() => {
-    console.log(authStatus);
-  }, [authStatus]);
 
   return (
     <>
