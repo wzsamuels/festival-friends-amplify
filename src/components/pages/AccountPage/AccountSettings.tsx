@@ -1,13 +1,16 @@
 import React, {useEffect, useState} from "react";
-import { AccountSettings } from "@aws-amplify/ui-react";
+import {AccountSettings, useAuthenticator} from "@aws-amplify/ui-react";
 import Header from "../../layout/Header";
-import {Control, Controller, FieldPath, SubmitHandler, useController, useForm} from "react-hook-form";
+import {Control, FieldPath, SubmitHandler, useController, useForm} from "react-hook-form";
 import {Switch} from "@headlessui/react";
 import classNames from "classnames";
 import Button from "../../common/Button/Button";
-import {useUserProfileStore} from "../../../stores/friendProfilesStore";
 import {DataStore} from "aws-amplify";
 import {PrivacySetting, UserProfile} from "../../../models";
+import LoggedOutState from "../../ui/LoggedOutState";
+import UnverifiedState from "../../ui/UnverifiedState";
+import useProfileStore from "../../../stores/profileStore";
+import useDataClearedStore from "../../../stores/dataClearedStore";
 
 interface AccountSettingsInputs {
   city: boolean
@@ -21,20 +24,11 @@ interface AccountSettingsInputs {
 }
 
 const AccountSettingsPage = () => {
-  const [privacySetting, setPrivacySetting] = useState<PrivacySetting>();
-  const { userProfile } = useUserProfileStore();
+  const userProfile = useProfileStore(state => state.userProfile);
+  const { route } = useAuthenticator(context => [context.route])
+  if(route !== 'authenticated') return <LoggedOutState/>
 
-
-  useEffect(() => {
-    if(!userProfile) return;
-    const privacySub = DataStore.observeQuery(PrivacySetting, c => c.userProfileID.eq(userProfile?.id)).subscribe(({items}) => {
-      setPrivacySetting(items[0]);
-      console.log(items[0])
-    })
-    return () => {
-      privacySub.unsubscribe();
-    }
-  }, [])
+  if(!userProfile?.verified) return <UnverifiedState/>
 
   return (
     <>
@@ -50,7 +44,7 @@ const AccountSettingsPage = () => {
             </div>
           </div>
           <div>
-            <PrivacySettingForm userProfile={userProfile} privacySetting={privacySetting}/>
+            <PrivacySettingForm userProfile={userProfile}/>
           </div>
         </section>
         <section className="my-8 min-w-4xl  max-w-[600px] w-full">
@@ -71,7 +65,8 @@ const AccountSettingsPage = () => {
   );
 };
 
-const PrivacySettingForm = ({privacySetting, userProfile}: {privacySetting: PrivacySetting | undefined, userProfile: UserProfile | null}) => {
+const PrivacySettingForm = ({userProfile}: { userProfile: UserProfile | null}) => {
+  const [privacySetting, setPrivacySetting] = useState<PrivacySetting>();
   const { control, handleSubmit, reset, getValues } = useForm<AccountSettingsInputs>({
     defaultValues: {
       city: privacySetting?.city || false,
@@ -112,6 +107,15 @@ const PrivacySettingForm = ({privacySetting, userProfile}: {privacySetting: Priv
       }))
     }
   }
+
+  useEffect(() => {
+    if(!userProfile) return;
+    const fetchPrivacySetting = async () => {
+      const privacySettingData = await userProfile.privacySetting;
+      setPrivacySetting(privacySettingData);
+    }
+    fetchPrivacySetting();
+  })
 
   useEffect(() => {
     if(!privacySetting) return;
