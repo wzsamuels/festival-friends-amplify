@@ -1,15 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuthenticator } from "@aws-amplify/ui-react";
 import { DataStore } from "aws-amplify";
 import { Friendship, UserProfile } from "../../../models";
 import FriendCard, { FriendCardButton } from "../../ui/FriendCard";
 import FriendSearchModal from "./Modals/FriendSearchModal";
 import Header from "../../layout/Header";
-import { useUserProfileStore } from "../../../stores/friendProfilesStore";
 import Segment from "../../common/Segment/Segment";
-import DataStoreContext, {
-  DataStoreContextType,
-} from "../../../context/DataStoreContext";
 import {
   acceptFriendRequest,
   createFriendRequest,
@@ -20,138 +16,106 @@ import UnverifiedState from "../../ui/UnverifiedState";
 import LoadingState from "../../ui/LoadingState";
 import { ToastData } from "../../../types";
 import Toast from "../../common/Toast/Toast";
-import Drawer from "../../common/Drawer/Drawer";
+import getErrorMessage from "../../../lib/getErrorMessage";
+import useDataClearedStore from "../../../stores/dataClearedStore";
+import useProfileStore from "../../../stores/profileStore";
+import {shallow} from "zustand/shallow";
+import useFriendStore from "../../../stores/friendProfileStore";
 
 type FriendType = "accepted" | "sent" | "suggestions" | "pending";
 
 const FriendsPage: React.FC = () => {
   const { route } = useAuthenticator((context) => [context.route]);
-  const { userProfile, loadingUserProfile, loadingFriendProfiles } =
-    useUserProfileStore();
-  const [allFriends, setAllFriends] = useState<Friendship[]>([]);
-  const [acceptedProfiles, setAcceptedProfiles] = useState<UserProfile[]>([]);
-  const [sentFriendProfiles, setSentFriends] = useState<UserProfile[]>([]);
-  const [pendingFriendProfiles, setPendingFriends] = useState<UserProfile[]>(
-    []
-  );
+  const { userProfile, loadingUserProfile } = useProfileStore((state) =>
+    ({ userProfile: state.userProfile, loadingUserProfile: state.loadingUserProfile }), shallow)
+  const loadingFriends = useFriendStore(state => state.loadingFriends);
+  const allFriendships = useFriendStore(state => state.allFriendships);
+  const acceptedFriendProfiles = useFriendStore(state => state.acceptedFriendProfiles);
+  const incomingFriendProfiles = useFriendStore(state => state.incomingFriendProfiles);
+  const outgoingFriendProfiles = useFriendStore(state => state.outgoingFriendProfiles);
   const [suggestedFriends, setSuggestedFriends] = useState<UserProfile[]>([]);
   const [friendType, setFriendType] = useState("accepted");
   const [isFriendsModalOpen, setIsFriendsModalOpen] = useState(false);
-  const { dataStoreCleared } = useContext(
-    DataStoreContext
-  ) as DataStoreContextType;
+  const dataCleared = useDataClearedStore((state) => state.dataCleared);
   const [toastData, setToastData] = useState<ToastData | null>(null);
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   useEffect(() => {
-    if (route !== "authenticated" || !userProfile || !dataStoreCleared) {
+    if (route !== "authenticated" || !userProfile || !dataCleared) {
       return;
     }
 
-    const subscription = DataStore.observeQuery(Friendship, (c) =>
-      c.or((c) => [
-        c.userProfileID.eq(userProfile.id),
-        c.friendProfileID.eq(userProfile.id),
-      ])
-    ).subscribe(async ({ items }) => {
-      const profileID = userProfile.id;
-      setAllFriends(items);
+    const fetchSuggestedFriends = async () => {
+      try {
+        const allProfiles = await DataStore.query(UserProfile);
 
-      const acceptedFriends = [] as UserProfile[];
-      const incomingFriendRequests = [] as UserProfile[];
-      const outgoingFriendRequests = [] as UserProfile[];
-
-      await Promise.all(
-        items.map(async (friend) => {
-          const relatedProfile =
-            friend.userProfileID === profileID
-              ? await friend.friendProfile
-              : await friend.userProfile;
-
-          if (friend.isAccepted) {
-            acceptedFriends.push(relatedProfile);
-          } else if (friend.friendProfileID === profileID) {
-            incomingFriendRequests.push(relatedProfile);
-          } else {
-            outgoingFriendRequests.push(relatedProfile);
+        // Filter user profiles based on common attributes
+        const suggestedFriends = allProfiles.filter((profile) => {
+          // Exclude the current user from the suggestions
+          if (profile.id === userProfile?.id) {
+            return false;
           }
-        })
-      );
+          // Exclude the current user's friends from the suggestions
+          if (
+            acceptedFriendProfiles.find(
+              (acceptedProfile) => acceptedProfile.id === profile.id
+            )
+          ) {
+            return false;
+          }
 
-      setPendingFriends(incomingFriendRequests);
-      setAcceptedProfiles(acceptedFriends);
-      setSentFriends(outgoingFriendRequests);
+          // Exclude the current user's pending friend requests from the suggestions
+          if (
+            incomingFriendProfiles.find(
+              (pendingFriendProfile) => pendingFriendProfile.id === profile.id
+            )
+          ) {
+            return false;
+          }
 
-      const allProfiles = await DataStore.query(UserProfile);
+          // Exclude the current user's sent friend requests from the suggestions
+          if (
+            outgoingFriendProfiles.find(
+              (sentFriendProfile) => sentFriendProfile.id === profile.id
+            )
+          ) {
+            return false;
+          }
 
-      // Filter user profiles based on common attributes
-      const suggestedFriends = allProfiles.filter((profile) => {
-        // Exclude the current user from the suggestions
-        if (profile.id === userProfile?.id) {
-          return false;
-        }
-        // Exclude the current user's friends from the suggestions
-        if (
-          acceptedProfiles.find(
-            (acceptedProfile) => acceptedProfile.id === profile.id
-          )
-        ) {
-          return false;
-        }
+          // Check for common attributes
+          const commonSchool = profile.school === userProfile?.school;
+          const commonCity = profile.city === userProfile?.city;
+          const commonState = profile.state === userProfile?.state;
 
-        // Exclude the current user's pending friend requests from the suggestions
-        if (
-          pendingFriendProfiles.find(
-            (pendingFriendProfile) => pendingFriendProfile.id === profile.id
-          )
-        ) {
-          return false;
-        }
-
-        // Exclude the current user's sent friend requests from the suggestions
-        if (
-          sentFriendProfiles.find(
-            (sentFriendProfile) => sentFriendProfile.id === profile.id
-          )
-        ) {
-          return false;
-        }
-
-        // Check for common attributes
-        const commonSchool = profile.school === userProfile?.school;
-        const commonCity = profile.city === userProfile?.city;
-        const commonState = profile.state === userProfile?.state;
-
-        return commonSchool || commonCity || commonState;
-      });
-      setSuggestedFriends(suggestedFriends);
-    });
-
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, [route, userProfile, dataStoreCleared]);
+          return commonSchool || commonCity || commonState;
+        });
+        setSuggestedFriends(suggestedFriends);
+      } catch (e) {
+        console.log("Error observing friendships in Friends.tsx: ", getErrorMessage(e));
+      }
+    }
+    fetchSuggestedFriends();
+  }, [route, userProfile, dataCleared]);
 
   useEffect(() => {
     console.log(
-      "All friends: ",
-      allFriends,
-      "\nAccepted friends: ",
-      acceptedProfiles,
-      "\nIncoming friend requests: ",
-      pendingFriendProfiles,
-      "\nOutgoing friend requests: ",
-      sentFriendProfiles
+      "All friendships: ",
+      allFriendships,
+      "\nAccepted friend profiles ",
+      acceptedFriendProfiles,
+      "\nIncoming friend profiles ",
+      incomingFriendProfiles,
+      "\nOutgoing friend profiles: ",
+      outgoingFriendProfiles
     );
-  }, [allFriends, acceptedProfiles, pendingFriendProfiles, sentFriendProfiles]);
+  }, [allFriendships, acceptedFriendProfiles, incomingFriendProfiles, outgoingFriendProfiles]);
 
   // Accept friend request
   const handleFriendAccept = async (friendProfile: UserProfile) => {
-    await acceptFriendRequest(friendProfile, allFriends);
+    await acceptFriendRequest(friendProfile, allFriendships);
   };
 
   const handleFriendReject = async (friendProfile: UserProfile) => {
-    await rejectFriendRequest(friendProfile, allFriends);
+    await rejectFriendRequest(friendProfile, allFriendships);
   };
 
   const handleFriendRequest = async (friendProfile: UserProfile) => {
@@ -182,7 +146,7 @@ const FriendsPage: React.FC = () => {
   );
 
   const renderFriends = () => {
-    if (loadingFriendProfiles || loadingUserProfile || route === "idle") {
+    if (loadingFriends || loadingUserProfile || route === "idle") {
       return <LoadingState />;
     }
 
@@ -203,11 +167,11 @@ const FriendsPage: React.FC = () => {
       }
     > = {
       accepted: {
-        friends: acceptedProfiles,
+        friends: acceptedFriendProfiles,
         noFriendsMessage: "No accepted friends.",
       },
       sent: {
-        friends: sentFriendProfiles,
+        friends: outgoingFriendProfiles,
         noFriendsMessage: "No sent friend requests.",
         buttons: [
           {
@@ -229,7 +193,7 @@ const FriendsPage: React.FC = () => {
         ],
       },
       pending: {
-        friends: pendingFriendProfiles,
+        friends: incomingFriendProfiles,
         noFriendsMessage: "No friend requests pending.",
         buttons: [
           {
@@ -278,9 +242,9 @@ const FriendsPage: React.FC = () => {
       children: (
         <div className="flex justify-center items-center">
           <div>Requests</div>
-          {pendingFriendProfiles.length > 0 ? (
+          {incomingFriendProfiles.length > 0 ? (
             <div className="bg-green-950 text-white rounded-full mx-2 w-[20px] p-2  h-[20px] justify-center items-center hidden sm:flex">
-              {pendingFriendProfiles.length}
+              {incomingFriendProfiles.length}
             </div>
           ) : null}
         </div>
@@ -304,9 +268,9 @@ const FriendsPage: React.FC = () => {
       children: (
         <div className="flex justify-center items-center">
           <div>Sent</div>
-          {sentFriendProfiles.length > 0 ? (
+          {outgoingFriendProfiles.length > 0 ? (
             <div className="bg-green-950 text-white rounded-full mx-2 w-[20px] p-2 h-[20px] justify-center items-center hidden md:flex">
-              {sentFriendProfiles.length}
+              {outgoingFriendProfiles.length}
             </div>
           ) : null}
         </div>
