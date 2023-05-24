@@ -1,37 +1,33 @@
-// AWS imports
-import { DataStore } from "aws-amplify";
-
 // React imports
-import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 // Local imports
 import {
   EventType,
-  Festival,
   LazyFestival,
   UserProfile,
 } from "../../../models";
-import DataStoreContext, {
-  DataStoreContextType,
-} from "../../../context/DataStoreContext";
 import EventCard from "../../ui/EventCard";
 import Header from "../../layout/Header";
-import { useUserProfileStore } from "../../../stores/friendProfilesStore";
 import Segment from "../../common/Segment/Segment";
 import EventSearchModal from "./Modals/EventSearchModal";
 import {
   fetchEventAttendees,
   getAttendingFriends,
 } from "../../../lib/eventHelpers";
+import useEventStore from "../../../stores/eventStore";
+import useFriendStore from "../../../stores/friendProfileStore";
+import LoadingState from "../../ui/LoadingState";
+import useDataClearedStore from "../../../stores/dataClearedStore";
+
+
+
 
 const EventPage = () => {
-  const { friendProfiles } = useUserProfileStore();
-  const [events, setEvents] = useState<LazyFestival[]>([]);
-  const [eventAttendees, setEventAttendees] = useState<
-    Map<string, UserProfile[]>
-  >(new Map());
-
+  const [eventAttendees, setEventAttendees] = useState<Map<string, UserProfile[]>>(new Map());
   // Filter events by type
+  const events = useEventStore(state => state.events)
+  const loadingEvents = useEventStore(state => state.loadingEvents)
   const sportEvents = events.filter((event) => event.type === EventType.SPORT);
   const musicEvents = events.filter((event) => event.type === EventType.MUSIC);
   const businessEvents = events.filter(
@@ -40,41 +36,35 @@ const EventPage = () => {
   const travelEvents = events.filter(
     (event) => event.type === EventType.TRAVEL
   )
-
+  const dataCleared = useDataClearedStore(state => state.dataCleared)
+  const friendProfiles = useFriendStore(state => state.acceptedFriendProfiles)
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
   const [eventType, setEventType] = useState("music");
 
-  const { dataStoreCleared } = useContext(
-    DataStoreContext
-  ) as DataStoreContextType;
-
-  // Observe the Festival data from DataStore
-  useLayoutEffect(() => {
-    if (dataStoreCleared) {
-      const eventSub = DataStore.observeQuery(Festival).subscribe(
-        ({ items }) => {
-          setEvents(items);
-        }
-      );
-
-      return () => {
-        eventSub.unsubscribe();
-      };
-    }
-  }, [dataStoreCleared]);
+  useEffect(() => {
+    console.log("Mounting EventPage")
+  },[])
 
   // Fetch event attendees
   useEffect(() => {
-    fetchEventAttendees(events).then(setEventAttendees);
-  }, [events]);
+    if(!dataCleared) return
 
-  // Get attending friends
+    try {
+      fetchEventAttendees(events).then(setEventAttendees);
+    } catch (e) {
+      console.log("Error fetching event attendees", e);
+    }
+  }, [events]);
 
   // Render festival cards
   const renderFestivalCards = (events: LazyFestival[]) => {
+    if(loadingEvents) {
+      return <LoadingState/>
+    }
+
     return events?.map((event) => (
       <EventCard
-        festival={event}
+        event={event}
         key={event.id}
         attendingFriends={getAttendingFriends({
           eventAttendees,
