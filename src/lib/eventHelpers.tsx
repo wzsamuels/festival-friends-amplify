@@ -6,14 +6,18 @@ export const fetchEventAttendees = async (
 ): Promise<Map<string, UserProfile[]>> => {
   const eventAttendeesMap = new Map<string, UserProfile[]>();
   if (events) {
-    for (const event of events) {
-      const attendees = (
-        await DataStore.query(EventProfile, (ep) => ep.eventID.eq(event.id))
-      ).map((eventProfile: EventProfile) => eventProfile.userProfile);
-      const attendeeProfiles = await Promise.all(
-        attendees.map(async (attendee) => await attendee)
-      );
-      eventAttendeesMap.set(event.id, attendeeProfiles);
+    try {
+      for (const event of events) {
+        const attendees = (
+          await DataStore.query(EventProfile, (ep) => ep.eventID.eq(event.id))
+        ).map((eventProfile: EventProfile) => eventProfile.userProfile);
+        const attendeeProfiles = await Promise.all(
+          attendees.map(async (attendee) => await attendee)
+        );
+        eventAttendeesMap.set(event.id, attendeeProfiles as UserProfile[]);
+      }
+    } catch (e) {
+      console.log("Error fetching event attendees: ", e)
     }
   }
   return eventAttendeesMap;
