@@ -27,8 +27,13 @@ const ConservationSearchModal = ({isOpen, setIsOpen} : ConservationSearchModalPr
 
   const handleSearch:SubmitHandler<ConversationSearchInputs> = async data => {
     const filteredData = getFilteredData(data);
-    const conversations = await DataStore.query(Conversation, c => c.or(() => criteria(c, filteredData)));
-    setResults(conversations)
+    try {
+      const conversations = await DataStore.query(Conversation, c => c.or(() => criteria(c, filteredData)));
+      setResults(conversations)
+    } catch (e) {
+      console.log("Error in conversation search",e)
+      setResults([])
+    }
   }
 
 
