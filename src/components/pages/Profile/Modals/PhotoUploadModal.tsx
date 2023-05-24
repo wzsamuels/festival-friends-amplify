@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
-import { Storage } from "aws-amplify";
-import { DataStore } from "@aws-amplify/datastore";
-import { Photo } from "../../../../models";
+import {createNewPhoto} from '../../../../services/PhotoServices'
 import { ProfileModalProps } from "../../../../@types/profile";
-import { Dialog } from "@headlessui/react";
 import Modal from "../../../common/Modal/Modal";
 import Button from "../../../common/Button/Button";
 
@@ -13,9 +9,11 @@ export interface PhotoUploadModalProps extends ProfileModalProps {
   setPhotoFile: (file: File | null) => void;
 }
 
+// TODO: Give UI feedback on upload progress
+
 const PhotoUploadModal = ({
   profile,
-  username,
+  sub,
   isOpen,
   setIsOpen,
   photoFile,
@@ -24,23 +22,11 @@ const PhotoUploadModal = ({
   const [preview, setPreview] = useState("");
   const handlePhotoUpload = async () => {
     console.log(photoFile);
-    if (photoFile) {
-      const id = uuidv4();
+
+    if (photoFile && profile) {
       try {
-        await Storage.put(`${username}/${id}`, photoFile, {
-          contentType: photoFile.type,
-        });
-        // Profile should always exist, but let's make Typescript happy
-        if (profile) {
-          await DataStore.save(
-            new Photo({
-              userProfile: profile,
-              s3Key: `${username}/${id}`,
-              isPrivate: false,
-              userProfileID: profile.id,
-            })
-          );
-        }
+        const newPhoto = createNewPhoto(sub, photoFile, profile);
+        console.log(newPhoto)
       } catch (error) {
         console.log("Error uploading file: ", error);
       } finally {
