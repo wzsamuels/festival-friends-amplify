@@ -6,6 +6,18 @@ import colleges from "../../../data/colleges.json";
 import InputWrapper from "../../common/InputWrapper/InputWrapper";
 import Label from "../../common/Label/Label";
 import Button from "../../common/Button/Button";
+import * as mutations from '../../../graphql/mutations';
+import { API, graphqlOperation } from 'aws-amplify';
+import {useAuthenticator} from "@aws-amplify/ui-react";
+import { GraphQLQuery } from '@aws-amplify/api';
+import {
+  CreateUserProfileMutation,
+  CreateUserProfileInput,
+  CreatePrivacySettingInput,
+  CreatePrivacySettingMutation
+} from "../../../API";
+import getErrorMessage from "../../../lib/getErrorMessage";
+import mockUserProfiles from '../../../data/profiles.json';
 
 const AdminPage = () => {
   return (
@@ -29,6 +41,9 @@ const VerifyAccounts = () => {
     []
   );
   const [message, setMessage] = useState<string>("");
+  const { user } = useAuthenticator((context) => [context.user]);
+  const username = user?.username as string;
+  const email = user?.attributes?.email as string;
 
   useEffect(() => {
     const fetchProfiles = async () => {
@@ -38,7 +53,12 @@ const VerifyAccounts = () => {
       console.log(response);
       setUnverifiedProfiles(response);
     };
-    fetchProfiles();
+
+    try {
+      fetchProfiles();
+    } catch (e) {
+      console.log("Error fetching profiles in AdminPage.tsx", getErrorMessage(e));
+    }
   }, []);
 
   const seedDatabase = async () => {
@@ -58,6 +78,53 @@ const VerifyAccounts = () => {
     alert(`Database seeded with ${newColleges.length} colleges`);
   };
 
+  // TODO: Refactor to separate file
+  const seedUserProfiles = async () => {
+    mockUserProfiles.map(async (profile) => {
+      try {
+        const privacySettingInput: CreatePrivacySettingInput = {
+          userProfileID: profile.id,
+          city: true,
+          state: true,
+          school: true,
+          email: true,
+          attendingEvents: true,
+          rides: true,
+          friends: true,
+          photos: true,
+        }
+
+        let collegeGroup: CollegeGroup | null = null;
+        if (profile.email.endsWith(".edu")) {
+          const emailDomain = profile.email.split("@")[1];
+          const collegeGroups = await DataStore.query(CollegeGroup, (c) =>
+            c.domain.eq(emailDomain)
+          );
+          collegeGroup = collegeGroups[0];
+        }
+
+        const userProfileInput: CreateUserProfileInput = {
+          ...profile,
+          ...(collegeGroup && {collegeGroupId: collegeGroup?.id})
+        }
+
+        const newUserProfile = await API.graphql<GraphQLQuery<CreateUserProfileMutation>>(
+          graphqlOperation(mutations.createUserProfile, {
+            input: userProfileInput}));
+
+        console.log(`New profile for ${profile.firstName}:`, newUserProfile);
+
+        const newPrivacySetting = await API.graphql<GraphQLQuery<CreatePrivacySettingMutation>>(
+          graphqlOperation(mutations.createPrivacySetting, {input: privacySettingInput}));
+
+        console.log(`New privacy setting for ${profile.firstName}:`, newPrivacySetting);
+
+      } catch (error) {
+        console.log(getErrorMessage(error));
+      }
+    })
+  }
+
   const verifyProfile = async (profile: UserProfile) => {
     const latestProfile = await DataStore.query(UserProfile, (c) =>
       c.id.eq(profile.id)
@@ -73,8 +140,41 @@ const VerifyAccounts = () => {
     setMessage("Profile verified");
   };
 
+  const createUserProfile = async () => {
+    const userProfileInput: CreateUserProfileInput = {
+      id: username,
+      email: email,
+      verified: false,
+      verifySubmitted: true
+    }
+    console.log(userProfileInput)
+    try {
+      const newUserProfile = await API.graphql<GraphQLQuery<CreateUserProfileMutation>>(
+        graphqlOperation(mutations.createUserProfile, {input: userProfileInput}));
+      console.log(newUserProfile);
+    } catch (error) {
+      console.log(getErrorMessage(error));
+    }
+
+    const privacySettingInput: CreatePrivacySettingInput = {
+      userProfileID: username,
+      city: true,
+      state: true,
+      school: true,
+      email: true,
+      attendingEvents: true,
+      rides: true,
+      friends: true,
+      photos: true,
+    }
+    const newPrivacySetting = await API.graphql<GraphQLQuery<CreatePrivacySettingMutation>>(
+      graphqlOperation(mutations.createPrivacySetting, {input: privacySettingInput}));
+    console.log(newPrivacySetting);
+  }
+
   return (
     <div>
+      <Button onClick={createUserProfile}>Create Profile</Button>
       {unverifiedProfiles.map((profile) => (
         <ul key={profile.id}>
           <InputWrapper className="my-4">
@@ -119,6 +219,7 @@ const VerifyAccounts = () => {
       </h2>
       <h3 className="text-center my-4">{message}</h3>
       {/*<IonButton onClick={seedDatabase}>Seed Database</IonButton>*/}
+      <Button onClick={seedUserProfiles}>Seed Database</Button>
     </div>
   );
 };
