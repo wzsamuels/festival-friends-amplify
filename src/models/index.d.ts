@@ -70,8 +70,8 @@ type EagerEventProfile = {
   readonly id: string;
   readonly userProfileID: string;
   readonly eventID: string;
-  readonly userProfile: UserProfile;
-  readonly event: Festival;
+  readonly userProfile?: UserProfile | null;
+  readonly event?: Festival | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -84,8 +84,8 @@ type LazyEventProfile = {
   readonly id: string;
   readonly userProfileID: string;
   readonly eventID: string;
-  readonly userProfile: AsyncItem<UserProfile>;
-  readonly event: AsyncItem<Festival>;
+  readonly userProfile: AsyncItem<UserProfile | undefined>;
+  readonly event: AsyncItem<Festival | undefined>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -156,22 +156,20 @@ type EagerUserProfile = {
   readonly id: string;
   readonly firstName?: string | null;
   readonly lastName?: string | null;
-  readonly userID: string;
   readonly verified: boolean;
   readonly verifySubmitted: boolean;
-  readonly profileImage?: string | null;
-  readonly bannerPhoto?: Photo | null;
+  readonly profilePhotoID?: string | null;
+  readonly bannerPhotoID?: string | null;
   readonly city?: string | null;
   readonly state?: string | null;
   readonly school?: string | null;
   readonly address?: string | null;
   readonly address2?: string | null;
   readonly phone?: string | null;
-  readonly username?: string | null;
   readonly email?: string | null;
   readonly zipcode?: string | null;
   readonly attendingEvents?: (EventProfile | null)[] | null;
-  readonly rides: (RideUser | null)[];
+  readonly rides?: (RideUser | null)[] | null;
   readonly friends?: (Friendship | null)[] | null;
   readonly conversations?: (Conversation | null)[] | null;
   readonly sentMessages?: (Message | null)[] | null;
@@ -179,9 +177,10 @@ type EagerUserProfile = {
   readonly photos?: (Photo | null)[] | null;
   readonly collegeGroupId?: string | null;
   readonly collegeGroup?: CollegeGroup | null;
+  readonly privacySetting?: PrivacySetting | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
-  readonly userProfileBannerPhotoId?: string | null;
+  readonly userProfilePrivacySettingId?: string | null;
 }
 
 type LazyUserProfile = {
@@ -192,18 +191,16 @@ type LazyUserProfile = {
   readonly id: string;
   readonly firstName?: string | null;
   readonly lastName?: string | null;
-  readonly userID: string;
   readonly verified: boolean;
   readonly verifySubmitted: boolean;
-  readonly profileImage?: string | null;
-  readonly bannerPhoto: AsyncItem<Photo | undefined>;
+  readonly profilePhotoID?: string | null;
+  readonly bannerPhotoID?: string | null;
   readonly city?: string | null;
   readonly state?: string | null;
   readonly school?: string | null;
   readonly address?: string | null;
   readonly address2?: string | null;
   readonly phone?: string | null;
-  readonly username?: string | null;
   readonly email?: string | null;
   readonly zipcode?: string | null;
   readonly attendingEvents: AsyncCollection<EventProfile>;
@@ -215,15 +212,62 @@ type LazyUserProfile = {
   readonly photos: AsyncCollection<Photo>;
   readonly collegeGroupId?: string | null;
   readonly collegeGroup: AsyncItem<CollegeGroup | undefined>;
+  readonly privacySetting: AsyncItem<PrivacySetting | undefined>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
-  readonly userProfileBannerPhotoId?: string | null;
+  readonly userProfilePrivacySettingId?: string | null;
 }
 
 export declare type UserProfile = LazyLoading extends LazyLoadingDisabled ? EagerUserProfile : LazyUserProfile
 
 export declare const UserProfile: (new (init: ModelInit<UserProfile>) => UserProfile) & {
   copyOf(source: UserProfile, mutator: (draft: MutableModel<UserProfile>) => MutableModel<UserProfile> | void): UserProfile;
+}
+
+type EagerPrivacySetting = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<PrivacySetting, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly userProfileID: string;
+  readonly userProfile?: UserProfile | null;
+  readonly city: boolean;
+  readonly state: boolean;
+  readonly school: boolean;
+  readonly email: boolean;
+  readonly attendingEvents: boolean;
+  readonly rides: boolean;
+  readonly friends: boolean;
+  readonly photos: boolean;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyPrivacySetting = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<PrivacySetting, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly userProfileID: string;
+  readonly userProfile: AsyncItem<UserProfile | undefined>;
+  readonly city: boolean;
+  readonly state: boolean;
+  readonly school: boolean;
+  readonly email: boolean;
+  readonly attendingEvents: boolean;
+  readonly rides: boolean;
+  readonly friends: boolean;
+  readonly photos: boolean;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type PrivacySetting = LazyLoading extends LazyLoadingDisabled ? EagerPrivacySetting : LazyPrivacySetting
+
+export declare const PrivacySetting: (new (init: ModelInit<PrivacySetting>) => PrivacySetting) & {
+  copyOf(source: PrivacySetting, mutator: (draft: MutableModel<PrivacySetting>) => MutableModel<PrivacySetting> | void): PrivacySetting;
 }
 
 type EagerRide = {
@@ -316,6 +360,7 @@ type EagerPhoto = {
   readonly userProfile: UserProfile;
   readonly s3Key: string;
   readonly isPrivate: boolean;
+  readonly identityId: string;
   readonly description?: string | null;
   readonly comments?: (PhotoComment | null)[] | null;
   readonly createdAt?: string | null;
@@ -332,6 +377,7 @@ type LazyPhoto = {
   readonly userProfile: AsyncItem<UserProfile>;
   readonly s3Key: string;
   readonly isPrivate: boolean;
+  readonly identityId: string;
   readonly description?: string | null;
   readonly comments: AsyncCollection<PhotoComment>;
   readonly createdAt?: string | null;

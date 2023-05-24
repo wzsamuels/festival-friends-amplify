@@ -14,8 +14,8 @@ type EventProfile @model @auth(rules: [{ allow: public }]) {
   id: ID!
   userProfileID: ID! @index(name: "byUserProfile")
   eventID: ID! @index(name: "byEvent")
-  userProfile: UserProfile! @belongsTo(fields: ["userProfileID"])
-  event: Festival! @belongsTo(fields: ["eventID"])
+  userProfile: UserProfile @belongsTo(fields: ["userProfileID"])
+  event: Festival @belongsTo(fields: ["eventID"])
 }
 
 type Festival @model @auth(rules: [{ allow: public }]) {
@@ -39,32 +39,44 @@ type UserProfile @model @auth(rules: [{ allow: public }]) {
   id: ID!
   firstName: String
   lastName: String
-  userID: ID!
   verified: Boolean!
   verifySubmitted: Boolean!
-  profileImage: String
-  bannerPhoto: Photo @hasOne
+  profilePhotoID: String
+  bannerPhotoID: String
   city: String
   state: String
   school: String
   address: String
   address2: String
   phone: String
-  username: String
   email: String
   zipcode: String
-  attendingEvents: [EventProfile]
-    @hasMany(indexName: "byUserProfile", fields: ["id"])
-  rides: [RideUser]! @hasMany(indexName: "byUserProfile", fields: ["id"])
+  attendingEvents: [EventProfile] @hasMany(indexName: "byUserProfile", fields: ["id"])
+  rides: [RideUser] @hasMany(indexName: "byUserProfile", fields: ["id"])
   friends: [Friendship] @hasMany(indexName: "byUserProfile", fields: ["id"])
-  conversations: [Conversation]
-    @hasMany(indexName: "byUserProfile", fields: ["id"])
+  conversations: [Conversation] @hasMany(indexName: "byUserProfile", fields: ["id"])
   sentMessages: [Message] @hasMany(indexName: "bySender", fields: ["id"])
   receivedMessages: [Message] @hasMany(indexName: "byReceiver", fields: ["id"])
   photos: [Photo] @hasMany(indexName: "byUserProfile", fields: ["id"])
   collegeGroupId: ID @index(name: "byCollegeGroup")
   collegeGroup: CollegeGroup @belongsTo(fields: ["collegeGroupId"])
+  privacySetting: PrivacySetting @hasOne
 }
+
+type PrivacySetting @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  userProfileID: ID! @index(name: "byUser")
+  userProfile: UserProfile @belongsTo(fields: ["userProfileID"])
+  city: Boolean!
+  state: Boolean!
+  school: Boolean!
+  email: Boolean!
+  attendingEvents: Boolean!
+  rides: Boolean!
+  friends: Boolean!
+  photos: Boolean!
+}
+
 
 type Ride @model @auth(rules: [{ allow: public }]) {
   id: ID!
@@ -93,6 +105,7 @@ type Photo @model @auth(rules: [{ allow: public }]) {
   userProfile: UserProfile! @belongsTo(fields: ["userProfileID"])
   s3Key: String!
   isPrivate: Boolean!
+  identityId: String!
   description: String
   comments: [PhotoComment] @hasMany(indexName: "byPhoto", fields: ["id"])
 }

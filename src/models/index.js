@@ -18,13 +18,14 @@ const EventType = {
   "TRAVEL": "TRAVEL"
 };
 
-const { Message, EventProfile, Festival, UserProfile, Ride, RideUser, Photo, PhotoComment, Friendship, Conversation, CollegeGroup } = initSchema(schema);
+const { Message, EventProfile, Festival, UserProfile, PrivacySetting, Ride, RideUser, Photo, PhotoComment, Friendship, Conversation, CollegeGroup } = initSchema(schema);
 
 export {
   Message,
   EventProfile,
   Festival,
   UserProfile,
+  PrivacySetting,
   Ride,
   RideUser,
   Photo,
