@@ -1,106 +1,75 @@
-import { EventProfile, LazyFestival, UserProfile } from "../../models";
-import React, { useContext, useEffect, useState } from "react";
-import DataStoreContext, {
-  DataStoreContextType,
-} from "../../context/DataStoreContext";
+import {EventProfile, Festival, UserProfile} from "../../models";
+import React, {useContext, useEffect, useState} from "react";
 import ImageContext from "../../context/ImageContext";
-import { DataStore } from "aws-amplify";
-import { BsCheck } from "react-icons/all";
-import { Link } from "react-router-dom";
-import { useUserProfileStore } from "../../stores/friendProfilesStore";
+import {BsCheck} from "react-icons/all";
+import {Link} from "react-router-dom";
 import Button from "../common/Button/Button";
 import EventFriendModal from "../pages/EventPage/Modals/EventFriendModal";
+import useDataClearedStore from "../../stores/dataClearedStore";
+import useProfileStore from "../../stores/profileStore";
+import {createEventProfile, deleteEventProfile, getEventProfile} from "../../services/eventProfileServices";
 
-interface FestivalCardProps {
-  festival: LazyFestival;
+interface EventCardProps {
+  event: Festival;
   attendingFriends: UserProfile[];
 }
 
-const EventCard = ({ festival, attendingFriends }: FestivalCardProps) => {
-  const [festivalImage, setFestivalImage] = useState("");
-  const [attendingEvent, setAttendingEvent] = useState(false);
-  const [eventProfile, setEventProfile] = useState<EventProfile>();
-  const { dataStoreCleared } = useContext(
-    DataStoreContext
-  ) as DataStoreContextType;
-  const { userProfile } = useUserProfileStore();
+const EventCard = ({ event, attendingFriends }: EventCardProps) => {
+  const [eventImage, setFestivalImage] = useState("");
+  const [eventProfile, setEventProfile] = useState<EventProfile | null>(null);
+  const dataCleared = useDataClearedStore((state) => state.dataCleared);
+  const userProfile = useProfileStore((state) => state.userProfile);
   const [isEventFriendModalOpen, setIsEventFriendModalOpen] = useState(false);
-
   const { getSignedURL } = useContext(ImageContext);
+
   useEffect(() => {
     const fetchSignedURL = async () => {
-      const url = await getSignedURL(festival.image);
-      setFestivalImage(url);
+      return await getSignedURL(event.image, "public");
     };
 
-    fetchSignedURL();
-  }, [festival.image, getSignedURL]);
+    fetchSignedURL().then(url => setFestivalImage(url));
+  }, [event.image, getSignedURL]);
 
   useEffect(() => {
-    if (dataStoreCleared) {
-      const eventProfileSub = DataStore.observeQuery(EventProfile, (c) =>
-        c.eventID.eq(festival.id)
-      ).subscribe(({ items }) => {
-        if (userProfile && items.length > 0) {
-          const ep = items.filter(
-            (item) => item.userProfileID === userProfile.id
-          );
-          if (ep.length > 0) {
-            setAttendingEvent(true);
-            setEventProfile(ep[0]);
-          }
-        } else {
-          setAttendingEvent(false);
-          setEventProfile(undefined);
-        }
-      });
+    if (!dataCleared || !userProfile) return;
 
-      return () => {
-        eventProfileSub.unsubscribe();
-      };
-    }
-  }, [dataStoreCleared, userProfile]);
+    getEventProfile(event.id, userProfile.id).then(eventProfile => setEventProfile(eventProfile));
+  }, [dataCleared, userProfile]);
 
   const handleAttendFestival = async () => {
-    if (userProfile) {
-      if (attendingEvent && eventProfile) {
-        // If the user is already attending, remove them from the attendees list
-        await DataStore.delete(eventProfile);
-        setAttendingEvent(false);
-        console.log("User removed from the festival attendees list");
-      } else {
-        // If the user is not attending, add them to the attendees list
-        await DataStore.save(
-          new EventProfile({
-            userProfileID: userProfile.id,
-            eventID: festival.id,
-            userProfile: userProfile,
-            event: festival,
-          })
-        );
-        console.log("User added to the festival attendees list");
-      }
+    if (!userProfile || !dataCleared) return;
+
+    if (eventProfile) {
+      // If the user is already attending, remove them from the attendees list
+      await deleteEventProfile(eventProfile);
+      setEventProfile(null)
+      console.log(`${userProfile.firstName} ${userProfile.lastName} has been removed from the event attendees list`);
+    } else {
+      // If the user is not attending, add them to the attendees list
+      const newEventProfile = await createEventProfile(event, userProfile);
+      setEventProfile(newEventProfile)
+      console.log(`${userProfile.firstName} ${userProfile.lastName} has been added to the event attendees list`);
     }
   };
 
   return (
     <div className="m-4 rounded-xl shadow-md w-full  max-w-[350px] bg-light-default">
-      <Link className="relative" to={`/events/${festival.id}`}>
+      <Link className="relative" to={`/events/${event.id}`}>
         <div className="w-full max-w-[350px] min-h-[350px] h-full max-h-[350px]  flex items-center justify-center">
-          {festivalImage ? (
+          {eventImage ? (
             <img
               className="w-full h-full object-cover aspect-square"
-              src={festivalImage}
-              alt={festival.name}
+              src={eventImage}
+              alt={event.name}
             />
           ) : null}
         </div>
         <div className=" bottom-4 left-4 rounded-xl z-10 w-full p-4 font-bold ">
           <div className="bold min-h-[3rem]">
-            {festival.name} - {festival.location}
+            {event.name} - {event.location}
           </div>
 
-          <div>{festival.startDate}</div>
+          <div>{event.startDate}</div>
         </div>
       </Link>
       <div className="p-2 text-base md:text-lg">
@@ -121,7 +90,7 @@ const EventCard = ({ festival, attendingFriends }: FestivalCardProps) => {
                 <span>&nbsp;</span>
               )}
             </button>
-            {attendingEvent ? (
+            {eventProfile ? (
               <Button
                 onClick={handleAttendFestival}
                 className="flex items-center"
@@ -142,7 +111,7 @@ const EventCard = ({ festival, attendingFriends }: FestivalCardProps) => {
         ) : null}
       </div>
       <EventFriendModal
-        event={festival}
+        event={event}
         attendingFriends={attendingFriends}
         isOpen={isEventFriendModalOpen}
         setIsOpen={setIsEventFriendModalOpen}
@@ -150,5 +119,28 @@ const EventCard = ({ festival, attendingFriends }: FestivalCardProps) => {
     </div>
   );
 };
+
+/*
+    const eventProfileSub = DataStore.observeQuery(EventProfile, (c) =>
+      c.eventID.eq(event.id)
+    ).subscribe(({ items }) => {
+      if (userProfile && items.length > 0) {
+        const ep = items.filter(
+          (item) => item.userProfileID === userProfile.id
+        );
+        if (ep.length > 0) {
+          setAttendingEvent(true);
+          setEventProfile(ep[0]);
+        }
+      } else {
+        setAttendingEvent(false);
+        setEventProfile(undefined);
+      }
+    });
+
+    return () => {
+      eventProfileSub.unsubscribe();
+    };
+ */
 
 export default EventCard;
