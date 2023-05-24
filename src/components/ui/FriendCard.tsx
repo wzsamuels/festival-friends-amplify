@@ -1,4 +1,4 @@
-import { UserProfile } from "../../models";
+import {Photo, UserProfile} from "../../models";
 import React, {
   ReactElement,
   ReactNode,
@@ -10,6 +10,7 @@ import ImageContext from "../../context/ImageContext";
 import { Link } from "react-router-dom";
 import Button from "../common/Button/Button";
 import {BsPerson} from "react-icons/all";
+import {DataStore} from "aws-amplify";
 
 export interface FriendCardButton {
   label: string;
@@ -39,14 +40,15 @@ const FriendCard = ({
   useEffect(() => {
     const fetchSignedURL = async () => {
       let url = ''
-      if (profile.profileImage) {
-        url = await getSignedURL(profile.profileImage as string);
+      if (profile.profilePhotoID) {
+        const photo = await DataStore.query(Photo, profile.profilePhotoID)
+        url = await getSignedURL(photo?.s3Key as string, "protected", photo?.identityId as string);
       }
       setProfileImage(url);
     };
 
     fetchSignedURL();
-  }, [profile.profileImage, getSignedURL]);
+  }, [profile.profilePhotoID, getSignedURL]);
 
   if (!profile) {
     return null;
@@ -65,7 +67,7 @@ const FriendCard = ({
             profileImage ?
               <img
                 onClick={onClick}
-                className={"rounded-full"}
+                className={"rounded-full aspect-square"}
                 width={200}
                 height={200}
                 src={profileImage}
