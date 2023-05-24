@@ -1,34 +1,15 @@
 import { Authenticator, useAuthenticator } from "@aws-amplify/ui-react";
-import React, { useContext, useEffect } from "react";
+import React, { } from "react";
 import ProfileUnverified from "../Profile/ProfileUnverified";
 import ProfileVerified from "../Profile/ProfileVerified";
-import { useUserProfileStore } from "../../../stores/friendProfilesStore";
 import Header from "../../layout/Header";
-import DataStoreContext, {
-  DataStoreContextType,
-} from "../../../context/DataStoreContext";
 import LoadingState from "../../ui/LoadingState";
+import useProfileStore from "../../../stores/profileStore";
 
 const AccountPage = () => {
   const { user } = useAuthenticator((context) => [context.user]);
-  const username = user?.username as string;
   const { route } = useAuthenticator((context) => [context.route]);
-  const loadingUserProfile = useUserProfileStore(
-    (state) => state.loadingUserProfile
-  );
-  const userProfile = useUserProfileStore((state) => state.userProfile);
-  const fetchAndObserveUserProfile = useUserProfileStore(
-    (state) => state.fetchAndObserveUserProfile
-  );
-  const { dataStoreCleared } = useContext(
-    DataStoreContext
-  ) as DataStoreContextType;
-
-  useEffect(() => {
-    if (user && dataStoreCleared) {
-      fetchAndObserveUserProfile(username, route);
-    }
-  }, [user, fetchAndObserveUserProfile, dataStoreCleared]);
+  const { loadingUserProfile, userProfile } = useProfileStore();
 
   const renderPage = () => {
     if (loadingUserProfile || route === "idle") {
