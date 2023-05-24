@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
 import Modal from "../../../common/Modal/Modal";
 import { v4 as uuidv4 } from "uuid";
-import { Storage } from "aws-amplify";
+import {Auth, Storage} from "aws-amplify";
 import { DataStore } from "@aws-amplify/datastore";
 import { Photo, UserProfile } from "../../../../models";
 import getErrorMessage from "../../../../lib/getErrorMessage";
 import PhotoImage from "../../../ui/PhotoImage";
 import { ProfileModalProps } from "../../../../@types/profile";
 import Button from "../../../common/Button/Button";
+import useProfileStore from "../../../../stores/profileStore";
+import {updateBannerPhoto, updateProfilePhoto} from "../../../../services/ProfileServices";
+import {createNewPhoto} from "../../../../services/PhotoServices";
 
 export interface ProfileImageModalProps extends ProfileModalProps {
   photos: Photo[];
@@ -15,57 +18,43 @@ export interface ProfileImageModalProps extends ProfileModalProps {
 
 const BannerPhotoModal = ({
   profile,
-  username,
+  sub,
   isOpen,
   setIsOpen,
   photos,
 }: ProfileImageModalProps) => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [uploading, setUploading] = useState(false);
+  const [updating, setUpdating] = useState(false);
   const [preview, setPreview] = useState("");
+  const setProfile = useProfileStore(state => state.setProfile)
 
   const handleProfileBannerUpdate = async () => {
-    if (selectedFile && profile) {
-      try {
-        const id = uuidv4();
-        await Storage.put(`${username}/${id}`, selectedFile, {
-          contentType: selectedFile.type,
-        });
-        const newPhoto = await DataStore.save(
-          new Photo({
-            userProfile: profile,
-            s3Key: `${username}/${id}`,
-            isPrivate: false,
-            userProfileID: profile.id,
-          })
-        );
-        await DataStore.save(
-          UserProfile.copyOf(profile, (updated) => {
-            updated.bannerPhoto = newPhoto;
-          })
-        );
-      } catch (error) {
-        alert(`Error uploading file: ${getErrorMessage(error)}`);
-      } finally {
-        dismissModal();
-      }
-    } else {
-      alert("No file selected!");
+    if (!selectedFile || !profile) return;
+    try {
+      const newPhoto = await createNewPhoto(sub, selectedFile, profile)
+      if(!newPhoto) throw new Error("Error creating new photo");
+
+      updateBannerPhoto(profile, newPhoto?.id)
+        .then(profile => setProfile(profile))
+        .catch(err => alert(err.message))
+    } catch (error) {
+      alert(`Error uploading file: ${getErrorMessage(error)}`);
+    } finally {
+      dismissModal();
     }
   };
 
   const handleProfileImageSelect = async (photo: Photo) => {
-    if (profile) {
-      try {
-        await DataStore.save(
-          UserProfile.copyOf(profile, (updated) => {
-            updated.bannerPhoto = photo;
-          })
-        );
-      } catch (error) {
-        alert(`Error uploading file: ${getErrorMessage(error)}`);
-      } finally {
-        dismissModal();
-      }
+    if(!profile) return;
+    try {
+      updateBannerPhoto(profile, photo?.id)
+        .then(profile => setProfile(profile))
+        .catch(err => alert(err.message))
+    } catch (error) {
+      alert(`Error uploading file: ${getErrorMessage(error)}`);
+    } finally {
+      dismissModal();
     }
   };
 
@@ -125,6 +114,7 @@ const BannerPhotoModal = ({
                 onClick={() => handleProfileImageSelect(photo)}
                 photo={photo}
                 key={photo.id}
+                level="protected"
               />
             ))}
           </div>
