@@ -13,7 +13,7 @@ const EventCardBase = ({ festival, className }: EventCardBaseProps) => {
   const [festivalImage, setFestivalImage] = useState("");
   useEffect(() => {
     const fetchSignedURL = async () => {
-      const url = await getSignedURL(festival.image);
+      const url = await getSignedURL(festival.image, "public");
       setFestivalImage(url);
     };
 
