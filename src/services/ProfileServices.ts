@@ -37,11 +37,39 @@ export const getBannerPhoto = async (
   return "";
 };
 
-export const updateProfilePhoto = async (profileID: string, photoID: string) => {
-  await API.graphql(graphqlOperation(updateUserProfile, {
-    input: {
-      id: profileID,
-      profilePhotoID: photoID,
+export const updateProfilePhoto = async (profile: UserProfile, photoID: string) => {
+  try {
+    const originalProfile = await DataStore.query(UserProfile, profile.id);
+    if(!originalProfile) return null;
+
+    const updatedProfile = UserProfile.copyOf(originalProfile, updated => {
+      updated.profilePhotoID = photoID;
+    });
+
+    // Return the updated profile
+    return await DataStore.save(updatedProfile);
+  } catch (e) {
+    console.log("Error updating profile photo", e)
+    return null;
+  }
+}
+
+export const updateBannerPhoto = async (profile: UserProfile, photoID: string) => {
+  try {
+    const originalProfile = await DataStore.query(UserProfile, profile.id);
+    if(!originalProfile) {
+      console.error('No profile found');
+      return null;
     }
-  }));
+
+    const updatedProfile = UserProfile.copyOf(originalProfile, updated => {
+      updated.bannerPhotoID = photoID;
+    });
+
+    // Return the updated profile
+    return await DataStore.save(updatedProfile);
+  } catch (e) {
+    console.log("Error updating banner photo", e)
+    return null;
+  }
 }
