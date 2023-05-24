@@ -17,10 +17,6 @@
         "cognitoUserPoolId": "authfestivalfriends"
       }
     ],
-    "conflictResolution": {
-      "defaultResolutionStrategy": {
-        "type": "AUTOMERGE"
-      }
-    }
+    "conflictResolution": {}
   }
 }

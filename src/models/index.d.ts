@@ -70,8 +70,8 @@ type EagerEventProfile = {
   readonly id: string;
   readonly userProfileID: string;
   readonly eventID: string;
-  readonly userProfile?: UserProfile | null;
-  readonly event?: Festival | null;
+  readonly userProfile: UserProfile;
+  readonly event: Festival;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -84,8 +84,8 @@ type LazyEventProfile = {
   readonly id: string;
   readonly userProfileID: string;
   readonly eventID: string;
-  readonly userProfile: AsyncItem<UserProfile | undefined>;
-  readonly event: AsyncItem<Festival | undefined>;
+  readonly userProfile: AsyncItem<UserProfile>;
+  readonly event: AsyncItem<Festival>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -357,7 +357,7 @@ type EagerPhoto = {
   };
   readonly id: string;
   readonly userProfileID: string;
-  readonly userProfile: UserProfile;
+  readonly userProfile?: UserProfile | null;
   readonly s3Key: string;
   readonly isPrivate: boolean;
   readonly identityId: string;
@@ -374,7 +374,7 @@ type LazyPhoto = {
   };
   readonly id: string;
   readonly userProfileID: string;
-  readonly userProfile: AsyncItem<UserProfile>;
+  readonly userProfile: AsyncItem<UserProfile | undefined>;
   readonly s3Key: string;
   readonly isPrivate: boolean;
   readonly identityId: string;

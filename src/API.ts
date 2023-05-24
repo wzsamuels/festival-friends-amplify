@@ -151,8 +151,8 @@ export type EventProfile = {
   id: string,
   userProfileID: string,
   eventID: string,
-  userProfile?: UserProfile | null,
-  event?: Festival | null,
+  userProfile: UserProfile,
+  event: Festival,
   createdAt: string,
   updatedAt: string,
   _version: number,
@@ -336,7 +336,7 @@ export type Photo = {
   __typename: "Photo",
   id: string,
   userProfileID: string,
-  userProfile: UserProfile,
+  userProfile?: UserProfile | null,
   s3Key: string,
   isPrivate: boolean,
   identityId: string,
@@ -3204,7 +3204,7 @@ export type CreateEventProfileMutation = {
     id: string,
     userProfileID: string,
     eventID: string,
-    userProfile?:  {
+    userProfile:  {
       __typename: "UserProfile",
       id: string,
       firstName?: string | null,
@@ -3418,8 +3418,8 @@ export type CreateEventProfileMutation = {
       _deleted?: boolean | null,
       _lastChangedAt: number,
       userProfilePrivacySettingId?: string | null,
-    } | null,
-    event?:  {
+    },
+    event:  {
       __typename: "Festival",
       id: string,
       name: string,
@@ -3496,7 +3496,7 @@ export type CreateEventProfileMutation = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-    } | null,
+    },
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -3516,7 +3516,7 @@ export type UpdateEventProfileMutation = {
     id: string,
     userProfileID: string,
     eventID: string,
-    userProfile?:  {
+    userProfile:  {
       __typename: "UserProfile",
       id: string,
       firstName?: string | null,
@@ -3730,8 +3730,8 @@ export type UpdateEventProfileMutation = {
       _deleted?: boolean | null,
       _lastChangedAt: number,
       userProfilePrivacySettingId?: string | null,
-    } | null,
-    event?:  {
+    },
+    event:  {
       __typename: "Festival",
       id: string,
       name: string,
@@ -3808,7 +3808,7 @@ export type UpdateEventProfileMutation = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-    } | null,
+    },
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -3828,7 +3828,7 @@ export type DeleteEventProfileMutation = {
     id: string,
     userProfileID: string,
     eventID: string,
-    userProfile?:  {
+    userProfile:  {
       __typename: "UserProfile",
       id: string,
       firstName?: string | null,
@@ -4042,8 +4042,8 @@ export type DeleteEventProfileMutation = {
       _deleted?: boolean | null,
       _lastChangedAt: number,
       userProfilePrivacySettingId?: string | null,
-    } | null,
-    event?:  {
+    },
+    event:  {
       __typename: "Festival",
       id: string,
       name: string,
@@ -4120,7 +4120,7 @@ export type DeleteEventProfileMutation = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-    } | null,
+    },
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -4222,7 +4222,7 @@ export type CreateFestivalMutation = {
         id: string,
         userProfileID: string,
         eventID: string,
-        userProfile?:  {
+        userProfile:  {
           __typename: "UserProfile",
           id: string,
           firstName?: string | null,
@@ -4246,8 +4246,8 @@ export type CreateFestivalMutation = {
           _deleted?: boolean | null,
           _lastChangedAt: number,
           userProfilePrivacySettingId?: string | null,
-        } | null,
-        event?:  {
+        },
+        event:  {
           __typename: "Festival",
           id: string,
           name: string,
@@ -4265,7 +4265,7 @@ export type CreateFestivalMutation = {
           _version: number,
           _deleted?: boolean | null,
           _lastChangedAt: number,
-        } | null,
+        },
         createdAt: string,
         updatedAt: string,
         _version: number,
@@ -4432,7 +4432,7 @@ export type UpdateFestivalMutation = {
         id: string,
         userProfileID: string,
         eventID: string,
-        userProfile?:  {
+        userProfile:  {
           __typename: "UserProfile",
           id: string,
           firstName?: string | null,
@@ -4456,8 +4456,8 @@ export type UpdateFestivalMutation = {
           _deleted?: boolean | null,
           _lastChangedAt: number,
           userProfilePrivacySettingId?: string | null,
-        } | null,
-        event?:  {
+        },
+        event:  {
           __typename: "Festival",
           id: string,
           name: string,
@@ -4475,7 +4475,7 @@ export type UpdateFestivalMutation = {
           _version: number,
           _deleted?: boolean | null,
           _lastChangedAt: number,
-        } | null,
+        },
         createdAt: string,
         updatedAt: string,
         _version: number,
@@ -4642,7 +4642,7 @@ export type DeleteFestivalMutation = {
         id: string,
         userProfileID: string,
         eventID: string,
-        userProfile?:  {
+        userProfile:  {
           __typename: "UserProfile",
           id: string,
           firstName?: string | null,
@@ -4666,8 +4666,8 @@ export type DeleteFestivalMutation = {
           _deleted?: boolean | null,
           _lastChangedAt: number,
           userProfilePrivacySettingId?: string | null,
-        } | null,
-        event?:  {
+        },
+        event:  {
           __typename: "Festival",
           id: string,
           name: string,
@@ -4685,7 +4685,7 @@ export type DeleteFestivalMutation = {
           _version: number,
           _deleted?: boolean | null,
           _lastChangedAt: number,
-        } | null,
+        },
         createdAt: string,
         updatedAt: string,
         _version: number,
@@ -4789,7 +4789,7 @@ export type CreateUserProfileMutation = {
         id: string,
         userProfileID: string,
         eventID: string,
-        userProfile?:  {
+        userProfile:  {
           __typename: "UserProfile",
           id: string,
           firstName?: string | null,
@@ -4813,8 +4813,8 @@ export type CreateUserProfileMutation = {
           _deleted?: boolean | null,
           _lastChangedAt: number,
           userProfilePrivacySettingId?: string | null,
-        } | null,
-        event?:  {
+        },
+        event:  {
           __typename: "Festival",
           id: string,
           name: string,
@@ -4832,7 +4832,7 @@ export type CreateUserProfileMutation = {
           _version: number,
           _deleted?: boolean | null,
           _lastChangedAt: number,
-        } | null,
+        },
         createdAt: string,
         updatedAt: string,
         _version: number,
@@ -5206,7 +5206,7 @@ export type CreateUserProfileMutation = {
         __typename: "Photo",
         id: string,
         userProfileID: string,
-        userProfile:  {
+        userProfile?:  {
           __typename: "UserProfile",
           id: string,
           firstName?: string | null,
@@ -5230,7 +5230,7 @@ export type CreateUserProfileMutation = {
           _deleted?: boolean | null,
           _lastChangedAt: number,
           userProfilePrivacySettingId?: string | null,
-        },
+        } | null,
         s3Key: string,
         isPrivate: boolean,
         identityId: string,
@@ -5465,7 +5465,7 @@ export type UpdateUserProfileMutation = {
         id: string,
         userProfileID: string,
         eventID: string,
-        userProfile?:  {
+        userProfile:  {
           __typename: "UserProfile",
           id: string,
           firstName?: string | null,
@@ -5489,8 +5489,8 @@ export type UpdateUserProfileMutation = {
           _deleted?: boolean | null,
           _lastChangedAt: number,
           userProfilePrivacySettingId?: string | null,
-        } | null,
-        event?:  {
+        },
+        event:  {
           __typename: "Festival",
           id: string,
           name: string,
@@ -5508,7 +5508,7 @@ export type UpdateUserProfileMutation = {
           _version: number,
           _deleted?: boolean | null,
           _lastChangedAt: number,
-        } | null,
+        },
         createdAt: string,
         updatedAt: string,
         _version: number,
@@ -5882,7 +5882,7 @@ export type UpdateUserProfileMutation = {
         __typename: "Photo",
         id: string,
         userProfileID: string,
-        userProfile:  {
+        userProfile?:  {
           __typename: "UserProfile",
           id: string,
           firstName?: string | null,
@@ -5906,7 +5906,7 @@ export type UpdateUserProfileMutation = {
           _deleted?: boolean | null,
           _lastChangedAt: number,
           userProfilePrivacySettingId?: string | null,
-        },
+        } | null,
         s3Key: string,
         isPrivate: boolean,
         identityId: string,
@@ -6141,7 +6141,7 @@ export type DeleteUserProfileMutation = {
         id: string,
         userProfileID: string,
         eventID: string,
-        userProfile?:  {
+        userProfile:  {
           __typename: "UserProfile",
           id: string,
           firstName?: string | null,
@@ -6165,8 +6165,8 @@ export type DeleteUserProfileMutation = {
           _deleted?: boolean | null,
           _lastChangedAt: number,
           userProfilePrivacySettingId?: string | null,
-        } | null,
-        event?:  {
+        },
+        event:  {
           __typename: "Festival",
           id: string,
           name: string,
@@ -6184,7 +6184,7 @@ export type DeleteUserProfileMutation = {
           _version: number,
           _deleted?: boolean | null,
           _lastChangedAt: number,
-        } | null,
+        },
         createdAt: string,
         updatedAt: string,
         _version: number,
@@ -6558,7 +6558,7 @@ export type DeleteUserProfileMutation = {
         __typename: "Photo",
         id: string,
         userProfileID: string,
-        userProfile:  {
+        userProfile?:  {
           __typename: "UserProfile",
           id: string,
           firstName?: string | null,
@@ -6582,7 +6582,7 @@ export type DeleteUserProfileMutation = {
           _deleted?: boolean | null,
           _lastChangedAt: number,
           userProfilePrivacySettingId?: string | null,
-        },
+        } | null,
         s3Key: string,
         isPrivate: boolean,
         identityId: string,
@@ -9539,7 +9539,7 @@ export type CreatePhotoMutation = {
     __typename: "Photo",
     id: string,
     userProfileID: string,
-    userProfile:  {
+    userProfile?:  {
       __typename: "UserProfile",
       id: string,
       firstName?: string | null,
@@ -9753,7 +9753,7 @@ export type CreatePhotoMutation = {
       _deleted?: boolean | null,
       _lastChangedAt: number,
       userProfilePrivacySettingId?: string | null,
-    },
+    } | null,
     s3Key: string,
     isPrivate: boolean,
     identityId: string,
@@ -9806,7 +9806,7 @@ export type UpdatePhotoMutation = {
     __typename: "Photo",
     id: string,
     userProfileID: string,
-    userProfile:  {
+    userProfile?:  {
       __typename: "UserProfile",
       id: string,
       firstName?: string | null,
@@ -10020,7 +10020,7 @@ export type UpdatePhotoMutation = {
       _deleted?: boolean | null,
       _lastChangedAt: number,
       userProfilePrivacySettingId?: string | null,
-    },
+    } | null,
     s3Key: string,
     isPrivate: boolean,
     identityId: string,
@@ -10073,7 +10073,7 @@ export type DeletePhotoMutation = {
     __typename: "Photo",
     id: string,
     userProfileID: string,
-    userProfile:  {
+    userProfile?:  {
       __typename: "UserProfile",
       id: string,
       firstName?: string | null,
@@ -10287,7 +10287,7 @@ export type DeletePhotoMutation = {
       _deleted?: boolean | null,
       _lastChangedAt: number,
       userProfilePrivacySettingId?: string | null,
-    },
+    } | null,
     s3Key: string,
     isPrivate: boolean,
     identityId: string,
@@ -10345,7 +10345,7 @@ export type CreatePhotoCommentMutation = {
       __typename: "Photo",
       id: string,
       userProfileID: string,
-      userProfile:  {
+      userProfile?:  {
         __typename: "UserProfile",
         id: string,
         firstName?: string | null,
@@ -10435,7 +10435,7 @@ export type CreatePhotoCommentMutation = {
         _deleted?: boolean | null,
         _lastChangedAt: number,
         userProfilePrivacySettingId?: string | null,
-      },
+      } | null,
       s3Key: string,
       isPrivate: boolean,
       identityId: string,
@@ -10485,7 +10485,7 @@ export type UpdatePhotoCommentMutation = {
       __typename: "Photo",
       id: string,
       userProfileID: string,
-      userProfile:  {
+      userProfile?:  {
         __typename: "UserProfile",
         id: string,
         firstName?: string | null,
@@ -10575,7 +10575,7 @@ export type UpdatePhotoCommentMutation = {
         _deleted?: boolean | null,
         _lastChangedAt: number,
         userProfilePrivacySettingId?: string | null,
-      },
+      } | null,
       s3Key: string,
       isPrivate: boolean,
       identityId: string,
@@ -10625,7 +10625,7 @@ export type DeletePhotoCommentMutation = {
       __typename: "Photo",
       id: string,
       userProfileID: string,
-      userProfile:  {
+      userProfile?:  {
         __typename: "UserProfile",
         id: string,
         firstName?: string | null,
@@ -10715,7 +10715,7 @@ export type DeletePhotoCommentMutation = {
         _deleted?: boolean | null,
         _lastChangedAt: number,
         userProfilePrivacySettingId?: string | null,
-      },
+      } | null,
       s3Key: string,
       isPrivate: boolean,
       identityId: string,
@@ -14216,7 +14216,7 @@ export type FindSuggestedFriendsQuery = {
         id: string,
         userProfileID: string,
         eventID: string,
-        userProfile?:  {
+        userProfile:  {
           __typename: "UserProfile",
           id: string,
           firstName?: string | null,
@@ -14240,8 +14240,8 @@ export type FindSuggestedFriendsQuery = {
           _deleted?: boolean | null,
           _lastChangedAt: number,
           userProfilePrivacySettingId?: string | null,
-        } | null,
-        event?:  {
+        },
+        event:  {
           __typename: "Festival",
           id: string,
           name: string,
@@ -14259,7 +14259,7 @@ export type FindSuggestedFriendsQuery = {
           _version: number,
           _deleted?: boolean | null,
           _lastChangedAt: number,
-        } | null,
+        },
         createdAt: string,
         updatedAt: string,
         _version: number,
@@ -14633,7 +14633,7 @@ export type FindSuggestedFriendsQuery = {
         __typename: "Photo",
         id: string,
         userProfileID: string,
-        userProfile:  {
+        userProfile?:  {
           __typename: "UserProfile",
           id: string,
           firstName?: string | null,
@@ -14657,7 +14657,7 @@ export type FindSuggestedFriendsQuery = {
           _deleted?: boolean | null,
           _lastChangedAt: number,
           userProfilePrivacySettingId?: string | null,
-        },
+        } | null,
         s3Key: string,
         isPrivate: boolean,
         identityId: string,
@@ -16928,7 +16928,7 @@ export type GetEventProfileQuery = {
     id: string,
     userProfileID: string,
     eventID: string,
-    userProfile?:  {
+    userProfile:  {
       __typename: "UserProfile",
       id: string,
       firstName?: string | null,
@@ -17142,8 +17142,8 @@ export type GetEventProfileQuery = {
       _deleted?: boolean | null,
       _lastChangedAt: number,
       userProfilePrivacySettingId?: string | null,
-    } | null,
-    event?:  {
+    },
+    event:  {
       __typename: "Festival",
       id: string,
       name: string,
@@ -17220,7 +17220,7 @@ export type GetEventProfileQuery = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-    } | null,
+    },
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -17243,7 +17243,7 @@ export type ListEventProfilesQuery = {
       id: string,
       userProfileID: string,
       eventID: string,
-      userProfile?:  {
+      userProfile:  {
         __typename: "UserProfile",
         id: string,
         firstName?: string | null,
@@ -17333,8 +17333,8 @@ export type ListEventProfilesQuery = {
         _deleted?: boolean | null,
         _lastChangedAt: number,
         userProfilePrivacySettingId?: string | null,
-      } | null,
-      event?:  {
+      },
+      event:  {
         __typename: "Festival",
         id: string,
         name: string,
@@ -17375,7 +17375,7 @@ export type ListEventProfilesQuery = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
-      } | null,
+      },
       createdAt: string,
       updatedAt: string,
       _version: number,
@@ -17402,7 +17402,7 @@ export type SyncEventProfilesQuery = {
       id: string,
       userProfileID: string,
       eventID: string,
-      userProfile?:  {
+      userProfile:  {
         __typename: "UserProfile",
         id: string,
         firstName?: string | null,
@@ -17492,8 +17492,8 @@ export type SyncEventProfilesQuery = {
         _deleted?: boolean | null,
         _lastChangedAt: number,
         userProfilePrivacySettingId?: string | null,
-      } | null,
-      event?:  {
+      },
+      event:  {
         __typename: "Festival",
         id: string,
         name: string,
@@ -17534,7 +17534,7 @@ export type SyncEventProfilesQuery = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
-      } | null,
+      },
       createdAt: string,
       updatedAt: string,
       _version: number,
@@ -17562,7 +17562,7 @@ export type EventProfilesByUserProfileIDQuery = {
       id: string,
       userProfileID: string,
       eventID: string,
-      userProfile?:  {
+      userProfile:  {
         __typename: "UserProfile",
         id: string,
         firstName?: string | null,
@@ -17652,8 +17652,8 @@ export type EventProfilesByUserProfileIDQuery = {
         _deleted?: boolean | null,
         _lastChangedAt: number,
         userProfilePrivacySettingId?: string | null,
-      } | null,
-      event?:  {
+      },
+      event:  {
         __typename: "Festival",
         id: string,
         name: string,
@@ -17694,7 +17694,7 @@ export type EventProfilesByUserProfileIDQuery = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
-      } | null,
+      },
       createdAt: string,
       updatedAt: string,
       _version: number,
@@ -17722,7 +17722,7 @@ export type EventProfilesByEventIDQuery = {
       id: string,
       userProfileID: string,
       eventID: string,
-      userProfile?:  {
+      userProfile:  {
         __typename: "UserProfile",
         id: string,
         firstName?: string | null,
@@ -17812,8 +17812,8 @@ export type EventProfilesByEventIDQuery = {
         _deleted?: boolean | null,
         _lastChangedAt: number,
         userProfilePrivacySettingId?: string | null,
-      } | null,
-      event?:  {
+      },
+      event:  {
         __typename: "Festival",
         id: string,
         name: string,
@@ -17854,7 +17854,7 @@ export type EventProfilesByEventIDQuery = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
-      } | null,
+      },
       createdAt: string,
       updatedAt: string,
       _version: number,
@@ -17958,7 +17958,7 @@ export type GetFestivalQuery = {
         id: string,
         userProfileID: string,
         eventID: string,
-        userProfile?:  {
+        userProfile:  {
           __typename: "UserProfile",
           id: string,
           firstName?: string | null,
@@ -17982,8 +17982,8 @@ export type GetFestivalQuery = {
           _deleted?: boolean | null,
           _lastChangedAt: number,
           userProfilePrivacySettingId?: string | null,
-        } | null,
-        event?:  {
+        },
+        event:  {
           __typename: "Festival",
           id: string,
           name: string,
@@ -18001,7 +18001,7 @@ export type GetFestivalQuery = {
           _version: number,
           _deleted?: boolean | null,
           _lastChangedAt: number,
-        } | null,
+        },
         createdAt: string,
         updatedAt: string,
         _version: number,
@@ -18383,7 +18383,7 @@ export type GetUserProfileQuery = {
         id: string,
         userProfileID: string,
         eventID: string,
-        userProfile?:  {
+        userProfile:  {
           __typename: "UserProfile",
           id: string,
           firstName?: string | null,
@@ -18407,8 +18407,8 @@ export type GetUserProfileQuery = {
           _deleted?: boolean | null,
           _lastChangedAt: number,
           userProfilePrivacySettingId?: string | null,
-        } | null,
-        event?:  {
+        },
+        event:  {
           __typename: "Festival",
           id: string,
           name: string,
@@ -18426,7 +18426,7 @@ export type GetUserProfileQuery = {
           _version: number,
           _deleted?: boolean | null,
           _lastChangedAt: number,
-        } | null,
+        },
         createdAt: string,
         updatedAt: string,
         _version: number,
@@ -18800,7 +18800,7 @@ export type GetUserProfileQuery = {
         __typename: "Photo",
         id: string,
         userProfileID: string,
-        userProfile:  {
+        userProfile?:  {
           __typename: "UserProfile",
           id: string,
           firstName?: string | null,
@@ -18824,7 +18824,7 @@ export type GetUserProfileQuery = {
           _deleted?: boolean | null,
           _lastChangedAt: number,
           userProfilePrivacySettingId?: string | null,
-        },
+        } | null,
         s3Key: string,
         isPrivate: boolean,
         identityId: string,
@@ -22111,7 +22111,7 @@ export type GetPhotoQuery = {
     __typename: "Photo",
     id: string,
     userProfileID: string,
-    userProfile:  {
+    userProfile?:  {
       __typename: "UserProfile",
       id: string,
       firstName?: string | null,
@@ -22325,7 +22325,7 @@ export type GetPhotoQuery = {
       _deleted?: boolean | null,
       _lastChangedAt: number,
       userProfilePrivacySettingId?: string | null,
-    },
+    } | null,
     s3Key: string,
     isPrivate: boolean,
     identityId: string,
@@ -22381,7 +22381,7 @@ export type ListPhotosQuery = {
       __typename: "Photo",
       id: string,
       userProfileID: string,
-      userProfile:  {
+      userProfile?:  {
         __typename: "UserProfile",
         id: string,
         firstName?: string | null,
@@ -22471,7 +22471,7 @@ export type ListPhotosQuery = {
         _deleted?: boolean | null,
         _lastChangedAt: number,
         userProfilePrivacySettingId?: string | null,
-      },
+      } | null,
       s3Key: string,
       isPrivate: boolean,
       identityId: string,
@@ -22517,7 +22517,7 @@ export type SyncPhotosQuery = {
       __typename: "Photo",
       id: string,
       userProfileID: string,
-      userProfile:  {
+      userProfile?:  {
         __typename: "UserProfile",
         id: string,
         firstName?: string | null,
@@ -22607,7 +22607,7 @@ export type SyncPhotosQuery = {
         _deleted?: boolean | null,
         _lastChangedAt: number,
         userProfilePrivacySettingId?: string | null,
-      },
+      } | null,
       s3Key: string,
       isPrivate: boolean,
       identityId: string,
@@ -22654,7 +22654,7 @@ export type PhotosByUserProfileIDQuery = {
       __typename: "Photo",
       id: string,
       userProfileID: string,
-      userProfile:  {
+      userProfile?:  {
         __typename: "UserProfile",
         id: string,
         firstName?: string | null,
@@ -22744,7 +22744,7 @@ export type PhotosByUserProfileIDQuery = {
         _deleted?: boolean | null,
         _lastChangedAt: number,
         userProfilePrivacySettingId?: string | null,
-      },
+      } | null,
       s3Key: string,
       isPrivate: boolean,
       identityId: string,
@@ -22790,7 +22790,7 @@ export type GetPhotoCommentQuery = {
       __typename: "Photo",
       id: string,
       userProfileID: string,
-      userProfile:  {
+      userProfile?:  {
         __typename: "UserProfile",
         id: string,
         firstName?: string | null,
@@ -22880,7 +22880,7 @@ export type GetPhotoCommentQuery = {
         _deleted?: boolean | null,
         _lastChangedAt: number,
         userProfilePrivacySettingId?: string | null,
-      },
+      } | null,
       s3Key: string,
       isPrivate: boolean,
       identityId: string,
@@ -22933,7 +22933,7 @@ export type ListPhotoCommentsQuery = {
         __typename: "Photo",
         id: string,
         userProfileID: string,
-        userProfile:  {
+        userProfile?:  {
           __typename: "UserProfile",
           id: string,
           firstName?: string | null,
@@ -22957,7 +22957,7 @@ export type ListPhotoCommentsQuery = {
           _deleted?: boolean | null,
           _lastChangedAt: number,
           userProfilePrivacySettingId?: string | null,
-        },
+        } | null,
         s3Key: string,
         isPrivate: boolean,
         identityId: string,
@@ -23003,7 +23003,7 @@ export type SyncPhotoCommentsQuery = {
         __typename: "Photo",
         id: string,
         userProfileID: string,
-        userProfile:  {
+        userProfile?:  {
           __typename: "UserProfile",
           id: string,
           firstName?: string | null,
@@ -23027,7 +23027,7 @@ export type SyncPhotoCommentsQuery = {
           _deleted?: boolean | null,
           _lastChangedAt: number,
           userProfilePrivacySettingId?: string | null,
-        },
+        } | null,
         s3Key: string,
         isPrivate: boolean,
         identityId: string,
@@ -23074,7 +23074,7 @@ export type PhotoCommentsByPhotoIDQuery = {
         __typename: "Photo",
         id: string,
         userProfileID: string,
-        userProfile:  {
+        userProfile?:  {
           __typename: "UserProfile",
           id: string,
           firstName?: string | null,
@@ -23098,7 +23098,7 @@ export type PhotoCommentsByPhotoIDQuery = {
           _deleted?: boolean | null,
           _lastChangedAt: number,
           userProfilePrivacySettingId?: string | null,
-        },
+        } | null,
         s3Key: string,
         isPrivate: boolean,
         identityId: string,
@@ -28182,7 +28182,7 @@ export type OnCreateEventProfileSubscription = {
     id: string,
     userProfileID: string,
     eventID: string,
-    userProfile?:  {
+    userProfile:  {
       __typename: "UserProfile",
       id: string,
       firstName?: string | null,
@@ -28396,8 +28396,8 @@ export type OnCreateEventProfileSubscription = {
       _deleted?: boolean | null,
       _lastChangedAt: number,
       userProfilePrivacySettingId?: string | null,
-    } | null,
-    event?:  {
+    },
+    event:  {
       __typename: "Festival",
       id: string,
       name: string,
@@ -28474,7 +28474,7 @@ export type OnCreateEventProfileSubscription = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-    } | null,
+    },
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -28493,7 +28493,7 @@ export type OnUpdateEventProfileSubscription = {
     id: string,
     userProfileID: string,
     eventID: string,
-    userProfile?:  {
+    userProfile:  {
       __typename: "UserProfile",
       id: string,
       firstName?: string | null,
@@ -28707,8 +28707,8 @@ export type OnUpdateEventProfileSubscription = {
       _deleted?: boolean | null,
       _lastChangedAt: number,
       userProfilePrivacySettingId?: string | null,
-    } | null,
-    event?:  {
+    },
+    event:  {
       __typename: "Festival",
       id: string,
       name: string,
@@ -28785,7 +28785,7 @@ export type OnUpdateEventProfileSubscription = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-    } | null,
+    },
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -28804,7 +28804,7 @@ export type OnDeleteEventProfileSubscription = {
     id: string,
     userProfileID: string,
     eventID: string,
-    userProfile?:  {
+    userProfile:  {
       __typename: "UserProfile",
       id: string,
       firstName?: string | null,
@@ -29018,8 +29018,8 @@ export type OnDeleteEventProfileSubscription = {
       _deleted?: boolean | null,
       _lastChangedAt: number,
       userProfilePrivacySettingId?: string | null,
-    } | null,
-    event?:  {
+    },
+    event:  {
       __typename: "Festival",
       id: string,
       name: string,
@@ -29096,7 +29096,7 @@ export type OnDeleteEventProfileSubscription = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-    } | null,
+    },
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -29197,7 +29197,7 @@ export type OnCreateFestivalSubscription = {
         id: string,
         userProfileID: string,
         eventID: string,
-        userProfile?:  {
+        userProfile:  {
           __typename: "UserProfile",
           id: string,
           firstName?: string | null,
@@ -29221,8 +29221,8 @@ export type OnCreateFestivalSubscription = {
           _deleted?: boolean | null,
           _lastChangedAt: number,
           userProfilePrivacySettingId?: string | null,
-        } | null,
-        event?:  {
+        },
+        event:  {
           __typename: "Festival",
           id: string,
           name: string,
@@ -29240,7 +29240,7 @@ export type OnCreateFestivalSubscription = {
           _version: number,
           _deleted?: boolean | null,
           _lastChangedAt: number,
-        } | null,
+        },
         createdAt: string,
         updatedAt: string,
         _version: number,
@@ -29406,7 +29406,7 @@ export type OnUpdateFestivalSubscription = {
         id: string,
         userProfileID: string,
         eventID: string,
-        userProfile?:  {
+        userProfile:  {
           __typename: "UserProfile",
           id: string,
           firstName?: string | null,
@@ -29430,8 +29430,8 @@ export type OnUpdateFestivalSubscription = {
           _deleted?: boolean | null,
           _lastChangedAt: number,
           userProfilePrivacySettingId?: string | null,
-        } | null,
-        event?:  {
+        },
+        event:  {
           __typename: "Festival",
           id: string,
           name: string,
@@ -29449,7 +29449,7 @@ export type OnUpdateFestivalSubscription = {
           _version: number,
           _deleted?: boolean | null,
           _lastChangedAt: number,
-        } | null,
+        },
         createdAt: string,
         updatedAt: string,
         _version: number,
@@ -29615,7 +29615,7 @@ export type OnDeleteFestivalSubscription = {
         id: string,
         userProfileID: string,
         eventID: string,
-        userProfile?:  {
+        userProfile:  {
           __typename: "UserProfile",
           id: string,
           firstName?: string | null,
@@ -29639,8 +29639,8 @@ export type OnDeleteFestivalSubscription = {
           _deleted?: boolean | null,
           _lastChangedAt: number,
           userProfilePrivacySettingId?: string | null,
-        } | null,
-        event?:  {
+        },
+        event:  {
           __typename: "Festival",
           id: string,
           name: string,
@@ -29658,7 +29658,7 @@ export type OnDeleteFestivalSubscription = {
           _version: number,
           _deleted?: boolean | null,
           _lastChangedAt: number,
-        } | null,
+        },
         createdAt: string,
         updatedAt: string,
         _version: number,
@@ -29761,7 +29761,7 @@ export type OnCreateUserProfileSubscription = {
         id: string,
         userProfileID: string,
         eventID: string,
-        userProfile?:  {
+        userProfile:  {
           __typename: "UserProfile",
           id: string,
           firstName?: string | null,
@@ -29785,8 +29785,8 @@ export type OnCreateUserProfileSubscription = {
           _deleted?: boolean | null,
           _lastChangedAt: number,
           userProfilePrivacySettingId?: string | null,
-        } | null,
-        event?:  {
+        },
+        event:  {
           __typename: "Festival",
           id: string,
           name: string,
@@ -29804,7 +29804,7 @@ export type OnCreateUserProfileSubscription = {
           _version: number,
           _deleted?: boolean | null,
           _lastChangedAt: number,
-        } | null,
+        },
         createdAt: string,
         updatedAt: string,
         _version: number,
@@ -30178,7 +30178,7 @@ export type OnCreateUserProfileSubscription = {
         __typename: "Photo",
         id: string,
         userProfileID: string,
-        userProfile:  {
+        userProfile?:  {
           __typename: "UserProfile",
           id: string,
           firstName?: string | null,
@@ -30202,7 +30202,7 @@ export type OnCreateUserProfileSubscription = {
           _deleted?: boolean | null,
           _lastChangedAt: number,
           userProfilePrivacySettingId?: string | null,
-        },
+        } | null,
         s3Key: string,
         isPrivate: boolean,
         identityId: string,
@@ -30436,7 +30436,7 @@ export type OnUpdateUserProfileSubscription = {
         id: string,
         userProfileID: string,
         eventID: string,
-        userProfile?:  {
+        userProfile:  {
           __typename: "UserProfile",
           id: string,
           firstName?: string | null,
@@ -30460,8 +30460,8 @@ export type OnUpdateUserProfileSubscription = {
           _deleted?: boolean | null,
           _lastChangedAt: number,
           userProfilePrivacySettingId?: string | null,
-        } | null,
-        event?:  {
+        },
+        event:  {
           __typename: "Festival",
           id: string,
           name: string,
@@ -30479,7 +30479,7 @@ export type OnUpdateUserProfileSubscription = {
           _version: number,
           _deleted?: boolean | null,
           _lastChangedAt: number,
-        } | null,
+        },
         createdAt: string,
         updatedAt: string,
         _version: number,
@@ -30853,7 +30853,7 @@ export type OnUpdateUserProfileSubscription = {
         __typename: "Photo",
         id: string,
         userProfileID: string,
-        userProfile:  {
+        userProfile?:  {
           __typename: "UserProfile",
           id: string,
           firstName?: string | null,
@@ -30877,7 +30877,7 @@ export type OnUpdateUserProfileSubscription = {
           _deleted?: boolean | null,
           _lastChangedAt: number,
           userProfilePrivacySettingId?: string | null,
-        },
+        } | null,
         s3Key: string,
         isPrivate: boolean,
         identityId: string,
@@ -31111,7 +31111,7 @@ export type OnDeleteUserProfileSubscription = {
         id: string,
         userProfileID: string,
         eventID: string,
-        userProfile?:  {
+        userProfile:  {
           __typename: "UserProfile",
           id: string,
           firstName?: string | null,
@@ -31135,8 +31135,8 @@ export type OnDeleteUserProfileSubscription = {
           _deleted?: boolean | null,
           _lastChangedAt: number,
           userProfilePrivacySettingId?: string | null,
-        } | null,
-        event?:  {
+        },
+        event:  {
           __typename: "Festival",
           id: string,
           name: string,
@@ -31154,7 +31154,7 @@ export type OnDeleteUserProfileSubscription = {
           _version: number,
           _deleted?: boolean | null,
           _lastChangedAt: number,
-        } | null,
+        },
         createdAt: string,
         updatedAt: string,
         _version: number,
@@ -31528,7 +31528,7 @@ export type OnDeleteUserProfileSubscription = {
         __typename: "Photo",
         id: string,
         userProfileID: string,
-        userProfile:  {
+        userProfile?:  {
           __typename: "UserProfile",
           id: string,
           firstName?: string | null,
@@ -31552,7 +31552,7 @@ export type OnDeleteUserProfileSubscription = {
           _deleted?: boolean | null,
           _lastChangedAt: number,
           userProfilePrivacySettingId?: string | null,
-        },
+        } | null,
         s3Key: string,
         isPrivate: boolean,
         identityId: string,
@@ -34499,7 +34499,7 @@ export type OnCreatePhotoSubscription = {
     __typename: "Photo",
     id: string,
     userProfileID: string,
-    userProfile:  {
+    userProfile?:  {
       __typename: "UserProfile",
       id: string,
       firstName?: string | null,
@@ -34713,7 +34713,7 @@ export type OnCreatePhotoSubscription = {
       _deleted?: boolean | null,
       _lastChangedAt: number,
       userProfilePrivacySettingId?: string | null,
-    },
+    } | null,
     s3Key: string,
     isPrivate: boolean,
     identityId: string,
@@ -34765,7 +34765,7 @@ export type OnUpdatePhotoSubscription = {
     __typename: "Photo",
     id: string,
     userProfileID: string,
-    userProfile:  {
+    userProfile?:  {
       __typename: "UserProfile",
       id: string,
       firstName?: string | null,
@@ -34979,7 +34979,7 @@ export type OnUpdatePhotoSubscription = {
       _deleted?: boolean | null,
       _lastChangedAt: number,
       userProfilePrivacySettingId?: string | null,
-    },
+    } | null,
     s3Key: string,
     isPrivate: boolean,
     identityId: string,
@@ -35031,7 +35031,7 @@ export type OnDeletePhotoSubscription = {
     __typename: "Photo",
     id: string,
     userProfileID: string,
-    userProfile:  {
+    userProfile?:  {
       __typename: "UserProfile",
       id: string,
       firstName?: string | null,
@@ -35245,7 +35245,7 @@ export type OnDeletePhotoSubscription = {
       _deleted?: boolean | null,
       _lastChangedAt: number,
       userProfilePrivacySettingId?: string | null,
-    },
+    } | null,
     s3Key: string,
     isPrivate: boolean,
     identityId: string,
@@ -35302,7 +35302,7 @@ export type OnCreatePhotoCommentSubscription = {
       __typename: "Photo",
       id: string,
       userProfileID: string,
-      userProfile:  {
+      userProfile?:  {
         __typename: "UserProfile",
         id: string,
         firstName?: string | null,
@@ -35392,7 +35392,7 @@ export type OnCreatePhotoCommentSubscription = {
         _deleted?: boolean | null,
         _lastChangedAt: number,
         userProfilePrivacySettingId?: string | null,
-      },
+      } | null,
       s3Key: string,
       isPrivate: boolean,
       identityId: string,
@@ -35441,7 +35441,7 @@ export type OnUpdatePhotoCommentSubscription = {
       __typename: "Photo",
       id: string,
       userProfileID: string,
-      userProfile:  {
+      userProfile?:  {
         __typename: "UserProfile",
         id: string,
         firstName?: string | null,
@@ -35531,7 +35531,7 @@ export type OnUpdatePhotoCommentSubscription = {
         _deleted?: boolean | null,
         _lastChangedAt: number,
         userProfilePrivacySettingId?: string | null,
-      },
+      } | null,
       s3Key: string,
       isPrivate: boolean,
       identityId: string,
@@ -35580,7 +35580,7 @@ export type OnDeletePhotoCommentSubscription = {
       __typename: "Photo",
       id: string,
       userProfileID: string,
-      userProfile:  {
+      userProfile?:  {
         __typename: "UserProfile",
         id: string,
         firstName?: string | null,
@@ -35670,7 +35670,7 @@ export type OnDeletePhotoCommentSubscription = {
         _deleted?: boolean | null,
         _lastChangedAt: number,
         userProfilePrivacySettingId?: string | null,
-      },
+      } | null,
       s3Key: string,
       isPrivate: boolean,
       identityId: string,

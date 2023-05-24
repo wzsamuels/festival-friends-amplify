@@ -14,8 +14,8 @@ type EventProfile @model @auth(rules: [{ allow: public }]) {
   id: ID!
   userProfileID: ID! @index(name: "byUserProfile")
   eventID: ID! @index(name: "byEvent")
-  userProfile: UserProfile @belongsTo(fields: ["userProfileID"])
-  event: Festival @belongsTo(fields: ["eventID"])
+  userProfile: UserProfile! @belongsTo(fields: ["userProfileID"])
+  event: Festival! @belongsTo(fields: ["eventID"])
 }
 
 type Festival @model @auth(rules: [{ allow: public }]) {
@@ -102,7 +102,7 @@ type RideUser @model @auth(rules: [{ allow: public }]) {
 type Photo @model @auth(rules: [{ allow: public }]) {
   id: ID!
   userProfileID: ID! @index(name: "byUserProfile")
-  userProfile: UserProfile! @belongsTo(fields: ["userProfileID"])
+  userProfile: UserProfile @belongsTo(fields: ["userProfileID"])
   s3Key: String!
   isPrivate: Boolean!
   identityId: String!

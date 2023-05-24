@@ -189,7 +189,7 @@ export const schema = {
                     "type": {
                         "model": "UserProfile"
                     },
-                    "isRequired": false,
+                    "isRequired": true,
                     "attributes": [],
                     "association": {
                         "connectionType": "BELONGS_TO",
@@ -204,7 +204,7 @@ export const schema = {
                     "type": {
                         "model": "Festival"
                     },
-                    "isRequired": false,
+                    "isRequired": true,
                     "attributes": [],
                     "association": {
                         "connectionType": "BELONGS_TO",
@@ -1206,7 +1206,7 @@ export const schema = {
                     "type": {
                         "model": "UserProfile"
                     },
-                    "isRequired": true,
+                    "isRequired": false,
                     "attributes": [],
                     "association": {
                         "connectionType": "BELONGS_TO",
@@ -1795,5 +1795,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.3",
-    "version": "adc9c203dace3799183fa4bc4de6cc59"
+    "version": "61756cba8b3aa31c109a56ac80e3debe"
 };
