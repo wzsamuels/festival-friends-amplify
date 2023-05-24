@@ -1,18 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
+import React, { useEffect } from "react";
+import { NavLink, Outlet } from "react-router-dom";
 import {
   BsEmojiSmile,
-  BsFillCarFrontFill,
   BsFillChatSquareDotsFill,
   BsFillPeopleFill,
   BsMusicNoteBeamed,
 } from "react-icons/bs";
 import PulseButton from "../common/PulseButton/PulseButton";
-import classNames from "classnames";
 
 const Layout = () => {
-  const responsiveStyles = "md:text-base text-sm";
-  const location = useLocation();
 
   useEffect(() => {
     document.body.focus();
