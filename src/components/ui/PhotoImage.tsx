@@ -1,19 +1,27 @@
 import React, { ComponentProps, useContext, useEffect, useState } from "react";
 import { Photo } from "../../models";
 import ImageContext from "../../context/ImageContext";
+import {S3Levels} from "../../@types/s3";
 
 interface PhotoProps extends ComponentProps<"img"> {
   photo: Photo;
+  level?: S3Levels;
 }
 
-const PhotoImage = ({ photo, className, onClick }: PhotoProps) => {
+const PhotoImage = ({ photo, className, onClick, level }: PhotoProps) => {
   const [photoUrl, setPhotoUrl] = useState("");
   const { getSignedURL } = useContext(ImageContext);
 
   useEffect(() => {
     const fetchSignedURL = async () => {
-      const url = await getSignedURL(photo.s3Key);
-      setPhotoUrl(url);
+      getSignedURL(photo.s3Key, level || "public",  photo.identityId)
+        .then(signedUrl => {
+          setPhotoUrl(signedUrl);
+        })
+        .catch(err => {
+          console.log("Error", err)
+          setPhotoUrl("")
+        });
     };
 
     fetchSignedURL();
