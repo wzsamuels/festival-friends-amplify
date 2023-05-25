@@ -9,11 +9,13 @@ const { print } = graphql;
 exports.handler = async (event, context) => {
   // insert code to be executed by your lambda trigger
 
+  /*
   console.log(event);
   const createUserProfileMutation = gql`
     mutation CreateUserProfile($input: CreateUserProfileInput!) {
       createUserProfile(input: $input) {
         id
+        email
       }
     }
   `;
@@ -22,6 +24,7 @@ exports.handler = async (event, context) => {
     mutation CreatePrivacySetting($input: CreatePrivacySettingInput!) {
       createPrivacySetting(input: $input) {
         id
+        userProfileID
       }
     }
   `;
@@ -29,12 +32,9 @@ exports.handler = async (event, context) => {
   const userProfile = {
     id: event.request.userAttributes.sub,
     email:event.request.userAttributes.email,
-    userID: event.request.userAttributes.sub,
     verified: false,
     verifySubmitted: false,
   };
-
-
 
   const userProfileData = await axios({
     url: process.env.APPSYNC_API_ENDPOINT,
@@ -50,7 +50,7 @@ exports.handler = async (event, context) => {
     },
   });
 
-  console.log(userProfileData)
+  console.log(userProfileData.data)
 
   const privacySetting= {
     userProfileID: event.request.userAttributes.sub,
@@ -78,7 +78,9 @@ exports.handler = async (event, context) => {
     },
   });
 
-  console.log(privacySettingData)
+  console.log(privacySettingData.data)
+
+   */
 
   return event;
 }
