@@ -38,7 +38,7 @@ const Toast: React.FC<ToastProps> = ({
   };
 
   return (
-    <div className={`fixed bottom-4 z-50 left-0 w-full  `} role="alert">
+    <div className={`fixed bottom-4 z-50 left-4 w-full  `} role="alert">
       <div
         className={`flex justify-between items-center max-w-sm p-4 rounded-lg shadow-lg ${
           toastColor[toastData.type]
