@@ -24,7 +24,7 @@ const AccountPage = () => {
       );
     }
 
-    if (!userProfile?.verified) {
+    if (!userProfile) {
       return <ProfileUnverified />;
     }
 
