@@ -50,9 +50,10 @@ const AppWrapper = () => {
   },[])
 
   useEffect(() => {
-    if(!dataCleared || !sub || route !== 'authenticated') return;
     console.log("sub", sub);
     console.log("route", route)
+    console.log("dataCleared", dataCleared)
+    if(!dataCleared || !sub || route !== 'authenticated') return;
     fetchUserProfile(sub, route)
   }, [sub, dataCleared, route]);
 
