@@ -1,7 +1,10 @@
-import { Conversation, Message, UserProfile } from "../../models";
-import React, { useEffect, useState } from "react";
-import { useUserProfileStore } from "../../stores/friendProfilesStore";
-import { DataStore, Storage } from "aws-amplify";
+import {Conversation, Message, Photo} from "../../models";
+import React, {useContext, useEffect, useState} from "react";
+import { DataStore } from "aws-amplify";
+import ImageContext from "../../context/ImageContext";
+import {getProfilePhoto} from "../../services/ProfileServices";
+import useProfileStore from "../../stores/profileStore";
+import useFriendStore from "../../stores/friendProfileStore";
 
 interface ConversationCardProps {
   conversation: Conversation;
@@ -16,7 +19,9 @@ const ConversationCard = ({
   const [friendProfileImage, setFriendProfileImage] = useState<string>();
   const [lastMessage, setLastMessage] = useState<string>();
   const [unreadMessage, setUnreadMessage] = useState<boolean>(false);
-  const { userProfile, friendProfiles } = useUserProfileStore();
+  const userProfile = useProfileStore((state) => state.userProfile);
+  const friendProfiles = useFriendStore(state => state.acceptedFriendProfiles)
+  const { getSignedURL } = useContext(ImageContext);
 
   const friendProfile = friendProfiles.find(
     (profile) =>
@@ -27,14 +32,14 @@ const ConversationCard = ({
   );
 
   useEffect(() => {
-    const fetchProfileImageAndLastMessage = async () => {
+    const fetchFriendProfileImage = async () => {
+      getProfilePhoto(friendProfile, getSignedURL).then(image => setFriendProfileImage(image))
+    };
+
+    const fetchLastMessage = async () => {
       if (!userProfile || !friendProfile) {
         return;
       }
-      const friendImage = await Storage.get(
-        friendProfile.profileImage as string
-      );
-      setFriendProfileImage(friendImage);
 
       const messages = await conversation.messages.toArray();
       console.log(messages);
@@ -44,16 +49,21 @@ const ConversationCard = ({
       const lastMessage = messages[messages.length - 1];
       setUnreadMessage(
         lastMessage.unreadMessage === true &&
-          lastMessage.senderID !== userProfile.id
+        lastMessage.senderID !== userProfile.id
       );
       const message =
         lastMessage.senderID === userProfile.id
           ? "You"
           : friendProfile.firstName;
       setLastMessage(message + ": " + lastMessage.content);
-    };
+    }
 
-    fetchProfileImageAndLastMessage();
+    try {
+      fetchFriendProfileImage();
+      fetchLastMessage();
+    } catch (e) {
+      console.log("Error fetching friend profile image or last message", e);
+    }
   }, [userProfile, friendProfiles, conversation]);
 
   const handleOnClick = async () => {
