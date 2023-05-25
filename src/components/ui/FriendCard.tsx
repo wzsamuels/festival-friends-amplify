@@ -56,6 +56,7 @@ const FriendCard = ({
 
   return (
     <div
+      onClick={onClick}
       className={`${className} bg-white border-2 border-gray-300  m-2m-4 p-2 rounded-xl hover:border-gray-500 shadow-xl flex flex-col items-center`}
     >
       <ConditionalWrapper
@@ -66,7 +67,6 @@ const FriendCard = ({
           {
             profileImage ?
               <img
-                onClick={onClick}
                 className={"rounded-full aspect-square"}
                 width={200}
                 height={200}
