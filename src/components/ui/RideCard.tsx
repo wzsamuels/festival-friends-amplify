@@ -3,8 +3,9 @@ import React, { useEffect, useState } from "react";
 import { DataStore } from "@aws-amplify/datastore";
 import { Link } from "react-router-dom";
 import Button from "../common/Button/Button";
-import { useUserProfileStore } from "../../stores/friendProfilesStore";
 import dayjs from "dayjs";
+import useProfileStore from "../../stores/profileStore";
+import useDataClearedStore from "../../stores/dataClearedStore";
 
 interface RideCardProps {
   ride: Ride;
@@ -15,9 +16,11 @@ const RideCard = ({ ride, className }: RideCardProps) => {
   const [driverProfile, setDriverProfile] = useState<UserProfile>();
   const [passengerProfiles, setPassengerProfiles] = useState<UserProfile[]>();
   const [ridersCount, setRidersCount] = useState<number>(0);
-  const { userProfile } = useUserProfileStore();
+  const userProfile = useProfileStore((state) => state.userProfile);
+  const dataCleared = useDataClearedStore((state) => state.dataCleared);
 
   useEffect(() => {
+    if(!dataCleared) return;
     const getRiders = async () => {
       const rideUsers = await DataStore.query(RideUser, (c) =>
         c.rideID.eq(ride.id)
@@ -32,7 +35,11 @@ const RideCard = ({ ride, className }: RideCardProps) => {
       setDriverProfile(driverProfile);
       setPassengerProfiles(riderProfiles);
     };
-    getRiders();
+    try {
+      getRiders();
+    } catch (e) {
+      console.log("Error getting riders", e);
+    }
   }, [ride]);
 
   const handleJoinRide = async () => {
