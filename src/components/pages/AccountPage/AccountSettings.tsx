@@ -10,7 +10,9 @@ import {PrivacySetting, UserProfile} from "../../../models";
 import LoggedOutState from "../../ui/LoggedOutState";
 import UnverifiedState from "../../ui/UnverifiedState";
 import useProfileStore from "../../../stores/profileStore";
-import useDataClearedStore from "../../../stores/dataClearedStore";
+import LoadingState from "../../ui/LoadingState";
+import Toast from "../../common/Toast/Toast";
+import {ToastData} from "../../../types";
 
 interface AccountSettingsInputs {
   city: boolean
@@ -67,6 +69,8 @@ const AccountSettingsPage = () => {
 
 const PrivacySettingForm = ({userProfile}: { userProfile: UserProfile | null}) => {
   const [privacySetting, setPrivacySetting] = useState<PrivacySetting>();
+  const [loading, setLoading] = useState(false);
+  const [toastData, setToastData] = React.useState<ToastData | null>(null);
   const { control, handleSubmit, reset, getValues } = useForm<AccountSettingsInputs>({
     defaultValues: {
       city: privacySetting?.city || false,
@@ -81,21 +85,10 @@ const PrivacySettingForm = ({userProfile}: { userProfile: UserProfile | null}) =
   });
 
   const handlePrivacyUpdate:SubmitHandler<AccountSettingsInputs> = async (data) => {
-    console.log(data)
-    if(!privacySetting) {
-      await DataStore.save(new PrivacySetting({
-        userProfileID: userProfile?.id as string,
-        city: data.city,
-        state: data.state,
-        school: data.school,
-        email: data.email,
-        attendingEvents: data.attendingEvents,
-        rides: data.rides,
-        friends: data.friends,
-        photos: data.photos,
-      }))
-    } else {
-      await DataStore.save(PrivacySetting.copyOf(privacySetting, updated => {
+    if(!privacySetting) return;
+
+    try {
+      const updatedPrivacySetting = await DataStore.save(PrivacySetting.copyOf(privacySetting, updated => {
         updated.city = data.city;
         updated.state = data.state;
         updated.school = data.school;
@@ -105,20 +98,35 @@ const PrivacySettingForm = ({userProfile}: { userProfile: UserProfile | null}) =
         updated.friends = data.friends;
         updated.photos = data.photos;
       }))
+      setPrivacySetting(updatedPrivacySetting);
+      setToastData({
+        message: "Privacy Setting Updated",
+        type: "success",
+      })
+    } catch (e) {
+      console.log("Error saving privacy setting", e);
+      setToastData({
+        message: "Error saving privacy setting",
+        type: "error",
+      })
     }
   }
 
   useEffect(() => {
-    if(!userProfile) return;
+    if(!userProfile || !userProfile.privacySettingID) return;
     const fetchPrivacySetting = async () => {
-      const privacySettingData = await userProfile.privacySetting;
+      const privacySettingData = await DataStore.query(PrivacySetting, userProfile.privacySettingID as string);
+      console.log("privacySettingData", privacySettingData);
       setPrivacySetting(privacySettingData);
     }
+    setLoading(true);
     fetchPrivacySetting();
-  })
+    setLoading(false);
+  }, [userProfile])
 
   useEffect(() => {
     if(!privacySetting) return;
+
     reset({
         city: privacySetting?.city || false,
         state: privacySetting?.state || false,
@@ -129,8 +137,23 @@ const PrivacySettingForm = ({userProfile}: { userProfile: UserProfile | null}) =
         friends: privacySetting?.friends || false,
         photos: privacySetting?.photos || false,
     });
-    console.log(getValues())
   }, [privacySetting])
+
+  if(loading) {
+    return (
+      <div className="flex justify-center items-center">
+        <LoadingState/>
+      </div>
+    )
+  }
+
+  if(!privacySetting) {
+    return (
+      <div className="flex justify-center items-center">
+        Privacy Setting Not Found!
+      </div>
+    )
+  }
 
   return (
     <form onSubmit={handleSubmit(handlePrivacyUpdate)}>
@@ -159,7 +182,14 @@ const PrivacySettingForm = ({userProfile}: { userProfile: UserProfile | null}) =
         <Toggle name="photos" label="Photos" control={control} />
       </Switch.Group>
       <Button type='submit'>Update</Button>
-
+      { toastData && (
+        <Toast
+          toastData={toastData}
+          onClose={() => {
+            setToastData(null);
+          }}
+        />
+      )}
     </form>
   )
 }
