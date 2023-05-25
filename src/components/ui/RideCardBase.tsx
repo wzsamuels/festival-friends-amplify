@@ -11,10 +11,15 @@ const RideCardBase = ({ ride }: RideCardBaseProps) => {
 
   useEffect(() => {
     const getEvent = async () => {
-      const event = await ride.event;
-      setEvent(event);
+      return ride.event;
     };
-    getEvent();
+    try {
+      getEvent()
+        .then((event) => setEvent(event));
+    } catch (e) {
+      console.log("Error getting event: ", e);
+      setEvent(undefined);
+    }
   }, [ride]);
 
   return (
