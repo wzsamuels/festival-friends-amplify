@@ -157,33 +157,9 @@ export const onCreateMessage = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
+        privacySettingID
         privacySetting {
           id
-          userProfileID
-          userProfile {
-            id
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            collegeGroupId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            userProfilePrivacySettingId
-          }
           city
           state
           school
@@ -203,7 +179,6 @@ export const onCreateMessage = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        userProfilePrivacySettingId
       }
       receiver {
         id
@@ -352,33 +327,9 @@ export const onCreateMessage = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
+        privacySettingID
         privacySetting {
           id
-          userProfileID
-          userProfile {
-            id
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            collegeGroupId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            userProfilePrivacySettingId
-          }
           city
           state
           school
@@ -398,7 +349,6 @@ export const onCreateMessage = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        userProfilePrivacySettingId
       }
       conversation {
         id
@@ -461,9 +411,9 @@ export const onCreateMessage = /* GraphQL */ `
             _deleted
             _lastChangedAt
           }
+          privacySettingID
           privacySetting {
             id
-            userProfileID
             city
             state
             school
@@ -483,7 +433,6 @@ export const onCreateMessage = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          userProfilePrivacySettingId
         }
         friendProfile {
           id
@@ -542,9 +491,9 @@ export const onCreateMessage = /* GraphQL */ `
             _deleted
             _lastChangedAt
           }
+          privacySettingID
           privacySetting {
             id
-            userProfileID
             city
             state
             school
@@ -564,7 +513,6 @@ export const onCreateMessage = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          userProfilePrivacySettingId
         }
         messages {
           items {
@@ -754,33 +702,9 @@ export const onUpdateMessage = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
+        privacySettingID
         privacySetting {
           id
-          userProfileID
-          userProfile {
-            id
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            collegeGroupId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            userProfilePrivacySettingId
-          }
           city
           state
           school
@@ -800,7 +724,6 @@ export const onUpdateMessage = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        userProfilePrivacySettingId
       }
       receiver {
         id
@@ -949,33 +872,9 @@ export const onUpdateMessage = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
+        privacySettingID
         privacySetting {
           id
-          userProfileID
-          userProfile {
-            id
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            collegeGroupId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            userProfilePrivacySettingId
-          }
           city
           state
           school
@@ -995,7 +894,6 @@ export const onUpdateMessage = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        userProfilePrivacySettingId
       }
       conversation {
         id
@@ -1058,9 +956,9 @@ export const onUpdateMessage = /* GraphQL */ `
             _deleted
             _lastChangedAt
           }
+          privacySettingID
           privacySetting {
             id
-            userProfileID
             city
             state
             school
@@ -1080,7 +978,6 @@ export const onUpdateMessage = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          userProfilePrivacySettingId
         }
         friendProfile {
           id
@@ -1139,9 +1036,9 @@ export const onUpdateMessage = /* GraphQL */ `
             _deleted
             _lastChangedAt
           }
+          privacySettingID
           privacySetting {
             id
-            userProfileID
             city
             state
             school
@@ -1161,7 +1058,6 @@ export const onUpdateMessage = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          userProfilePrivacySettingId
         }
         messages {
           items {
@@ -1351,33 +1247,9 @@ export const onDeleteMessage = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
+        privacySettingID
         privacySetting {
           id
-          userProfileID
-          userProfile {
-            id
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            collegeGroupId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            userProfilePrivacySettingId
-          }
           city
           state
           school
@@ -1397,7 +1269,6 @@ export const onDeleteMessage = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        userProfilePrivacySettingId
       }
       receiver {
         id
@@ -1546,33 +1417,9 @@ export const onDeleteMessage = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
+        privacySettingID
         privacySetting {
           id
-          userProfileID
-          userProfile {
-            id
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            collegeGroupId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            userProfilePrivacySettingId
-          }
           city
           state
           school
@@ -1592,7 +1439,6 @@ export const onDeleteMessage = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        userProfilePrivacySettingId
       }
       conversation {
         id
@@ -1655,9 +1501,9 @@ export const onDeleteMessage = /* GraphQL */ `
             _deleted
             _lastChangedAt
           }
+          privacySettingID
           privacySetting {
             id
-            userProfileID
             city
             state
             school
@@ -1677,7 +1523,6 @@ export const onDeleteMessage = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          userProfilePrivacySettingId
         }
         friendProfile {
           id
@@ -1736,9 +1581,9 @@ export const onDeleteMessage = /* GraphQL */ `
             _deleted
             _lastChangedAt
           }
+          privacySettingID
           privacySetting {
             id
-            userProfileID
             city
             state
             school
@@ -1758,7 +1603,6 @@ export const onDeleteMessage = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          userProfilePrivacySettingId
         }
         messages {
           items {
@@ -1948,33 +1792,9 @@ export const onCreateEventProfile = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
+        privacySettingID
         privacySetting {
           id
-          userProfileID
-          userProfile {
-            id
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            collegeGroupId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            userProfilePrivacySettingId
-          }
           city
           state
           school
@@ -1994,7 +1814,6 @@ export const onCreateEventProfile = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        userProfilePrivacySettingId
       }
       event {
         id
@@ -2229,33 +2048,9 @@ export const onUpdateEventProfile = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
+        privacySettingID
         privacySetting {
           id
-          userProfileID
-          userProfile {
-            id
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            collegeGroupId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            userProfilePrivacySettingId
-          }
           city
           state
           school
@@ -2275,7 +2070,6 @@ export const onUpdateEventProfile = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        userProfilePrivacySettingId
       }
       event {
         id
@@ -2510,33 +2304,9 @@ export const onDeleteEventProfile = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
+        privacySettingID
         privacySetting {
           id
-          userProfileID
-          userProfile {
-            id
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            collegeGroupId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            userProfilePrivacySettingId
-          }
           city
           state
           school
@@ -2556,7 +2326,6 @@ export const onDeleteEventProfile = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        userProfilePrivacySettingId
       }
       event {
         id
@@ -2695,12 +2464,12 @@ export const onCreateFestival = /* GraphQL */ `
             email
             zipcode
             collegeGroupId
+            privacySettingID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
-            userProfilePrivacySettingId
           }
           nextToken
           startedAt
@@ -2734,12 +2503,12 @@ export const onCreateFestival = /* GraphQL */ `
             email
             zipcode
             collegeGroupId
+            privacySettingID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
-            userProfilePrivacySettingId
           }
           event {
             id
@@ -2886,12 +2655,12 @@ export const onUpdateFestival = /* GraphQL */ `
             email
             zipcode
             collegeGroupId
+            privacySettingID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
-            userProfilePrivacySettingId
           }
           nextToken
           startedAt
@@ -2925,12 +2694,12 @@ export const onUpdateFestival = /* GraphQL */ `
             email
             zipcode
             collegeGroupId
+            privacySettingID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
-            userProfilePrivacySettingId
           }
           event {
             id
@@ -3077,12 +2846,12 @@ export const onDeleteFestival = /* GraphQL */ `
             email
             zipcode
             collegeGroupId
+            privacySettingID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
-            userProfilePrivacySettingId
           }
           nextToken
           startedAt
@@ -3116,12 +2885,12 @@ export const onDeleteFestival = /* GraphQL */ `
             email
             zipcode
             collegeGroupId
+            privacySettingID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
-            userProfilePrivacySettingId
           }
           event {
             id
@@ -3251,12 +3020,12 @@ export const onCreateUserProfile = /* GraphQL */ `
             email
             zipcode
             collegeGroupId
+            privacySettingID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
-            userProfilePrivacySettingId
           }
           event {
             id
@@ -3320,12 +3089,12 @@ export const onCreateUserProfile = /* GraphQL */ `
             email
             zipcode
             collegeGroupId
+            privacySettingID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
-            userProfilePrivacySettingId
           }
           userProfileID
           isDriver
@@ -3361,12 +3130,12 @@ export const onCreateUserProfile = /* GraphQL */ `
             email
             zipcode
             collegeGroupId
+            privacySettingID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
-            userProfilePrivacySettingId
           }
           friendProfile {
             id
@@ -3385,12 +3154,12 @@ export const onCreateUserProfile = /* GraphQL */ `
             email
             zipcode
             collegeGroupId
+            privacySettingID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
-            userProfilePrivacySettingId
           }
           createdAt
           updatedAt
@@ -3423,12 +3192,12 @@ export const onCreateUserProfile = /* GraphQL */ `
             email
             zipcode
             collegeGroupId
+            privacySettingID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
-            userProfilePrivacySettingId
           }
           friendProfile {
             id
@@ -3447,12 +3216,12 @@ export const onCreateUserProfile = /* GraphQL */ `
             email
             zipcode
             collegeGroupId
+            privacySettingID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
-            userProfilePrivacySettingId
           }
           messages {
             nextToken
@@ -3492,12 +3261,12 @@ export const onCreateUserProfile = /* GraphQL */ `
             email
             zipcode
             collegeGroupId
+            privacySettingID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
-            userProfilePrivacySettingId
           }
           receiver {
             id
@@ -3516,12 +3285,12 @@ export const onCreateUserProfile = /* GraphQL */ `
             email
             zipcode
             collegeGroupId
+            privacySettingID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
-            userProfilePrivacySettingId
           }
           conversation {
             id
@@ -3568,12 +3337,12 @@ export const onCreateUserProfile = /* GraphQL */ `
             email
             zipcode
             collegeGroupId
+            privacySettingID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
-            userProfilePrivacySettingId
           }
           receiver {
             id
@@ -3592,12 +3361,12 @@ export const onCreateUserProfile = /* GraphQL */ `
             email
             zipcode
             collegeGroupId
+            privacySettingID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
-            userProfilePrivacySettingId
           }
           conversation {
             id
@@ -3641,12 +3410,12 @@ export const onCreateUserProfile = /* GraphQL */ `
             email
             zipcode
             collegeGroupId
+            privacySettingID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
-            userProfilePrivacySettingId
           }
           s3Key
           isPrivate
@@ -3712,12 +3481,12 @@ export const onCreateUserProfile = /* GraphQL */ `
             email
             zipcode
             collegeGroupId
+            privacySettingID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
-            userProfilePrivacySettingId
           }
           nextToken
           startedAt
@@ -3728,90 +3497,9 @@ export const onCreateUserProfile = /* GraphQL */ `
         _deleted
         _lastChangedAt
       }
+      privacySettingID
       privacySetting {
         id
-        userProfileID
-        userProfile {
-          id
-          firstName
-          lastName
-          verified
-          verifySubmitted
-          profilePhotoID
-          bannerPhotoID
-          city
-          state
-          school
-          address
-          address2
-          phone
-          email
-          zipcode
-          attendingEvents {
-            nextToken
-            startedAt
-          }
-          rides {
-            nextToken
-            startedAt
-          }
-          friends {
-            nextToken
-            startedAt
-          }
-          conversations {
-            nextToken
-            startedAt
-          }
-          sentMessages {
-            nextToken
-            startedAt
-          }
-          receivedMessages {
-            nextToken
-            startedAt
-          }
-          photos {
-            nextToken
-            startedAt
-          }
-          collegeGroupId
-          collegeGroup {
-            id
-            name
-            domain
-            webPage
-            countryCode
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          privacySetting {
-            id
-            userProfileID
-            city
-            state
-            school
-            email
-            attendingEvents
-            rides
-            friends
-            photos
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          userProfilePrivacySettingId
-        }
         city
         state
         school
@@ -3831,7 +3519,6 @@ export const onCreateUserProfile = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      userProfilePrivacySettingId
     }
   }
 `;
@@ -3877,12 +3564,12 @@ export const onUpdateUserProfile = /* GraphQL */ `
             email
             zipcode
             collegeGroupId
+            privacySettingID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
-            userProfilePrivacySettingId
           }
           event {
             id
@@ -3946,12 +3633,12 @@ export const onUpdateUserProfile = /* GraphQL */ `
             email
             zipcode
             collegeGroupId
+            privacySettingID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
-            userProfilePrivacySettingId
           }
           userProfileID
           isDriver
@@ -3987,12 +3674,12 @@ export const onUpdateUserProfile = /* GraphQL */ `
             email
             zipcode
             collegeGroupId
+            privacySettingID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
-            userProfilePrivacySettingId
           }
           friendProfile {
             id
@@ -4011,12 +3698,12 @@ export const onUpdateUserProfile = /* GraphQL */ `
             email
             zipcode
             collegeGroupId
+            privacySettingID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
-            userProfilePrivacySettingId
           }
           createdAt
           updatedAt
@@ -4049,12 +3736,12 @@ export const onUpdateUserProfile = /* GraphQL */ `
             email
             zipcode
             collegeGroupId
+            privacySettingID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
-            userProfilePrivacySettingId
           }
           friendProfile {
             id
@@ -4073,12 +3760,12 @@ export const onUpdateUserProfile = /* GraphQL */ `
             email
             zipcode
             collegeGroupId
+            privacySettingID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
-            userProfilePrivacySettingId
           }
           messages {
             nextToken
@@ -4118,12 +3805,12 @@ export const onUpdateUserProfile = /* GraphQL */ `
             email
             zipcode
             collegeGroupId
+            privacySettingID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
-            userProfilePrivacySettingId
           }
           receiver {
             id
@@ -4142,12 +3829,12 @@ export const onUpdateUserProfile = /* GraphQL */ `
             email
             zipcode
             collegeGroupId
+            privacySettingID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
-            userProfilePrivacySettingId
           }
           conversation {
             id
@@ -4194,12 +3881,12 @@ export const onUpdateUserProfile = /* GraphQL */ `
             email
             zipcode
             collegeGroupId
+            privacySettingID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
-            userProfilePrivacySettingId
           }
           receiver {
             id
@@ -4218,12 +3905,12 @@ export const onUpdateUserProfile = /* GraphQL */ `
             email
             zipcode
             collegeGroupId
+            privacySettingID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
-            userProfilePrivacySettingId
           }
           conversation {
             id
@@ -4267,12 +3954,12 @@ export const onUpdateUserProfile = /* GraphQL */ `
             email
             zipcode
             collegeGroupId
+            privacySettingID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
-            userProfilePrivacySettingId
           }
           s3Key
           isPrivate
@@ -4338,12 +4025,12 @@ export const onUpdateUserProfile = /* GraphQL */ `
             email
             zipcode
             collegeGroupId
+            privacySettingID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
-            userProfilePrivacySettingId
           }
           nextToken
           startedAt
@@ -4354,90 +4041,9 @@ export const onUpdateUserProfile = /* GraphQL */ `
         _deleted
         _lastChangedAt
       }
+      privacySettingID
       privacySetting {
         id
-        userProfileID
-        userProfile {
-          id
-          firstName
-          lastName
-          verified
-          verifySubmitted
-          profilePhotoID
-          bannerPhotoID
-          city
-          state
-          school
-          address
-          address2
-          phone
-          email
-          zipcode
-          attendingEvents {
-            nextToken
-            startedAt
-          }
-          rides {
-            nextToken
-            startedAt
-          }
-          friends {
-            nextToken
-            startedAt
-          }
-          conversations {
-            nextToken
-            startedAt
-          }
-          sentMessages {
-            nextToken
-            startedAt
-          }
-          receivedMessages {
-            nextToken
-            startedAt
-          }
-          photos {
-            nextToken
-            startedAt
-          }
-          collegeGroupId
-          collegeGroup {
-            id
-            name
-            domain
-            webPage
-            countryCode
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          privacySetting {
-            id
-            userProfileID
-            city
-            state
-            school
-            email
-            attendingEvents
-            rides
-            friends
-            photos
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          userProfilePrivacySettingId
-        }
         city
         state
         school
@@ -4457,7 +4063,6 @@ export const onUpdateUserProfile = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      userProfilePrivacySettingId
     }
   }
 `;
@@ -4503,12 +4108,12 @@ export const onDeleteUserProfile = /* GraphQL */ `
             email
             zipcode
             collegeGroupId
+            privacySettingID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
-            userProfilePrivacySettingId
           }
           event {
             id
@@ -4572,12 +4177,12 @@ export const onDeleteUserProfile = /* GraphQL */ `
             email
             zipcode
             collegeGroupId
+            privacySettingID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
-            userProfilePrivacySettingId
           }
           userProfileID
           isDriver
@@ -4613,12 +4218,12 @@ export const onDeleteUserProfile = /* GraphQL */ `
             email
             zipcode
             collegeGroupId
+            privacySettingID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
-            userProfilePrivacySettingId
           }
           friendProfile {
             id
@@ -4637,12 +4242,12 @@ export const onDeleteUserProfile = /* GraphQL */ `
             email
             zipcode
             collegeGroupId
+            privacySettingID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
-            userProfilePrivacySettingId
           }
           createdAt
           updatedAt
@@ -4675,12 +4280,12 @@ export const onDeleteUserProfile = /* GraphQL */ `
             email
             zipcode
             collegeGroupId
+            privacySettingID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
-            userProfilePrivacySettingId
           }
           friendProfile {
             id
@@ -4699,12 +4304,12 @@ export const onDeleteUserProfile = /* GraphQL */ `
             email
             zipcode
             collegeGroupId
+            privacySettingID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
-            userProfilePrivacySettingId
           }
           messages {
             nextToken
@@ -4744,12 +4349,12 @@ export const onDeleteUserProfile = /* GraphQL */ `
             email
             zipcode
             collegeGroupId
+            privacySettingID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
-            userProfilePrivacySettingId
           }
           receiver {
             id
@@ -4768,12 +4373,12 @@ export const onDeleteUserProfile = /* GraphQL */ `
             email
             zipcode
             collegeGroupId
+            privacySettingID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
-            userProfilePrivacySettingId
           }
           conversation {
             id
@@ -4820,12 +4425,12 @@ export const onDeleteUserProfile = /* GraphQL */ `
             email
             zipcode
             collegeGroupId
+            privacySettingID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
-            userProfilePrivacySettingId
           }
           receiver {
             id
@@ -4844,12 +4449,12 @@ export const onDeleteUserProfile = /* GraphQL */ `
             email
             zipcode
             collegeGroupId
+            privacySettingID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
-            userProfilePrivacySettingId
           }
           conversation {
             id
@@ -4893,12 +4498,12 @@ export const onDeleteUserProfile = /* GraphQL */ `
             email
             zipcode
             collegeGroupId
+            privacySettingID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
-            userProfilePrivacySettingId
           }
           s3Key
           isPrivate
@@ -4964,12 +4569,12 @@ export const onDeleteUserProfile = /* GraphQL */ `
             email
             zipcode
             collegeGroupId
+            privacySettingID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
-            userProfilePrivacySettingId
           }
           nextToken
           startedAt
@@ -4980,90 +4585,9 @@ export const onDeleteUserProfile = /* GraphQL */ `
         _deleted
         _lastChangedAt
       }
+      privacySettingID
       privacySetting {
         id
-        userProfileID
-        userProfile {
-          id
-          firstName
-          lastName
-          verified
-          verifySubmitted
-          profilePhotoID
-          bannerPhotoID
-          city
-          state
-          school
-          address
-          address2
-          phone
-          email
-          zipcode
-          attendingEvents {
-            nextToken
-            startedAt
-          }
-          rides {
-            nextToken
-            startedAt
-          }
-          friends {
-            nextToken
-            startedAt
-          }
-          conversations {
-            nextToken
-            startedAt
-          }
-          sentMessages {
-            nextToken
-            startedAt
-          }
-          receivedMessages {
-            nextToken
-            startedAt
-          }
-          photos {
-            nextToken
-            startedAt
-          }
-          collegeGroupId
-          collegeGroup {
-            id
-            name
-            domain
-            webPage
-            countryCode
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          privacySetting {
-            id
-            userProfileID
-            city
-            state
-            school
-            email
-            attendingEvents
-            rides
-            friends
-            photos
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          userProfilePrivacySettingId
-        }
         city
         state
         school
@@ -5083,7 +4607,6 @@ export const onDeleteUserProfile = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      userProfilePrivacySettingId
     }
   }
 `;
@@ -5093,202 +4616,6 @@ export const onCreatePrivacySetting = /* GraphQL */ `
   ) {
     onCreatePrivacySetting(filter: $filter) {
       id
-      userProfileID
-      userProfile {
-        id
-        firstName
-        lastName
-        verified
-        verifySubmitted
-        profilePhotoID
-        bannerPhotoID
-        city
-        state
-        school
-        address
-        address2
-        phone
-        email
-        zipcode
-        attendingEvents {
-          items {
-            id
-            userProfileID
-            eventID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        rides {
-          items {
-            id
-            rideID
-            userProfileID
-            isDriver
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        friends {
-          items {
-            id
-            userProfileID
-            friendProfileID
-            isAccepted
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        conversations {
-          items {
-            id
-            userProfileID
-            friendProfileID
-            unreadMessage
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        sentMessages {
-          items {
-            id
-            content
-            senderID
-            receiverID
-            conversationID
-            unreadMessage
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        receivedMessages {
-          items {
-            id
-            content
-            senderID
-            receiverID
-            conversationID
-            unreadMessage
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        photos {
-          items {
-            id
-            userProfileID
-            s3Key
-            isPrivate
-            identityId
-            description
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        collegeGroupId
-        collegeGroup {
-          id
-          name
-          domain
-          webPage
-          countryCode
-          events {
-            nextToken
-            startedAt
-          }
-          members {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        privacySetting {
-          id
-          userProfileID
-          userProfile {
-            id
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            collegeGroupId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            userProfilePrivacySettingId
-          }
-          city
-          state
-          school
-          email
-          attendingEvents
-          rides
-          friends
-          photos
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        userProfilePrivacySettingId
-      }
       city
       state
       school
@@ -5311,202 +4638,6 @@ export const onUpdatePrivacySetting = /* GraphQL */ `
   ) {
     onUpdatePrivacySetting(filter: $filter) {
       id
-      userProfileID
-      userProfile {
-        id
-        firstName
-        lastName
-        verified
-        verifySubmitted
-        profilePhotoID
-        bannerPhotoID
-        city
-        state
-        school
-        address
-        address2
-        phone
-        email
-        zipcode
-        attendingEvents {
-          items {
-            id
-            userProfileID
-            eventID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        rides {
-          items {
-            id
-            rideID
-            userProfileID
-            isDriver
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        friends {
-          items {
-            id
-            userProfileID
-            friendProfileID
-            isAccepted
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        conversations {
-          items {
-            id
-            userProfileID
-            friendProfileID
-            unreadMessage
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        sentMessages {
-          items {
-            id
-            content
-            senderID
-            receiverID
-            conversationID
-            unreadMessage
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        receivedMessages {
-          items {
-            id
-            content
-            senderID
-            receiverID
-            conversationID
-            unreadMessage
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        photos {
-          items {
-            id
-            userProfileID
-            s3Key
-            isPrivate
-            identityId
-            description
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        collegeGroupId
-        collegeGroup {
-          id
-          name
-          domain
-          webPage
-          countryCode
-          events {
-            nextToken
-            startedAt
-          }
-          members {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        privacySetting {
-          id
-          userProfileID
-          userProfile {
-            id
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            collegeGroupId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            userProfilePrivacySettingId
-          }
-          city
-          state
-          school
-          email
-          attendingEvents
-          rides
-          friends
-          photos
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        userProfilePrivacySettingId
-      }
       city
       state
       school
@@ -5529,202 +4660,6 @@ export const onDeletePrivacySetting = /* GraphQL */ `
   ) {
     onDeletePrivacySetting(filter: $filter) {
       id
-      userProfileID
-      userProfile {
-        id
-        firstName
-        lastName
-        verified
-        verifySubmitted
-        profilePhotoID
-        bannerPhotoID
-        city
-        state
-        school
-        address
-        address2
-        phone
-        email
-        zipcode
-        attendingEvents {
-          items {
-            id
-            userProfileID
-            eventID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        rides {
-          items {
-            id
-            rideID
-            userProfileID
-            isDriver
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        friends {
-          items {
-            id
-            userProfileID
-            friendProfileID
-            isAccepted
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        conversations {
-          items {
-            id
-            userProfileID
-            friendProfileID
-            unreadMessage
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        sentMessages {
-          items {
-            id
-            content
-            senderID
-            receiverID
-            conversationID
-            unreadMessage
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        receivedMessages {
-          items {
-            id
-            content
-            senderID
-            receiverID
-            conversationID
-            unreadMessage
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        photos {
-          items {
-            id
-            userProfileID
-            s3Key
-            isPrivate
-            identityId
-            description
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        collegeGroupId
-        collegeGroup {
-          id
-          name
-          domain
-          webPage
-          countryCode
-          events {
-            nextToken
-            startedAt
-          }
-          members {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        privacySetting {
-          id
-          userProfileID
-          userProfile {
-            id
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            collegeGroupId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            userProfilePrivacySettingId
-          }
-          city
-          state
-          school
-          email
-          attendingEvents
-          rides
-          friends
-          photos
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        userProfilePrivacySettingId
-      }
       city
       state
       school
@@ -5923,9 +4858,9 @@ export const onCreateRide = /* GraphQL */ `
             _deleted
             _lastChangedAt
           }
+          privacySettingID
           privacySetting {
             id
-            userProfileID
             city
             state
             school
@@ -5945,7 +4880,6 @@ export const onCreateRide = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          userProfilePrivacySettingId
         }
         userProfileID
         isDriver
@@ -5990,12 +4924,12 @@ export const onCreateRide = /* GraphQL */ `
             email
             zipcode
             collegeGroupId
+            privacySettingID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
-            userProfilePrivacySettingId
           }
           userProfileID
           isDriver
@@ -6203,9 +5137,9 @@ export const onUpdateRide = /* GraphQL */ `
             _deleted
             _lastChangedAt
           }
+          privacySettingID
           privacySetting {
             id
-            userProfileID
             city
             state
             school
@@ -6225,7 +5159,6 @@ export const onUpdateRide = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          userProfilePrivacySettingId
         }
         userProfileID
         isDriver
@@ -6270,12 +5203,12 @@ export const onUpdateRide = /* GraphQL */ `
             email
             zipcode
             collegeGroupId
+            privacySettingID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
-            userProfilePrivacySettingId
           }
           userProfileID
           isDriver
@@ -6483,9 +5416,9 @@ export const onDeleteRide = /* GraphQL */ `
             _deleted
             _lastChangedAt
           }
+          privacySettingID
           privacySetting {
             id
-            userProfileID
             city
             state
             school
@@ -6505,7 +5438,6 @@ export const onDeleteRide = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          userProfilePrivacySettingId
         }
         userProfileID
         isDriver
@@ -6550,12 +5482,12 @@ export const onDeleteRide = /* GraphQL */ `
             email
             zipcode
             collegeGroupId
+            privacySettingID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
-            userProfilePrivacySettingId
           }
           userProfileID
           isDriver
@@ -6660,12 +5592,12 @@ export const onCreateRideUser = /* GraphQL */ `
             email
             zipcode
             collegeGroupId
+            privacySettingID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
-            userProfilePrivacySettingId
           }
           userProfileID
           isDriver
@@ -6849,33 +5781,9 @@ export const onCreateRideUser = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
+        privacySettingID
         privacySetting {
           id
-          userProfileID
-          userProfile {
-            id
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            collegeGroupId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            userProfilePrivacySettingId
-          }
           city
           state
           school
@@ -6895,7 +5803,6 @@ export const onCreateRideUser = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        userProfilePrivacySettingId
       }
       userProfileID
       isDriver
@@ -6986,12 +5893,12 @@ export const onUpdateRideUser = /* GraphQL */ `
             email
             zipcode
             collegeGroupId
+            privacySettingID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
-            userProfilePrivacySettingId
           }
           userProfileID
           isDriver
@@ -7175,33 +6082,9 @@ export const onUpdateRideUser = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
+        privacySettingID
         privacySetting {
           id
-          userProfileID
-          userProfile {
-            id
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            collegeGroupId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            userProfilePrivacySettingId
-          }
           city
           state
           school
@@ -7221,7 +6104,6 @@ export const onUpdateRideUser = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        userProfilePrivacySettingId
       }
       userProfileID
       isDriver
@@ -7312,12 +6194,12 @@ export const onDeleteRideUser = /* GraphQL */ `
             email
             zipcode
             collegeGroupId
+            privacySettingID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
-            userProfilePrivacySettingId
           }
           userProfileID
           isDriver
@@ -7501,33 +6383,9 @@ export const onDeleteRideUser = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
+        privacySettingID
         privacySetting {
           id
-          userProfileID
-          userProfile {
-            id
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            collegeGroupId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            userProfilePrivacySettingId
-          }
           city
           state
           school
@@ -7547,7 +6405,6 @@ export const onDeleteRideUser = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        userProfilePrivacySettingId
       }
       userProfileID
       isDriver
@@ -7711,33 +6568,9 @@ export const onCreatePhoto = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
+        privacySettingID
         privacySetting {
           id
-          userProfileID
-          userProfile {
-            id
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            collegeGroupId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            userProfilePrivacySettingId
-          }
           city
           state
           school
@@ -7757,7 +6590,6 @@ export const onCreatePhoto = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        userProfilePrivacySettingId
       }
       s3Key
       isPrivate
@@ -7950,33 +6782,9 @@ export const onUpdatePhoto = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
+        privacySettingID
         privacySetting {
           id
-          userProfileID
-          userProfile {
-            id
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            collegeGroupId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            userProfilePrivacySettingId
-          }
           city
           state
           school
@@ -7996,7 +6804,6 @@ export const onUpdatePhoto = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        userProfilePrivacySettingId
       }
       s3Key
       isPrivate
@@ -8189,33 +6996,9 @@ export const onDeletePhoto = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
+        privacySettingID
         privacySetting {
           id
-          userProfileID
-          userProfile {
-            id
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            collegeGroupId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            userProfilePrivacySettingId
-          }
           city
           state
           school
@@ -8235,7 +7018,6 @@ export const onDeletePhoto = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        userProfilePrivacySettingId
       }
       s3Key
       isPrivate
@@ -8344,9 +7126,9 @@ export const onCreatePhotoComment = /* GraphQL */ `
             _deleted
             _lastChangedAt
           }
+          privacySettingID
           privacySetting {
             id
-            userProfileID
             city
             state
             school
@@ -8366,7 +7148,6 @@ export const onCreatePhotoComment = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          userProfilePrivacySettingId
         }
         s3Key
         isPrivate
@@ -8468,9 +7249,9 @@ export const onUpdatePhotoComment = /* GraphQL */ `
             _deleted
             _lastChangedAt
           }
+          privacySettingID
           privacySetting {
             id
-            userProfileID
             city
             state
             school
@@ -8490,7 +7271,6 @@ export const onUpdatePhotoComment = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          userProfilePrivacySettingId
         }
         s3Key
         isPrivate
@@ -8592,9 +7372,9 @@ export const onDeletePhotoComment = /* GraphQL */ `
             _deleted
             _lastChangedAt
           }
+          privacySettingID
           privacySetting {
             id
-            userProfileID
             city
             state
             school
@@ -8614,7 +7394,6 @@ export const onDeletePhotoComment = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          userProfilePrivacySettingId
         }
         s3Key
         isPrivate
@@ -8804,33 +7583,9 @@ export const onCreateFriendship = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
+        privacySettingID
         privacySetting {
           id
-          userProfileID
-          userProfile {
-            id
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            collegeGroupId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            userProfilePrivacySettingId
-          }
           city
           state
           school
@@ -8850,7 +7605,6 @@ export const onCreateFriendship = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        userProfilePrivacySettingId
       }
       friendProfile {
         id
@@ -8999,33 +7753,9 @@ export const onCreateFriendship = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
+        privacySettingID
         privacySetting {
           id
-          userProfileID
-          userProfile {
-            id
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            collegeGroupId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            userProfilePrivacySettingId
-          }
           city
           state
           school
@@ -9045,7 +7775,6 @@ export const onCreateFriendship = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        userProfilePrivacySettingId
       }
       createdAt
       updatedAt
@@ -9211,33 +7940,9 @@ export const onUpdateFriendship = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
+        privacySettingID
         privacySetting {
           id
-          userProfileID
-          userProfile {
-            id
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            collegeGroupId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            userProfilePrivacySettingId
-          }
           city
           state
           school
@@ -9257,7 +7962,6 @@ export const onUpdateFriendship = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        userProfilePrivacySettingId
       }
       friendProfile {
         id
@@ -9406,33 +8110,9 @@ export const onUpdateFriendship = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
+        privacySettingID
         privacySetting {
           id
-          userProfileID
-          userProfile {
-            id
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            collegeGroupId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            userProfilePrivacySettingId
-          }
           city
           state
           school
@@ -9452,7 +8132,6 @@ export const onUpdateFriendship = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        userProfilePrivacySettingId
       }
       createdAt
       updatedAt
@@ -9618,33 +8297,9 @@ export const onDeleteFriendship = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
+        privacySettingID
         privacySetting {
           id
-          userProfileID
-          userProfile {
-            id
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            collegeGroupId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            userProfilePrivacySettingId
-          }
           city
           state
           school
@@ -9664,7 +8319,6 @@ export const onDeleteFriendship = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        userProfilePrivacySettingId
       }
       friendProfile {
         id
@@ -9813,33 +8467,9 @@ export const onDeleteFriendship = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
+        privacySettingID
         privacySetting {
           id
-          userProfileID
-          userProfile {
-            id
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            collegeGroupId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            userProfilePrivacySettingId
-          }
           city
           state
           school
@@ -9859,7 +8489,6 @@ export const onDeleteFriendship = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        userProfilePrivacySettingId
       }
       createdAt
       updatedAt
@@ -10024,33 +8653,9 @@ export const onCreateConversation = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
+        privacySettingID
         privacySetting {
           id
-          userProfileID
-          userProfile {
-            id
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            collegeGroupId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            userProfilePrivacySettingId
-          }
           city
           state
           school
@@ -10070,7 +8675,6 @@ export const onCreateConversation = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        userProfilePrivacySettingId
       }
       friendProfile {
         id
@@ -10219,33 +8823,9 @@ export const onCreateConversation = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
+        privacySettingID
         privacySetting {
           id
-          userProfileID
-          userProfile {
-            id
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            collegeGroupId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            userProfilePrivacySettingId
-          }
           city
           state
           school
@@ -10265,7 +8845,6 @@ export const onCreateConversation = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        userProfilePrivacySettingId
       }
       messages {
         items {
@@ -10291,12 +8870,12 @@ export const onCreateConversation = /* GraphQL */ `
             email
             zipcode
             collegeGroupId
+            privacySettingID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
-            userProfilePrivacySettingId
           }
           receiver {
             id
@@ -10315,12 +8894,12 @@ export const onCreateConversation = /* GraphQL */ `
             email
             zipcode
             collegeGroupId
+            privacySettingID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
-            userProfilePrivacySettingId
           }
           conversation {
             id
@@ -10507,33 +9086,9 @@ export const onUpdateConversation = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
+        privacySettingID
         privacySetting {
           id
-          userProfileID
-          userProfile {
-            id
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            collegeGroupId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            userProfilePrivacySettingId
-          }
           city
           state
           school
@@ -10553,7 +9108,6 @@ export const onUpdateConversation = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        userProfilePrivacySettingId
       }
       friendProfile {
         id
@@ -10702,33 +9256,9 @@ export const onUpdateConversation = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
+        privacySettingID
         privacySetting {
           id
-          userProfileID
-          userProfile {
-            id
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            collegeGroupId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            userProfilePrivacySettingId
-          }
           city
           state
           school
@@ -10748,7 +9278,6 @@ export const onUpdateConversation = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        userProfilePrivacySettingId
       }
       messages {
         items {
@@ -10774,12 +9303,12 @@ export const onUpdateConversation = /* GraphQL */ `
             email
             zipcode
             collegeGroupId
+            privacySettingID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
-            userProfilePrivacySettingId
           }
           receiver {
             id
@@ -10798,12 +9327,12 @@ export const onUpdateConversation = /* GraphQL */ `
             email
             zipcode
             collegeGroupId
+            privacySettingID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
-            userProfilePrivacySettingId
           }
           conversation {
             id
@@ -10990,33 +9519,9 @@ export const onDeleteConversation = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
+        privacySettingID
         privacySetting {
           id
-          userProfileID
-          userProfile {
-            id
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            collegeGroupId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            userProfilePrivacySettingId
-          }
           city
           state
           school
@@ -11036,7 +9541,6 @@ export const onDeleteConversation = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        userProfilePrivacySettingId
       }
       friendProfile {
         id
@@ -11185,33 +9689,9 @@ export const onDeleteConversation = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
+        privacySettingID
         privacySetting {
           id
-          userProfileID
-          userProfile {
-            id
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            collegeGroupId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            userProfilePrivacySettingId
-          }
           city
           state
           school
@@ -11231,7 +9711,6 @@ export const onDeleteConversation = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        userProfilePrivacySettingId
       }
       messages {
         items {
@@ -11257,12 +9736,12 @@ export const onDeleteConversation = /* GraphQL */ `
             email
             zipcode
             collegeGroupId
+            privacySettingID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
-            userProfilePrivacySettingId
           }
           receiver {
             id
@@ -11281,12 +9760,12 @@ export const onDeleteConversation = /* GraphQL */ `
             email
             zipcode
             collegeGroupId
+            privacySettingID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
-            userProfilePrivacySettingId
           }
           conversation {
             id
@@ -11428,9 +9907,9 @@ export const onCreateCollegeGroup = /* GraphQL */ `
             _deleted
             _lastChangedAt
           }
+          privacySettingID
           privacySetting {
             id
-            userProfileID
             city
             state
             school
@@ -11450,7 +9929,6 @@ export const onCreateCollegeGroup = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          userProfilePrivacySettingId
         }
         nextToken
         startedAt
@@ -11573,9 +10051,9 @@ export const onUpdateCollegeGroup = /* GraphQL */ `
             _deleted
             _lastChangedAt
           }
+          privacySettingID
           privacySetting {
             id
-            userProfileID
             city
             state
             school
@@ -11595,7 +10073,6 @@ export const onUpdateCollegeGroup = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          userProfilePrivacySettingId
         }
         nextToken
         startedAt
@@ -11718,9 +10195,9 @@ export const onDeleteCollegeGroup = /* GraphQL */ `
             _deleted
             _lastChangedAt
           }
+          privacySettingID
           privacySetting {
             id
-            userProfileID
             city
             state
             school
@@ -11740,7 +10217,6 @@ export const onDeleteCollegeGroup = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          userProfilePrivacySettingId
         }
         nextToken
         startedAt

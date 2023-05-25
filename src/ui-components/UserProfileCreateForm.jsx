@@ -85,8 +85,8 @@ export default function UserProfileCreateForm(props) {
   const validations = {
     firstName: [],
     lastName: [],
-    verified: [{ type: "Required" }],
-    verifySubmitted: [{ type: "Required" }],
+    verified: [],
+    verifySubmitted: [],
     profilePhotoID: [],
     bannerPhotoID: [],
     city: [],

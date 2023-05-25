@@ -39,8 +39,8 @@ type UserProfile @model @auth(rules: [{ allow: public }]) {
   id: ID!
   firstName: String
   lastName: String
-  verified: Boolean!
-  verifySubmitted: Boolean!
+  verified: Boolean @default(value: "false")
+  verifySubmitted: Boolean @default(value: "false")
   profilePhotoID: String
   bannerPhotoID: String
   city: String
@@ -60,23 +60,21 @@ type UserProfile @model @auth(rules: [{ allow: public }]) {
   photos: [Photo] @hasMany(indexName: "byUserProfile", fields: ["id"])
   collegeGroupId: ID @index(name: "byCollegeGroup")
   collegeGroup: CollegeGroup @belongsTo(fields: ["collegeGroupId"])
-  privacySetting: PrivacySetting @hasOne
+  privacySettingID: ID
+  privacySetting: PrivacySetting @hasOne(fields: ["privacySettingID"])
 }
 
 type PrivacySetting @model @auth(rules: [{ allow: public }]) {
   id: ID!
-  userProfileID: ID! @index(name: "byUser")
-  userProfile: UserProfile @belongsTo(fields: ["userProfileID"])
-  city: Boolean!
-  state: Boolean!
-  school: Boolean!
-  email: Boolean!
-  attendingEvents: Boolean!
-  rides: Boolean!
-  friends: Boolean!
-  photos: Boolean!
+  city: Boolean @default(value: "true")
+  state: Boolean @default(value: "true")
+  school: Boolean @default(value: "true")
+  email: Boolean @default(value: "true")
+  attendingEvents: Boolean @default(value: "true")
+  rides: Boolean @default(value: "true")
+  friends: Boolean @default(value: "true")
+  photos: Boolean @default(value: "true")
 }
-
 
 type Ride @model @auth(rules: [{ allow: public }]) {
   id: ID!

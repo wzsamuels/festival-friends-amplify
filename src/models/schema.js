@@ -481,14 +481,14 @@ export const schema = {
                     "name": "verified",
                     "isArray": false,
                     "type": "Boolean",
-                    "isRequired": true,
+                    "isRequired": false,
                     "attributes": []
                 },
                 "verifySubmitted": {
                     "name": "verifySubmitted",
                     "isArray": false,
                     "type": "Boolean",
-                    "isRequired": true,
+                    "isRequired": false,
                     "attributes": []
                 },
                 "profilePhotoID": {
@@ -695,6 +695,13 @@ export const schema = {
                         ]
                     }
                 },
+                "privacySettingID": {
+                    "name": "privacySettingID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "privacySetting": {
                     "name": "privacySetting",
                     "isArray": false,
@@ -709,7 +716,7 @@ export const schema = {
                             "id"
                         ],
                         "targetNames": [
-                            "userProfilePrivacySettingId"
+                            "privacySettingID"
                         ]
                     }
                 },
@@ -728,13 +735,6 @@ export const schema = {
                     "isRequired": false,
                     "attributes": [],
                     "isReadOnly": true
-                },
-                "userProfilePrivacySettingId": {
-                    "name": "userProfilePrivacySettingId",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": false,
-                    "attributes": []
                 }
             },
             "syncable": true,
@@ -781,82 +781,60 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "userProfileID": {
-                    "name": "userProfileID",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "userProfile": {
-                    "name": "userProfile",
-                    "isArray": false,
-                    "type": {
-                        "model": "UserProfile"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "BELONGS_TO",
-                        "targetNames": [
-                            "userProfileID"
-                        ]
-                    }
-                },
                 "city": {
                     "name": "city",
                     "isArray": false,
                     "type": "Boolean",
-                    "isRequired": true,
+                    "isRequired": false,
                     "attributes": []
                 },
                 "state": {
                     "name": "state",
                     "isArray": false,
                     "type": "Boolean",
-                    "isRequired": true,
+                    "isRequired": false,
                     "attributes": []
                 },
                 "school": {
                     "name": "school",
                     "isArray": false,
                     "type": "Boolean",
-                    "isRequired": true,
+                    "isRequired": false,
                     "attributes": []
                 },
                 "email": {
                     "name": "email",
                     "isArray": false,
                     "type": "Boolean",
-                    "isRequired": true,
+                    "isRequired": false,
                     "attributes": []
                 },
                 "attendingEvents": {
                     "name": "attendingEvents",
                     "isArray": false,
                     "type": "Boolean",
-                    "isRequired": true,
+                    "isRequired": false,
                     "attributes": []
                 },
                 "rides": {
                     "name": "rides",
                     "isArray": false,
                     "type": "Boolean",
-                    "isRequired": true,
+                    "isRequired": false,
                     "attributes": []
                 },
                 "friends": {
                     "name": "friends",
                     "isArray": false,
                     "type": "Boolean",
-                    "isRequired": true,
+                    "isRequired": false,
                     "attributes": []
                 },
                 "photos": {
                     "name": "photos",
                     "isArray": false,
                     "type": "Boolean",
-                    "isRequired": true,
+                    "isRequired": false,
                     "attributes": []
                 },
                 "createdAt": {
@@ -882,15 +860,6 @@ export const schema = {
                 {
                     "type": "model",
                     "properties": {}
-                },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "byUser",
-                        "fields": [
-                            "userProfileID"
-                        ]
-                    }
                 },
                 {
                     "type": "auth",
@@ -1795,5 +1764,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.3",
-    "version": "61756cba8b3aa31c109a56ac80e3debe"
+    "version": "c2fe8cb1a9100a4fab64ed95373e163d"
 };

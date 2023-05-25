@@ -171,71 +171,9 @@
           "resourceName": "festivalfriendsPostConfirmation"
         }
       ]
-    },
-    "AMPLIFY_storage_festivalfriendsmessages_arn": {
-      "usedBy": [
-        {
-          "category": "storage",
-          "resourceName": "festivalfriendsmessages"
-        }
-      ]
-    },
-    "AMPLIFY_storage_festivalfriendsmessages_partitionKeyName": {
-      "usedBy": [
-        {
-          "category": "storage",
-          "resourceName": "festivalfriendsmessages"
-        }
-      ]
-    },
-    "AMPLIFY_storage_festivalfriendsmessages_partitionKeyType": {
-      "usedBy": [
-        {
-          "category": "storage",
-          "resourceName": "festivalfriendsmessages"
-        }
-      ]
-    },
-    "AMPLIFY_storage_festivalfriendsmessages_region": {
-      "usedBy": [
-        {
-          "category": "storage",
-          "resourceName": "festivalfriendsmessages"
-        }
-      ]
-    },
-    "AMPLIFY_storage_festivalfriendsmessages_sortKeyName": {
-      "usedBy": [
-        {
-          "category": "storage",
-          "resourceName": "festivalfriendsmessages"
-        }
-      ]
-    },
-    "AMPLIFY_storage_festivalfriendsmessages_sortKeyType": {
-      "usedBy": [
-        {
-          "category": "storage",
-          "resourceName": "festivalfriendsmessages"
-        }
-      ]
-    },
-    "AMPLIFY_storage_festivalfriendsmessages_tableName": {
-      "usedBy": [
-        {
-          "category": "storage",
-          "resourceName": "festivalfriendsmessages"
-        }
-      ]
     }
   },
   "storage": {
-    "festivalfriendsmessages": {
-      "dependsOn": [],
-      "providerPlugin": "awscloudformation",
-      "service": "DynamoDB",
-      "serviceType": "imported"
-    },
     "s3festivalfriendsstorage2dfb2266": {
       "dependsOn": [],
       "providerPlugin": "awscloudformation",

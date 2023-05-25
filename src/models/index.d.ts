@@ -156,8 +156,8 @@ type EagerUserProfile = {
   readonly id: string;
   readonly firstName?: string | null;
   readonly lastName?: string | null;
-  readonly verified: boolean;
-  readonly verifySubmitted: boolean;
+  readonly verified?: boolean | null;
+  readonly verifySubmitted?: boolean | null;
   readonly profilePhotoID?: string | null;
   readonly bannerPhotoID?: string | null;
   readonly city?: string | null;
@@ -177,10 +177,10 @@ type EagerUserProfile = {
   readonly photos?: (Photo | null)[] | null;
   readonly collegeGroupId?: string | null;
   readonly collegeGroup?: CollegeGroup | null;
+  readonly privacySettingID?: string | null;
   readonly privacySetting?: PrivacySetting | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
-  readonly userProfilePrivacySettingId?: string | null;
 }
 
 type LazyUserProfile = {
@@ -191,8 +191,8 @@ type LazyUserProfile = {
   readonly id: string;
   readonly firstName?: string | null;
   readonly lastName?: string | null;
-  readonly verified: boolean;
-  readonly verifySubmitted: boolean;
+  readonly verified?: boolean | null;
+  readonly verifySubmitted?: boolean | null;
   readonly profilePhotoID?: string | null;
   readonly bannerPhotoID?: string | null;
   readonly city?: string | null;
@@ -212,10 +212,10 @@ type LazyUserProfile = {
   readonly photos: AsyncCollection<Photo>;
   readonly collegeGroupId?: string | null;
   readonly collegeGroup: AsyncItem<CollegeGroup | undefined>;
+  readonly privacySettingID?: string | null;
   readonly privacySetting: AsyncItem<PrivacySetting | undefined>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
-  readonly userProfilePrivacySettingId?: string | null;
 }
 
 export declare type UserProfile = LazyLoading extends LazyLoadingDisabled ? EagerUserProfile : LazyUserProfile
@@ -230,16 +230,14 @@ type EagerPrivacySetting = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly userProfileID: string;
-  readonly userProfile?: UserProfile | null;
-  readonly city: boolean;
-  readonly state: boolean;
-  readonly school: boolean;
-  readonly email: boolean;
-  readonly attendingEvents: boolean;
-  readonly rides: boolean;
-  readonly friends: boolean;
-  readonly photos: boolean;
+  readonly city?: boolean | null;
+  readonly state?: boolean | null;
+  readonly school?: boolean | null;
+  readonly email?: boolean | null;
+  readonly attendingEvents?: boolean | null;
+  readonly rides?: boolean | null;
+  readonly friends?: boolean | null;
+  readonly photos?: boolean | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -250,16 +248,14 @@ type LazyPrivacySetting = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly userProfileID: string;
-  readonly userProfile: AsyncItem<UserProfile | undefined>;
-  readonly city: boolean;
-  readonly state: boolean;
-  readonly school: boolean;
-  readonly email: boolean;
-  readonly attendingEvents: boolean;
-  readonly rides: boolean;
-  readonly friends: boolean;
-  readonly photos: boolean;
+  readonly city?: boolean | null;
+  readonly state?: boolean | null;
+  readonly school?: boolean | null;
+  readonly email?: boolean | null;
+  readonly attendingEvents?: boolean | null;
+  readonly rides?: boolean | null;
+  readonly friends?: boolean | null;
+  readonly photos?: boolean | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

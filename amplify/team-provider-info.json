@@ -27,15 +27,6 @@
         }
       },
       "storage": {
-        "festivalfriendsmessages": {
-          "arn": "arn:aws:dynamodb:us-east-1:642956558393:table/festival-friends-messages",
-          "partitionKeyName": "conversationId",
-          "partitionKeyType": "S",
-          "region": "us-east-1",
-          "sortKeyName": "createdAt",
-          "sortKeyType": "S",
-          "tableName": "festival-friends-messages"
-        },
         "s3festivalfriendsstorage2dfb2266": {}
       },
       "auth": {
