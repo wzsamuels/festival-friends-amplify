@@ -1,6 +1,5 @@
-import { Festival, Photo, Ride } from "../../../models";
-import React, { useContext, useEffect, useState } from "react";
-import { Storage } from "aws-amplify";
+import {EventProfile, Festival, Photo, Ride} from "../../../models";
+import React, {useContext, useEffect, useState} from "react";
 import { DataStore } from "@aws-amplify/datastore";
 import ProfileEditModal from "./Modals/ProfileEditModal";
 import ProfileImageModal from "./Modals/ProfileImageModal";
@@ -9,12 +8,12 @@ import PhotoImage from "../../ui/PhotoImage";
 import { BsPerson } from "react-icons/all";
 import BannerPhotoModal from "./Modals/BannerPhotoModal";
 import Button from "../../common/Button/Button";
-import { useUserProfileStore } from "../../../stores/friendProfilesStore";
 import PhotoModal from "./Modals/PhotoModal";
-import DataStoreContext, {
-  DataStoreContextType,
-} from "../../../context/DataStoreContext";
 import { Link } from "react-router-dom";
+import useDataClearedStore from "../../../stores/dataClearedStore";
+import useProfileStore from "../../../stores/profileStore";
+import {getBannerPhoto, getProfilePhoto} from "../../../services/ProfileServices";
+import ImageContext from "../../../context/ImageContext";
 
 const ProfileVerified = ({ user }: { user: any }) => {
   const [profileImage, setProfileImage] = useState("");
@@ -30,53 +29,77 @@ const ProfileVerified = ({ user }: { user: any }) => {
   const [eventsAttending, setEventsAttending] = useState<Festival[]>([]);
   const [rides, setRides] = useState<Ride[]>([]);
   const username = user.username as string;
-  const userProfile = useUserProfileStore((state) => state.userProfile);
-  const { dataStoreCleared } = useContext(
-    DataStoreContext
-  ) as DataStoreContextType;
+  const userProfile = useProfileStore((state) => state.userProfile);
+  const dataCleared = useDataClearedStore((state) => state.dataCleared);
+  const { getSignedURL } = useContext(ImageContext)
 
   useEffect(() => {
-    if (userProfile && dataStoreCleared) {
-      const fetchProfileImage = async () => {
-        if (userProfile.profileImage) {
-          const image = await Storage.get(`${userProfile.profileImage}`, {
-            level: "public",
-          });
-          setProfileImage(image);
-        }
+    if (!dataCleared || !userProfile) return;
+    const fetchProfilePhoto = async () => {
+      getProfilePhoto(userProfile, getSignedURL).then(image => setProfileImage(image))
+    }
+    const fetchProfileBanner = async () => {
+      getBannerPhoto(userProfile, getSignedURL).then(image => setBannerImage(image))
+    }
+    const fetchEventsAttending = async () => {
+      if(!userProfile.attendingEvents) return;
 
-        const banner = await userProfile.bannerPhoto;
-        if (banner) {
-          const bannerFile = await Storage.get(`${banner?.s3Key}`, {
-            level: "public",
-          });
-          setBannerImage(bannerFile);
-        }
-
+      try {
         const eventProfiles = await userProfile.attendingEvents.toArray();
         const events = await Promise.all(
-          eventProfiles.map(async (eventProfile) => await eventProfile.event)
-        );
-        setEventsAttending(events);
+          eventProfiles.map(async (eventProfile) => await eventProfile.event));
+        const filteredEvents = events.filter((event) => event !== undefined);
+        setEventsAttending(filteredEvents as Festival[]);
+      } catch (e) {
+        console.log("Error converting attending events array", e)
+      }
+    }
 
-        const rideUsers = await userProfile.rides.toArray();
-        const rides = await Promise.all(
-          rideUsers.map(async (rideUser) => await rideUser.ride)
-        );
-        setRides(rides);
-      };
-      fetchProfileImage();
+    const fetchRides = async () => {
+      if(!userProfile.rides) return;
 
+      const rideUsers = await userProfile.rides.toArray();
+      const rides = await Promise.all(
+        rideUsers.map(async (rideUser) => await rideUser.ride)
+      );
+      setRides(rides);
+    };
+
+    try {
+      fetchProfilePhoto();
+      fetchProfileBanner();
+      fetchEventsAttending();
+      fetchRides();
+    } catch (e) {
+      console.log(e);
+    }
+
+    console.log(userProfile);
+
+
+    try {
       const photoSub = DataStore.observeQuery(Photo, (photo) =>
         photo.userProfileID.eq(userProfile.id)
       ).subscribe(({ items }) => {
         setPhotos(items);
       });
+
+      const eventProfileSub = DataStore.observeQuery(EventProfile, (eventProfile) =>
+        eventProfile.userProfileID.eq(userProfile.id))
+        .subscribe(async ({ items }) => {
+          const eventPromises = items.map(async (eventProfile) => await eventProfile.event);
+          const events = await Promise.all(eventPromises);
+          setEventsAttending(events);
+      })
+
       return () => {
         photoSub.unsubscribe();
+        eventProfileSub.unsubscribe();
       };
+    } catch (e) {
+      console.log(e);
     }
-  }, [userProfile, dataStoreCleared]);
+  }, [userProfile, dataCleared]);
 
   useEffect(() => {
     if (!selectedFile) {
@@ -103,7 +126,7 @@ const ProfileVerified = ({ user }: { user: any }) => {
         )}
         <div className="flex flex-col justify-center items-center w-full h-full absolute top-0 left-0">
           <div className="bg-light-default rounded-2xl p-4 flex-1 max-h-[450px] ">
-            {userProfile?.profileImage ? (
+            {profileImage ? (
               <img
                 onClick={() => setIsProfileImageModalOpen(true)}
                 className="aspect-square max-w-[350px] w-full rounded-full cursor-pointer"
@@ -135,7 +158,7 @@ const ProfileVerified = ({ user }: { user: any }) => {
 
       <section className="p-4">
         <h1 className="text-2xl my-4">Events Attending</h1>
-        {eventsAttending.map((event, index) => (
+        {eventsAttending?.map((event, index) => (
           <span key={event.id}>
             <Link
               className="hover:underline text-green-950"
@@ -190,6 +213,7 @@ const ProfileVerified = ({ user }: { user: any }) => {
               <PhotoImage
                 className="object-cover cursor-pointer"
                 photo={photo}
+                level='protected'
               />
             </div>
           ))}
@@ -199,14 +223,14 @@ const ProfileVerified = ({ user }: { user: any }) => {
         <>
           <BannerPhotoModal
             photos={photos}
-            username={username}
+            sub={username}
             isOpen={isBannerModalOpen}
             setIsOpen={setIsBannerModalOpen}
             profile={userProfile}
           />
           <PhotoUploadModal
             profile={userProfile}
-            username={username}
+            sub={username}
             isOpen={isPhotoUploadModalOpen}
             setIsOpen={setPhotoUploadModalOpen}
             photoFile={selectedFile}
@@ -214,7 +238,7 @@ const ProfileVerified = ({ user }: { user: any }) => {
           />
           <ProfileImageModal
             profile={userProfile}
-            username={username}
+            sub={username}
             isOpen={isProfileImageModalOpen}
             setIsOpen={setIsProfileImageModalOpen}
             photos={photos}
@@ -224,7 +248,7 @@ const ProfileVerified = ({ user }: { user: any }) => {
             profileImage={profileImage}
             isOpen={isProfileModalOpen}
             setIsOpen={setProfileModalOpen}
-            username={username}
+            sub={username}
             callback={() => {
               setProfileModalOpen(false);
               setIsProfileImageModalOpen(true);
