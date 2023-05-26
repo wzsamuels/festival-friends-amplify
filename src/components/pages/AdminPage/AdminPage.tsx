@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FestivalCreateForm } from "../../../ui-components";
-import { CollegeGroup, UserProfile } from "../../../models";
+import {CollegeGroup, PrivacySetting, UserProfile} from "../../../models";
 import { DataStore } from "aws-amplify";
 import colleges from "../../../data/colleges.json";
 import InputWrapper from "../../common/InputWrapper/InputWrapper";
@@ -8,16 +8,16 @@ import Label from "../../common/Label/Label";
 import Button from "../../common/Button/Button";
 import * as mutations from '../../../graphql/mutations';
 import { API, graphqlOperation } from 'aws-amplify';
-import {useAuthenticator} from "@aws-amplify/ui-react";
 import { GraphQLQuery } from '@aws-amplify/api';
 import {
   CreateUserProfileMutation,
   CreateUserProfileInput,
-  CreatePrivacySettingInput,
-  CreatePrivacySettingMutation
 } from "../../../API";
 import getErrorMessage from "../../../lib/getErrorMessage";
 import mockUserProfiles from '../../../data/profiles.json';
+import {getCollegeGroupByEmail} from "../../../services/collegeGroupServices";
+import {ToastData} from "../../../types";
+import Toast from "../../common/Toast/Toast";
 
 const AdminPage = () => {
   return (
@@ -30,26 +30,109 @@ const AdminPage = () => {
         <h1 className="text-xl md:text-2xl">Create Festival</h1>
         <FestivalCreateForm />
       </section>
+      <section className="w-full max-w-xl my-8">
+        <SeedDatabase/>
+      </section>
     </div>
   );
 };
 
+const ClearDatabase  = async () => {
+  return (
+    <div>
+
+    </div>
+  )
+}
+
 export default AdminPage;
 
+const SeedDatabase = () => {
+  const seedUserProfiles = async () => {
+    try {
+      const userProfile = await DataStore.query(UserProfile);
+      if(userProfile.length > 0) {
+        alert("Database already seeded");
+        return;
+      }
+    } catch (error) {
+      console.log("Error seeding database", error);
+    }
+
+    mockUserProfiles.map(async (profile) => {
+      try {
+        const newPrivacySetting =  await DataStore.save(new PrivacySetting({}));
+        const collegeGroup = await getCollegeGroupByEmail(profile.email);
+
+        const userProfileInput: CreateUserProfileInput = {
+          ...profile,
+          ...(collegeGroup && {collegeGroupId: collegeGroup?.id}),
+          privacySettingID: newPrivacySetting.id
+        }
+
+        const newUserProfile = await API.graphql<GraphQLQuery<CreateUserProfileMutation>>(
+          graphqlOperation(mutations.createUserProfile, {
+            input: userProfileInput}));
+
+        console.log(`New profile for ${profile.firstName}:`, newUserProfile);
+
+      } catch (error) {
+        console.log(getErrorMessage(error));
+      }
+    })
+  }
+
+
+  const seedCollegeGroups = async () => {
+    try {
+      const collegeGroups = await DataStore.query(CollegeGroup);
+      if(collegeGroups.length > 0) {
+        alert("Database already seeded");
+        return;
+      }
+    } catch (error) {
+      console.log("Error seeding database", error);
+    }
+
+    try {
+      const newColleges = await Promise.all(
+        colleges.map(async (college) => {
+          return await DataStore.save(
+            new CollegeGroup({
+              name: college.name,
+              members: [],
+              domain: college.domains[0],
+              webPage: college.web_pages[0],
+              countryCode: college.alpha_two_code,
+            })
+          );
+        })
+      );
+      alert(`Database seeded with ${newColleges.length} colleges`);
+    } catch (e) {
+      console.log("Error seeding database", e);
+    }
+  };
+
+  return (
+    <>
+      <h1 className="text-xl md:text-2xl">Seed Database</h1>
+      <Button className="my-4" onClick={seedUserProfiles}>Seed User Profiles</Button>
+      <Button className="my-4" onClick={seedCollegeGroups}>Seed College Groups</Button>
+    </>
+  )
+}
+
 const VerifyAccounts = () => {
-  const [unverifiedProfiles, setUnverifiedProfiles] = useState<UserProfile[]>(
-    []
-  );
-  const [message, setMessage] = useState<string>("");
-  const { user } = useAuthenticator((context) => [context.user]);
-  const username = user?.username as string;
-  const email = user?.attributes?.email as string;
+  const [unverifiedProfiles, setUnverifiedProfiles] = useState<UserProfile[]>([]);
+  const [toastData, setToastData] = useState<ToastData | null>(null);
 
   useEffect(() => {
     const fetchProfiles = async () => {
-      const response = await DataStore.query(UserProfile, (c) =>
-        c.verified.eq(false)
-      );
+      const response = await DataStore.query(UserProfile, (c) => c.and(c => [
+        c.verified.eq(false),
+        c.verifySubmitted.eq(true)
+      ]));
       console.log(response);
       setUnverifiedProfiles(response);
     };
@@ -61,120 +144,35 @@ const VerifyAccounts = () => {
     }
   }, []);
 
-  const seedDatabase = async () => {
-    const newColleges = await Promise.all(
-      colleges.map(async (college) => {
-        return await DataStore.save(
-          new CollegeGroup({
-            name: college.name,
-            members: [],
-            domain: college.domains[0],
-            webPage: college.web_pages[0],
-            countryCode: college.alpha_two_code,
-          })
-        );
-      })
-    );
-    alert(`Database seeded with ${newColleges.length} colleges`);
-  };
-
-  // TODO: Refactor to separate file
-  const seedUserProfiles = async () => {
-    mockUserProfiles.map(async (profile) => {
-      try {
-        const privacySettingInput: CreatePrivacySettingInput = {
-          userProfileID: profile.id,
-          city: true,
-          state: true,
-          school: true,
-          email: true,
-          attendingEvents: true,
-          rides: true,
-          friends: true,
-          photos: true,
-        }
-
-        let collegeGroup: CollegeGroup | null = null;
-        if (profile.email.endsWith(".edu")) {
-          const emailDomain = profile.email.split("@")[1];
-          const collegeGroups = await DataStore.query(CollegeGroup, (c) =>
-            c.domain.eq(emailDomain)
-          );
-          collegeGroup = collegeGroups[0];
-        }
-
-        const userProfileInput: CreateUserProfileInput = {
-          ...profile,
-          ...(collegeGroup && {collegeGroupId: collegeGroup?.id})
-        }
-
-        const newUserProfile = await API.graphql<GraphQLQuery<CreateUserProfileMutation>>(
-          graphqlOperation(mutations.createUserProfile, {
-            input: userProfileInput}));
-
-        console.log(`New profile for ${profile.firstName}:`, newUserProfile);
-
-        const newPrivacySetting = await API.graphql<GraphQLQuery<CreatePrivacySettingMutation>>(
-          graphqlOperation(mutations.createPrivacySetting, {input: privacySettingInput}));
-
-        console.log(`New privacy setting for ${profile.firstName}:`, newPrivacySetting);
-
-      } catch (error) {
-        console.log(getErrorMessage(error));
-      }
-    })
-  }
-
   const verifyProfile = async (profile: UserProfile) => {
-    const latestProfile = await DataStore.query(UserProfile, (c) =>
-      c.id.eq(profile.id)
-    );
-    await DataStore.save(
-      UserProfile.copyOf(latestProfile[0], (updated) => {
-        updated.verified = true;
-      })
-    );
-    setUnverifiedProfiles(
-      unverifiedProfiles.filter((p) => p.id !== profile.id)
-    );
-    setMessage("Profile verified");
-  };
-
-  const createUserProfile = async () => {
-    const userProfileInput: CreateUserProfileInput = {
-      id: username,
-      email: email,
-      verified: false,
-      verifySubmitted: true
-    }
-    console.log(userProfileInput)
     try {
-      const newUserProfile = await API.graphql<GraphQLQuery<CreateUserProfileMutation>>(
-        graphqlOperation(mutations.createUserProfile, {input: userProfileInput}));
-      console.log(newUserProfile);
-    } catch (error) {
-      console.log(getErrorMessage(error));
+      const latestProfile = await DataStore.query(UserProfile, profile.id);
+      if (!latestProfile) {
+        throw new Error("No profile found");
+      }
+      await DataStore.save(
+        UserProfile.copyOf(latestProfile, (updated) => {
+          updated.verified = true;
+        })
+      );
+      setUnverifiedProfiles(
+        unverifiedProfiles.filter((p) => p.id !== profile.id)
+      );
+      setToastData({
+        message: `Profile ${profile.firstName} ${profile.lastName} verified`,
+        type: "success",
+      });
+    } catch (e) {
+      setToastData({
+        message: `Error verifying profile ${profile.firstName} ${profile.lastName}`,
+        type: "error",
+      });
+      console.log("Error verifying profile", getErrorMessage(e));
     }
-
-    const privacySettingInput: CreatePrivacySettingInput = {
-      userProfileID: username,
-      city: true,
-      state: true,
-      school: true,
-      email: true,
-      attendingEvents: true,
-      rides: true,
-      friends: true,
-      photos: true,
-    }
-    const newPrivacySetting = await API.graphql<GraphQLQuery<CreatePrivacySettingMutation>>(
-      graphqlOperation(mutations.createPrivacySetting, {input: privacySettingInput}));
-    console.log(newPrivacySetting);
-  }
+  };
 
   return (
     <div>
-      <Button onClick={createUserProfile}>Create Profile</Button>
       {unverifiedProfiles.map((profile) => (
         <ul key={profile.id}>
           <InputWrapper className="my-4">
@@ -217,9 +215,14 @@ const VerifyAccounts = () => {
       <h2 className="text-lg text-center my-4">
         {unverifiedProfiles.length} profiles to verify
       </h2>
-      <h3 className="text-center my-4">{message}</h3>
-      {/*<IonButton onClick={seedDatabase}>Seed Database</IonButton>*/}
-      <Button onClick={seedUserProfiles}>Seed Database</Button>
+      {toastData && (
+        <Toast
+          toastData={toastData}
+          onClose={() => {
+            setToastData(null);
+          }}
+        />
+      )}
     </div>
   );
-};
+}
