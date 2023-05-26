@@ -29,7 +29,7 @@ const PhotoModal = ({
   // TODO - Add confirmation before deleting
   return (
     <Modal isOpen={isOpen} setIsOpen={setIsOpen} title="Photo">
-      {photo && <PhotoImage className="w-full" photo={photo} />}
+      {photo && <PhotoImage className="max-w-xl" photo={photo} />}
       <div className="flex justify-center my-4">
         {deletePhoto && <Button onClick={handleDeletePhoto}>Delete</Button>}
       </div>

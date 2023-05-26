@@ -8,7 +8,7 @@ import Input from "../../../common/Input/Input";
 import Button from "../../../common/Button/Button";
 import { Festival, Ride, RideUser } from "../../../../models";
 import { DataStore } from "@aws-amplify/datastore";
-import { useUserProfileStore } from "../../../../stores/friendProfilesStore";
+import useProfileStore from "../../../../stores/profileStore";
 
 // TODO - Finish modal
 
@@ -25,11 +25,12 @@ interface NewRideModalProps extends ModalProps {
 
 const NewRideModal = ({ isOpen, setIsOpen, event }: NewRideModalProps) => {
   const { register, handleSubmit } = useForm<RideInputs>();
-  const { userProfile } = useUserProfileStore();
+  const userProfile = useProfileStore(state => state.userProfile)
 
   const onSubmit: SubmitHandler<RideInputs> = async (data) => {
-    if (userProfile) {
-      console.log(data);
+    if (!userProfile) return;
+
+    try {
       const date = new Date(data.departureTime);
       const departureTime = date.toISOString();
       const newRide = await DataStore.save(
@@ -51,14 +52,14 @@ const NewRideModal = ({ isOpen, setIsOpen, event }: NewRideModalProps) => {
           isDriver: true,
         })
       );
-      const updatedRide = await DataStore.save(
+      await DataStore.save(
         Ride.copyOf(newRide, (updated) => {
           updated.driver = newRideUser;
         })
       );
-      console.log(updatedRide);
-      console.log(newRide);
-      console.log(newRideUser);
+    } catch (e) {
+      console.log(e);
+    } finally {
       setIsOpen(false);
     }
   };
@@ -70,7 +71,7 @@ const NewRideModal = ({ isOpen, setIsOpen, event }: NewRideModalProps) => {
       title="New Ride"
       className="max-w-xl"
     >
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form className="p-4" onSubmit={handleSubmit(onSubmit)}>
         <InputWrapper className="my-4">
           <Label>Max passengers</Label>
           <Input {...register("maxPassengers")} />

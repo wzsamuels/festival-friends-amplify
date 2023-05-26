@@ -4,12 +4,13 @@ import { ProfileInputs } from "../../../../types";
 import { DataStore } from "@aws-amplify/datastore";
 import { UserProfile } from "../../../../models";
 import getErrorMessage from "../../../../lib/getErrorMessage";
-import ProfileForm from "../ProfileForm";
+import ProfileEditForm from "../ProfileEditForm";
 import { ProfileModalProps } from "../../../../@types/profile";
 import { Dialog, Transition } from "@headlessui/react";
 import Button from "../../../common/Button/Button";
 import { BsPerson } from "react-icons/all";
 import Modal from "../../../common/Modal/Modal";
+import useProfileStore from "../../../../stores/profileStore";
 
 const ProfileEditModal = ({
   profile,
@@ -18,10 +19,17 @@ const ProfileEditModal = ({
   setIsOpen,
   callback,
 }: ProfileModalProps) => {
+  const setProfile = useProfileStore((state) => state.setProfile);
   const handleProfileUpdate: SubmitHandler<ProfileInputs> = async (data) => {
     try {
-      await DataStore.save(
-        UserProfile.copyOf(profile, (updated) => {
+      const originalProfile = await DataStore.query(UserProfile, profile.id);
+      if(!originalProfile) {
+        console.error('No profile found');
+        return;
+      }
+
+      const updatedProfile = await DataStore.save(
+        UserProfile.copyOf(originalProfile, (updated) => {
           updated.firstName = data.firstName;
           updated.lastName = data.lastName;
           updated.phone = data.phone;
@@ -33,8 +41,11 @@ const ProfileEditModal = ({
           updated.school = data.school;
         })
       );
+      setProfile(updatedProfile);
+      console.log(updatedProfile);
     } catch (error) {
       alert(`Error updating profile: ${getErrorMessage(error)}`);
+      throw error;
     } finally {
       setIsOpen(false);
     }
@@ -61,7 +72,7 @@ const ProfileEditModal = ({
           )}
         </div>
         <div className="flex justify-center">
-          <ProfileForm onSubmit={handleProfileUpdate} profile={profile} />
+          <ProfileEditForm onSubmit={handleProfileUpdate} profile={profile} />
         </div>
       </div>
     </Modal>

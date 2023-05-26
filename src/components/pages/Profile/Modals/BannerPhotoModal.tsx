@@ -76,12 +76,14 @@ const BannerPhotoModal = ({
   }, [selectedFile]);
 
   return (
-    <Modal isOpen={isOpen} setIsOpen={setIsOpen} title="Banner Image">
+    <Modal isOpen={isOpen} setIsOpen={setIsOpen} onClose={dismissModal} title="Banner Image">
       {preview ? (
-        <div className="flex flex-col items-center justify-center w-full p-4">
-          <img className="w-full " src={preview} alt="Preview" />
-          <div className="mt-6 flex justify-center w-full">
-            <Button className="mr-4" onClick={() => setSelectedFile(null)}>
+        <div className="flex flex-col items-center justify-center w-full">
+          <div className="flex flex-col items-center justify-center w-full">
+            <img className="w-full " src={preview} alt="Preview" />
+          </div>
+          <div className="m-4 flex justify-center gap-4">
+            <Button onClick={() => setSelectedFile(null)}>
               Cancel
             </Button>
             <Button onClick={() => handleProfileBannerUpdate()}>

@@ -1,10 +1,13 @@
 import { ModalProps } from "../../../@types/modal";
 import { Conversation, Message, UserProfile } from "../../../models";
-import React, { useEffect, useState } from "react";
-import { DataStore, Storage } from "aws-amplify";
+import React, {useContext, useEffect, useState} from "react";
+import { DataStore } from "aws-amplify";
 import Modal from "../../common/Modal/Modal";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useUserProfileStore } from "../../../stores/friendProfilesStore";
+import {getProfilePhoto} from "../../../services/ProfileServices";
+import ImageContext from "../../../context/ImageContext";
+import useProfileStore from "../../../stores/profileStore";
+import useDataClearedStore from "../../../stores/dataClearedStore";
 
 interface ConversationModalProps extends ModalProps {
   conversation: Conversation | undefined;
@@ -20,11 +23,11 @@ const ConversationModal = ({
 }: ConversationModalProps) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const { register, handleSubmit, reset } = useForm<MessageInput>();
-  const [friendProfileImage, setFriendProfileImage] = useState<
-    string | undefined
-  >();
+  const [friendProfileImage, setFriendProfileImage] = useState<string | undefined>();
   const [friendProfile, setFriendProfile] = useState<UserProfile | undefined>();
-  const userProfile = useUserProfileStore((state) => state.userProfile);
+  const userProfile = useProfileStore(state => state.userProfile);
+  const dataCleared = useDataClearedStore(state => state.dataCleared);
+  const { getSignedURL } = useContext(ImageContext);
 
   const handleSendMessage: SubmitHandler<MessageInput> = async (data) => {
     if (data.message && friendProfile && userProfile && conversation) {
@@ -46,25 +49,22 @@ const ConversationModal = ({
   };
 
   useEffect(() => {
+    if(!dataCleared) return;
     // Fetch the profiles of the participants of the conversation
-    const fetchProfiles = async () => {
+    const fetchFriendProfile = async () => {
       if (!userProfile) {
         return;
       }
-      const friend = await DataStore.query(UserProfile, (c) =>
-        c.id.eq(
-          (userProfile.id === conversation?.userProfileID
+      const friendProfile = await DataStore.query(UserProfile,(userProfile.id === conversation?.userProfileID
             ? conversation.friendProfileID
             : conversation?.userProfileID) as string
-        )
       );
       // Fetch the profile images of the participants of the conversation
-      const friendImage = await Storage.get(friend[0].profileImage as string);
-      setFriendProfileImage(friendImage);
-      setFriendProfile(friend[0]);
+      getProfilePhoto(friendProfile, getSignedURL).then(image => setFriendProfileImage(image))
+      setFriendProfile(friendProfile);
     };
 
-    fetchProfiles();
+    fetchFriendProfile();
 
     // Fetch the messages of the conversation
     const profileSub = DataStore.observeQuery(Message, (c) =>

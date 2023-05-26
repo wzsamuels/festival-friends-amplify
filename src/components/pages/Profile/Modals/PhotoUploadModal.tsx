@@ -18,11 +18,10 @@ const PhotoUploadModal = ({
   setIsOpen,
   photoFile,
   setPhotoFile,
+
 }: PhotoUploadModalProps) => {
   const [preview, setPreview] = useState("");
   const handlePhotoUpload = async () => {
-    console.log(photoFile);
-
     if (photoFile && profile) {
       try {
         const newPhoto = createNewPhoto(sub, photoFile, profile);
@@ -54,11 +53,17 @@ const PhotoUploadModal = ({
   }, [photoFile]);
 
   return (
-    <Modal isOpen={isOpen} setIsOpen={setIsOpen} title="Upload Photo">
-      {preview && <img className="w-full" src={preview} alt="Preview" />}
-      <div className="flex justify-center gap-2 mt-4">
-        <Button onClick={() => setIsOpen(false)}>Close</Button>
-        <Button onClick={handlePhotoUpload}>Upload</Button>
+    <Modal isOpen={isOpen} setIsOpen={setIsOpen} onClose={dismissModal} title="Upload Photo" className="max-w-2xl">
+      <div className="flex flex-col items-center justify-center w-full p-4">
+        {preview &&
+          <div className='max-w-xl'>
+            <img className=" rounded-full" src={preview} alt="Preview" />
+          </div>
+        }
+        <div className="flex justify-center gap-2 my-4">
+          <Button onClick={dismissModal}>Cancel</Button>
+          <Button onClick={handlePhotoUpload}>Upload</Button>
+        </div>
       </div>
     </Modal>
   );
