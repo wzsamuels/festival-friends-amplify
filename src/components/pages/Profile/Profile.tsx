@@ -1,6 +1,6 @@
 import { Link, useParams } from "react-router-dom";
-import React, { useEffect, useState } from "react";
-import { Festival, Photo, Ride, UserProfile } from "../../../models";
+import React, {useEffect, useState} from "react";
+import {Festival, Photo, PrivacySetting, Ride, UserProfile} from "../../../models";
 import { DataStore, Storage } from "aws-amplify";
 import PhotoImage from "../../ui/PhotoImage";
 import Header from "../../layout/Header";
@@ -8,9 +8,12 @@ import PhotoModal from "./Modals/PhotoModal";
 import { useNavigate } from "react-router-dom";
 import { BsPerson, IoArrowBack } from "react-icons/all";
 import RideCardBase from "../../ui/RideCardBase";
+import getErrorMessage from "../../../lib/getErrorMessage";
+import useDataClearedStore from "../../../stores/dataClearedStore";
 
 const ProfilePage = () => {
   const [profile, setProfile] = useState<UserProfile>();
+  const [privacySetting, setPrivacySetting] = useState<PrivacySetting>();
   const [profileImage, setProfileImage] = useState("");
   const [bannerImage, setBannerImage] = useState("");
   const [photos, setPhotos] = useState<Photo[]>([]);
@@ -18,6 +21,7 @@ const ProfilePage = () => {
   const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
   const [eventsAttending, setEventsAttending] = useState<Festival[]>([]);
   const [rides, setRides] = useState<Ride[]>([]);
+  const dataCleared = useDataClearedStore(state => state.dataCleared);
 
   const { profileId } = useParams();
   const navigate = useNavigate();
@@ -30,15 +34,25 @@ const ProfilePage = () => {
       const profile = profileData[0];
       setProfile(profile);
 
-      const imageData = await Storage.get(profile.profileImage as string);
-      setProfileImage(imageData);
+      //const privacySetting = await profile.privacySetting;
+      //setPrivacySetting(privacySetting);
 
-      const banner = await profile.bannerPhoto;
-      if (banner) {
-        const bannerFile = await Storage.get(`${banner?.s3Key}`, {
-          level: "public",
+      if(profile.profilePhotoID) {
+        const profilePhoto = await DataStore.query(Photo, profile.profilePhotoID)
+        const imageData = await Storage.get(profilePhoto?.s3Key as string, {
+          level: "protected",
+          identityId: profilePhoto?.identityId
         });
-        setBannerImage(bannerFile);
+        setProfileImage(imageData);
+      }
+
+      if(profile.bannerPhotoID) {
+        const bannerPhoto = await DataStore.query(Photo, profile.bannerPhotoID)
+        const imageData = await Storage.get(bannerPhoto?.s3Key as string, {
+          level: "protected",
+          identityId: bannerPhoto?.identityId
+        });
+        setBannerImage(imageData);
       }
 
       const photoData = await DataStore.query(Photo, (c) =>
@@ -58,8 +72,17 @@ const ProfilePage = () => {
       );
       setRides(rides);
     };
-    fetchProfile();
-  }, []);
+
+    if(!dataCleared) return;
+
+    try {
+      fetchProfile();
+    } catch(error) {
+      console.log("Error fetching profile in Profile.tsx: ", getErrorMessage(error));
+    }
+  }, [dataCleared]);
+
+  // TODO: Add full privacy setting
 
   return (
     <>
@@ -83,7 +106,7 @@ const ProfilePage = () => {
           <div className="w-full h-full  object-cover top-0 left-0 bg-light-default" />
         )}
         <div className="flex flex-col justify-center items-center w-full h-full absolute top-0 left-0">
-          {profile?.profileImage ? (
+          {profileImage ? (
             <img
               className="aspect-square max-w-[350px] w-full rounded-full cursor-pointer"
               src={profileImage}
@@ -101,10 +124,12 @@ const ProfilePage = () => {
           <h1 className={"text-2xl my-4"}>
             {profile?.firstName} {profile?.lastName}
           </h1>
+          { privacySetting?.city &&
           <div className={"text-lg my-2 flex flex-wrap"}>
             <span className="basis-[120px]">City:</span>
             <span>{profile?.city}</span>
           </div>
+          }
           <div className={"text-lg my-2 flex flex-wrap"}>
             <span className="basis-[120px]">State:</span>
             <span>{profile?.state}</span>
@@ -152,7 +177,7 @@ const ProfilePage = () => {
                   setSelectedPhoto(photo);
                 }}
               >
-                <PhotoImage photo={photo} key={photo.id} />
+                <PhotoImage level='protected' photo={photo} key={photo.id} />
               </div>
             ))}
           </div>
