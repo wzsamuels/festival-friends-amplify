@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState} from "react";
 import { DataStore } from "aws-amplify";
 import { Conversation, UserProfile } from "../../../models";
 import { useAuthenticator } from "@aws-amplify/ui-react";
@@ -10,22 +10,26 @@ import Modal from "../../common/Modal/Modal";
 import Header from "../../layout/Header";
 import ConservationSearchModal from "./ConservationSearchModal";
 import Button from "../../common/Button/Button";
-import { useUserProfileStore } from "../../../stores/friendProfilesStore";
 import ConversationCard from "../../ui/ConversationCard";
 import LoadingState from "../../ui/LoadingState";
+import useProfileStore from "../../../stores/profileStore";
+import useFriendStore from "../../../stores/friendProfileStore";
+import useConversationStore from "../../../stores/conversationStore";
+import useDataClearedStore from "../../../stores/dataClearedStore";
 
 const MessagePage: React.FC = () => {
-  const [conversations, setConversations] = useState<Conversation[]>([]);
-  const [currentConversation, setCurrentConversation] =
-    useState<Conversation>();
-  const [isNewConversationModalOpen, setNewConversationModalOpen] =
-    useState(false);
-  const [isConversationSearchModalOpen, setConversationSearchModalOpen] =
-    useState(false);
+  const [currentConversation, setCurrentConversation] = useState<Conversation>();
+  const [isNewConversationModalOpen, setNewConversationModalOpen] = useState(false);
+  const [isConversationSearchModalOpen, setConversationSearchModalOpen] = useState(false);
   const [isConversationModalOpen, setConversationModalOpen] = useState(false);
   const { route } = useAuthenticator((context) => [context.route]);
-  const { userProfile, loadingUserProfile, friendProfiles } =
-    useUserProfileStore();
+  const userProfile = useProfileStore((state) => state.userProfile);
+  const loadingUserProfile = useProfileStore((state) => state.loadingUserProfile);
+  const friendProfiles = useFriendStore((state) => state.acceptedFriendProfiles);
+  const conversations = useConversationStore((state) => state.conversations);
+  const dataCleared = useDataClearedStore(state => state.dataCleared)
+
+  console.log("MessagePage friends: ", friendProfiles)
 
   const handleNewConversation = async ({
     friendProfile,
@@ -33,9 +37,11 @@ const MessagePage: React.FC = () => {
     friendProfile: UserProfile;
   }) => {
     setNewConversationModalOpen(false);
-    if (!userProfile) {
+    if (!userProfile || !dataCleared) {
       return;
     }
+    // TODO: Simplify query, move to service file?
+
     const existingConversation1 = await DataStore.query(Conversation, (c) =>
       c.and((c) => [
         c.userProfileID.eq(userProfile?.id),
@@ -70,45 +76,10 @@ const MessagePage: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    if (userProfile) {
-      const conversationSub = DataStore.observeQuery(Conversation, (c) =>
-        c.or((c) => [
-          c.userProfileID.eq(userProfile.id),
-          c.friendProfileID.eq(userProfile.id),
-        ])
-      ).subscribe(({ items }) => {
-        setConversations(items);
-      });
-
-      return () => {
-        conversationSub.unsubscribe();
-      };
-    } else {
-      // Clear the conversations state when the user logs out
-      setConversations([]);
-    }
-  }, [userProfile]);
   const openConversationModal = (conversation: Conversation) => {
     setCurrentConversation(conversation);
     setConversationModalOpen(true);
   };
-
-  useEffect(() => {
-    if (userProfile) {
-      const conversationSub = DataStore.observeQuery(Conversation, (c) =>
-        c.or((c) => [
-          c.userProfileID.eq(userProfile.id),
-          c.friendProfileID.eq(userProfile.id),
-        ])
-      ).subscribe(({ items }) => {
-        setConversations(items);
-      });
-      return () => {
-        conversationSub.unsubscribe();
-      };
-    }
-  }, [userProfile]);
 
   const renderMessages = () => {
     if (loadingUserProfile || route === "idle") {
