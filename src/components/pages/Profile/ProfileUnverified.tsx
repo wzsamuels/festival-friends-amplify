@@ -1,20 +1,26 @@
 import { SubmitHandler, useForm, Controller } from "react-hook-form";
 import React, { useRef, useState } from "react";
-import { CollegeGroup, UserProfile } from "../../../models";
+import {CollegeGroup, PrivacySetting, UserProfile} from "../../../models";
 import { DataStore } from "@aws-amplify/datastore";
 import { ProfileInputs } from "../../../types";
 import { useAuthenticator } from "@aws-amplify/ui-react";
 import InputWrapper from "../../common/InputWrapper/InputWrapper";
 import Input from "../../common/Input/Input";
 import Label from "../../common/Label/Label";
-import { useUserProfileStore } from "../../../stores/friendProfilesStore";
 import Button from "../../common/Button/Button";
 import states from "../../../data/states";
 import { useFormattedPhoneInput } from "../../../hooks/useFormattedPhoneInput";
+import useProfileStore from "../../../stores/profileStore";
+import Select from "../../common/Select";
+import {getCollegeGroupByEmail} from "../../../services/collegeGroupServices";
+import {CreateUserProfileInput, CreateUserProfileMutation} from "../../../API";
+import {API, graphqlOperation} from "aws-amplify";
+import {GraphQLQuery} from "@aws-amplify/api";
+import * as mutations from "../../../graphql/mutations";
 
 const ProfileUnverified = () => {
   const { user } = useAuthenticator((context) => [context.user]);
-  const userProfile = useUserProfileStore((state) => state.userProfile);
+  const userProfile = useProfileStore((state) => state.userProfile);
   const { phone, inputRef, handlePhoneChange } = useFormattedPhoneInput();
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -23,7 +29,6 @@ const ProfileUnverified = () => {
     defaultValues: {
       firstName: userProfile?.firstName || "",
       lastName: userProfile?.lastName || "",
-      username: userProfile?.username || "",
       school: userProfile?.school || "",
       city: userProfile?.city || "",
       state: userProfile?.state || "",
@@ -32,29 +37,33 @@ const ProfileUnverified = () => {
       address2: userProfile?.address2 || "",
     },
   });
-  const username = user.username as string;
   const email = user?.attributes?.email as string;
 
   const createNewProfile: SubmitHandler<ProfileInputs> = async (data) => {
     //alert(`Email: ${email}\nUsername: ${username}\nData: ${JSON.stringify(data)}`)
     setIsSubmitting(true);
-    let collegeGroup: CollegeGroup | null = null;
-    if (email?.endsWith(".edu")) {
-      const emailDomain = email.split("@")[1];
-      const collegeGroups = await DataStore.query(CollegeGroup, (c) =>
-        c.domain.eq(emailDomain)
-      );
-      collegeGroup = collegeGroups[0];
-      alert("Detected college group: " + emailDomain + " " + collegeGroup?.name);
-    }
     try {
+      const newPrivacySetting =  await DataStore.save(new PrivacySetting({}));
+      const collegeGroup = await getCollegeGroupByEmail(email);
+
+      const userProfileInput: CreateUserProfileInput = {
+        ...data,
+        ...(collegeGroup && {collegeGroupId: collegeGroup?.id}),
+        privacySettingID: newPrivacySetting.id
+      }
+
+      const newUserProfile = await API.graphql<GraphQLQuery<CreateUserProfileMutation>>(
+        graphqlOperation(mutations.createUserProfile, {
+          input: userProfileInput}));
+
+      console.log(`New profile: `, newUserProfile);
+      /*
       if (userProfile) {
         const newProfile = await DataStore.save(UserProfile.copyOf(userProfile, (updated) => {
             updated.verifySubmitted = true;
             updated.phone = phone;
             updated.firstName = data.firstName;
             updated.lastName = data.lastName;
-            updated.username = data.username;
             updated.school = data.school;
             updated.city = data.city;
             updated.state = data.state;
@@ -64,19 +73,9 @@ const ProfileUnverified = () => {
             updated.collegeGroup = collegeGroup;
           }));
         console.log("Updated existing profile: ", JSON.stringify(newProfile));
-      } else {
-        const newProfile = await DataStore.save(
-          new UserProfile({
-            ...data,
-            verified: false,
-            verifySubmitted: true,
-            userID: username,
-            email: email,
-            phone: phone,
-            ...(collegeGroup && {collegeGroup: collegeGroup}),
-          }))
-        console.log("Created new profile: ", JSON.stringify(newProfile));
       }
+       */
+
     } catch (err) {
       console.error("Error saving profile:", err);
     } finally {
@@ -136,12 +135,12 @@ const ProfileUnverified = () => {
             </InputWrapper>
             <InputWrapper className="my-4 flex-1">
               <Label>State</Label>
-              <select
-                placeholder=""
+              <Select
                 {...register("state", { required: true })}
                 name="state"
+                defaultValue=""
               >
-                <option value="" disabled selected>
+                <option value="" disabled>
                   Select state
                 </option>
                 {states.map((state) => (
@@ -149,7 +148,7 @@ const ProfileUnverified = () => {
                     {state.name}
                   </option>
                 ))}
-              </select>
+              </Select>
             </InputWrapper>
           </div>
           <InputWrapper className="my-4">
