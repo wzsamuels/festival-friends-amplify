@@ -18,6 +18,7 @@ const AccountButton = () => {
   const clearProfile = useProfileStore(state => state.clearUserProfile);
   const clearFriendProfiles = useFriendStore(state => state.clearFriends);
   const clearConversations = useConversationStore(state => state.clearConversations);
+  const friendUnsubscribe = useFriendStore(state => state.friendUnsubscribe);
 
   const clearStores = () => {
     clearProfile();
@@ -25,11 +26,11 @@ const AccountButton = () => {
     clearConversations();
   }
 
+  // TODO: Move to  a separate file
   const handleSignOut = async () => {
     try {
       console.log("Attempting sign out...");
       setAlertIsOpen(true);
-      setDataCleared(false);
       await signOut();
       console.log("Sign out successful.");
     } catch (e) {
@@ -38,7 +39,17 @@ const AccountButton = () => {
     }
 
     try {
+      console.log("Stopping subscriptions...");
+      friendUnsubscribe();
+      console.log("subscriptions stopped.");
+    } catch (e) {
+      console.log("Error stopping subscriptions: ", e);
+      return;
+    }
+
+    try {
       console.log("Clearing DataStore...");
+      setDataCleared(false);
       await DataStore.clear();
       console.log("DataStore cleared.");
     } catch (e) {
@@ -62,6 +73,14 @@ const AccountButton = () => {
       setAlertIsOpen(false);
     } catch (e) {
       console.log("Error setting dataCleared: ", e);
+    }
+
+    try {
+      console.log("Starting datastore...");
+      await DataStore.start();
+      console.log("Datastore started.");
+    } catch (e) {
+      console.log("Error starting datastore: ", e);
     }
   };
 
