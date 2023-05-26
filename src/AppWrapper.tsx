@@ -34,6 +34,8 @@ import useProfileStore from "./stores/profileStore";
 import useFriendStore from "./stores/friendProfileStore";
 
 import useConversationStore from "./stores/conversationStore";
+import LoadingState from "./components/ui/LoadingState";
+import LayoutErrorBoundary from "./components/ui/LayoutErrorBoundary";
 
 const AppWrapper = () => {
   const { user } = useAuthenticator((context) => [context.user]);
@@ -68,6 +70,7 @@ const AppWrapper = () => {
     {
       path: "/",
       element: <Layout />,
+      errorElement: <LayoutErrorBoundary/>,
       children: [
         {
           index: true,
@@ -96,6 +99,7 @@ const AppWrapper = () => {
         {
           path: "account",
           element: <AccountPage />,
+          errorElement: <LayoutErrorBoundary/>,
         },
         {
           path: "admin",
@@ -111,7 +115,7 @@ const AppWrapper = () => {
 
   return (
     <ImageProvider>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<div className='flex justify-center items-center h-screen'><LoadingState/></div>}>
         <RouterProvider router={router} />
       </Suspense>
     </ImageProvider>
