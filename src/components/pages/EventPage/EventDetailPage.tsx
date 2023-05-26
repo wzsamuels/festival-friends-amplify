@@ -1,51 +1,55 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Festival, UserProfile } from "../../../models";
+import {Festival, UserProfile} from "../../../models";
 import { DataStore } from "@aws-amplify/datastore";
 import ImageContext from "../../../context/ImageContext";
 import FriendCard from "../../ui/FriendCard";
 import { Link, useParams } from "react-router-dom";
 import Header from "../../layout/Header";
-import { useUserProfileStore } from "../../../stores/friendProfilesStore";
-import { Ride } from "../../../models/index";
+import { Ride } from "../../../models";
 import Button from "../../common/Button/Button";
 import NewRideModal from "./Modals/NewRideModal";
 import RideCard from "../../ui/RideCard";
+import useFriendStore from "../../../stores/friendProfileStore";
+import useEventStore from "../../../stores/eventStore";
+import useDataClearedStore from "../../../stores/dataClearedStore";
 
 const EventDetailPage = () => {
-  const [event, setEvent] = useState<Festival>();
+  const { id } = useParams();
+  const friendProfiles = useFriendStore(state => state.acceptedFriendProfiles)
+  const loadingFriendProfiles = useFriendStore(state => state.loadingFriends)
+  const event = useEventStore(state => state.events).find(event => event.id === id)
   const [eventImage, setEventImage] = React.useState("");
   const [attendees, setAttendees] = useState<UserProfile[]>([]);
   const [attendeeFriends, setAttendeeFriends] = useState<UserProfile[]>([]);
   const [rides, setRides] = useState<Ride[]>([]);
   const [isNewRideModalOpen, setIsNewRideModalOpen] = useState(false);
-  const { friendProfiles, loadingFriendProfiles } = useUserProfileStore();
-  const { id } = useParams();
+  const dataCleared = useDataClearedStore(state => state.dataCleared)
   const { getSignedURL } = useContext(ImageContext);
 
-  useEffect(() => {
-    const fetchEvent = async () => {
-      const items = await DataStore.query(Festival, (c) =>
-        c.id.eq(id as string)
-      );
-      // Fetch event and event image
-      const event = items[0];
-      const image = await getSignedURL(event.image);
-      setEventImage(image);
-      setEvent(event);
-      // Fetch attendee profiles
-      const attendeeProfiles: UserProfile[] = [];
-      for await (const attendee of event.attendees) {
-        const profile = await attendee.userProfile;
-        attendeeProfiles.push(profile);
-      }
-      setAttendees(attendeeProfiles);
-      // Fetch rides
-    };
-    fetchEvent();
-  }, [id]);
 
   useEffect(() => {
-    if (event) {
+    if(!event || !dataCleared) return;
+
+    const fetchEventImage = async () => {
+      return await getSignedURL(event.image, "public");
+    }
+    const fetchEventData = async () => {
+      const attendeeProfiles: UserProfile[] = [];
+      const eventData = await DataStore.query(Festival, id as string) as Festival;
+
+      for await (const attendee of eventData.attendees) {
+        const profile = await attendee.userProfile;
+        attendeeProfiles.push(profile as UserProfile);
+      }
+      setAttendees(attendeeProfiles);
+
+    };
+    try {
+      fetchEventImage()
+        .then(image => setEventImage(image));
+      fetchEventData();
+
+      // Fetch rides
       const rideSub = DataStore.observeQuery(Ride, (c) =>
         c.eventID.eq(id as string)
       ).subscribe(({ items }) => {
@@ -55,12 +59,14 @@ const EventDetailPage = () => {
       return () => {
         rideSub.unsubscribe();
       };
+    } catch (e) {
+      console.log("Error fetching event data: ", e);
     }
   }, [event]);
 
+
   useEffect(() => {
-    console.log("Friend Profiles", friendProfiles);
-    if (friendProfiles.length === 0) {
+    if (friendProfiles.length === 0 || loadingFriendProfiles) {
       return;
     }
     const friendIds = new Set(friendProfiles.map((friend) => friend.id));
@@ -68,7 +74,7 @@ const EventDetailPage = () => {
       friendIds.has(attendee.id)
     );
     setAttendeeFriends(newAttendeeFriends);
-  }, [friendProfiles, attendees]);
+  }, [friendProfiles, attendees, loadingFriendProfiles]);
 
   return (
     <>
