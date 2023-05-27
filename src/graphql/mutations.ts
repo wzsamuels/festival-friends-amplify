@@ -1965,6 +1965,7 @@ export const createEventProfile = /* GraphQL */ `
         type
         tagline
         description
+        url
         group {
           id
           name
@@ -2237,6 +2238,7 @@ export const updateEventProfile = /* GraphQL */ `
         type
         tagline
         description
+        url
         group {
           id
           name
@@ -2509,6 +2511,7 @@ export const deleteEventProfile = /* GraphQL */ `
         type
         tagline
         description
+        url
         group {
           id
           name
@@ -2592,6 +2595,7 @@ export const createFestival = /* GraphQL */ `
       type
       tagline
       description
+      url
       group {
         id
         name
@@ -2610,6 +2614,7 @@ export const createFestival = /* GraphQL */ `
             type
             tagline
             description
+            url
             groupID
             createdAt
             updatedAt
@@ -2695,6 +2700,7 @@ export const createFestival = /* GraphQL */ `
             type
             tagline
             description
+            url
             groupID
             createdAt
             updatedAt
@@ -2725,6 +2731,7 @@ export const createFestival = /* GraphQL */ `
             type
             tagline
             description
+            url
             groupID
             createdAt
             updatedAt
@@ -2786,6 +2793,7 @@ export const updateFestival = /* GraphQL */ `
       type
       tagline
       description
+      url
       group {
         id
         name
@@ -2804,6 +2812,7 @@ export const updateFestival = /* GraphQL */ `
             type
             tagline
             description
+            url
             groupID
             createdAt
             updatedAt
@@ -2889,6 +2898,7 @@ export const updateFestival = /* GraphQL */ `
             type
             tagline
             description
+            url
             groupID
             createdAt
             updatedAt
@@ -2919,6 +2929,7 @@ export const updateFestival = /* GraphQL */ `
             type
             tagline
             description
+            url
             groupID
             createdAt
             updatedAt
@@ -2980,6 +2991,7 @@ export const deleteFestival = /* GraphQL */ `
       type
       tagline
       description
+      url
       group {
         id
         name
@@ -2998,6 +3010,7 @@ export const deleteFestival = /* GraphQL */ `
             type
             tagline
             description
+            url
             groupID
             createdAt
             updatedAt
@@ -3083,6 +3096,7 @@ export const deleteFestival = /* GraphQL */ `
             type
             tagline
             description
+            url
             groupID
             createdAt
             updatedAt
@@ -3113,6 +3127,7 @@ export const deleteFestival = /* GraphQL */ `
             type
             tagline
             description
+            url
             groupID
             createdAt
             updatedAt
@@ -3219,6 +3234,7 @@ export const createUserProfile = /* GraphQL */ `
             type
             tagline
             description
+            url
             groupID
             createdAt
             updatedAt
@@ -3634,6 +3650,7 @@ export const createUserProfile = /* GraphQL */ `
             type
             tagline
             description
+            url
             groupID
             createdAt
             updatedAt
@@ -3803,6 +3820,7 @@ export const updateUserProfile = /* GraphQL */ `
             type
             tagline
             description
+            url
             groupID
             createdAt
             updatedAt
@@ -4218,6 +4236,7 @@ export const updateUserProfile = /* GraphQL */ `
             type
             tagline
             description
+            url
             groupID
             createdAt
             updatedAt
@@ -4387,6 +4406,7 @@ export const deleteUserProfile = /* GraphQL */ `
             type
             tagline
             description
+            url
             groupID
             createdAt
             updatedAt
@@ -4802,6 +4822,7 @@ export const deleteUserProfile = /* GraphQL */ `
             type
             tagline
             description
+            url
             groupID
             createdAt
             updatedAt
@@ -5606,6 +5627,7 @@ export const createRide = /* GraphQL */ `
         type
         tagline
         description
+        url
         group {
           id
           name
@@ -5681,6 +5703,7 @@ export const createRide = /* GraphQL */ `
             type
             tagline
             description
+            url
             groupID
             createdAt
             updatedAt
@@ -5892,6 +5915,7 @@ export const updateRide = /* GraphQL */ `
         type
         tagline
         description
+        url
         group {
           id
           name
@@ -5967,6 +5991,7 @@ export const updateRide = /* GraphQL */ `
             type
             tagline
             description
+            url
             groupID
             createdAt
             updatedAt
@@ -6178,6 +6203,7 @@ export const deleteRide = /* GraphQL */ `
         type
         tagline
         description
+        url
         group {
           id
           name
@@ -6253,6 +6279,7 @@ export const deleteRide = /* GraphQL */ `
             type
             tagline
             description
+            url
             groupID
             createdAt
             updatedAt
@@ -6466,6 +6493,7 @@ export const createRideUser = /* GraphQL */ `
           type
           tagline
           description
+          url
           group {
             id
             name
@@ -6785,6 +6813,7 @@ export const updateRideUser = /* GraphQL */ `
           type
           tagline
           description
+          url
           group {
             id
             name
@@ -7104,6 +7133,7 @@ export const deleteRideUser = /* GraphQL */ `
           type
           tagline
           description
+          url
           group {
             id
             name
@@ -11062,6 +11092,7 @@ export const createCollegeGroup = /* GraphQL */ `
           type
           tagline
           description
+          url
           group {
             id
             name
@@ -11211,6 +11242,7 @@ export const updateCollegeGroup = /* GraphQL */ `
           type
           tagline
           description
+          url
           group {
             id
             name
@@ -11360,6 +11392,7 @@ export const deleteCollegeGroup = /* GraphQL */ `
           type
           tagline
           description
+          url
           group {
             id
             name

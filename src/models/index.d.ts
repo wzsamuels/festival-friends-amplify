@@ -117,6 +117,7 @@ type EagerFestival = {
   readonly type?: EventType | keyof typeof EventType | null;
   readonly tagline?: string | null;
   readonly description?: string | null;
+  readonly url?: string | null;
   readonly group?: CollegeGroup | null;
   readonly groupID?: string | null;
   readonly attendees?: (EventProfile | null)[] | null;
@@ -140,6 +141,7 @@ type LazyFestival = {
   readonly type?: EventType | keyof typeof EventType | null;
   readonly tagline?: string | null;
   readonly description?: string | null;
+  readonly url?: string | null;
   readonly group: AsyncItem<CollegeGroup | undefined>;
   readonly groupID?: string | null;
   readonly attendees: AsyncCollection<EventProfile>;

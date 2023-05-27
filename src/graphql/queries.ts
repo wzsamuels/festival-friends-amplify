@@ -60,6 +60,7 @@ export const findSuggestedFriends = /* GraphQL */ `
             type
             tagline
             description
+            url
             groupID
             createdAt
             updatedAt
@@ -475,6 +476,7 @@ export const findSuggestedFriends = /* GraphQL */ `
             type
             tagline
             description
+            url
             groupID
             createdAt
             updatedAt
@@ -2678,6 +2680,7 @@ export const getEventProfile = /* GraphQL */ `
         type
         tagline
         description
+        url
         group {
           id
           name
@@ -2851,6 +2854,7 @@ export const listEventProfiles = /* GraphQL */ `
           type
           tagline
           description
+          url
           group {
             id
             name
@@ -3001,6 +3005,7 @@ export const syncEventProfiles = /* GraphQL */ `
           type
           tagline
           description
+          url
           group {
             id
             name
@@ -3153,6 +3158,7 @@ export const eventProfilesByUserProfileID = /* GraphQL */ `
           type
           tagline
           description
+          url
           group {
             id
             name
@@ -3305,6 +3311,7 @@ export const eventProfilesByEventID = /* GraphQL */ `
           type
           tagline
           description
+          url
           group {
             id
             name
@@ -3356,6 +3363,7 @@ export const getFestival = /* GraphQL */ `
       type
       tagline
       description
+      url
       group {
         id
         name
@@ -3374,6 +3382,7 @@ export const getFestival = /* GraphQL */ `
             type
             tagline
             description
+            url
             groupID
             createdAt
             updatedAt
@@ -3459,6 +3468,7 @@ export const getFestival = /* GraphQL */ `
             type
             tagline
             description
+            url
             groupID
             createdAt
             updatedAt
@@ -3489,6 +3499,7 @@ export const getFestival = /* GraphQL */ `
             type
             tagline
             description
+            url
             groupID
             createdAt
             updatedAt
@@ -3552,6 +3563,7 @@ export const listFestivals = /* GraphQL */ `
         type
         tagline
         description
+        url
         group {
           id
           name
@@ -3640,6 +3652,7 @@ export const syncFestivals = /* GraphQL */ `
         type
         tagline
         description
+        url
         group {
           id
           name
@@ -3730,6 +3743,7 @@ export const festivalsByGroupID = /* GraphQL */ `
         type
         tagline
         description
+        url
         group {
           id
           name
@@ -3852,6 +3866,7 @@ export const getUserProfile = /* GraphQL */ `
             type
             tagline
             description
+            url
             groupID
             createdAt
             updatedAt
@@ -4267,6 +4282,7 @@ export const getUserProfile = /* GraphQL */ `
             type
             tagline
             description
+            url
             groupID
             createdAt
             updatedAt
@@ -5612,6 +5628,7 @@ export const getRide = /* GraphQL */ `
         type
         tagline
         description
+        url
         group {
           id
           name
@@ -5687,6 +5704,7 @@ export const getRide = /* GraphQL */ `
             type
             tagline
             description
+            url
             groupID
             createdAt
             updatedAt
@@ -5900,6 +5918,7 @@ export const listRides = /* GraphQL */ `
           type
           tagline
           description
+          url
           group {
             id
             name
@@ -6034,6 +6053,7 @@ export const syncRides = /* GraphQL */ `
           type
           tagline
           description
+          url
           group {
             id
             name
@@ -6170,6 +6190,7 @@ export const ridesByEventID = /* GraphQL */ `
           type
           tagline
           description
+          url
           group {
             id
             name
@@ -6295,6 +6316,7 @@ export const getRideUser = /* GraphQL */ `
           type
           tagline
           description
+          url
           group {
             id
             name
@@ -6616,6 +6638,7 @@ export const listRideUsers = /* GraphQL */ `
             type
             tagline
             description
+            url
             groupID
             createdAt
             updatedAt
@@ -6776,6 +6799,7 @@ export const syncRideUsers = /* GraphQL */ `
             type
             tagline
             description
+            url
             groupID
             createdAt
             updatedAt
@@ -6938,6 +6962,7 @@ export const rideUsersByRideID = /* GraphQL */ `
             type
             tagline
             description
+            url
             groupID
             createdAt
             updatedAt
@@ -7100,6 +7125,7 @@ export const rideUsersByUserProfileID = /* GraphQL */ `
             type
             tagline
             description
+            url
             groupID
             createdAt
             updatedAt
@@ -10678,6 +10704,7 @@ export const getCollegeGroup = /* GraphQL */ `
           type
           tagline
           description
+          url
           group {
             id
             name
@@ -10829,6 +10856,7 @@ export const listCollegeGroups = /* GraphQL */ `
             type
             tagline
             description
+            url
             groupID
             createdAt
             updatedAt
@@ -10909,6 +10937,7 @@ export const syncCollegeGroups = /* GraphQL */ `
             type
             tagline
             description
+            url
             groupID
             createdAt
             updatedAt

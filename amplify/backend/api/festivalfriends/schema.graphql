@@ -29,6 +29,7 @@ type Festival @model @auth(rules: [{ allow: public }]) {
   type: EventType
   tagline: String
   description: String
+  url: String
   group: CollegeGroup @belongsTo(fields: ["groupID"])
   groupID: ID @index(name: "byGroup")
   attendees: [EventProfile] @hasMany(fields: ["id"])

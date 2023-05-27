@@ -1955,6 +1955,7 @@ export const onCreateEventProfile = /* GraphQL */ `
         type
         tagline
         description
+        url
         group {
           id
           name
@@ -2226,6 +2227,7 @@ export const onUpdateEventProfile = /* GraphQL */ `
         type
         tagline
         description
+        url
         group {
           id
           name
@@ -2497,6 +2499,7 @@ export const onDeleteEventProfile = /* GraphQL */ `
         type
         tagline
         description
+        url
         group {
           id
           name
@@ -2577,6 +2580,7 @@ export const onCreateFestival = /* GraphQL */ `
       type
       tagline
       description
+      url
       group {
         id
         name
@@ -2595,6 +2599,7 @@ export const onCreateFestival = /* GraphQL */ `
             type
             tagline
             description
+            url
             groupID
             createdAt
             updatedAt
@@ -2680,6 +2685,7 @@ export const onCreateFestival = /* GraphQL */ `
             type
             tagline
             description
+            url
             groupID
             createdAt
             updatedAt
@@ -2710,6 +2716,7 @@ export const onCreateFestival = /* GraphQL */ `
             type
             tagline
             description
+            url
             groupID
             createdAt
             updatedAt
@@ -2768,6 +2775,7 @@ export const onUpdateFestival = /* GraphQL */ `
       type
       tagline
       description
+      url
       group {
         id
         name
@@ -2786,6 +2794,7 @@ export const onUpdateFestival = /* GraphQL */ `
             type
             tagline
             description
+            url
             groupID
             createdAt
             updatedAt
@@ -2871,6 +2880,7 @@ export const onUpdateFestival = /* GraphQL */ `
             type
             tagline
             description
+            url
             groupID
             createdAt
             updatedAt
@@ -2901,6 +2911,7 @@ export const onUpdateFestival = /* GraphQL */ `
             type
             tagline
             description
+            url
             groupID
             createdAt
             updatedAt
@@ -2959,6 +2970,7 @@ export const onDeleteFestival = /* GraphQL */ `
       type
       tagline
       description
+      url
       group {
         id
         name
@@ -2977,6 +2989,7 @@ export const onDeleteFestival = /* GraphQL */ `
             type
             tagline
             description
+            url
             groupID
             createdAt
             updatedAt
@@ -3062,6 +3075,7 @@ export const onDeleteFestival = /* GraphQL */ `
             type
             tagline
             description
+            url
             groupID
             createdAt
             updatedAt
@@ -3092,6 +3106,7 @@ export const onDeleteFestival = /* GraphQL */ `
             type
             tagline
             description
+            url
             groupID
             createdAt
             updatedAt
@@ -3197,6 +3212,7 @@ export const onCreateUserProfile = /* GraphQL */ `
             type
             tagline
             description
+            url
             groupID
             createdAt
             updatedAt
@@ -3612,6 +3628,7 @@ export const onCreateUserProfile = /* GraphQL */ `
             type
             tagline
             description
+            url
             groupID
             createdAt
             updatedAt
@@ -3780,6 +3797,7 @@ export const onUpdateUserProfile = /* GraphQL */ `
             type
             tagline
             description
+            url
             groupID
             createdAt
             updatedAt
@@ -4195,6 +4213,7 @@ export const onUpdateUserProfile = /* GraphQL */ `
             type
             tagline
             description
+            url
             groupID
             createdAt
             updatedAt
@@ -4363,6 +4382,7 @@ export const onDeleteUserProfile = /* GraphQL */ `
             type
             tagline
             description
+            url
             groupID
             createdAt
             updatedAt
@@ -4778,6 +4798,7 @@ export const onDeleteUserProfile = /* GraphQL */ `
             type
             tagline
             description
+            url
             groupID
             createdAt
             updatedAt
@@ -5573,6 +5594,7 @@ export const onCreateRide = /* GraphQL */ `
         type
         tagline
         description
+        url
         group {
           id
           name
@@ -5648,6 +5670,7 @@ export const onCreateRide = /* GraphQL */ `
             type
             tagline
             description
+            url
             groupID
             createdAt
             updatedAt
@@ -5856,6 +5879,7 @@ export const onUpdateRide = /* GraphQL */ `
         type
         tagline
         description
+        url
         group {
           id
           name
@@ -5931,6 +5955,7 @@ export const onUpdateRide = /* GraphQL */ `
             type
             tagline
             description
+            url
             groupID
             createdAt
             updatedAt
@@ -6139,6 +6164,7 @@ export const onDeleteRide = /* GraphQL */ `
         type
         tagline
         description
+        url
         group {
           id
           name
@@ -6214,6 +6240,7 @@ export const onDeleteRide = /* GraphQL */ `
             type
             tagline
             description
+            url
             groupID
             createdAt
             updatedAt
@@ -6424,6 +6451,7 @@ export const onCreateRideUser = /* GraphQL */ `
           type
           tagline
           description
+          url
           group {
             id
             name
@@ -6740,6 +6768,7 @@ export const onUpdateRideUser = /* GraphQL */ `
           type
           tagline
           description
+          url
           group {
             id
             name
@@ -7056,6 +7085,7 @@ export const onDeleteRideUser = /* GraphQL */ `
           type
           tagline
           description
+          url
           group {
             id
             name
@@ -10995,6 +11025,7 @@ export const onCreateCollegeGroup = /* GraphQL */ `
           type
           tagline
           description
+          url
           group {
             id
             name
@@ -11143,6 +11174,7 @@ export const onUpdateCollegeGroup = /* GraphQL */ `
           type
           tagline
           description
+          url
           group {
             id
             name
@@ -11291,6 +11323,7 @@ export const onDeleteCollegeGroup = /* GraphQL */ `
           type
           tagline
           description
+          url
           group {
             id
             name

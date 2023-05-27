@@ -38,6 +38,7 @@ export default function FestivalCreateForm(props) {
     type: "",
     tagline: "",
     description: "",
+    url: "",
   };
   const [name, setName] = React.useState(initialValues.name);
   const [genre, setGenre] = React.useState(initialValues.genre);
@@ -50,6 +51,7 @@ export default function FestivalCreateForm(props) {
   const [description, setDescription] = React.useState(
     initialValues.description
   );
+  const [url, setUrl] = React.useState(initialValues.url);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setName(initialValues.name);
@@ -61,6 +63,7 @@ export default function FestivalCreateForm(props) {
     setType(initialValues.type);
     setTagline(initialValues.tagline);
     setDescription(initialValues.description);
+    setUrl(initialValues.url);
     setErrors({});
   };
   const validations = {
@@ -73,6 +76,7 @@ export default function FestivalCreateForm(props) {
     type: [],
     tagline: [],
     description: [],
+    url: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -109,6 +113,7 @@ export default function FestivalCreateForm(props) {
           type,
           tagline,
           description,
+          url,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -172,6 +177,7 @@ export default function FestivalCreateForm(props) {
               type,
               tagline,
               description,
+              url,
             };
             const result = onChange(modelFields);
             value = result?.name ?? value;
@@ -204,6 +210,7 @@ export default function FestivalCreateForm(props) {
               type,
               tagline,
               description,
+              url,
             };
             const result = onChange(modelFields);
             value = result?.genre ?? value;
@@ -236,6 +243,7 @@ export default function FestivalCreateForm(props) {
               type,
               tagline,
               description,
+              url,
             };
             const result = onChange(modelFields);
             value = result?.image ?? value;
@@ -268,6 +276,7 @@ export default function FestivalCreateForm(props) {
               type,
               tagline,
               description,
+              url,
             };
             const result = onChange(modelFields);
             value = result?.location ?? value;
@@ -301,6 +310,7 @@ export default function FestivalCreateForm(props) {
               type,
               tagline,
               description,
+              url,
             };
             const result = onChange(modelFields);
             value = result?.startDate ?? value;
@@ -334,6 +344,7 @@ export default function FestivalCreateForm(props) {
               type,
               tagline,
               description,
+              url,
             };
             const result = onChange(modelFields);
             value = result?.endDate ?? value;
@@ -366,6 +377,7 @@ export default function FestivalCreateForm(props) {
               type: value,
               tagline,
               description,
+              url,
             };
             const result = onChange(modelFields);
             value = result?.type ?? value;
@@ -439,6 +451,7 @@ export default function FestivalCreateForm(props) {
               type,
               tagline: value,
               description,
+              url,
             };
             const result = onChange(modelFields);
             value = result?.tagline ?? value;
@@ -471,6 +484,7 @@ export default function FestivalCreateForm(props) {
               type,
               tagline,
               description: value,
+              url,
             };
             const result = onChange(modelFields);
             value = result?.description ?? value;
@@ -484,6 +498,39 @@ export default function FestivalCreateForm(props) {
         errorMessage={errors.description?.errorMessage}
         hasError={errors.description?.hasError}
         {...getOverrideProps(overrides, "description")}
+      ></TextField>
+      <TextField
+        label="Url"
+        isRequired={false}
+        isReadOnly={false}
+        value={url}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              genre,
+              image,
+              location,
+              startDate,
+              endDate,
+              type,
+              tagline,
+              description,
+              url: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.url ?? value;
+          }
+          if (errors.url?.hasError) {
+            runValidationTasks("url", value);
+          }
+          setUrl(value);
+        }}
+        onBlur={() => runValidationTasks("url", url)}
+        errorMessage={errors.url?.errorMessage}
+        hasError={errors.url?.hasError}
+        {...getOverrideProps(overrides, "url")}
       ></TextField>
       <Flex
         justifyContent="space-between"
