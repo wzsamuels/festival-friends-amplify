@@ -14,7 +14,7 @@ interface ProfileFormProps {
   profile: UserProfile | null | undefined;
 }
 
-const ProfileEditForm = ({ onSubmit, profile }: ProfileFormProps) => {
+const AccountEditForm = ({ onSubmit, profile }: ProfileFormProps) => {
   const [message, setMessage] = useState("");
   const {
     register,
@@ -102,4 +102,4 @@ const ProfileEditForm = ({ onSubmit, profile }: ProfileFormProps) => {
   );
 };
 
-export default ProfileEditForm;
+export default AccountEditForm;
