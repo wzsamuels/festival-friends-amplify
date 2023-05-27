@@ -174,6 +174,21 @@ export const onCreateMessage = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
+        socialMedia {
+          items {
+            id
+            userProfileID
+            socialMediaType
+            accountURL
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
@@ -344,6 +359,21 @@ export const onCreateMessage = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
+        socialMedia {
+          items {
+            id
+            userProfileID
+            socialMediaType
+            accountURL
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
@@ -428,6 +458,10 @@ export const onCreateMessage = /* GraphQL */ `
             _deleted
             _lastChangedAt
           }
+          socialMedia {
+            nextToken
+            startedAt
+          }
           createdAt
           updatedAt
           _version
@@ -507,6 +541,10 @@ export const onCreateMessage = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+          }
+          socialMedia {
+            nextToken
+            startedAt
           }
           createdAt
           updatedAt
@@ -719,6 +757,21 @@ export const onUpdateMessage = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
+        socialMedia {
+          items {
+            id
+            userProfileID
+            socialMediaType
+            accountURL
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
@@ -889,6 +942,21 @@ export const onUpdateMessage = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
+        socialMedia {
+          items {
+            id
+            userProfileID
+            socialMediaType
+            accountURL
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
@@ -973,6 +1041,10 @@ export const onUpdateMessage = /* GraphQL */ `
             _deleted
             _lastChangedAt
           }
+          socialMedia {
+            nextToken
+            startedAt
+          }
           createdAt
           updatedAt
           _version
@@ -1052,6 +1124,10 @@ export const onUpdateMessage = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+          }
+          socialMedia {
+            nextToken
+            startedAt
           }
           createdAt
           updatedAt
@@ -1264,6 +1340,21 @@ export const onDeleteMessage = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
+        socialMedia {
+          items {
+            id
+            userProfileID
+            socialMediaType
+            accountURL
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
@@ -1434,6 +1525,21 @@ export const onDeleteMessage = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
+        socialMedia {
+          items {
+            id
+            userProfileID
+            socialMediaType
+            accountURL
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
@@ -1518,6 +1624,10 @@ export const onDeleteMessage = /* GraphQL */ `
             _deleted
             _lastChangedAt
           }
+          socialMedia {
+            nextToken
+            startedAt
+          }
           createdAt
           updatedAt
           _version
@@ -1597,6 +1707,10 @@ export const onDeleteMessage = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+          }
+          socialMedia {
+            nextToken
+            startedAt
           }
           createdAt
           updatedAt
@@ -1808,6 +1922,21 @@ export const onCreateEventProfile = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+        }
+        socialMedia {
+          items {
+            id
+            userProfileID
+            socialMediaType
+            accountURL
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
         }
         createdAt
         updatedAt
@@ -2065,6 +2194,21 @@ export const onUpdateEventProfile = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
+        socialMedia {
+          items {
+            id
+            userProfileID
+            socialMediaType
+            accountURL
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
@@ -2320,6 +2464,21 @@ export const onDeleteEventProfile = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+        }
+        socialMedia {
+          items {
+            id
+            userProfileID
+            socialMediaType
+            accountURL
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
         }
         createdAt
         updatedAt
@@ -3514,6 +3673,45 @@ export const onCreateUserProfile = /* GraphQL */ `
         _deleted
         _lastChangedAt
       }
+      socialMedia {
+        items {
+          id
+          userProfileID
+          userProfile {
+            id
+            firstName
+            lastName
+            verified
+            verifySubmitted
+            profilePhotoID
+            bannerPhotoID
+            city
+            state
+            school
+            address
+            address2
+            phone
+            email
+            zipcode
+            collegeGroupId
+            privacySettingID
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          socialMediaType
+          accountURL
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
       createdAt
       updatedAt
       _version
@@ -4057,6 +4255,45 @@ export const onUpdateUserProfile = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+      }
+      socialMedia {
+        items {
+          id
+          userProfileID
+          userProfile {
+            id
+            firstName
+            lastName
+            verified
+            verifySubmitted
+            profilePhotoID
+            bannerPhotoID
+            city
+            state
+            school
+            address
+            address2
+            phone
+            email
+            zipcode
+            collegeGroupId
+            privacySettingID
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          socialMediaType
+          accountURL
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
       }
       createdAt
       updatedAt
@@ -4602,6 +4839,651 @@ export const onDeleteUserProfile = /* GraphQL */ `
         _deleted
         _lastChangedAt
       }
+      socialMedia {
+        items {
+          id
+          userProfileID
+          userProfile {
+            id
+            firstName
+            lastName
+            verified
+            verifySubmitted
+            profilePhotoID
+            bannerPhotoID
+            city
+            state
+            school
+            address
+            address2
+            phone
+            email
+            zipcode
+            collegeGroupId
+            privacySettingID
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          socialMediaType
+          accountURL
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onCreateSocialMedia = /* GraphQL */ `
+  subscription OnCreateSocialMedia(
+    $filter: ModelSubscriptionSocialMediaFilterInput
+  ) {
+    onCreateSocialMedia(filter: $filter) {
+      id
+      userProfileID
+      userProfile {
+        id
+        firstName
+        lastName
+        verified
+        verifySubmitted
+        profilePhotoID
+        bannerPhotoID
+        city
+        state
+        school
+        address
+        address2
+        phone
+        email
+        zipcode
+        attendingEvents {
+          items {
+            id
+            userProfileID
+            eventID
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        rides {
+          items {
+            id
+            rideID
+            userProfileID
+            isDriver
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        friends {
+          items {
+            id
+            userProfileID
+            friendProfileID
+            isAccepted
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        conversations {
+          items {
+            id
+            userProfileID
+            friendProfileID
+            unreadMessage
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        sentMessages {
+          items {
+            id
+            content
+            senderID
+            receiverID
+            conversationID
+            unreadMessage
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        receivedMessages {
+          items {
+            id
+            content
+            senderID
+            receiverID
+            conversationID
+            unreadMessage
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        photos {
+          items {
+            id
+            userProfileID
+            s3Key
+            isPrivate
+            identityId
+            description
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        collegeGroupId
+        collegeGroup {
+          id
+          name
+          domain
+          webPage
+          countryCode
+          events {
+            nextToken
+            startedAt
+          }
+          members {
+            nextToken
+            startedAt
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        privacySettingID
+        privacySetting {
+          id
+          city
+          state
+          school
+          email
+          attendingEvents
+          rides
+          friends
+          photos
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        socialMedia {
+          items {
+            id
+            userProfileID
+            socialMediaType
+            accountURL
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      socialMediaType
+      accountURL
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onUpdateSocialMedia = /* GraphQL */ `
+  subscription OnUpdateSocialMedia(
+    $filter: ModelSubscriptionSocialMediaFilterInput
+  ) {
+    onUpdateSocialMedia(filter: $filter) {
+      id
+      userProfileID
+      userProfile {
+        id
+        firstName
+        lastName
+        verified
+        verifySubmitted
+        profilePhotoID
+        bannerPhotoID
+        city
+        state
+        school
+        address
+        address2
+        phone
+        email
+        zipcode
+        attendingEvents {
+          items {
+            id
+            userProfileID
+            eventID
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        rides {
+          items {
+            id
+            rideID
+            userProfileID
+            isDriver
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        friends {
+          items {
+            id
+            userProfileID
+            friendProfileID
+            isAccepted
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        conversations {
+          items {
+            id
+            userProfileID
+            friendProfileID
+            unreadMessage
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        sentMessages {
+          items {
+            id
+            content
+            senderID
+            receiverID
+            conversationID
+            unreadMessage
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        receivedMessages {
+          items {
+            id
+            content
+            senderID
+            receiverID
+            conversationID
+            unreadMessage
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        photos {
+          items {
+            id
+            userProfileID
+            s3Key
+            isPrivate
+            identityId
+            description
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        collegeGroupId
+        collegeGroup {
+          id
+          name
+          domain
+          webPage
+          countryCode
+          events {
+            nextToken
+            startedAt
+          }
+          members {
+            nextToken
+            startedAt
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        privacySettingID
+        privacySetting {
+          id
+          city
+          state
+          school
+          email
+          attendingEvents
+          rides
+          friends
+          photos
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        socialMedia {
+          items {
+            id
+            userProfileID
+            socialMediaType
+            accountURL
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      socialMediaType
+      accountURL
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onDeleteSocialMedia = /* GraphQL */ `
+  subscription OnDeleteSocialMedia(
+    $filter: ModelSubscriptionSocialMediaFilterInput
+  ) {
+    onDeleteSocialMedia(filter: $filter) {
+      id
+      userProfileID
+      userProfile {
+        id
+        firstName
+        lastName
+        verified
+        verifySubmitted
+        profilePhotoID
+        bannerPhotoID
+        city
+        state
+        school
+        address
+        address2
+        phone
+        email
+        zipcode
+        attendingEvents {
+          items {
+            id
+            userProfileID
+            eventID
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        rides {
+          items {
+            id
+            rideID
+            userProfileID
+            isDriver
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        friends {
+          items {
+            id
+            userProfileID
+            friendProfileID
+            isAccepted
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        conversations {
+          items {
+            id
+            userProfileID
+            friendProfileID
+            unreadMessage
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        sentMessages {
+          items {
+            id
+            content
+            senderID
+            receiverID
+            conversationID
+            unreadMessage
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        receivedMessages {
+          items {
+            id
+            content
+            senderID
+            receiverID
+            conversationID
+            unreadMessage
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        photos {
+          items {
+            id
+            userProfileID
+            s3Key
+            isPrivate
+            identityId
+            description
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        collegeGroupId
+        collegeGroup {
+          id
+          name
+          domain
+          webPage
+          countryCode
+          events {
+            nextToken
+            startedAt
+          }
+          members {
+            nextToken
+            startedAt
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        privacySettingID
+        privacySetting {
+          id
+          city
+          state
+          school
+          email
+          attendingEvents
+          rides
+          friends
+          photos
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        socialMedia {
+          items {
+            id
+            userProfileID
+            socialMediaType
+            accountURL
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      socialMediaType
+      accountURL
       createdAt
       updatedAt
       _version
@@ -4874,6 +5756,10 @@ export const onCreateRide = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+          }
+          socialMedia {
+            nextToken
+            startedAt
           }
           createdAt
           updatedAt
@@ -5154,6 +6040,10 @@ export const onUpdateRide = /* GraphQL */ `
             _deleted
             _lastChangedAt
           }
+          socialMedia {
+            nextToken
+            startedAt
+          }
           createdAt
           updatedAt
           _version
@@ -5432,6 +6322,10 @@ export const onDeleteRide = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+          }
+          socialMedia {
+            nextToken
+            startedAt
           }
           createdAt
           updatedAt
@@ -5798,6 +6692,21 @@ export const onCreateRideUser = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
+        socialMedia {
+          items {
+            id
+            userProfileID
+            socialMediaType
+            accountURL
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
@@ -6098,6 +7007,21 @@ export const onUpdateRideUser = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+        }
+        socialMedia {
+          items {
+            id
+            userProfileID
+            socialMediaType
+            accountURL
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
         }
         createdAt
         updatedAt
@@ -6400,6 +7324,21 @@ export const onDeleteRideUser = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
+        socialMedia {
+          items {
+            id
+            userProfileID
+            socialMediaType
+            accountURL
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
@@ -6584,6 +7523,21 @@ export const onCreatePhoto = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+        }
+        socialMedia {
+          items {
+            id
+            userProfileID
+            socialMediaType
+            accountURL
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
         }
         createdAt
         updatedAt
@@ -6799,6 +7753,21 @@ export const onUpdatePhoto = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
+        socialMedia {
+          items {
+            id
+            userProfileID
+            socialMediaType
+            accountURL
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
@@ -7013,6 +7982,21 @@ export const onDeletePhoto = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
+        socialMedia {
+          items {
+            id
+            userProfileID
+            socialMediaType
+            accountURL
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
@@ -7143,6 +8127,10 @@ export const onCreatePhotoComment = /* GraphQL */ `
             _deleted
             _lastChangedAt
           }
+          socialMedia {
+            nextToken
+            startedAt
+          }
           createdAt
           updatedAt
           _version
@@ -7266,6 +8254,10 @@ export const onUpdatePhotoComment = /* GraphQL */ `
             _deleted
             _lastChangedAt
           }
+          socialMedia {
+            nextToken
+            startedAt
+          }
           createdAt
           updatedAt
           _version
@@ -7388,6 +8380,10 @@ export const onDeletePhotoComment = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+          }
+          socialMedia {
+            nextToken
+            startedAt
           }
           createdAt
           updatedAt
@@ -7600,6 +8596,21 @@ export const onCreateFriendship = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
+        socialMedia {
+          items {
+            id
+            userProfileID
+            socialMediaType
+            accountURL
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
@@ -7769,6 +8780,21 @@ export const onCreateFriendship = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+        }
+        socialMedia {
+          items {
+            id
+            userProfileID
+            socialMediaType
+            accountURL
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
         }
         createdAt
         updatedAt
@@ -7957,6 +8983,21 @@ export const onUpdateFriendship = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
+        socialMedia {
+          items {
+            id
+            userProfileID
+            socialMediaType
+            accountURL
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
@@ -8126,6 +9167,21 @@ export const onUpdateFriendship = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+        }
+        socialMedia {
+          items {
+            id
+            userProfileID
+            socialMediaType
+            accountURL
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
         }
         createdAt
         updatedAt
@@ -8314,6 +9370,21 @@ export const onDeleteFriendship = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
+        socialMedia {
+          items {
+            id
+            userProfileID
+            socialMediaType
+            accountURL
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
@@ -8483,6 +9554,21 @@ export const onDeleteFriendship = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+        }
+        socialMedia {
+          items {
+            id
+            userProfileID
+            socialMediaType
+            accountURL
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
         }
         createdAt
         updatedAt
@@ -8670,6 +9756,21 @@ export const onCreateConversation = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
+        socialMedia {
+          items {
+            id
+            userProfileID
+            socialMediaType
+            accountURL
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
@@ -8839,6 +9940,21 @@ export const onCreateConversation = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+        }
+        socialMedia {
+          items {
+            id
+            userProfileID
+            socialMediaType
+            accountURL
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
         }
         createdAt
         updatedAt
@@ -9103,6 +10219,21 @@ export const onUpdateConversation = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
+        socialMedia {
+          items {
+            id
+            userProfileID
+            socialMediaType
+            accountURL
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
@@ -9272,6 +10403,21 @@ export const onUpdateConversation = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+        }
+        socialMedia {
+          items {
+            id
+            userProfileID
+            socialMediaType
+            accountURL
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
         }
         createdAt
         updatedAt
@@ -9536,6 +10682,21 @@ export const onDeleteConversation = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
+        socialMedia {
+          items {
+            id
+            userProfileID
+            socialMediaType
+            accountURL
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
@@ -9705,6 +10866,21 @@ export const onDeleteConversation = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+        }
+        socialMedia {
+          items {
+            id
+            userProfileID
+            socialMediaType
+            accountURL
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
         }
         createdAt
         updatedAt
@@ -9924,6 +11100,10 @@ export const onCreateCollegeGroup = /* GraphQL */ `
             _deleted
             _lastChangedAt
           }
+          socialMedia {
+            nextToken
+            startedAt
+          }
           createdAt
           updatedAt
           _version
@@ -10068,6 +11248,10 @@ export const onUpdateCollegeGroup = /* GraphQL */ `
             _deleted
             _lastChangedAt
           }
+          socialMedia {
+            nextToken
+            startedAt
+          }
           createdAt
           updatedAt
           _version
@@ -10211,6 +11395,10 @@ export const onDeleteCollegeGroup = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+          }
+          socialMedia {
+            nextToken
+            startedAt
           }
           createdAt
           updatedAt

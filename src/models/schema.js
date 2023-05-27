@@ -720,6 +720,22 @@ export const schema = {
                         ]
                     }
                 },
+                "socialMedia": {
+                    "name": "socialMedia",
+                    "isArray": true,
+                    "type": {
+                        "model": "SocialMedia"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": [
+                            "userProfile"
+                        ]
+                    }
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -750,6 +766,105 @@ export const schema = {
                         "name": "byCollegeGroup",
                         "fields": [
                             "collegeGroupId"
+                        ]
+                    }
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "allow": "public",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "SocialMedia": {
+            "name": "SocialMedia",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "userProfileID": {
+                    "name": "userProfileID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "userProfile": {
+                    "name": "userProfile",
+                    "isArray": false,
+                    "type": {
+                        "model": "UserProfile"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetNames": [
+                            "userProfileID"
+                        ]
+                    }
+                },
+                "socialMediaType": {
+                    "name": "socialMediaType",
+                    "isArray": false,
+                    "type": {
+                        "enum": "SocialMediaType"
+                    },
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "accountURL": {
+                    "name": "accountURL",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "SocialMedias",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byUserProfile",
+                        "fields": [
+                            "userProfileID"
                         ]
                     }
                 },
@@ -1760,9 +1875,17 @@ export const schema = {
                 "ALL",
                 "TRAVEL"
             ]
+        },
+        "SocialMediaType": {
+            "name": "SocialMediaType",
+            "values": [
+                "FACEBOOK",
+                "TWITTER",
+                "INSTAGRAM"
+            ]
         }
     },
     "nonModels": {},
     "codegenVersion": "3.4.3",
-    "version": "c2fe8cb1a9100a4fab64ed95373e163d"
+    "version": "a02ff5247b12f1a4880d8aae49fec168"
 };

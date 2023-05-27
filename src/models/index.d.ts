@@ -18,6 +18,12 @@ export enum EventType {
   TRAVEL = "TRAVEL"
 }
 
+export enum SocialMediaType {
+  FACEBOOK = "FACEBOOK",
+  TWITTER = "TWITTER",
+  INSTAGRAM = "INSTAGRAM"
+}
+
 
 
 type EagerMessage = {
@@ -179,6 +185,7 @@ type EagerUserProfile = {
   readonly collegeGroup?: CollegeGroup | null;
   readonly privacySettingID?: string | null;
   readonly privacySetting?: PrivacySetting | null;
+  readonly socialMedia?: (SocialMedia | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -214,6 +221,7 @@ type LazyUserProfile = {
   readonly collegeGroup: AsyncItem<CollegeGroup | undefined>;
   readonly privacySettingID?: string | null;
   readonly privacySetting: AsyncItem<PrivacySetting | undefined>;
+  readonly socialMedia: AsyncCollection<SocialMedia>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -222,6 +230,40 @@ export declare type UserProfile = LazyLoading extends LazyLoadingDisabled ? Eage
 
 export declare const UserProfile: (new (init: ModelInit<UserProfile>) => UserProfile) & {
   copyOf(source: UserProfile, mutator: (draft: MutableModel<UserProfile>) => MutableModel<UserProfile> | void): UserProfile;
+}
+
+type EagerSocialMedia = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<SocialMedia, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly userProfileID: string;
+  readonly userProfile?: UserProfile | null;
+  readonly socialMediaType: SocialMediaType | keyof typeof SocialMediaType;
+  readonly accountURL: string;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazySocialMedia = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<SocialMedia, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly userProfileID: string;
+  readonly userProfile: AsyncItem<UserProfile | undefined>;
+  readonly socialMediaType: SocialMediaType | keyof typeof SocialMediaType;
+  readonly accountURL: string;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type SocialMedia = LazyLoading extends LazyLoadingDisabled ? EagerSocialMedia : LazySocialMedia
+
+export declare const SocialMedia: (new (init: ModelInit<SocialMedia>) => SocialMedia) & {
+  copyOf(source: SocialMedia, mutator: (draft: MutableModel<SocialMedia>) => MutableModel<SocialMedia> | void): SocialMedia;
 }
 
 type EagerPrivacySetting = {

@@ -62,6 +62,15 @@ type UserProfile @model @auth(rules: [{ allow: public }]) {
   collegeGroup: CollegeGroup @belongsTo(fields: ["collegeGroupId"])
   privacySettingID: ID
   privacySetting: PrivacySetting @hasOne(fields: ["privacySettingID"])
+  socialMedia: [SocialMedia] @hasMany(indexName: "byUserProfile", fields: ["id"])
+}
+
+type SocialMedia @model @auth(rules: [{ allow: public}]) {
+  id: ID!
+  userProfileID: ID! @index(name: "byUserProfile")
+  userProfile: UserProfile @belongsTo(fields: ["userProfileID"])
+  socialMediaType: SocialMediaType!
+  accountURL: String!
 }
 
 type PrivacySetting @model @auth(rules: [{ allow: public }]) {
@@ -166,4 +175,10 @@ enum EventType {
   MUSIC
   ALL
   TRAVEL
+}
+
+enum SocialMediaType {
+  FACEBOOK,
+  TWITTER,
+  INSTAGRAM
 }

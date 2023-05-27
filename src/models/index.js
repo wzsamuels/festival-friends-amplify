@@ -18,13 +18,20 @@ const EventType = {
   "TRAVEL": "TRAVEL"
 };
 
-const { Message, EventProfile, Festival, UserProfile, PrivacySetting, Ride, RideUser, Photo, PhotoComment, Friendship, Conversation, CollegeGroup } = initSchema(schema);
+const SocialMediaType = {
+  "FACEBOOK": "FACEBOOK",
+  "TWITTER": "TWITTER",
+  "INSTAGRAM": "INSTAGRAM"
+};
+
+const { Message, EventProfile, Festival, UserProfile, SocialMedia, PrivacySetting, Ride, RideUser, Photo, PhotoComment, Friendship, Conversation, CollegeGroup } = initSchema(schema);
 
 export {
   Message,
   EventProfile,
   Festival,
   UserProfile,
+  SocialMedia,
   PrivacySetting,
   Ride,
   RideUser,
@@ -34,5 +41,6 @@ export {
   Conversation,
   CollegeGroup,
   FriendshipStatus,
-  EventType
+  EventType,
+  SocialMediaType
 };
