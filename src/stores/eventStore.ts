@@ -26,7 +26,6 @@ const useEventStore = create<EventStore>((set: SetState<EventStore>) => ({
   loadingEvents: false,
   error: null,
   fetchEvents: async () => {
-    console.log("Fetching events in store")
     set({loadingEvents: true})
     try {
 
@@ -38,7 +37,9 @@ const useEventStore = create<EventStore>((set: SetState<EventStore>) => ({
 
        */
 
+      await DataStore.start()
       const eventData = await DataStore.query(Festival);
+      console.log("Fetching events in store: ", eventData)
       set({events: eventData})
 
       /*
