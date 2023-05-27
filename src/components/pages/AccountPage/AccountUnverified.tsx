@@ -1,6 +1,6 @@
 import { SubmitHandler, useForm, Controller } from "react-hook-form";
-import React, { useRef, useState } from "react";
-import {CollegeGroup, PrivacySetting, UserProfile} from "../../../models";
+import React, { useState } from "react";
+import {PrivacySetting} from "../../../models";
 import { DataStore } from "@aws-amplify/datastore";
 import { ProfileInputs } from "../../../types";
 import { useAuthenticator } from "@aws-amplify/ui-react";
@@ -18,25 +18,14 @@ import {API, graphqlOperation} from "aws-amplify";
 import {GraphQLQuery} from "@aws-amplify/api";
 import * as mutations from "../../../graphql/mutations";
 
-const ProfileUnverified = () => {
+const AccountUnverified = () => {
   const { user } = useAuthenticator((context) => [context.user]);
   const userProfile = useProfileStore((state) => state.userProfile);
   const { phone, inputRef, handlePhoneChange } = useFormattedPhoneInput();
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const { register, handleSubmit, control } = useForm<ProfileInputs>({
-    defaultValues: {
-      firstName: userProfile?.firstName || "",
-      lastName: userProfile?.lastName || "",
-      school: userProfile?.school || "",
-      city: userProfile?.city || "",
-      state: userProfile?.state || "",
-      zipcode: userProfile?.zipcode || "",
-      address: userProfile?.address || "",
-      address2: userProfile?.address2 || "",
-    },
-  });
+  const { register, handleSubmit, control } = useForm<ProfileInputs>();
   const email = user?.attributes?.email as string;
 
   const createNewProfile: SubmitHandler<ProfileInputs> = async (data) => {
@@ -56,26 +45,7 @@ const ProfileUnverified = () => {
         graphqlOperation(mutations.createUserProfile, {
           input: userProfileInput}));
 
-      console.log(`New profile: `, newUserProfile);
-      /*
-      if (userProfile) {
-        const newProfile = await DataStore.save(UserProfile.copyOf(userProfile, (updated) => {
-            updated.verifySubmitted = true;
-            updated.phone = phone;
-            updated.firstName = data.firstName;
-            updated.lastName = data.lastName;
-            updated.school = data.school;
-            updated.city = data.city;
-            updated.state = data.state;
-            updated.zipcode = data.zipcode;
-            updated.address = data.address;
-            updated.address2 = data.address2;
-            updated.collegeGroup = collegeGroup;
-          }));
-        console.log("Updated existing profile: ", JSON.stringify(newProfile));
-      }
-       */
-
+      console.log(`New profile: `, newUserProfile, "\nNew Privacy Setting: ", newPrivacySetting);
     } catch (err) {
       console.error("Error saving profile:", err);
     } finally {
@@ -100,6 +70,14 @@ const ProfileUnverified = () => {
         </p>
       </div>
     );
+  }
+
+  if(isSubmitting) {
+    return (
+      <div className="flex flex-col justify-center items-center my-4 p-4">
+        <h1 className="text-xl md:text-2xl my-4">Submitting Profile...</h1>
+      </div>
+    )
   }
 
   return (
@@ -191,4 +169,4 @@ const ProfileUnverified = () => {
   );
 };
 
-export default ProfileUnverified;
+export default AccountUnverified;
