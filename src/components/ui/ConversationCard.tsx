@@ -84,31 +84,26 @@ const ConversationCard = ({
   return (
     <div
       onClick={handleOnClick}
-      className={`shadow-xl w-full max-w-[600px] flex justify-between  ${className}`}
+      className={`shadow-xl w-full max-w-[600px] flex justify-between overflow-hidden ${className}`}
     >
-      <div className="flex items-center justify-between w-full p-4">
-        <div className="flex items-center">
-          <img
-            className="rounded-full mx-4 max-w-[75px] w-full max-h-[75px] aspect-square"
-            src={friendProfileImage}
-            alt={friendProfile?.firstName ? friendProfile.firstName : ""}
-          />
-          <div className="flex flex-col">
-            <span className="text-lg font-bold">
-              {friendProfile?.firstName} {friendProfile?.lastName}
-            </span>
-            <span className="my-2 truncate">{lastMessage}</span>
+      <div className="flex items-center w-full p-4">
+        <img
+          className="rounded-full mx-4 max-w-[75px] w-full max-h-[75px] aspect-square"
+          src={friendProfileImage}
+          alt={friendProfile?.firstName ? friendProfile.firstName : ""}
+        />
+        <div className="flex flex-col flex-grow overflow-hidden">
+          <div className="text-lg font-bold flex justify-between">
+            <span>{friendProfile?.firstName} {friendProfile?.lastName}</span>
+            {unreadMessage &&
+              <span className="h-2 w-2 rounded-full bg-green-950"></span>
+            }
           </div>
-        </div>
-        <div>
-          {unreadMessage ? (
-            <span className="text-primary-default text-sm">New</span>
-          ) : (
-            <span className="text-primary-default text-sm">No New</span>
-          )}
+          <div className="my-2 truncate">{lastMessage}</div>
         </div>
       </div>
     </div>
+
   );
 };
 
