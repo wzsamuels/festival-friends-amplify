@@ -1,5 +1,5 @@
 import { Link, useParams } from "react-router-dom";
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {Festival, Photo, PrivacySetting, Ride, UserProfile} from "../../../models";
 import { DataStore, Storage } from "aws-amplify";
 import PhotoImage from "../../ui/PhotoImage";
@@ -10,9 +10,13 @@ import { BsPerson, IoArrowBack } from "react-icons/all";
 import RideCardBase from "../../ui/RideCardBase";
 import getErrorMessage from "../../../lib/getErrorMessage";
 import useDataClearedStore from "../../../stores/dataClearedStore";
+import ImageContext from "../../../context/ImageContext";
+import {getBannerPhoto, getEventsAttending, getProfile, getProfilePhoto} from "../../../services/ProfileServices";
+import {getRidesByProfile} from "../../../services/rideServices";
+import {getPhotosByProfile} from "../../../services/PhotoServices";
 
 const ProfilePage = () => {
-  const [profile, setProfile] = useState<UserProfile>();
+  const [profile, setProfile] = useState<UserProfile | null | undefined>();
   const [privacySetting, setPrivacySetting] = useState<PrivacySetting>();
   const [profileImage, setProfileImage] = useState("");
   const [bannerImage, setBannerImage] = useState("");
@@ -22,65 +26,60 @@ const ProfilePage = () => {
   const [eventsAttending, setEventsAttending] = useState<Festival[]>([]);
   const [rides, setRides] = useState<Ride[]>([]);
   const dataCleared = useDataClearedStore(state => state.dataCleared);
-
+  const { getSignedURL } = useContext(ImageContext)
   const { profileId } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
+    if(!dataCleared) return;
     const fetchProfile = async () => {
-      const profileData = await DataStore.query(UserProfile, (c) =>
-        c.id.eq(profileId as string)
-      );
-      const profile = profileData[0];
-      setProfile(profile);
-
-      //const privacySetting = await profile.privacySetting;
-      //setPrivacySetting(privacySetting);
-
-      if(profile.profilePhotoID) {
-        const profilePhoto = await DataStore.query(Photo, profile.profilePhotoID)
-        const imageData = await Storage.get(profilePhoto?.s3Key as string, {
-          level: "protected",
-          identityId: profilePhoto?.identityId
-        });
-        setProfileImage(imageData);
-      }
-
-      if(profile.bannerPhotoID) {
-        const bannerPhoto = await DataStore.query(Photo, profile.bannerPhotoID)
-        const imageData = await Storage.get(bannerPhoto?.s3Key as string, {
-          level: "protected",
-          identityId: bannerPhoto?.identityId
-        });
-        setBannerImage(imageData);
-      }
-
-      const photoData = await DataStore.query(Photo, (c) =>
-        c.userProfileID.eq(profile.id)
-      );
-      setPhotos(photoData);
-
-      const eventProfiles = await profile.attendingEvents.toArray();
-      const events = await Promise.all(
-        eventProfiles.map(async (eventProfile) => await eventProfile.event)
-      );
-      setEventsAttending(events);
-
-      const rideUsers = await profile.rides.toArray();
-      const rides = await Promise.all(
-        rideUsers.map(async (rideUser) => await rideUser.ride)
-      );
-      setRides(rides);
+      return await getProfile(profileId as string);
     };
 
-    if(!dataCleared) return;
-
     try {
-      fetchProfile();
+      fetchProfile()
+        .then(profile => setProfile(profile));
     } catch(error) {
       console.log("Error fetching profile in Profile.tsx: ", getErrorMessage(error));
     }
   }, [dataCleared]);
+
+  useEffect(() => {
+    if(!dataCleared || !profile) return;
+
+    const fetchProfileImage = async () => {
+      return await getProfilePhoto(profile, getSignedURL)
+    }
+    const fetchBannerImage = async () => {
+      return await getBannerPhoto(profile, getSignedURL)
+    }
+    const fetchPhotos = async () => {
+      return getPhotosByProfile(profile);
+    }
+    const fetchEventsAttending = async () => {
+      return await getEventsAttending(profile)
+    }
+
+    const fetchRides = async () => {
+      return await getRidesByProfile(profile);
+    };
+    const fetchPrivacySetting = async () => {
+      return profile.privacySetting;
+    }
+    fetchProfileImage()
+      .then(image => setProfileImage(image))
+      .catch(error => console.log("Error fetching profile image: ", getErrorMessage(error)));
+    fetchBannerImage()
+      .then(bannerImage => setBannerImage(bannerImage));
+    fetchPhotos()
+      .then(photos => setPhotos(photos));
+    fetchEventsAttending()
+      .then(eventsAttending => setEventsAttending(eventsAttending));
+    fetchRides()
+      .then(rides => setRides(rides));
+    fetchPrivacySetting()
+      .then(privacySetting => setPrivacySetting(privacySetting));
+  }, [dataCleared, profile]);
 
   // TODO: Add full privacy setting
 
@@ -124,11 +123,11 @@ const ProfilePage = () => {
           <h1 className={"text-2xl my-4"}>
             {profile?.firstName} {profile?.lastName}
           </h1>
-          { privacySetting?.city &&
-          <div className={"text-lg my-2 flex flex-wrap"}>
-            <span className="basis-[120px]">City:</span>
-            <span>{profile?.city}</span>
-          </div>
+          { !privacySetting?.city &&
+            <div className={"text-lg my-2 flex flex-wrap"}>
+              <span className="basis-[120px]">City:</span>
+              <span>{profile?.city}</span>
+            </div>
           }
           <div className={"text-lg my-2 flex flex-wrap"}>
             <span className="basis-[120px]">State:</span>
