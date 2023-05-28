@@ -1,14 +1,11 @@
 import React, { useState} from "react";
-import { DataStore } from "aws-amplify";
 import { Conversation, UserProfile } from "../../../models";
 import { useAuthenticator } from "@aws-amplify/ui-react";
-import FriendCard from "../../ui/FriendCard";
-import ConversationModal from "./ConversationModal";
+import ConversationModal from "./Modals/ConversationModal";
 import { BsPlus, FaSearch } from "react-icons/all";
 import { Link } from "react-router-dom";
-import Modal from "../../common/Modal/Modal";
 import Header from "../../layout/Header";
-import ConservationSearchModal from "./ConservationSearchModal";
+import ConservationSearchModal from "./Modals/ConservationSearchModal";
 import Button from "../../common/Button/Button";
 import ConversationCard from "../../ui/ConversationCard";
 import LoadingState from "../../ui/LoadingState";
@@ -16,6 +13,8 @@ import useProfileStore from "../../../stores/profileStore";
 import useFriendStore from "../../../stores/friendProfileStore";
 import useConversationStore from "../../../stores/conversationStore";
 import useDataClearedStore from "../../../stores/dataClearedStore";
+import {createConversation} from "../../../services/conversationServices";
+import NewConversationModal from "./Modals/NewConversationModal";
 
 const MessagePage: React.FC = () => {
   const [currentConversation, setCurrentConversation] = useState<Conversation>();
@@ -40,40 +39,9 @@ const MessagePage: React.FC = () => {
     if (!userProfile || !dataCleared) {
       return;
     }
-    // TODO: Simplify query, move to service file?
-
-    const existingConversation1 = await DataStore.query(Conversation, (c) =>
-      c.and((c) => [
-        c.userProfileID.eq(userProfile?.id),
-        c.friendProfileID.eq(friendProfile.id),
-      ])
-    );
-    const existingConversation2 = await DataStore.query(Conversation, (c) =>
-      c.and((c) => [
-        c.userProfileID.eq(friendProfile.id),
-        c.friendProfileID.eq(userProfile?.id),
-      ])
-    );
-    const existingConversations = [
-      ...existingConversation1,
-      ...existingConversation2,
-    ];
-    if (existingConversations.length === 0) {
-      const newConversation = await DataStore.save(
-        new Conversation({
-          userProfileID: userProfile?.id,
-          friendProfileID: friendProfile.id,
-          messages: [],
-          userProfile: userProfile,
-          friendProfile: friendProfile,
-        })
-      );
-      setCurrentConversation(newConversation);
-      setConversationModalOpen(true);
-    } else {
-      setCurrentConversation(existingConversations[0]);
-      setConversationModalOpen(true);
-    }
+    const conversation = await createConversation(userProfile, friendProfile)
+    setCurrentConversation(conversation);
+    setConversationModalOpen(true);
   };
 
   const openConversationModal = (conversation: Conversation) => {
@@ -145,30 +113,11 @@ const MessagePage: React.FC = () => {
             <BsPlus className="text-3xl" />
           </button>
         </div>
-        <Modal
+        <NewConversationModal
+          friendProfiles={friendProfiles}
           isOpen={isNewConversationModalOpen}
           setIsOpen={setNewConversationModalOpen}
-          title={<div>Start New Conversation</div>}
-        >
-          {friendProfiles.length > 0 ? (
-            friendProfiles.map((profile) => (
-              <FriendCard
-                key={profile.id}
-                profile={profile}
-                onClick={() =>
-                  handleNewConversation({ friendProfile: profile })
-                }
-                link={false}
-              />
-            ))
-          ) : (
-            <div>
-              <h1 className="text-xl md:text-2xl my-4">
-                No Friends found. Add some friends to start a conversation.
-              </h1>
-            </div>
-          )}
-        </Modal>
+          handleNewConversation={handleNewConversation}/>
         <ConversationModal
           conversation={currentConversation}
           isOpen={isConversationModalOpen}
