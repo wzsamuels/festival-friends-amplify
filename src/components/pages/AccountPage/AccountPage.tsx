@@ -1,7 +1,7 @@
 import { Authenticator, useAuthenticator } from "@aws-amplify/ui-react";
 import React, { } from "react";
-import ProfileUnverified from "../Profile/ProfileUnverified";
-import ProfileVerified from "../Profile/ProfileVerified";
+import AccountUnverified from "./AccountUnverified";
+import AccountVerified from "./AccountVerified";
 import Header from "../../layout/Header";
 import LoadingState from "../../ui/LoadingState";
 import useProfileStore from "../../../stores/profileStore";
@@ -25,11 +25,11 @@ const AccountPage = () => {
     }
 
     if (!userProfile) {
-      return <ProfileUnverified />;
+      return <AccountUnverified />;
     }
 
     if (userProfile?.verified) {
-      return <ProfileVerified user={user} />;
+      return <AccountVerified user={user} />;
     }
 
     if (!userProfile?.verified && userProfile?.verifySubmitted) {
