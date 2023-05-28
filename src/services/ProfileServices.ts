@@ -1,7 +1,15 @@
 import {Photo, UserProfile} from "../models";
-import {API, DataStore, graphqlOperation} from "aws-amplify";
+import {DataStore} from "aws-amplify";
 import {S3Levels} from "../@types/s3";
-import {updateUserProfile} from "../graphql/mutations";
+
+export const getProfile = async (userID: string) => {
+  try {
+    return await DataStore.query(UserProfile, userID);
+  } catch (e) {
+    console.log("Error getting profile", e)
+    return null;
+  }
+}
 
 export const getProfilePhoto = async (
   profile: UserProfile | null | undefined,
@@ -71,5 +79,17 @@ export const updateBannerPhoto = async (profile: UserProfile, photoID: string) =
   } catch (e) {
     console.log("Error updating banner photo", e)
     return null;
+  }
+}
+
+export const getEventsAttending = async (profile: UserProfile) => {
+  try {
+    const eventProfiles = await profile.attendingEvents.toArray();
+    return await Promise.all(
+      eventProfiles.map(async (eventProfile) => await eventProfile.event)
+    );
+  } catch (e) {
+    console.log("Error getting profile", e)
+    return [];
   }
 }
