@@ -1,21 +1,22 @@
 import {EventProfile, Festival, Photo, Ride} from "../../../models";
 import React, {useContext, useEffect, useState} from "react";
 import { DataStore } from "@aws-amplify/datastore";
-import ProfileEditModal from "./Modals/ProfileEditModal";
-import ProfileImageModal from "./Modals/ProfileImageModal";
-import PhotoUploadModal from "./Modals/PhotoUploadModal";
+import ProfileEditModal from "../Profile/Modals/ProfileEditModal";
+import ProfileImageModal from "../Profile/Modals/ProfileImageModal";
+import PhotoUploadModal from "../Profile/Modals/PhotoUploadModal";
 import PhotoImage from "../../ui/PhotoImage";
 import { BsPerson } from "react-icons/all";
-import BannerPhotoModal from "./Modals/BannerPhotoModal";
+import BannerPhotoModal from "../Profile/Modals/BannerPhotoModal";
 import Button from "../../common/Button/Button";
-import PhotoModal from "./Modals/PhotoModal";
+import PhotoModal from "../Profile/Modals/PhotoModal";
 import { Link } from "react-router-dom";
 import useDataClearedStore from "../../../stores/dataClearedStore";
 import useProfileStore from "../../../stores/profileStore";
-import {getBannerPhoto, getProfilePhoto} from "../../../services/ProfileServices";
+import {getBannerPhoto, getEventsAttending, getProfilePhoto} from "../../../services/ProfileServices";
 import ImageContext from "../../../context/ImageContext";
+import {getRidesByProfile} from "../../../services/rideServices";
 
-const ProfileVerified = ({ user }: { user: any }) => {
+const AccountVerified = ({ user }: { user: any }) => {
   const [profileImage, setProfileImage] = useState("");
   const [bannerImage, setBannerImage] = useState("");
   const [photos, setPhotos] = useState<Photo[]>([]);
@@ -36,46 +37,33 @@ const ProfileVerified = ({ user }: { user: any }) => {
   useEffect(() => {
     if (!dataCleared || !userProfile) return;
     const fetchProfilePhoto = async () => {
-      getProfilePhoto(userProfile, getSignedURL).then(image => setProfileImage(image))
+      return await getProfilePhoto(userProfile, getSignedURL)
     }
     const fetchProfileBanner = async () => {
-      getBannerPhoto(userProfile, getSignedURL).then(image => setBannerImage(image))
+      return await getBannerPhoto(userProfile, getSignedURL)
     }
     const fetchEventsAttending = async () => {
-      if(!userProfile.attendingEvents) return;
-
-      try {
-        const eventProfiles = await userProfile.attendingEvents.toArray();
-        const events = await Promise.all(
-          eventProfiles.map(async (eventProfile) => await eventProfile.event));
-        const filteredEvents = events.filter((event) => event !== undefined);
-        setEventsAttending(filteredEvents as Festival[]);
-      } catch (e) {
-        console.log("Error converting attending events array", e)
-      }
+      return await getEventsAttending(userProfile)
     }
 
     const fetchRides = async () => {
-      if(!userProfile.rides) return;
-
-      const rideUsers = await userProfile.rides.toArray();
-      const rides = await Promise.all(
-        rideUsers.map(async (rideUser) => await rideUser.ride)
-      );
-      setRides(rides);
+      return await getRidesByProfile(userProfile);
     };
 
     try {
-      fetchProfilePhoto();
-      fetchProfileBanner();
-      fetchEventsAttending();
-      fetchRides();
+      fetchProfilePhoto()
+        .then(image => setProfileImage(image));
+      fetchProfileBanner()
+        .then(image => setBannerImage(image));
+      fetchEventsAttending()
+        .then(eventsAttending => setEventsAttending(eventsAttending));
+      fetchRides()
+        .then(rides => setRides(rides));
     } catch (e) {
       console.log(e);
     }
 
     console.log(userProfile);
-
 
     try {
       const photoSub = DataStore.observeQuery(Photo, (photo) =>
@@ -158,7 +146,7 @@ const ProfileVerified = ({ user }: { user: any }) => {
 
       <section className="p-4">
         <h1 className="text-2xl my-4">Events Attending</h1>
-        {eventsAttending?.map((event, index) => (
+        {eventsAttending.length > 0 ? eventsAttending?.map((event, index) => (
           <span key={event.id}>
             <Link
               className="hover:underline text-green-950"
@@ -168,17 +156,23 @@ const ProfileVerified = ({ user }: { user: any }) => {
             </Link>
             {index < eventsAttending.length - 1 ? ", " : ""}
           </span>
-        ))}
+        ))
+          :
+          <div>Not attending any events.</div>
+        }
       </section>
       <hr className="my-8 border border-primary-default w-full" />
       <section className="p-4">
         <h1 className="text-2xl my-4">Rides</h1>
-        {rides.map((ride) => (
+        {rides.length > 0 ? rides?.map((ride, index) => (
           <div key={ride.id}>
             Ride to {ride.endPoint} from {ride.startPoint} on{" "}
             {ride.departureTime}
           </div>
-        ))}
+        ))
+          :
+          <div>Not part of any rides.</div>
+        }
       </section>
       <hr className="my-8 border border-primary-default w-full" />
       <section className="p-4">
@@ -266,4 +260,4 @@ const ProfileVerified = ({ user }: { user: any }) => {
   );
 };
 
-export default ProfileVerified;
+export default AccountVerified;
