@@ -1,7 +1,5 @@
 import {Photo, UserProfile} from "../../models";
 import React, {
-  ReactElement,
-  ReactNode,
   useContext,
   useEffect,
   useState,
@@ -11,6 +9,7 @@ import { Link } from "react-router-dom";
 import Button from "../common/Button/Button";
 import {BsPerson} from "react-icons/all";
 import {DataStore} from "aws-amplify";
+import ConditionalWrapper from "../ConditionalWrapper";
 
 export interface FriendCardButton {
   label: string;
@@ -57,7 +56,7 @@ const FriendCard = ({
   return (
     <div
       onClick={onClick}
-      className={`${className} bg-white border-2 border-gray-300  m-2m-4 p-2 rounded-xl hover:border-gray-500 shadow-xl flex flex-col items-center`}
+      className={`${className} bg-white border-2 border-gray-300 p-2 rounded-xl hover:border-gray-500 shadow-xl`}
     >
       <ConditionalWrapper
         condition={link}
@@ -103,16 +102,4 @@ const FriendCard = ({
   );
 };
 
-interface ConditionalWrapperProps {
-  condition: boolean;
-  wrapper: (children: ReactNode) => ReactElement | null;
-  children: ReactNode;
-}
-
-const ConditionalWrapper = ({
-  condition,
-  wrapper,
-  children,
-}: ConditionalWrapperProps) =>
-  condition ? wrapper(children) : (children as ReactElement);
 export default FriendCard;
