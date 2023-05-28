@@ -1,13 +1,15 @@
-import { ModalProps } from "../../../@types/modal";
-import { Conversation, Message, UserProfile } from "../../../models";
+import { ModalProps } from "../../../../@types/modal";
+import { Conversation, Message, UserProfile } from "../../../../models";
 import React, {useContext, useEffect, useState} from "react";
-import { DataStore } from "aws-amplify";
-import Modal from "../../common/Modal/Modal";
+import {DataStore, SortDirection} from "aws-amplify";
+import Modal from "../../../common/Modal/Modal";
 import { SubmitHandler, useForm } from "react-hook-form";
-import {getProfilePhoto} from "../../../services/ProfileServices";
-import ImageContext from "../../../context/ImageContext";
-import useProfileStore from "../../../stores/profileStore";
-import useDataClearedStore from "../../../stores/dataClearedStore";
+import {getProfilePhoto} from "../../../../services/ProfileServices";
+import ImageContext from "../../../../context/ImageContext";
+import useProfileStore from "../../../../stores/profileStore";
+import useDataClearedStore from "../../../../stores/dataClearedStore";
+import Button from "../../../common/Button/Button";
+import Input from "../../../common/Input/Input";
 
 interface ConversationModalProps extends ModalProps {
   conversation: Conversation | undefined;
@@ -68,7 +70,7 @@ const ConversationModal = ({
 
     // Fetch the messages of the conversation
     const profileSub = DataStore.observeQuery(Message, (c) =>
-      c.conversationID.eq(conversation?.id as string)
+      c.conversationID.eq(conversation?.id as string), {sort: s => s.createdAt(SortDirection.ASCENDING)}
     ).subscribe(({ items }) => {
       console.log(items);
       setMessages(items);
@@ -84,9 +86,10 @@ const ConversationModal = ({
       isOpen={isOpen}
       setIsOpen={setIsOpen}
       title={<div>Conversation with {friendProfile?.firstName}</div>}
+      className="max-w-2xl"
     >
-      <div className="px-4 pt-4 pb-16">
-        {messages.map((message) => (
+      <div className="px-4 pt-4 pb-36 sm:pb-24">
+        {messages.length > 0 ? messages.map((message) => (
           <div
             key={message.id}
             className={`flex my-4 w-full ${
@@ -106,31 +109,36 @@ const ConversationModal = ({
               className={`p-4 rounded-xl ${
                 message.senderID === userProfile?.id
                   ? "bg-green-950 text-white"
-                  : "bg-teal-600"
+                  : "bg-teal-600 text-white"
               } w-1/2`}
             >
               {message.content}
             </div>
           </div>
-        ))}
+        ))
+          :
+          <div className='h-[15rem] max-h-full'>&nbsp;</div>
+        }
       </div>
       <div className="fixed bottom-0 left-0 w-full p-4">
         <form
-          className="pt-4 border-t border-t-primary-default flex justify-between"
+          className="pt-4 border-t border-t-primary-default flex flex-col sm:flex-row justify-between"
           onSubmit={handleSubmit(handleSendMessage)}
         >
-          <input
-            className="w-full p-2 outline-0"
+          <Input
+            className="w-full p-2 outline-0 flex-1"
             placeholder="Message"
             {...register("message")}
             type="text"
           />
-          <button
-            className="bg-primary-default text-light-default py-2 px-4 rounded-xl"
-            type="submit"
-          >
-            Send
-          </button>
+          <div className='flex-1 justify-end flex mt-4'>
+            <Button
+              className="bg-primary-default text-light-default py-2 px-4 rounded-xl"
+              type="submit"
+            >
+              Send
+            </Button>
+          </div>
         </form>
       </div>
     </Modal>
