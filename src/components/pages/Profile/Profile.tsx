@@ -1,7 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import React, {useContext, useEffect, useState} from "react";
 import {Festival, Photo, PrivacySetting, Ride, UserProfile} from "../../../models";
-import { DataStore, Storage } from "aws-amplify";
 import PhotoImage from "../../ui/PhotoImage";
 import Header from "../../layout/Header";
 import PhotoModal from "./Modals/PhotoModal";
@@ -81,8 +80,6 @@ const ProfilePage = () => {
       .then(privacySetting => setPrivacySetting(privacySetting));
   }, [dataCleared, profile]);
 
-  // TODO: Add full privacy setting
-
   return (
     <>
       <Header>
@@ -123,62 +120,81 @@ const ProfilePage = () => {
           <h1 className={"text-2xl my-4"}>
             {profile?.firstName} {profile?.lastName}
           </h1>
-          { !privacySetting?.city &&
-            <div className={"text-lg my-2 flex flex-wrap"}>
-              <span className="basis-[120px]">City:</span>
-              <span>{profile?.city}</span>
-            </div>
+          {
+            !privacySetting?.city &&
+              <div className={"text-lg my-2 flex flex-wrap"}>
+                <span className="basis-[120px]">City:</span>
+                <span>{profile?.city}</span>
+              </div>
           }
-          <div className={"text-lg my-2 flex flex-wrap"}>
-            <span className="basis-[120px]">State:</span>
-            <span>{profile?.state}</span>
-          </div>
-          <div className={"text-lg my-2 flex flex-wrap"}>
-            <span className="basis-[120px]">School:</span>
-            <span>{profile?.school}</span>
-          </div>
+          {
+            !privacySetting?.state &&
+              <div className={"text-lg my-2 flex flex-wrap"}>
+                <span className="basis-[120px]">State:</span>
+                <span>{profile?.state}</span>
+              </div>
+          }
+          {
+            !privacySetting?.school &&
+              <div className={"text-lg my-2 flex flex-wrap"}>
+                <span className="basis-[120px]">School:</span>
+                <span>{profile?.school}</span>
+              </div>
+          }
         </div>
         <section>
           <h1 className="text-2xl my-4">Events Attending</h1>
-          {eventsAttending.length > 0 ? (
-            eventsAttending.map((event, index) => (
-              <span key={event.id}>
-                <Link
-                  className="hover:underline text-green-950"
-                  to={`/events/${event.id}`}
-                >
-                  {event.name}
-                </Link>
-                {index < eventsAttending.length - 1 ? ", " : ""}
-              </span>
-            ))
-          ) : (
-            <span>Not attending any events</span>
-          )}
+          {
+            !privacySetting?.attendingEvents ?
+              (eventsAttending.length > 0 ? eventsAttending.map((event, index) =>
+                <span key={event.id}>
+                  <Link
+                    className="hover:underline text-green-950"
+                    to={`/events/${event.id}`}
+                  >
+                    {event.name}
+                  </Link>
+                  {index < eventsAttending.length - 1 ? ", " : ""}
+                </span>
+              ) :
+              <span>Not attending any events</span>
+            ):
+            <span>This user has set their privacy setting to hide events.</span>
+          }
         </section>
         <section>
           <h1 className="text-2xl my-4">Rides</h1>
-          {rides.length > 0 ? (
-            rides.map((ride) => <RideCardBase ride={ride} key={ride.id} />)
-          ) : (
-            <span>Not signed up for any rides</span>
-          )}
+          {
+            !privacySetting?.rides ?
+              (rides.length > 0 ? rides.map(ride =>
+                <RideCardBase ride={ride} key={ride.id} />
+              ) :
+              <span>Not signed up for any rides</span>
+            ) :
+            <span>This user has set their privacy setting to hide rides.</span>
+          }
         </section>
         <section>
           <h1 className="text-2xl my-4">Photos</h1>
           <div className="flex flex-wrap gap-4">
-            {photos?.map((photo) => (
-              <div
-                className="max-w-[200px] max-h-[200px] cursor-pointer aspect-square w-full h-full"
-                key={photo.id}
-                onClick={() => {
-                  setIsPhotoModalOpen(true);
-                  setSelectedPhoto(photo);
-                }}
-              >
-                <PhotoImage level='protected' photo={photo} key={photo.id} />
-              </div>
-            ))}
+            {
+              !privacySetting?.photos ?
+                (photos.length > 0 ? photos.map(photo =>
+                  <div
+                    className="max-w-[200px] max-h-[200px] cursor-pointer aspect-square w-full h-full"
+                    key={photo.id}
+                    onClick={() => {
+                      setIsPhotoModalOpen(true);
+                      setSelectedPhoto(photo);
+                    }}
+                  >
+                    <PhotoImage level='protected' photo={photo} key={photo.id} />
+                  </div>
+                ) :
+                <span>No photos</span>
+              ) :
+              <div>This user has set their privacy setting to hide photos.</div>
+            }
           </div>
         </section>
         <PhotoModal
