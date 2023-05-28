@@ -1,12 +1,11 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { SubmitHandler } from "react-hook-form";
 import { ProfileInputs } from "../../../../types";
 import { DataStore } from "@aws-amplify/datastore";
 import { UserProfile } from "../../../../models";
 import getErrorMessage from "../../../../lib/getErrorMessage";
-import ProfileEditForm from "../ProfileEditForm";
+import AccountEditForm from "../../AccountPage/AccountEditForm";
 import { ProfileModalProps } from "../../../../@types/profile";
-import { Dialog, Transition } from "@headlessui/react";
 import Button from "../../../common/Button/Button";
 import { BsPerson } from "react-icons/all";
 import Modal from "../../../common/Modal/Modal";
@@ -72,7 +71,7 @@ const ProfileEditModal = ({
           )}
         </div>
         <div className="flex justify-center">
-          <ProfileEditForm onSubmit={handleProfileUpdate} profile={profile} />
+          <AccountEditForm onSubmit={handleProfileUpdate} profile={profile} />
         </div>
       </div>
     </Modal>
