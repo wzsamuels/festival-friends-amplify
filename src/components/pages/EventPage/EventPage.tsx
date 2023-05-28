@@ -20,9 +20,6 @@ import useFriendStore from "../../../stores/friendProfileStore";
 import LoadingState from "../../ui/LoadingState";
 import useDataClearedStore from "../../../stores/dataClearedStore";
 
-
-
-
 const EventPage = () => {
   const [eventAttendees, setEventAttendees] = useState<Map<string, UserProfile[]>>(new Map());
   // Filter events by type
@@ -30,12 +27,8 @@ const EventPage = () => {
   const loadingEvents = useEventStore(state => state.loadingEvents)
   const sportEvents = events.filter((event) => event.type === EventType.SPORT);
   const musicEvents = events.filter((event) => event.type === EventType.MUSIC);
-  const businessEvents = events.filter(
-    (event) => event.type === EventType.BUSINESS
-  );
-  const travelEvents = events.filter(
-    (event) => event.type === EventType.TRAVEL
-  )
+  const businessEvents = events.filter((event) => event.type === EventType.BUSINESS);
+  const travelEvents = events.filter((event) => event.type === EventType.TRAVEL)
   const dataCleared = useDataClearedStore(state => state.dataCleared)
   const friendProfiles = useFriendStore(state => state.acceptedFriendProfiles)
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
