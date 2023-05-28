@@ -10,6 +10,18 @@ export const getRidesByEvent  = async (eventID: string) => {
   }
 }
 
+export const getRidesByProfile = async (profile: UserProfile) => {
+  try {
+    const rideUsers = await profile.rides.toArray();
+    return await Promise.all(
+      rideUsers.map(async (rideUser) => await rideUser.ride)
+    );
+  } catch (e) {
+    console.log("Error getting rides: ", e);
+    return [];
+  }
+}
+
 export const getRidersByEvent = async (ride:  Ride) => {
   try {
     return await DataStore.query(RideUser, c => c.rideID.eq(ride.id));
