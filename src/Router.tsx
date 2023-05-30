@@ -20,7 +20,6 @@ const AccountPage = lazy(
   () => import("./components/pages/AccountPage/AccountPage")
 );
 
-//Amplify.Logger.LOG_LEVEL = 'DEBUG';
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
@@ -36,8 +35,12 @@ import useFriendStore from "./stores/friendProfileStore";
 import useConversationStore from "./stores/conversationStore";
 import LoadingState from "./components/ui/LoadingState";
 import LayoutErrorBoundary from "./components/ui/LayoutErrorBoundary";
+import AdminEventPage from "./components/pages/AdminPage/AdminEventPage";
+import AdminLayout from "./components/pages/AdminPage/AdminLayout";
+import VerifyAccounts from "./components/pages/AdminPage/VerifyAccounts";
+import AdminDatabasePage from "./components/pages/AdminPage/AdminDatabasePage";
 
-const AppWrapper = () => {
+const Router = () => {
   const { user } = useAuthenticator((context) => [context.user]);
   const fetchUserProfile = useProfileStore(state => state.fetchUserProfile)
   const userProfile = useProfileStore(state => state.userProfile)
@@ -48,7 +51,7 @@ const AppWrapper = () => {
   const { route } = useAuthenticator((context) => [context.route]);
 
   useEffect(() => {
-    console.log("AppWrapper mounted")
+    console.log("Router mounted")
   },[])
 
   useEffect(() => {
@@ -103,7 +106,22 @@ const AppWrapper = () => {
         },
         {
           path: "admin",
-          element: <AdminPage />,
+          element: <AdminLayout/>,
+          children: [
+            {
+              index: true,
+              element: <AdminEventPage/>,
+              loader: adminEventLoader
+            },
+            {
+              path: "accounts",
+              element: <VerifyAccounts/>
+            },
+            {
+              path: "database",
+              element: <AdminDatabasePage/>
+            }
+          ]
         },
         {
           path: "/friends/profile/:profileId",
@@ -122,4 +140,4 @@ const AppWrapper = () => {
   );
 };
 
-export default AppWrapper;
+export default Router;

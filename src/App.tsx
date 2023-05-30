@@ -1,5 +1,5 @@
 import { Authenticator } from "@aws-amplify/ui-react";
-import AppWrapper from "./AppWrapper";
+import Router from "./Router";
 import React, {useEffect} from "react";
 import useEventStore from "./stores/eventStore";
 import awsExports from "./aws-exports";
@@ -20,7 +20,7 @@ const App = () => {
 
   return (
     <Authenticator.Provider>
-      <AppWrapper />
+      <Router />
     </Authenticator.Provider>
   );
 };
