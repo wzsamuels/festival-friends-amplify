@@ -1,24 +1,33 @@
-import { SubmitHandler, useForm } from "react-hook-form";
+import {SubmitHandler, useFieldArray, useForm} from "react-hook-form";
 
-import React, { useState } from "react";
-import { UserProfile } from "../../../models";
+import React, {Fragment, useContext, useEffect, useState} from "react";
+import {SocialMedia, SocialMediaType, UserProfile} from "../../../models";
 import { ProfileInputs } from "../../../types";
 import states from "../../../data/states";
 import Label from "../../common/Label/Label";
 import Input from "../../common/Input/Input";
 import Button from "../../common/Button/Button";
 import Select from "../../common/Select";
+import useDataClearedStore from "../../../stores/dataClearedStore";
+import {FaWindowClose} from "react-icons/all";
+import {DataStore} from "@aws-amplify/datastore";
 
 interface ProfileFormProps {
   onSubmit: SubmitHandler<ProfileInputs>;
   profile: UserProfile | null | undefined;
 }
 
+
+
 const AccountEditForm = ({ onSubmit, profile }: ProfileFormProps) => {
   const [message, setMessage] = useState("");
+  const dataCleared = useDataClearedStore(state => state.dataCleared)
   const {
     register,
     handleSubmit,
+    setValue,
+    control,
+    getValues,
     formState: { errors },
   } = useForm<ProfileInputs>({
     defaultValues: {
@@ -31,8 +40,51 @@ const AccountEditForm = ({ onSubmit, profile }: ProfileFormProps) => {
       zipcode: profile?.zipcode || "",
       address: profile?.address || "",
       address2: profile?.address2 || "",
+      //socialMedia: [],
     },
   });
+
+  const { fields, append, remove } = useFieldArray({name: "socialMedia", control})
+
+  useEffect(() => {
+    if(!profile || !dataCleared) return;
+    const fetchSocialMedia = async () => {
+      const socialMedia = await profile.socialMedia.toArray();
+      return socialMedia.map(sm => {
+        return {
+          id: sm.id,
+          type: sm.socialMediaType,
+          url: sm.accountURL,
+          saved: true
+        }
+      })
+    }
+    fetchSocialMedia().then(socialMedia => setValue("socialMedia",  socialMedia))
+  }, [profile])
+
+  const handleSocialMediaDelete = async (index: number) => {
+    const socialMedia = getValues("socialMedia")
+    await DataStore.delete(SocialMedia, socialMedia[index].id as string)
+    remove(index)
+  }
+
+  const handleSocialMediaSave = async (index: number) => {
+    const socialMedia = getValues("socialMedia")
+
+    const newSM = await DataStore.save(new SocialMedia({
+      socialMediaType: socialMedia[index].type,
+      accountURL: socialMedia[index].url,
+      userProfile: profile,
+      userProfileID: profile?.id as string
+    }))
+
+    socialMedia[index].id = newSM.id
+    socialMedia[index].saved = true
+    setValue("socialMedia", socialMedia)
+
+    console.log(newSM)
+  }
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -91,6 +143,52 @@ const AccountEditForm = ({ onSubmit, profile }: ProfileFormProps) => {
         <Label>Zip Code</Label>
         <Input {...register("zipcode")} />
       </div>
+      <section className=''>
+        <div className='flex justify-between'>
+          <h2 className='font-bold'>Social Media Accounts</h2>
+          <Button
+            type="button"
+            className="my-4"
+            onClick={() => append({
+              id: "0",
+              type: "",
+              url: "",
+              saved: false
+            })}
+          >
+            +
+          </Button>
+        </div>
+        <div className="my-4">
+        { fields.map((socialMedia, index) =>
+          <div className='my-4 flex justify-between' key={index} >
+            <div className='flex-auto'>
+              <div className="flex flex-wrap my-4">
+                <Label>Social Media</Label>
+                <Input {...register(`socialMedia.${index}.type` as const)} />
+              </div>
+              <div className="flex flex-wrap my-4">
+                <Label>Account URL</Label>
+                <Input {...register(`socialMedia.${index}.url` as const)} />
+              </div>
+              <div className='flex justify-center gap-4'>
+              {
+                socialMedia.saved ?
+                  <>
+                    <Button type="button" className='mx-4' onClick={() => handleSocialMediaDelete(index)}>Delete</Button>
+                  </>
+                    :
+                  <>
+                    <Button type="button" className='mx-4' onClick={() => remove(index)} variation='outline'>Cancel</Button>
+                    <Button type="button" className='mx-4' onClick={() => handleSocialMediaSave(index)}>Save</Button>
+                  </>
+              }
+              </div>
+            </div>
+          </div>
+        )}
+        </div>
+      </section>
 
       <div className="my-6 flex justify-center">
         <Button type="submit" className="my-4">

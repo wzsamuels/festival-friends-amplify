@@ -1,6 +1,6 @@
-import { SubmitHandler, useForm, Controller } from "react-hook-form";
+import {SubmitHandler, useForm, Controller, useFieldArray} from "react-hook-form";
 import React, { useState } from "react";
-import {PrivacySetting} from "../../../models";
+import {PrivacySetting, SocialMedia, UserProfile} from "../../../models";
 import { DataStore } from "@aws-amplify/datastore";
 import { ProfileInputs } from "../../../types";
 import { useAuthenticator } from "@aws-amplify/ui-react";
@@ -13,38 +13,62 @@ import { useFormattedPhoneInput } from "../../../hooks/useFormattedPhoneInput";
 import useProfileStore from "../../../stores/profileStore";
 import Select from "../../common/Select";
 import {getCollegeGroupByEmail} from "../../../services/collegeGroupServices";
-import {CreateUserProfileInput, CreateUserProfileMutation} from "../../../API";
-import {API, graphqlOperation} from "aws-amplify";
-import {GraphQLQuery} from "@aws-amplify/api";
-import * as mutations from "../../../graphql/mutations";
 
 const AccountUnverified = () => {
   const { user } = useAuthenticator((context) => [context.user]);
   const userProfile = useProfileStore((state) => state.userProfile);
+  const setProfile = useProfileStore((state) => state.setProfile);
   const { phone, inputRef, handlePhoneChange } = useFormattedPhoneInput();
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const { register, handleSubmit, control } = useForm<ProfileInputs>();
-  const email = user?.attributes?.email as string;
+  const { register, handleSubmit, control, getValues } = useForm<ProfileInputs>();
+  const { fields, append, remove } = useFieldArray({name: "socialMedia", control})
+
 
   const createNewProfile: SubmitHandler<ProfileInputs> = async (data) => {
     //alert(`Email: ${email}\nUsername: ${username}\nData: ${JSON.stringify(data)}`)
     setIsSubmitting(true);
     try {
+      const sub = user?.attributes?.sub as string;
+      const email = user?.attributes?.email as string;
       const newPrivacySetting =  await DataStore.save(new PrivacySetting({}));
       const collegeGroup = await getCollegeGroupByEmail(email);
+      const { socialMedia, ...filteredData} = data;
 
-      const userProfileInput: CreateUserProfileInput = {
-        ...data,
+      const newUserProfile = await DataStore.save(new UserProfile({
+        ...filteredData,
+        email: email,
+        phone: phone,
         ...(collegeGroup && {collegeGroupId: collegeGroup?.id}),
+        verifySubmitted: true,
+        privacySettingID: newPrivacySetting.id,
+        sub: sub
+      }));
+
+      /*
+      const userProfileInput: CreateUserProfileInput = {
+        ...filteredData,
+        ...(collegeGroup && {collegeGroupId: collegeGroup?.id}),
+        verifySubmitted: true,
         privacySettingID: newPrivacySetting.id
       }
 
-      const newUserProfile = await API.graphql<GraphQLQuery<CreateUserProfileMutation>>(
+      const response = await API.graphql<GraphQLQuery<CreateUserProfileMutation>>(
         graphqlOperation(mutations.createUserProfile, {
           input: userProfileInput}));
+      const newUserProfile = response.data?.createUserProfile as unknown as UserProfile;
+       */
 
+      socialMedia.map(async (account) =>
+        await DataStore.save(new SocialMedia({
+          socialMediaType: account.type,
+          accountURL: account.url,
+          userProfileID: newUserProfile?.id,
+          userProfile: newUserProfile,
+        }))
+      );
+      setProfile(newUserProfile);
       console.log(`New profile: `, newUserProfile, "\nNew Privacy Setting: ", newPrivacySetting);
     } catch (err) {
       console.error("Error saving profile:", err);
@@ -155,6 +179,42 @@ const AccountUnverified = () => {
               )}
             />
           </InputWrapper>
+          <section>
+            <div className='flex justify-between'>
+              <h2 className='font-bold'>Social Media Accounts</h2>
+              <Button
+                type="button"
+                className="my-4"
+                onClick={() => append({
+                  id: "0",
+                  type: "",
+                  url: "",
+                  saved: false
+                })}
+              >
+                +
+              </Button>
+            </div>
+            <div className="my-4">
+              { fields.map((socialMedia, index) =>
+                <div className='my-4 flex justify-between' key={index} >
+                  <div className='flex-auto'>
+                    <div className="flex flex-wrap my-4">
+                      <Label>Social Media</Label>
+                      <Input {...register(`socialMedia.${index}.type` as const)} />
+                    </div>
+                    <div className="flex flex-wrap my-4">
+                      <Label>Account URL</Label>
+                      <Input {...register(`socialMedia.${index}.url` as const)} />
+                    </div>
+                    <div className='flex justify-center gap-4'>
+                      <Button type="button" className='mx-4' onClick={() => remove(index)} variation='outline'>Cancel</Button>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </section>
           <div className="flex justify-center items-center my-6">
             <Button
               className="bg-primary-default text-light-default rounded-md px-8 py-2"
