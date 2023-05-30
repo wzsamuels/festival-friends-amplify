@@ -70,16 +70,19 @@ const ClearDatabase = () => {
     }
   }
   return (
-    <div className='flex justify-center my-6'>
-      <Button
-        onClick={clearDatabase}
-        disabled={clearing}
-      >
-        {
-          clearing ? <span>Clearing... <LoadingState/></span> : "Clear Database"
-        }
-      </Button>
-    </div>
+    <>
+      <h1 className="text-xl md:text-2xl text-center">Clear Database</h1>
+      <div className='flex justify-center gap-4'>
+        <Button
+          onClick={clearDatabase}
+          disabled={clearing}
+        >
+          {
+            clearing ? <span>Clearing... <LoadingState/></span> : "Clear Database"
+          }
+        </Button>
+      </div>
+    </>
   )
 }
 

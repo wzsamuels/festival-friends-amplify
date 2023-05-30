@@ -83,9 +83,11 @@ const SeedDatabase = () => {
 
   return (
     <>
-      <h1 className="text-xl md:text-2xl">Seed Database</h1>
-      <Button className="my-4" onClick={seedUserProfiles}>Seed User Profiles</Button>
-      <Button className="my-4" onClick={seedCollegeGroups}>Seed College Groups</Button>
+      <h1 className="text-xl md:text-2xl text-center">Seed Database</h1>
+      <div className='flex justify-center gap-4'>
+        <Button className="my-4" onClick={seedUserProfiles}>Seed User Profiles</Button>
+        <Button className="my-4" onClick={seedCollegeGroups}>Seed College Groups</Button>
+      </div>
     </>
   )
 }
