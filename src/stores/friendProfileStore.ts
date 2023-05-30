@@ -62,7 +62,12 @@ const useFriendStore = create<FriendStore>((set: SetState<FriendStore>, get) => 
     });
     set({ friendSubscription: friendshipSub });
   },
-  friendUnsubscribe: () => get().friendSubscription.unsubscribe()
+  friendUnsubscribe: () => {
+    const friendSub = get().friendSubscription;
+    if (friendSub) {
+      friendSub.unsubscribe()
+    }
+  }
 }));
 
 export default useFriendStore;
