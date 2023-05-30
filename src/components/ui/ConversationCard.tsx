@@ -1,8 +1,8 @@
-import {Conversation, Message, Photo} from "../../models";
+import {Conversation, Message} from "../../models";
 import React, {useContext, useEffect, useState} from "react";
 import { DataStore } from "aws-amplify";
 import ImageContext from "../../context/ImageContext";
-import {getProfilePhoto} from "../../services/ProfileServices";
+import {getProfilePhoto} from "../../services/profileServices";
 import useProfileStore from "../../stores/profileStore";
 import useFriendStore from "../../stores/friendProfileStore";
 

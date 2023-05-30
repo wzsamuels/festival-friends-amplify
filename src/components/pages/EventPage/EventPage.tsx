@@ -19,7 +19,6 @@ import useEventStore from "../../../stores/eventStore";
 import useFriendStore from "../../../stores/friendProfileStore";
 import LoadingState from "../../ui/LoadingState";
 import useDataClearedStore from "../../../stores/dataClearedStore";
-
 const EventPage = () => {
   const [eventAttendees, setEventAttendees] = useState<Map<string, UserProfile[]>>(new Map());
   // Filter events by type
@@ -34,9 +33,6 @@ const EventPage = () => {
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
   const [eventType, setEventType] = useState("music");
 
-  useEffect(() => {
-    console.log("Mounting EventPage")
-  },[])
 
   // Fetch event attendees
   useEffect(() => {

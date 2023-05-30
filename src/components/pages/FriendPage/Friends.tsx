@@ -10,7 +10,7 @@ import {
   acceptFriendRequest,
   createFriendRequest,
   rejectFriendRequest,
-} from "../../../services/FriendsService";
+} from "../../../services/friendsService";
 import LoggedOutState from "../../ui/LoggedOutState";
 import UnverifiedState from "../../ui/UnverifiedState";
 import LoadingState from "../../ui/LoadingState";

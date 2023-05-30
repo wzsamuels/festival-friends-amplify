@@ -11,7 +11,7 @@ import CustomAlert from "../../../common/Alert/Alert";
 import Toast from "../../../common/Toast/Toast";
 import { ToastData } from "../../../../types";
 import { criteria, getFilteredData } from "../../../../lib/searchHelpers";
-import { createFriendRequest } from "../../../../services/FriendsService";
+import { createFriendRequest } from "../../../../services/friendsService";
 import InputWrapper from "../../../common/InputWrapper/InputWrapper";
 import states from "../../../../data/states";
 import useProfileStore from "../../../../stores/profileStore";

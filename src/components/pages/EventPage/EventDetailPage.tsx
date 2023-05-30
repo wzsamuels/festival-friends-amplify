@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import {Festival, UserProfile} from "../../../models";
+import {UserProfile} from "../../../models";
 import { DataStore } from "@aws-amplify/datastore";
 import ImageContext from "../../../context/ImageContext";
 import FriendCard from "../../ui/FriendCard";

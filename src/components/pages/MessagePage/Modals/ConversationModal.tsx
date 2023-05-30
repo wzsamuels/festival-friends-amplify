@@ -4,7 +4,7 @@ import React, {useContext, useEffect, useState} from "react";
 import {DataStore, SortDirection} from "aws-amplify";
 import Modal from "../../../common/Modal/Modal";
 import { SubmitHandler, useForm } from "react-hook-form";
-import {getProfilePhoto} from "../../../../services/ProfileServices";
+import {getProfilePhoto} from "../../../../services/profileServices";
 import ImageContext from "../../../../context/ImageContext";
 import useProfileStore from "../../../../stores/profileStore";
 import useDataClearedStore from "../../../../stores/dataClearedStore";
