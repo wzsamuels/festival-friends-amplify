@@ -5,6 +5,7 @@ import ImageContext from "../../context/ImageContext";
 import {getProfilePhoto} from "../../services/profileServices";
 import useProfileStore from "../../stores/profileStore";
 import useFriendStore from "../../stores/friendProfileStore";
+import {BsPerson} from "react-icons/all";
 
 interface ConversationCardProps {
   conversation: Conversation;
@@ -87,11 +88,19 @@ const ConversationCard = ({
       className={`shadow-xl w-full max-w-[600px] flex justify-between overflow-hidden ${className}`}
     >
       <div className="flex items-center w-full p-4">
-        <img
-          className="rounded-full mx-4 max-w-[75px] w-full max-h-[75px] aspect-square"
-          src={friendProfileImage}
-          alt={friendProfile?.firstName ? friendProfile.firstName : ""}
-        />
+        {
+          friendProfileImage ?
+            <img
+              className="rounded-full mx-4 max-w-[75px] w-full max-h-[75px] aspect-square"
+              src={friendProfileImage}
+              alt={friendProfile?.firstName ? friendProfile.firstName : ""}
+            />
+            :
+            <div
+              className={"flex mx-4 justify-center items-center rounded-full bg-gray-300 h-[75px] w-[75px]"}>
+              <BsPerson className="w-1/2 h-1/2 text-medium-default text-center" />
+            </div>
+        }
         <div className="flex flex-col flex-grow overflow-hidden">
           <div className="text-lg font-bold flex justify-between">
             <span>{friendProfile?.firstName} {friendProfile?.lastName}</span>
