@@ -12,7 +12,7 @@ import PhotoModal from "../Profile/Modals/PhotoModal";
 import { Link } from "react-router-dom";
 import useDataClearedStore from "../../../stores/dataClearedStore";
 import useProfileStore from "../../../stores/profileStore";
-import {getBannerPhoto, getEventsAttending, getProfilePhoto} from "../../../services/ProfileServices";
+import {getBannerPhoto, getEventsAttending, getProfilePhoto} from "../../../services/profileServices";
 import ImageContext from "../../../context/ImageContext";
 import {getRidesByProfile} from "../../../services/rideServices";
 
@@ -63,8 +63,6 @@ const AccountVerified = ({ user }: { user: any }) => {
       console.log(e);
     }
 
-    console.log(userProfile);
-
     try {
       const photoSub = DataStore.observeQuery(Photo, (photo) =>
         photo.userProfileID.eq(userProfile.id)
@@ -72,17 +70,8 @@ const AccountVerified = ({ user }: { user: any }) => {
         setPhotos(items);
       });
 
-      const eventProfileSub = DataStore.observeQuery(EventProfile, (eventProfile) =>
-        eventProfile.userProfileID.eq(userProfile.id))
-        .subscribe(async ({ items }) => {
-          const eventPromises = items.map(async (eventProfile) => await eventProfile.event);
-          const events = await Promise.all(eventPromises);
-          setEventsAttending(events);
-      })
-
       return () => {
         photoSub.unsubscribe();
-        eventProfileSub.unsubscribe();
       };
     } catch (e) {
       console.log(e);
