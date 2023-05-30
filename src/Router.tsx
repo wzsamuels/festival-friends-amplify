@@ -20,6 +20,7 @@ const AccountPage = lazy(
   () => import("./components/pages/AccountPage/AccountPage")
 );
 
+import { loader as adminEventLoader} from './components/pages/AdminPage/AdminEventPage'
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
