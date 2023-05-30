@@ -21,8 +21,8 @@ const useProfileStore = create<ProfileStore>((set: SetState<ProfileStore>,  get)
     set({loadingUserProfile: true})
     try {
       console.log("Fetching profile, ", sub, route)
-      const profile = await DataStore.query(UserProfile, sub)
-      set({userProfile: profile})
+      const profile = await DataStore.query(UserProfile, c => c.sub.eq(sub))
+      set({userProfile: profile[0]})
 
     }
     catch (e) {
