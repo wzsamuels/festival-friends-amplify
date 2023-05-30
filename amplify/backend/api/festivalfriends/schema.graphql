@@ -30,6 +30,7 @@ type Festival @model @auth(rules: [{ allow: public }]) {
   tagline: String
   description: String
   url: String
+  approved: Boolean @default(value: "true")
   group: CollegeGroup @belongsTo(fields: ["groupID"])
   groupID: ID @index(name: "byGroup")
   attendees: [EventProfile] @hasMany(fields: ["id"])
@@ -38,6 +39,7 @@ type Festival @model @auth(rules: [{ allow: public }]) {
 
 type UserProfile @model @auth(rules: [{ allow: public }]) {
   id: ID!
+  sub: String!
   firstName: String
   lastName: String
   verified: Boolean @default(value: "false")
@@ -70,20 +72,20 @@ type SocialMedia @model @auth(rules: [{ allow: public}]) {
   id: ID!
   userProfileID: ID! @index(name: "byUserProfile")
   userProfile: UserProfile @belongsTo(fields: ["userProfileID"])
-  socialMediaType: SocialMediaType!
+  socialMediaType: String!
   accountURL: String!
 }
 
 type PrivacySetting @model @auth(rules: [{ allow: public }]) {
   id: ID!
-  city: Boolean @default(value: "true")
-  state: Boolean @default(value: "true")
-  school: Boolean @default(value: "true")
-  email: Boolean @default(value: "true")
-  attendingEvents: Boolean @default(value: "true")
-  rides: Boolean @default(value: "true")
-  friends: Boolean @default(value: "true")
-  photos: Boolean @default(value: "true")
+  city: Boolean @default(value: "false")
+  state: Boolean @default(value: "false")
+  school: Boolean @default(value: "false")
+  email: Boolean @default(value: "false")
+  attendingEvents: Boolean @default(value: "false")
+  rides: Boolean @default(value: "false")
+  friends: Boolean @default(value: "false")
+  photos: Boolean @default(value: "false")
 }
 
 type Ride @model @auth(rules: [{ allow: public }]) {

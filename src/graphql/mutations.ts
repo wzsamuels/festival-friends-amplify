@@ -15,6 +15,7 @@ export const createMessage = /* GraphQL */ `
       conversationID
       sender {
         id
+        sub
         firstName
         lastName
         verified
@@ -200,6 +201,7 @@ export const createMessage = /* GraphQL */ `
       }
       receiver {
         id
+        sub
         firstName
         lastName
         verified
@@ -389,6 +391,7 @@ export const createMessage = /* GraphQL */ `
         friendProfileID
         userProfile {
           id
+          sub
           firstName
           lastName
           verified
@@ -473,6 +476,7 @@ export const createMessage = /* GraphQL */ `
         }
         friendProfile {
           id
+          sub
           firstName
           lastName
           verified
@@ -601,6 +605,7 @@ export const updateMessage = /* GraphQL */ `
       conversationID
       sender {
         id
+        sub
         firstName
         lastName
         verified
@@ -786,6 +791,7 @@ export const updateMessage = /* GraphQL */ `
       }
       receiver {
         id
+        sub
         firstName
         lastName
         verified
@@ -975,6 +981,7 @@ export const updateMessage = /* GraphQL */ `
         friendProfileID
         userProfile {
           id
+          sub
           firstName
           lastName
           verified
@@ -1059,6 +1066,7 @@ export const updateMessage = /* GraphQL */ `
         }
         friendProfile {
           id
+          sub
           firstName
           lastName
           verified
@@ -1187,6 +1195,7 @@ export const deleteMessage = /* GraphQL */ `
       conversationID
       sender {
         id
+        sub
         firstName
         lastName
         verified
@@ -1372,6 +1381,7 @@ export const deleteMessage = /* GraphQL */ `
       }
       receiver {
         id
+        sub
         firstName
         lastName
         verified
@@ -1561,6 +1571,7 @@ export const deleteMessage = /* GraphQL */ `
         friendProfileID
         userProfile {
           id
+          sub
           firstName
           lastName
           verified
@@ -1645,6 +1656,7 @@ export const deleteMessage = /* GraphQL */ `
         }
         friendProfile {
           id
+          sub
           firstName
           lastName
           verified
@@ -1771,6 +1783,7 @@ export const createEventProfile = /* GraphQL */ `
       eventID
       userProfile {
         id
+        sub
         firstName
         lastName
         verified
@@ -1966,6 +1979,7 @@ export const createEventProfile = /* GraphQL */ `
         tagline
         description
         url
+        approved
         group {
           id
           name
@@ -2044,6 +2058,7 @@ export const updateEventProfile = /* GraphQL */ `
       eventID
       userProfile {
         id
+        sub
         firstName
         lastName
         verified
@@ -2239,6 +2254,7 @@ export const updateEventProfile = /* GraphQL */ `
         tagline
         description
         url
+        approved
         group {
           id
           name
@@ -2317,6 +2333,7 @@ export const deleteEventProfile = /* GraphQL */ `
       eventID
       userProfile {
         id
+        sub
         firstName
         lastName
         verified
@@ -2512,6 +2529,7 @@ export const deleteEventProfile = /* GraphQL */ `
         tagline
         description
         url
+        approved
         group {
           id
           name
@@ -2596,6 +2614,7 @@ export const createFestival = /* GraphQL */ `
       tagline
       description
       url
+      approved
       group {
         id
         name
@@ -2615,6 +2634,7 @@ export const createFestival = /* GraphQL */ `
             tagline
             description
             url
+            approved
             groupID
             createdAt
             updatedAt
@@ -2628,6 +2648,7 @@ export const createFestival = /* GraphQL */ `
         members {
           items {
             id
+            sub
             firstName
             lastName
             verified
@@ -2667,6 +2688,7 @@ export const createFestival = /* GraphQL */ `
           eventID
           userProfile {
             id
+            sub
             firstName
             lastName
             verified
@@ -2701,6 +2723,7 @@ export const createFestival = /* GraphQL */ `
             tagline
             description
             url
+            approved
             groupID
             createdAt
             updatedAt
@@ -2732,6 +2755,7 @@ export const createFestival = /* GraphQL */ `
             tagline
             description
             url
+            approved
             groupID
             createdAt
             updatedAt
@@ -2794,6 +2818,7 @@ export const updateFestival = /* GraphQL */ `
       tagline
       description
       url
+      approved
       group {
         id
         name
@@ -2813,6 +2838,7 @@ export const updateFestival = /* GraphQL */ `
             tagline
             description
             url
+            approved
             groupID
             createdAt
             updatedAt
@@ -2826,6 +2852,7 @@ export const updateFestival = /* GraphQL */ `
         members {
           items {
             id
+            sub
             firstName
             lastName
             verified
@@ -2865,6 +2892,7 @@ export const updateFestival = /* GraphQL */ `
           eventID
           userProfile {
             id
+            sub
             firstName
             lastName
             verified
@@ -2899,6 +2927,7 @@ export const updateFestival = /* GraphQL */ `
             tagline
             description
             url
+            approved
             groupID
             createdAt
             updatedAt
@@ -2930,6 +2959,7 @@ export const updateFestival = /* GraphQL */ `
             tagline
             description
             url
+            approved
             groupID
             createdAt
             updatedAt
@@ -2992,6 +3022,7 @@ export const deleteFestival = /* GraphQL */ `
       tagline
       description
       url
+      approved
       group {
         id
         name
@@ -3011,6 +3042,7 @@ export const deleteFestival = /* GraphQL */ `
             tagline
             description
             url
+            approved
             groupID
             createdAt
             updatedAt
@@ -3024,6 +3056,7 @@ export const deleteFestival = /* GraphQL */ `
         members {
           items {
             id
+            sub
             firstName
             lastName
             verified
@@ -3063,6 +3096,7 @@ export const deleteFestival = /* GraphQL */ `
           eventID
           userProfile {
             id
+            sub
             firstName
             lastName
             verified
@@ -3097,6 +3131,7 @@ export const deleteFestival = /* GraphQL */ `
             tagline
             description
             url
+            approved
             groupID
             createdAt
             updatedAt
@@ -3128,6 +3163,7 @@ export const deleteFestival = /* GraphQL */ `
             tagline
             description
             url
+            approved
             groupID
             createdAt
             updatedAt
@@ -3180,6 +3216,7 @@ export const createUserProfile = /* GraphQL */ `
   ) {
     createUserProfile(input: $input, condition: $condition) {
       id
+      sub
       firstName
       lastName
       verified
@@ -3201,6 +3238,7 @@ export const createUserProfile = /* GraphQL */ `
           eventID
           userProfile {
             id
+            sub
             firstName
             lastName
             verified
@@ -3235,6 +3273,7 @@ export const createUserProfile = /* GraphQL */ `
             tagline
             description
             url
+            approved
             groupID
             createdAt
             updatedAt
@@ -3271,6 +3310,7 @@ export const createUserProfile = /* GraphQL */ `
           rideID
           userProfile {
             id
+            sub
             firstName
             lastName
             verified
@@ -3312,6 +3352,7 @@ export const createUserProfile = /* GraphQL */ `
           isAccepted
           userProfile {
             id
+            sub
             firstName
             lastName
             verified
@@ -3336,6 +3377,7 @@ export const createUserProfile = /* GraphQL */ `
           }
           friendProfile {
             id
+            sub
             firstName
             lastName
             verified
@@ -3374,6 +3416,7 @@ export const createUserProfile = /* GraphQL */ `
           friendProfileID
           userProfile {
             id
+            sub
             firstName
             lastName
             verified
@@ -3398,6 +3441,7 @@ export const createUserProfile = /* GraphQL */ `
           }
           friendProfile {
             id
+            sub
             firstName
             lastName
             verified
@@ -3443,6 +3487,7 @@ export const createUserProfile = /* GraphQL */ `
           conversationID
           sender {
             id
+            sub
             firstName
             lastName
             verified
@@ -3467,6 +3512,7 @@ export const createUserProfile = /* GraphQL */ `
           }
           receiver {
             id
+            sub
             firstName
             lastName
             verified
@@ -3519,6 +3565,7 @@ export const createUserProfile = /* GraphQL */ `
           conversationID
           sender {
             id
+            sub
             firstName
             lastName
             verified
@@ -3543,6 +3590,7 @@ export const createUserProfile = /* GraphQL */ `
           }
           receiver {
             id
+            sub
             firstName
             lastName
             verified
@@ -3592,6 +3640,7 @@ export const createUserProfile = /* GraphQL */ `
           userProfileID
           userProfile {
             id
+            sub
             firstName
             lastName
             verified
@@ -3651,6 +3700,7 @@ export const createUserProfile = /* GraphQL */ `
             tagline
             description
             url
+            approved
             groupID
             createdAt
             updatedAt
@@ -3664,6 +3714,7 @@ export const createUserProfile = /* GraphQL */ `
         members {
           items {
             id
+            sub
             firstName
             lastName
             verified
@@ -3718,6 +3769,7 @@ export const createUserProfile = /* GraphQL */ `
           userProfileID
           userProfile {
             id
+            sub
             firstName
             lastName
             verified
@@ -3766,6 +3818,7 @@ export const updateUserProfile = /* GraphQL */ `
   ) {
     updateUserProfile(input: $input, condition: $condition) {
       id
+      sub
       firstName
       lastName
       verified
@@ -3787,6 +3840,7 @@ export const updateUserProfile = /* GraphQL */ `
           eventID
           userProfile {
             id
+            sub
             firstName
             lastName
             verified
@@ -3821,6 +3875,7 @@ export const updateUserProfile = /* GraphQL */ `
             tagline
             description
             url
+            approved
             groupID
             createdAt
             updatedAt
@@ -3857,6 +3912,7 @@ export const updateUserProfile = /* GraphQL */ `
           rideID
           userProfile {
             id
+            sub
             firstName
             lastName
             verified
@@ -3898,6 +3954,7 @@ export const updateUserProfile = /* GraphQL */ `
           isAccepted
           userProfile {
             id
+            sub
             firstName
             lastName
             verified
@@ -3922,6 +3979,7 @@ export const updateUserProfile = /* GraphQL */ `
           }
           friendProfile {
             id
+            sub
             firstName
             lastName
             verified
@@ -3960,6 +4018,7 @@ export const updateUserProfile = /* GraphQL */ `
           friendProfileID
           userProfile {
             id
+            sub
             firstName
             lastName
             verified
@@ -3984,6 +4043,7 @@ export const updateUserProfile = /* GraphQL */ `
           }
           friendProfile {
             id
+            sub
             firstName
             lastName
             verified
@@ -4029,6 +4089,7 @@ export const updateUserProfile = /* GraphQL */ `
           conversationID
           sender {
             id
+            sub
             firstName
             lastName
             verified
@@ -4053,6 +4114,7 @@ export const updateUserProfile = /* GraphQL */ `
           }
           receiver {
             id
+            sub
             firstName
             lastName
             verified
@@ -4105,6 +4167,7 @@ export const updateUserProfile = /* GraphQL */ `
           conversationID
           sender {
             id
+            sub
             firstName
             lastName
             verified
@@ -4129,6 +4192,7 @@ export const updateUserProfile = /* GraphQL */ `
           }
           receiver {
             id
+            sub
             firstName
             lastName
             verified
@@ -4178,6 +4242,7 @@ export const updateUserProfile = /* GraphQL */ `
           userProfileID
           userProfile {
             id
+            sub
             firstName
             lastName
             verified
@@ -4237,6 +4302,7 @@ export const updateUserProfile = /* GraphQL */ `
             tagline
             description
             url
+            approved
             groupID
             createdAt
             updatedAt
@@ -4250,6 +4316,7 @@ export const updateUserProfile = /* GraphQL */ `
         members {
           items {
             id
+            sub
             firstName
             lastName
             verified
@@ -4304,6 +4371,7 @@ export const updateUserProfile = /* GraphQL */ `
           userProfileID
           userProfile {
             id
+            sub
             firstName
             lastName
             verified
@@ -4352,6 +4420,7 @@ export const deleteUserProfile = /* GraphQL */ `
   ) {
     deleteUserProfile(input: $input, condition: $condition) {
       id
+      sub
       firstName
       lastName
       verified
@@ -4373,6 +4442,7 @@ export const deleteUserProfile = /* GraphQL */ `
           eventID
           userProfile {
             id
+            sub
             firstName
             lastName
             verified
@@ -4407,6 +4477,7 @@ export const deleteUserProfile = /* GraphQL */ `
             tagline
             description
             url
+            approved
             groupID
             createdAt
             updatedAt
@@ -4443,6 +4514,7 @@ export const deleteUserProfile = /* GraphQL */ `
           rideID
           userProfile {
             id
+            sub
             firstName
             lastName
             verified
@@ -4484,6 +4556,7 @@ export const deleteUserProfile = /* GraphQL */ `
           isAccepted
           userProfile {
             id
+            sub
             firstName
             lastName
             verified
@@ -4508,6 +4581,7 @@ export const deleteUserProfile = /* GraphQL */ `
           }
           friendProfile {
             id
+            sub
             firstName
             lastName
             verified
@@ -4546,6 +4620,7 @@ export const deleteUserProfile = /* GraphQL */ `
           friendProfileID
           userProfile {
             id
+            sub
             firstName
             lastName
             verified
@@ -4570,6 +4645,7 @@ export const deleteUserProfile = /* GraphQL */ `
           }
           friendProfile {
             id
+            sub
             firstName
             lastName
             verified
@@ -4615,6 +4691,7 @@ export const deleteUserProfile = /* GraphQL */ `
           conversationID
           sender {
             id
+            sub
             firstName
             lastName
             verified
@@ -4639,6 +4716,7 @@ export const deleteUserProfile = /* GraphQL */ `
           }
           receiver {
             id
+            sub
             firstName
             lastName
             verified
@@ -4691,6 +4769,7 @@ export const deleteUserProfile = /* GraphQL */ `
           conversationID
           sender {
             id
+            sub
             firstName
             lastName
             verified
@@ -4715,6 +4794,7 @@ export const deleteUserProfile = /* GraphQL */ `
           }
           receiver {
             id
+            sub
             firstName
             lastName
             verified
@@ -4764,6 +4844,7 @@ export const deleteUserProfile = /* GraphQL */ `
           userProfileID
           userProfile {
             id
+            sub
             firstName
             lastName
             verified
@@ -4823,6 +4904,7 @@ export const deleteUserProfile = /* GraphQL */ `
             tagline
             description
             url
+            approved
             groupID
             createdAt
             updatedAt
@@ -4836,6 +4918,7 @@ export const deleteUserProfile = /* GraphQL */ `
         members {
           items {
             id
+            sub
             firstName
             lastName
             verified
@@ -4890,6 +4973,7 @@ export const deleteUserProfile = /* GraphQL */ `
           userProfileID
           userProfile {
             id
+            sub
             firstName
             lastName
             verified
@@ -4941,6 +5025,7 @@ export const createSocialMedia = /* GraphQL */ `
       userProfileID
       userProfile {
         id
+        sub
         firstName
         lastName
         verified
@@ -5144,6 +5229,7 @@ export const updateSocialMedia = /* GraphQL */ `
       userProfileID
       userProfile {
         id
+        sub
         firstName
         lastName
         verified
@@ -5347,6 +5433,7 @@ export const deleteSocialMedia = /* GraphQL */ `
       userProfileID
       userProfile {
         id
+        sub
         firstName
         lastName
         verified
@@ -5628,6 +5715,7 @@ export const createRide = /* GraphQL */ `
         tagline
         description
         url
+        approved
         group {
           id
           name
@@ -5704,6 +5792,7 @@ export const createRide = /* GraphQL */ `
             tagline
             description
             url
+            approved
             groupID
             createdAt
             updatedAt
@@ -5741,6 +5830,7 @@ export const createRide = /* GraphQL */ `
         rideID
         userProfile {
           id
+          sub
           firstName
           lastName
           verified
@@ -5851,6 +5941,7 @@ export const createRide = /* GraphQL */ `
           rideID
           userProfile {
             id
+            sub
             firstName
             lastName
             verified
@@ -5916,6 +6007,7 @@ export const updateRide = /* GraphQL */ `
         tagline
         description
         url
+        approved
         group {
           id
           name
@@ -5992,6 +6084,7 @@ export const updateRide = /* GraphQL */ `
             tagline
             description
             url
+            approved
             groupID
             createdAt
             updatedAt
@@ -6029,6 +6122,7 @@ export const updateRide = /* GraphQL */ `
         rideID
         userProfile {
           id
+          sub
           firstName
           lastName
           verified
@@ -6139,6 +6233,7 @@ export const updateRide = /* GraphQL */ `
           rideID
           userProfile {
             id
+            sub
             firstName
             lastName
             verified
@@ -6204,6 +6299,7 @@ export const deleteRide = /* GraphQL */ `
         tagline
         description
         url
+        approved
         group {
           id
           name
@@ -6280,6 +6376,7 @@ export const deleteRide = /* GraphQL */ `
             tagline
             description
             url
+            approved
             groupID
             createdAt
             updatedAt
@@ -6317,6 +6414,7 @@ export const deleteRide = /* GraphQL */ `
         rideID
         userProfile {
           id
+          sub
           firstName
           lastName
           verified
@@ -6427,6 +6525,7 @@ export const deleteRide = /* GraphQL */ `
           rideID
           userProfile {
             id
+            sub
             firstName
             lastName
             verified
@@ -6494,6 +6593,7 @@ export const createRideUser = /* GraphQL */ `
           tagline
           description
           url
+          approved
           group {
             id
             name
@@ -6541,6 +6641,7 @@ export const createRideUser = /* GraphQL */ `
           rideID
           userProfile {
             id
+            sub
             firstName
             lastName
             verified
@@ -6600,6 +6701,7 @@ export const createRideUser = /* GraphQL */ `
       rideID
       userProfile {
         id
+        sub
         firstName
         lastName
         verified
@@ -6814,6 +6916,7 @@ export const updateRideUser = /* GraphQL */ `
           tagline
           description
           url
+          approved
           group {
             id
             name
@@ -6861,6 +6964,7 @@ export const updateRideUser = /* GraphQL */ `
           rideID
           userProfile {
             id
+            sub
             firstName
             lastName
             verified
@@ -6920,6 +7024,7 @@ export const updateRideUser = /* GraphQL */ `
       rideID
       userProfile {
         id
+        sub
         firstName
         lastName
         verified
@@ -7134,6 +7239,7 @@ export const deleteRideUser = /* GraphQL */ `
           tagline
           description
           url
+          approved
           group {
             id
             name
@@ -7181,6 +7287,7 @@ export const deleteRideUser = /* GraphQL */ `
           rideID
           userProfile {
             id
+            sub
             firstName
             lastName
             verified
@@ -7240,6 +7347,7 @@ export const deleteRideUser = /* GraphQL */ `
       rideID
       userProfile {
         id
+        sub
         firstName
         lastName
         verified
@@ -7443,6 +7551,7 @@ export const createPhoto = /* GraphQL */ `
       userProfileID
       userProfile {
         id
+        sub
         firstName
         lastName
         verified
@@ -7675,6 +7784,7 @@ export const updatePhoto = /* GraphQL */ `
       userProfileID
       userProfile {
         id
+        sub
         firstName
         lastName
         verified
@@ -7907,6 +8017,7 @@ export const deletePhoto = /* GraphQL */ `
       userProfileID
       userProfile {
         id
+        sub
         firstName
         lastName
         verified
@@ -8143,6 +8254,7 @@ export const createPhotoComment = /* GraphQL */ `
         userProfileID
         userProfile {
           id
+          sub
           firstName
           lastName
           verified
@@ -8271,6 +8383,7 @@ export const updatePhotoComment = /* GraphQL */ `
         userProfileID
         userProfile {
           id
+          sub
           firstName
           lastName
           verified
@@ -8399,6 +8512,7 @@ export const deletePhotoComment = /* GraphQL */ `
         userProfileID
         userProfile {
           id
+          sub
           firstName
           lastName
           verified
@@ -8525,6 +8639,7 @@ export const createFriendship = /* GraphQL */ `
       isAccepted
       userProfile {
         id
+        sub
         firstName
         lastName
         verified
@@ -8710,6 +8825,7 @@ export const createFriendship = /* GraphQL */ `
       }
       friendProfile {
         id
+        sub
         firstName
         lastName
         verified
@@ -8913,6 +9029,7 @@ export const updateFriendship = /* GraphQL */ `
       isAccepted
       userProfile {
         id
+        sub
         firstName
         lastName
         verified
@@ -9098,6 +9215,7 @@ export const updateFriendship = /* GraphQL */ `
       }
       friendProfile {
         id
+        sub
         firstName
         lastName
         verified
@@ -9301,6 +9419,7 @@ export const deleteFriendship = /* GraphQL */ `
       isAccepted
       userProfile {
         id
+        sub
         firstName
         lastName
         verified
@@ -9486,6 +9605,7 @@ export const deleteFriendship = /* GraphQL */ `
       }
       friendProfile {
         id
+        sub
         firstName
         lastName
         verified
@@ -9688,6 +9808,7 @@ export const createConversation = /* GraphQL */ `
       friendProfileID
       userProfile {
         id
+        sub
         firstName
         lastName
         verified
@@ -9873,6 +9994,7 @@ export const createConversation = /* GraphQL */ `
       }
       friendProfile {
         id
+        sub
         firstName
         lastName
         verified
@@ -10065,6 +10187,7 @@ export const createConversation = /* GraphQL */ `
           conversationID
           sender {
             id
+            sub
             firstName
             lastName
             verified
@@ -10089,6 +10212,7 @@ export const createConversation = /* GraphQL */ `
           }
           receiver {
             id
+            sub
             firstName
             lastName
             verified
@@ -10152,6 +10276,7 @@ export const updateConversation = /* GraphQL */ `
       friendProfileID
       userProfile {
         id
+        sub
         firstName
         lastName
         verified
@@ -10337,6 +10462,7 @@ export const updateConversation = /* GraphQL */ `
       }
       friendProfile {
         id
+        sub
         firstName
         lastName
         verified
@@ -10529,6 +10655,7 @@ export const updateConversation = /* GraphQL */ `
           conversationID
           sender {
             id
+            sub
             firstName
             lastName
             verified
@@ -10553,6 +10680,7 @@ export const updateConversation = /* GraphQL */ `
           }
           receiver {
             id
+            sub
             firstName
             lastName
             verified
@@ -10616,6 +10744,7 @@ export const deleteConversation = /* GraphQL */ `
       friendProfileID
       userProfile {
         id
+        sub
         firstName
         lastName
         verified
@@ -10801,6 +10930,7 @@ export const deleteConversation = /* GraphQL */ `
       }
       friendProfile {
         id
+        sub
         firstName
         lastName
         verified
@@ -10993,6 +11123,7 @@ export const deleteConversation = /* GraphQL */ `
           conversationID
           sender {
             id
+            sub
             firstName
             lastName
             verified
@@ -11017,6 +11148,7 @@ export const deleteConversation = /* GraphQL */ `
           }
           receiver {
             id
+            sub
             firstName
             lastName
             verified
@@ -11093,6 +11225,7 @@ export const createCollegeGroup = /* GraphQL */ `
           tagline
           description
           url
+          approved
           group {
             id
             name
@@ -11126,6 +11259,7 @@ export const createCollegeGroup = /* GraphQL */ `
       members {
         items {
           id
+          sub
           firstName
           lastName
           verified
@@ -11243,6 +11377,7 @@ export const updateCollegeGroup = /* GraphQL */ `
           tagline
           description
           url
+          approved
           group {
             id
             name
@@ -11276,6 +11411,7 @@ export const updateCollegeGroup = /* GraphQL */ `
       members {
         items {
           id
+          sub
           firstName
           lastName
           verified
@@ -11393,6 +11529,7 @@ export const deleteCollegeGroup = /* GraphQL */ `
           tagline
           description
           url
+          approved
           group {
             id
             name
@@ -11426,6 +11563,7 @@ export const deleteCollegeGroup = /* GraphQL */ `
       members {
         items {
           id
+          sub
           firstName
           lastName
           verified

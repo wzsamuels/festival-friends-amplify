@@ -11,6 +11,7 @@ import {
   Flex,
   Grid,
   SelectField,
+  SwitchField,
   TextField,
 } from "@aws-amplify/ui-react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
@@ -40,6 +41,7 @@ export default function FestivalUpdateForm(props) {
     tagline: "",
     description: "",
     url: "",
+    approved: false,
   };
   const [name, setName] = React.useState(initialValues.name);
   const [genre, setGenre] = React.useState(initialValues.genre);
@@ -53,6 +55,7 @@ export default function FestivalUpdateForm(props) {
     initialValues.description
   );
   const [url, setUrl] = React.useState(initialValues.url);
+  const [approved, setApproved] = React.useState(initialValues.approved);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = festivalRecord
@@ -68,6 +71,7 @@ export default function FestivalUpdateForm(props) {
     setTagline(cleanValues.tagline);
     setDescription(cleanValues.description);
     setUrl(cleanValues.url);
+    setApproved(cleanValues.approved);
     setErrors({});
   };
   const [festivalRecord, setFestivalRecord] = React.useState(festivalModelProp);
@@ -92,6 +96,7 @@ export default function FestivalUpdateForm(props) {
     tagline: [],
     description: [],
     url: [],
+    approved: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -129,6 +134,7 @@ export default function FestivalUpdateForm(props) {
           tagline,
           description,
           url,
+          approved,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -194,6 +200,7 @@ export default function FestivalUpdateForm(props) {
               tagline,
               description,
               url,
+              approved,
             };
             const result = onChange(modelFields);
             value = result?.name ?? value;
@@ -227,6 +234,7 @@ export default function FestivalUpdateForm(props) {
               tagline,
               description,
               url,
+              approved,
             };
             const result = onChange(modelFields);
             value = result?.genre ?? value;
@@ -260,6 +268,7 @@ export default function FestivalUpdateForm(props) {
               tagline,
               description,
               url,
+              approved,
             };
             const result = onChange(modelFields);
             value = result?.image ?? value;
@@ -293,6 +302,7 @@ export default function FestivalUpdateForm(props) {
               tagline,
               description,
               url,
+              approved,
             };
             const result = onChange(modelFields);
             value = result?.location ?? value;
@@ -327,6 +337,7 @@ export default function FestivalUpdateForm(props) {
               tagline,
               description,
               url,
+              approved,
             };
             const result = onChange(modelFields);
             value = result?.startDate ?? value;
@@ -361,6 +372,7 @@ export default function FestivalUpdateForm(props) {
               tagline,
               description,
               url,
+              approved,
             };
             const result = onChange(modelFields);
             value = result?.endDate ?? value;
@@ -394,6 +406,7 @@ export default function FestivalUpdateForm(props) {
               tagline,
               description,
               url,
+              approved,
             };
             const result = onChange(modelFields);
             value = result?.type ?? value;
@@ -468,6 +481,7 @@ export default function FestivalUpdateForm(props) {
               tagline: value,
               description,
               url,
+              approved,
             };
             const result = onChange(modelFields);
             value = result?.tagline ?? value;
@@ -501,6 +515,7 @@ export default function FestivalUpdateForm(props) {
               tagline,
               description: value,
               url,
+              approved,
             };
             const result = onChange(modelFields);
             value = result?.description ?? value;
@@ -534,6 +549,7 @@ export default function FestivalUpdateForm(props) {
               tagline,
               description,
               url: value,
+              approved,
             };
             const result = onChange(modelFields);
             value = result?.url ?? value;
@@ -548,6 +564,40 @@ export default function FestivalUpdateForm(props) {
         hasError={errors.url?.hasError}
         {...getOverrideProps(overrides, "url")}
       ></TextField>
+      <SwitchField
+        label="Approved"
+        defaultChecked={false}
+        isDisabled={false}
+        isChecked={approved}
+        onChange={(e) => {
+          let value = e.target.checked;
+          if (onChange) {
+            const modelFields = {
+              name,
+              genre,
+              image,
+              location,
+              startDate,
+              endDate,
+              type,
+              tagline,
+              description,
+              url,
+              approved: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.approved ?? value;
+          }
+          if (errors.approved?.hasError) {
+            runValidationTasks("approved", value);
+          }
+          setApproved(value);
+        }}
+        onBlur={() => runValidationTasks("approved", approved)}
+        errorMessage={errors.approved?.errorMessage}
+        hasError={errors.approved?.hasError}
+        {...getOverrideProps(overrides, "approved")}
+      ></SwitchField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}

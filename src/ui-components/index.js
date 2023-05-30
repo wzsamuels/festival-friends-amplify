@@ -5,8 +5,8 @@
  **************************************************************************/
 
 export { default as studioTheme } from "./studioTheme";
-export { default as FestivalCreateForm } from "./FestivalCreateForm";
 export { default as FestivalUpdateForm } from "./FestivalUpdateForm";
+export { default as FestivalCreateForm } from "./FestivalCreateForm";
 export { default as UserProfileCreateForm } from "./UserProfileCreateForm";
 export { default as UserProfileUpdateForm } from "./UserProfileUpdateForm";
 export { default as PrivacySettingCreateForm } from "./PrivacySettingCreateForm";

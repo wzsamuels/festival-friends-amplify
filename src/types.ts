@@ -1,3 +1,6 @@
+import {SocialMedia} from "./models";
+import {AsyncCollection} from "@aws-amplify/datastore";
+
 export type ProfileInputs = {
   firstName: string;
   lastName: string;
@@ -9,7 +12,15 @@ export type ProfileInputs = {
   zipcode: string;
   address: string;
   address2: string;
+  socialMedia: SocialMediaInput[];
 };
+
+type SocialMediaInput = {
+  id: string;
+  type: string;
+  url: string;
+  saved: boolean;
+}
 
 export interface ToastData {
   message: string;

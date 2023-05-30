@@ -355,6 +355,13 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "approved": {
+                    "name": "approved",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "group": {
                     "name": "group",
                     "isArray": false,
@@ -467,6 +474,13 @@ export const schema = {
                     "name": "id",
                     "isArray": false,
                     "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "sub": {
+                    "name": "sub",
+                    "isArray": false,
+                    "type": "String",
                     "isRequired": true,
                     "attributes": []
                 },
@@ -829,9 +843,7 @@ export const schema = {
                 "socialMediaType": {
                     "name": "socialMediaType",
                     "isArray": false,
-                    "type": {
-                        "enum": "SocialMediaType"
-                    },
+                    "type": "String",
                     "isRequired": true,
                     "attributes": []
                 },
@@ -1894,5 +1906,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.3",
-    "version": "be988205144555d4405c640f1f2dcae6"
+    "version": "5dd2ee22dc129961625dc07f7a597b18"
 };

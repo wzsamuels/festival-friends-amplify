@@ -118,6 +118,7 @@ type EagerFestival = {
   readonly tagline?: string | null;
   readonly description?: string | null;
   readonly url?: string | null;
+  readonly approved?: boolean | null;
   readonly group?: CollegeGroup | null;
   readonly groupID?: string | null;
   readonly attendees?: (EventProfile | null)[] | null;
@@ -142,6 +143,7 @@ type LazyFestival = {
   readonly tagline?: string | null;
   readonly description?: string | null;
   readonly url?: string | null;
+  readonly approved?: boolean | null;
   readonly group: AsyncItem<CollegeGroup | undefined>;
   readonly groupID?: string | null;
   readonly attendees: AsyncCollection<EventProfile>;
@@ -162,6 +164,7 @@ type EagerUserProfile = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
+  readonly sub: string;
   readonly firstName?: string | null;
   readonly lastName?: string | null;
   readonly verified?: boolean | null;
@@ -198,6 +201,7 @@ type LazyUserProfile = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
+  readonly sub: string;
   readonly firstName?: string | null;
   readonly lastName?: string | null;
   readonly verified?: boolean | null;
@@ -242,7 +246,7 @@ type EagerSocialMedia = {
   readonly id: string;
   readonly userProfileID: string;
   readonly userProfile?: UserProfile | null;
-  readonly socialMediaType: SocialMediaType | keyof typeof SocialMediaType;
+  readonly socialMediaType: string;
   readonly accountURL: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
@@ -256,7 +260,7 @@ type LazySocialMedia = {
   readonly id: string;
   readonly userProfileID: string;
   readonly userProfile: AsyncItem<UserProfile | undefined>;
-  readonly socialMediaType: SocialMediaType | keyof typeof SocialMediaType;
+  readonly socialMediaType: string;
   readonly accountURL: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;

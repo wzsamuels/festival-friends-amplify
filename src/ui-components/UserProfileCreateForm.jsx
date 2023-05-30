@@ -29,6 +29,7 @@ export default function UserProfileCreateForm(props) {
     ...rest
   } = props;
   const initialValues = {
+    sub: "",
     firstName: "",
     lastName: "",
     verified: false,
@@ -44,6 +45,7 @@ export default function UserProfileCreateForm(props) {
     email: "",
     zipcode: "",
   };
+  const [sub, setSub] = React.useState(initialValues.sub);
   const [firstName, setFirstName] = React.useState(initialValues.firstName);
   const [lastName, setLastName] = React.useState(initialValues.lastName);
   const [verified, setVerified] = React.useState(initialValues.verified);
@@ -66,6 +68,7 @@ export default function UserProfileCreateForm(props) {
   const [zipcode, setZipcode] = React.useState(initialValues.zipcode);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
+    setSub(initialValues.sub);
     setFirstName(initialValues.firstName);
     setLastName(initialValues.lastName);
     setVerified(initialValues.verified);
@@ -83,6 +86,7 @@ export default function UserProfileCreateForm(props) {
     setErrors({});
   };
   const validations = {
+    sub: [{ type: "Required" }],
     firstName: [],
     lastName: [],
     verified: [],
@@ -124,6 +128,7 @@ export default function UserProfileCreateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
+          sub,
           firstName,
           lastName,
           verified,
@@ -184,6 +189,44 @@ export default function UserProfileCreateForm(props) {
       {...rest}
     >
       <TextField
+        label="Sub"
+        isRequired={true}
+        isReadOnly={false}
+        value={sub}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              sub: value,
+              firstName,
+              lastName,
+              verified,
+              verifySubmitted,
+              profilePhotoID,
+              bannerPhotoID,
+              city,
+              state,
+              school,
+              address,
+              address2,
+              phone,
+              email,
+              zipcode,
+            };
+            const result = onChange(modelFields);
+            value = result?.sub ?? value;
+          }
+          if (errors.sub?.hasError) {
+            runValidationTasks("sub", value);
+          }
+          setSub(value);
+        }}
+        onBlur={() => runValidationTasks("sub", sub)}
+        errorMessage={errors.sub?.errorMessage}
+        hasError={errors.sub?.hasError}
+        {...getOverrideProps(overrides, "sub")}
+      ></TextField>
+      <TextField
         label="First name"
         isRequired={false}
         isReadOnly={false}
@@ -192,6 +235,7 @@ export default function UserProfileCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              sub,
               firstName: value,
               lastName,
               verified,
@@ -229,6 +273,7 @@ export default function UserProfileCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              sub,
               firstName,
               lastName: value,
               verified,
@@ -266,6 +311,7 @@ export default function UserProfileCreateForm(props) {
           let value = e.target.checked;
           if (onChange) {
             const modelFields = {
+              sub,
               firstName,
               lastName,
               verified: value,
@@ -303,6 +349,7 @@ export default function UserProfileCreateForm(props) {
           let value = e.target.checked;
           if (onChange) {
             const modelFields = {
+              sub,
               firstName,
               lastName,
               verified,
@@ -340,6 +387,7 @@ export default function UserProfileCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              sub,
               firstName,
               lastName,
               verified,
@@ -377,6 +425,7 @@ export default function UserProfileCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              sub,
               firstName,
               lastName,
               verified,
@@ -414,6 +463,7 @@ export default function UserProfileCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              sub,
               firstName,
               lastName,
               verified,
@@ -451,6 +501,7 @@ export default function UserProfileCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              sub,
               firstName,
               lastName,
               verified,
@@ -488,6 +539,7 @@ export default function UserProfileCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              sub,
               firstName,
               lastName,
               verified,
@@ -525,6 +577,7 @@ export default function UserProfileCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              sub,
               firstName,
               lastName,
               verified,
@@ -562,6 +615,7 @@ export default function UserProfileCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              sub,
               firstName,
               lastName,
               verified,
@@ -599,6 +653,7 @@ export default function UserProfileCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              sub,
               firstName,
               lastName,
               verified,
@@ -636,6 +691,7 @@ export default function UserProfileCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              sub,
               firstName,
               lastName,
               verified,
@@ -673,6 +729,7 @@ export default function UserProfileCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              sub,
               firstName,
               lastName,
               verified,

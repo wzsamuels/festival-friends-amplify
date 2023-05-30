@@ -107,6 +107,7 @@ export type Message = {
 export type UserProfile = {
   __typename: "UserProfile",
   id: string,
+  sub: string,
   firstName?: string | null,
   lastName?: string | null,
   verified?: boolean | null,
@@ -174,6 +175,7 @@ export type Festival = {
   tagline?: string | null,
   description?: string | null,
   url?: string | null,
+  approved?: boolean | null,
   group?: CollegeGroup | null,
   groupID?: string | null,
   attendees?: ModelEventProfileConnection | null,
@@ -401,7 +403,7 @@ export type SocialMedia = {
   id: string,
   userProfileID: string,
   userProfile?: UserProfile | null,
-  socialMediaType: SocialMediaType,
+  socialMediaType: string,
   accountURL: string,
   createdAt: string,
   updatedAt: string,
@@ -409,13 +411,6 @@ export type SocialMedia = {
   _deleted?: boolean | null,
   _lastChangedAt: number,
 };
-
-export enum SocialMediaType {
-  FACEBOOK = "FACEBOOK",
-  TWITTER = "TWITTER",
-  INSTAGRAM = "INSTAGRAM",
-}
-
 
 export type UpdateMessageInput = {
   id: string,
@@ -471,6 +466,7 @@ export type CreateFestivalInput = {
   tagline?: string | null,
   description?: string | null,
   url?: string | null,
+  approved?: boolean | null,
   groupID?: string | null,
   _version?: number | null,
 };
@@ -486,6 +482,7 @@ export type ModelFestivalConditionInput = {
   tagline?: ModelStringInput | null,
   description?: ModelStringInput | null,
   url?: ModelStringInput | null,
+  approved?: ModelBooleanInput | null,
   groupID?: ModelIDInput | null,
   and?: Array< ModelFestivalConditionInput | null > | null,
   or?: Array< ModelFestivalConditionInput | null > | null,
@@ -509,6 +506,7 @@ export type UpdateFestivalInput = {
   tagline?: string | null,
   description?: string | null,
   url?: string | null,
+  approved?: boolean | null,
   groupID?: string | null,
   _version?: number | null,
 };
@@ -520,6 +518,7 @@ export type DeleteFestivalInput = {
 
 export type CreateUserProfileInput = {
   id?: string | null,
+  sub: string,
   firstName?: string | null,
   lastName?: string | null,
   verified?: boolean | null,
@@ -540,6 +539,7 @@ export type CreateUserProfileInput = {
 };
 
 export type ModelUserProfileConditionInput = {
+  sub?: ModelStringInput | null,
   firstName?: ModelStringInput | null,
   lastName?: ModelStringInput | null,
   verified?: ModelBooleanInput | null,
@@ -563,6 +563,7 @@ export type ModelUserProfileConditionInput = {
 
 export type UpdateUserProfileInput = {
   id: string,
+  sub?: string | null,
   firstName?: string | null,
   lastName?: string | null,
   verified?: boolean | null,
@@ -590,29 +591,24 @@ export type DeleteUserProfileInput = {
 export type CreateSocialMediaInput = {
   id?: string | null,
   userProfileID: string,
-  socialMediaType: SocialMediaType,
+  socialMediaType: string,
   accountURL: string,
   _version?: number | null,
 };
 
 export type ModelSocialMediaConditionInput = {
   userProfileID?: ModelIDInput | null,
-  socialMediaType?: ModelSocialMediaTypeInput | null,
+  socialMediaType?: ModelStringInput | null,
   accountURL?: ModelStringInput | null,
   and?: Array< ModelSocialMediaConditionInput | null > | null,
   or?: Array< ModelSocialMediaConditionInput | null > | null,
   not?: ModelSocialMediaConditionInput | null,
 };
 
-export type ModelSocialMediaTypeInput = {
-  eq?: SocialMediaType | null,
-  ne?: SocialMediaType | null,
-};
-
 export type UpdateSocialMediaInput = {
   id: string,
   userProfileID?: string | null,
-  socialMediaType?: SocialMediaType | null,
+  socialMediaType?: string | null,
   accountURL?: string | null,
   _version?: number | null,
 };
@@ -943,6 +939,7 @@ export type ModelFestivalFilterInput = {
   tagline?: ModelStringInput | null,
   description?: ModelStringInput | null,
   url?: ModelStringInput | null,
+  approved?: ModelBooleanInput | null,
   groupID?: ModelIDInput | null,
   and?: Array< ModelFestivalFilterInput | null > | null,
   or?: Array< ModelFestivalFilterInput | null > | null,
@@ -951,6 +948,7 @@ export type ModelFestivalFilterInput = {
 
 export type ModelUserProfileFilterInput = {
   id?: ModelIDInput | null,
+  sub?: ModelStringInput | null,
   firstName?: ModelStringInput | null,
   lastName?: ModelStringInput | null,
   verified?: ModelBooleanInput | null,
@@ -975,7 +973,7 @@ export type ModelUserProfileFilterInput = {
 export type ModelSocialMediaFilterInput = {
   id?: ModelIDInput | null,
   userProfileID?: ModelIDInput | null,
-  socialMediaType?: ModelSocialMediaTypeInput | null,
+  socialMediaType?: ModelStringInput | null,
   accountURL?: ModelStringInput | null,
   and?: Array< ModelSocialMediaFilterInput | null > | null,
   or?: Array< ModelSocialMediaFilterInput | null > | null,
@@ -1152,6 +1150,7 @@ export type ModelSubscriptionFestivalFilterInput = {
   tagline?: ModelSubscriptionStringInput | null,
   description?: ModelSubscriptionStringInput | null,
   url?: ModelSubscriptionStringInput | null,
+  approved?: ModelSubscriptionBooleanInput | null,
   groupID?: ModelSubscriptionIDInput | null,
   and?: Array< ModelSubscriptionFestivalFilterInput | null > | null,
   or?: Array< ModelSubscriptionFestivalFilterInput | null > | null,
@@ -1159,6 +1158,7 @@ export type ModelSubscriptionFestivalFilterInput = {
 
 export type ModelSubscriptionUserProfileFilterInput = {
   id?: ModelSubscriptionIDInput | null,
+  sub?: ModelSubscriptionStringInput | null,
   firstName?: ModelSubscriptionStringInput | null,
   lastName?: ModelSubscriptionStringInput | null,
   verified?: ModelSubscriptionBooleanInput | null,
@@ -1297,6 +1297,7 @@ export type CreateMessageMutation = {
     sender:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -1483,7 +1484,7 @@ export type CreateMessageMutation = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -1503,6 +1504,7 @@ export type CreateMessageMutation = {
     receiver:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -1689,7 +1691,7 @@ export type CreateMessageMutation = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -1714,6 +1716,7 @@ export type CreateMessageMutation = {
       userProfile:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -1809,6 +1812,7 @@ export type CreateMessageMutation = {
       friendProfile:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -1952,6 +1956,7 @@ export type UpdateMessageMutation = {
     sender:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -2138,7 +2143,7 @@ export type UpdateMessageMutation = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -2158,6 +2163,7 @@ export type UpdateMessageMutation = {
     receiver:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -2344,7 +2350,7 @@ export type UpdateMessageMutation = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -2369,6 +2375,7 @@ export type UpdateMessageMutation = {
       userProfile:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -2464,6 +2471,7 @@ export type UpdateMessageMutation = {
       friendProfile:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -2607,6 +2615,7 @@ export type DeleteMessageMutation = {
     sender:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -2793,7 +2802,7 @@ export type DeleteMessageMutation = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -2813,6 +2822,7 @@ export type DeleteMessageMutation = {
     receiver:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -2999,7 +3009,7 @@ export type DeleteMessageMutation = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -3024,6 +3034,7 @@ export type DeleteMessageMutation = {
       userProfile:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -3119,6 +3130,7 @@ export type DeleteMessageMutation = {
       friendProfile:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -3260,6 +3272,7 @@ export type CreateEventProfileMutation = {
     userProfile:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -3446,7 +3459,7 @@ export type CreateEventProfileMutation = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -3476,6 +3489,7 @@ export type CreateEventProfileMutation = {
       tagline?: string | null,
       description?: string | null,
       url?: string | null,
+      approved?: boolean | null,
       group?:  {
         __typename: "CollegeGroup",
         id: string,
@@ -3564,6 +3578,7 @@ export type UpdateEventProfileMutation = {
     userProfile:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -3750,7 +3765,7 @@ export type UpdateEventProfileMutation = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -3780,6 +3795,7 @@ export type UpdateEventProfileMutation = {
       tagline?: string | null,
       description?: string | null,
       url?: string | null,
+      approved?: boolean | null,
       group?:  {
         __typename: "CollegeGroup",
         id: string,
@@ -3868,6 +3884,7 @@ export type DeleteEventProfileMutation = {
     userProfile:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -4054,7 +4071,7 @@ export type DeleteEventProfileMutation = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -4084,6 +4101,7 @@ export type DeleteEventProfileMutation = {
       tagline?: string | null,
       description?: string | null,
       url?: string | null,
+      approved?: boolean | null,
       group?:  {
         __typename: "CollegeGroup",
         id: string,
@@ -4177,6 +4195,7 @@ export type CreateFestivalMutation = {
     tagline?: string | null,
     description?: string | null,
     url?: string | null,
+    approved?: boolean | null,
     group?:  {
       __typename: "CollegeGroup",
       id: string,
@@ -4199,6 +4218,7 @@ export type CreateFestivalMutation = {
           tagline?: string | null,
           description?: string | null,
           url?: string | null,
+          approved?: boolean | null,
           groupID?: string | null,
           createdAt: string,
           updatedAt: string,
@@ -4214,6 +4234,7 @@ export type CreateFestivalMutation = {
         items:  Array< {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -4256,6 +4277,7 @@ export type CreateFestivalMutation = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -4291,6 +4313,7 @@ export type CreateFestivalMutation = {
           tagline?: string | null,
           description?: string | null,
           url?: string | null,
+          approved?: boolean | null,
           groupID?: string | null,
           createdAt: string,
           updatedAt: string,
@@ -4325,6 +4348,7 @@ export type CreateFestivalMutation = {
           tagline?: string | null,
           description?: string | null,
           url?: string | null,
+          approved?: boolean | null,
           groupID?: string | null,
           createdAt: string,
           updatedAt: string,
@@ -4391,6 +4415,7 @@ export type UpdateFestivalMutation = {
     tagline?: string | null,
     description?: string | null,
     url?: string | null,
+    approved?: boolean | null,
     group?:  {
       __typename: "CollegeGroup",
       id: string,
@@ -4413,6 +4438,7 @@ export type UpdateFestivalMutation = {
           tagline?: string | null,
           description?: string | null,
           url?: string | null,
+          approved?: boolean | null,
           groupID?: string | null,
           createdAt: string,
           updatedAt: string,
@@ -4428,6 +4454,7 @@ export type UpdateFestivalMutation = {
         items:  Array< {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -4470,6 +4497,7 @@ export type UpdateFestivalMutation = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -4505,6 +4533,7 @@ export type UpdateFestivalMutation = {
           tagline?: string | null,
           description?: string | null,
           url?: string | null,
+          approved?: boolean | null,
           groupID?: string | null,
           createdAt: string,
           updatedAt: string,
@@ -4539,6 +4568,7 @@ export type UpdateFestivalMutation = {
           tagline?: string | null,
           description?: string | null,
           url?: string | null,
+          approved?: boolean | null,
           groupID?: string | null,
           createdAt: string,
           updatedAt: string,
@@ -4605,6 +4635,7 @@ export type DeleteFestivalMutation = {
     tagline?: string | null,
     description?: string | null,
     url?: string | null,
+    approved?: boolean | null,
     group?:  {
       __typename: "CollegeGroup",
       id: string,
@@ -4627,6 +4658,7 @@ export type DeleteFestivalMutation = {
           tagline?: string | null,
           description?: string | null,
           url?: string | null,
+          approved?: boolean | null,
           groupID?: string | null,
           createdAt: string,
           updatedAt: string,
@@ -4642,6 +4674,7 @@ export type DeleteFestivalMutation = {
         items:  Array< {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -4684,6 +4717,7 @@ export type DeleteFestivalMutation = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -4719,6 +4753,7 @@ export type DeleteFestivalMutation = {
           tagline?: string | null,
           description?: string | null,
           url?: string | null,
+          approved?: boolean | null,
           groupID?: string | null,
           createdAt: string,
           updatedAt: string,
@@ -4753,6 +4788,7 @@ export type DeleteFestivalMutation = {
           tagline?: string | null,
           description?: string | null,
           url?: string | null,
+          approved?: boolean | null,
           groupID?: string | null,
           createdAt: string,
           updatedAt: string,
@@ -4809,6 +4845,7 @@ export type CreateUserProfileMutation = {
   createUserProfile?:  {
     __typename: "UserProfile",
     id: string,
+    sub: string,
     firstName?: string | null,
     lastName?: string | null,
     verified?: boolean | null,
@@ -4833,6 +4870,7 @@ export type CreateUserProfileMutation = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -4868,6 +4906,7 @@ export type CreateUserProfileMutation = {
           tagline?: string | null,
           description?: string | null,
           url?: string | null,
+          approved?: boolean | null,
           groupID?: string | null,
           createdAt: string,
           updatedAt: string,
@@ -4908,6 +4947,7 @@ export type CreateUserProfileMutation = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -4952,6 +4992,7 @@ export type CreateUserProfileMutation = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -4977,6 +5018,7 @@ export type CreateUserProfileMutation = {
         friendProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -5018,6 +5060,7 @@ export type CreateUserProfileMutation = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -5043,6 +5086,7 @@ export type CreateUserProfileMutation = {
         friendProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -5092,6 +5136,7 @@ export type CreateUserProfileMutation = {
         sender:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -5117,6 +5162,7 @@ export type CreateUserProfileMutation = {
         receiver:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -5173,6 +5219,7 @@ export type CreateUserProfileMutation = {
         sender:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -5198,6 +5245,7 @@ export type CreateUserProfileMutation = {
         receiver:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -5251,6 +5299,7 @@ export type CreateUserProfileMutation = {
         userProfile?:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -5314,6 +5363,7 @@ export type CreateUserProfileMutation = {
           tagline?: string | null,
           description?: string | null,
           url?: string | null,
+          approved?: boolean | null,
           groupID?: string | null,
           createdAt: string,
           updatedAt: string,
@@ -5329,6 +5379,7 @@ export type CreateUserProfileMutation = {
         items:  Array< {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -5387,6 +5438,7 @@ export type CreateUserProfileMutation = {
         userProfile?:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -5409,7 +5461,7 @@ export type CreateUserProfileMutation = {
           _deleted?: boolean | null,
           _lastChangedAt: number,
         } | null,
-        socialMediaType: SocialMediaType,
+        socialMediaType: string,
         accountURL: string,
         createdAt: string,
         updatedAt: string,
@@ -5437,6 +5489,7 @@ export type UpdateUserProfileMutation = {
   updateUserProfile?:  {
     __typename: "UserProfile",
     id: string,
+    sub: string,
     firstName?: string | null,
     lastName?: string | null,
     verified?: boolean | null,
@@ -5461,6 +5514,7 @@ export type UpdateUserProfileMutation = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -5496,6 +5550,7 @@ export type UpdateUserProfileMutation = {
           tagline?: string | null,
           description?: string | null,
           url?: string | null,
+          approved?: boolean | null,
           groupID?: string | null,
           createdAt: string,
           updatedAt: string,
@@ -5536,6 +5591,7 @@ export type UpdateUserProfileMutation = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -5580,6 +5636,7 @@ export type UpdateUserProfileMutation = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -5605,6 +5662,7 @@ export type UpdateUserProfileMutation = {
         friendProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -5646,6 +5704,7 @@ export type UpdateUserProfileMutation = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -5671,6 +5730,7 @@ export type UpdateUserProfileMutation = {
         friendProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -5720,6 +5780,7 @@ export type UpdateUserProfileMutation = {
         sender:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -5745,6 +5806,7 @@ export type UpdateUserProfileMutation = {
         receiver:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -5801,6 +5863,7 @@ export type UpdateUserProfileMutation = {
         sender:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -5826,6 +5889,7 @@ export type UpdateUserProfileMutation = {
         receiver:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -5879,6 +5943,7 @@ export type UpdateUserProfileMutation = {
         userProfile?:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -5942,6 +6007,7 @@ export type UpdateUserProfileMutation = {
           tagline?: string | null,
           description?: string | null,
           url?: string | null,
+          approved?: boolean | null,
           groupID?: string | null,
           createdAt: string,
           updatedAt: string,
@@ -5957,6 +6023,7 @@ export type UpdateUserProfileMutation = {
         items:  Array< {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -6015,6 +6082,7 @@ export type UpdateUserProfileMutation = {
         userProfile?:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -6037,7 +6105,7 @@ export type UpdateUserProfileMutation = {
           _deleted?: boolean | null,
           _lastChangedAt: number,
         } | null,
-        socialMediaType: SocialMediaType,
+        socialMediaType: string,
         accountURL: string,
         createdAt: string,
         updatedAt: string,
@@ -6065,6 +6133,7 @@ export type DeleteUserProfileMutation = {
   deleteUserProfile?:  {
     __typename: "UserProfile",
     id: string,
+    sub: string,
     firstName?: string | null,
     lastName?: string | null,
     verified?: boolean | null,
@@ -6089,6 +6158,7 @@ export type DeleteUserProfileMutation = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -6124,6 +6194,7 @@ export type DeleteUserProfileMutation = {
           tagline?: string | null,
           description?: string | null,
           url?: string | null,
+          approved?: boolean | null,
           groupID?: string | null,
           createdAt: string,
           updatedAt: string,
@@ -6164,6 +6235,7 @@ export type DeleteUserProfileMutation = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -6208,6 +6280,7 @@ export type DeleteUserProfileMutation = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -6233,6 +6306,7 @@ export type DeleteUserProfileMutation = {
         friendProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -6274,6 +6348,7 @@ export type DeleteUserProfileMutation = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -6299,6 +6374,7 @@ export type DeleteUserProfileMutation = {
         friendProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -6348,6 +6424,7 @@ export type DeleteUserProfileMutation = {
         sender:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -6373,6 +6450,7 @@ export type DeleteUserProfileMutation = {
         receiver:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -6429,6 +6507,7 @@ export type DeleteUserProfileMutation = {
         sender:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -6454,6 +6533,7 @@ export type DeleteUserProfileMutation = {
         receiver:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -6507,6 +6587,7 @@ export type DeleteUserProfileMutation = {
         userProfile?:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -6570,6 +6651,7 @@ export type DeleteUserProfileMutation = {
           tagline?: string | null,
           description?: string | null,
           url?: string | null,
+          approved?: boolean | null,
           groupID?: string | null,
           createdAt: string,
           updatedAt: string,
@@ -6585,6 +6667,7 @@ export type DeleteUserProfileMutation = {
         items:  Array< {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -6643,6 +6726,7 @@ export type DeleteUserProfileMutation = {
         userProfile?:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -6665,7 +6749,7 @@ export type DeleteUserProfileMutation = {
           _deleted?: boolean | null,
           _lastChangedAt: number,
         } | null,
-        socialMediaType: SocialMediaType,
+        socialMediaType: string,
         accountURL: string,
         createdAt: string,
         updatedAt: string,
@@ -6697,6 +6781,7 @@ export type CreateSocialMediaMutation = {
     userProfile?:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -6883,7 +6968,7 @@ export type CreateSocialMediaMutation = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -6900,7 +6985,7 @@ export type CreateSocialMediaMutation = {
       _deleted?: boolean | null,
       _lastChangedAt: number,
     } | null,
-    socialMediaType: SocialMediaType,
+    socialMediaType: string,
     accountURL: string,
     createdAt: string,
     updatedAt: string,
@@ -6923,6 +7008,7 @@ export type UpdateSocialMediaMutation = {
     userProfile?:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -7109,7 +7195,7 @@ export type UpdateSocialMediaMutation = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -7126,7 +7212,7 @@ export type UpdateSocialMediaMutation = {
       _deleted?: boolean | null,
       _lastChangedAt: number,
     } | null,
-    socialMediaType: SocialMediaType,
+    socialMediaType: string,
     accountURL: string,
     createdAt: string,
     updatedAt: string,
@@ -7149,6 +7235,7 @@ export type DeleteSocialMediaMutation = {
     userProfile?:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -7335,7 +7422,7 @@ export type DeleteSocialMediaMutation = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -7352,7 +7439,7 @@ export type DeleteSocialMediaMutation = {
       _deleted?: boolean | null,
       _lastChangedAt: number,
     } | null,
-    socialMediaType: SocialMediaType,
+    socialMediaType: string,
     accountURL: string,
     createdAt: string,
     updatedAt: string,
@@ -7459,6 +7546,7 @@ export type CreateRideMutation = {
       tagline?: string | null,
       description?: string | null,
       url?: string | null,
+      approved?: boolean | null,
       group?:  {
         __typename: "CollegeGroup",
         id: string,
@@ -7545,6 +7633,7 @@ export type CreateRideMutation = {
           tagline?: string | null,
           description?: string | null,
           url?: string | null,
+          approved?: boolean | null,
           groupID?: string | null,
           createdAt: string,
           updatedAt: string,
@@ -7585,6 +7674,7 @@ export type CreateRideMutation = {
       userProfile:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -7709,6 +7799,7 @@ export type CreateRideMutation = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -7777,6 +7868,7 @@ export type UpdateRideMutation = {
       tagline?: string | null,
       description?: string | null,
       url?: string | null,
+      approved?: boolean | null,
       group?:  {
         __typename: "CollegeGroup",
         id: string,
@@ -7863,6 +7955,7 @@ export type UpdateRideMutation = {
           tagline?: string | null,
           description?: string | null,
           url?: string | null,
+          approved?: boolean | null,
           groupID?: string | null,
           createdAt: string,
           updatedAt: string,
@@ -7903,6 +7996,7 @@ export type UpdateRideMutation = {
       userProfile:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -8027,6 +8121,7 @@ export type UpdateRideMutation = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -8095,6 +8190,7 @@ export type DeleteRideMutation = {
       tagline?: string | null,
       description?: string | null,
       url?: string | null,
+      approved?: boolean | null,
       group?:  {
         __typename: "CollegeGroup",
         id: string,
@@ -8181,6 +8277,7 @@ export type DeleteRideMutation = {
           tagline?: string | null,
           description?: string | null,
           url?: string | null,
+          approved?: boolean | null,
           groupID?: string | null,
           createdAt: string,
           updatedAt: string,
@@ -8221,6 +8318,7 @@ export type DeleteRideMutation = {
       userProfile:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -8345,6 +8443,7 @@ export type DeleteRideMutation = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -8416,6 +8515,7 @@ export type CreateRideUserMutation = {
         tagline?: string | null,
         description?: string | null,
         url?: string | null,
+        approved?: boolean | null,
         group?:  {
           __typename: "CollegeGroup",
           id: string,
@@ -8469,6 +8569,7 @@ export type CreateRideUserMutation = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -8531,6 +8632,7 @@ export type CreateRideUserMutation = {
     userProfile:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -8717,7 +8819,7 @@ export type CreateRideUserMutation = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -8769,6 +8871,7 @@ export type UpdateRideUserMutation = {
         tagline?: string | null,
         description?: string | null,
         url?: string | null,
+        approved?: boolean | null,
         group?:  {
           __typename: "CollegeGroup",
           id: string,
@@ -8822,6 +8925,7 @@ export type UpdateRideUserMutation = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -8884,6 +8988,7 @@ export type UpdateRideUserMutation = {
     userProfile:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -9070,7 +9175,7 @@ export type UpdateRideUserMutation = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -9122,6 +9227,7 @@ export type DeleteRideUserMutation = {
         tagline?: string | null,
         description?: string | null,
         url?: string | null,
+        approved?: boolean | null,
         group?:  {
           __typename: "CollegeGroup",
           id: string,
@@ -9175,6 +9281,7 @@ export type DeleteRideUserMutation = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -9237,6 +9344,7 @@ export type DeleteRideUserMutation = {
     userProfile:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -9423,7 +9531,7 @@ export type DeleteRideUserMutation = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -9463,6 +9571,7 @@ export type CreatePhotoMutation = {
     userProfile?:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -9649,7 +9758,7 @@ export type CreatePhotoMutation = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -9721,6 +9830,7 @@ export type UpdatePhotoMutation = {
     userProfile?:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -9907,7 +10017,7 @@ export type UpdatePhotoMutation = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -9979,6 +10089,7 @@ export type DeletePhotoMutation = {
     userProfile?:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -10165,7 +10276,7 @@ export type DeletePhotoMutation = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -10242,6 +10353,7 @@ export type CreatePhotoCommentMutation = {
       userProfile?:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -10386,6 +10498,7 @@ export type UpdatePhotoCommentMutation = {
       userProfile?:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -10530,6 +10643,7 @@ export type DeletePhotoCommentMutation = {
       userProfile?:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -10671,6 +10785,7 @@ export type CreateFriendshipMutation = {
     userProfile:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -10857,7 +10972,7 @@ export type CreateFriendshipMutation = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -10877,6 +10992,7 @@ export type CreateFriendshipMutation = {
     friendProfile:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -11063,7 +11179,7 @@ export type CreateFriendshipMutation = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -11103,6 +11219,7 @@ export type UpdateFriendshipMutation = {
     userProfile:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -11289,7 +11406,7 @@ export type UpdateFriendshipMutation = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -11309,6 +11426,7 @@ export type UpdateFriendshipMutation = {
     friendProfile:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -11495,7 +11613,7 @@ export type UpdateFriendshipMutation = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -11535,6 +11653,7 @@ export type DeleteFriendshipMutation = {
     userProfile:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -11721,7 +11840,7 @@ export type DeleteFriendshipMutation = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -11741,6 +11860,7 @@ export type DeleteFriendshipMutation = {
     friendProfile:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -11927,7 +12047,7 @@ export type DeleteFriendshipMutation = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -11966,6 +12086,7 @@ export type CreateConversationMutation = {
     userProfile:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -12152,7 +12273,7 @@ export type CreateConversationMutation = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -12172,6 +12293,7 @@ export type CreateConversationMutation = {
     friendProfile:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -12358,7 +12480,7 @@ export type CreateConversationMutation = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -12387,6 +12509,7 @@ export type CreateConversationMutation = {
         sender:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -12412,6 +12535,7 @@ export type CreateConversationMutation = {
         receiver:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -12479,6 +12603,7 @@ export type UpdateConversationMutation = {
     userProfile:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -12665,7 +12790,7 @@ export type UpdateConversationMutation = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -12685,6 +12810,7 @@ export type UpdateConversationMutation = {
     friendProfile:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -12871,7 +12997,7 @@ export type UpdateConversationMutation = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -12900,6 +13026,7 @@ export type UpdateConversationMutation = {
         sender:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -12925,6 +13052,7 @@ export type UpdateConversationMutation = {
         receiver:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -12992,6 +13120,7 @@ export type DeleteConversationMutation = {
     userProfile:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -13178,7 +13307,7 @@ export type DeleteConversationMutation = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -13198,6 +13327,7 @@ export type DeleteConversationMutation = {
     friendProfile:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -13384,7 +13514,7 @@ export type DeleteConversationMutation = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -13413,6 +13543,7 @@ export type DeleteConversationMutation = {
         sender:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -13438,6 +13569,7 @@ export type DeleteConversationMutation = {
         receiver:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -13519,6 +13651,7 @@ export type CreateCollegeGroupMutation = {
         tagline?: string | null,
         description?: string | null,
         url?: string | null,
+        approved?: boolean | null,
         group?:  {
           __typename: "CollegeGroup",
           id: string,
@@ -13557,6 +13690,7 @@ export type CreateCollegeGroupMutation = {
       items:  Array< {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -13688,6 +13822,7 @@ export type UpdateCollegeGroupMutation = {
         tagline?: string | null,
         description?: string | null,
         url?: string | null,
+        approved?: boolean | null,
         group?:  {
           __typename: "CollegeGroup",
           id: string,
@@ -13726,6 +13861,7 @@ export type UpdateCollegeGroupMutation = {
       items:  Array< {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -13857,6 +13993,7 @@ export type DeleteCollegeGroupMutation = {
         tagline?: string | null,
         description?: string | null,
         url?: string | null,
+        approved?: boolean | null,
         group?:  {
           __typename: "CollegeGroup",
           id: string,
@@ -13895,6 +14032,7 @@ export type DeleteCollegeGroupMutation = {
       items:  Array< {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -14008,6 +14146,7 @@ export type FindSuggestedFriendsQuery = {
   findSuggestedFriends?:  Array< {
     __typename: "UserProfile",
     id: string,
+    sub: string,
     firstName?: string | null,
     lastName?: string | null,
     verified?: boolean | null,
@@ -14032,6 +14171,7 @@ export type FindSuggestedFriendsQuery = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -14067,6 +14207,7 @@ export type FindSuggestedFriendsQuery = {
           tagline?: string | null,
           description?: string | null,
           url?: string | null,
+          approved?: boolean | null,
           groupID?: string | null,
           createdAt: string,
           updatedAt: string,
@@ -14107,6 +14248,7 @@ export type FindSuggestedFriendsQuery = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -14151,6 +14293,7 @@ export type FindSuggestedFriendsQuery = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -14176,6 +14319,7 @@ export type FindSuggestedFriendsQuery = {
         friendProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -14217,6 +14361,7 @@ export type FindSuggestedFriendsQuery = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -14242,6 +14387,7 @@ export type FindSuggestedFriendsQuery = {
         friendProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -14291,6 +14437,7 @@ export type FindSuggestedFriendsQuery = {
         sender:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -14316,6 +14463,7 @@ export type FindSuggestedFriendsQuery = {
         receiver:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -14372,6 +14520,7 @@ export type FindSuggestedFriendsQuery = {
         sender:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -14397,6 +14546,7 @@ export type FindSuggestedFriendsQuery = {
         receiver:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -14450,6 +14600,7 @@ export type FindSuggestedFriendsQuery = {
         userProfile?:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -14513,6 +14664,7 @@ export type FindSuggestedFriendsQuery = {
           tagline?: string | null,
           description?: string | null,
           url?: string | null,
+          approved?: boolean | null,
           groupID?: string | null,
           createdAt: string,
           updatedAt: string,
@@ -14528,6 +14680,7 @@ export type FindSuggestedFriendsQuery = {
         items:  Array< {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -14586,6 +14739,7 @@ export type FindSuggestedFriendsQuery = {
         userProfile?:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -14608,7 +14762,7 @@ export type FindSuggestedFriendsQuery = {
           _deleted?: boolean | null,
           _lastChangedAt: number,
         } | null,
-        socialMediaType: SocialMediaType,
+        socialMediaType: string,
         accountURL: string,
         createdAt: string,
         updatedAt: string,
@@ -14642,6 +14796,7 @@ export type GetMessageQuery = {
     sender:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -14828,7 +14983,7 @@ export type GetMessageQuery = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -14848,6 +15003,7 @@ export type GetMessageQuery = {
     receiver:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -15034,7 +15190,7 @@ export type GetMessageQuery = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -15059,6 +15215,7 @@ export type GetMessageQuery = {
       userProfile:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -15154,6 +15311,7 @@ export type GetMessageQuery = {
       friendProfile:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -15300,6 +15458,7 @@ export type ListMessagesQuery = {
       sender:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -15395,6 +15554,7 @@ export type ListMessagesQuery = {
       receiver:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -15495,6 +15655,7 @@ export type ListMessagesQuery = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -15520,6 +15681,7 @@ export type ListMessagesQuery = {
         friendProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -15586,6 +15748,7 @@ export type SyncMessagesQuery = {
       sender:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -15681,6 +15844,7 @@ export type SyncMessagesQuery = {
       receiver:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -15781,6 +15945,7 @@ export type SyncMessagesQuery = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -15806,6 +15971,7 @@ export type SyncMessagesQuery = {
         friendProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -15873,6 +16039,7 @@ export type MessagesBySenderIDQuery = {
       sender:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -15968,6 +16135,7 @@ export type MessagesBySenderIDQuery = {
       receiver:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -16068,6 +16236,7 @@ export type MessagesBySenderIDQuery = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -16093,6 +16262,7 @@ export type MessagesBySenderIDQuery = {
         friendProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -16160,6 +16330,7 @@ export type MessagesByReceiverIDQuery = {
       sender:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -16255,6 +16426,7 @@ export type MessagesByReceiverIDQuery = {
       receiver:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -16355,6 +16527,7 @@ export type MessagesByReceiverIDQuery = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -16380,6 +16553,7 @@ export type MessagesByReceiverIDQuery = {
         friendProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -16447,6 +16621,7 @@ export type MessagesByConversationIDQuery = {
       sender:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -16542,6 +16717,7 @@ export type MessagesByConversationIDQuery = {
       receiver:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -16642,6 +16818,7 @@ export type MessagesByConversationIDQuery = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -16667,6 +16844,7 @@ export type MessagesByConversationIDQuery = {
         friendProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -16726,6 +16904,7 @@ export type GetEventProfileQuery = {
     userProfile:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -16912,7 +17091,7 @@ export type GetEventProfileQuery = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -16942,6 +17121,7 @@ export type GetEventProfileQuery = {
       tagline?: string | null,
       description?: string | null,
       url?: string | null,
+      approved?: boolean | null,
       group?:  {
         __typename: "CollegeGroup",
         id: string,
@@ -17033,6 +17213,7 @@ export type ListEventProfilesQuery = {
       userProfile:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -17138,6 +17319,7 @@ export type ListEventProfilesQuery = {
         tagline?: string | null,
         description?: string | null,
         url?: string | null,
+        approved?: boolean | null,
         group?:  {
           __typename: "CollegeGroup",
           id: string,
@@ -17197,6 +17379,7 @@ export type SyncEventProfilesQuery = {
       userProfile:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -17302,6 +17485,7 @@ export type SyncEventProfilesQuery = {
         tagline?: string | null,
         description?: string | null,
         url?: string | null,
+        approved?: boolean | null,
         group?:  {
           __typename: "CollegeGroup",
           id: string,
@@ -17362,6 +17546,7 @@ export type EventProfilesByUserProfileIDQuery = {
       userProfile:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -17467,6 +17652,7 @@ export type EventProfilesByUserProfileIDQuery = {
         tagline?: string | null,
         description?: string | null,
         url?: string | null,
+        approved?: boolean | null,
         group?:  {
           __typename: "CollegeGroup",
           id: string,
@@ -17527,6 +17713,7 @@ export type EventProfilesByEventIDQuery = {
       userProfile:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -17632,6 +17819,7 @@ export type EventProfilesByEventIDQuery = {
         tagline?: string | null,
         description?: string | null,
         url?: string | null,
+        approved?: boolean | null,
         group?:  {
           __typename: "CollegeGroup",
           id: string,
@@ -17691,6 +17879,7 @@ export type GetFestivalQuery = {
     tagline?: string | null,
     description?: string | null,
     url?: string | null,
+    approved?: boolean | null,
     group?:  {
       __typename: "CollegeGroup",
       id: string,
@@ -17713,6 +17902,7 @@ export type GetFestivalQuery = {
           tagline?: string | null,
           description?: string | null,
           url?: string | null,
+          approved?: boolean | null,
           groupID?: string | null,
           createdAt: string,
           updatedAt: string,
@@ -17728,6 +17918,7 @@ export type GetFestivalQuery = {
         items:  Array< {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -17770,6 +17961,7 @@ export type GetFestivalQuery = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -17805,6 +17997,7 @@ export type GetFestivalQuery = {
           tagline?: string | null,
           description?: string | null,
           url?: string | null,
+          approved?: boolean | null,
           groupID?: string | null,
           createdAt: string,
           updatedAt: string,
@@ -17839,6 +18032,7 @@ export type GetFestivalQuery = {
           tagline?: string | null,
           description?: string | null,
           url?: string | null,
+          approved?: boolean | null,
           groupID?: string | null,
           createdAt: string,
           updatedAt: string,
@@ -17908,6 +18102,7 @@ export type ListFestivalsQuery = {
       tagline?: string | null,
       description?: string | null,
       url?: string | null,
+      approved?: boolean | null,
       group?:  {
         __typename: "CollegeGroup",
         id: string,
@@ -18002,6 +18197,7 @@ export type SyncFestivalsQuery = {
       tagline?: string | null,
       description?: string | null,
       url?: string | null,
+      approved?: boolean | null,
       group?:  {
         __typename: "CollegeGroup",
         id: string,
@@ -18097,6 +18293,7 @@ export type FestivalsByGroupIDQuery = {
       tagline?: string | null,
       description?: string | null,
       url?: string | null,
+      approved?: boolean | null,
       group?:  {
         __typename: "CollegeGroup",
         id: string,
@@ -18176,6 +18373,7 @@ export type GetUserProfileQuery = {
   getUserProfile?:  {
     __typename: "UserProfile",
     id: string,
+    sub: string,
     firstName?: string | null,
     lastName?: string | null,
     verified?: boolean | null,
@@ -18200,6 +18398,7 @@ export type GetUserProfileQuery = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -18235,6 +18434,7 @@ export type GetUserProfileQuery = {
           tagline?: string | null,
           description?: string | null,
           url?: string | null,
+          approved?: boolean | null,
           groupID?: string | null,
           createdAt: string,
           updatedAt: string,
@@ -18275,6 +18475,7 @@ export type GetUserProfileQuery = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -18319,6 +18520,7 @@ export type GetUserProfileQuery = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -18344,6 +18546,7 @@ export type GetUserProfileQuery = {
         friendProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -18385,6 +18588,7 @@ export type GetUserProfileQuery = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -18410,6 +18614,7 @@ export type GetUserProfileQuery = {
         friendProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -18459,6 +18664,7 @@ export type GetUserProfileQuery = {
         sender:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -18484,6 +18690,7 @@ export type GetUserProfileQuery = {
         receiver:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -18540,6 +18747,7 @@ export type GetUserProfileQuery = {
         sender:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -18565,6 +18773,7 @@ export type GetUserProfileQuery = {
         receiver:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -18618,6 +18827,7 @@ export type GetUserProfileQuery = {
         userProfile?:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -18681,6 +18891,7 @@ export type GetUserProfileQuery = {
           tagline?: string | null,
           description?: string | null,
           url?: string | null,
+          approved?: boolean | null,
           groupID?: string | null,
           createdAt: string,
           updatedAt: string,
@@ -18696,6 +18907,7 @@ export type GetUserProfileQuery = {
         items:  Array< {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -18754,6 +18966,7 @@ export type GetUserProfileQuery = {
         userProfile?:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -18776,7 +18989,7 @@ export type GetUserProfileQuery = {
           _deleted?: boolean | null,
           _lastChangedAt: number,
         } | null,
-        socialMediaType: SocialMediaType,
+        socialMediaType: string,
         accountURL: string,
         createdAt: string,
         updatedAt: string,
@@ -18807,6 +19020,7 @@ export type ListUserProfilesQuery = {
     items:  Array< {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -18993,7 +19207,7 @@ export type ListUserProfilesQuery = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -19028,6 +19242,7 @@ export type SyncUserProfilesQuery = {
     items:  Array< {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -19214,7 +19429,7 @@ export type SyncUserProfilesQuery = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -19250,6 +19465,7 @@ export type UserProfilesByCollegeGroupIdQuery = {
     items:  Array< {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -19436,7 +19652,7 @@ export type UserProfilesByCollegeGroupIdQuery = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -19470,6 +19686,7 @@ export type GetSocialMediaQuery = {
     userProfile?:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -19656,7 +19873,7 @@ export type GetSocialMediaQuery = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -19673,7 +19890,7 @@ export type GetSocialMediaQuery = {
       _deleted?: boolean | null,
       _lastChangedAt: number,
     } | null,
-    socialMediaType: SocialMediaType,
+    socialMediaType: string,
     accountURL: string,
     createdAt: string,
     updatedAt: string,
@@ -19699,6 +19916,7 @@ export type ListSocialMediasQuery = {
       userProfile?:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -19791,7 +20009,7 @@ export type ListSocialMediasQuery = {
         _deleted?: boolean | null,
         _lastChangedAt: number,
       } | null,
-      socialMediaType: SocialMediaType,
+      socialMediaType: string,
       accountURL: string,
       createdAt: string,
       updatedAt: string,
@@ -19821,6 +20039,7 @@ export type SyncSocialMediasQuery = {
       userProfile?:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -19913,7 +20132,7 @@ export type SyncSocialMediasQuery = {
         _deleted?: boolean | null,
         _lastChangedAt: number,
       } | null,
-      socialMediaType: SocialMediaType,
+      socialMediaType: string,
       accountURL: string,
       createdAt: string,
       updatedAt: string,
@@ -19944,6 +20163,7 @@ export type SocialMediasByUserProfileIDQuery = {
       userProfile?:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -20036,7 +20256,7 @@ export type SocialMediasByUserProfileIDQuery = {
         _deleted?: boolean | null,
         _lastChangedAt: number,
       } | null,
-      socialMediaType: SocialMediaType,
+      socialMediaType: string,
       accountURL: string,
       createdAt: string,
       updatedAt: string,
@@ -20157,6 +20377,7 @@ export type GetRideQuery = {
       tagline?: string | null,
       description?: string | null,
       url?: string | null,
+      approved?: boolean | null,
       group?:  {
         __typename: "CollegeGroup",
         id: string,
@@ -20243,6 +20464,7 @@ export type GetRideQuery = {
           tagline?: string | null,
           description?: string | null,
           url?: string | null,
+          approved?: boolean | null,
           groupID?: string | null,
           createdAt: string,
           updatedAt: string,
@@ -20283,6 +20505,7 @@ export type GetRideQuery = {
       userProfile:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -20407,6 +20630,7 @@ export type GetRideQuery = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -20478,6 +20702,7 @@ export type ListRidesQuery = {
         tagline?: string | null,
         description?: string | null,
         url?: string | null,
+        approved?: boolean | null,
         group?:  {
           __typename: "CollegeGroup",
           id: string,
@@ -20531,6 +20756,7 @@ export type ListRidesQuery = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -20620,6 +20846,7 @@ export type SyncRidesQuery = {
         tagline?: string | null,
         description?: string | null,
         url?: string | null,
+        approved?: boolean | null,
         group?:  {
           __typename: "CollegeGroup",
           id: string,
@@ -20673,6 +20900,7 @@ export type SyncRidesQuery = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -20763,6 +20991,7 @@ export type RidesByEventIDQuery = {
         tagline?: string | null,
         description?: string | null,
         url?: string | null,
+        approved?: boolean | null,
         group?:  {
           __typename: "CollegeGroup",
           id: string,
@@ -20816,6 +21045,7 @@ export type RidesByEventIDQuery = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -20903,6 +21133,7 @@ export type GetRideUserQuery = {
         tagline?: string | null,
         description?: string | null,
         url?: string | null,
+        approved?: boolean | null,
         group?:  {
           __typename: "CollegeGroup",
           id: string,
@@ -20956,6 +21187,7 @@ export type GetRideUserQuery = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -21018,6 +21250,7 @@ export type GetRideUserQuery = {
     userProfile:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -21204,7 +21437,7 @@ export type GetRideUserQuery = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -21259,6 +21492,7 @@ export type ListRideUsersQuery = {
           tagline?: string | null,
           description?: string | null,
           url?: string | null,
+          approved?: boolean | null,
           groupID?: string | null,
           createdAt: string,
           updatedAt: string,
@@ -21299,6 +21533,7 @@ export type ListRideUsersQuery = {
       userProfile:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -21433,6 +21668,7 @@ export type SyncRideUsersQuery = {
           tagline?: string | null,
           description?: string | null,
           url?: string | null,
+          approved?: boolean | null,
           groupID?: string | null,
           createdAt: string,
           updatedAt: string,
@@ -21473,6 +21709,7 @@ export type SyncRideUsersQuery = {
       userProfile:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -21608,6 +21845,7 @@ export type RideUsersByRideIDQuery = {
           tagline?: string | null,
           description?: string | null,
           url?: string | null,
+          approved?: boolean | null,
           groupID?: string | null,
           createdAt: string,
           updatedAt: string,
@@ -21648,6 +21886,7 @@ export type RideUsersByRideIDQuery = {
       userProfile:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -21783,6 +22022,7 @@ export type RideUsersByUserProfileIDQuery = {
           tagline?: string | null,
           description?: string | null,
           url?: string | null,
+          approved?: boolean | null,
           groupID?: string | null,
           createdAt: string,
           updatedAt: string,
@@ -21823,6 +22063,7 @@ export type RideUsersByUserProfileIDQuery = {
       userProfile:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -21940,6 +22181,7 @@ export type GetPhotoQuery = {
     userProfile?:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -22126,7 +22368,7 @@ export type GetPhotoQuery = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -22201,6 +22443,7 @@ export type ListPhotosQuery = {
       userProfile?:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -22341,6 +22584,7 @@ export type SyncPhotosQuery = {
       userProfile?:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -22482,6 +22726,7 @@ export type PhotosByUserProfileIDQuery = {
       userProfile?:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -22622,6 +22867,7 @@ export type GetPhotoCommentQuery = {
       userProfile?:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -22769,6 +23015,7 @@ export type ListPhotoCommentsQuery = {
         userProfile?:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -22839,6 +23086,7 @@ export type SyncPhotoCommentsQuery = {
         userProfile?:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -22910,6 +23158,7 @@ export type PhotoCommentsByPhotoIDQuery = {
         userProfile?:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -22972,6 +23221,7 @@ export type GetFriendshipQuery = {
     userProfile:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -23158,7 +23408,7 @@ export type GetFriendshipQuery = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -23178,6 +23428,7 @@ export type GetFriendshipQuery = {
     friendProfile:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -23364,7 +23615,7 @@ export type GetFriendshipQuery = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -23407,6 +23658,7 @@ export type ListFriendshipsQuery = {
       userProfile:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -23502,6 +23754,7 @@ export type ListFriendshipsQuery = {
       friendProfile:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -23624,6 +23877,7 @@ export type SyncFriendshipsQuery = {
       userProfile:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -23719,6 +23973,7 @@ export type SyncFriendshipsQuery = {
       friendProfile:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -23842,6 +24097,7 @@ export type FriendshipsByUserProfileIDQuery = {
       userProfile:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -23937,6 +24193,7 @@ export type FriendshipsByUserProfileIDQuery = {
       friendProfile:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -24060,6 +24317,7 @@ export type FriendshipsByFriendProfileIDQuery = {
       userProfile:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -24155,6 +24413,7 @@ export type FriendshipsByFriendProfileIDQuery = {
       friendProfile:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -24271,6 +24530,7 @@ export type GetConversationQuery = {
     userProfile:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -24457,7 +24717,7 @@ export type GetConversationQuery = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -24477,6 +24737,7 @@ export type GetConversationQuery = {
     friendProfile:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -24663,7 +24924,7 @@ export type GetConversationQuery = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -24692,6 +24953,7 @@ export type GetConversationQuery = {
         sender:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -24717,6 +24979,7 @@ export type GetConversationQuery = {
         receiver:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -24787,6 +25050,7 @@ export type ListConversationsQuery = {
       userProfile:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -24882,6 +25146,7 @@ export type ListConversationsQuery = {
       friendProfile:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -25023,6 +25288,7 @@ export type SyncConversationsQuery = {
       userProfile:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -25118,6 +25384,7 @@ export type SyncConversationsQuery = {
       friendProfile:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -25260,6 +25527,7 @@ export type ConversationsByUserProfileIDQuery = {
       userProfile:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -25355,6 +25623,7 @@ export type ConversationsByUserProfileIDQuery = {
       friendProfile:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -25497,6 +25766,7 @@ export type ConversationsByFriendProfileIDQuery = {
       userProfile:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -25592,6 +25862,7 @@ export type ConversationsByFriendProfileIDQuery = {
       friendProfile:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -25742,6 +26013,7 @@ export type GetCollegeGroupQuery = {
         tagline?: string | null,
         description?: string | null,
         url?: string | null,
+        approved?: boolean | null,
         group?:  {
           __typename: "CollegeGroup",
           id: string,
@@ -25780,6 +26052,7 @@ export type GetCollegeGroupQuery = {
       items:  Array< {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -25914,6 +26187,7 @@ export type ListCollegeGroupsQuery = {
           tagline?: string | null,
           description?: string | null,
           url?: string | null,
+          approved?: boolean | null,
           groupID?: string | null,
           createdAt: string,
           updatedAt: string,
@@ -25929,6 +26203,7 @@ export type ListCollegeGroupsQuery = {
         items:  Array< {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -25997,6 +26272,7 @@ export type SyncCollegeGroupsQuery = {
           tagline?: string | null,
           description?: string | null,
           url?: string | null,
+          approved?: boolean | null,
           groupID?: string | null,
           createdAt: string,
           updatedAt: string,
@@ -26012,6 +26288,7 @@ export type SyncCollegeGroupsQuery = {
         items:  Array< {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -26063,6 +26340,7 @@ export type OnCreateMessageSubscription = {
     sender:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -26249,7 +26527,7 @@ export type OnCreateMessageSubscription = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -26269,6 +26547,7 @@ export type OnCreateMessageSubscription = {
     receiver:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -26455,7 +26734,7 @@ export type OnCreateMessageSubscription = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -26480,6 +26759,7 @@ export type OnCreateMessageSubscription = {
       userProfile:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -26575,6 +26855,7 @@ export type OnCreateMessageSubscription = {
       friendProfile:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -26717,6 +26998,7 @@ export type OnUpdateMessageSubscription = {
     sender:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -26903,7 +27185,7 @@ export type OnUpdateMessageSubscription = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -26923,6 +27205,7 @@ export type OnUpdateMessageSubscription = {
     receiver:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -27109,7 +27392,7 @@ export type OnUpdateMessageSubscription = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -27134,6 +27417,7 @@ export type OnUpdateMessageSubscription = {
       userProfile:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -27229,6 +27513,7 @@ export type OnUpdateMessageSubscription = {
       friendProfile:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -27371,6 +27656,7 @@ export type OnDeleteMessageSubscription = {
     sender:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -27557,7 +27843,7 @@ export type OnDeleteMessageSubscription = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -27577,6 +27863,7 @@ export type OnDeleteMessageSubscription = {
     receiver:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -27763,7 +28050,7 @@ export type OnDeleteMessageSubscription = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -27788,6 +28075,7 @@ export type OnDeleteMessageSubscription = {
       userProfile:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -27883,6 +28171,7 @@ export type OnDeleteMessageSubscription = {
       friendProfile:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -28023,6 +28312,7 @@ export type OnCreateEventProfileSubscription = {
     userProfile:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -28209,7 +28499,7 @@ export type OnCreateEventProfileSubscription = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -28239,6 +28529,7 @@ export type OnCreateEventProfileSubscription = {
       tagline?: string | null,
       description?: string | null,
       url?: string | null,
+      approved?: boolean | null,
       group?:  {
         __typename: "CollegeGroup",
         id: string,
@@ -28326,6 +28617,7 @@ export type OnUpdateEventProfileSubscription = {
     userProfile:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -28512,7 +28804,7 @@ export type OnUpdateEventProfileSubscription = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -28542,6 +28834,7 @@ export type OnUpdateEventProfileSubscription = {
       tagline?: string | null,
       description?: string | null,
       url?: string | null,
+      approved?: boolean | null,
       group?:  {
         __typename: "CollegeGroup",
         id: string,
@@ -28629,6 +28922,7 @@ export type OnDeleteEventProfileSubscription = {
     userProfile:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -28815,7 +29109,7 @@ export type OnDeleteEventProfileSubscription = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -28845,6 +29139,7 @@ export type OnDeleteEventProfileSubscription = {
       tagline?: string | null,
       description?: string | null,
       url?: string | null,
+      approved?: boolean | null,
       group?:  {
         __typename: "CollegeGroup",
         id: string,
@@ -28937,6 +29232,7 @@ export type OnCreateFestivalSubscription = {
     tagline?: string | null,
     description?: string | null,
     url?: string | null,
+    approved?: boolean | null,
     group?:  {
       __typename: "CollegeGroup",
       id: string,
@@ -28959,6 +29255,7 @@ export type OnCreateFestivalSubscription = {
           tagline?: string | null,
           description?: string | null,
           url?: string | null,
+          approved?: boolean | null,
           groupID?: string | null,
           createdAt: string,
           updatedAt: string,
@@ -28974,6 +29271,7 @@ export type OnCreateFestivalSubscription = {
         items:  Array< {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -29016,6 +29314,7 @@ export type OnCreateFestivalSubscription = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -29051,6 +29350,7 @@ export type OnCreateFestivalSubscription = {
           tagline?: string | null,
           description?: string | null,
           url?: string | null,
+          approved?: boolean | null,
           groupID?: string | null,
           createdAt: string,
           updatedAt: string,
@@ -29085,6 +29385,7 @@ export type OnCreateFestivalSubscription = {
           tagline?: string | null,
           description?: string | null,
           url?: string | null,
+          approved?: boolean | null,
           groupID?: string | null,
           createdAt: string,
           updatedAt: string,
@@ -29150,6 +29451,7 @@ export type OnUpdateFestivalSubscription = {
     tagline?: string | null,
     description?: string | null,
     url?: string | null,
+    approved?: boolean | null,
     group?:  {
       __typename: "CollegeGroup",
       id: string,
@@ -29172,6 +29474,7 @@ export type OnUpdateFestivalSubscription = {
           tagline?: string | null,
           description?: string | null,
           url?: string | null,
+          approved?: boolean | null,
           groupID?: string | null,
           createdAt: string,
           updatedAt: string,
@@ -29187,6 +29490,7 @@ export type OnUpdateFestivalSubscription = {
         items:  Array< {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -29229,6 +29533,7 @@ export type OnUpdateFestivalSubscription = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -29264,6 +29569,7 @@ export type OnUpdateFestivalSubscription = {
           tagline?: string | null,
           description?: string | null,
           url?: string | null,
+          approved?: boolean | null,
           groupID?: string | null,
           createdAt: string,
           updatedAt: string,
@@ -29298,6 +29604,7 @@ export type OnUpdateFestivalSubscription = {
           tagline?: string | null,
           description?: string | null,
           url?: string | null,
+          approved?: boolean | null,
           groupID?: string | null,
           createdAt: string,
           updatedAt: string,
@@ -29363,6 +29670,7 @@ export type OnDeleteFestivalSubscription = {
     tagline?: string | null,
     description?: string | null,
     url?: string | null,
+    approved?: boolean | null,
     group?:  {
       __typename: "CollegeGroup",
       id: string,
@@ -29385,6 +29693,7 @@ export type OnDeleteFestivalSubscription = {
           tagline?: string | null,
           description?: string | null,
           url?: string | null,
+          approved?: boolean | null,
           groupID?: string | null,
           createdAt: string,
           updatedAt: string,
@@ -29400,6 +29709,7 @@ export type OnDeleteFestivalSubscription = {
         items:  Array< {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -29442,6 +29752,7 @@ export type OnDeleteFestivalSubscription = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -29477,6 +29788,7 @@ export type OnDeleteFestivalSubscription = {
           tagline?: string | null,
           description?: string | null,
           url?: string | null,
+          approved?: boolean | null,
           groupID?: string | null,
           createdAt: string,
           updatedAt: string,
@@ -29511,6 +29823,7 @@ export type OnDeleteFestivalSubscription = {
           tagline?: string | null,
           description?: string | null,
           url?: string | null,
+          approved?: boolean | null,
           groupID?: string | null,
           createdAt: string,
           updatedAt: string,
@@ -29566,6 +29879,7 @@ export type OnCreateUserProfileSubscription = {
   onCreateUserProfile?:  {
     __typename: "UserProfile",
     id: string,
+    sub: string,
     firstName?: string | null,
     lastName?: string | null,
     verified?: boolean | null,
@@ -29590,6 +29904,7 @@ export type OnCreateUserProfileSubscription = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -29625,6 +29940,7 @@ export type OnCreateUserProfileSubscription = {
           tagline?: string | null,
           description?: string | null,
           url?: string | null,
+          approved?: boolean | null,
           groupID?: string | null,
           createdAt: string,
           updatedAt: string,
@@ -29665,6 +29981,7 @@ export type OnCreateUserProfileSubscription = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -29709,6 +30026,7 @@ export type OnCreateUserProfileSubscription = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -29734,6 +30052,7 @@ export type OnCreateUserProfileSubscription = {
         friendProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -29775,6 +30094,7 @@ export type OnCreateUserProfileSubscription = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -29800,6 +30120,7 @@ export type OnCreateUserProfileSubscription = {
         friendProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -29849,6 +30170,7 @@ export type OnCreateUserProfileSubscription = {
         sender:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -29874,6 +30196,7 @@ export type OnCreateUserProfileSubscription = {
         receiver:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -29930,6 +30253,7 @@ export type OnCreateUserProfileSubscription = {
         sender:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -29955,6 +30279,7 @@ export type OnCreateUserProfileSubscription = {
         receiver:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -30008,6 +30333,7 @@ export type OnCreateUserProfileSubscription = {
         userProfile?:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -30071,6 +30397,7 @@ export type OnCreateUserProfileSubscription = {
           tagline?: string | null,
           description?: string | null,
           url?: string | null,
+          approved?: boolean | null,
           groupID?: string | null,
           createdAt: string,
           updatedAt: string,
@@ -30086,6 +30413,7 @@ export type OnCreateUserProfileSubscription = {
         items:  Array< {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -30144,6 +30472,7 @@ export type OnCreateUserProfileSubscription = {
         userProfile?:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -30166,7 +30495,7 @@ export type OnCreateUserProfileSubscription = {
           _deleted?: boolean | null,
           _lastChangedAt: number,
         } | null,
-        socialMediaType: SocialMediaType,
+        socialMediaType: string,
         accountURL: string,
         createdAt: string,
         updatedAt: string,
@@ -30193,6 +30522,7 @@ export type OnUpdateUserProfileSubscription = {
   onUpdateUserProfile?:  {
     __typename: "UserProfile",
     id: string,
+    sub: string,
     firstName?: string | null,
     lastName?: string | null,
     verified?: boolean | null,
@@ -30217,6 +30547,7 @@ export type OnUpdateUserProfileSubscription = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -30252,6 +30583,7 @@ export type OnUpdateUserProfileSubscription = {
           tagline?: string | null,
           description?: string | null,
           url?: string | null,
+          approved?: boolean | null,
           groupID?: string | null,
           createdAt: string,
           updatedAt: string,
@@ -30292,6 +30624,7 @@ export type OnUpdateUserProfileSubscription = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -30336,6 +30669,7 @@ export type OnUpdateUserProfileSubscription = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -30361,6 +30695,7 @@ export type OnUpdateUserProfileSubscription = {
         friendProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -30402,6 +30737,7 @@ export type OnUpdateUserProfileSubscription = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -30427,6 +30763,7 @@ export type OnUpdateUserProfileSubscription = {
         friendProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -30476,6 +30813,7 @@ export type OnUpdateUserProfileSubscription = {
         sender:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -30501,6 +30839,7 @@ export type OnUpdateUserProfileSubscription = {
         receiver:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -30557,6 +30896,7 @@ export type OnUpdateUserProfileSubscription = {
         sender:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -30582,6 +30922,7 @@ export type OnUpdateUserProfileSubscription = {
         receiver:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -30635,6 +30976,7 @@ export type OnUpdateUserProfileSubscription = {
         userProfile?:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -30698,6 +31040,7 @@ export type OnUpdateUserProfileSubscription = {
           tagline?: string | null,
           description?: string | null,
           url?: string | null,
+          approved?: boolean | null,
           groupID?: string | null,
           createdAt: string,
           updatedAt: string,
@@ -30713,6 +31056,7 @@ export type OnUpdateUserProfileSubscription = {
         items:  Array< {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -30771,6 +31115,7 @@ export type OnUpdateUserProfileSubscription = {
         userProfile?:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -30793,7 +31138,7 @@ export type OnUpdateUserProfileSubscription = {
           _deleted?: boolean | null,
           _lastChangedAt: number,
         } | null,
-        socialMediaType: SocialMediaType,
+        socialMediaType: string,
         accountURL: string,
         createdAt: string,
         updatedAt: string,
@@ -30820,6 +31165,7 @@ export type OnDeleteUserProfileSubscription = {
   onDeleteUserProfile?:  {
     __typename: "UserProfile",
     id: string,
+    sub: string,
     firstName?: string | null,
     lastName?: string | null,
     verified?: boolean | null,
@@ -30844,6 +31190,7 @@ export type OnDeleteUserProfileSubscription = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -30879,6 +31226,7 @@ export type OnDeleteUserProfileSubscription = {
           tagline?: string | null,
           description?: string | null,
           url?: string | null,
+          approved?: boolean | null,
           groupID?: string | null,
           createdAt: string,
           updatedAt: string,
@@ -30919,6 +31267,7 @@ export type OnDeleteUserProfileSubscription = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -30963,6 +31312,7 @@ export type OnDeleteUserProfileSubscription = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -30988,6 +31338,7 @@ export type OnDeleteUserProfileSubscription = {
         friendProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -31029,6 +31380,7 @@ export type OnDeleteUserProfileSubscription = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -31054,6 +31406,7 @@ export type OnDeleteUserProfileSubscription = {
         friendProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -31103,6 +31456,7 @@ export type OnDeleteUserProfileSubscription = {
         sender:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -31128,6 +31482,7 @@ export type OnDeleteUserProfileSubscription = {
         receiver:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -31184,6 +31539,7 @@ export type OnDeleteUserProfileSubscription = {
         sender:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -31209,6 +31565,7 @@ export type OnDeleteUserProfileSubscription = {
         receiver:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -31262,6 +31619,7 @@ export type OnDeleteUserProfileSubscription = {
         userProfile?:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -31325,6 +31683,7 @@ export type OnDeleteUserProfileSubscription = {
           tagline?: string | null,
           description?: string | null,
           url?: string | null,
+          approved?: boolean | null,
           groupID?: string | null,
           createdAt: string,
           updatedAt: string,
@@ -31340,6 +31699,7 @@ export type OnDeleteUserProfileSubscription = {
         items:  Array< {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -31398,6 +31758,7 @@ export type OnDeleteUserProfileSubscription = {
         userProfile?:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -31420,7 +31781,7 @@ export type OnDeleteUserProfileSubscription = {
           _deleted?: boolean | null,
           _lastChangedAt: number,
         } | null,
-        socialMediaType: SocialMediaType,
+        socialMediaType: string,
         accountURL: string,
         createdAt: string,
         updatedAt: string,
@@ -31451,6 +31812,7 @@ export type OnCreateSocialMediaSubscription = {
     userProfile?:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -31637,7 +31999,7 @@ export type OnCreateSocialMediaSubscription = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -31654,7 +32016,7 @@ export type OnCreateSocialMediaSubscription = {
       _deleted?: boolean | null,
       _lastChangedAt: number,
     } | null,
-    socialMediaType: SocialMediaType,
+    socialMediaType: string,
     accountURL: string,
     createdAt: string,
     updatedAt: string,
@@ -31676,6 +32038,7 @@ export type OnUpdateSocialMediaSubscription = {
     userProfile?:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -31862,7 +32225,7 @@ export type OnUpdateSocialMediaSubscription = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -31879,7 +32242,7 @@ export type OnUpdateSocialMediaSubscription = {
       _deleted?: boolean | null,
       _lastChangedAt: number,
     } | null,
-    socialMediaType: SocialMediaType,
+    socialMediaType: string,
     accountURL: string,
     createdAt: string,
     updatedAt: string,
@@ -31901,6 +32264,7 @@ export type OnDeleteSocialMediaSubscription = {
     userProfile?:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -32087,7 +32451,7 @@ export type OnDeleteSocialMediaSubscription = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -32104,7 +32468,7 @@ export type OnDeleteSocialMediaSubscription = {
       _deleted?: boolean | null,
       _lastChangedAt: number,
     } | null,
-    socialMediaType: SocialMediaType,
+    socialMediaType: string,
     accountURL: string,
     createdAt: string,
     updatedAt: string,
@@ -32207,6 +32571,7 @@ export type OnCreateRideSubscription = {
       tagline?: string | null,
       description?: string | null,
       url?: string | null,
+      approved?: boolean | null,
       group?:  {
         __typename: "CollegeGroup",
         id: string,
@@ -32293,6 +32658,7 @@ export type OnCreateRideSubscription = {
           tagline?: string | null,
           description?: string | null,
           url?: string | null,
+          approved?: boolean | null,
           groupID?: string | null,
           createdAt: string,
           updatedAt: string,
@@ -32333,6 +32699,7 @@ export type OnCreateRideSubscription = {
       userProfile:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -32457,6 +32824,7 @@ export type OnCreateRideSubscription = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -32524,6 +32892,7 @@ export type OnUpdateRideSubscription = {
       tagline?: string | null,
       description?: string | null,
       url?: string | null,
+      approved?: boolean | null,
       group?:  {
         __typename: "CollegeGroup",
         id: string,
@@ -32610,6 +32979,7 @@ export type OnUpdateRideSubscription = {
           tagline?: string | null,
           description?: string | null,
           url?: string | null,
+          approved?: boolean | null,
           groupID?: string | null,
           createdAt: string,
           updatedAt: string,
@@ -32650,6 +33020,7 @@ export type OnUpdateRideSubscription = {
       userProfile:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -32774,6 +33145,7 @@ export type OnUpdateRideSubscription = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -32841,6 +33213,7 @@ export type OnDeleteRideSubscription = {
       tagline?: string | null,
       description?: string | null,
       url?: string | null,
+      approved?: boolean | null,
       group?:  {
         __typename: "CollegeGroup",
         id: string,
@@ -32927,6 +33300,7 @@ export type OnDeleteRideSubscription = {
           tagline?: string | null,
           description?: string | null,
           url?: string | null,
+          approved?: boolean | null,
           groupID?: string | null,
           createdAt: string,
           updatedAt: string,
@@ -32967,6 +33341,7 @@ export type OnDeleteRideSubscription = {
       userProfile:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -33091,6 +33466,7 @@ export type OnDeleteRideSubscription = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -33161,6 +33537,7 @@ export type OnCreateRideUserSubscription = {
         tagline?: string | null,
         description?: string | null,
         url?: string | null,
+        approved?: boolean | null,
         group?:  {
           __typename: "CollegeGroup",
           id: string,
@@ -33214,6 +33591,7 @@ export type OnCreateRideUserSubscription = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -33276,6 +33654,7 @@ export type OnCreateRideUserSubscription = {
     userProfile:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -33462,7 +33841,7 @@ export type OnCreateRideUserSubscription = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -33513,6 +33892,7 @@ export type OnUpdateRideUserSubscription = {
         tagline?: string | null,
         description?: string | null,
         url?: string | null,
+        approved?: boolean | null,
         group?:  {
           __typename: "CollegeGroup",
           id: string,
@@ -33566,6 +33946,7 @@ export type OnUpdateRideUserSubscription = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -33628,6 +34009,7 @@ export type OnUpdateRideUserSubscription = {
     userProfile:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -33814,7 +34196,7 @@ export type OnUpdateRideUserSubscription = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -33865,6 +34247,7 @@ export type OnDeleteRideUserSubscription = {
         tagline?: string | null,
         description?: string | null,
         url?: string | null,
+        approved?: boolean | null,
         group?:  {
           __typename: "CollegeGroup",
           id: string,
@@ -33918,6 +34301,7 @@ export type OnDeleteRideUserSubscription = {
         userProfile:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -33980,6 +34364,7 @@ export type OnDeleteRideUserSubscription = {
     userProfile:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -34166,7 +34551,7 @@ export type OnDeleteRideUserSubscription = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -34205,6 +34590,7 @@ export type OnCreatePhotoSubscription = {
     userProfile?:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -34391,7 +34777,7 @@ export type OnCreatePhotoSubscription = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -34462,6 +34848,7 @@ export type OnUpdatePhotoSubscription = {
     userProfile?:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -34648,7 +35035,7 @@ export type OnUpdatePhotoSubscription = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -34719,6 +35106,7 @@ export type OnDeletePhotoSubscription = {
     userProfile?:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -34905,7 +35293,7 @@ export type OnDeletePhotoSubscription = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -34981,6 +35369,7 @@ export type OnCreatePhotoCommentSubscription = {
       userProfile?:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -35124,6 +35513,7 @@ export type OnUpdatePhotoCommentSubscription = {
       userProfile?:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -35267,6 +35657,7 @@ export type OnDeletePhotoCommentSubscription = {
       userProfile?:  {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -35407,6 +35798,7 @@ export type OnCreateFriendshipSubscription = {
     userProfile:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -35593,7 +35985,7 @@ export type OnCreateFriendshipSubscription = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -35613,6 +36005,7 @@ export type OnCreateFriendshipSubscription = {
     friendProfile:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -35799,7 +36192,7 @@ export type OnCreateFriendshipSubscription = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -35838,6 +36231,7 @@ export type OnUpdateFriendshipSubscription = {
     userProfile:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -36024,7 +36418,7 @@ export type OnUpdateFriendshipSubscription = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -36044,6 +36438,7 @@ export type OnUpdateFriendshipSubscription = {
     friendProfile:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -36230,7 +36625,7 @@ export type OnUpdateFriendshipSubscription = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -36269,6 +36664,7 @@ export type OnDeleteFriendshipSubscription = {
     userProfile:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -36455,7 +36851,7 @@ export type OnDeleteFriendshipSubscription = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -36475,6 +36871,7 @@ export type OnDeleteFriendshipSubscription = {
     friendProfile:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -36661,7 +37058,7 @@ export type OnDeleteFriendshipSubscription = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -36699,6 +37096,7 @@ export type OnCreateConversationSubscription = {
     userProfile:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -36885,7 +37283,7 @@ export type OnCreateConversationSubscription = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -36905,6 +37303,7 @@ export type OnCreateConversationSubscription = {
     friendProfile:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -37091,7 +37490,7 @@ export type OnCreateConversationSubscription = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -37120,6 +37519,7 @@ export type OnCreateConversationSubscription = {
         sender:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -37145,6 +37545,7 @@ export type OnCreateConversationSubscription = {
         receiver:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -37211,6 +37612,7 @@ export type OnUpdateConversationSubscription = {
     userProfile:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -37397,7 +37799,7 @@ export type OnUpdateConversationSubscription = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -37417,6 +37819,7 @@ export type OnUpdateConversationSubscription = {
     friendProfile:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -37603,7 +38006,7 @@ export type OnUpdateConversationSubscription = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -37632,6 +38035,7 @@ export type OnUpdateConversationSubscription = {
         sender:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -37657,6 +38061,7 @@ export type OnUpdateConversationSubscription = {
         receiver:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -37723,6 +38128,7 @@ export type OnDeleteConversationSubscription = {
     userProfile:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -37909,7 +38315,7 @@ export type OnDeleteConversationSubscription = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -37929,6 +38335,7 @@ export type OnDeleteConversationSubscription = {
     friendProfile:  {
       __typename: "UserProfile",
       id: string,
+      sub: string,
       firstName?: string | null,
       lastName?: string | null,
       verified?: boolean | null,
@@ -38115,7 +38522,7 @@ export type OnDeleteConversationSubscription = {
           __typename: "SocialMedia",
           id: string,
           userProfileID: string,
-          socialMediaType: SocialMediaType,
+          socialMediaType: string,
           accountURL: string,
           createdAt: string,
           updatedAt: string,
@@ -38144,6 +38551,7 @@ export type OnDeleteConversationSubscription = {
         sender:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -38169,6 +38577,7 @@ export type OnDeleteConversationSubscription = {
         receiver:  {
           __typename: "UserProfile",
           id: string,
+          sub: string,
           firstName?: string | null,
           lastName?: string | null,
           verified?: boolean | null,
@@ -38249,6 +38658,7 @@ export type OnCreateCollegeGroupSubscription = {
         tagline?: string | null,
         description?: string | null,
         url?: string | null,
+        approved?: boolean | null,
         group?:  {
           __typename: "CollegeGroup",
           id: string,
@@ -38287,6 +38697,7 @@ export type OnCreateCollegeGroupSubscription = {
       items:  Array< {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -38417,6 +38828,7 @@ export type OnUpdateCollegeGroupSubscription = {
         tagline?: string | null,
         description?: string | null,
         url?: string | null,
+        approved?: boolean | null,
         group?:  {
           __typename: "CollegeGroup",
           id: string,
@@ -38455,6 +38867,7 @@ export type OnUpdateCollegeGroupSubscription = {
       items:  Array< {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,
@@ -38585,6 +38998,7 @@ export type OnDeleteCollegeGroupSubscription = {
         tagline?: string | null,
         description?: string | null,
         url?: string | null,
+        approved?: boolean | null,
         group?:  {
           __typename: "CollegeGroup",
           id: string,
@@ -38623,6 +39037,7 @@ export type OnDeleteCollegeGroupSubscription = {
       items:  Array< {
         __typename: "UserProfile",
         id: string,
+        sub: string,
         firstName?: string | null,
         lastName?: string | null,
         verified?: boolean | null,

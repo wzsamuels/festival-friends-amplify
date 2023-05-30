@@ -5,7 +5,7 @@
  **************************************************************************/
 
 import * as React from "react";
-import { GridProps, SelectFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
+import { GridProps, SelectFieldProps, SwitchFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
 import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
 export declare type ValidationResponse = {
     hasError: boolean;
@@ -23,6 +23,7 @@ export declare type FestivalCreateFormInputValues = {
     tagline?: string;
     description?: string;
     url?: string;
+    approved?: boolean;
 };
 export declare type FestivalCreateFormValidationValues = {
     name?: ValidationFunction<string>;
@@ -35,6 +36,7 @@ export declare type FestivalCreateFormValidationValues = {
     tagline?: ValidationFunction<string>;
     description?: ValidationFunction<string>;
     url?: ValidationFunction<string>;
+    approved?: ValidationFunction<boolean>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type FestivalCreateFormOverridesProps = {
@@ -49,6 +51,7 @@ export declare type FestivalCreateFormOverridesProps = {
     tagline?: PrimitiveOverrideProps<TextFieldProps>;
     description?: PrimitiveOverrideProps<TextFieldProps>;
     url?: PrimitiveOverrideProps<TextFieldProps>;
+    approved?: PrimitiveOverrideProps<SwitchFieldProps>;
 } & EscapeHatchProps;
 export declare type FestivalCreateFormProps = React.PropsWithChildren<{
     overrides?: FestivalCreateFormOverridesProps | undefined | null;
