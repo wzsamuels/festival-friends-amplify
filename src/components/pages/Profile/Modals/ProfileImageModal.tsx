@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
-import {Auth, Storage} from "aws-amplify";
-import { DataStore } from "@aws-amplify/datastore";
-import { Photo, UserProfile } from "../../../../models";
+import { Photo } from "../../../../models";
 import { ProfileModalProps } from "../../../../@types/profile";
 import PhotoImage from "../../../ui/PhotoImage";
 import getErrorMessage from "../../../../lib/getErrorMessage";
 import Modal from "../../../common/Modal/Modal";
 import Button from "../../../common/Button/Button";
-import {createNewPhoto} from "../../../../services/PhotoServices";
+import {createNewPhoto} from "../../../../services/photoServices";
 import useProfileStore from "../../../../stores/profileStore";
-import {updateProfilePhoto} from "../../../../services/ProfileServices";
+import {updateProfilePhoto} from "../../../../services/profileServices";
 
 export interface ProfileImageModalProps extends ProfileModalProps {
   photos: Photo[];
@@ -27,7 +24,6 @@ const ProfileImageModal = ({
   const [preview, setPreview] = useState("");
   const [uploading, setUploading] = useState(false);
   const [updating, setUpdating] = useState(false);
-  const setProfilePhoto = useProfileStore((state) => state.setProfilePhoto);
 
   const setProfile = useProfileStore(state => state.setProfile)
   // Upload new profile image to S3 bucket, create new Photo, and update user profile image

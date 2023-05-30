@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {createNewPhoto} from '../../../../services/PhotoServices'
+import {createNewPhoto} from '../../../../services/photoServices'
 import { ProfileModalProps } from "../../../../@types/profile";
 import Modal from "../../../common/Modal/Modal";
 import Button from "../../../common/Button/Button";
