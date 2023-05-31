@@ -6,13 +6,13 @@ import Header from "../../layout/Header";
 import PhotoModal from "./Modals/PhotoModal";
 import { useNavigate } from "react-router-dom";
 import { BsPerson, IoArrowBack } from "react-icons/all";
-import RideCardBase from "../../ui/RideCardBase";
 import getErrorMessage from "../../../lib/getErrorMessage";
 import useDataClearedStore from "../../../stores/dataClearedStore";
 import ImageContext from "../../../context/ImageContext";
-import {getBannerPhoto, getEventsAttending, getProfile, getProfilePhoto} from "../../../services/ProfileServices";
+import {getBannerPhoto, getEventsAttending, getProfile, getProfilePhoto} from "../../../services/profileServices";
 import {getRidesByProfile} from "../../../services/rideServices";
-import {getPhotosByProfile} from "../../../services/PhotoServices";
+import {getPhotosByProfile} from "../../../services/photoServices";
+import RideCard from "../../ui/RideCard";
 
 const ProfilePage = () => {
   const [profile, setProfile] = useState<UserProfile | null | undefined>();
@@ -41,7 +41,7 @@ const ProfilePage = () => {
     } catch(error) {
       console.log("Error fetching profile in Profile.tsx: ", getErrorMessage(error));
     }
-  }, [dataCleared]);
+  }, [dataCleared, profileId]);
 
   useEffect(() => {
     if(!dataCleared || !profile) return;
@@ -164,15 +164,17 @@ const ProfilePage = () => {
         </section>
         <section>
           <h1 className="text-2xl my-4">Rides</h1>
+          <div className='flex flex-wrap'>
           {
             !privacySetting?.rides ?
               (rides.length > 0 ? rides.map(ride =>
-                <RideCardBase ride={ride} key={ride.id} />
+                <RideCard ride={ride} key={ride.id} className="m-4"/>
               ) :
               <span>Not signed up for any rides</span>
             ) :
             <span>This user has set their privacy setting to hide rides.</span>
           }
+          </div>
         </section>
         <section>
           <h1 className="text-2xl my-4">Photos</h1>
