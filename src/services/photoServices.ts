@@ -41,3 +41,12 @@ export const getPhotosByProfile = async (profile: UserProfile) => {
     return [];
   }
 }
+
+export const deletePhoto = async (photo: Photo) => {
+  try {
+    await DataStore.delete(photo);
+    await Storage.remove(`${photo.s3Key}`);
+  } catch (e) {
+    console.log("Error deleting photo:", e);
+  }
+}
