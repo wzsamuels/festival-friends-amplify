@@ -3,7 +3,7 @@ import React, {useContext, useEffect, useState} from "react";
 import {Festival, Photo, PrivacySetting, Ride, UserProfile} from "../../../models";
 import PhotoImage from "../../ui/PhotoImage";
 import Header from "../../layout/Header";
-import PhotoModal from "./Modals/PhotoModal";
+import PhotoModal from "../AccountPage/Modals/PhotoModal";
 import { useNavigate } from "react-router-dom";
 import { BsPerson, IoArrowBack } from "react-icons/all";
 import getErrorMessage from "../../../lib/getErrorMessage";

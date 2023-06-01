@@ -25,7 +25,7 @@ const VerifyAccounts = () => {
     try {
       fetchProfiles();
     } catch (e) {
-      console.log("Error fetching profiles in AdminPage.tsx", getErrorMessage(e));
+      console.log("Error fetching profiles in VerifyAccounts.tsx", getErrorMessage(e));
     }
   }, []);
 
