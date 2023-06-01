@@ -8,19 +8,25 @@ import EventFriendModal from "../pages/EventPage/Modals/EventFriendModal";
 import useDataClearedStore from "../../stores/dataClearedStore";
 import useProfileStore from "../../stores/profileStore";
 import {createEventProfile, deleteEventProfile, getEventProfile} from "../../services/eventProfileServices";
+import {getEventAttendeeProfiles} from "../../services/eventServices";
+import useFriendStore from "../../stores/friendProfileStore";
+import dayjs from "dayjs";
 
 interface EventCardProps {
   event: Festival;
   attendingFriends: UserProfile[];
 }
 
-const EventCard = ({ event, attendingFriends }: EventCardProps) => {
+const EventCard = ({ event }: EventCardProps) => {
   const [eventImage, setFestivalImage] = useState("");
+  const [attendeeProfiles, setAttendeeProfiles] = useState<UserProfile[]>([]);
+  const friendProfiles = useFriendStore(state => state.acceptedFriendProfiles);
+  const [friendsAttending, setFriendsAttending] = useState<UserProfile[]>([])
   const [eventProfile, setEventProfile] = useState<EventProfile | null>(null);
-  const dataCleared = useDataClearedStore((state) => state.dataCleared);
   const userProfile = useProfileStore((state) => state.userProfile);
   const [isEventFriendModalOpen, setIsEventFriendModalOpen] = useState(false);
   const { getSignedURL } = useContext(ImageContext);
+  const dataCleared = useDataClearedStore(state => state.dataCleared)
 
   useEffect(() => {
     const fetchSignedURL = async () => {
@@ -29,6 +35,19 @@ const EventCard = ({ event, attendingFriends }: EventCardProps) => {
 
     fetchSignedURL().then(url => setFestivalImage(url));
   }, [event.image, getSignedURL]);
+
+  useEffect(() => {
+    //if(!event || !dataCleared) return;
+    try {
+      getEventAttendeeProfiles(event.id).then(profiles => {
+        setAttendeeProfiles(profiles)
+        const attendeeMap = new Map(profiles.map(profile => [profile.id, profile]))
+        setFriendsAttending(friendProfiles.filter(profile => attendeeMap.has(profile.id)));
+      })
+    } catch (e) {
+      console.log("Error fetching event attendee profiles", e);
+    }
+  }, [event])
 
   useEffect(() => {
     if (!dataCleared || !userProfile) return;
@@ -42,11 +61,13 @@ const EventCard = ({ event, attendingFriends }: EventCardProps) => {
     if (eventProfile) {
       // If the user is already attending, remove them from the attendees list
       await deleteEventProfile(eventProfile);
+      setAttendeeProfiles(state => state.filter(profile => profile.id !== userProfile.id))
       setEventProfile(null)
       console.log(`${userProfile.firstName} ${userProfile.lastName} has been removed from the event attendees list`);
     } else {
       // If the user is not attending, add them to the attendees list
       const newEventProfile = await createEventProfile(event, userProfile);
+      setAttendeeProfiles(state => [...state, userProfile])
       setEventProfile(newEventProfile)
       console.log(`${userProfile.firstName} ${userProfile.lastName} has been added to the event attendees list`);
     }
@@ -64,32 +85,49 @@ const EventCard = ({ event, attendingFriends }: EventCardProps) => {
             />
           ) : null}
         </div>
-        <div className=" bottom-4 left-4 rounded-xl z-10 w-full p-4 font-bold ">
-          <div className="bold min-h-[3rem]">
-            {event.name} - {event.location}
+        <div className=" bottom-4 left-4 rounded-xl z-10 w-full p-4 ">
+          <div className="font-bold min-h-[3rem]">
+            {event.name}
           </div>
+          <div>{event.city}, {event.state}</div>
 
-          <div>{event.startDate}</div>
+          <div>{dayjs(event.startDate).format("MMMM D, YYYY")}</div>
         </div>
       </Link>
       <div className="p-2 text-base md:text-lg">
         {userProfile ? (
           <>
+            <div>
             <button
-              className="my-2  text-green-950"
-              disabled={attendingFriends.length === 0}
+              className="my-2 text-green-950"
+              disabled={friendsAttending.length === 0}
               onClick={() => setIsEventFriendModalOpen(true)}
             >
-              {attendingFriends.length > 0 ? (
+              {friendsAttending.length > 0 ? (
                 <span className="underline">
-                  {attendingFriends.length} friend
-                  {attendingFriends.length > 1 ? "s" : ""}{" "}
-                  {attendingFriends.length > 1 ? "are" : "is"} attending
+                  {friendsAttending.length} friend
+                  {friendsAttending.length > 1 ? "s" : ""}{" "}
+                  {friendsAttending.length > 1 ? "are" : "is"} attending
                 </span>
               ) : (
                 <span>&nbsp;</span>
               )}
             </button>
+            </div>
+            <div>
+            <button
+              className="mb-2 text-green-950">
+              {attendeeProfiles.length > 0 ? (
+                <span className="underline my-4">
+                  {attendeeProfiles.length}{" "}
+                  {attendeeProfiles.length > 1 ? "people" : "person"}{" "}
+                  {attendeeProfiles.length > 1 ? "are" : "is"} attending
+                </span>
+              ) : (
+                <span>&nbsp;</span>
+              )}
+            </button>
+            </div>
             {eventProfile ? (
               <Button
                 onClick={handleAttendFestival}
@@ -112,7 +150,7 @@ const EventCard = ({ event, attendingFriends }: EventCardProps) => {
       </div>
       <EventFriendModal
         event={event}
-        attendingFriends={attendingFriends}
+        attendingFriends={friendsAttending}
         isOpen={isEventFriendModalOpen}
         setIsOpen={setIsEventFriendModalOpen}
       />
