@@ -66,8 +66,10 @@ const ProfileImageModal = ({
       setPreview("");
       return;
     }
+    setUploading(true);
     const objectUrl = URL.createObjectURL(selectedFile);
     setPreview(objectUrl);
+    setUploading(false);
     // free memory when ever this component is unmounted
     return () => URL.revokeObjectURL(objectUrl);
   }, [selectedFile]);

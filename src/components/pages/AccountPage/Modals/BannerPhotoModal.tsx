@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Modal from "../../../common/Modal/Modal";
-import { v4 as uuidv4 } from "uuid";
-import {Auth, Storage} from "aws-amplify";
-import { DataStore } from "@aws-amplify/datastore";
 import { Photo, UserProfile } from "../../../../models";
 import getErrorMessage from "../../../../lib/getErrorMessage";
 import PhotoImage from "../../../ui/PhotoImage";
 import { ProfileModalProps } from "../../../../@types/profile";
 import Button from "../../../common/Button/Button";
 import useProfileStore from "../../../../stores/profileStore";
-import {updateBannerPhoto, updateProfilePhoto} from "../../../../services/ProfileServices";
-import {createNewPhoto} from "../../../../services/PhotoServices";
+import {updateBannerPhoto, updateProfilePhoto} from "../../../../services/profileServices";
+import {createNewPhoto} from "../../../../services/photoServices";
 
 export interface ProfileImageModalProps extends ProfileModalProps {
   photos: Photo[];
@@ -69,8 +66,10 @@ const BannerPhotoModal = ({
       setPreview("");
       return;
     }
+    setUploading(true);
     const objectUrl = URL.createObjectURL(selectedFile);
     setPreview(objectUrl);
+    setUploading(false);
     // free memory when ever this component is unmounted
     return () => URL.revokeObjectURL(objectUrl);
   }, [selectedFile]);
