@@ -7,11 +7,12 @@ const AdminLayout = () => {
     <>
       <Header>
         <div className='w-full flex justify-around'>
-          <Link to="/admin/events">Events</Link>
+          <Link to="/admin">Events</Link>
           <Link to="/admin/accounts">Accounts</Link>
+          <Link to="/admin/database">Database</Link>
         </div>
       </Header>
-      <div className='my-16 p-4'>
+      <div className='my-8 p-4'>
         <Outlet/>
       </div>
     </>
