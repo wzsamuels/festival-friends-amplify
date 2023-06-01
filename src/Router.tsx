@@ -4,7 +4,7 @@ import React, {lazy, Suspense, useEffect } from "react";
 const MessagePage = lazy(
   () => import("./components/pages/MessagePage/MessagePage")
 );
-const AdminPage = lazy(() => import("./components/pages/AdminPage/AdminPage"));
+
 const FriendsPage = lazy(() => import("./components/pages/FriendPage/Friends"));
 const EventPage = lazy(() => import("./components/pages/EventPage/EventPage"));
 const AccountSettingsPage = lazy(
@@ -40,6 +40,7 @@ import AdminEventPage from "./components/pages/AdminPage/AdminEventPage";
 import AdminLayout from "./components/pages/AdminPage/AdminLayout";
 import VerifyAccounts from "./components/pages/AdminPage/VerifyAccounts";
 import AdminDatabasePage from "./components/pages/AdminPage/AdminDatabasePage";
+import useEventStore from "./stores/eventStore";
 
 const Router = () => {
   const { user } = useAuthenticator((context) => [context.user]);
@@ -50,6 +51,7 @@ const Router = () => {
   const sub = user?.username as string;
   const dataCleared = useDataClearedStore(state => state.dataCleared)
   const { route } = useAuthenticator((context) => [context.route]);
+  const fetchEvents = useEventStore(state => state.fetchEvents)
 
   useEffect(() => {
     console.log("Router mounted")
@@ -60,6 +62,7 @@ const Router = () => {
     console.log("route", route)
     console.log("dataCleared", dataCleared)
     if(!dataCleared || !sub || route !== 'authenticated') return;
+    fetchEvents();
     fetchUserProfile(sub, route)
   }, [sub, dataCleared, route]);
 
