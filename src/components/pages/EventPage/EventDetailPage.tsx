@@ -166,14 +166,14 @@ const EventDetailPage = () => {
       For 'md' screens and larger, position it absolutely as before. */}
         <div className="sm:rounded-xl shadow-xl z-10 text-primary-default border sm:border-b-green-950 sm:absolute bottom-4 left-4 bg-white p-4 bg-light-default min-w-[250px]">
           <h1 className="text-xl my-2">{event?.name}</h1>
-          <p className="my-2"> {event?.location}</p>
+          <p className="my-2">{event?.city}, {event?.state}</p>
           <p className="my-2">{event?.startDate} - {event?.endDate}</p>
           <p className="my-2">{event?.url}</p>
         </div>
       </div>
-      <div>
-        <h1>About this event</h1>
-        <p>{event?.description}</p>
+      <div className="p-4">
+        <h1 className="text-2xl">About this event</h1>
+        <p className="m-4">{event?.description}</p>
       </div>
       {renderRides()}
       {event && (
