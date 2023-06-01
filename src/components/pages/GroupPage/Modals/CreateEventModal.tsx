@@ -11,14 +11,20 @@ import { CollegeGroup, Festival } from "../../../../models";
 import { v4 as uuidv4 } from "uuid";
 import { Storage } from "aws-amplify";
 import getErrorMessage from "../../../../lib/getErrorMessage";
+import TextArea from "../../../common/TextArea";
+import {EventType} from "../../../../API";
+import Select from "../../../common/Select";
+import states from "../../../../data/states";
 
 interface EventInput {
-  eventName: string;
-  eventGenre: string;
-  eventStartDate: string;
-  eventEndDate: string;
-  eventLocation: string;
-  eventDescription: string;
+  name: string;
+  genre: string;
+  startDate: string;
+  endDate: string;
+  city: string;
+  state: string;
+  address: string;
+  description: string;
 }
 
 interface CreateEventModalProps extends ModalProps {
@@ -43,15 +49,12 @@ const CreateEventModal = ({
         });
         await DataStore.save(
           new Festival({
-            name: data.eventName,
-            genre: data.eventGenre,
-            startDate: data.eventStartDate,
-            endDate: data.eventEndDate,
-            location: data.eventLocation,
-            description: data.eventDescription,
+            ...data,
             image: `event-images/${id}`,
             group: group,
             groupID: group.id,
+            approved: false,
+            type: EventType.COLLEGE
           })
         );
       } catch (e) {
@@ -78,31 +81,52 @@ const CreateEventModal = ({
   }, [selectedFile]);
 
   return (
-    <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
-      <form onSubmit={handleSubmit(handleCreateEvent)}>
-        <InputWrapper>
-          <Label>Event name</Label>
-          <Input {...register("eventName")} />
+    <Modal isOpen={isOpen} setIsOpen={setIsOpen} className='max-w-2xl' title="New event">
+      <form onSubmit={handleSubmit(handleCreateEvent)} className='p-4 '>
+        <InputWrapper className='my-4'>
+          <Label>Name</Label>
+          <Input {...register("name", {required: true})}/>
         </InputWrapper>
-        <InputWrapper>
-          <Label>Event genre</Label>
-          <Input {...register("eventGenre")} />
+        <InputWrapper className='my-4'>
+          <Label>Genre</Label>
+          <Input {...register("genre", {required: true})} />
         </InputWrapper>
-        <InputWrapper>
-          <Label>Event start date</Label>
-          <Input type="date" {...register("eventStartDate")} />
+        <InputWrapper className='my-4'>
+          <Label>Start date</Label>
+          <Input type="date" {...register("startDate", {required: true})} />
         </InputWrapper>
-        <InputWrapper>
-          <Label>Event end date</Label>
-          <Input type="date" {...register("eventEndDate")} />
+        <InputWrapper className='my-4'>
+          <Label>End date</Label>
+          <Input type="date" {...register("endDate", {required: true})} />
         </InputWrapper>
-        <InputWrapper>
-          <Label>Event location</Label>
-          <Input {...register("eventLocation")} />
+        <InputWrapper className='my-4'>
+          <Label>City</Label>
+          <Input {...register("city", {required: true})} />
         </InputWrapper>
-        <InputWrapper>
+        <div className="flex flex-wrap my-4">
+          <Label>State</Label>
+          <Select
+            {...register("state", { required: true })}
+            name="state"
+            defaultValue=""
+          >
+            <option value="" disabled>
+              Select state
+            </option>
+            {states.map((state) => (
+              <option key={state.code} value={state.name}>
+                {state.name}
+              </option>
+            ))}
+          </Select>
+        </div>
+        <InputWrapper className='my-4'>
+          <Label>Address</Label>
+          <Input {...register("address", {required: true})} />
+        </InputWrapper>
+        <InputWrapper className='my-4'>
           <Label>Event description</Label>
-          <Input {...register("eventDescription")} />
+          <TextArea {...register("description", {required: true})} />
         </InputWrapper>
         {preview && <img src={preview} alt="preview" className="w-full" />}
         <div className="flex justify-center">
