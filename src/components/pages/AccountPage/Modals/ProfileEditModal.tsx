@@ -4,7 +4,7 @@ import { ProfileInputs } from "../../../../types";
 import { DataStore } from "@aws-amplify/datastore";
 import { UserProfile } from "../../../../models";
 import getErrorMessage from "../../../../lib/getErrorMessage";
-import AccountEditForm from "../../AccountPage/AccountEditForm";
+import AccountEditForm from "../AccountEditForm";
 import { ProfileModalProps } from "../../../../@types/profile";
 import Button from "../../../common/Button/Button";
 import { BsPerson } from "react-icons/all";
