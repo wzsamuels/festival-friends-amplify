@@ -1,4 +1,4 @@
-import {SocialMedia} from "./models";
+import {EventType, SocialMedia} from "./models";
 import {AsyncCollection} from "@aws-amplify/datastore";
 
 export type ProfileInputs = {
@@ -14,6 +14,20 @@ export type ProfileInputs = {
   address2: string;
   socialMedia: SocialMediaInput[];
 };
+
+export interface EventInputs {
+  name: string;
+  genre: string;
+  location: string;
+  state: string;
+  city: string;
+  address: string;
+  startDate: string;
+  endDate: string;
+  type: EventType;
+  description: string | null;
+  url: string | null;
+}
 
 type SocialMediaInput = {
   id: string;

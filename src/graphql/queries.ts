@@ -57,10 +57,12 @@ export const findSuggestedFriends = /* GraphQL */ `
             genre
             image
             location
+            state
+            city
+            address
             startDate
             endDate
             type
-            tagline
             description
             url
             approved
@@ -484,10 +486,12 @@ export const findSuggestedFriends = /* GraphQL */ `
             genre
             image
             location
+            state
+            city
+            address
             startDate
             endDate
             type
-            tagline
             description
             url
             approved
@@ -2716,10 +2720,12 @@ export const getEventProfile = /* GraphQL */ `
         genre
         image
         location
+        state
+        city
+        address
         startDate
         endDate
         type
-        tagline
         description
         url
         approved
@@ -2892,10 +2898,12 @@ export const listEventProfiles = /* GraphQL */ `
           genre
           image
           location
+          state
+          city
+          address
           startDate
           endDate
           type
-          tagline
           description
           url
           approved
@@ -3045,10 +3053,12 @@ export const syncEventProfiles = /* GraphQL */ `
           genre
           image
           location
+          state
+          city
+          address
           startDate
           endDate
           type
-          tagline
           description
           url
           approved
@@ -3200,10 +3210,12 @@ export const eventProfilesByUserProfileID = /* GraphQL */ `
           genre
           image
           location
+          state
+          city
+          address
           startDate
           endDate
           type
-          tagline
           description
           url
           approved
@@ -3355,10 +3367,12 @@ export const eventProfilesByEventID = /* GraphQL */ `
           genre
           image
           location
+          state
+          city
+          address
           startDate
           endDate
           type
-          tagline
           description
           url
           approved
@@ -3408,10 +3422,12 @@ export const getFestival = /* GraphQL */ `
       genre
       image
       location
+      state
+      city
+      address
       startDate
       endDate
       type
-      tagline
       description
       url
       approved
@@ -3428,10 +3444,12 @@ export const getFestival = /* GraphQL */ `
             genre
             image
             location
+            state
+            city
+            address
             startDate
             endDate
             type
-            tagline
             description
             url
             approved
@@ -3517,10 +3535,12 @@ export const getFestival = /* GraphQL */ `
             genre
             image
             location
+            state
+            city
+            address
             startDate
             endDate
             type
-            tagline
             description
             url
             approved
@@ -3549,10 +3569,12 @@ export const getFestival = /* GraphQL */ `
             genre
             image
             location
+            state
+            city
+            address
             startDate
             endDate
             type
-            tagline
             description
             url
             approved
@@ -3614,10 +3636,12 @@ export const listFestivals = /* GraphQL */ `
         genre
         image
         location
+        state
+        city
+        address
         startDate
         endDate
         type
-        tagline
         description
         url
         approved
@@ -3704,10 +3728,12 @@ export const syncFestivals = /* GraphQL */ `
         genre
         image
         location
+        state
+        city
+        address
         startDate
         endDate
         type
-        tagline
         description
         url
         approved
@@ -3796,10 +3822,12 @@ export const festivalsByGroupID = /* GraphQL */ `
         genre
         image
         location
+        state
+        city
+        address
         startDate
         endDate
         type
-        tagline
         description
         url
         approved
@@ -3922,10 +3950,12 @@ export const getUserProfile = /* GraphQL */ `
             genre
             image
             location
+            state
+            city
+            address
             startDate
             endDate
             type
-            tagline
             description
             url
             approved
@@ -4349,10 +4379,12 @@ export const getUserProfile = /* GraphQL */ `
             genre
             image
             location
+            state
+            city
+            address
             startDate
             endDate
             type
-            tagline
             description
             url
             approved
@@ -5705,10 +5737,12 @@ export const getRide = /* GraphQL */ `
         genre
         image
         location
+        state
+        city
+        address
         startDate
         endDate
         type
-        tagline
         description
         url
         approved
@@ -5782,10 +5816,12 @@ export const getRide = /* GraphQL */ `
             genre
             image
             location
+            state
+            city
+            address
             startDate
             endDate
             type
-            tagline
             description
             url
             approved
@@ -5999,10 +6035,12 @@ export const listRides = /* GraphQL */ `
           genre
           image
           location
+          state
+          city
+          address
           startDate
           endDate
           type
-          tagline
           description
           url
           approved
@@ -6136,10 +6174,12 @@ export const syncRides = /* GraphQL */ `
           genre
           image
           location
+          state
+          city
+          address
           startDate
           endDate
           type
-          tagline
           description
           url
           approved
@@ -6275,10 +6315,12 @@ export const ridesByEventID = /* GraphQL */ `
           genre
           image
           location
+          state
+          city
+          address
           startDate
           endDate
           type
-          tagline
           description
           url
           approved
@@ -6403,10 +6445,12 @@ export const getRideUser = /* GraphQL */ `
           genre
           image
           location
+          state
+          city
+          address
           startDate
           endDate
           type
-          tagline
           description
           url
           approved
@@ -6728,10 +6772,12 @@ export const listRideUsers = /* GraphQL */ `
             genre
             image
             location
+            state
+            city
+            address
             startDate
             endDate
             type
-            tagline
             description
             url
             approved
@@ -6891,10 +6937,12 @@ export const syncRideUsers = /* GraphQL */ `
             genre
             image
             location
+            state
+            city
+            address
             startDate
             endDate
             type
-            tagline
             description
             url
             approved
@@ -7056,10 +7104,12 @@ export const rideUsersByRideID = /* GraphQL */ `
             genre
             image
             location
+            state
+            city
+            address
             startDate
             endDate
             type
-            tagline
             description
             url
             approved
@@ -7221,10 +7271,12 @@ export const rideUsersByUserProfileID = /* GraphQL */ `
             genre
             image
             location
+            state
+            city
+            address
             startDate
             endDate
             type
-            tagline
             description
             url
             approved
@@ -10832,10 +10884,12 @@ export const getCollegeGroup = /* GraphQL */ `
           genre
           image
           location
+          state
+          city
+          address
           startDate
           endDate
           type
-          tagline
           description
           url
           approved
@@ -10986,10 +11040,12 @@ export const listCollegeGroups = /* GraphQL */ `
             genre
             image
             location
+            state
+            city
+            address
             startDate
             endDate
             type
-            tagline
             description
             url
             approved
@@ -11069,10 +11125,12 @@ export const syncCollegeGroups = /* GraphQL */ `
             genre
             image
             location
+            state
+            city
+            address
             startDate
             endDate
             type
-            tagline
             description
             url
             approved

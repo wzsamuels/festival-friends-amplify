@@ -8,8 +8,6 @@ export enum FriendshipStatus {
 }
 
 export enum EventType {
-  CONCERT = "CONCERT",
-  FESTIVAL = "FESTIVAL",
   SPORT = "SPORT",
   BUSINESS = "BUSINESS",
   COLLEGE = "COLLEGE",
@@ -111,11 +109,13 @@ type EagerFestival = {
   readonly name: string;
   readonly genre: string;
   readonly image: string;
-  readonly location: string;
+  readonly location?: string | null;
+  readonly state: string;
+  readonly city: string;
+  readonly address: string;
   readonly startDate: string;
   readonly endDate: string;
   readonly type?: EventType | keyof typeof EventType | null;
-  readonly tagline?: string | null;
   readonly description?: string | null;
   readonly url?: string | null;
   readonly approved?: boolean | null;
@@ -136,11 +136,13 @@ type LazyFestival = {
   readonly name: string;
   readonly genre: string;
   readonly image: string;
-  readonly location: string;
+  readonly location?: string | null;
+  readonly state: string;
+  readonly city: string;
+  readonly address: string;
   readonly startDate: string;
   readonly endDate: string;
   readonly type?: EventType | keyof typeof EventType | null;
-  readonly tagline?: string | null;
   readonly description?: string | null;
   readonly url?: string | null;
   readonly approved?: boolean | null;

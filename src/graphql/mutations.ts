@@ -1973,10 +1973,12 @@ export const createEventProfile = /* GraphQL */ `
         genre
         image
         location
+        state
+        city
+        address
         startDate
         endDate
         type
-        tagline
         description
         url
         approved
@@ -2248,10 +2250,12 @@ export const updateEventProfile = /* GraphQL */ `
         genre
         image
         location
+        state
+        city
+        address
         startDate
         endDate
         type
-        tagline
         description
         url
         approved
@@ -2523,10 +2527,12 @@ export const deleteEventProfile = /* GraphQL */ `
         genre
         image
         location
+        state
+        city
+        address
         startDate
         endDate
         type
-        tagline
         description
         url
         approved
@@ -2608,10 +2614,12 @@ export const createFestival = /* GraphQL */ `
       genre
       image
       location
+      state
+      city
+      address
       startDate
       endDate
       type
-      tagline
       description
       url
       approved
@@ -2628,10 +2636,12 @@ export const createFestival = /* GraphQL */ `
             genre
             image
             location
+            state
+            city
+            address
             startDate
             endDate
             type
-            tagline
             description
             url
             approved
@@ -2717,10 +2727,12 @@ export const createFestival = /* GraphQL */ `
             genre
             image
             location
+            state
+            city
+            address
             startDate
             endDate
             type
-            tagline
             description
             url
             approved
@@ -2749,10 +2761,12 @@ export const createFestival = /* GraphQL */ `
             genre
             image
             location
+            state
+            city
+            address
             startDate
             endDate
             type
-            tagline
             description
             url
             approved
@@ -2812,10 +2826,12 @@ export const updateFestival = /* GraphQL */ `
       genre
       image
       location
+      state
+      city
+      address
       startDate
       endDate
       type
-      tagline
       description
       url
       approved
@@ -2832,10 +2848,12 @@ export const updateFestival = /* GraphQL */ `
             genre
             image
             location
+            state
+            city
+            address
             startDate
             endDate
             type
-            tagline
             description
             url
             approved
@@ -2921,10 +2939,12 @@ export const updateFestival = /* GraphQL */ `
             genre
             image
             location
+            state
+            city
+            address
             startDate
             endDate
             type
-            tagline
             description
             url
             approved
@@ -2953,10 +2973,12 @@ export const updateFestival = /* GraphQL */ `
             genre
             image
             location
+            state
+            city
+            address
             startDate
             endDate
             type
-            tagline
             description
             url
             approved
@@ -3016,10 +3038,12 @@ export const deleteFestival = /* GraphQL */ `
       genre
       image
       location
+      state
+      city
+      address
       startDate
       endDate
       type
-      tagline
       description
       url
       approved
@@ -3036,10 +3060,12 @@ export const deleteFestival = /* GraphQL */ `
             genre
             image
             location
+            state
+            city
+            address
             startDate
             endDate
             type
-            tagline
             description
             url
             approved
@@ -3125,10 +3151,12 @@ export const deleteFestival = /* GraphQL */ `
             genre
             image
             location
+            state
+            city
+            address
             startDate
             endDate
             type
-            tagline
             description
             url
             approved
@@ -3157,10 +3185,12 @@ export const deleteFestival = /* GraphQL */ `
             genre
             image
             location
+            state
+            city
+            address
             startDate
             endDate
             type
-            tagline
             description
             url
             approved
@@ -3267,10 +3297,12 @@ export const createUserProfile = /* GraphQL */ `
             genre
             image
             location
+            state
+            city
+            address
             startDate
             endDate
             type
-            tagline
             description
             url
             approved
@@ -3694,10 +3726,12 @@ export const createUserProfile = /* GraphQL */ `
             genre
             image
             location
+            state
+            city
+            address
             startDate
             endDate
             type
-            tagline
             description
             url
             approved
@@ -3869,10 +3903,12 @@ export const updateUserProfile = /* GraphQL */ `
             genre
             image
             location
+            state
+            city
+            address
             startDate
             endDate
             type
-            tagline
             description
             url
             approved
@@ -4296,10 +4332,12 @@ export const updateUserProfile = /* GraphQL */ `
             genre
             image
             location
+            state
+            city
+            address
             startDate
             endDate
             type
-            tagline
             description
             url
             approved
@@ -4471,10 +4509,12 @@ export const deleteUserProfile = /* GraphQL */ `
             genre
             image
             location
+            state
+            city
+            address
             startDate
             endDate
             type
-            tagline
             description
             url
             approved
@@ -4898,10 +4938,12 @@ export const deleteUserProfile = /* GraphQL */ `
             genre
             image
             location
+            state
+            city
+            address
             startDate
             endDate
             type
-            tagline
             description
             url
             approved
@@ -5709,10 +5751,12 @@ export const createRide = /* GraphQL */ `
         genre
         image
         location
+        state
+        city
+        address
         startDate
         endDate
         type
-        tagline
         description
         url
         approved
@@ -5786,10 +5830,12 @@ export const createRide = /* GraphQL */ `
             genre
             image
             location
+            state
+            city
+            address
             startDate
             endDate
             type
-            tagline
             description
             url
             approved
@@ -6001,10 +6047,12 @@ export const updateRide = /* GraphQL */ `
         genre
         image
         location
+        state
+        city
+        address
         startDate
         endDate
         type
-        tagline
         description
         url
         approved
@@ -6078,10 +6126,12 @@ export const updateRide = /* GraphQL */ `
             genre
             image
             location
+            state
+            city
+            address
             startDate
             endDate
             type
-            tagline
             description
             url
             approved
@@ -6293,10 +6343,12 @@ export const deleteRide = /* GraphQL */ `
         genre
         image
         location
+        state
+        city
+        address
         startDate
         endDate
         type
-        tagline
         description
         url
         approved
@@ -6370,10 +6422,12 @@ export const deleteRide = /* GraphQL */ `
             genre
             image
             location
+            state
+            city
+            address
             startDate
             endDate
             type
-            tagline
             description
             url
             approved
@@ -6587,10 +6641,12 @@ export const createRideUser = /* GraphQL */ `
           genre
           image
           location
+          state
+          city
+          address
           startDate
           endDate
           type
-          tagline
           description
           url
           approved
@@ -6910,10 +6966,12 @@ export const updateRideUser = /* GraphQL */ `
           genre
           image
           location
+          state
+          city
+          address
           startDate
           endDate
           type
-          tagline
           description
           url
           approved
@@ -7233,10 +7291,12 @@ export const deleteRideUser = /* GraphQL */ `
           genre
           image
           location
+          state
+          city
+          address
           startDate
           endDate
           type
-          tagline
           description
           url
           approved
@@ -11219,10 +11279,12 @@ export const createCollegeGroup = /* GraphQL */ `
           genre
           image
           location
+          state
+          city
+          address
           startDate
           endDate
           type
-          tagline
           description
           url
           approved
@@ -11371,10 +11433,12 @@ export const updateCollegeGroup = /* GraphQL */ `
           genre
           image
           location
+          state
+          city
+          address
           startDate
           endDate
           type
-          tagline
           description
           url
           approved
@@ -11523,10 +11587,12 @@ export const deleteCollegeGroup = /* GraphQL */ `
           genre
           image
           location
+          state
+          city
+          address
           startDate
           endDate
           type
-          tagline
           description
           url
           approved

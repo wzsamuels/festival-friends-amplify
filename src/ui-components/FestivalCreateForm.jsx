@@ -34,10 +34,12 @@ export default function FestivalCreateForm(props) {
     genre: "",
     image: "",
     location: "",
+    state: "",
+    city: "",
+    address: "",
     startDate: "",
     endDate: "",
     type: "",
-    tagline: "",
     description: "",
     url: "",
     approved: false,
@@ -46,10 +48,12 @@ export default function FestivalCreateForm(props) {
   const [genre, setGenre] = React.useState(initialValues.genre);
   const [image, setImage] = React.useState(initialValues.image);
   const [location, setLocation] = React.useState(initialValues.location);
+  const [state, setState] = React.useState(initialValues.state);
+  const [city, setCity] = React.useState(initialValues.city);
+  const [address, setAddress] = React.useState(initialValues.address);
   const [startDate, setStartDate] = React.useState(initialValues.startDate);
   const [endDate, setEndDate] = React.useState(initialValues.endDate);
   const [type, setType] = React.useState(initialValues.type);
-  const [tagline, setTagline] = React.useState(initialValues.tagline);
   const [description, setDescription] = React.useState(
     initialValues.description
   );
@@ -61,10 +65,12 @@ export default function FestivalCreateForm(props) {
     setGenre(initialValues.genre);
     setImage(initialValues.image);
     setLocation(initialValues.location);
+    setState(initialValues.state);
+    setCity(initialValues.city);
+    setAddress(initialValues.address);
     setStartDate(initialValues.startDate);
     setEndDate(initialValues.endDate);
     setType(initialValues.type);
-    setTagline(initialValues.tagline);
     setDescription(initialValues.description);
     setUrl(initialValues.url);
     setApproved(initialValues.approved);
@@ -74,11 +80,13 @@ export default function FestivalCreateForm(props) {
     name: [{ type: "Required" }],
     genre: [{ type: "Required" }],
     image: [{ type: "Required" }],
-    location: [{ type: "Required" }],
+    location: [],
+    state: [{ type: "Required" }],
+    city: [{ type: "Required" }],
+    address: [{ type: "Required" }],
     startDate: [{ type: "Required" }],
     endDate: [{ type: "Required" }],
     type: [],
-    tagline: [],
     description: [],
     url: [],
     approved: [],
@@ -113,10 +121,12 @@ export default function FestivalCreateForm(props) {
           genre,
           image,
           location,
+          state,
+          city,
+          address,
           startDate,
           endDate,
           type,
-          tagline,
           description,
           url,
           approved,
@@ -178,10 +188,12 @@ export default function FestivalCreateForm(props) {
               genre,
               image,
               location,
+              state,
+              city,
+              address,
               startDate,
               endDate,
               type,
-              tagline,
               description,
               url,
               approved,
@@ -212,10 +224,12 @@ export default function FestivalCreateForm(props) {
               genre: value,
               image,
               location,
+              state,
+              city,
+              address,
               startDate,
               endDate,
               type,
-              tagline,
               description,
               url,
               approved,
@@ -246,10 +260,12 @@ export default function FestivalCreateForm(props) {
               genre,
               image: value,
               location,
+              state,
+              city,
+              address,
               startDate,
               endDate,
               type,
-              tagline,
               description,
               url,
               approved,
@@ -269,7 +285,7 @@ export default function FestivalCreateForm(props) {
       ></TextField>
       <TextField
         label="Location"
-        isRequired={true}
+        isRequired={false}
         isReadOnly={false}
         value={location}
         onChange={(e) => {
@@ -280,10 +296,12 @@ export default function FestivalCreateForm(props) {
               genre,
               image,
               location: value,
+              state,
+              city,
+              address,
               startDate,
               endDate,
               type,
-              tagline,
               description,
               url,
               approved,
@@ -302,6 +320,114 @@ export default function FestivalCreateForm(props) {
         {...getOverrideProps(overrides, "location")}
       ></TextField>
       <TextField
+        label="State"
+        isRequired={true}
+        isReadOnly={false}
+        value={state}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              genre,
+              image,
+              location,
+              state: value,
+              city,
+              address,
+              startDate,
+              endDate,
+              type,
+              description,
+              url,
+              approved,
+            };
+            const result = onChange(modelFields);
+            value = result?.state ?? value;
+          }
+          if (errors.state?.hasError) {
+            runValidationTasks("state", value);
+          }
+          setState(value);
+        }}
+        onBlur={() => runValidationTasks("state", state)}
+        errorMessage={errors.state?.errorMessage}
+        hasError={errors.state?.hasError}
+        {...getOverrideProps(overrides, "state")}
+      ></TextField>
+      <TextField
+        label="City"
+        isRequired={true}
+        isReadOnly={false}
+        value={city}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              genre,
+              image,
+              location,
+              state,
+              city: value,
+              address,
+              startDate,
+              endDate,
+              type,
+              description,
+              url,
+              approved,
+            };
+            const result = onChange(modelFields);
+            value = result?.city ?? value;
+          }
+          if (errors.city?.hasError) {
+            runValidationTasks("city", value);
+          }
+          setCity(value);
+        }}
+        onBlur={() => runValidationTasks("city", city)}
+        errorMessage={errors.city?.errorMessage}
+        hasError={errors.city?.hasError}
+        {...getOverrideProps(overrides, "city")}
+      ></TextField>
+      <TextField
+        label="Address"
+        isRequired={true}
+        isReadOnly={false}
+        value={address}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              genre,
+              image,
+              location,
+              state,
+              city,
+              address: value,
+              startDate,
+              endDate,
+              type,
+              description,
+              url,
+              approved,
+            };
+            const result = onChange(modelFields);
+            value = result?.address ?? value;
+          }
+          if (errors.address?.hasError) {
+            runValidationTasks("address", value);
+          }
+          setAddress(value);
+        }}
+        onBlur={() => runValidationTasks("address", address)}
+        errorMessage={errors.address?.errorMessage}
+        hasError={errors.address?.hasError}
+        {...getOverrideProps(overrides, "address")}
+      ></TextField>
+      <TextField
         label="Start date"
         isRequired={true}
         isReadOnly={false}
@@ -315,10 +441,12 @@ export default function FestivalCreateForm(props) {
               genre,
               image,
               location,
+              state,
+              city,
+              address,
               startDate: value,
               endDate,
               type,
-              tagline,
               description,
               url,
               approved,
@@ -350,10 +478,12 @@ export default function FestivalCreateForm(props) {
               genre,
               image,
               location,
+              state,
+              city,
+              address,
               startDate,
               endDate: value,
               type,
-              tagline,
               description,
               url,
               approved,
@@ -384,10 +514,12 @@ export default function FestivalCreateForm(props) {
               genre,
               image,
               location,
+              state,
+              city,
+              address,
               startDate,
               endDate,
               type: value,
-              tagline,
               description,
               url,
               approved,
@@ -406,80 +538,36 @@ export default function FestivalCreateForm(props) {
         {...getOverrideProps(overrides, "type")}
       >
         <option
-          children="Concert"
-          value="CONCERT"
-          {...getOverrideProps(overrides, "typeoption0")}
-        ></option>
-        <option
-          children="Festival"
-          value="FESTIVAL"
-          {...getOverrideProps(overrides, "typeoption1")}
-        ></option>
-        <option
           children="Sport"
           value="SPORT"
-          {...getOverrideProps(overrides, "typeoption2")}
+          {...getOverrideProps(overrides, "typeoption0")}
         ></option>
         <option
           children="Business"
           value="BUSINESS"
-          {...getOverrideProps(overrides, "typeoption3")}
+          {...getOverrideProps(overrides, "typeoption1")}
         ></option>
         <option
           children="College"
           value="COLLEGE"
-          {...getOverrideProps(overrides, "typeoption4")}
+          {...getOverrideProps(overrides, "typeoption2")}
         ></option>
         <option
           children="Music"
           value="MUSIC"
-          {...getOverrideProps(overrides, "typeoption5")}
+          {...getOverrideProps(overrides, "typeoption3")}
         ></option>
         <option
           children="All"
           value="ALL"
-          {...getOverrideProps(overrides, "typeoption6")}
+          {...getOverrideProps(overrides, "typeoption4")}
         ></option>
         <option
           children="Travel"
           value="TRAVEL"
-          {...getOverrideProps(overrides, "typeoption7")}
+          {...getOverrideProps(overrides, "typeoption5")}
         ></option>
       </SelectField>
-      <TextField
-        label="Tagline"
-        isRequired={false}
-        isReadOnly={false}
-        value={tagline}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              name,
-              genre,
-              image,
-              location,
-              startDate,
-              endDate,
-              type,
-              tagline: value,
-              description,
-              url,
-              approved,
-            };
-            const result = onChange(modelFields);
-            value = result?.tagline ?? value;
-          }
-          if (errors.tagline?.hasError) {
-            runValidationTasks("tagline", value);
-          }
-          setTagline(value);
-        }}
-        onBlur={() => runValidationTasks("tagline", tagline)}
-        errorMessage={errors.tagline?.errorMessage}
-        hasError={errors.tagline?.hasError}
-        {...getOverrideProps(overrides, "tagline")}
-      ></TextField>
       <TextField
         label="Description"
         isRequired={false}
@@ -493,10 +581,12 @@ export default function FestivalCreateForm(props) {
               genre,
               image,
               location,
+              state,
+              city,
+              address,
               startDate,
               endDate,
               type,
-              tagline,
               description: value,
               url,
               approved,
@@ -527,10 +617,12 @@ export default function FestivalCreateForm(props) {
               genre,
               image,
               location,
+              state,
+              city,
+              address,
               startDate,
               endDate,
               type,
-              tagline,
               description,
               url: value,
               approved,
@@ -561,10 +653,12 @@ export default function FestivalCreateForm(props) {
               genre,
               image,
               location,
+              state,
+              city,
+              address,
               startDate,
               endDate,
               type,
-              tagline,
               description,
               url,
               approved: value,

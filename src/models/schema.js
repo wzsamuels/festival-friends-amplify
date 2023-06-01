@@ -308,6 +308,27 @@ export const schema = {
                     "name": "location",
                     "isArray": false,
                     "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "state": {
+                    "name": "state",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "city": {
+                    "name": "city",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "address": {
+                    "name": "address",
+                    "isArray": false,
+                    "type": "String",
                     "isRequired": true,
                     "attributes": []
                 },
@@ -331,13 +352,6 @@ export const schema = {
                     "type": {
                         "enum": "EventType"
                     },
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "tagline": {
-                    "name": "tagline",
-                    "isArray": false,
-                    "type": "String",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -1885,8 +1899,6 @@ export const schema = {
         "EventType": {
             "name": "EventType",
             "values": [
-                "CONCERT",
-                "FESTIVAL",
                 "SPORT",
                 "BUSINESS",
                 "COLLEGE",
@@ -1906,5 +1918,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.3",
-    "version": "5dd2ee22dc129961625dc07f7a597b18"
+    "version": "f70b5b6e0b5a52dc76f8a479039d94b9"
 };

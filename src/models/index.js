@@ -8,8 +8,6 @@ const FriendshipStatus = {
 };
 
 const EventType = {
-  "CONCERT": "CONCERT",
-  "FESTIVAL": "FESTIVAL",
   "SPORT": "SPORT",
   "BUSINESS": "BUSINESS",
   "COLLEGE": "COLLEGE",
