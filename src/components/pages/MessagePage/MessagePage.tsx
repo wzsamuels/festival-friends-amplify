@@ -56,14 +56,16 @@ const MessagePage: React.FC = () => {
 
     if (route !== "authenticated") {
       return (
-        <>
+        <div className='bg-[url("/src/images/messages.png")] w-full bg-cover flex flex-col items-center justify-center h-full min-h-screen p-2'>
+          <div className="text-green-950 font-bold flex flex-col items-center justify-center  bg-white p-4 rounded-xl w-full max-w-2xl ">
           <div className="m-4 text-xl">
             You must be logged in to view your messages.
           </div>
           <Link to="/account">
             <Button>Sign In</Button>
           </Link>
-        </>
+          </div>
+        </div>
       );
     }
 
@@ -97,22 +99,29 @@ const MessagePage: React.FC = () => {
   return (
     <>
       <Header>
+        {
+          route === "authenticated" &&
         <div className="w-full flex justify-end">
           <button onClick={() => setConversationSearchModalOpen(true)}>
             <FaSearch />
           </button>
         </div>
+        }
       </Header>
       <div className="p-4 min-h-full h-full relative">
         {renderMessages()}
-        <div className="fixed bottom-20 right-16">
-          <button
-            className="flex flex-col items-center rounded-[100%] bg-green-950 text-white p-3"
-            onClick={() => setNewConversationModalOpen(true)}
-          >
-            <BsPlus className="text-3xl" />
-          </button>
-        </div>
+        {
+          route === "authenticated" &&
+          <div className="fixed bottom-20 right-16">
+            <button
+              className="flex flex-col items-center rounded-[100%] bg-green-950 text-white p-3"
+              onClick={() => setNewConversationModalOpen(true)}
+            >
+              <BsPlus className="text-3xl" />
+            </button>
+          </div>
+        }
+
         <NewConversationModal
           friendProfiles={friendProfiles}
           isOpen={isNewConversationModalOpen}
