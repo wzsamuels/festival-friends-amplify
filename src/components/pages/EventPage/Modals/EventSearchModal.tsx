@@ -11,7 +11,8 @@ import EventCardBase from "../../../ui/EventCardBase";
 import useEventStore from "../../../../stores/eventStore";
 
 interface EventSearchInput {
-  location: string;
+  state: string;
+  city: string;
   genre: string;
   MUSIC: boolean;
   SPORT: boolean;
@@ -38,7 +39,8 @@ const EventSearchModal = ({ isOpen, setIsOpen }: ModalProps) => {
 
     const eventResults = events.filter(event =>
       // Check if location is included in the search criteria and if it matches the event's location.
-      (!data['location'] || event.location.includes(data['location'])) &&
+      (!data['state'] || (event?.state && event.state.includes(data['state']))) &&
+      (!data['city'] || (event.city && event.city.includes(data['city']))) &&
       // Check if genre is included in the search criteria and if it matches the event's genre.
       (!data['genre'] || event.genre.includes(data['genre'])) &&
       // Check if one of the event types is selected and if it matches the event's type.
@@ -63,8 +65,12 @@ const EventSearchModal = ({ isOpen, setIsOpen }: ModalProps) => {
       <div className='flex flex-col items-center justify-center'>
         <form className="p-4 w-full max-w-md" onSubmit={handleSubmit(handleEventSearch)}>
           <InputWrapper className="mb-4">
-            <Label>Location</Label>
-            <Input {...register("location")} />
+            <Label>City</Label>
+            <Input {...register("city")} />
+          </InputWrapper>
+          <InputWrapper className="mb-4">
+            <Label>State</Label>
+            <Input {...register("state")} />
           </InputWrapper>
           <InputWrapper className='mb-4'>
             <Label>Genre / Category</Label>
