@@ -103,9 +103,14 @@ const GroupsPage = () => {
     <>
       <Header />
       <div className="p-4 mt-4">
-        <span className="text-xl md:text-2xl lg:text-3xl">
+        <div className="text-xl sm:text-2xl lg:text-3xl text-center w-full">
           Welcome to the {collegeGroup?.name} community page!
-        </span>
+        </div>
+        <div className='flex justify-center m-4'>
+          <Button onClick={() => setIsCreateEventModalOpen(true)}>
+            Create Event
+          </Button>
+        </div>
         <div className="grid gap-4 justify-items-center grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 items-center px-4">
           {events?.map((event) => (
             <EventCard
@@ -119,9 +124,7 @@ const GroupsPage = () => {
             />
           ))}
         </div>
-        <Button onClick={() => setIsCreateEventModalOpen(true)}>
-          Create Event
-        </Button>
+
       </div>
       {collegeGroup && (
         <CreateEventModal
