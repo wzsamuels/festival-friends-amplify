@@ -1,20 +1,22 @@
 import {EventProfile, Festival, Photo, Ride} from "../../../models";
 import React, {useContext, useEffect, useState} from "react";
 import { DataStore } from "@aws-amplify/datastore";
-import ProfileEditModal from "../Profile/Modals/ProfileEditModal";
-import ProfileImageModal from "../Profile/Modals/ProfileImageModal";
-import PhotoUploadModal from "../Profile/Modals/PhotoUploadModal";
+import ProfileEditModal from "./Modals/ProfileEditModal";
+import ProfileImageModal from "./Modals/ProfileImageModal";
+import PhotoUploadModal from "./Modals/PhotoUploadModal";
 import PhotoImage from "../../ui/PhotoImage";
 import { BsPerson } from "react-icons/all";
-import BannerPhotoModal from "../Profile/Modals/BannerPhotoModal";
+import BannerPhotoModal from "./Modals/BannerPhotoModal";
 import Button from "../../common/Button/Button";
-import PhotoModal from "../Profile/Modals/PhotoModal";
+import PhotoModal from "./Modals/PhotoModal";
 import { Link } from "react-router-dom";
 import useDataClearedStore from "../../../stores/dataClearedStore";
 import useProfileStore from "../../../stores/profileStore";
 import {getBannerPhoto, getEventsAttending, getProfilePhoto} from "../../../services/profileServices";
 import ImageContext from "../../../context/ImageContext";
 import {getRidesByProfile} from "../../../services/rideServices";
+import EventCard from "../../ui/EventCard";
+import RideCard from "../../ui/RideCard";
 
 const AccountVerified = ({ user }: { user: any }) => {
   const [profileImage, setProfileImage] = useState("");
@@ -42,9 +44,6 @@ const AccountVerified = ({ user }: { user: any }) => {
     const fetchProfileBanner = async () => {
       return await getBannerPhoto(userProfile, getSignedURL)
     }
-    const fetchEventsAttending = async () => {
-      return await getEventsAttending(userProfile)
-    }
 
     const fetchRides = async () => {
       return await getRidesByProfile(userProfile);
@@ -55,13 +54,13 @@ const AccountVerified = ({ user }: { user: any }) => {
         .then(image => setProfileImage(image));
       fetchProfileBanner()
         .then(image => setBannerImage(image));
-      fetchEventsAttending()
-        .then(eventsAttending => setEventsAttending(eventsAttending));
       fetchRides()
         .then(rides => setRides(rides));
     } catch (e) {
       console.log(e);
     }
+
+    // Use DataStore subs to get immediate updates
 
     try {
       const photoSub = DataStore.observeQuery(Photo, (photo) =>
@@ -70,8 +69,20 @@ const AccountVerified = ({ user }: { user: any }) => {
         setPhotos(items);
       });
 
+      const eventSub = DataStore.observeQuery(EventProfile, (eventProfile) =>
+        eventProfile.userProfileID.eq(userProfile.id)
+      ).subscribe(async ({ items }) => {
+        const events = []
+        for await(const eventProfile of items) {
+          const event = await eventProfile.event;
+          events.push(event)
+        }
+        setEventsAttending(events);
+      })
+
       return () => {
         photoSub.unsubscribe();
+        eventSub.unsubscribe();
       };
     } catch (e) {
       console.log(e);
@@ -135,33 +146,25 @@ const AccountVerified = ({ user }: { user: any }) => {
 
       <section className="p-4">
         <h1 className="text-2xl my-4">Events Attending</h1>
+        <div className='flex flex-wrap'>
         {eventsAttending.length > 0 ? eventsAttending?.map((event, index) => (
-          <span key={event.id}>
-            <Link
-              className="hover:underline text-green-950"
-              to={`/events/${event.id}`}
-            >
-              {event.name}
-            </Link>
-            {index < eventsAttending.length - 1 ? ", " : ""}
-          </span>
+          <EventCard key={event.id} event={event} attendingFriends={[]}/>
         ))
           :
           <div>Not attending any events.</div>
-        }
+        }</div>
       </section>
       <hr className="my-8 border border-primary-default w-full" />
       <section className="p-4">
         <h1 className="text-2xl my-4">Rides</h1>
+        <div className='flex flex-wrap'>
         {rides.length > 0 ? rides?.map((ride, index) => (
-          <div key={ride.id}>
-            Ride to {ride.endPoint} from {ride.startPoint} on{" "}
-            {ride.departureTime}
-          </div>
+          <RideCard ride={ride} key={ride.id} className='m-4'/>
         ))
           :
           <div>Not part of any rides.</div>
         }
+        </div>
       </section>
       <hr className="my-8 border border-primary-default w-full" />
       <section className="p-4">
