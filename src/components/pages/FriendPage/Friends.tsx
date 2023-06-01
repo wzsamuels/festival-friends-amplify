@@ -21,6 +21,8 @@ import useDataClearedStore from "../../../stores/dataClearedStore";
 import useProfileStore from "../../../stores/profileStore";
 import {shallow} from "zustand/shallow";
 import useFriendStore from "../../../stores/friendProfileStore";
+import {Link} from "react-router-dom";
+import Button from "../../common/Button/Button";
 
 type FriendType = "accepted" | "sent" | "suggestions" | "pending";
 
@@ -151,7 +153,15 @@ const FriendsPage: React.FC = () => {
     }
 
     if (route !== "authenticated") {
-      return <LoggedOutState />;
+      return (
+        <div className='bg-[url("/src/images/friends3.jpeg")] w-full bg-cover flex flex-col items-center justify-center h-full min-h-screen p-2'>
+          <div className="text-green-950 font-bold flex flex-col items-center justify-center  bg-white p-4 rounded-xl w-full max-w-2xl ">
+            <Link to="/account">
+              <Button>Sign In</Button>
+            </Link>
+          </div>
+        </div>
+      )
     }
 
     if (!loadingUserProfile && (!userProfile || !userProfile.verified)) {
