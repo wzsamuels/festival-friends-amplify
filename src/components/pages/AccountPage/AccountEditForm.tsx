@@ -1,7 +1,7 @@
 import {SubmitHandler, useFieldArray, useForm} from "react-hook-form";
 
-import React, {Fragment, useContext, useEffect, useState} from "react";
-import {SocialMedia, SocialMediaType, UserProfile} from "../../../models";
+import React, { useEffect, useState} from "react";
+import {SocialMedia, UserProfile} from "../../../models";
 import { ProfileInputs } from "../../../types";
 import states from "../../../data/states";
 import Label from "../../common/Label/Label";
@@ -9,8 +9,9 @@ import Input from "../../common/Input/Input";
 import Button from "../../common/Button/Button";
 import Select from "../../common/Select";
 import useDataClearedStore from "../../../stores/dataClearedStore";
-import {FaWindowClose} from "react-icons/all";
+import {BsPlus} from "react-icons/all";
 import {DataStore} from "@aws-amplify/datastore";
+import socialMediaTypes from "../../../data/socialMediaTypes.json";
 
 interface ProfileFormProps {
   onSubmit: SubmitHandler<ProfileInputs>;
@@ -144,7 +145,7 @@ const AccountEditForm = ({ onSubmit, profile }: ProfileFormProps) => {
         <Input {...register("zipcode")} />
       </div>
       <section className=''>
-        <div className='flex justify-between'>
+        <div className='flex justify-between items-center'>
           <h2 className='font-bold'>Social Media Accounts</h2>
           <Button
             type="button"
@@ -156,7 +157,7 @@ const AccountEditForm = ({ onSubmit, profile }: ProfileFormProps) => {
               saved: false
             })}
           >
-            +
+            <BsPlus/>
           </Button>
         </div>
         <div className="my-4">
@@ -165,7 +166,19 @@ const AccountEditForm = ({ onSubmit, profile }: ProfileFormProps) => {
             <div className='flex-auto'>
               <div className="flex flex-wrap my-4">
                 <Label>Social Media</Label>
-                <Input {...register(`socialMedia.${index}.type` as const)} />
+                <Select
+                  {...register(`socialMedia.${index}.type` as const, { required: true })}
+                  defaultValue=""
+                >
+                  <option value="" disabled>
+                    Select social media
+                  </option>
+                  {socialMediaTypes.map((media) => (
+                    <option key={media.id} value={media.name}>
+                      {media.name}
+                    </option>
+                  ))}
+                </Select>
               </div>
               <div className="flex flex-wrap my-4">
                 <Label>Account URL</Label>

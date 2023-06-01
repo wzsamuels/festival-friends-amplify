@@ -13,6 +13,8 @@ import { useFormattedPhoneInput } from "../../../hooks/useFormattedPhoneInput";
 import useProfileStore from "../../../stores/profileStore";
 import Select from "../../common/Select";
 import {getCollegeGroupByEmail} from "../../../services/collegeGroupServices";
+import {BsPlus} from "react-icons/all";
+import socialMediaTypes from "../../../data/socialMediaTypes.json";
 
 const AccountUnverified = () => {
   const { user } = useAuthenticator((context) => [context.user]);
@@ -180,7 +182,7 @@ const AccountUnverified = () => {
             />
           </InputWrapper>
           <section>
-            <div className='flex justify-between'>
+            <div className='flex justify-between items-center'>
               <h2 className='font-bold'>Social Media Accounts</h2>
               <Button
                 type="button"
@@ -192,7 +194,7 @@ const AccountUnverified = () => {
                   saved: false
                 })}
               >
-                +
+                <BsPlus/>
               </Button>
             </div>
             <div className="my-4">
@@ -201,7 +203,19 @@ const AccountUnverified = () => {
                   <div className='flex-auto'>
                     <div className="flex flex-wrap my-4">
                       <Label>Social Media</Label>
-                      <Input {...register(`socialMedia.${index}.type` as const)} />
+                      <Select
+                        {...register(`socialMedia.${index}.type` as const, { required: true })}
+                        defaultValue=""
+                      >
+                        <option value="" disabled>
+                          Select social media
+                        </option>
+                        {socialMediaTypes.map((media) => (
+                          <option key={media.id} value={media.name}>
+                            {media.name}
+                          </option>
+                        ))}
+                      </Select>
                     </div>
                     <div className="flex flex-wrap my-4">
                       <Label>Account URL</Label>
