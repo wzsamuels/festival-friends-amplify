@@ -1,48 +1,42 @@
 import {create, SetState} from "zustand";
 import {Festival} from "../models";
 import getErrorMessage from "../lib/getErrorMessage";
-import {API, DataStore, graphqlOperation} from "aws-amplify";
-import {GraphQLResult} from "@aws-amplify/api";
-import {listFestivals} from "../graphql/queries";
+import { DataStore} from "aws-amplify";
 
 type EventStore = {
   events: Festival[],
   loadingEvents: boolean,
   fetchEvents: () => void
+  eventsUnsubscribe: () => void
+  eventSubscription: any
   error: string | null,
 }
 
-type GraphQLResultExtended = GraphQLResult & {
-  data: {
-    listFestivals: {
-      items: Festival[];
-    };
-  };
-  errors?: { message: string }[]
-};
 
-const useEventStore = create<EventStore>((set: SetState<EventStore>) => ({
+const useEventStore = create<EventStore>((set: SetState<EventStore>, get) => ({
   events: [] as Festival[],
   loadingEvents: false,
   error: null,
+  eventSubscription: null,
   fetchEvents: async () => {
     set({loadingEvents: true})
     try {
 
-      /*
+
       const eventSub = await DataStore.observeQuery(Festival).subscribe(({items}) => {
         console.log("Events in store", items)
         set({events: items})
       })
+      set({eventSubscription: eventSub})
 
-       */
-
+/*
       await DataStore.start()
       const eventData = await DataStore.query(Festival);
       console.log("Fetching events in store: ", eventData)
       set({events: eventData})
-
+*/
       /*
+
       const eventData = await API.graphql(graphqlOperation(listFestivals)) as GraphQLResultExtended;
       if(eventData.errors) {
         set({error: eventData.errors[0].message || "Unknown error"})
@@ -60,7 +54,8 @@ const useEventStore = create<EventStore>((set: SetState<EventStore>) => ({
     } finally {
       set({loadingEvents: false})
     }
-  }
+  },
+  eventsUnsubscribe: () => get().eventSubscription?.unsubscribe()
 }));
 
 export default useEventStore;
