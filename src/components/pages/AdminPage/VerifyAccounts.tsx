@@ -7,6 +7,7 @@ import Button from "../../common/Button/Button";
 import Toast from "../../common/Toast/Toast";
 import getErrorMessage from "../../../lib/getErrorMessage";
 import {ToastData} from "../../../types";
+import AccountInfo from "./AccountInfo";
 
 const VerifyAccounts = () => {
   const [unverifiedProfiles, setUnverifiedProfiles] = useState<UserProfile[]>([]);
@@ -57,58 +58,24 @@ const VerifyAccounts = () => {
   };
 
   return (
-    <div className="w-full max-w-xl flex flex-col">
-      <h1 className="text-xl md:text-2xl">Verify Profiles</h1>
-      {unverifiedProfiles.map((profile) => (
-        <ul key={profile.id}>
-          <InputWrapper className="my-4">
-            <Label>Email</Label>
-            <div className="text-wrap">{profile.email}</div>
-          </InputWrapper>
-          <InputWrapper className="my-4">
-            <Label>Phone Number</Label>
-            <div className="text-wrap">{profile.phone}</div>
-          </InputWrapper>
-          <InputWrapper className="my-4">
-            <Label>City</Label>
-            <div className="text-wrap">{profile.city}</div>
-          </InputWrapper>
-          <InputWrapper className="my-4">
-            <Label>State</Label>
-            <div className="text-wrap">{profile.state}</div>
-          </InputWrapper>
-          <InputWrapper className="my-4">
-            <Label>Zip Code</Label>
-            <div className="text-wrap">{profile.zipcode}</div>
-          </InputWrapper>
-          <InputWrapper className="my-4">
-            <Label>Address</Label>
-            <div className="text-wrap">{profile.address}</div>
-          </InputWrapper>
-          <InputWrapper className="my-4">
-            <div slot="start" className="text-wrap">
-              School
-            </div>
-            <div className="text-wrap">{profile.school}</div>
-          </InputWrapper>
-          <div className="flex justify-center my-4">
-            <Button onClick={() => verifyProfile(profile)}>
-              Verify Profile
-            </Button>
-          </div>
-        </ul>
-      ))}
-      <h2 className="text-lg text-center my-4">
-        {unverifiedProfiles.length} profiles to verify
-      </h2>
-      {toastData && (
-        <Toast
-          toastData={toastData}
-          onClose={() => {
-            setToastData(null);
-          }}
-        />
-      )}
+    <div className="w-full items-center flex flex-col">
+      <div className="max-w-lg w-full">
+        <h1 className="text-xl md:text-2xl">Profiles Needing Verification</h1>
+        {unverifiedProfiles.map((profile) =>
+          <AccountInfo key={profile.id} profile={profile} onVerify={verifyProfile} />
+        )}
+        <h2 className="text-lg text-center my-4">
+          {unverifiedProfiles.length} profiles to verify
+        </h2>
+        {toastData && (
+          <Toast
+            toastData={toastData}
+            onClose={() => {
+              setToastData(null);
+            }}
+          />
+        )}
+      </div>
     </div>
   );
 }
