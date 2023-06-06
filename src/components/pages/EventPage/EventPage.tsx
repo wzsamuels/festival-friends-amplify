@@ -33,7 +33,6 @@ const EventPage = () => {
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
   const [eventType, setEventType] = useState("music");
 
-
   // Fetch event attendees
   useEffect(() => {
     if(!dataCleared) return

@@ -13,7 +13,7 @@ const Header = ({ children, onSearch }: HeaderProps) => {
 
   return (
     <header className="bg-white shadow-xl w-full flex items-center fixed  top-0 z-10">
-      <div className="flex-1 w-full">{children}</div>
+      <div className="flex-1 w-full md:mr-4">{children}</div>
       <div className="[&>*]:p-2 [&>*]:md:p-4 flex">
         {onSearch ? (
           <SearchButton onClick={onSearch} />

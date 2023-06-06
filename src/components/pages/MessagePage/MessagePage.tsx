@@ -57,13 +57,13 @@ const MessagePage: React.FC = () => {
     if (route !== "authenticated") {
       return (
         <div className='bg-[url("/src/images/messages.png")] w-full bg-cover flex flex-col items-center justify-center h-full min-h-screen p-2'>
-          <div className="text-green-950 font-bold flex flex-col items-center justify-center  bg-white p-4 rounded-xl w-full max-w-2xl ">
-          <div className="m-4 text-xl">
-            You must be logged in to view your messages.
-          </div>
-          <Link to="/account">
-            <Button>Sign In</Button>
-          </Link>
+          <div className="text-green-950 font-bold flex flex-col items-center justify-center  bg-white p-4 rounded-xl w-full max-w-lg ">
+            <h1 className="m-4 text-xl">
+              You must be logged in to view your messages.
+            </h1>
+            <Link to="/account">
+              <Button>Sign In</Button>
+            </Link>
           </div>
         </div>
       );
@@ -101,11 +101,11 @@ const MessagePage: React.FC = () => {
       <Header>
         {
           route === "authenticated" &&
-        <div className="w-full flex justify-end">
-          <button onClick={() => setConversationSearchModalOpen(true)}>
-            <FaSearch />
-          </button>
-        </div>
+            <div className="w-full flex justify-end">
+              <button onClick={() => setConversationSearchModalOpen(true)}>
+                <FaSearch />
+              </button>
+            </div>
         }
       </Header>
       <div className="p-4 min-h-full h-full relative">

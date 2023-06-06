@@ -74,27 +74,25 @@ const GroupsPage = () => {
       <>
         <Header />
         <div className='bg-[url("/src/images/group.png")] w-full bg-cover flex flex-col items-center justify-center h-full min-h-screen p-2'>
-          <div className="text-green-950 font-bold flex flex-col items-center justify-center  bg-white p-4 rounded-xl w-full max-w-2xl ">
-            <div className="p-4 m-4  text-center">
+          <div className="text-green-950 font-bold flex flex-col items-center justify-center  bg-white p-4 rounded-xl w-full max-w-lg ">
               {authStatus !== "authenticated" ? (
-                <div>
-                  <div className="mb-6 text-xl md:text-2xl lg:text-3xl">
+                <>
+                  <h1 className="m-4 text-xl">
                     Connect with your community
-                  </div>
+                  </h1>
                   <Link to="/account">
                     <Button>Sign In</Button>
                   </Link>
-                </div>
+                </>
               ) : (
-                <span className="text-xl md:text-2xl lg:text-3xl">
+                <h1 className="m-4 text-xl">
                   Our community features is restricted to college students only.
                   If you&apos;re a college student and believe you should be
                   able to access this feature, please contact us.
-                </span>
+                </h1>
               )}
             </div>
           </div>
-        </div>
       </>
     );
   }
