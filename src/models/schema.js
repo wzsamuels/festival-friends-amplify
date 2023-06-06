@@ -369,6 +369,27 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "customerID": {
+                    "name": "customerID",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "hasPaid": {
+                    "name": "hasPaid",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "subID": {
+                    "name": "subID",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "approved": {
                     "name": "approved",
                     "isArray": false,
@@ -540,6 +561,20 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "verifyPhotoID": {
+                    "name": "verifyPhotoID",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "customerID": {
+                    "name": "customerID",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "city": {
                     "name": "city",
                     "isArray": false,
@@ -591,6 +626,27 @@ export const schema = {
                 },
                 "zipcode": {
                     "name": "zipcode",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "birthDate": {
+                    "name": "birthDate",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "hobbies": {
+                    "name": "hobbies",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "gender": {
+                    "name": "gender",
                     "isArray": false,
                     "type": "String",
                     "isRequired": false,
@@ -1918,5 +1974,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.3",
-    "version": "f70b5b6e0b5a52dc76f8a479039d94b9"
+    "version": "8f961e14f683c009a19436adcbad3369"
 };

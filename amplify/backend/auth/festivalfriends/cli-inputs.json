@@ -37,7 +37,7 @@
     "useDefault": "manual",
     "userPoolGroups": false,
     "userPoolGroupList": [],
-    "adminQueries": true,
+    "adminQueries": false,
     "usernameCaseSensitive": false,
     "useEnabledMfas": true,
     "authRoleArn": {
@@ -77,11 +77,9 @@
     "parentStack": {
       "Ref": "AWS::StackId"
     },
-    "authTriggerConnections": [
-      "{\"triggerType\":\"PostConfirmation\",\"lambdaFunctionName\":\"festivalfriendsPostConfirmation\"}"
-    ],
+    "authTriggerConnections": "[\n  {\n    \"triggerType\": \"PostConfirmation\",\n    \"lambdaFunctionName\": \"festivalfriendsPostConfirmation\"\n  }\n]",
     "permissions": [
-      "{\"policyName\":\"AddToGroupCognito\",\"trigger\":\"PostConfirmation\",\"effect\":\"Allow\",\"actions\":[\"cognito-idp:AdminAddUserToGroup\",\"cognito-idp:GetGroup\",\"cognito-idp:CreateGroup\"],\"resource\":{\"paramType\":\"!GetAtt\",\"keys\":[\"UserPool\",\"Arn\"]}}"
+      "{\n  \"policyName\": \"AddToGroupCognito\",\n  \"trigger\": \"PostConfirmation\",\n  \"effect\": \"Allow\",\n  \"actions\": [\n    \"cognito-idp:AdminAddUserToGroup\",\n    \"cognito-idp:GetGroup\",\n    \"cognito-idp:CreateGroup\"\n  ],\n  \"resource\": {\n    \"paramType\": \"!GetAtt\",\n    \"keys\": [\n      \"UserPool\",\n      \"Arn\"\n    ]\n  }\n}"
     ]
   }
 }

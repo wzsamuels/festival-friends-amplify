@@ -43,12 +43,6 @@
     },
     "s3Key": {
       "Type": "String"
-    },
-    "appsyncApiEndpoint": {
-      "Type": "String"
-    },
-    "appsyncApiKey": {
-      "Type": "String"
     }
   },
   "Conditions": {
@@ -101,12 +95,6 @@
             },
             "GROUP": {
               "Ref": "GROUP"
-            },
-            "APPSYNC_API_ENDPOINT": {
-              "Ref": "appsyncApiEndpoint"
-            },
-            "APPSYNC_API_KEY": {
-              "Ref": "appsyncApiKey"
             }
           }
         },

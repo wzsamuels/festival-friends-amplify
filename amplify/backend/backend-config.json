@@ -1,27 +1,5 @@
 {
   "api": {
-    "AdminQueries": {
-      "authorizationType": "AMAZON_COGNITO_USER_POOLS",
-      "dependsOn": [
-        {
-          "attributes": [
-            "UserPoolId"
-          ],
-          "category": "auth",
-          "resourceName": "festivalfriends"
-        },
-        {
-          "attributes": [
-            "Arn",
-            "Name"
-          ],
-          "category": "function",
-          "resourceName": "AdminQueriese03c7317"
-        }
-      ],
-      "providerPlugin": "awscloudformation",
-      "service": "API Gateway"
-    },
     "festivalfriends": {
       "dependsOn": [
         {
@@ -56,6 +34,58 @@
       },
       "providerPlugin": "awscloudformation",
       "service": "AppSync"
+    },
+    "stripeAPI": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "stripeCheckout"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "createPaymentPortal"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "test"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "cancelSubscription"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
+    "stripeWebhook": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "stripeWebhook"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
     }
   },
   "auth": {
@@ -109,68 +139,82 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
+    "cancelSubscription": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "festivalfriendstestlayer"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "createPaymentPortal": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "festivalfriendstestlayer"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
     "festivalfriendsPostConfirmation": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
-    }
-  },
-  "parameters": {
-    "AMPLIFY_function_AdminQueriese03c7317_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "AdminQueriese03c7317"
-        }
-      ]
     },
-    "AMPLIFY_function_AdminQueriese03c7317_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "AdminQueriese03c7317"
-        }
-      ]
+    "festivalfriendsapiLayer": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "LambdaLayer"
     },
-    "AMPLIFY_function_festivalfriendsPostConfirmation_GROUP": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "festivalfriendsPostConfirmation"
-        }
-      ]
+    "festivalfriendstestlayer": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "LambdaLayer"
     },
-    "AMPLIFY_function_festivalfriendsPostConfirmation_appsyncApiEndpoint": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "festivalfriendsPostConfirmation"
-        }
-      ]
+    "stripeCheckout": {
+      "build": true,
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
     },
-    "AMPLIFY_function_festivalfriendsPostConfirmation_appsyncApiKey": {
-      "usedBy": [
+    "stripeWebhook": {
+      "build": true,
+      "dependsOn": [
         {
+          "attributes": [
+            "Arn"
+          ],
           "category": "function",
-          "resourceName": "festivalfriendsPostConfirmation"
+          "resourceName": "festivalfriendstestlayer"
+        },
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput",
+            "GraphQLAPIKeyOutput"
+          ],
+          "category": "api",
+          "resourceName": "festivalfriends"
         }
-      ]
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
     },
-    "AMPLIFY_function_festivalfriendsPostConfirmation_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "festivalfriendsPostConfirmation"
-        }
-      ]
-    },
-    "AMPLIFY_function_festivalfriendsPostConfirmation_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "festivalfriendsPostConfirmation"
-        }
-      ]
+    "test": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
     }
   },
   "storage": {

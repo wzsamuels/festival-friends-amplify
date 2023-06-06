@@ -14,14 +14,5 @@
   "triggerEventPath": "PostConfirmation.event.json",
   "roleName": "festivalfriendsPostConfirmation",
   "skipEdit": true,
-  "environmentVariableList": [
-    {
-      "cloudFormationParameterName": "appsyncApiEndpoint",
-      "environmentVariableName": "APPSYNC_API_ENDPOINT"
-    },
-    {
-      "cloudFormationParameterName": "appsyncApiKey",
-      "environmentVariableName": "APPSYNC_API_KEY"
-    }
-  ]
+  "environmentVariableList": []
 }

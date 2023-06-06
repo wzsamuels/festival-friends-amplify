@@ -118,6 +118,9 @@ type EagerFestival = {
   readonly type?: EventType | keyof typeof EventType | null;
   readonly description?: string | null;
   readonly url?: string | null;
+  readonly customerID?: string | null;
+  readonly hasPaid?: boolean | null;
+  readonly subID?: string | null;
   readonly approved?: boolean | null;
   readonly group?: CollegeGroup | null;
   readonly groupID?: string | null;
@@ -145,6 +148,9 @@ type LazyFestival = {
   readonly type?: EventType | keyof typeof EventType | null;
   readonly description?: string | null;
   readonly url?: string | null;
+  readonly customerID?: string | null;
+  readonly hasPaid?: boolean | null;
+  readonly subID?: string | null;
   readonly approved?: boolean | null;
   readonly group: AsyncItem<CollegeGroup | undefined>;
   readonly groupID?: string | null;
@@ -173,6 +179,8 @@ type EagerUserProfile = {
   readonly verifySubmitted?: boolean | null;
   readonly profilePhotoID?: string | null;
   readonly bannerPhotoID?: string | null;
+  readonly verifyPhotoID?: string | null;
+  readonly customerID?: string | null;
   readonly city?: string | null;
   readonly state?: string | null;
   readonly school?: string | null;
@@ -181,6 +189,9 @@ type EagerUserProfile = {
   readonly phone?: string | null;
   readonly email?: string | null;
   readonly zipcode?: string | null;
+  readonly birthDate?: string | null;
+  readonly hobbies?: string | null;
+  readonly gender?: string | null;
   readonly attendingEvents?: (EventProfile | null)[] | null;
   readonly rides?: (RideUser | null)[] | null;
   readonly friends?: (Friendship | null)[] | null;
@@ -210,6 +221,8 @@ type LazyUserProfile = {
   readonly verifySubmitted?: boolean | null;
   readonly profilePhotoID?: string | null;
   readonly bannerPhotoID?: string | null;
+  readonly verifyPhotoID?: string | null;
+  readonly customerID?: string | null;
   readonly city?: string | null;
   readonly state?: string | null;
   readonly school?: string | null;
@@ -218,6 +231,9 @@ type LazyUserProfile = {
   readonly phone?: string | null;
   readonly email?: string | null;
   readonly zipcode?: string | null;
+  readonly birthDate?: string | null;
+  readonly hobbies?: string | null;
+  readonly gender?: string | null;
   readonly attendingEvents: AsyncCollection<EventProfile>;
   readonly rides: AsyncCollection<RideUser>;
   readonly friends: AsyncCollection<Friendship>;

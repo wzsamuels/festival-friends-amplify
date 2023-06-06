@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "test.e2e": "cypress run",
     "test.unit": "vitest",
-    "lint": "eslint"
+    "lint": "eslint",
+    "updateAppsyncOperations": "amplify api gql-compile && amplify codegen && babel src/graphql --extensions .ts --config-file ./babel.config.json -d ./amplify/backend/function/festivalfriendsapiLayer/opt/graphql/"
   },
   "dependencies": {
     "@aws-amplify/ui-react": "^4.6.0",
@@ -33,10 +34,14 @@
     "react-router": "^6.11.2",
     "react-router-dom": "^6.11.2",
     "rollup-plugin-node-polyfills": "^0.2.1",
+    "stripe": "^12.8.0",
     "uuid": "^9.0.0",
     "zustand": "^4.3.7"
   },
   "devDependencies": {
+    "@babel/cli": "^7.21.5",
+    "@babel/core": "^7.22.1",
+    "@babel/preset-env": "^7.22.4",
     "@capacitor/cli": "^4.8.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",

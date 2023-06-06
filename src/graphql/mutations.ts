@@ -22,6 +22,8 @@ export const createMessage = /* GraphQL */ `
         verifySubmitted
         profilePhotoID
         bannerPhotoID
+        verifyPhotoID
+        customerID
         city
         state
         school
@@ -30,6 +32,9 @@ export const createMessage = /* GraphQL */ `
         phone
         email
         zipcode
+        birthDate
+        hobbies
+        gender
         attendingEvents {
           items {
             id
@@ -208,6 +213,8 @@ export const createMessage = /* GraphQL */ `
         verifySubmitted
         profilePhotoID
         bannerPhotoID
+        verifyPhotoID
+        customerID
         city
         state
         school
@@ -216,6 +223,9 @@ export const createMessage = /* GraphQL */ `
         phone
         email
         zipcode
+        birthDate
+        hobbies
+        gender
         attendingEvents {
           items {
             id
@@ -398,6 +408,8 @@ export const createMessage = /* GraphQL */ `
           verifySubmitted
           profilePhotoID
           bannerPhotoID
+          verifyPhotoID
+          customerID
           city
           state
           school
@@ -406,6 +418,9 @@ export const createMessage = /* GraphQL */ `
           phone
           email
           zipcode
+          birthDate
+          hobbies
+          gender
           attendingEvents {
             nextToken
             startedAt
@@ -483,6 +498,8 @@ export const createMessage = /* GraphQL */ `
           verifySubmitted
           profilePhotoID
           bannerPhotoID
+          verifyPhotoID
+          customerID
           city
           state
           school
@@ -491,6 +508,9 @@ export const createMessage = /* GraphQL */ `
           phone
           email
           zipcode
+          birthDate
+          hobbies
+          gender
           attendingEvents {
             nextToken
             startedAt
@@ -612,6 +632,8 @@ export const updateMessage = /* GraphQL */ `
         verifySubmitted
         profilePhotoID
         bannerPhotoID
+        verifyPhotoID
+        customerID
         city
         state
         school
@@ -620,6 +642,9 @@ export const updateMessage = /* GraphQL */ `
         phone
         email
         zipcode
+        birthDate
+        hobbies
+        gender
         attendingEvents {
           items {
             id
@@ -798,6 +823,8 @@ export const updateMessage = /* GraphQL */ `
         verifySubmitted
         profilePhotoID
         bannerPhotoID
+        verifyPhotoID
+        customerID
         city
         state
         school
@@ -806,6 +833,9 @@ export const updateMessage = /* GraphQL */ `
         phone
         email
         zipcode
+        birthDate
+        hobbies
+        gender
         attendingEvents {
           items {
             id
@@ -988,6 +1018,8 @@ export const updateMessage = /* GraphQL */ `
           verifySubmitted
           profilePhotoID
           bannerPhotoID
+          verifyPhotoID
+          customerID
           city
           state
           school
@@ -996,6 +1028,9 @@ export const updateMessage = /* GraphQL */ `
           phone
           email
           zipcode
+          birthDate
+          hobbies
+          gender
           attendingEvents {
             nextToken
             startedAt
@@ -1073,6 +1108,8 @@ export const updateMessage = /* GraphQL */ `
           verifySubmitted
           profilePhotoID
           bannerPhotoID
+          verifyPhotoID
+          customerID
           city
           state
           school
@@ -1081,6 +1118,9 @@ export const updateMessage = /* GraphQL */ `
           phone
           email
           zipcode
+          birthDate
+          hobbies
+          gender
           attendingEvents {
             nextToken
             startedAt
@@ -1202,6 +1242,8 @@ export const deleteMessage = /* GraphQL */ `
         verifySubmitted
         profilePhotoID
         bannerPhotoID
+        verifyPhotoID
+        customerID
         city
         state
         school
@@ -1210,6 +1252,9 @@ export const deleteMessage = /* GraphQL */ `
         phone
         email
         zipcode
+        birthDate
+        hobbies
+        gender
         attendingEvents {
           items {
             id
@@ -1388,6 +1433,8 @@ export const deleteMessage = /* GraphQL */ `
         verifySubmitted
         profilePhotoID
         bannerPhotoID
+        verifyPhotoID
+        customerID
         city
         state
         school
@@ -1396,6 +1443,9 @@ export const deleteMessage = /* GraphQL */ `
         phone
         email
         zipcode
+        birthDate
+        hobbies
+        gender
         attendingEvents {
           items {
             id
@@ -1578,6 +1628,8 @@ export const deleteMessage = /* GraphQL */ `
           verifySubmitted
           profilePhotoID
           bannerPhotoID
+          verifyPhotoID
+          customerID
           city
           state
           school
@@ -1586,6 +1638,9 @@ export const deleteMessage = /* GraphQL */ `
           phone
           email
           zipcode
+          birthDate
+          hobbies
+          gender
           attendingEvents {
             nextToken
             startedAt
@@ -1663,6 +1718,8 @@ export const deleteMessage = /* GraphQL */ `
           verifySubmitted
           profilePhotoID
           bannerPhotoID
+          verifyPhotoID
+          customerID
           city
           state
           school
@@ -1671,6 +1728,9 @@ export const deleteMessage = /* GraphQL */ `
           phone
           email
           zipcode
+          birthDate
+          hobbies
+          gender
           attendingEvents {
             nextToken
             startedAt
@@ -1790,6 +1850,8 @@ export const createEventProfile = /* GraphQL */ `
         verifySubmitted
         profilePhotoID
         bannerPhotoID
+        verifyPhotoID
+        customerID
         city
         state
         school
@@ -1798,6 +1860,9 @@ export const createEventProfile = /* GraphQL */ `
         phone
         email
         zipcode
+        birthDate
+        hobbies
+        gender
         attendingEvents {
           items {
             id
@@ -1981,6 +2046,9 @@ export const createEventProfile = /* GraphQL */ `
         type
         description
         url
+        customerID
+        hasPaid
+        subID
         approved
         group {
           id
@@ -2067,6 +2135,8 @@ export const updateEventProfile = /* GraphQL */ `
         verifySubmitted
         profilePhotoID
         bannerPhotoID
+        verifyPhotoID
+        customerID
         city
         state
         school
@@ -2075,6 +2145,9 @@ export const updateEventProfile = /* GraphQL */ `
         phone
         email
         zipcode
+        birthDate
+        hobbies
+        gender
         attendingEvents {
           items {
             id
@@ -2258,6 +2331,9 @@ export const updateEventProfile = /* GraphQL */ `
         type
         description
         url
+        customerID
+        hasPaid
+        subID
         approved
         group {
           id
@@ -2344,6 +2420,8 @@ export const deleteEventProfile = /* GraphQL */ `
         verifySubmitted
         profilePhotoID
         bannerPhotoID
+        verifyPhotoID
+        customerID
         city
         state
         school
@@ -2352,6 +2430,9 @@ export const deleteEventProfile = /* GraphQL */ `
         phone
         email
         zipcode
+        birthDate
+        hobbies
+        gender
         attendingEvents {
           items {
             id
@@ -2535,6 +2616,9 @@ export const deleteEventProfile = /* GraphQL */ `
         type
         description
         url
+        customerID
+        hasPaid
+        subID
         approved
         group {
           id
@@ -2622,6 +2706,9 @@ export const createFestival = /* GraphQL */ `
       type
       description
       url
+      customerID
+      hasPaid
+      subID
       approved
       group {
         id
@@ -2644,6 +2731,9 @@ export const createFestival = /* GraphQL */ `
             type
             description
             url
+            customerID
+            hasPaid
+            subID
             approved
             groupID
             createdAt
@@ -2665,6 +2755,8 @@ export const createFestival = /* GraphQL */ `
             verifySubmitted
             profilePhotoID
             bannerPhotoID
+            verifyPhotoID
+            customerID
             city
             state
             school
@@ -2673,6 +2765,9 @@ export const createFestival = /* GraphQL */ `
             phone
             email
             zipcode
+            birthDate
+            hobbies
+            gender
             collegeGroupId
             privacySettingID
             createdAt
@@ -2705,6 +2800,8 @@ export const createFestival = /* GraphQL */ `
             verifySubmitted
             profilePhotoID
             bannerPhotoID
+            verifyPhotoID
+            customerID
             city
             state
             school
@@ -2713,6 +2810,9 @@ export const createFestival = /* GraphQL */ `
             phone
             email
             zipcode
+            birthDate
+            hobbies
+            gender
             collegeGroupId
             privacySettingID
             createdAt
@@ -2735,6 +2835,9 @@ export const createFestival = /* GraphQL */ `
             type
             description
             url
+            customerID
+            hasPaid
+            subID
             approved
             groupID
             createdAt
@@ -2769,6 +2872,9 @@ export const createFestival = /* GraphQL */ `
             type
             description
             url
+            customerID
+            hasPaid
+            subID
             approved
             groupID
             createdAt
@@ -2834,6 +2940,9 @@ export const updateFestival = /* GraphQL */ `
       type
       description
       url
+      customerID
+      hasPaid
+      subID
       approved
       group {
         id
@@ -2856,6 +2965,9 @@ export const updateFestival = /* GraphQL */ `
             type
             description
             url
+            customerID
+            hasPaid
+            subID
             approved
             groupID
             createdAt
@@ -2877,6 +2989,8 @@ export const updateFestival = /* GraphQL */ `
             verifySubmitted
             profilePhotoID
             bannerPhotoID
+            verifyPhotoID
+            customerID
             city
             state
             school
@@ -2885,6 +2999,9 @@ export const updateFestival = /* GraphQL */ `
             phone
             email
             zipcode
+            birthDate
+            hobbies
+            gender
             collegeGroupId
             privacySettingID
             createdAt
@@ -2917,6 +3034,8 @@ export const updateFestival = /* GraphQL */ `
             verifySubmitted
             profilePhotoID
             bannerPhotoID
+            verifyPhotoID
+            customerID
             city
             state
             school
@@ -2925,6 +3044,9 @@ export const updateFestival = /* GraphQL */ `
             phone
             email
             zipcode
+            birthDate
+            hobbies
+            gender
             collegeGroupId
             privacySettingID
             createdAt
@@ -2947,6 +3069,9 @@ export const updateFestival = /* GraphQL */ `
             type
             description
             url
+            customerID
+            hasPaid
+            subID
             approved
             groupID
             createdAt
@@ -2981,6 +3106,9 @@ export const updateFestival = /* GraphQL */ `
             type
             description
             url
+            customerID
+            hasPaid
+            subID
             approved
             groupID
             createdAt
@@ -3046,6 +3174,9 @@ export const deleteFestival = /* GraphQL */ `
       type
       description
       url
+      customerID
+      hasPaid
+      subID
       approved
       group {
         id
@@ -3068,6 +3199,9 @@ export const deleteFestival = /* GraphQL */ `
             type
             description
             url
+            customerID
+            hasPaid
+            subID
             approved
             groupID
             createdAt
@@ -3089,6 +3223,8 @@ export const deleteFestival = /* GraphQL */ `
             verifySubmitted
             profilePhotoID
             bannerPhotoID
+            verifyPhotoID
+            customerID
             city
             state
             school
@@ -3097,6 +3233,9 @@ export const deleteFestival = /* GraphQL */ `
             phone
             email
             zipcode
+            birthDate
+            hobbies
+            gender
             collegeGroupId
             privacySettingID
             createdAt
@@ -3129,6 +3268,8 @@ export const deleteFestival = /* GraphQL */ `
             verifySubmitted
             profilePhotoID
             bannerPhotoID
+            verifyPhotoID
+            customerID
             city
             state
             school
@@ -3137,6 +3278,9 @@ export const deleteFestival = /* GraphQL */ `
             phone
             email
             zipcode
+            birthDate
+            hobbies
+            gender
             collegeGroupId
             privacySettingID
             createdAt
@@ -3159,6 +3303,9 @@ export const deleteFestival = /* GraphQL */ `
             type
             description
             url
+            customerID
+            hasPaid
+            subID
             approved
             groupID
             createdAt
@@ -3193,6 +3340,9 @@ export const deleteFestival = /* GraphQL */ `
             type
             description
             url
+            customerID
+            hasPaid
+            subID
             approved
             groupID
             createdAt
@@ -3253,6 +3403,8 @@ export const createUserProfile = /* GraphQL */ `
       verifySubmitted
       profilePhotoID
       bannerPhotoID
+      verifyPhotoID
+      customerID
       city
       state
       school
@@ -3261,6 +3413,9 @@ export const createUserProfile = /* GraphQL */ `
       phone
       email
       zipcode
+      birthDate
+      hobbies
+      gender
       attendingEvents {
         items {
           id
@@ -3275,6 +3430,8 @@ export const createUserProfile = /* GraphQL */ `
             verifySubmitted
             profilePhotoID
             bannerPhotoID
+            verifyPhotoID
+            customerID
             city
             state
             school
@@ -3283,6 +3440,9 @@ export const createUserProfile = /* GraphQL */ `
             phone
             email
             zipcode
+            birthDate
+            hobbies
+            gender
             collegeGroupId
             privacySettingID
             createdAt
@@ -3305,6 +3465,9 @@ export const createUserProfile = /* GraphQL */ `
             type
             description
             url
+            customerID
+            hasPaid
+            subID
             approved
             groupID
             createdAt
@@ -3349,6 +3512,8 @@ export const createUserProfile = /* GraphQL */ `
             verifySubmitted
             profilePhotoID
             bannerPhotoID
+            verifyPhotoID
+            customerID
             city
             state
             school
@@ -3357,6 +3522,9 @@ export const createUserProfile = /* GraphQL */ `
             phone
             email
             zipcode
+            birthDate
+            hobbies
+            gender
             collegeGroupId
             privacySettingID
             createdAt
@@ -3391,6 +3559,8 @@ export const createUserProfile = /* GraphQL */ `
             verifySubmitted
             profilePhotoID
             bannerPhotoID
+            verifyPhotoID
+            customerID
             city
             state
             school
@@ -3399,6 +3569,9 @@ export const createUserProfile = /* GraphQL */ `
             phone
             email
             zipcode
+            birthDate
+            hobbies
+            gender
             collegeGroupId
             privacySettingID
             createdAt
@@ -3416,6 +3589,8 @@ export const createUserProfile = /* GraphQL */ `
             verifySubmitted
             profilePhotoID
             bannerPhotoID
+            verifyPhotoID
+            customerID
             city
             state
             school
@@ -3424,6 +3599,9 @@ export const createUserProfile = /* GraphQL */ `
             phone
             email
             zipcode
+            birthDate
+            hobbies
+            gender
             collegeGroupId
             privacySettingID
             createdAt
@@ -3455,6 +3633,8 @@ export const createUserProfile = /* GraphQL */ `
             verifySubmitted
             profilePhotoID
             bannerPhotoID
+            verifyPhotoID
+            customerID
             city
             state
             school
@@ -3463,6 +3643,9 @@ export const createUserProfile = /* GraphQL */ `
             phone
             email
             zipcode
+            birthDate
+            hobbies
+            gender
             collegeGroupId
             privacySettingID
             createdAt
@@ -3480,6 +3663,8 @@ export const createUserProfile = /* GraphQL */ `
             verifySubmitted
             profilePhotoID
             bannerPhotoID
+            verifyPhotoID
+            customerID
             city
             state
             school
@@ -3488,6 +3673,9 @@ export const createUserProfile = /* GraphQL */ `
             phone
             email
             zipcode
+            birthDate
+            hobbies
+            gender
             collegeGroupId
             privacySettingID
             createdAt
@@ -3526,6 +3714,8 @@ export const createUserProfile = /* GraphQL */ `
             verifySubmitted
             profilePhotoID
             bannerPhotoID
+            verifyPhotoID
+            customerID
             city
             state
             school
@@ -3534,6 +3724,9 @@ export const createUserProfile = /* GraphQL */ `
             phone
             email
             zipcode
+            birthDate
+            hobbies
+            gender
             collegeGroupId
             privacySettingID
             createdAt
@@ -3551,6 +3744,8 @@ export const createUserProfile = /* GraphQL */ `
             verifySubmitted
             profilePhotoID
             bannerPhotoID
+            verifyPhotoID
+            customerID
             city
             state
             school
@@ -3559,6 +3754,9 @@ export const createUserProfile = /* GraphQL */ `
             phone
             email
             zipcode
+            birthDate
+            hobbies
+            gender
             collegeGroupId
             privacySettingID
             createdAt
@@ -3604,6 +3802,8 @@ export const createUserProfile = /* GraphQL */ `
             verifySubmitted
             profilePhotoID
             bannerPhotoID
+            verifyPhotoID
+            customerID
             city
             state
             school
@@ -3612,6 +3812,9 @@ export const createUserProfile = /* GraphQL */ `
             phone
             email
             zipcode
+            birthDate
+            hobbies
+            gender
             collegeGroupId
             privacySettingID
             createdAt
@@ -3629,6 +3832,8 @@ export const createUserProfile = /* GraphQL */ `
             verifySubmitted
             profilePhotoID
             bannerPhotoID
+            verifyPhotoID
+            customerID
             city
             state
             school
@@ -3637,6 +3842,9 @@ export const createUserProfile = /* GraphQL */ `
             phone
             email
             zipcode
+            birthDate
+            hobbies
+            gender
             collegeGroupId
             privacySettingID
             createdAt
@@ -3679,6 +3887,8 @@ export const createUserProfile = /* GraphQL */ `
             verifySubmitted
             profilePhotoID
             bannerPhotoID
+            verifyPhotoID
+            customerID
             city
             state
             school
@@ -3687,6 +3897,9 @@ export const createUserProfile = /* GraphQL */ `
             phone
             email
             zipcode
+            birthDate
+            hobbies
+            gender
             collegeGroupId
             privacySettingID
             createdAt
@@ -3734,6 +3947,9 @@ export const createUserProfile = /* GraphQL */ `
             type
             description
             url
+            customerID
+            hasPaid
+            subID
             approved
             groupID
             createdAt
@@ -3755,6 +3971,8 @@ export const createUserProfile = /* GraphQL */ `
             verifySubmitted
             profilePhotoID
             bannerPhotoID
+            verifyPhotoID
+            customerID
             city
             state
             school
@@ -3763,6 +3981,9 @@ export const createUserProfile = /* GraphQL */ `
             phone
             email
             zipcode
+            birthDate
+            hobbies
+            gender
             collegeGroupId
             privacySettingID
             createdAt
@@ -3810,6 +4031,8 @@ export const createUserProfile = /* GraphQL */ `
             verifySubmitted
             profilePhotoID
             bannerPhotoID
+            verifyPhotoID
+            customerID
             city
             state
             school
@@ -3818,6 +4041,9 @@ export const createUserProfile = /* GraphQL */ `
             phone
             email
             zipcode
+            birthDate
+            hobbies
+            gender
             collegeGroupId
             privacySettingID
             createdAt
@@ -3859,6 +4085,8 @@ export const updateUserProfile = /* GraphQL */ `
       verifySubmitted
       profilePhotoID
       bannerPhotoID
+      verifyPhotoID
+      customerID
       city
       state
       school
@@ -3867,6 +4095,9 @@ export const updateUserProfile = /* GraphQL */ `
       phone
       email
       zipcode
+      birthDate
+      hobbies
+      gender
       attendingEvents {
         items {
           id
@@ -3881,6 +4112,8 @@ export const updateUserProfile = /* GraphQL */ `
             verifySubmitted
             profilePhotoID
             bannerPhotoID
+            verifyPhotoID
+            customerID
             city
             state
             school
@@ -3889,6 +4122,9 @@ export const updateUserProfile = /* GraphQL */ `
             phone
             email
             zipcode
+            birthDate
+            hobbies
+            gender
             collegeGroupId
             privacySettingID
             createdAt
@@ -3911,6 +4147,9 @@ export const updateUserProfile = /* GraphQL */ `
             type
             description
             url
+            customerID
+            hasPaid
+            subID
             approved
             groupID
             createdAt
@@ -3955,6 +4194,8 @@ export const updateUserProfile = /* GraphQL */ `
             verifySubmitted
             profilePhotoID
             bannerPhotoID
+            verifyPhotoID
+            customerID
             city
             state
             school
@@ -3963,6 +4204,9 @@ export const updateUserProfile = /* GraphQL */ `
             phone
             email
             zipcode
+            birthDate
+            hobbies
+            gender
             collegeGroupId
             privacySettingID
             createdAt
@@ -3997,6 +4241,8 @@ export const updateUserProfile = /* GraphQL */ `
             verifySubmitted
             profilePhotoID
             bannerPhotoID
+            verifyPhotoID
+            customerID
             city
             state
             school
@@ -4005,6 +4251,9 @@ export const updateUserProfile = /* GraphQL */ `
             phone
             email
             zipcode
+            birthDate
+            hobbies
+            gender
             collegeGroupId
             privacySettingID
             createdAt
@@ -4022,6 +4271,8 @@ export const updateUserProfile = /* GraphQL */ `
             verifySubmitted
             profilePhotoID
             bannerPhotoID
+            verifyPhotoID
+            customerID
             city
             state
             school
@@ -4030,6 +4281,9 @@ export const updateUserProfile = /* GraphQL */ `
             phone
             email
             zipcode
+            birthDate
+            hobbies
+            gender
             collegeGroupId
             privacySettingID
             createdAt
@@ -4061,6 +4315,8 @@ export const updateUserProfile = /* GraphQL */ `
             verifySubmitted
             profilePhotoID
             bannerPhotoID
+            verifyPhotoID
+            customerID
             city
             state
             school
@@ -4069,6 +4325,9 @@ export const updateUserProfile = /* GraphQL */ `
             phone
             email
             zipcode
+            birthDate
+            hobbies
+            gender
             collegeGroupId
             privacySettingID
             createdAt
@@ -4086,6 +4345,8 @@ export const updateUserProfile = /* GraphQL */ `
             verifySubmitted
             profilePhotoID
             bannerPhotoID
+            verifyPhotoID
+            customerID
             city
             state
             school
@@ -4094,6 +4355,9 @@ export const updateUserProfile = /* GraphQL */ `
             phone
             email
             zipcode
+            birthDate
+            hobbies
+            gender
             collegeGroupId
             privacySettingID
             createdAt
@@ -4132,6 +4396,8 @@ export const updateUserProfile = /* GraphQL */ `
             verifySubmitted
             profilePhotoID
             bannerPhotoID
+            verifyPhotoID
+            customerID
             city
             state
             school
@@ -4140,6 +4406,9 @@ export const updateUserProfile = /* GraphQL */ `
             phone
             email
             zipcode
+            birthDate
+            hobbies
+            gender
             collegeGroupId
             privacySettingID
             createdAt
@@ -4157,6 +4426,8 @@ export const updateUserProfile = /* GraphQL */ `
             verifySubmitted
             profilePhotoID
             bannerPhotoID
+            verifyPhotoID
+            customerID
             city
             state
             school
@@ -4165,6 +4436,9 @@ export const updateUserProfile = /* GraphQL */ `
             phone
             email
             zipcode
+            birthDate
+            hobbies
+            gender
             collegeGroupId
             privacySettingID
             createdAt
@@ -4210,6 +4484,8 @@ export const updateUserProfile = /* GraphQL */ `
             verifySubmitted
             profilePhotoID
             bannerPhotoID
+            verifyPhotoID
+            customerID
             city
             state
             school
@@ -4218,6 +4494,9 @@ export const updateUserProfile = /* GraphQL */ `
             phone
             email
             zipcode
+            birthDate
+            hobbies
+            gender
             collegeGroupId
             privacySettingID
             createdAt
@@ -4235,6 +4514,8 @@ export const updateUserProfile = /* GraphQL */ `
             verifySubmitted
             profilePhotoID
             bannerPhotoID
+            verifyPhotoID
+            customerID
             city
             state
             school
@@ -4243,6 +4524,9 @@ export const updateUserProfile = /* GraphQL */ `
             phone
             email
             zipcode
+            birthDate
+            hobbies
+            gender
             collegeGroupId
             privacySettingID
             createdAt
@@ -4285,6 +4569,8 @@ export const updateUserProfile = /* GraphQL */ `
             verifySubmitted
             profilePhotoID
             bannerPhotoID
+            verifyPhotoID
+            customerID
             city
             state
             school
@@ -4293,6 +4579,9 @@ export const updateUserProfile = /* GraphQL */ `
             phone
             email
             zipcode
+            birthDate
+            hobbies
+            gender
             collegeGroupId
             privacySettingID
             createdAt
@@ -4340,6 +4629,9 @@ export const updateUserProfile = /* GraphQL */ `
             type
             description
             url
+            customerID
+            hasPaid
+            subID
             approved
             groupID
             createdAt
@@ -4361,6 +4653,8 @@ export const updateUserProfile = /* GraphQL */ `
             verifySubmitted
             profilePhotoID
             bannerPhotoID
+            verifyPhotoID
+            customerID
             city
             state
             school
@@ -4369,6 +4663,9 @@ export const updateUserProfile = /* GraphQL */ `
             phone
             email
             zipcode
+            birthDate
+            hobbies
+            gender
             collegeGroupId
             privacySettingID
             createdAt
@@ -4416,6 +4713,8 @@ export const updateUserProfile = /* GraphQL */ `
             verifySubmitted
             profilePhotoID
             bannerPhotoID
+            verifyPhotoID
+            customerID
             city
             state
             school
@@ -4424,6 +4723,9 @@ export const updateUserProfile = /* GraphQL */ `
             phone
             email
             zipcode
+            birthDate
+            hobbies
+            gender
             collegeGroupId
             privacySettingID
             createdAt
@@ -4465,6 +4767,8 @@ export const deleteUserProfile = /* GraphQL */ `
       verifySubmitted
       profilePhotoID
       bannerPhotoID
+      verifyPhotoID
+      customerID
       city
       state
       school
@@ -4473,6 +4777,9 @@ export const deleteUserProfile = /* GraphQL */ `
       phone
       email
       zipcode
+      birthDate
+      hobbies
+      gender
       attendingEvents {
         items {
           id
@@ -4487,6 +4794,8 @@ export const deleteUserProfile = /* GraphQL */ `
             verifySubmitted
             profilePhotoID
             bannerPhotoID
+            verifyPhotoID
+            customerID
             city
             state
             school
@@ -4495,6 +4804,9 @@ export const deleteUserProfile = /* GraphQL */ `
             phone
             email
             zipcode
+            birthDate
+            hobbies
+            gender
             collegeGroupId
             privacySettingID
             createdAt
@@ -4517,6 +4829,9 @@ export const deleteUserProfile = /* GraphQL */ `
             type
             description
             url
+            customerID
+            hasPaid
+            subID
             approved
             groupID
             createdAt
@@ -4561,6 +4876,8 @@ export const deleteUserProfile = /* GraphQL */ `
             verifySubmitted
             profilePhotoID
             bannerPhotoID
+            verifyPhotoID
+            customerID
             city
             state
             school
@@ -4569,6 +4886,9 @@ export const deleteUserProfile = /* GraphQL */ `
             phone
             email
             zipcode
+            birthDate
+            hobbies
+            gender
             collegeGroupId
             privacySettingID
             createdAt
@@ -4603,6 +4923,8 @@ export const deleteUserProfile = /* GraphQL */ `
             verifySubmitted
             profilePhotoID
             bannerPhotoID
+            verifyPhotoID
+            customerID
             city
             state
             school
@@ -4611,6 +4933,9 @@ export const deleteUserProfile = /* GraphQL */ `
             phone
             email
             zipcode
+            birthDate
+            hobbies
+            gender
             collegeGroupId
             privacySettingID
             createdAt
@@ -4628,6 +4953,8 @@ export const deleteUserProfile = /* GraphQL */ `
             verifySubmitted
             profilePhotoID
             bannerPhotoID
+            verifyPhotoID
+            customerID
             city
             state
             school
@@ -4636,6 +4963,9 @@ export const deleteUserProfile = /* GraphQL */ `
             phone
             email
             zipcode
+            birthDate
+            hobbies
+            gender
             collegeGroupId
             privacySettingID
             createdAt
@@ -4667,6 +4997,8 @@ export const deleteUserProfile = /* GraphQL */ `
             verifySubmitted
             profilePhotoID
             bannerPhotoID
+            verifyPhotoID
+            customerID
             city
             state
             school
@@ -4675,6 +5007,9 @@ export const deleteUserProfile = /* GraphQL */ `
             phone
             email
             zipcode
+            birthDate
+            hobbies
+            gender
             collegeGroupId
             privacySettingID
             createdAt
@@ -4692,6 +5027,8 @@ export const deleteUserProfile = /* GraphQL */ `
             verifySubmitted
             profilePhotoID
             bannerPhotoID
+            verifyPhotoID
+            customerID
             city
             state
             school
@@ -4700,6 +5037,9 @@ export const deleteUserProfile = /* GraphQL */ `
             phone
             email
             zipcode
+            birthDate
+            hobbies
+            gender
             collegeGroupId
             privacySettingID
             createdAt
@@ -4738,6 +5078,8 @@ export const deleteUserProfile = /* GraphQL */ `
             verifySubmitted
             profilePhotoID
             bannerPhotoID
+            verifyPhotoID
+            customerID
             city
             state
             school
@@ -4746,6 +5088,9 @@ export const deleteUserProfile = /* GraphQL */ `
             phone
             email
             zipcode
+            birthDate
+            hobbies
+            gender
             collegeGroupId
             privacySettingID
             createdAt
@@ -4763,6 +5108,8 @@ export const deleteUserProfile = /* GraphQL */ `
             verifySubmitted
             profilePhotoID
             bannerPhotoID
+            verifyPhotoID
+            customerID
             city
             state
             school
@@ -4771,6 +5118,9 @@ export const deleteUserProfile = /* GraphQL */ `
             phone
             email
             zipcode
+            birthDate
+            hobbies
+            gender
             collegeGroupId
             privacySettingID
             createdAt
@@ -4816,6 +5166,8 @@ export const deleteUserProfile = /* GraphQL */ `
             verifySubmitted
             profilePhotoID
             bannerPhotoID
+            verifyPhotoID
+            customerID
             city
             state
             school
@@ -4824,6 +5176,9 @@ export const deleteUserProfile = /* GraphQL */ `
             phone
             email
             zipcode
+            birthDate
+            hobbies
+            gender
             collegeGroupId
             privacySettingID
             createdAt
@@ -4841,6 +5196,8 @@ export const deleteUserProfile = /* GraphQL */ `
             verifySubmitted
             profilePhotoID
             bannerPhotoID
+            verifyPhotoID
+            customerID
             city
             state
             school
@@ -4849,6 +5206,9 @@ export const deleteUserProfile = /* GraphQL */ `
             phone
             email
             zipcode
+            birthDate
+            hobbies
+            gender
             collegeGroupId
             privacySettingID
             createdAt
@@ -4891,6 +5251,8 @@ export const deleteUserProfile = /* GraphQL */ `
             verifySubmitted
             profilePhotoID
             bannerPhotoID
+            verifyPhotoID
+            customerID
             city
             state
             school
@@ -4899,6 +5261,9 @@ export const deleteUserProfile = /* GraphQL */ `
             phone
             email
             zipcode
+            birthDate
+            hobbies
+            gender
             collegeGroupId
             privacySettingID
             createdAt
@@ -4946,6 +5311,9 @@ export const deleteUserProfile = /* GraphQL */ `
             type
             description
             url
+            customerID
+            hasPaid
+            subID
             approved
             groupID
             createdAt
@@ -4967,6 +5335,8 @@ export const deleteUserProfile = /* GraphQL */ `
             verifySubmitted
             profilePhotoID
             bannerPhotoID
+            verifyPhotoID
+            customerID
             city
             state
             school
@@ -4975,6 +5345,9 @@ export const deleteUserProfile = /* GraphQL */ `
             phone
             email
             zipcode
+            birthDate
+            hobbies
+            gender
             collegeGroupId
             privacySettingID
             createdAt
@@ -5022,6 +5395,8 @@ export const deleteUserProfile = /* GraphQL */ `
             verifySubmitted
             profilePhotoID
             bannerPhotoID
+            verifyPhotoID
+            customerID
             city
             state
             school
@@ -5030,6 +5405,9 @@ export const deleteUserProfile = /* GraphQL */ `
             phone
             email
             zipcode
+            birthDate
+            hobbies
+            gender
             collegeGroupId
             privacySettingID
             createdAt
@@ -5074,6 +5452,8 @@ export const createSocialMedia = /* GraphQL */ `
         verifySubmitted
         profilePhotoID
         bannerPhotoID
+        verifyPhotoID
+        customerID
         city
         state
         school
@@ -5082,6 +5462,9 @@ export const createSocialMedia = /* GraphQL */ `
         phone
         email
         zipcode
+        birthDate
+        hobbies
+        gender
         attendingEvents {
           items {
             id
@@ -5278,6 +5661,8 @@ export const updateSocialMedia = /* GraphQL */ `
         verifySubmitted
         profilePhotoID
         bannerPhotoID
+        verifyPhotoID
+        customerID
         city
         state
         school
@@ -5286,6 +5671,9 @@ export const updateSocialMedia = /* GraphQL */ `
         phone
         email
         zipcode
+        birthDate
+        hobbies
+        gender
         attendingEvents {
           items {
             id
@@ -5482,6 +5870,8 @@ export const deleteSocialMedia = /* GraphQL */ `
         verifySubmitted
         profilePhotoID
         bannerPhotoID
+        verifyPhotoID
+        customerID
         city
         state
         school
@@ -5490,6 +5880,9 @@ export const deleteSocialMedia = /* GraphQL */ `
         phone
         email
         zipcode
+        birthDate
+        hobbies
+        gender
         attendingEvents {
           items {
             id
@@ -5759,6 +6152,9 @@ export const createRide = /* GraphQL */ `
         type
         description
         url
+        customerID
+        hasPaid
+        subID
         approved
         group {
           id
@@ -5838,6 +6234,9 @@ export const createRide = /* GraphQL */ `
             type
             description
             url
+            customerID
+            hasPaid
+            subID
             approved
             groupID
             createdAt
@@ -5883,6 +6282,8 @@ export const createRide = /* GraphQL */ `
           verifySubmitted
           profilePhotoID
           bannerPhotoID
+          verifyPhotoID
+          customerID
           city
           state
           school
@@ -5891,6 +6292,9 @@ export const createRide = /* GraphQL */ `
           phone
           email
           zipcode
+          birthDate
+          hobbies
+          gender
           attendingEvents {
             nextToken
             startedAt
@@ -5994,6 +6398,8 @@ export const createRide = /* GraphQL */ `
             verifySubmitted
             profilePhotoID
             bannerPhotoID
+            verifyPhotoID
+            customerID
             city
             state
             school
@@ -6002,6 +6408,9 @@ export const createRide = /* GraphQL */ `
             phone
             email
             zipcode
+            birthDate
+            hobbies
+            gender
             collegeGroupId
             privacySettingID
             createdAt
@@ -6055,6 +6464,9 @@ export const updateRide = /* GraphQL */ `
         type
         description
         url
+        customerID
+        hasPaid
+        subID
         approved
         group {
           id
@@ -6134,6 +6546,9 @@ export const updateRide = /* GraphQL */ `
             type
             description
             url
+            customerID
+            hasPaid
+            subID
             approved
             groupID
             createdAt
@@ -6179,6 +6594,8 @@ export const updateRide = /* GraphQL */ `
           verifySubmitted
           profilePhotoID
           bannerPhotoID
+          verifyPhotoID
+          customerID
           city
           state
           school
@@ -6187,6 +6604,9 @@ export const updateRide = /* GraphQL */ `
           phone
           email
           zipcode
+          birthDate
+          hobbies
+          gender
           attendingEvents {
             nextToken
             startedAt
@@ -6290,6 +6710,8 @@ export const updateRide = /* GraphQL */ `
             verifySubmitted
             profilePhotoID
             bannerPhotoID
+            verifyPhotoID
+            customerID
             city
             state
             school
@@ -6298,6 +6720,9 @@ export const updateRide = /* GraphQL */ `
             phone
             email
             zipcode
+            birthDate
+            hobbies
+            gender
             collegeGroupId
             privacySettingID
             createdAt
@@ -6351,6 +6776,9 @@ export const deleteRide = /* GraphQL */ `
         type
         description
         url
+        customerID
+        hasPaid
+        subID
         approved
         group {
           id
@@ -6430,6 +6858,9 @@ export const deleteRide = /* GraphQL */ `
             type
             description
             url
+            customerID
+            hasPaid
+            subID
             approved
             groupID
             createdAt
@@ -6475,6 +6906,8 @@ export const deleteRide = /* GraphQL */ `
           verifySubmitted
           profilePhotoID
           bannerPhotoID
+          verifyPhotoID
+          customerID
           city
           state
           school
@@ -6483,6 +6916,9 @@ export const deleteRide = /* GraphQL */ `
           phone
           email
           zipcode
+          birthDate
+          hobbies
+          gender
           attendingEvents {
             nextToken
             startedAt
@@ -6586,6 +7022,8 @@ export const deleteRide = /* GraphQL */ `
             verifySubmitted
             profilePhotoID
             bannerPhotoID
+            verifyPhotoID
+            customerID
             city
             state
             school
@@ -6594,6 +7032,9 @@ export const deleteRide = /* GraphQL */ `
             phone
             email
             zipcode
+            birthDate
+            hobbies
+            gender
             collegeGroupId
             privacySettingID
             createdAt
@@ -6649,6 +7090,9 @@ export const createRideUser = /* GraphQL */ `
           type
           description
           url
+          customerID
+          hasPaid
+          subID
           approved
           group {
             id
@@ -6704,6 +7148,8 @@ export const createRideUser = /* GraphQL */ `
             verifySubmitted
             profilePhotoID
             bannerPhotoID
+            verifyPhotoID
+            customerID
             city
             state
             school
@@ -6712,6 +7158,9 @@ export const createRideUser = /* GraphQL */ `
             phone
             email
             zipcode
+            birthDate
+            hobbies
+            gender
             collegeGroupId
             privacySettingID
             createdAt
@@ -6764,6 +7213,8 @@ export const createRideUser = /* GraphQL */ `
         verifySubmitted
         profilePhotoID
         bannerPhotoID
+        verifyPhotoID
+        customerID
         city
         state
         school
@@ -6772,6 +7223,9 @@ export const createRideUser = /* GraphQL */ `
         phone
         email
         zipcode
+        birthDate
+        hobbies
+        gender
         attendingEvents {
           items {
             id
@@ -6974,6 +7428,9 @@ export const updateRideUser = /* GraphQL */ `
           type
           description
           url
+          customerID
+          hasPaid
+          subID
           approved
           group {
             id
@@ -7029,6 +7486,8 @@ export const updateRideUser = /* GraphQL */ `
             verifySubmitted
             profilePhotoID
             bannerPhotoID
+            verifyPhotoID
+            customerID
             city
             state
             school
@@ -7037,6 +7496,9 @@ export const updateRideUser = /* GraphQL */ `
             phone
             email
             zipcode
+            birthDate
+            hobbies
+            gender
             collegeGroupId
             privacySettingID
             createdAt
@@ -7089,6 +7551,8 @@ export const updateRideUser = /* GraphQL */ `
         verifySubmitted
         profilePhotoID
         bannerPhotoID
+        verifyPhotoID
+        customerID
         city
         state
         school
@@ -7097,6 +7561,9 @@ export const updateRideUser = /* GraphQL */ `
         phone
         email
         zipcode
+        birthDate
+        hobbies
+        gender
         attendingEvents {
           items {
             id
@@ -7299,6 +7766,9 @@ export const deleteRideUser = /* GraphQL */ `
           type
           description
           url
+          customerID
+          hasPaid
+          subID
           approved
           group {
             id
@@ -7354,6 +7824,8 @@ export const deleteRideUser = /* GraphQL */ `
             verifySubmitted
             profilePhotoID
             bannerPhotoID
+            verifyPhotoID
+            customerID
             city
             state
             school
@@ -7362,6 +7834,9 @@ export const deleteRideUser = /* GraphQL */ `
             phone
             email
             zipcode
+            birthDate
+            hobbies
+            gender
             collegeGroupId
             privacySettingID
             createdAt
@@ -7414,6 +7889,8 @@ export const deleteRideUser = /* GraphQL */ `
         verifySubmitted
         profilePhotoID
         bannerPhotoID
+        verifyPhotoID
+        customerID
         city
         state
         school
@@ -7422,6 +7899,9 @@ export const deleteRideUser = /* GraphQL */ `
         phone
         email
         zipcode
+        birthDate
+        hobbies
+        gender
         attendingEvents {
           items {
             id
@@ -7618,6 +8098,8 @@ export const createPhoto = /* GraphQL */ `
         verifySubmitted
         profilePhotoID
         bannerPhotoID
+        verifyPhotoID
+        customerID
         city
         state
         school
@@ -7626,6 +8108,9 @@ export const createPhoto = /* GraphQL */ `
         phone
         email
         zipcode
+        birthDate
+        hobbies
+        gender
         attendingEvents {
           items {
             id
@@ -7851,6 +8336,8 @@ export const updatePhoto = /* GraphQL */ `
         verifySubmitted
         profilePhotoID
         bannerPhotoID
+        verifyPhotoID
+        customerID
         city
         state
         school
@@ -7859,6 +8346,9 @@ export const updatePhoto = /* GraphQL */ `
         phone
         email
         zipcode
+        birthDate
+        hobbies
+        gender
         attendingEvents {
           items {
             id
@@ -8084,6 +8574,8 @@ export const deletePhoto = /* GraphQL */ `
         verifySubmitted
         profilePhotoID
         bannerPhotoID
+        verifyPhotoID
+        customerID
         city
         state
         school
@@ -8092,6 +8584,9 @@ export const deletePhoto = /* GraphQL */ `
         phone
         email
         zipcode
+        birthDate
+        hobbies
+        gender
         attendingEvents {
           items {
             id
@@ -8321,6 +8816,8 @@ export const createPhotoComment = /* GraphQL */ `
           verifySubmitted
           profilePhotoID
           bannerPhotoID
+          verifyPhotoID
+          customerID
           city
           state
           school
@@ -8329,6 +8826,9 @@ export const createPhotoComment = /* GraphQL */ `
           phone
           email
           zipcode
+          birthDate
+          hobbies
+          gender
           attendingEvents {
             nextToken
             startedAt
@@ -8450,6 +8950,8 @@ export const updatePhotoComment = /* GraphQL */ `
           verifySubmitted
           profilePhotoID
           bannerPhotoID
+          verifyPhotoID
+          customerID
           city
           state
           school
@@ -8458,6 +8960,9 @@ export const updatePhotoComment = /* GraphQL */ `
           phone
           email
           zipcode
+          birthDate
+          hobbies
+          gender
           attendingEvents {
             nextToken
             startedAt
@@ -8579,6 +9084,8 @@ export const deletePhotoComment = /* GraphQL */ `
           verifySubmitted
           profilePhotoID
           bannerPhotoID
+          verifyPhotoID
+          customerID
           city
           state
           school
@@ -8587,6 +9094,9 @@ export const deletePhotoComment = /* GraphQL */ `
           phone
           email
           zipcode
+          birthDate
+          hobbies
+          gender
           attendingEvents {
             nextToken
             startedAt
@@ -8706,6 +9216,8 @@ export const createFriendship = /* GraphQL */ `
         verifySubmitted
         profilePhotoID
         bannerPhotoID
+        verifyPhotoID
+        customerID
         city
         state
         school
@@ -8714,6 +9226,9 @@ export const createFriendship = /* GraphQL */ `
         phone
         email
         zipcode
+        birthDate
+        hobbies
+        gender
         attendingEvents {
           items {
             id
@@ -8892,6 +9407,8 @@ export const createFriendship = /* GraphQL */ `
         verifySubmitted
         profilePhotoID
         bannerPhotoID
+        verifyPhotoID
+        customerID
         city
         state
         school
@@ -8900,6 +9417,9 @@ export const createFriendship = /* GraphQL */ `
         phone
         email
         zipcode
+        birthDate
+        hobbies
+        gender
         attendingEvents {
           items {
             id
@@ -9096,6 +9616,8 @@ export const updateFriendship = /* GraphQL */ `
         verifySubmitted
         profilePhotoID
         bannerPhotoID
+        verifyPhotoID
+        customerID
         city
         state
         school
@@ -9104,6 +9626,9 @@ export const updateFriendship = /* GraphQL */ `
         phone
         email
         zipcode
+        birthDate
+        hobbies
+        gender
         attendingEvents {
           items {
             id
@@ -9282,6 +9807,8 @@ export const updateFriendship = /* GraphQL */ `
         verifySubmitted
         profilePhotoID
         bannerPhotoID
+        verifyPhotoID
+        customerID
         city
         state
         school
@@ -9290,6 +9817,9 @@ export const updateFriendship = /* GraphQL */ `
         phone
         email
         zipcode
+        birthDate
+        hobbies
+        gender
         attendingEvents {
           items {
             id
@@ -9486,6 +10016,8 @@ export const deleteFriendship = /* GraphQL */ `
         verifySubmitted
         profilePhotoID
         bannerPhotoID
+        verifyPhotoID
+        customerID
         city
         state
         school
@@ -9494,6 +10026,9 @@ export const deleteFriendship = /* GraphQL */ `
         phone
         email
         zipcode
+        birthDate
+        hobbies
+        gender
         attendingEvents {
           items {
             id
@@ -9672,6 +10207,8 @@ export const deleteFriendship = /* GraphQL */ `
         verifySubmitted
         profilePhotoID
         bannerPhotoID
+        verifyPhotoID
+        customerID
         city
         state
         school
@@ -9680,6 +10217,9 @@ export const deleteFriendship = /* GraphQL */ `
         phone
         email
         zipcode
+        birthDate
+        hobbies
+        gender
         attendingEvents {
           items {
             id
@@ -9875,6 +10415,8 @@ export const createConversation = /* GraphQL */ `
         verifySubmitted
         profilePhotoID
         bannerPhotoID
+        verifyPhotoID
+        customerID
         city
         state
         school
@@ -9883,6 +10425,9 @@ export const createConversation = /* GraphQL */ `
         phone
         email
         zipcode
+        birthDate
+        hobbies
+        gender
         attendingEvents {
           items {
             id
@@ -10061,6 +10606,8 @@ export const createConversation = /* GraphQL */ `
         verifySubmitted
         profilePhotoID
         bannerPhotoID
+        verifyPhotoID
+        customerID
         city
         state
         school
@@ -10069,6 +10616,9 @@ export const createConversation = /* GraphQL */ `
         phone
         email
         zipcode
+        birthDate
+        hobbies
+        gender
         attendingEvents {
           items {
             id
@@ -10254,6 +10804,8 @@ export const createConversation = /* GraphQL */ `
             verifySubmitted
             profilePhotoID
             bannerPhotoID
+            verifyPhotoID
+            customerID
             city
             state
             school
@@ -10262,6 +10814,9 @@ export const createConversation = /* GraphQL */ `
             phone
             email
             zipcode
+            birthDate
+            hobbies
+            gender
             collegeGroupId
             privacySettingID
             createdAt
@@ -10279,6 +10834,8 @@ export const createConversation = /* GraphQL */ `
             verifySubmitted
             profilePhotoID
             bannerPhotoID
+            verifyPhotoID
+            customerID
             city
             state
             school
@@ -10287,6 +10844,9 @@ export const createConversation = /* GraphQL */ `
             phone
             email
             zipcode
+            birthDate
+            hobbies
+            gender
             collegeGroupId
             privacySettingID
             createdAt
@@ -10343,6 +10903,8 @@ export const updateConversation = /* GraphQL */ `
         verifySubmitted
         profilePhotoID
         bannerPhotoID
+        verifyPhotoID
+        customerID
         city
         state
         school
@@ -10351,6 +10913,9 @@ export const updateConversation = /* GraphQL */ `
         phone
         email
         zipcode
+        birthDate
+        hobbies
+        gender
         attendingEvents {
           items {
             id
@@ -10529,6 +11094,8 @@ export const updateConversation = /* GraphQL */ `
         verifySubmitted
         profilePhotoID
         bannerPhotoID
+        verifyPhotoID
+        customerID
         city
         state
         school
@@ -10537,6 +11104,9 @@ export const updateConversation = /* GraphQL */ `
         phone
         email
         zipcode
+        birthDate
+        hobbies
+        gender
         attendingEvents {
           items {
             id
@@ -10722,6 +11292,8 @@ export const updateConversation = /* GraphQL */ `
             verifySubmitted
             profilePhotoID
             bannerPhotoID
+            verifyPhotoID
+            customerID
             city
             state
             school
@@ -10730,6 +11302,9 @@ export const updateConversation = /* GraphQL */ `
             phone
             email
             zipcode
+            birthDate
+            hobbies
+            gender
             collegeGroupId
             privacySettingID
             createdAt
@@ -10747,6 +11322,8 @@ export const updateConversation = /* GraphQL */ `
             verifySubmitted
             profilePhotoID
             bannerPhotoID
+            verifyPhotoID
+            customerID
             city
             state
             school
@@ -10755,6 +11332,9 @@ export const updateConversation = /* GraphQL */ `
             phone
             email
             zipcode
+            birthDate
+            hobbies
+            gender
             collegeGroupId
             privacySettingID
             createdAt
@@ -10811,6 +11391,8 @@ export const deleteConversation = /* GraphQL */ `
         verifySubmitted
         profilePhotoID
         bannerPhotoID
+        verifyPhotoID
+        customerID
         city
         state
         school
@@ -10819,6 +11401,9 @@ export const deleteConversation = /* GraphQL */ `
         phone
         email
         zipcode
+        birthDate
+        hobbies
+        gender
         attendingEvents {
           items {
             id
@@ -10997,6 +11582,8 @@ export const deleteConversation = /* GraphQL */ `
         verifySubmitted
         profilePhotoID
         bannerPhotoID
+        verifyPhotoID
+        customerID
         city
         state
         school
@@ -11005,6 +11592,9 @@ export const deleteConversation = /* GraphQL */ `
         phone
         email
         zipcode
+        birthDate
+        hobbies
+        gender
         attendingEvents {
           items {
             id
@@ -11190,6 +11780,8 @@ export const deleteConversation = /* GraphQL */ `
             verifySubmitted
             profilePhotoID
             bannerPhotoID
+            verifyPhotoID
+            customerID
             city
             state
             school
@@ -11198,6 +11790,9 @@ export const deleteConversation = /* GraphQL */ `
             phone
             email
             zipcode
+            birthDate
+            hobbies
+            gender
             collegeGroupId
             privacySettingID
             createdAt
@@ -11215,6 +11810,8 @@ export const deleteConversation = /* GraphQL */ `
             verifySubmitted
             profilePhotoID
             bannerPhotoID
+            verifyPhotoID
+            customerID
             city
             state
             school
@@ -11223,6 +11820,9 @@ export const deleteConversation = /* GraphQL */ `
             phone
             email
             zipcode
+            birthDate
+            hobbies
+            gender
             collegeGroupId
             privacySettingID
             createdAt
@@ -11287,6 +11887,9 @@ export const createCollegeGroup = /* GraphQL */ `
           type
           description
           url
+          customerID
+          hasPaid
+          subID
           approved
           group {
             id
@@ -11328,6 +11931,8 @@ export const createCollegeGroup = /* GraphQL */ `
           verifySubmitted
           profilePhotoID
           bannerPhotoID
+          verifyPhotoID
+          customerID
           city
           state
           school
@@ -11336,6 +11941,9 @@ export const createCollegeGroup = /* GraphQL */ `
           phone
           email
           zipcode
+          birthDate
+          hobbies
+          gender
           attendingEvents {
             nextToken
             startedAt
@@ -11441,6 +12049,9 @@ export const updateCollegeGroup = /* GraphQL */ `
           type
           description
           url
+          customerID
+          hasPaid
+          subID
           approved
           group {
             id
@@ -11482,6 +12093,8 @@ export const updateCollegeGroup = /* GraphQL */ `
           verifySubmitted
           profilePhotoID
           bannerPhotoID
+          verifyPhotoID
+          customerID
           city
           state
           school
@@ -11490,6 +12103,9 @@ export const updateCollegeGroup = /* GraphQL */ `
           phone
           email
           zipcode
+          birthDate
+          hobbies
+          gender
           attendingEvents {
             nextToken
             startedAt
@@ -11595,6 +12211,9 @@ export const deleteCollegeGroup = /* GraphQL */ `
           type
           description
           url
+          customerID
+          hasPaid
+          subID
           approved
           group {
             id
@@ -11636,6 +12255,8 @@ export const deleteCollegeGroup = /* GraphQL */ `
           verifySubmitted
           profilePhotoID
           bannerPhotoID
+          verifyPhotoID
+          customerID
           city
           state
           school
@@ -11644,6 +12265,9 @@ export const deleteCollegeGroup = /* GraphQL */ `
           phone
           email
           zipcode
+          birthDate
+          hobbies
+          gender
           attendingEvents {
             nextToken
             startedAt

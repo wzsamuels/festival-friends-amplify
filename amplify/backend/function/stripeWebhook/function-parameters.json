@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "api": {
+      "festivalfriends": [
+        "Query",
+        "Mutation",
+        "Subscription"
+      ]
+    }
+  },
+  "lambdaLayers": [
+    {
+      "type": "ProjectLayer",
+      "resourceName": "festivalfriendstestlayer",
+      "env": "dev",
+      "version": "Always choose latest version",
+      "isLatestVersionSelected": true
+    }
+  ],
+  "secretNames": [
+    "STRIPE_SECRET_KEY",
+    "STRIPE_ENDPOINT_SECRET",
+    "test"
+  ]
+}

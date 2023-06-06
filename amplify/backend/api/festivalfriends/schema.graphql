@@ -32,6 +32,9 @@ type Festival @model @auth(rules: [{ allow: public }]) {
   type: EventType
   description: String
   url: String
+  customerID: String
+  hasPaid: Boolean
+  subID: String @index(name: "bySubID")
   approved: Boolean @default(value: "true")
   group: CollegeGroup @belongsTo(fields: ["groupID"])
   groupID: ID @index(name: "byGroup")
@@ -48,6 +51,8 @@ type UserProfile @model @auth(rules: [{ allow: public }]) {
   verifySubmitted: Boolean @default(value: "false")
   profilePhotoID: String
   bannerPhotoID: String
+  verifyPhotoID: String
+  customerID: String
   city: String
   state: String
   school: String
@@ -56,6 +61,9 @@ type UserProfile @model @auth(rules: [{ allow: public }]) {
   phone: String
   email: String
   zipcode: String
+  birthDate: String
+  hobbies: String
+  gender: String
   attendingEvents: [EventProfile] @hasMany(indexName: "byUserProfile", fields: ["id"])
   rides: [RideUser] @hasMany(indexName: "byUserProfile", fields: ["id"])
   friends: [Friendship] @hasMany(indexName: "byUserProfile", fields: ["id"])
