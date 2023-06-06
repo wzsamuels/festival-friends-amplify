@@ -1,5 +1,5 @@
 import {SubmitHandler, useForm, Controller, useFieldArray} from "react-hook-form";
-import React, { useState } from "react";
+import React, {useState} from "react";
 import {PrivacySetting, SocialMedia, UserProfile} from "../../../models";
 import { DataStore } from "@aws-amplify/datastore";
 import { ProfileInputs } from "../../../types";
@@ -15,6 +15,9 @@ import Select from "../../common/Select";
 import {getCollegeGroupByEmail} from "../../../services/collegeGroupServices";
 import {BsPlus} from "react-icons/all";
 import socialMediaTypes from "../../../data/socialMediaTypes.json";
+import {createNewPhoto} from "../../../services/photoServices";
+import ImageUpload from "../../common/ImageUpload";
+import useFilePreview from "../../../hooks/useFilePreview";
 
 const AccountUnverified = () => {
   const { user } = useAuthenticator((context) => [context.user]);
@@ -23,13 +26,13 @@ const AccountUnverified = () => {
   const { phone, inputRef, handlePhoneChange } = useFormattedPhoneInput();
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const { register, handleSubmit, control, getValues } = useForm<ProfileInputs>();
+  const {selectedFile, setSelectedFile, preview} = useFilePreview()
+  const { register, handleSubmit, control } = useForm<ProfileInputs>();
   const { fields, append, remove } = useFieldArray({name: "socialMedia", control})
 
-
   const createNewProfile: SubmitHandler<ProfileInputs> = async (data) => {
-    //alert(`Email: ${email}\nUsername: ${username}\nData: ${JSON.stringify(data)}`)
+    if(!selectedFile) return;
+
     setIsSubmitting(true);
     try {
       const sub = user?.attributes?.sub as string;
@@ -37,6 +40,7 @@ const AccountUnverified = () => {
       const newPrivacySetting =  await DataStore.save(new PrivacySetting({}));
       const collegeGroup = await getCollegeGroupByEmail(email);
       const { socialMedia, ...filteredData} = data;
+
 
       const newUserProfile = await DataStore.save(new UserProfile({
         ...filteredData,
@@ -48,20 +52,6 @@ const AccountUnverified = () => {
         sub: sub
       }));
 
-      /*
-      const userProfileInput: CreateUserProfileInput = {
-        ...filteredData,
-        ...(collegeGroup && {collegeGroupId: collegeGroup?.id}),
-        verifySubmitted: true,
-        privacySettingID: newPrivacySetting.id
-      }
-
-      const response = await API.graphql<GraphQLQuery<CreateUserProfileMutation>>(
-        graphqlOperation(mutations.createUserProfile, {
-          input: userProfileInput}));
-      const newUserProfile = response.data?.createUserProfile as unknown as UserProfile;
-       */
-
       socialMedia.map(async (account) =>
         await DataStore.save(new SocialMedia({
           socialMediaType: account.type,
@@ -70,6 +60,10 @@ const AccountUnverified = () => {
           userProfile: newUserProfile,
         }))
       );
+      const verifyPhoto = await createNewPhoto(sub, selectedFile, newUserProfile.id);
+      verifyPhoto && await DataStore.save(UserProfile.copyOf(newUserProfile, (updated) => {
+        updated.verifyPhotoID = verifyPhoto.id;
+      }));
       setProfile(newUserProfile);
       console.log(`New profile: `, newUserProfile, "\nNew Privacy Setting: ", newPrivacySetting);
     } catch (err) {
@@ -82,7 +76,7 @@ const AccountUnverified = () => {
 
   if (isSubmitted || userProfile?.verifySubmitted) {
     return (
-      <div className="flex flex-col justify-center items-center mt-4 p-4">
+      <div className="flex flex-col w-full justify-center items-center mt-4 p-4">
         <h1 className="text-xl md:text-2xl">Profile Created!</h1>
         <p className="my-6">
           Your profile has been submitted for verification. You&apos;ll receive
@@ -111,7 +105,7 @@ const AccountUnverified = () => {
       <h1 className="text-xl md:text-2xl">Create Profile</h1>
       <p className="my-6">
         This personal information will be used to verify your identity for the
-        safety of our community. Once your profile is verified, all your
+        safety of our community. Please use a <span className="font-bold">new</span> photograph of yourself that Once your profile is verified, all your
         information will be set to private until you specify otherwise.
       </p>
       <div className="flex justify-center w-full">
@@ -228,6 +222,16 @@ const AccountUnverified = () => {
                 </div>
               )}
             </div>
+          </section>
+          <section>
+            <div className="flex justify-center">
+              {preview &&
+                <div className='max-w-xl'>
+                  <img className=" rounded-full" src={preview} alt="Preview" />
+                </div>
+              }
+            </div>
+            <ImageUpload setSelectedFile={setSelectedFile}/>
           </section>
           <div className="flex justify-center items-center my-6">
             <Button
