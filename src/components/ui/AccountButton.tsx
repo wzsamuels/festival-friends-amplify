@@ -10,6 +10,7 @@ import useDataClearedStore from "../../stores/dataClearedStore";
 import useProfileStore from "../../stores/profileStore";
 import useFriendStore from "../../stores/friendProfileStore";
 import useConversationStore from "../../stores/conversationStore";
+import useEventStore from "../../stores/eventStore";
 const AccountButton = () => {
   const { user, signOut } = useAuthenticator((context) => [context.user]);
   const setDataCleared = useDataClearedStore(state => state.setDataCleared);
@@ -19,6 +20,7 @@ const AccountButton = () => {
   const clearFriendProfiles = useFriendStore(state => state.clearFriends);
   const clearConversations = useConversationStore(state => state.clearConversations);
   const friendUnsubscribe = useFriendStore(state => state.friendUnsubscribe);
+  const eventsUnsubscribe = useEventStore(state => state.eventsUnsubscribe);
 
   const clearStores = () => {
     clearProfile();
@@ -41,6 +43,7 @@ const AccountButton = () => {
     try {
       console.log("Stopping subscriptions...");
       friendUnsubscribe();
+      eventsUnsubscribe();
       console.log("subscriptions stopped.");
     } catch (e) {
       console.log("Error stopping subscriptions: ", e);
@@ -87,7 +90,7 @@ const AccountButton = () => {
   return (
     <>
       <Menu as="div" className="relative">
-        <Menu.Button className="hover:bg-gray-100 text-green-950">
+        <Menu.Button className="hover:bg-gray-100 text-green-950 mx-1 sm:mx-2">
           <FaUser />
         </Menu.Button>
         <Transition
@@ -103,7 +106,7 @@ const AccountButton = () => {
             {authStatus === "authenticated" ? (
               <>
                 <Menu.Item
-                  className="border-b border-b-green-950  p-2"
+                  className="border-b border-b-green-950 p-2"
                   as="div"
                 >
                   {user?.attributes?.email}
@@ -151,6 +154,14 @@ const AccountButton = () => {
                 </Link>
               </Menu.Item>
             )}
+            <Menu.Item>
+              <Link
+                className="w-full cursor-pointer hover:text-white hover:bg-green-950 p-2"
+                to="/submit-event"
+                >
+                Submit Event
+              </Link>
+            </Menu.Item>
           </Menu.Items>
         </Transition>
       </Menu>
