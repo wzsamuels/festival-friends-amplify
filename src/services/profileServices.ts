@@ -1,4 +1,4 @@
-import {Photo, UserProfile} from "../models";
+import {Festival, Photo, UserProfile} from "../models";
 import {DataStore} from "aws-amplify";
 import {S3Levels} from "../@types/s3";
 
@@ -40,6 +40,23 @@ export const getBannerPhoto = async (
     }
   } catch (e) {
     console.log("Error getting banner photo", profile, e)
+  }
+
+  return "";
+};
+
+export const getVerifyPhoto = async (
+  profile: UserProfile | null | undefined,
+  getSignedURL: (s3Key: string, level: S3Levels, identityId?: string | undefined) => Promise<string>) => {
+  if(!profile || !profile.verifyPhotoID) return "";
+
+  try {
+    const photo = await DataStore.query(Photo, profile.verifyPhotoID)
+    if (photo) {
+      return await getSignedURL(photo.s3Key, "protected", photo.identityId)
+    }
+  } catch (e) {
+    console.log("Error getting profile photo", profile, e)
   }
 
   return "";
@@ -88,6 +105,16 @@ export const getEventsAttending = async (profile: UserProfile) => {
     return await Promise.all(
       eventProfiles.map(async (eventProfile) => await eventProfile.event)
     );
+  } catch (e) {
+    console.log("Error getting profile", e)
+    return [];
+  }
+}
+
+export const getUserEvents = async (profile: UserProfile | null) => {
+  if(!profile) return [];
+  try {
+    return await DataStore.query(Festival, c => c.customerID.eq(profile.customerID))
   } catch (e) {
     console.log("Error getting profile", e)
     return [];
