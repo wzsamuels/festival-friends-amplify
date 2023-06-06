@@ -18,14 +18,23 @@ const AccountPage = () => {
 
     if (route !== "authenticated") {
       return (
-        <div className="w-screen h-screen translate-y-[-15%] flex justify-center items-center">
-          <Authenticator />
-        </div>
+        <>
+          <Header />
+          <div className="w-screen h-screen translate-y-[-15%] flex justify-center items-center">
+            <Authenticator />
+          </div>
+        </>
       );
     }
 
     if (!userProfile) {
-      return <AccountUnverified />;
+      return (
+        <>
+          <Header />
+          <AccountUnverified />
+        </>
+      )
+
     }
 
     if (userProfile?.verified) {
@@ -34,18 +43,23 @@ const AccountPage = () => {
 
     if (!userProfile?.verified && userProfile?.verifySubmitted) {
       return (
-        <div className="w-full max-w-lg p-4">
-          <div>
-            Your profile has been submitted for verification. You&apos;ll
-            receive an email at the address you used to sign up for this account
-            once the process has been completed.
+        <>
+          <Header />
+          <div className="flex w-full h-full justify-center items-center flex-col p-4">
+            <div className="max-w-lg">
+              <div className="my-4">
+                Your profile has been submitted for verification. You&apos;ll
+                receive an email at the address you used to sign up for this account
+                once the process has been completed.
+              </div>
+              <div className="my-4">
+                If you&apos;ve received confirmation that your profile has been
+                verified but are still seeing this message, please try refreshing
+                this page.
+              </div>
+            </div>
           </div>
-          <div className="my-4">
-            If you&apos;ve received confirmation that your profile has been
-            verified but are still seeing this message, please try refreshing
-            this page.
-          </div>
-        </div>
+        </>
       );
     } else {
       return <div>Something went wrong</div>;
@@ -54,7 +68,6 @@ const AccountPage = () => {
 
   return (
     <>
-      <Header />
       {renderPage()}
     </>
   );
