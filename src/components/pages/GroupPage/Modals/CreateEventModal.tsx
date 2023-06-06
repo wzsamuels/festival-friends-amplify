@@ -15,6 +15,7 @@ import TextArea from "../../../common/TextArea";
 import {EventType} from "../../../../API";
 import Select from "../../../common/Select";
 import states from "../../../../data/states";
+import useFilePreview from "../../../../hooks/useFilePreview";
 
 interface EventInput {
   name: string;
@@ -37,8 +38,7 @@ const CreateEventModal = ({
   group,
 }: CreateEventModalProps) => {
   const { register, handleSubmit, reset } = useForm<EventInput>();
-  const [selectedFile, setSelectedFile] = React.useState<File | null>(null);
-  const [preview, setPreview] = React.useState<string | null>(null);
+  const { selectedFile, setSelectedFile, preview } = useFilePreview();
 
   const handleCreateEvent: SubmitHandler<EventInput> = async (data) => {
     if (selectedFile) {
@@ -63,22 +63,10 @@ const CreateEventModal = ({
       } finally {
         setIsOpen(false);
         setSelectedFile(null);
-        setPreview(null);
         reset();
       }
     }
   };
-
-  useEffect(() => {
-    if (!selectedFile) {
-      setPreview("");
-      return;
-    }
-    const objectUrl = URL.createObjectURL(selectedFile);
-    setPreview(objectUrl);
-    // free memory when ever this component is unmounted
-    return () => URL.revokeObjectURL(objectUrl);
-  }, [selectedFile]);
 
   return (
     <Modal isOpen={isOpen} setIsOpen={setIsOpen} className='max-w-2xl' title="New event">
