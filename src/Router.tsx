@@ -13,7 +13,7 @@ const AccountSettingsPage = lazy(
 const EventDetailPage = lazy(
   () => import("./components/pages/EventPage/EventDetailPage")
 );
-const ProfilePage = lazy(() => import("./components/pages/Profile/Profile"));
+const ProfilePage = lazy(() => import("./components/pages/ProfilePage/ProfilePage"));
 const GroupsPage = lazy(() => import("./components/pages/GroupPage/GroupPage"));
 const Layout = lazy(() => import("./components/layout/Layout"));
 const AccountPage = lazy(
@@ -41,6 +41,7 @@ import AdminLayout from "./components/pages/AdminPage/AdminLayout";
 import VerifyAccounts from "./components/pages/AdminPage/VerifyAccounts";
 import AdminDatabasePage from "./components/pages/AdminPage/AdminDatabasePage";
 import useEventStore from "./stores/eventStore";
+import SubmitEventPage from "./components/pages/SubmitEventPage/SubmitEventPage";
 
 const Router = () => {
   const { user } = useAuthenticator((context) => [context.user]);
@@ -107,6 +108,10 @@ const Router = () => {
           path: "account",
           element: <AccountPage />,
           errorElement: <LayoutErrorBoundary/>,
+        },
+        {
+          path: "submit-event",
+          element: <SubmitEventPage />,
         },
         {
           path: "admin",
