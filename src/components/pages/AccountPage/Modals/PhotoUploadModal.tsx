@@ -24,7 +24,7 @@ const PhotoUploadModal = ({
   const handlePhotoUpload = async () => {
     if (photoFile && profile) {
       try {
-        const newPhoto = createNewPhoto(sub, photoFile, profile);
+        const newPhoto = createNewPhoto(sub, photoFile, profile.id);
         console.log(newPhoto)
       } catch (error) {
         console.log("Error uploading file: ", error);

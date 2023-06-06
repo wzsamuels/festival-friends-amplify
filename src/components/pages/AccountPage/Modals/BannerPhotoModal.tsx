@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Modal from "../../../common/Modal/Modal";
-import { Photo, UserProfile } from "../../../../models";
+import { Photo } from "../../../../models";
 import getErrorMessage from "../../../../lib/getErrorMessage";
 import PhotoImage from "../../../ui/PhotoImage";
 import { ProfileModalProps } from "../../../../@types/profile";
 import Button from "../../../common/Button/Button";
 import useProfileStore from "../../../../stores/profileStore";
-import {updateBannerPhoto, updateProfilePhoto} from "../../../../services/profileServices";
+import {updateBannerPhoto} from "../../../../services/profileServices";
 import {createNewPhoto} from "../../../../services/photoServices";
 
 export interface ProfileImageModalProps extends ProfileModalProps {
@@ -29,7 +29,7 @@ const BannerPhotoModal = ({
   const handleProfileBannerUpdate = async () => {
     if (!selectedFile || !profile) return;
     try {
-      const newPhoto = await createNewPhoto(sub, selectedFile, profile)
+      const newPhoto = await createNewPhoto(sub, selectedFile, profile.id)
       if(!newPhoto) throw new Error("Error creating new photo");
 
       updateBannerPhoto(profile, newPhoto?.id)

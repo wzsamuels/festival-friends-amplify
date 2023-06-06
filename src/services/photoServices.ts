@@ -3,7 +3,7 @@ import {v4 as uuidv4} from "uuid";
 import {Photo, UserProfile} from "../models";
 import {DataStore} from "@aws-amplify/datastore";
 
-export const createNewPhoto = async (sub: string, photoFile: File, profile: UserProfile) => {
+export const createNewPhoto = async (sub: string, photoFile: File, profileID: string) => {
   const id = uuidv4();
   const credentials = await Auth.currentCredentials();
   const identityId = credentials.identityId;
@@ -22,7 +22,7 @@ export const createNewPhoto = async (sub: string, photoFile: File, profile: User
       new Photo({
         s3Key: `${sub}/${id}`,
         isPrivate: false,
-        userProfileID: profile.id,
+        userProfileID: profileID,
         identityId: identityId
       }));
   } catch (e) {

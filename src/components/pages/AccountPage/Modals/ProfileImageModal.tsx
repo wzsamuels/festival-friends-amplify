@@ -31,7 +31,7 @@ const ProfileImageModal = ({
     if (selectedFile) {
       try {
         setUploading(true);
-        const newPhoto = await createNewPhoto(sub, selectedFile, profile);
+        const newPhoto = await createNewPhoto(sub, selectedFile, profile.id);
         setUploading(false);
 
         if(!newPhoto) throw new Error("Error creating new photo");
