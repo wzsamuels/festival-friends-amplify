@@ -21,7 +21,7 @@ const ImageProvider = ({ children }: ImageProviderProps) => {
       try {
         const signedURL = await Storage.get(s3Key, {
           level: level,
-          expires: 60 * 60 * 24,
+          expires: 60 * 60 * 24 * 7,
           identityId: identityId
         });
         setImageURLs((prevState) => ({ ...prevState, [s3Key]: signedURL }));
