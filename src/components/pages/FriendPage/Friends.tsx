@@ -23,6 +23,10 @@ import {shallow} from "zustand/shallow";
 import useFriendStore from "../../../stores/friendProfileStore";
 import {Link} from "react-router-dom";
 import Button from "../../common/Button/Button";
+import {
+  FaUserFriends,
+  MdLightbulbOutline, MdMoveToInbox,
+} from "react-icons/all";
 
 type FriendType = "accepted" | "sent" | "suggestions" | "pending";
 
@@ -154,8 +158,11 @@ const FriendsPage: React.FC = () => {
 
     if (route !== "authenticated") {
       return (
-        <div className='bg-[url("/src/images/friends3.jpeg")] w-full bg-cover flex flex-col items-center justify-center h-full min-h-screen p-2'>
-          <div className="text-green-950 font-bold flex flex-col items-center justify-center  bg-white p-4 rounded-xl w-full max-w-2xl ">
+        <div className='bg-[url("/src/images/friends5.jpeg")] w-full bg-cover flex flex-col items-center justify-center h-full min-h-screen p-2'>
+          <div className="text-green-950 font-bold flex flex-col items-center justify-center  bg-white p-4 rounded-xl w-full max-w-lg ">
+            <h1 className="m-4 text-xl">
+              Login in to view your friends.
+            </h1>
             <Link to="/account">
               <Button>Sign In</Button>
             </Link>
@@ -245,13 +252,19 @@ const FriendsPage: React.FC = () => {
   const segmentItems = [
     {
       type: "accepted",
-      label: "Friends",
+      children: (
+        <div className="flex justify-center items-center">
+          <div className="block mx-4">Friends</div>
+          <div className="hidden text-xl"><FaUserFriends/></div>
+        </div>
+      )
     },
     {
       type: "pending",
       children: (
         <div className="flex justify-center items-center">
-          <div>Requests</div>
+          <div className="block">Requests</div>
+          <div className="hidden text-xl"><MdMoveToInbox/></div>
           {incomingFriendProfiles.length > 0 ? (
             <div className="bg-green-950 text-white rounded-full mx-2 w-[20px] p-2  h-[20px] justify-center items-center hidden sm:flex">
               {incomingFriendProfiles.length}
@@ -260,27 +273,32 @@ const FriendsPage: React.FC = () => {
         </div>
       ),
     },
+    /*
     {
-      type: "suggestions",
+      type: "sent",
       children: (
         <div className="flex justify-center items-center">
-          <div>Suggestions</div>
-          {suggestedFriends.length > 0 ? (
+          <div className="hidden sm:block">Sent</div>
+          <div className="block sm:hidden text-xl"><MdOutlineOutbox/></div>
+          {outgoingFriendProfiles.length > 0 ? (
             <div className="bg-green-950 text-white rounded-full mx-2 w-[20px] p-2 h-[20px] justify-center items-center hidden md:flex">
-              {suggestedFriends.length}
+              {outgoingFriendProfiles.length}
             </div>
           ) : null}
         </div>
       ),
     },
+
+     */
     {
-      type: "sent",
+      type: "suggestions",
       children: (
         <div className="flex justify-center items-center">
-          <div>Sent</div>
-          {outgoingFriendProfiles.length > 0 ? (
+          <div className="block">Suggested</div>
+          <div className="hidden text-xl"><MdLightbulbOutline/></div>
+          {suggestedFriends.length > 0 ? (
             <div className="bg-green-950 text-white rounded-full mx-2 w-[20px] p-2 h-[20px] justify-center items-center hidden md:flex">
-              {outgoingFriendProfiles.length}
+              {suggestedFriends.length}
             </div>
           ) : null}
         </div>
