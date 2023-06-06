@@ -9,7 +9,7 @@ import { BsPerson } from "react-icons/all";
 import BannerPhotoModal from "./Modals/BannerPhotoModal";
 import Button from "../../common/Button/Button";
 import PhotoModal from "./Modals/PhotoModal";
-import { Link } from "react-router-dom";
+import {Link, useSearchParams} from "react-router-dom";
 import useDataClearedStore from "../../../stores/dataClearedStore";
 import useProfileStore from "../../../stores/profileStore";
 import {getBannerPhoto, getEventsAttending, getProfilePhoto} from "../../../services/profileServices";
@@ -17,6 +17,14 @@ import ImageContext from "../../../context/ImageContext";
 import {getRidesByProfile} from "../../../services/rideServices";
 import EventCard from "../../ui/EventCard";
 import RideCard from "../../ui/RideCard";
+import Header from "../../layout/Header";
+import Segment from "../../common/Segment/Segment";
+import EventManagement from "./EventManagement";
+
+const segmentItems = [
+  { type: "profile", label: "Profile" },
+  { type: "event", label: "Events" }
+];
 
 const AccountVerified = ({ user }: { user: any }) => {
   const [profileImage, setProfileImage] = useState("");
@@ -35,6 +43,8 @@ const AccountVerified = ({ user }: { user: any }) => {
   const userProfile = useProfileStore((state) => state.userProfile);
   const dataCleared = useDataClearedStore((state) => state.dataCleared);
   const { getSignedURL } = useContext(ImageContext)
+  const [accountType, setAccountType] = useState("profile");
+  const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
     if (!dataCleared || !userProfile) return;
@@ -96,158 +106,185 @@ const AccountVerified = ({ user }: { user: any }) => {
     setPhotoUploadModalOpen(true);
   }, [selectedFile]);
 
-  return (
-    <div className="w-full">
-      <section
-        className={
-          "flex justify-center flex-col relative w-full h-screen max-h-[500px]"
-        }
-      >
-        {bannerImage ? (
-          <img
-            src={bannerImage}
-            alt="Banner"
-            className="w-full h-full  object-cover top-0 left-0"
-          />
-        ) : (
-          <div className="w-full h-full  object-cover top-0 left-0 bg-light-default" />
-        )}
-        <div className="flex flex-col justify-center items-center w-full h-full absolute top-0 left-0">
-          <div className="bg-light-default rounded-2xl p-4 flex-1 max-h-[450px] ">
-            {profileImage ? (
+  const renderAccount = () => {
+    if(accountType === "profile") {
+      return (
+        <>
+          <section
+            className={
+              "flex justify-center flex-col relative w-full h-screen max-h-[500px]"
+            }
+          >
+            {bannerImage ? (
               <img
-                onClick={() => setIsProfileImageModalOpen(true)}
-                className="aspect-square max-w-[350px] w-full rounded-full cursor-pointer"
-                src={profileImage}
-                alt="Profile Image"
+                src={bannerImage}
+                alt="Banner"
+                className="w-full h-full  object-cover top-0 left-0"
               />
             ) : (
-              <div className="flex justify-center items-center w-full h-full max-w-[350px] max-h-[350px] border border-medium-default">
-                <BsPerson className="w-3/4 h-3/4 text-medium-default text-center" />
-              </div>
+              <div className="w-full h-full  object-cover top-0 left-0 bg-light-default" />
             )}
-            <div className="flex justify-center my-2">
-              <Button
-                className="mx-2 flex-1"
-                onClick={() => setProfileModalOpen(true)}
-              >
-                Edit Profile
-              </Button>
-              <Button
-                className="flex-1"
-                onClick={() => setIsBannerModalOpen(true)}
-              >
-                Change Banner
-              </Button>
+            <div className="flex flex-col justify-center items-center w-full h-full absolute top-0 left-0">
+              <div className="bg-light-default rounded-2xl p-4 flex-1 max-h-[450px] ">
+                {profileImage ? (
+                  <img
+                    onClick={() => setIsProfileImageModalOpen(true)}
+                    className="aspect-square max-w-[350px] w-full rounded-full cursor-pointer"
+                    src={profileImage}
+                    alt="Profile Image"
+                  />
+                ) : (
+                  <div className="flex justify-center items-center w-full h-full max-w-[350px] max-h-[350px] border border-medium-default">
+                    <BsPerson className="w-3/4 h-3/4 text-medium-default text-center" />
+                  </div>
+                )}
+                <div className="flex justify-center my-2">
+                  <Button
+                    className="mx-2 flex-1"
+                    onClick={() => setProfileModalOpen(true)}
+                  >
+                    Edit Profile
+                  </Button>
+                  <Button
+                    className="flex-1"
+                    onClick={() => setIsBannerModalOpen(true)}
+                  >
+                    Change Banner
+                  </Button>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      </section>
+          </section>
 
-      <section className="p-4">
-        <h1 className="text-2xl my-4">Events Attending</h1>
-        <div className='flex flex-wrap'>
-        {eventsAttending.length > 0 ? eventsAttending?.map((event, index) => (
-          <EventCard key={event.id} event={event} attendingFriends={[]}/>
-        ))
-          :
-          <div>Not attending any events.</div>
-        }</div>
-      </section>
-      <hr className="my-8 border border-primary-default w-full" />
-      <section className="p-4">
-        <h1 className="text-2xl my-4">Rides</h1>
-        <div className='flex flex-wrap'>
-        {rides.length > 0 ? rides?.map((ride, index) => (
-          <RideCard ride={ride} key={ride.id} className='m-4'/>
-        ))
-          :
-          <div>Not part of any rides.</div>
-        }
-        </div>
-      </section>
-      <hr className="my-8 border border-primary-default w-full" />
-      <section className="p-4">
-        <div className="flex justify-between w-full">
-          <h2 className="text-2xl">Photos</h2>
-          <label
-            htmlFor="upload-photo"
-            className="block bg-green-950 text-white rounded-md uppercase py-2 px-4 cursor-pointer"
-          >
-            Upload Photo
-          </label>
-          <input
-            type="file"
-            accept="image/png, image/jpeg"
-            onChange={(e) =>
-              e?.target?.files && setSelectedFile(e.target.files[0])
-            }
-            className="my-4 hidden"
-            id="upload-photo"
-          />
-        </div>
-        <div className="flex justify-center gap-4 flex-wrap w-full my-8">
-          {photos?.map((photo) => (
-            <div
-              className="max-w-[200px] max-h-[200px]"
-              onClick={() => {
-                setPhotoModalOpen(true);
-                setSelectedPhoto(photo);
-              }}
-              key={photo.id}
-            >
-              <PhotoImage
-                className="object-cover cursor-pointer"
-                photo={photo}
-                level='protected'
+          <section className="p-4">
+            <h1 className="text-2xl my-4">Events Attending</h1>
+            <div className='flex flex-wrap'>
+              {eventsAttending.length > 0 ? eventsAttending?.map((event, index) => (
+                  <EventCard key={event.id} event={event} attendingFriends={[]}/>
+                ))
+                :
+                <div>Not attending any events.</div>
+              }</div>
+          </section>
+          <hr className="my-8 border border-primary-default w-full" />
+          <section className="p-4">
+            <h1 className="text-2xl my-4">Rides</h1>
+            <div className='flex flex-wrap'>
+              {rides.length > 0 ? rides?.map((ride, index) => (
+                  <RideCard ride={ride} key={ride.id} className='m-4'/>
+                ))
+                :
+                <div>Not part of any rides.</div>
+              }
+            </div>
+          </section>
+          <hr className="my-8 border border-primary-default w-full" />
+          <section className="p-4">
+            <div className="flex justify-between w-full">
+              <h2 className="text-2xl">Photos</h2>
+              <label
+                htmlFor="upload-photo"
+                className="block bg-green-950 text-white rounded-md uppercase py-2 px-4 cursor-pointer"
+              >
+                Upload Photo
+              </label>
+              <input
+                type="file"
+                accept="image/png, image/jpeg"
+                onChange={(e) =>
+                  e?.target?.files && setSelectedFile(e.target.files[0])
+                }
+                className="my-4 hidden"
+                id="upload-photo"
               />
             </div>
-          ))}
-        </div>
-      </section>
-      {userProfile && (
-        <>
-          <BannerPhotoModal
-            photos={photos}
-            sub={username}
-            isOpen={isBannerModalOpen}
-            setIsOpen={setIsBannerModalOpen}
-            profile={userProfile}
-          />
-          <PhotoUploadModal
-            profile={userProfile}
-            sub={username}
-            isOpen={isPhotoUploadModalOpen}
-            setIsOpen={setPhotoUploadModalOpen}
-            photoFile={selectedFile}
-            setPhotoFile={setSelectedFile}
-          />
-          <ProfileImageModal
-            profile={userProfile}
-            sub={username}
-            isOpen={isProfileImageModalOpen}
-            setIsOpen={setIsProfileImageModalOpen}
-            photos={photos}
-          />
-          <ProfileEditModal
-            profile={userProfile}
-            profileImage={profileImage}
-            isOpen={isProfileModalOpen}
-            setIsOpen={setProfileModalOpen}
-            sub={username}
-            callback={() => {
-              setProfileModalOpen(false);
-              setIsProfileImageModalOpen(true);
-            }}
-          />
-          <PhotoModal
-            photo={selectedPhoto}
-            isOpen={isPhotoModalOpen}
-            setIsOpen={setPhotoModalOpen}
-            deletePhoto={true}
-          />
+            <div className="flex justify-center gap-4 flex-wrap w-full my-8">
+              {photos?.map((photo) => (
+                <div
+                  className="max-w-[200px] max-h-[200px]"
+                  onClick={() => {
+                    setPhotoModalOpen(true);
+                    setSelectedPhoto(photo);
+                  }}
+                  key={photo.id}
+                >
+                  <PhotoImage
+                    className="object-cover cursor-pointer"
+                    photo={photo}
+                    level='protected'
+                  />
+                </div>
+              ))}
+            </div>
+          </section>
+          {userProfile && (
+            <>
+              <BannerPhotoModal
+                photos={photos}
+                sub={username}
+                isOpen={isBannerModalOpen}
+                setIsOpen={setIsBannerModalOpen}
+                profile={userProfile}
+              />
+              <PhotoUploadModal
+                profile={userProfile}
+                sub={username}
+                isOpen={isPhotoUploadModalOpen}
+                setIsOpen={setPhotoUploadModalOpen}
+                photoFile={selectedFile}
+                setPhotoFile={setSelectedFile}
+              />
+              <ProfileImageModal
+                profile={userProfile}
+                sub={username}
+                isOpen={isProfileImageModalOpen}
+                setIsOpen={setIsProfileImageModalOpen}
+                photos={photos}
+              />
+              <ProfileEditModal
+                profile={userProfile}
+                profileImage={profileImage}
+                isOpen={isProfileModalOpen}
+                setIsOpen={setProfileModalOpen}
+                sub={username}
+                callback={() => {
+                  setProfileModalOpen(false);
+                  setIsProfileImageModalOpen(true);
+                }}
+              />
+              <PhotoModal
+                photo={selectedPhoto}
+                isOpen={isPhotoModalOpen}
+                setIsOpen={setPhotoModalOpen}
+                deletePhoto={true}
+              />
+            </>
+          )}
         </>
-      )}
+      )
+    }
+    if(accountType === "event") {
+      return (
+        <>
+          <section>
+            <EventManagement/>
+          </section>
+        </>
+      )
+    }
+  }
+
+  return (
+    <div className="w-full">
+      <Header>
+        <Segment
+          segmentType={accountType}
+          setSegmentType={setAccountType}
+          items={segmentItems}
+        />
+
+      </Header>
+      {renderAccount()}
     </div>
   );
 };
