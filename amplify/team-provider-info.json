@@ -31,7 +31,7 @@
         },
         "stripeWebhook": {
           "deploymentBucketName": "amplify-festivalfriends-dev-143122-deployment",
-          "s3Key": "amplify-builds/stripeWebhook-304876476979714c5146-build.zip",
+          "s3Key": "amplify-builds/stripeWebhook-51635150485071687a68-build.zip",
           "secretsPathAmplifyAppId": "d2roywvsx7rezb"
         },
         "festivalfriendsapiLayer": {

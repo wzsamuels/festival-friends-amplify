@@ -478,6 +478,15 @@ export const schema = {
                 {
                     "type": "key",
                     "properties": {
+                        "name": "bySubID",
+                        "fields": [
+                            "subID"
+                        ]
+                    }
+                },
+                {
+                    "type": "key",
+                    "properties": {
                         "name": "byGroup",
                         "fields": [
                             "groupID"

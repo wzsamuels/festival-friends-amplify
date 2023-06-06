@@ -66,6 +66,33 @@ const getFestivalQuery = gql`
   }
 `
 
+const getFestivalBySubID = gql`
+  query GetFestivalBySubID($subID: String!) {
+    festivalsBySubID(subID: $subID) {
+      items {
+        id
+        name
+        subID
+        customerID
+        _version
+      }
+    }
+  }
+`
+
+const deleteFestival = gql`
+  mutation DeleteFestival($input: DeleteFestivalInput!) {
+      deleteFestival(input: $input) {
+        id
+        name
+        subID
+        customerID
+        _version
+      }
+  }
+`
+
+
 exports.handler = async (event) => {
 
   const { Parameters } = await (new aws.SSM())
@@ -97,6 +124,61 @@ exports.handler = async (event) => {
     const eventID = session.metadata.eventID;
     console.log("EventID", eventID)
     const subID = session.id
+
+    try {
+      let response = await axios({
+        url: GRAPHQL_API_ENDPOINT,
+        method: 'post',
+        headers: {
+          'x-api-key': GRAPHQL_API_KEY,
+        },
+        data: {
+          query: print(getFestivalBySubID),
+          variables: {
+            subID: subID
+          }
+        },
+      });
+      console.log(response);
+      let { data } = response.data;
+
+      if (data?.errors) {
+        console.error('GraphQL errors:', data?.errors);
+        return {statusCode: 500, body: `GraphQL errors ${JSON.stringify(data?.errors)}`};
+      }
+      console.log("Event queried:", JSON.stringify(data));
+
+      const eventID = data?.festivalsBySubID.items[0]?.id;
+      const version = data?.festivalsBySubID.items[0]?._version;
+
+      response = await axios({
+        url: GRAPHQL_API_ENDPOINT,
+        method: 'post',
+        headers: {
+          'x-api-key': GRAPHQL_API_KEY,
+        },
+        data: {
+          query: print(deleteFestival),
+          variables: {
+            input: {
+              id: eventID,
+              _version: version
+            }
+          }
+        },
+      });
+      console.log(response);
+
+      if (data?.errors) {
+        console.error('GraphQL errors:', data?.errors);
+        return {statusCode: 500, body: `GraphQL errors ${JSON.stringify(data?.errors)}`};
+      }
+      console.log("Event deleted:", JSON.stringify(data));
+
+    } catch (e) {
+      console.log("Error getting event:", e)
+      return { statusCode: 500, body: `Error getting event ${e?.message}` };
+    }
 
   } else if (stripeEvent.type === 'checkout.session.completed') {
 

@@ -85,7 +85,6 @@ const EventUpdateForm = ({eventID} : {eventID: string}) => {
       reset({
         name: event?.name,
         genre: event?.genre,
-        location: event?.location || "",
         state: event?.state || "",
         city: event?.city || "",
         address: event?.address || "",

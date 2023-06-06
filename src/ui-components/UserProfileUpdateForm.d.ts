@@ -21,6 +21,8 @@ export declare type UserProfileUpdateFormInputValues = {
     verifySubmitted?: boolean;
     profilePhotoID?: string;
     bannerPhotoID?: string;
+    verifyPhotoID?: string;
+    customerID?: string;
     city?: string;
     state?: string;
     school?: string;
@@ -29,6 +31,9 @@ export declare type UserProfileUpdateFormInputValues = {
     phone?: string;
     email?: string;
     zipcode?: string;
+    birthDate?: string;
+    hobbies?: string;
+    gender?: string;
 };
 export declare type UserProfileUpdateFormValidationValues = {
     sub?: ValidationFunction<string>;
@@ -38,6 +43,8 @@ export declare type UserProfileUpdateFormValidationValues = {
     verifySubmitted?: ValidationFunction<boolean>;
     profilePhotoID?: ValidationFunction<string>;
     bannerPhotoID?: ValidationFunction<string>;
+    verifyPhotoID?: ValidationFunction<string>;
+    customerID?: ValidationFunction<string>;
     city?: ValidationFunction<string>;
     state?: ValidationFunction<string>;
     school?: ValidationFunction<string>;
@@ -46,6 +53,9 @@ export declare type UserProfileUpdateFormValidationValues = {
     phone?: ValidationFunction<string>;
     email?: ValidationFunction<string>;
     zipcode?: ValidationFunction<string>;
+    birthDate?: ValidationFunction<string>;
+    hobbies?: ValidationFunction<string>;
+    gender?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type UserProfileUpdateFormOverridesProps = {
@@ -57,6 +67,8 @@ export declare type UserProfileUpdateFormOverridesProps = {
     verifySubmitted?: PrimitiveOverrideProps<SwitchFieldProps>;
     profilePhotoID?: PrimitiveOverrideProps<TextFieldProps>;
     bannerPhotoID?: PrimitiveOverrideProps<TextFieldProps>;
+    verifyPhotoID?: PrimitiveOverrideProps<TextFieldProps>;
+    customerID?: PrimitiveOverrideProps<TextFieldProps>;
     city?: PrimitiveOverrideProps<TextFieldProps>;
     state?: PrimitiveOverrideProps<TextFieldProps>;
     school?: PrimitiveOverrideProps<TextFieldProps>;
@@ -65,6 +77,9 @@ export declare type UserProfileUpdateFormOverridesProps = {
     phone?: PrimitiveOverrideProps<TextFieldProps>;
     email?: PrimitiveOverrideProps<TextFieldProps>;
     zipcode?: PrimitiveOverrideProps<TextFieldProps>;
+    birthDate?: PrimitiveOverrideProps<TextFieldProps>;
+    hobbies?: PrimitiveOverrideProps<TextFieldProps>;
+    gender?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type UserProfileUpdateFormProps = React.PropsWithChildren<{
     overrides?: UserProfileUpdateFormOverridesProps | undefined | null;

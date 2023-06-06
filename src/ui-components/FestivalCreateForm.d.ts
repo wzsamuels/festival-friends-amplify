@@ -25,6 +25,9 @@ export declare type FestivalCreateFormInputValues = {
     type?: string;
     description?: string;
     url?: string;
+    customerID?: string;
+    hasPaid?: boolean;
+    subID?: string;
     approved?: boolean;
 };
 export declare type FestivalCreateFormValidationValues = {
@@ -40,6 +43,9 @@ export declare type FestivalCreateFormValidationValues = {
     type?: ValidationFunction<string>;
     description?: ValidationFunction<string>;
     url?: ValidationFunction<string>;
+    customerID?: ValidationFunction<string>;
+    hasPaid?: ValidationFunction<boolean>;
+    subID?: ValidationFunction<string>;
     approved?: ValidationFunction<boolean>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
@@ -57,6 +63,9 @@ export declare type FestivalCreateFormOverridesProps = {
     type?: PrimitiveOverrideProps<SelectFieldProps>;
     description?: PrimitiveOverrideProps<TextFieldProps>;
     url?: PrimitiveOverrideProps<TextFieldProps>;
+    customerID?: PrimitiveOverrideProps<TextFieldProps>;
+    hasPaid?: PrimitiveOverrideProps<SwitchFieldProps>;
+    subID?: PrimitiveOverrideProps<TextFieldProps>;
     approved?: PrimitiveOverrideProps<SwitchFieldProps>;
 } & EscapeHatchProps;
 export declare type FestivalCreateFormProps = React.PropsWithChildren<{

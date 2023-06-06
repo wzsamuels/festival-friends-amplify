@@ -42,6 +42,9 @@ export default function FestivalCreateForm(props) {
     type: "",
     description: "",
     url: "",
+    customerID: "",
+    hasPaid: false,
+    subID: "",
     approved: false,
   };
   const [name, setName] = React.useState(initialValues.name);
@@ -58,6 +61,9 @@ export default function FestivalCreateForm(props) {
     initialValues.description
   );
   const [url, setUrl] = React.useState(initialValues.url);
+  const [customerID, setCustomerID] = React.useState(initialValues.customerID);
+  const [hasPaid, setHasPaid] = React.useState(initialValues.hasPaid);
+  const [subID, setSubID] = React.useState(initialValues.subID);
   const [approved, setApproved] = React.useState(initialValues.approved);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
@@ -73,6 +79,9 @@ export default function FestivalCreateForm(props) {
     setType(initialValues.type);
     setDescription(initialValues.description);
     setUrl(initialValues.url);
+    setCustomerID(initialValues.customerID);
+    setHasPaid(initialValues.hasPaid);
+    setSubID(initialValues.subID);
     setApproved(initialValues.approved);
     setErrors({});
   };
@@ -89,6 +98,9 @@ export default function FestivalCreateForm(props) {
     type: [],
     description: [],
     url: [],
+    customerID: [],
+    hasPaid: [],
+    subID: [],
     approved: [],
   };
   const runValidationTasks = async (
@@ -129,6 +141,9 @@ export default function FestivalCreateForm(props) {
           type,
           description,
           url,
+          customerID,
+          hasPaid,
+          subID,
           approved,
         };
         const validationResponses = await Promise.all(
@@ -196,6 +211,9 @@ export default function FestivalCreateForm(props) {
               type,
               description,
               url,
+              customerID,
+              hasPaid,
+              subID,
               approved,
             };
             const result = onChange(modelFields);
@@ -232,6 +250,9 @@ export default function FestivalCreateForm(props) {
               type,
               description,
               url,
+              customerID,
+              hasPaid,
+              subID,
               approved,
             };
             const result = onChange(modelFields);
@@ -268,6 +289,9 @@ export default function FestivalCreateForm(props) {
               type,
               description,
               url,
+              customerID,
+              hasPaid,
+              subID,
               approved,
             };
             const result = onChange(modelFields);
@@ -304,6 +328,9 @@ export default function FestivalCreateForm(props) {
               type,
               description,
               url,
+              customerID,
+              hasPaid,
+              subID,
               approved,
             };
             const result = onChange(modelFields);
@@ -340,6 +367,9 @@ export default function FestivalCreateForm(props) {
               type,
               description,
               url,
+              customerID,
+              hasPaid,
+              subID,
               approved,
             };
             const result = onChange(modelFields);
@@ -376,6 +406,9 @@ export default function FestivalCreateForm(props) {
               type,
               description,
               url,
+              customerID,
+              hasPaid,
+              subID,
               approved,
             };
             const result = onChange(modelFields);
@@ -412,6 +445,9 @@ export default function FestivalCreateForm(props) {
               type,
               description,
               url,
+              customerID,
+              hasPaid,
+              subID,
               approved,
             };
             const result = onChange(modelFields);
@@ -449,6 +485,9 @@ export default function FestivalCreateForm(props) {
               type,
               description,
               url,
+              customerID,
+              hasPaid,
+              subID,
               approved,
             };
             const result = onChange(modelFields);
@@ -486,6 +525,9 @@ export default function FestivalCreateForm(props) {
               type,
               description,
               url,
+              customerID,
+              hasPaid,
+              subID,
               approved,
             };
             const result = onChange(modelFields);
@@ -522,6 +564,9 @@ export default function FestivalCreateForm(props) {
               type: value,
               description,
               url,
+              customerID,
+              hasPaid,
+              subID,
               approved,
             };
             const result = onChange(modelFields);
@@ -589,6 +634,9 @@ export default function FestivalCreateForm(props) {
               type,
               description: value,
               url,
+              customerID,
+              hasPaid,
+              subID,
               approved,
             };
             const result = onChange(modelFields);
@@ -625,6 +673,9 @@ export default function FestivalCreateForm(props) {
               type,
               description,
               url: value,
+              customerID,
+              hasPaid,
+              subID,
               approved,
             };
             const result = onChange(modelFields);
@@ -639,6 +690,123 @@ export default function FestivalCreateForm(props) {
         errorMessage={errors.url?.errorMessage}
         hasError={errors.url?.hasError}
         {...getOverrideProps(overrides, "url")}
+      ></TextField>
+      <TextField
+        label="Customer id"
+        isRequired={false}
+        isReadOnly={false}
+        value={customerID}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              genre,
+              image,
+              location,
+              state,
+              city,
+              address,
+              startDate,
+              endDate,
+              type,
+              description,
+              url,
+              customerID: value,
+              hasPaid,
+              subID,
+              approved,
+            };
+            const result = onChange(modelFields);
+            value = result?.customerID ?? value;
+          }
+          if (errors.customerID?.hasError) {
+            runValidationTasks("customerID", value);
+          }
+          setCustomerID(value);
+        }}
+        onBlur={() => runValidationTasks("customerID", customerID)}
+        errorMessage={errors.customerID?.errorMessage}
+        hasError={errors.customerID?.hasError}
+        {...getOverrideProps(overrides, "customerID")}
+      ></TextField>
+      <SwitchField
+        label="Has paid"
+        defaultChecked={false}
+        isDisabled={false}
+        isChecked={hasPaid}
+        onChange={(e) => {
+          let value = e.target.checked;
+          if (onChange) {
+            const modelFields = {
+              name,
+              genre,
+              image,
+              location,
+              state,
+              city,
+              address,
+              startDate,
+              endDate,
+              type,
+              description,
+              url,
+              customerID,
+              hasPaid: value,
+              subID,
+              approved,
+            };
+            const result = onChange(modelFields);
+            value = result?.hasPaid ?? value;
+          }
+          if (errors.hasPaid?.hasError) {
+            runValidationTasks("hasPaid", value);
+          }
+          setHasPaid(value);
+        }}
+        onBlur={() => runValidationTasks("hasPaid", hasPaid)}
+        errorMessage={errors.hasPaid?.errorMessage}
+        hasError={errors.hasPaid?.hasError}
+        {...getOverrideProps(overrides, "hasPaid")}
+      ></SwitchField>
+      <TextField
+        label="Sub id"
+        isRequired={false}
+        isReadOnly={false}
+        value={subID}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              genre,
+              image,
+              location,
+              state,
+              city,
+              address,
+              startDate,
+              endDate,
+              type,
+              description,
+              url,
+              customerID,
+              hasPaid,
+              subID: value,
+              approved,
+            };
+            const result = onChange(modelFields);
+            value = result?.subID ?? value;
+          }
+          if (errors.subID?.hasError) {
+            runValidationTasks("subID", value);
+          }
+          setSubID(value);
+        }}
+        onBlur={() => runValidationTasks("subID", subID)}
+        errorMessage={errors.subID?.errorMessage}
+        hasError={errors.subID?.hasError}
+        {...getOverrideProps(overrides, "subID")}
       ></TextField>
       <SwitchField
         label="Approved"
@@ -661,6 +829,9 @@ export default function FestivalCreateForm(props) {
               type,
               description,
               url,
+              customerID,
+              hasPaid,
+              subID,
               approved: value,
             };
             const result = onChange(modelFields);

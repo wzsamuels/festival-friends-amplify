@@ -4065,6 +4065,103 @@ export const syncFestivals = /* GraphQL */ `
     }
   }
 `;
+export const festivalsBySubID = /* GraphQL */ `
+  query FestivalsBySubID(
+    $subID: String!
+    $sortDirection: ModelSortDirection
+    $filter: ModelFestivalFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    festivalsBySubID(
+      subID: $subID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        name
+        genre
+        image
+        location
+        state
+        city
+        address
+        startDate
+        endDate
+        type
+        description
+        url
+        customerID
+        hasPaid
+        subID
+        approved
+        group {
+          id
+          name
+          domain
+          webPage
+          countryCode
+          events {
+            nextToken
+            startedAt
+          }
+          members {
+            nextToken
+            startedAt
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        groupID
+        attendees {
+          items {
+            id
+            userProfileID
+            eventID
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        rides {
+          items {
+            id
+            eventID
+            maxPassengers
+            departureTime
+            startPoint
+            endPoint
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            rideDriverId
+          }
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
 export const festivalsByGroupID = /* GraphQL */ `
   query FestivalsByGroupID(
     $groupID: ID!

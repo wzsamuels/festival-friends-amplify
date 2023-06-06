@@ -217,6 +217,176 @@
       "service": "Lambda"
     }
   },
+  "parameters": {
+    "AMPLIFY_function_AdminQueriese03c7317_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "AdminQueriese03c7317"
+        }
+      ]
+    },
+    "AMPLIFY_function_AdminQueriese03c7317_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "AdminQueriese03c7317"
+        }
+      ]
+    },
+    "AMPLIFY_function_cancelSubscription_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "cancelSubscription"
+        }
+      ]
+    },
+    "AMPLIFY_function_cancelSubscription_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "cancelSubscription"
+        }
+      ]
+    },
+    "AMPLIFY_function_createPaymentPortal_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "createPaymentPortal"
+        }
+      ]
+    },
+    "AMPLIFY_function_createPaymentPortal_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "createPaymentPortal"
+        }
+      ]
+    },
+    "AMPLIFY_function_festivalfriendsPostConfirmation_GROUP": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "festivalfriendsPostConfirmation"
+        }
+      ]
+    },
+    "AMPLIFY_function_festivalfriendsPostConfirmation_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "festivalfriendsPostConfirmation"
+        }
+      ]
+    },
+    "AMPLIFY_function_festivalfriendsPostConfirmation_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "festivalfriendsPostConfirmation"
+        }
+      ]
+    },
+    "AMPLIFY_function_festivalfriendsapiLayer_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "festivalfriendsapiLayer"
+        }
+      ]
+    },
+    "AMPLIFY_function_festivalfriendsapiLayer_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "festivalfriendsapiLayer"
+        }
+      ]
+    },
+    "AMPLIFY_function_festivalfriendstestlayer_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "festivalfriendstestlayer"
+        }
+      ]
+    },
+    "AMPLIFY_function_festivalfriendstestlayer_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "festivalfriendstestlayer"
+        }
+      ]
+    },
+    "AMPLIFY_function_stripeCheckout_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "stripeCheckout"
+        }
+      ]
+    },
+    "AMPLIFY_function_stripeCheckout_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "stripeCheckout"
+        }
+      ]
+    },
+    "AMPLIFY_function_stripeCheckout_stripeSecretKey": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "stripeCheckout"
+        }
+      ]
+    },
+    "AMPLIFY_function_stripeWebhook_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "stripeWebhook"
+        }
+      ]
+    },
+    "AMPLIFY_function_stripeWebhook_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "stripeWebhook"
+        }
+      ]
+    },
+    "AMPLIFY_function_stripeWebhook_secretsPathAmplifyAppId": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "stripeWebhook"
+        }
+      ]
+    },
+    "AMPLIFY_function_test_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "test"
+        }
+      ]
+    },
+    "AMPLIFY_function_test_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "test"
+        }
+      ]
+    }
+  },
   "storage": {
     "s3festivalfriendsstorage2dfb2266": {
       "dependsOn": [],

@@ -36,6 +36,8 @@ export default function UserProfileCreateForm(props) {
     verifySubmitted: false,
     profilePhotoID: "",
     bannerPhotoID: "",
+    verifyPhotoID: "",
+    customerID: "",
     city: "",
     state: "",
     school: "",
@@ -44,6 +46,9 @@ export default function UserProfileCreateForm(props) {
     phone: "",
     email: "",
     zipcode: "",
+    birthDate: "",
+    hobbies: "",
+    gender: "",
   };
   const [sub, setSub] = React.useState(initialValues.sub);
   const [firstName, setFirstName] = React.useState(initialValues.firstName);
@@ -58,6 +63,10 @@ export default function UserProfileCreateForm(props) {
   const [bannerPhotoID, setBannerPhotoID] = React.useState(
     initialValues.bannerPhotoID
   );
+  const [verifyPhotoID, setVerifyPhotoID] = React.useState(
+    initialValues.verifyPhotoID
+  );
+  const [customerID, setCustomerID] = React.useState(initialValues.customerID);
   const [city, setCity] = React.useState(initialValues.city);
   const [state, setState] = React.useState(initialValues.state);
   const [school, setSchool] = React.useState(initialValues.school);
@@ -66,6 +75,9 @@ export default function UserProfileCreateForm(props) {
   const [phone, setPhone] = React.useState(initialValues.phone);
   const [email, setEmail] = React.useState(initialValues.email);
   const [zipcode, setZipcode] = React.useState(initialValues.zipcode);
+  const [birthDate, setBirthDate] = React.useState(initialValues.birthDate);
+  const [hobbies, setHobbies] = React.useState(initialValues.hobbies);
+  const [gender, setGender] = React.useState(initialValues.gender);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setSub(initialValues.sub);
@@ -75,6 +87,8 @@ export default function UserProfileCreateForm(props) {
     setVerifySubmitted(initialValues.verifySubmitted);
     setProfilePhotoID(initialValues.profilePhotoID);
     setBannerPhotoID(initialValues.bannerPhotoID);
+    setVerifyPhotoID(initialValues.verifyPhotoID);
+    setCustomerID(initialValues.customerID);
     setCity(initialValues.city);
     setState(initialValues.state);
     setSchool(initialValues.school);
@@ -83,6 +97,9 @@ export default function UserProfileCreateForm(props) {
     setPhone(initialValues.phone);
     setEmail(initialValues.email);
     setZipcode(initialValues.zipcode);
+    setBirthDate(initialValues.birthDate);
+    setHobbies(initialValues.hobbies);
+    setGender(initialValues.gender);
     setErrors({});
   };
   const validations = {
@@ -93,6 +110,8 @@ export default function UserProfileCreateForm(props) {
     verifySubmitted: [],
     profilePhotoID: [],
     bannerPhotoID: [],
+    verifyPhotoID: [],
+    customerID: [],
     city: [],
     state: [],
     school: [],
@@ -101,6 +120,9 @@ export default function UserProfileCreateForm(props) {
     phone: [],
     email: [],
     zipcode: [],
+    birthDate: [],
+    hobbies: [],
+    gender: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -135,6 +157,8 @@ export default function UserProfileCreateForm(props) {
           verifySubmitted,
           profilePhotoID,
           bannerPhotoID,
+          verifyPhotoID,
+          customerID,
           city,
           state,
           school,
@@ -143,6 +167,9 @@ export default function UserProfileCreateForm(props) {
           phone,
           email,
           zipcode,
+          birthDate,
+          hobbies,
+          gender,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -204,6 +231,8 @@ export default function UserProfileCreateForm(props) {
               verifySubmitted,
               profilePhotoID,
               bannerPhotoID,
+              verifyPhotoID,
+              customerID,
               city,
               state,
               school,
@@ -212,6 +241,9 @@ export default function UserProfileCreateForm(props) {
               phone,
               email,
               zipcode,
+              birthDate,
+              hobbies,
+              gender,
             };
             const result = onChange(modelFields);
             value = result?.sub ?? value;
@@ -242,6 +274,8 @@ export default function UserProfileCreateForm(props) {
               verifySubmitted,
               profilePhotoID,
               bannerPhotoID,
+              verifyPhotoID,
+              customerID,
               city,
               state,
               school,
@@ -250,6 +284,9 @@ export default function UserProfileCreateForm(props) {
               phone,
               email,
               zipcode,
+              birthDate,
+              hobbies,
+              gender,
             };
             const result = onChange(modelFields);
             value = result?.firstName ?? value;
@@ -280,6 +317,8 @@ export default function UserProfileCreateForm(props) {
               verifySubmitted,
               profilePhotoID,
               bannerPhotoID,
+              verifyPhotoID,
+              customerID,
               city,
               state,
               school,
@@ -288,6 +327,9 @@ export default function UserProfileCreateForm(props) {
               phone,
               email,
               zipcode,
+              birthDate,
+              hobbies,
+              gender,
             };
             const result = onChange(modelFields);
             value = result?.lastName ?? value;
@@ -318,6 +360,8 @@ export default function UserProfileCreateForm(props) {
               verifySubmitted,
               profilePhotoID,
               bannerPhotoID,
+              verifyPhotoID,
+              customerID,
               city,
               state,
               school,
@@ -326,6 +370,9 @@ export default function UserProfileCreateForm(props) {
               phone,
               email,
               zipcode,
+              birthDate,
+              hobbies,
+              gender,
             };
             const result = onChange(modelFields);
             value = result?.verified ?? value;
@@ -356,6 +403,8 @@ export default function UserProfileCreateForm(props) {
               verifySubmitted: value,
               profilePhotoID,
               bannerPhotoID,
+              verifyPhotoID,
+              customerID,
               city,
               state,
               school,
@@ -364,6 +413,9 @@ export default function UserProfileCreateForm(props) {
               phone,
               email,
               zipcode,
+              birthDate,
+              hobbies,
+              gender,
             };
             const result = onChange(modelFields);
             value = result?.verifySubmitted ?? value;
@@ -394,6 +446,8 @@ export default function UserProfileCreateForm(props) {
               verifySubmitted,
               profilePhotoID: value,
               bannerPhotoID,
+              verifyPhotoID,
+              customerID,
               city,
               state,
               school,
@@ -402,6 +456,9 @@ export default function UserProfileCreateForm(props) {
               phone,
               email,
               zipcode,
+              birthDate,
+              hobbies,
+              gender,
             };
             const result = onChange(modelFields);
             value = result?.profilePhotoID ?? value;
@@ -432,6 +489,8 @@ export default function UserProfileCreateForm(props) {
               verifySubmitted,
               profilePhotoID,
               bannerPhotoID: value,
+              verifyPhotoID,
+              customerID,
               city,
               state,
               school,
@@ -440,6 +499,9 @@ export default function UserProfileCreateForm(props) {
               phone,
               email,
               zipcode,
+              birthDate,
+              hobbies,
+              gender,
             };
             const result = onChange(modelFields);
             value = result?.bannerPhotoID ?? value;
@@ -453,6 +515,92 @@ export default function UserProfileCreateForm(props) {
         errorMessage={errors.bannerPhotoID?.errorMessage}
         hasError={errors.bannerPhotoID?.hasError}
         {...getOverrideProps(overrides, "bannerPhotoID")}
+      ></TextField>
+      <TextField
+        label="Verify photo id"
+        isRequired={false}
+        isReadOnly={false}
+        value={verifyPhotoID}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              sub,
+              firstName,
+              lastName,
+              verified,
+              verifySubmitted,
+              profilePhotoID,
+              bannerPhotoID,
+              verifyPhotoID: value,
+              customerID,
+              city,
+              state,
+              school,
+              address,
+              address2,
+              phone,
+              email,
+              zipcode,
+              birthDate,
+              hobbies,
+              gender,
+            };
+            const result = onChange(modelFields);
+            value = result?.verifyPhotoID ?? value;
+          }
+          if (errors.verifyPhotoID?.hasError) {
+            runValidationTasks("verifyPhotoID", value);
+          }
+          setVerifyPhotoID(value);
+        }}
+        onBlur={() => runValidationTasks("verifyPhotoID", verifyPhotoID)}
+        errorMessage={errors.verifyPhotoID?.errorMessage}
+        hasError={errors.verifyPhotoID?.hasError}
+        {...getOverrideProps(overrides, "verifyPhotoID")}
+      ></TextField>
+      <TextField
+        label="Customer id"
+        isRequired={false}
+        isReadOnly={false}
+        value={customerID}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              sub,
+              firstName,
+              lastName,
+              verified,
+              verifySubmitted,
+              profilePhotoID,
+              bannerPhotoID,
+              verifyPhotoID,
+              customerID: value,
+              city,
+              state,
+              school,
+              address,
+              address2,
+              phone,
+              email,
+              zipcode,
+              birthDate,
+              hobbies,
+              gender,
+            };
+            const result = onChange(modelFields);
+            value = result?.customerID ?? value;
+          }
+          if (errors.customerID?.hasError) {
+            runValidationTasks("customerID", value);
+          }
+          setCustomerID(value);
+        }}
+        onBlur={() => runValidationTasks("customerID", customerID)}
+        errorMessage={errors.customerID?.errorMessage}
+        hasError={errors.customerID?.hasError}
+        {...getOverrideProps(overrides, "customerID")}
       ></TextField>
       <TextField
         label="City"
@@ -470,6 +618,8 @@ export default function UserProfileCreateForm(props) {
               verifySubmitted,
               profilePhotoID,
               bannerPhotoID,
+              verifyPhotoID,
+              customerID,
               city: value,
               state,
               school,
@@ -478,6 +628,9 @@ export default function UserProfileCreateForm(props) {
               phone,
               email,
               zipcode,
+              birthDate,
+              hobbies,
+              gender,
             };
             const result = onChange(modelFields);
             value = result?.city ?? value;
@@ -508,6 +661,8 @@ export default function UserProfileCreateForm(props) {
               verifySubmitted,
               profilePhotoID,
               bannerPhotoID,
+              verifyPhotoID,
+              customerID,
               city,
               state: value,
               school,
@@ -516,6 +671,9 @@ export default function UserProfileCreateForm(props) {
               phone,
               email,
               zipcode,
+              birthDate,
+              hobbies,
+              gender,
             };
             const result = onChange(modelFields);
             value = result?.state ?? value;
@@ -546,6 +704,8 @@ export default function UserProfileCreateForm(props) {
               verifySubmitted,
               profilePhotoID,
               bannerPhotoID,
+              verifyPhotoID,
+              customerID,
               city,
               state,
               school: value,
@@ -554,6 +714,9 @@ export default function UserProfileCreateForm(props) {
               phone,
               email,
               zipcode,
+              birthDate,
+              hobbies,
+              gender,
             };
             const result = onChange(modelFields);
             value = result?.school ?? value;
@@ -584,6 +747,8 @@ export default function UserProfileCreateForm(props) {
               verifySubmitted,
               profilePhotoID,
               bannerPhotoID,
+              verifyPhotoID,
+              customerID,
               city,
               state,
               school,
@@ -592,6 +757,9 @@ export default function UserProfileCreateForm(props) {
               phone,
               email,
               zipcode,
+              birthDate,
+              hobbies,
+              gender,
             };
             const result = onChange(modelFields);
             value = result?.address ?? value;
@@ -622,6 +790,8 @@ export default function UserProfileCreateForm(props) {
               verifySubmitted,
               profilePhotoID,
               bannerPhotoID,
+              verifyPhotoID,
+              customerID,
               city,
               state,
               school,
@@ -630,6 +800,9 @@ export default function UserProfileCreateForm(props) {
               phone,
               email,
               zipcode,
+              birthDate,
+              hobbies,
+              gender,
             };
             const result = onChange(modelFields);
             value = result?.address2 ?? value;
@@ -660,6 +833,8 @@ export default function UserProfileCreateForm(props) {
               verifySubmitted,
               profilePhotoID,
               bannerPhotoID,
+              verifyPhotoID,
+              customerID,
               city,
               state,
               school,
@@ -668,6 +843,9 @@ export default function UserProfileCreateForm(props) {
               phone: value,
               email,
               zipcode,
+              birthDate,
+              hobbies,
+              gender,
             };
             const result = onChange(modelFields);
             value = result?.phone ?? value;
@@ -698,6 +876,8 @@ export default function UserProfileCreateForm(props) {
               verifySubmitted,
               profilePhotoID,
               bannerPhotoID,
+              verifyPhotoID,
+              customerID,
               city,
               state,
               school,
@@ -706,6 +886,9 @@ export default function UserProfileCreateForm(props) {
               phone,
               email: value,
               zipcode,
+              birthDate,
+              hobbies,
+              gender,
             };
             const result = onChange(modelFields);
             value = result?.email ?? value;
@@ -736,6 +919,8 @@ export default function UserProfileCreateForm(props) {
               verifySubmitted,
               profilePhotoID,
               bannerPhotoID,
+              verifyPhotoID,
+              customerID,
               city,
               state,
               school,
@@ -744,6 +929,9 @@ export default function UserProfileCreateForm(props) {
               phone,
               email,
               zipcode: value,
+              birthDate,
+              hobbies,
+              gender,
             };
             const result = onChange(modelFields);
             value = result?.zipcode ?? value;
@@ -757,6 +945,135 @@ export default function UserProfileCreateForm(props) {
         errorMessage={errors.zipcode?.errorMessage}
         hasError={errors.zipcode?.hasError}
         {...getOverrideProps(overrides, "zipcode")}
+      ></TextField>
+      <TextField
+        label="Birth date"
+        isRequired={false}
+        isReadOnly={false}
+        value={birthDate}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              sub,
+              firstName,
+              lastName,
+              verified,
+              verifySubmitted,
+              profilePhotoID,
+              bannerPhotoID,
+              verifyPhotoID,
+              customerID,
+              city,
+              state,
+              school,
+              address,
+              address2,
+              phone,
+              email,
+              zipcode,
+              birthDate: value,
+              hobbies,
+              gender,
+            };
+            const result = onChange(modelFields);
+            value = result?.birthDate ?? value;
+          }
+          if (errors.birthDate?.hasError) {
+            runValidationTasks("birthDate", value);
+          }
+          setBirthDate(value);
+        }}
+        onBlur={() => runValidationTasks("birthDate", birthDate)}
+        errorMessage={errors.birthDate?.errorMessage}
+        hasError={errors.birthDate?.hasError}
+        {...getOverrideProps(overrides, "birthDate")}
+      ></TextField>
+      <TextField
+        label="Hobbies"
+        isRequired={false}
+        isReadOnly={false}
+        value={hobbies}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              sub,
+              firstName,
+              lastName,
+              verified,
+              verifySubmitted,
+              profilePhotoID,
+              bannerPhotoID,
+              verifyPhotoID,
+              customerID,
+              city,
+              state,
+              school,
+              address,
+              address2,
+              phone,
+              email,
+              zipcode,
+              birthDate,
+              hobbies: value,
+              gender,
+            };
+            const result = onChange(modelFields);
+            value = result?.hobbies ?? value;
+          }
+          if (errors.hobbies?.hasError) {
+            runValidationTasks("hobbies", value);
+          }
+          setHobbies(value);
+        }}
+        onBlur={() => runValidationTasks("hobbies", hobbies)}
+        errorMessage={errors.hobbies?.errorMessage}
+        hasError={errors.hobbies?.hasError}
+        {...getOverrideProps(overrides, "hobbies")}
+      ></TextField>
+      <TextField
+        label="Gender"
+        isRequired={false}
+        isReadOnly={false}
+        value={gender}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              sub,
+              firstName,
+              lastName,
+              verified,
+              verifySubmitted,
+              profilePhotoID,
+              bannerPhotoID,
+              verifyPhotoID,
+              customerID,
+              city,
+              state,
+              school,
+              address,
+              address2,
+              phone,
+              email,
+              zipcode,
+              birthDate,
+              hobbies,
+              gender: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.gender ?? value;
+          }
+          if (errors.gender?.hasError) {
+            runValidationTasks("gender", value);
+          }
+          setGender(value);
+        }}
+        onBlur={() => runValidationTasks("gender", gender)}
+        errorMessage={errors.gender?.errorMessage}
+        hasError={errors.gender?.hasError}
+        {...getOverrideProps(overrides, "gender")}
       ></TextField>
       <Flex
         justifyContent="space-between"
