@@ -13,6 +13,7 @@ import {getBannerPhoto, getEventsAttending, getProfile, getProfilePhoto} from ".
 import {getRidesByProfile} from "../../../services/rideServices";
 import {getPhotosByProfile} from "../../../services/photoServices";
 import RideCard from "../../ui/RideCard";
+import SocialMediaList from "./SocialMediaList";
 
 const ProfilePage = () => {
   const [profile, setProfile] = useState<UserProfile | null | undefined>();
@@ -39,44 +40,30 @@ const ProfilePage = () => {
       fetchProfile()
         .then(profile => setProfile(profile));
     } catch(error) {
-      console.log("Error fetching profile in Profile.tsx: ", getErrorMessage(error));
+      console.log("Error fetching profile in ProfilePage.tsx: ", getErrorMessage(error));
     }
   }, [dataCleared, profileId]);
 
   useEffect(() => {
     if(!dataCleared || !profile) return;
 
-    const fetchProfileImage = async () => {
-      return await getProfilePhoto(profile, getSignedURL)
-    }
-    const fetchBannerImage = async () => {
-      return await getBannerPhoto(profile, getSignedURL)
-    }
-    const fetchPhotos = async () => {
-      return getPhotosByProfile(profile);
-    }
-    const fetchEventsAttending = async () => {
-      return await getEventsAttending(profile)
-    }
-
-    const fetchRides = async () => {
-      return await getRidesByProfile(profile);
-    };
-    const fetchPrivacySetting = async () => {
-      return profile.privacySetting;
-    }
-    fetchProfileImage()
+    getProfilePhoto(profile, getSignedURL)
       .then(image => setProfileImage(image))
       .catch(error => console.log("Error fetching profile image: ", getErrorMessage(error)));
-    fetchBannerImage()
-      .then(bannerImage => setBannerImage(bannerImage));
-    fetchPhotos()
+
+    getBannerPhoto(profile, getSignedURL)
+      .then(bannerImage => setBannerImage(bannerImage))
+
+    getPhotosByProfile(profile)
       .then(photos => setPhotos(photos));
-    fetchEventsAttending()
+
+    getEventsAttending(profile)
       .then(eventsAttending => setEventsAttending(eventsAttending));
-    fetchRides()
+
+    getRidesByProfile(profile)
       .then(rides => setRides(rides));
-    fetchPrivacySetting()
+
+    profile.privacySetting
       .then(privacySetting => setPrivacySetting(privacySetting));
   }, [dataCleared, profile]);
 
@@ -122,25 +109,29 @@ const ProfilePage = () => {
           </h1>
           {
             !privacySetting?.city &&
-              <div className={"text-lg my-2 flex flex-wrap"}>
+              <div className={"text-base md:text-lg my-2 flex flex-wrap"}>
                 <span className="basis-[120px]">City:</span>
                 <span>{profile?.city}</span>
               </div>
           }
           {
             !privacySetting?.state &&
-              <div className={"text-lg my-2 flex flex-wrap"}>
+              <div className={"text-base md:text-lg my-2 flex flex-wrap"}>
                 <span className="basis-[120px]">State:</span>
                 <span>{profile?.state}</span>
               </div>
           }
           {
             !privacySetting?.school &&
-              <div className={"text-lg my-2 flex flex-wrap"}>
+              <div className={"text-base md:text-lg my-2 flex flex-wrap"}>
                 <span className="basis-[120px]">School:</span>
                 <span>{profile?.school}</span>
               </div>
           }
+        </div>
+        <div>
+          <h2 className="text-base md:text-lg font-bold">Social Media</h2>
+          <SocialMediaList profile={profile}/>
         </div>
         <section>
           <h1 className="text-2xl my-4">Events Attending</h1>
