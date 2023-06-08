@@ -2,15 +2,15 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const findSuggestedFriends = /* GraphQL */ `
-  query FindSuggestedFriends($school: String, $city: String, $state: String) {
-    findSuggestedFriends(school: $school, city: $city, state: $state) {
+export const getProfile = /* GraphQL */ `
+  query GetProfile($id: ID!) {
+    getProfile(id: $id) {
       id
       sub
       firstName
       lastName
       verified
-      verifySubmitted
+      submitted
       profilePhotoID
       bannerPhotoID
       verifyPhotoID
@@ -26,18 +26,18 @@ export const findSuggestedFriends = /* GraphQL */ `
       birthDate
       hobbies
       gender
-      attendingEvents {
+      events {
         items {
           id
-          userProfileID
-          eventID
-          userProfile {
+          profileId
+          eventId
+          profile {
             id
             sub
             firstName
             lastName
             verified
-            verifySubmitted
+            submitted
             profilePhotoID
             bannerPhotoID
             verifyPhotoID
@@ -53,13 +53,13 @@ export const findSuggestedFriends = /* GraphQL */ `
             birthDate
             hobbies
             gender
-            collegeGroupId
-            privacySettingID
+            groupID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
+            profilePrivacySettingId
           }
           event {
             id
@@ -77,7 +77,8 @@ export const findSuggestedFriends = /* GraphQL */ `
             url
             customerID
             hasPaid
-            subID
+            cancelled
+            subscriptionID
             approved
             groupID
             createdAt
@@ -98,28 +99,15 @@ export const findSuggestedFriends = /* GraphQL */ `
       rides {
         items {
           id
-          ride {
-            id
-            eventID
-            maxPassengers
-            departureTime
-            startPoint
-            endPoint
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            rideDriverId
-          }
-          rideID
-          userProfile {
+          profileId
+          rideId
+          profile {
             id
             sub
             firstName
             lastName
             verified
-            verifySubmitted
+            submitted
             profilePhotoID
             bannerPhotoID
             verifyPhotoID
@@ -135,16 +123,28 @@ export const findSuggestedFriends = /* GraphQL */ `
             birthDate
             hobbies
             gender
-            collegeGroupId
-            privacySettingID
+            groupID
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            profilePrivacySettingId
+          }
+          ride {
+            id
+            eventID
+            driverProfileID
+            maxPassengers
+            departureTime
+            startPoint
+            endPoint
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
           }
-          userProfileID
-          isDriver
           createdAt
           updatedAt
           _version
@@ -157,16 +157,16 @@ export const findSuggestedFriends = /* GraphQL */ `
       friends {
         items {
           id
-          userProfileID
+          profileID
           friendProfileID
           isAccepted
-          userProfile {
+          profile {
             id
             sub
             firstName
             lastName
             verified
-            verifySubmitted
+            submitted
             profilePhotoID
             bannerPhotoID
             verifyPhotoID
@@ -182,13 +182,13 @@ export const findSuggestedFriends = /* GraphQL */ `
             birthDate
             hobbies
             gender
-            collegeGroupId
-            privacySettingID
+            groupID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
+            profilePrivacySettingId
           }
           friendProfile {
             id
@@ -196,7 +196,7 @@ export const findSuggestedFriends = /* GraphQL */ `
             firstName
             lastName
             verified
-            verifySubmitted
+            submitted
             profilePhotoID
             bannerPhotoID
             verifyPhotoID
@@ -212,13 +212,13 @@ export const findSuggestedFriends = /* GraphQL */ `
             birthDate
             hobbies
             gender
-            collegeGroupId
-            privacySettingID
+            groupID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
+            profilePrivacySettingId
           }
           createdAt
           updatedAt
@@ -232,15 +232,15 @@ export const findSuggestedFriends = /* GraphQL */ `
       conversations {
         items {
           id
-          userProfileID
+          profileID
           friendProfileID
-          userProfile {
+          profile {
             id
             sub
             firstName
             lastName
             verified
-            verifySubmitted
+            submitted
             profilePhotoID
             bannerPhotoID
             verifyPhotoID
@@ -256,13 +256,13 @@ export const findSuggestedFriends = /* GraphQL */ `
             birthDate
             hobbies
             gender
-            collegeGroupId
-            privacySettingID
+            groupID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
+            profilePrivacySettingId
           }
           friendProfile {
             id
@@ -270,7 +270,7 @@ export const findSuggestedFriends = /* GraphQL */ `
             firstName
             lastName
             verified
-            verifySubmitted
+            submitted
             profilePhotoID
             bannerPhotoID
             verifyPhotoID
@@ -286,13 +286,13 @@ export const findSuggestedFriends = /* GraphQL */ `
             birthDate
             hobbies
             gender
-            collegeGroupId
-            privacySettingID
+            groupID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
+            profilePrivacySettingId
           }
           messages {
             nextToken
@@ -308,193 +308,17 @@ export const findSuggestedFriends = /* GraphQL */ `
         nextToken
         startedAt
       }
-      sentMessages {
-        items {
-          id
-          content
-          senderID
-          receiverID
-          conversationID
-          sender {
-            id
-            sub
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            verifyPhotoID
-            customerID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            birthDate
-            hobbies
-            gender
-            collegeGroupId
-            privacySettingID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          receiver {
-            id
-            sub
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            verifyPhotoID
-            customerID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            birthDate
-            hobbies
-            gender
-            collegeGroupId
-            privacySettingID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          conversation {
-            id
-            userProfileID
-            friendProfileID
-            unreadMessage
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          unreadMessage
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        nextToken
-        startedAt
-      }
-      receivedMessages {
-        items {
-          id
-          content
-          senderID
-          receiverID
-          conversationID
-          sender {
-            id
-            sub
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            verifyPhotoID
-            customerID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            birthDate
-            hobbies
-            gender
-            collegeGroupId
-            privacySettingID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          receiver {
-            id
-            sub
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            verifyPhotoID
-            customerID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            birthDate
-            hobbies
-            gender
-            collegeGroupId
-            privacySettingID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          conversation {
-            id
-            userProfileID
-            friendProfileID
-            unreadMessage
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          unreadMessage
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        nextToken
-        startedAt
-      }
       photos {
         items {
           id
-          userProfileID
-          userProfile {
+          profileID
+          profile {
             id
             sub
             firstName
             lastName
             verified
-            verifySubmitted
+            submitted
             profilePhotoID
             bannerPhotoID
             verifyPhotoID
@@ -510,22 +334,18 @@ export const findSuggestedFriends = /* GraphQL */ `
             birthDate
             hobbies
             gender
-            collegeGroupId
-            privacySettingID
+            groupID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
+            profilePrivacySettingId
           }
           s3Key
           isPrivate
           identityId
           description
-          comments {
-            nextToken
-            startedAt
-          }
           createdAt
           updatedAt
           _version
@@ -535,13 +355,12 @@ export const findSuggestedFriends = /* GraphQL */ `
         nextToken
         startedAt
       }
-      collegeGroupId
-      collegeGroup {
+      groupID
+      group {
         id
         name
         domain
         webPage
-        countryCode
         events {
           items {
             id
@@ -559,7 +378,8 @@ export const findSuggestedFriends = /* GraphQL */ `
             url
             customerID
             hasPaid
-            subID
+            cancelled
+            subscriptionID
             approved
             groupID
             createdAt
@@ -578,7 +398,7 @@ export const findSuggestedFriends = /* GraphQL */ `
             firstName
             lastName
             verified
-            verifySubmitted
+            submitted
             profilePhotoID
             bannerPhotoID
             verifyPhotoID
@@ -594,13 +414,13 @@ export const findSuggestedFriends = /* GraphQL */ `
             birthDate
             hobbies
             gender
-            collegeGroupId
-            privacySettingID
+            groupID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
+            profilePrivacySettingId
           }
           nextToken
           startedAt
@@ -611,14 +431,13 @@ export const findSuggestedFriends = /* GraphQL */ `
         _deleted
         _lastChangedAt
       }
-      privacySettingID
       privacySetting {
         id
         city
         state
         school
         email
-        attendingEvents
+        events
         rides
         friends
         photos
@@ -631,14 +450,755 @@ export const findSuggestedFriends = /* GraphQL */ `
       socialMedia {
         items {
           id
-          userProfileID
-          userProfile {
+          socialMediaType
+          accountURL
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          profileSocialMediaId
+        }
+        nextToken
+        startedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      profilePrivacySettingId
+    }
+  }
+`;
+export const listProfiles = /* GraphQL */ `
+  query ListProfiles(
+    $filter: ModelProfileFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listProfiles(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        sub
+        firstName
+        lastName
+        verified
+        submitted
+        profilePhotoID
+        bannerPhotoID
+        verifyPhotoID
+        customerID
+        city
+        state
+        school
+        address
+        address2
+        phone
+        email
+        zipcode
+        birthDate
+        hobbies
+        gender
+        events {
+          items {
+            id
+            profileId
+            eventId
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        rides {
+          items {
+            id
+            profileId
+            rideId
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        friends {
+          items {
+            id
+            profileID
+            friendProfileID
+            isAccepted
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        conversations {
+          items {
+            id
+            profileID
+            friendProfileID
+            unreadMessage
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        photos {
+          items {
+            id
+            profileID
+            s3Key
+            isPrivate
+            identityId
+            description
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        groupID
+        group {
+          id
+          name
+          domain
+          webPage
+          events {
+            nextToken
+            startedAt
+          }
+          members {
+            nextToken
+            startedAt
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        privacySetting {
+          id
+          city
+          state
+          school
+          email
+          events
+          rides
+          friends
+          photos
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        socialMedia {
+          items {
+            id
+            socialMediaType
+            accountURL
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            profileSocialMediaId
+          }
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        profilePrivacySettingId
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const syncProfiles = /* GraphQL */ `
+  query SyncProfiles(
+    $filter: ModelProfileFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncProfiles(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        sub
+        firstName
+        lastName
+        verified
+        submitted
+        profilePhotoID
+        bannerPhotoID
+        verifyPhotoID
+        customerID
+        city
+        state
+        school
+        address
+        address2
+        phone
+        email
+        zipcode
+        birthDate
+        hobbies
+        gender
+        events {
+          items {
+            id
+            profileId
+            eventId
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        rides {
+          items {
+            id
+            profileId
+            rideId
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        friends {
+          items {
+            id
+            profileID
+            friendProfileID
+            isAccepted
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        conversations {
+          items {
+            id
+            profileID
+            friendProfileID
+            unreadMessage
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        photos {
+          items {
+            id
+            profileID
+            s3Key
+            isPrivate
+            identityId
+            description
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        groupID
+        group {
+          id
+          name
+          domain
+          webPage
+          events {
+            nextToken
+            startedAt
+          }
+          members {
+            nextToken
+            startedAt
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        privacySetting {
+          id
+          city
+          state
+          school
+          email
+          events
+          rides
+          friends
+          photos
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        socialMedia {
+          items {
+            id
+            socialMediaType
+            accountURL
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            profileSocialMediaId
+          }
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        profilePrivacySettingId
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const profilesByGroupID = /* GraphQL */ `
+  query ProfilesByGroupID(
+    $groupID: ID!
+    $sortDirection: ModelSortDirection
+    $filter: ModelProfileFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    profilesByGroupID(
+      groupID: $groupID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        sub
+        firstName
+        lastName
+        verified
+        submitted
+        profilePhotoID
+        bannerPhotoID
+        verifyPhotoID
+        customerID
+        city
+        state
+        school
+        address
+        address2
+        phone
+        email
+        zipcode
+        birthDate
+        hobbies
+        gender
+        events {
+          items {
+            id
+            profileId
+            eventId
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        rides {
+          items {
+            id
+            profileId
+            rideId
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        friends {
+          items {
+            id
+            profileID
+            friendProfileID
+            isAccepted
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        conversations {
+          items {
+            id
+            profileID
+            friendProfileID
+            unreadMessage
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        photos {
+          items {
+            id
+            profileID
+            s3Key
+            isPrivate
+            identityId
+            description
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        groupID
+        group {
+          id
+          name
+          domain
+          webPage
+          events {
+            nextToken
+            startedAt
+          }
+          members {
+            nextToken
+            startedAt
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        privacySetting {
+          id
+          city
+          state
+          school
+          email
+          events
+          rides
+          friends
+          photos
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        socialMedia {
+          items {
+            id
+            socialMediaType
+            accountURL
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            profileSocialMediaId
+          }
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        profilePrivacySettingId
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const getSocialMedia = /* GraphQL */ `
+  query GetSocialMedia($id: ID!) {
+    getSocialMedia(id: $id) {
+      id
+      socialMediaType
+      accountURL
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      profileSocialMediaId
+    }
+  }
+`;
+export const listSocialMedias = /* GraphQL */ `
+  query ListSocialMedias(
+    $filter: ModelSocialMediaFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listSocialMedias(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        socialMediaType
+        accountURL
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        profileSocialMediaId
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const syncSocialMedias = /* GraphQL */ `
+  query SyncSocialMedias(
+    $filter: ModelSocialMediaFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncSocialMedias(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        socialMediaType
+        accountURL
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        profileSocialMediaId
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const getPrivacySetting = /* GraphQL */ `
+  query GetPrivacySetting($id: ID!) {
+    getPrivacySetting(id: $id) {
+      id
+      city
+      state
+      school
+      email
+      events
+      rides
+      friends
+      photos
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const listPrivacySettings = /* GraphQL */ `
+  query ListPrivacySettings(
+    $filter: ModelPrivacySettingFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listPrivacySettings(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        city
+        state
+        school
+        email
+        events
+        rides
+        friends
+        photos
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const syncPrivacySettings = /* GraphQL */ `
+  query SyncPrivacySettings(
+    $filter: ModelPrivacySettingFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncPrivacySettings(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        city
+        state
+        school
+        email
+        events
+        rides
+        friends
+        photos
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const getEvent = /* GraphQL */ `
+  query GetEvent($id: ID!) {
+    getEvent(id: $id) {
+      id
+      name
+      genre
+      image
+      location
+      state
+      city
+      address
+      startDate
+      endDate
+      type
+      description
+      url
+      customerID
+      hasPaid
+      cancelled
+      subscriptionID
+      approved
+      group {
+        id
+        name
+        domain
+        webPage
+        events {
+          items {
+            id
+            name
+            genre
+            image
+            location
+            state
+            city
+            address
+            startDate
+            endDate
+            type
+            description
+            url
+            customerID
+            hasPaid
+            cancelled
+            subscriptionID
+            approved
+            groupID
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        members {
+          items {
             id
             sub
             firstName
             lastName
             verified
-            verifySubmitted
+            submitted
             profilePhotoID
             bannerPhotoID
             verifyPhotoID
@@ -654,16 +1214,133 @@ export const findSuggestedFriends = /* GraphQL */ `
             birthDate
             hobbies
             gender
-            collegeGroupId
-            privacySettingID
+            groupID
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            profilePrivacySettingId
+          }
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      groupID
+      attendees {
+        items {
+          id
+          profileId
+          eventId
+          profile {
+            id
+            sub
+            firstName
+            lastName
+            verified
+            submitted
+            profilePhotoID
+            bannerPhotoID
+            verifyPhotoID
+            customerID
+            city
+            state
+            school
+            address
+            address2
+            phone
+            email
+            zipcode
+            birthDate
+            hobbies
+            gender
+            groupID
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            profilePrivacySettingId
+          }
+          event {
+            id
+            name
+            genre
+            image
+            location
+            state
+            city
+            address
+            startDate
+            endDate
+            type
+            description
+            url
+            customerID
+            hasPaid
+            cancelled
+            subscriptionID
+            approved
+            groupID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
           }
-          socialMediaType
-          accountURL
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
+      rides {
+        items {
+          id
+          event {
+            id
+            name
+            genre
+            image
+            location
+            state
+            city
+            address
+            startDate
+            endDate
+            type
+            description
+            url
+            customerID
+            hasPaid
+            cancelled
+            subscriptionID
+            approved
+            groupID
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          eventID
+          driverProfileID
+          passengers {
+            nextToken
+            startedAt
+          }
+          maxPassengers
+          departureTime
+          startPoint
+          endPoint
           createdAt
           updatedAt
           _version
@@ -681,153 +1358,412 @@ export const findSuggestedFriends = /* GraphQL */ `
     }
   }
 `;
-export const getMessage = /* GraphQL */ `
-  query GetMessage($id: ID!) {
-    getMessage(id: $id) {
+export const listEvents = /* GraphQL */ `
+  query ListEvents(
+    $filter: ModelEventFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listEvents(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
+        genre
+        image
+        location
+        state
+        city
+        address
+        startDate
+        endDate
+        type
+        description
+        url
+        customerID
+        hasPaid
+        cancelled
+        subscriptionID
+        approved
+        group {
+          id
+          name
+          domain
+          webPage
+          events {
+            nextToken
+            startedAt
+          }
+          members {
+            nextToken
+            startedAt
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        groupID
+        attendees {
+          items {
+            id
+            profileId
+            eventId
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        rides {
+          items {
+            id
+            eventID
+            driverProfileID
+            maxPassengers
+            departureTime
+            startPoint
+            endPoint
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const syncEvents = /* GraphQL */ `
+  query SyncEvents(
+    $filter: ModelEventFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncEvents(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        name
+        genre
+        image
+        location
+        state
+        city
+        address
+        startDate
+        endDate
+        type
+        description
+        url
+        customerID
+        hasPaid
+        cancelled
+        subscriptionID
+        approved
+        group {
+          id
+          name
+          domain
+          webPage
+          events {
+            nextToken
+            startedAt
+          }
+          members {
+            nextToken
+            startedAt
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        groupID
+        attendees {
+          items {
+            id
+            profileId
+            eventId
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        rides {
+          items {
+            id
+            eventID
+            driverProfileID
+            maxPassengers
+            departureTime
+            startPoint
+            endPoint
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const eventsBySubscriptionID = /* GraphQL */ `
+  query EventsBySubscriptionID(
+    $subscriptionID: String!
+    $sortDirection: ModelSortDirection
+    $filter: ModelEventFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    eventsBySubscriptionID(
+      subscriptionID: $subscriptionID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        name
+        genre
+        image
+        location
+        state
+        city
+        address
+        startDate
+        endDate
+        type
+        description
+        url
+        customerID
+        hasPaid
+        cancelled
+        subscriptionID
+        approved
+        group {
+          id
+          name
+          domain
+          webPage
+          events {
+            nextToken
+            startedAt
+          }
+          members {
+            nextToken
+            startedAt
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        groupID
+        attendees {
+          items {
+            id
+            profileId
+            eventId
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        rides {
+          items {
+            id
+            eventID
+            driverProfileID
+            maxPassengers
+            departureTime
+            startPoint
+            endPoint
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const eventsByGroupID = /* GraphQL */ `
+  query EventsByGroupID(
+    $groupID: ID!
+    $sortDirection: ModelSortDirection
+    $filter: ModelEventFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    eventsByGroupID(
+      groupID: $groupID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        name
+        genre
+        image
+        location
+        state
+        city
+        address
+        startDate
+        endDate
+        type
+        description
+        url
+        customerID
+        hasPaid
+        cancelled
+        subscriptionID
+        approved
+        group {
+          id
+          name
+          domain
+          webPage
+          events {
+            nextToken
+            startedAt
+          }
+          members {
+            nextToken
+            startedAt
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        groupID
+        attendees {
+          items {
+            id
+            profileId
+            eventId
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        rides {
+          items {
+            id
+            eventID
+            driverProfileID
+            maxPassengers
+            departureTime
+            startPoint
+            endPoint
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const getRide = /* GraphQL */ `
+  query GetRide($id: ID!) {
+    getRide(id: $id) {
       id
-      content
-      senderID
-      receiverID
-      conversationID
-      sender {
+      event {
         id
-        sub
-        firstName
-        lastName
-        verified
-        verifySubmitted
-        profilePhotoID
-        bannerPhotoID
-        verifyPhotoID
-        customerID
-        city
+        name
+        genre
+        image
+        location
         state
-        school
+        city
         address
-        address2
-        phone
-        email
-        zipcode
-        birthDate
-        hobbies
-        gender
-        attendingEvents {
-          items {
-            id
-            userProfileID
-            eventID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        rides {
-          items {
-            id
-            rideID
-            userProfileID
-            isDriver
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        friends {
-          items {
-            id
-            userProfileID
-            friendProfileID
-            isAccepted
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        conversations {
-          items {
-            id
-            userProfileID
-            friendProfileID
-            unreadMessage
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        sentMessages {
-          items {
-            id
-            content
-            senderID
-            receiverID
-            conversationID
-            unreadMessage
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        receivedMessages {
-          items {
-            id
-            content
-            senderID
-            receiverID
-            conversationID
-            unreadMessage
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        photos {
-          items {
-            id
-            userProfileID
-            s3Key
-            isPrivate
-            identityId
-            description
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        collegeGroupId
-        collegeGroup {
+        startDate
+        endDate
+        type
+        description
+        url
+        customerID
+        hasPaid
+        cancelled
+        subscriptionID
+        approved
+        group {
           id
           name
           domain
           webPage
-          countryCode
           events {
             nextToken
             startedAt
@@ -842,29 +1778,30 @@ export const getMessage = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
-        privacySettingID
-        privacySetting {
-          id
-          city
-          state
-          school
-          email
-          attendingEvents
-          rides
-          friends
-          photos
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        socialMedia {
+        groupID
+        attendees {
           items {
             id
-            userProfileID
-            socialMediaType
-            accountURL
+            profileId
+            eventId
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        rides {
+          items {
+            id
+            eventID
+            driverProfileID
+            maxPassengers
+            departureTime
+            startPoint
+            endPoint
             createdAt
             updatedAt
             _version
@@ -880,13 +1817,359 @@ export const getMessage = /* GraphQL */ `
         _deleted
         _lastChangedAt
       }
-      receiver {
+      eventID
+      driverProfileID
+      passengers {
+        items {
+          id
+          profileId
+          rideId
+          profile {
+            id
+            sub
+            firstName
+            lastName
+            verified
+            submitted
+            profilePhotoID
+            bannerPhotoID
+            verifyPhotoID
+            customerID
+            city
+            state
+            school
+            address
+            address2
+            phone
+            email
+            zipcode
+            birthDate
+            hobbies
+            gender
+            groupID
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            profilePrivacySettingId
+          }
+          ride {
+            id
+            eventID
+            driverProfileID
+            maxPassengers
+            departureTime
+            startPoint
+            endPoint
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
+      maxPassengers
+      departureTime
+      startPoint
+      endPoint
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const listRides = /* GraphQL */ `
+  query ListRides(
+    $filter: ModelRideFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listRides(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        event {
+          id
+          name
+          genre
+          image
+          location
+          state
+          city
+          address
+          startDate
+          endDate
+          type
+          description
+          url
+          customerID
+          hasPaid
+          cancelled
+          subscriptionID
+          approved
+          group {
+            id
+            name
+            domain
+            webPage
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          groupID
+          attendees {
+            nextToken
+            startedAt
+          }
+          rides {
+            nextToken
+            startedAt
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        eventID
+        driverProfileID
+        passengers {
+          items {
+            id
+            profileId
+            rideId
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        maxPassengers
+        departureTime
+        startPoint
+        endPoint
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const syncRides = /* GraphQL */ `
+  query SyncRides(
+    $filter: ModelRideFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncRides(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        event {
+          id
+          name
+          genre
+          image
+          location
+          state
+          city
+          address
+          startDate
+          endDate
+          type
+          description
+          url
+          customerID
+          hasPaid
+          cancelled
+          subscriptionID
+          approved
+          group {
+            id
+            name
+            domain
+            webPage
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          groupID
+          attendees {
+            nextToken
+            startedAt
+          }
+          rides {
+            nextToken
+            startedAt
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        eventID
+        driverProfileID
+        passengers {
+          items {
+            id
+            profileId
+            rideId
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        maxPassengers
+        departureTime
+        startPoint
+        endPoint
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const ridesByEventID = /* GraphQL */ `
+  query RidesByEventID(
+    $eventID: ID!
+    $sortDirection: ModelSortDirection
+    $filter: ModelRideFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    ridesByEventID(
+      eventID: $eventID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        event {
+          id
+          name
+          genre
+          image
+          location
+          state
+          city
+          address
+          startDate
+          endDate
+          type
+          description
+          url
+          customerID
+          hasPaid
+          cancelled
+          subscriptionID
+          approved
+          group {
+            id
+            name
+            domain
+            webPage
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          groupID
+          attendees {
+            nextToken
+            startedAt
+          }
+          rides {
+            nextToken
+            startedAt
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        eventID
+        driverProfileID
+        passengers {
+          items {
+            id
+            profileId
+            rideId
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        maxPassengers
+        departureTime
+        startPoint
+        endPoint
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const getPhoto = /* GraphQL */ `
+  query GetPhoto($id: ID!) {
+    getPhoto(id: $id) {
+      id
+      profileID
+      profile {
         id
         sub
         firstName
         lastName
         verified
-        verifySubmitted
+        submitted
         profilePhotoID
         bannerPhotoID
         verifyPhotoID
@@ -902,11 +2185,11 @@ export const getMessage = /* GraphQL */ `
         birthDate
         hobbies
         gender
-        attendingEvents {
+        events {
           items {
             id
-            userProfileID
-            eventID
+            profileId
+            eventId
             createdAt
             updatedAt
             _version
@@ -919,9 +2202,8 @@ export const getMessage = /* GraphQL */ `
         rides {
           items {
             id
-            rideID
-            userProfileID
-            isDriver
+            profileId
+            rideId
             createdAt
             updatedAt
             _version
@@ -934,7 +2216,7 @@ export const getMessage = /* GraphQL */ `
         friends {
           items {
             id
-            userProfileID
+            profileID
             friendProfileID
             isAccepted
             createdAt
@@ -949,42 +2231,8 @@ export const getMessage = /* GraphQL */ `
         conversations {
           items {
             id
-            userProfileID
+            profileID
             friendProfileID
-            unreadMessage
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        sentMessages {
-          items {
-            id
-            content
-            senderID
-            receiverID
-            conversationID
-            unreadMessage
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        receivedMessages {
-          items {
-            id
-            content
-            senderID
-            receiverID
-            conversationID
             unreadMessage
             createdAt
             updatedAt
@@ -998,7 +2246,7 @@ export const getMessage = /* GraphQL */ `
         photos {
           items {
             id
-            userProfileID
+            profileID
             s3Key
             isPrivate
             identityId
@@ -1012,13 +2260,12 @@ export const getMessage = /* GraphQL */ `
           nextToken
           startedAt
         }
-        collegeGroupId
-        collegeGroup {
+        groupID
+        group {
           id
           name
           domain
           webPage
-          countryCode
           events {
             nextToken
             startedAt
@@ -1033,14 +2280,13 @@ export const getMessage = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
-        privacySettingID
         privacySetting {
           id
           city
           state
           school
           email
-          attendingEvents
+          events
           rides
           friends
           photos
@@ -1053,7 +2299,6 @@ export const getMessage = /* GraphQL */ `
         socialMedia {
           items {
             id
-            userProfileID
             socialMediaType
             accountURL
             createdAt
@@ -1061,6 +2306,7 @@ export const getMessage = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            profileSocialMediaId
           }
           nextToken
           startedAt
@@ -1070,18 +2316,37 @@ export const getMessage = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        profilePrivacySettingId
       }
-      conversation {
+      s3Key
+      isPrivate
+      identityId
+      description
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const listPhotos = /* GraphQL */ `
+  query ListPhotos(
+    $filter: ModelPhotoFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listPhotos(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
         id
-        userProfileID
-        friendProfileID
-        userProfile {
+        profileID
+        profile {
           id
           sub
           firstName
           lastName
           verified
-          verifySubmitted
+          submitted
           profilePhotoID
           bannerPhotoID
           verifyPhotoID
@@ -1097,7 +2362,7 @@ export const getMessage = /* GraphQL */ `
           birthDate
           hobbies
           gender
-          attendingEvents {
+          events {
             nextToken
             startedAt
           }
@@ -1113,39 +2378,29 @@ export const getMessage = /* GraphQL */ `
             nextToken
             startedAt
           }
-          sentMessages {
-            nextToken
-            startedAt
-          }
-          receivedMessages {
-            nextToken
-            startedAt
-          }
           photos {
             nextToken
             startedAt
           }
-          collegeGroupId
-          collegeGroup {
+          groupID
+          group {
             id
             name
             domain
             webPage
-            countryCode
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
           }
-          privacySettingID
           privacySetting {
             id
             city
             state
             school
             email
-            attendingEvents
+            events
             rides
             friends
             photos
@@ -1164,6 +2419,666 @@ export const getMessage = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          profilePrivacySettingId
+        }
+        s3Key
+        isPrivate
+        identityId
+        description
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const syncPhotos = /* GraphQL */ `
+  query SyncPhotos(
+    $filter: ModelPhotoFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncPhotos(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        profileID
+        profile {
+          id
+          sub
+          firstName
+          lastName
+          verified
+          submitted
+          profilePhotoID
+          bannerPhotoID
+          verifyPhotoID
+          customerID
+          city
+          state
+          school
+          address
+          address2
+          phone
+          email
+          zipcode
+          birthDate
+          hobbies
+          gender
+          events {
+            nextToken
+            startedAt
+          }
+          rides {
+            nextToken
+            startedAt
+          }
+          friends {
+            nextToken
+            startedAt
+          }
+          conversations {
+            nextToken
+            startedAt
+          }
+          photos {
+            nextToken
+            startedAt
+          }
+          groupID
+          group {
+            id
+            name
+            domain
+            webPage
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          privacySetting {
+            id
+            city
+            state
+            school
+            email
+            events
+            rides
+            friends
+            photos
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          socialMedia {
+            nextToken
+            startedAt
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          profilePrivacySettingId
+        }
+        s3Key
+        isPrivate
+        identityId
+        description
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const photosByProfileID = /* GraphQL */ `
+  query PhotosByProfileID(
+    $profileID: ID!
+    $sortDirection: ModelSortDirection
+    $filter: ModelPhotoFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    photosByProfileID(
+      profileID: $profileID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        profileID
+        profile {
+          id
+          sub
+          firstName
+          lastName
+          verified
+          submitted
+          profilePhotoID
+          bannerPhotoID
+          verifyPhotoID
+          customerID
+          city
+          state
+          school
+          address
+          address2
+          phone
+          email
+          zipcode
+          birthDate
+          hobbies
+          gender
+          events {
+            nextToken
+            startedAt
+          }
+          rides {
+            nextToken
+            startedAt
+          }
+          friends {
+            nextToken
+            startedAt
+          }
+          conversations {
+            nextToken
+            startedAt
+          }
+          photos {
+            nextToken
+            startedAt
+          }
+          groupID
+          group {
+            id
+            name
+            domain
+            webPage
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          privacySetting {
+            id
+            city
+            state
+            school
+            email
+            events
+            rides
+            friends
+            photos
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          socialMedia {
+            nextToken
+            startedAt
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          profilePrivacySettingId
+        }
+        s3Key
+        isPrivate
+        identityId
+        description
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const getFriendship = /* GraphQL */ `
+  query GetFriendship($id: ID!) {
+    getFriendship(id: $id) {
+      id
+      profileID
+      friendProfileID
+      isAccepted
+      profile {
+        id
+        sub
+        firstName
+        lastName
+        verified
+        submitted
+        profilePhotoID
+        bannerPhotoID
+        verifyPhotoID
+        customerID
+        city
+        state
+        school
+        address
+        address2
+        phone
+        email
+        zipcode
+        birthDate
+        hobbies
+        gender
+        events {
+          items {
+            id
+            profileId
+            eventId
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        rides {
+          items {
+            id
+            profileId
+            rideId
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        friends {
+          items {
+            id
+            profileID
+            friendProfileID
+            isAccepted
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        conversations {
+          items {
+            id
+            profileID
+            friendProfileID
+            unreadMessage
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        photos {
+          items {
+            id
+            profileID
+            s3Key
+            isPrivate
+            identityId
+            description
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        groupID
+        group {
+          id
+          name
+          domain
+          webPage
+          events {
+            nextToken
+            startedAt
+          }
+          members {
+            nextToken
+            startedAt
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        privacySetting {
+          id
+          city
+          state
+          school
+          email
+          events
+          rides
+          friends
+          photos
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        socialMedia {
+          items {
+            id
+            socialMediaType
+            accountURL
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            profileSocialMediaId
+          }
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        profilePrivacySettingId
+      }
+      friendProfile {
+        id
+        sub
+        firstName
+        lastName
+        verified
+        submitted
+        profilePhotoID
+        bannerPhotoID
+        verifyPhotoID
+        customerID
+        city
+        state
+        school
+        address
+        address2
+        phone
+        email
+        zipcode
+        birthDate
+        hobbies
+        gender
+        events {
+          items {
+            id
+            profileId
+            eventId
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        rides {
+          items {
+            id
+            profileId
+            rideId
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        friends {
+          items {
+            id
+            profileID
+            friendProfileID
+            isAccepted
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        conversations {
+          items {
+            id
+            profileID
+            friendProfileID
+            unreadMessage
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        photos {
+          items {
+            id
+            profileID
+            s3Key
+            isPrivate
+            identityId
+            description
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        groupID
+        group {
+          id
+          name
+          domain
+          webPage
+          events {
+            nextToken
+            startedAt
+          }
+          members {
+            nextToken
+            startedAt
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        privacySetting {
+          id
+          city
+          state
+          school
+          email
+          events
+          rides
+          friends
+          photos
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        socialMedia {
+          items {
+            id
+            socialMediaType
+            accountURL
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            profileSocialMediaId
+          }
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        profilePrivacySettingId
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const listFriendships = /* GraphQL */ `
+  query ListFriendships(
+    $filter: ModelFriendshipFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listFriendships(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        profileID
+        friendProfileID
+        isAccepted
+        profile {
+          id
+          sub
+          firstName
+          lastName
+          verified
+          submitted
+          profilePhotoID
+          bannerPhotoID
+          verifyPhotoID
+          customerID
+          city
+          state
+          school
+          address
+          address2
+          phone
+          email
+          zipcode
+          birthDate
+          hobbies
+          gender
+          events {
+            nextToken
+            startedAt
+          }
+          rides {
+            nextToken
+            startedAt
+          }
+          friends {
+            nextToken
+            startedAt
+          }
+          conversations {
+            nextToken
+            startedAt
+          }
+          photos {
+            nextToken
+            startedAt
+          }
+          groupID
+          group {
+            id
+            name
+            domain
+            webPage
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          privacySetting {
+            id
+            city
+            state
+            school
+            email
+            events
+            rides
+            friends
+            photos
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          socialMedia {
+            nextToken
+            startedAt
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          profilePrivacySettingId
         }
         friendProfile {
           id
@@ -1171,7 +3086,7 @@ export const getMessage = /* GraphQL */ `
           firstName
           lastName
           verified
-          verifySubmitted
+          submitted
           profilePhotoID
           bannerPhotoID
           verifyPhotoID
@@ -1187,7 +3102,7 @@ export const getMessage = /* GraphQL */ `
           birthDate
           hobbies
           gender
-          attendingEvents {
+          events {
             nextToken
             startedAt
           }
@@ -1203,39 +3118,29 @@ export const getMessage = /* GraphQL */ `
             nextToken
             startedAt
           }
-          sentMessages {
-            nextToken
-            startedAt
-          }
-          receivedMessages {
-            nextToken
-            startedAt
-          }
           photos {
             nextToken
             startedAt
           }
-          collegeGroupId
-          collegeGroup {
+          groupID
+          group {
             id
             name
             domain
             webPage
-            countryCode
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
           }
-          privacySettingID
           privacySetting {
             id
             city
             state
             school
             email
-            attendingEvents
+            events
             rides
             friends
             photos
@@ -1254,20 +3159,1137 @@ export const getMessage = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          profilePrivacySettingId
         }
-        messages {
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const syncFriendships = /* GraphQL */ `
+  query SyncFriendships(
+    $filter: ModelFriendshipFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncFriendships(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        profileID
+        friendProfileID
+        isAccepted
+        profile {
+          id
+          sub
+          firstName
+          lastName
+          verified
+          submitted
+          profilePhotoID
+          bannerPhotoID
+          verifyPhotoID
+          customerID
+          city
+          state
+          school
+          address
+          address2
+          phone
+          email
+          zipcode
+          birthDate
+          hobbies
+          gender
+          events {
+            nextToken
+            startedAt
+          }
+          rides {
+            nextToken
+            startedAt
+          }
+          friends {
+            nextToken
+            startedAt
+          }
+          conversations {
+            nextToken
+            startedAt
+          }
+          photos {
+            nextToken
+            startedAt
+          }
+          groupID
+          group {
+            id
+            name
+            domain
+            webPage
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          privacySetting {
+            id
+            city
+            state
+            school
+            email
+            events
+            rides
+            friends
+            photos
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          socialMedia {
+            nextToken
+            startedAt
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          profilePrivacySettingId
+        }
+        friendProfile {
+          id
+          sub
+          firstName
+          lastName
+          verified
+          submitted
+          profilePhotoID
+          bannerPhotoID
+          verifyPhotoID
+          customerID
+          city
+          state
+          school
+          address
+          address2
+          phone
+          email
+          zipcode
+          birthDate
+          hobbies
+          gender
+          events {
+            nextToken
+            startedAt
+          }
+          rides {
+            nextToken
+            startedAt
+          }
+          friends {
+            nextToken
+            startedAt
+          }
+          conversations {
+            nextToken
+            startedAt
+          }
+          photos {
+            nextToken
+            startedAt
+          }
+          groupID
+          group {
+            id
+            name
+            domain
+            webPage
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          privacySetting {
+            id
+            city
+            state
+            school
+            email
+            events
+            rides
+            friends
+            photos
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          socialMedia {
+            nextToken
+            startedAt
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          profilePrivacySettingId
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const friendshipsByProfileID = /* GraphQL */ `
+  query FriendshipsByProfileID(
+    $profileID: ID!
+    $sortDirection: ModelSortDirection
+    $filter: ModelFriendshipFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    friendshipsByProfileID(
+      profileID: $profileID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        profileID
+        friendProfileID
+        isAccepted
+        profile {
+          id
+          sub
+          firstName
+          lastName
+          verified
+          submitted
+          profilePhotoID
+          bannerPhotoID
+          verifyPhotoID
+          customerID
+          city
+          state
+          school
+          address
+          address2
+          phone
+          email
+          zipcode
+          birthDate
+          hobbies
+          gender
+          events {
+            nextToken
+            startedAt
+          }
+          rides {
+            nextToken
+            startedAt
+          }
+          friends {
+            nextToken
+            startedAt
+          }
+          conversations {
+            nextToken
+            startedAt
+          }
+          photos {
+            nextToken
+            startedAt
+          }
+          groupID
+          group {
+            id
+            name
+            domain
+            webPage
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          privacySetting {
+            id
+            city
+            state
+            school
+            email
+            events
+            rides
+            friends
+            photos
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          socialMedia {
+            nextToken
+            startedAt
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          profilePrivacySettingId
+        }
+        friendProfile {
+          id
+          sub
+          firstName
+          lastName
+          verified
+          submitted
+          profilePhotoID
+          bannerPhotoID
+          verifyPhotoID
+          customerID
+          city
+          state
+          school
+          address
+          address2
+          phone
+          email
+          zipcode
+          birthDate
+          hobbies
+          gender
+          events {
+            nextToken
+            startedAt
+          }
+          rides {
+            nextToken
+            startedAt
+          }
+          friends {
+            nextToken
+            startedAt
+          }
+          conversations {
+            nextToken
+            startedAt
+          }
+          photos {
+            nextToken
+            startedAt
+          }
+          groupID
+          group {
+            id
+            name
+            domain
+            webPage
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          privacySetting {
+            id
+            city
+            state
+            school
+            email
+            events
+            rides
+            friends
+            photos
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          socialMedia {
+            nextToken
+            startedAt
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          profilePrivacySettingId
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const friendshipsByFriendProfileID = /* GraphQL */ `
+  query FriendshipsByFriendProfileID(
+    $friendProfileID: ID!
+    $sortDirection: ModelSortDirection
+    $filter: ModelFriendshipFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    friendshipsByFriendProfileID(
+      friendProfileID: $friendProfileID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        profileID
+        friendProfileID
+        isAccepted
+        profile {
+          id
+          sub
+          firstName
+          lastName
+          verified
+          submitted
+          profilePhotoID
+          bannerPhotoID
+          verifyPhotoID
+          customerID
+          city
+          state
+          school
+          address
+          address2
+          phone
+          email
+          zipcode
+          birthDate
+          hobbies
+          gender
+          events {
+            nextToken
+            startedAt
+          }
+          rides {
+            nextToken
+            startedAt
+          }
+          friends {
+            nextToken
+            startedAt
+          }
+          conversations {
+            nextToken
+            startedAt
+          }
+          photos {
+            nextToken
+            startedAt
+          }
+          groupID
+          group {
+            id
+            name
+            domain
+            webPage
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          privacySetting {
+            id
+            city
+            state
+            school
+            email
+            events
+            rides
+            friends
+            photos
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          socialMedia {
+            nextToken
+            startedAt
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          profilePrivacySettingId
+        }
+        friendProfile {
+          id
+          sub
+          firstName
+          lastName
+          verified
+          submitted
+          profilePhotoID
+          bannerPhotoID
+          verifyPhotoID
+          customerID
+          city
+          state
+          school
+          address
+          address2
+          phone
+          email
+          zipcode
+          birthDate
+          hobbies
+          gender
+          events {
+            nextToken
+            startedAt
+          }
+          rides {
+            nextToken
+            startedAt
+          }
+          friends {
+            nextToken
+            startedAt
+          }
+          conversations {
+            nextToken
+            startedAt
+          }
+          photos {
+            nextToken
+            startedAt
+          }
+          groupID
+          group {
+            id
+            name
+            domain
+            webPage
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          privacySetting {
+            id
+            city
+            state
+            school
+            email
+            events
+            rides
+            friends
+            photos
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          socialMedia {
+            nextToken
+            startedAt
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          profilePrivacySettingId
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const getConversation = /* GraphQL */ `
+  query GetConversation($id: ID!) {
+    getConversation(id: $id) {
+      id
+      profileID
+      friendProfileID
+      profile {
+        id
+        sub
+        firstName
+        lastName
+        verified
+        submitted
+        profilePhotoID
+        bannerPhotoID
+        verifyPhotoID
+        customerID
+        city
+        state
+        school
+        address
+        address2
+        phone
+        email
+        zipcode
+        birthDate
+        hobbies
+        gender
+        events {
           items {
             id
-            content
-            senderID
-            receiverID
-            conversationID
+            profileId
+            eventId
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        rides {
+          items {
+            id
+            profileId
+            rideId
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        friends {
+          items {
+            id
+            profileID
+            friendProfileID
+            isAccepted
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        conversations {
+          items {
+            id
+            profileID
+            friendProfileID
             unreadMessage
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        photos {
+          items {
+            id
+            profileID
+            s3Key
+            isPrivate
+            identityId
+            description
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        groupID
+        group {
+          id
+          name
+          domain
+          webPage
+          events {
+            nextToken
+            startedAt
+          }
+          members {
+            nextToken
+            startedAt
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        privacySetting {
+          id
+          city
+          state
+          school
+          email
+          events
+          rides
+          friends
+          photos
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        socialMedia {
+          items {
+            id
+            socialMediaType
+            accountURL
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            profileSocialMediaId
+          }
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        profilePrivacySettingId
+      }
+      friendProfile {
+        id
+        sub
+        firstName
+        lastName
+        verified
+        submitted
+        profilePhotoID
+        bannerPhotoID
+        verifyPhotoID
+        customerID
+        city
+        state
+        school
+        address
+        address2
+        phone
+        email
+        zipcode
+        birthDate
+        hobbies
+        gender
+        events {
+          items {
+            id
+            profileId
+            eventId
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        rides {
+          items {
+            id
+            profileId
+            rideId
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        friends {
+          items {
+            id
+            profileID
+            friendProfileID
+            isAccepted
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        conversations {
+          items {
+            id
+            profileID
+            friendProfileID
+            unreadMessage
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        photos {
+          items {
+            id
+            profileID
+            s3Key
+            isPrivate
+            identityId
+            description
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        groupID
+        group {
+          id
+          name
+          domain
+          webPage
+          events {
+            nextToken
+            startedAt
+          }
+          members {
+            nextToken
+            startedAt
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        privacySetting {
+          id
+          city
+          state
+          school
+          email
+          events
+          rides
+          friends
+          photos
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        socialMedia {
+          items {
+            id
+            socialMediaType
+            accountURL
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            profileSocialMediaId
+          }
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        profilePrivacySettingId
+      }
+      messages {
+        items {
+          id
+          conversation {
+            id
+            profileID
+            friendProfileID
+            unreadMessage
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          conversationID
+          content
+          senderProfileID
+          receiverProfileID
+          unread
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          conversationMessagesId
+        }
+        nextToken
+        startedAt
+      }
+      unreadMessage
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const listConversations = /* GraphQL */ `
+  query ListConversations(
+    $filter: ModelConversationFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listConversations(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        profileID
+        friendProfileID
+        profile {
+          id
+          sub
+          firstName
+          lastName
+          verified
+          submitted
+          profilePhotoID
+          bannerPhotoID
+          verifyPhotoID
+          customerID
+          city
+          state
+          school
+          address
+          address2
+          phone
+          email
+          zipcode
+          birthDate
+          hobbies
+          gender
+          events {
+            nextToken
+            startedAt
+          }
+          rides {
+            nextToken
+            startedAt
+          }
+          friends {
+            nextToken
+            startedAt
+          }
+          conversations {
+            nextToken
+            startedAt
+          }
+          photos {
+            nextToken
+            startedAt
+          }
+          groupID
+          group {
+            id
+            name
+            domain
+            webPage
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          privacySetting {
+            id
+            city
+            state
+            school
+            email
+            events
+            rides
+            friends
+            photos
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          socialMedia {
+            nextToken
+            startedAt
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          profilePrivacySettingId
+        }
+        friendProfile {
+          id
+          sub
+          firstName
+          lastName
+          verified
+          submitted
+          profilePhotoID
+          bannerPhotoID
+          verifyPhotoID
+          customerID
+          city
+          state
+          school
+          address
+          address2
+          phone
+          email
+          zipcode
+          birthDate
+          hobbies
+          gender
+          events {
+            nextToken
+            startedAt
+          }
+          rides {
+            nextToken
+            startedAt
+          }
+          friends {
+            nextToken
+            startedAt
+          }
+          conversations {
+            nextToken
+            startedAt
+          }
+          photos {
+            nextToken
+            startedAt
+          }
+          groupID
+          group {
+            id
+            name
+            domain
+            webPage
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          privacySetting {
+            id
+            city
+            state
+            school
+            email
+            events
+            rides
+            friends
+            photos
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          socialMedia {
+            nextToken
+            startedAt
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          profilePrivacySettingId
+        }
+        messages {
+          items {
+            id
+            conversationID
+            content
+            senderProfileID
+            receiverProfileID
+            unread
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            conversationMessagesId
           }
           nextToken
           startedAt
@@ -1279,12 +4301,848 @@ export const getMessage = /* GraphQL */ `
         _deleted
         _lastChangedAt
       }
-      unreadMessage
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const syncConversations = /* GraphQL */ `
+  query SyncConversations(
+    $filter: ModelConversationFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncConversations(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        profileID
+        friendProfileID
+        profile {
+          id
+          sub
+          firstName
+          lastName
+          verified
+          submitted
+          profilePhotoID
+          bannerPhotoID
+          verifyPhotoID
+          customerID
+          city
+          state
+          school
+          address
+          address2
+          phone
+          email
+          zipcode
+          birthDate
+          hobbies
+          gender
+          events {
+            nextToken
+            startedAt
+          }
+          rides {
+            nextToken
+            startedAt
+          }
+          friends {
+            nextToken
+            startedAt
+          }
+          conversations {
+            nextToken
+            startedAt
+          }
+          photos {
+            nextToken
+            startedAt
+          }
+          groupID
+          group {
+            id
+            name
+            domain
+            webPage
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          privacySetting {
+            id
+            city
+            state
+            school
+            email
+            events
+            rides
+            friends
+            photos
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          socialMedia {
+            nextToken
+            startedAt
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          profilePrivacySettingId
+        }
+        friendProfile {
+          id
+          sub
+          firstName
+          lastName
+          verified
+          submitted
+          profilePhotoID
+          bannerPhotoID
+          verifyPhotoID
+          customerID
+          city
+          state
+          school
+          address
+          address2
+          phone
+          email
+          zipcode
+          birthDate
+          hobbies
+          gender
+          events {
+            nextToken
+            startedAt
+          }
+          rides {
+            nextToken
+            startedAt
+          }
+          friends {
+            nextToken
+            startedAt
+          }
+          conversations {
+            nextToken
+            startedAt
+          }
+          photos {
+            nextToken
+            startedAt
+          }
+          groupID
+          group {
+            id
+            name
+            domain
+            webPage
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          privacySetting {
+            id
+            city
+            state
+            school
+            email
+            events
+            rides
+            friends
+            photos
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          socialMedia {
+            nextToken
+            startedAt
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          profilePrivacySettingId
+        }
+        messages {
+          items {
+            id
+            conversationID
+            content
+            senderProfileID
+            receiverProfileID
+            unread
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            conversationMessagesId
+          }
+          nextToken
+          startedAt
+        }
+        unreadMessage
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const conversationsByProfileID = /* GraphQL */ `
+  query ConversationsByProfileID(
+    $profileID: ID!
+    $sortDirection: ModelSortDirection
+    $filter: ModelConversationFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    conversationsByProfileID(
+      profileID: $profileID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        profileID
+        friendProfileID
+        profile {
+          id
+          sub
+          firstName
+          lastName
+          verified
+          submitted
+          profilePhotoID
+          bannerPhotoID
+          verifyPhotoID
+          customerID
+          city
+          state
+          school
+          address
+          address2
+          phone
+          email
+          zipcode
+          birthDate
+          hobbies
+          gender
+          events {
+            nextToken
+            startedAt
+          }
+          rides {
+            nextToken
+            startedAt
+          }
+          friends {
+            nextToken
+            startedAt
+          }
+          conversations {
+            nextToken
+            startedAt
+          }
+          photos {
+            nextToken
+            startedAt
+          }
+          groupID
+          group {
+            id
+            name
+            domain
+            webPage
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          privacySetting {
+            id
+            city
+            state
+            school
+            email
+            events
+            rides
+            friends
+            photos
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          socialMedia {
+            nextToken
+            startedAt
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          profilePrivacySettingId
+        }
+        friendProfile {
+          id
+          sub
+          firstName
+          lastName
+          verified
+          submitted
+          profilePhotoID
+          bannerPhotoID
+          verifyPhotoID
+          customerID
+          city
+          state
+          school
+          address
+          address2
+          phone
+          email
+          zipcode
+          birthDate
+          hobbies
+          gender
+          events {
+            nextToken
+            startedAt
+          }
+          rides {
+            nextToken
+            startedAt
+          }
+          friends {
+            nextToken
+            startedAt
+          }
+          conversations {
+            nextToken
+            startedAt
+          }
+          photos {
+            nextToken
+            startedAt
+          }
+          groupID
+          group {
+            id
+            name
+            domain
+            webPage
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          privacySetting {
+            id
+            city
+            state
+            school
+            email
+            events
+            rides
+            friends
+            photos
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          socialMedia {
+            nextToken
+            startedAt
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          profilePrivacySettingId
+        }
+        messages {
+          items {
+            id
+            conversationID
+            content
+            senderProfileID
+            receiverProfileID
+            unread
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            conversationMessagesId
+          }
+          nextToken
+          startedAt
+        }
+        unreadMessage
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const conversationsByFriendProfileID = /* GraphQL */ `
+  query ConversationsByFriendProfileID(
+    $friendProfileID: ID!
+    $sortDirection: ModelSortDirection
+    $filter: ModelConversationFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    conversationsByFriendProfileID(
+      friendProfileID: $friendProfileID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        profileID
+        friendProfileID
+        profile {
+          id
+          sub
+          firstName
+          lastName
+          verified
+          submitted
+          profilePhotoID
+          bannerPhotoID
+          verifyPhotoID
+          customerID
+          city
+          state
+          school
+          address
+          address2
+          phone
+          email
+          zipcode
+          birthDate
+          hobbies
+          gender
+          events {
+            nextToken
+            startedAt
+          }
+          rides {
+            nextToken
+            startedAt
+          }
+          friends {
+            nextToken
+            startedAt
+          }
+          conversations {
+            nextToken
+            startedAt
+          }
+          photos {
+            nextToken
+            startedAt
+          }
+          groupID
+          group {
+            id
+            name
+            domain
+            webPage
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          privacySetting {
+            id
+            city
+            state
+            school
+            email
+            events
+            rides
+            friends
+            photos
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          socialMedia {
+            nextToken
+            startedAt
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          profilePrivacySettingId
+        }
+        friendProfile {
+          id
+          sub
+          firstName
+          lastName
+          verified
+          submitted
+          profilePhotoID
+          bannerPhotoID
+          verifyPhotoID
+          customerID
+          city
+          state
+          school
+          address
+          address2
+          phone
+          email
+          zipcode
+          birthDate
+          hobbies
+          gender
+          events {
+            nextToken
+            startedAt
+          }
+          rides {
+            nextToken
+            startedAt
+          }
+          friends {
+            nextToken
+            startedAt
+          }
+          conversations {
+            nextToken
+            startedAt
+          }
+          photos {
+            nextToken
+            startedAt
+          }
+          groupID
+          group {
+            id
+            name
+            domain
+            webPage
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          privacySetting {
+            id
+            city
+            state
+            school
+            email
+            events
+            rides
+            friends
+            photos
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          socialMedia {
+            nextToken
+            startedAt
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          profilePrivacySettingId
+        }
+        messages {
+          items {
+            id
+            conversationID
+            content
+            senderProfileID
+            receiverProfileID
+            unread
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            conversationMessagesId
+          }
+          nextToken
+          startedAt
+        }
+        unreadMessage
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const getMessage = /* GraphQL */ `
+  query GetMessage($id: ID!) {
+    getMessage(id: $id) {
+      id
+      conversation {
+        id
+        profileID
+        friendProfileID
+        profile {
+          id
+          sub
+          firstName
+          lastName
+          verified
+          submitted
+          profilePhotoID
+          bannerPhotoID
+          verifyPhotoID
+          customerID
+          city
+          state
+          school
+          address
+          address2
+          phone
+          email
+          zipcode
+          birthDate
+          hobbies
+          gender
+          events {
+            nextToken
+            startedAt
+          }
+          rides {
+            nextToken
+            startedAt
+          }
+          friends {
+            nextToken
+            startedAt
+          }
+          conversations {
+            nextToken
+            startedAt
+          }
+          photos {
+            nextToken
+            startedAt
+          }
+          groupID
+          group {
+            id
+            name
+            domain
+            webPage
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          privacySetting {
+            id
+            city
+            state
+            school
+            email
+            events
+            rides
+            friends
+            photos
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          socialMedia {
+            nextToken
+            startedAt
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          profilePrivacySettingId
+        }
+        friendProfile {
+          id
+          sub
+          firstName
+          lastName
+          verified
+          submitted
+          profilePhotoID
+          bannerPhotoID
+          verifyPhotoID
+          customerID
+          city
+          state
+          school
+          address
+          address2
+          phone
+          email
+          zipcode
+          birthDate
+          hobbies
+          gender
+          events {
+            nextToken
+            startedAt
+          }
+          rides {
+            nextToken
+            startedAt
+          }
+          friends {
+            nextToken
+            startedAt
+          }
+          conversations {
+            nextToken
+            startedAt
+          }
+          photos {
+            nextToken
+            startedAt
+          }
+          groupID
+          group {
+            id
+            name
+            domain
+            webPage
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          privacySetting {
+            id
+            city
+            state
+            school
+            email
+            events
+            rides
+            friends
+            photos
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          socialMedia {
+            nextToken
+            startedAt
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          profilePrivacySettingId
+        }
+        messages {
+          items {
+            id
+            conversationID
+            content
+            senderProfileID
+            receiverProfileID
+            unread
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            conversationMessagesId
+          }
+          nextToken
+          startedAt
+        }
+        unreadMessage
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      conversationID
+      content
+      senderProfileID
+      receiverProfileID
+      unread
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
+      conversationMessagesId
     }
   }
 `;
@@ -1297,201 +5155,17 @@ export const listMessages = /* GraphQL */ `
     listMessages(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        content
-        senderID
-        receiverID
-        conversationID
-        sender {
-          id
-          sub
-          firstName
-          lastName
-          verified
-          verifySubmitted
-          profilePhotoID
-          bannerPhotoID
-          verifyPhotoID
-          customerID
-          city
-          state
-          school
-          address
-          address2
-          phone
-          email
-          zipcode
-          birthDate
-          hobbies
-          gender
-          attendingEvents {
-            nextToken
-            startedAt
-          }
-          rides {
-            nextToken
-            startedAt
-          }
-          friends {
-            nextToken
-            startedAt
-          }
-          conversations {
-            nextToken
-            startedAt
-          }
-          sentMessages {
-            nextToken
-            startedAt
-          }
-          receivedMessages {
-            nextToken
-            startedAt
-          }
-          photos {
-            nextToken
-            startedAt
-          }
-          collegeGroupId
-          collegeGroup {
-            id
-            name
-            domain
-            webPage
-            countryCode
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          privacySettingID
-          privacySetting {
-            id
-            city
-            state
-            school
-            email
-            attendingEvents
-            rides
-            friends
-            photos
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          socialMedia {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        receiver {
-          id
-          sub
-          firstName
-          lastName
-          verified
-          verifySubmitted
-          profilePhotoID
-          bannerPhotoID
-          verifyPhotoID
-          customerID
-          city
-          state
-          school
-          address
-          address2
-          phone
-          email
-          zipcode
-          birthDate
-          hobbies
-          gender
-          attendingEvents {
-            nextToken
-            startedAt
-          }
-          rides {
-            nextToken
-            startedAt
-          }
-          friends {
-            nextToken
-            startedAt
-          }
-          conversations {
-            nextToken
-            startedAt
-          }
-          sentMessages {
-            nextToken
-            startedAt
-          }
-          receivedMessages {
-            nextToken
-            startedAt
-          }
-          photos {
-            nextToken
-            startedAt
-          }
-          collegeGroupId
-          collegeGroup {
-            id
-            name
-            domain
-            webPage
-            countryCode
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          privacySettingID
-          privacySetting {
-            id
-            city
-            state
-            school
-            email
-            attendingEvents
-            rides
-            friends
-            photos
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          socialMedia {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
         conversation {
           id
-          userProfileID
+          profileID
           friendProfileID
-          userProfile {
+          profile {
             id
             sub
             firstName
             lastName
             verified
-            verifySubmitted
+            submitted
             profilePhotoID
             bannerPhotoID
             verifyPhotoID
@@ -1507,13 +5181,13 @@ export const listMessages = /* GraphQL */ `
             birthDate
             hobbies
             gender
-            collegeGroupId
-            privacySettingID
+            groupID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
+            profilePrivacySettingId
           }
           friendProfile {
             id
@@ -1521,7 +5195,7 @@ export const listMessages = /* GraphQL */ `
             firstName
             lastName
             verified
-            verifySubmitted
+            submitted
             profilePhotoID
             bannerPhotoID
             verifyPhotoID
@@ -1537,13 +5211,13 @@ export const listMessages = /* GraphQL */ `
             birthDate
             hobbies
             gender
-            collegeGroupId
-            privacySettingID
+            groupID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
+            profilePrivacySettingId
           }
           messages {
             nextToken
@@ -1556,12 +5230,17 @@ export const listMessages = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
-        unreadMessage
+        conversationID
+        content
+        senderProfileID
+        receiverProfileID
+        unread
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
+        conversationMessagesId
       }
       nextToken
       startedAt
@@ -1583,201 +5262,17 @@ export const syncMessages = /* GraphQL */ `
     ) {
       items {
         id
-        content
-        senderID
-        receiverID
-        conversationID
-        sender {
-          id
-          sub
-          firstName
-          lastName
-          verified
-          verifySubmitted
-          profilePhotoID
-          bannerPhotoID
-          verifyPhotoID
-          customerID
-          city
-          state
-          school
-          address
-          address2
-          phone
-          email
-          zipcode
-          birthDate
-          hobbies
-          gender
-          attendingEvents {
-            nextToken
-            startedAt
-          }
-          rides {
-            nextToken
-            startedAt
-          }
-          friends {
-            nextToken
-            startedAt
-          }
-          conversations {
-            nextToken
-            startedAt
-          }
-          sentMessages {
-            nextToken
-            startedAt
-          }
-          receivedMessages {
-            nextToken
-            startedAt
-          }
-          photos {
-            nextToken
-            startedAt
-          }
-          collegeGroupId
-          collegeGroup {
-            id
-            name
-            domain
-            webPage
-            countryCode
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          privacySettingID
-          privacySetting {
-            id
-            city
-            state
-            school
-            email
-            attendingEvents
-            rides
-            friends
-            photos
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          socialMedia {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        receiver {
-          id
-          sub
-          firstName
-          lastName
-          verified
-          verifySubmitted
-          profilePhotoID
-          bannerPhotoID
-          verifyPhotoID
-          customerID
-          city
-          state
-          school
-          address
-          address2
-          phone
-          email
-          zipcode
-          birthDate
-          hobbies
-          gender
-          attendingEvents {
-            nextToken
-            startedAt
-          }
-          rides {
-            nextToken
-            startedAt
-          }
-          friends {
-            nextToken
-            startedAt
-          }
-          conversations {
-            nextToken
-            startedAt
-          }
-          sentMessages {
-            nextToken
-            startedAt
-          }
-          receivedMessages {
-            nextToken
-            startedAt
-          }
-          photos {
-            nextToken
-            startedAt
-          }
-          collegeGroupId
-          collegeGroup {
-            id
-            name
-            domain
-            webPage
-            countryCode
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          privacySettingID
-          privacySetting {
-            id
-            city
-            state
-            school
-            email
-            attendingEvents
-            rides
-            friends
-            photos
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          socialMedia {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
         conversation {
           id
-          userProfileID
+          profileID
           friendProfileID
-          userProfile {
+          profile {
             id
             sub
             firstName
             lastName
             verified
-            verifySubmitted
+            submitted
             profilePhotoID
             bannerPhotoID
             verifyPhotoID
@@ -1793,13 +5288,13 @@ export const syncMessages = /* GraphQL */ `
             birthDate
             hobbies
             gender
-            collegeGroupId
-            privacySettingID
+            groupID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
+            profilePrivacySettingId
           }
           friendProfile {
             id
@@ -1807,7 +5302,7 @@ export const syncMessages = /* GraphQL */ `
             firstName
             lastName
             verified
-            verifySubmitted
+            submitted
             profilePhotoID
             bannerPhotoID
             verifyPhotoID
@@ -1823,13 +5318,13 @@ export const syncMessages = /* GraphQL */ `
             birthDate
             hobbies
             gender
-            collegeGroupId
-            privacySettingID
+            groupID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
+            profilePrivacySettingId
           }
           messages {
             nextToken
@@ -1842,588 +5337,17 @@ export const syncMessages = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
-        unreadMessage
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
-export const messagesBySenderID = /* GraphQL */ `
-  query MessagesBySenderID(
-    $senderID: ID!
-    $sortDirection: ModelSortDirection
-    $filter: ModelMessageFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    messagesBySenderID(
-      senderID: $senderID
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        content
-        senderID
-        receiverID
         conversationID
-        sender {
-          id
-          sub
-          firstName
-          lastName
-          verified
-          verifySubmitted
-          profilePhotoID
-          bannerPhotoID
-          verifyPhotoID
-          customerID
-          city
-          state
-          school
-          address
-          address2
-          phone
-          email
-          zipcode
-          birthDate
-          hobbies
-          gender
-          attendingEvents {
-            nextToken
-            startedAt
-          }
-          rides {
-            nextToken
-            startedAt
-          }
-          friends {
-            nextToken
-            startedAt
-          }
-          conversations {
-            nextToken
-            startedAt
-          }
-          sentMessages {
-            nextToken
-            startedAt
-          }
-          receivedMessages {
-            nextToken
-            startedAt
-          }
-          photos {
-            nextToken
-            startedAt
-          }
-          collegeGroupId
-          collegeGroup {
-            id
-            name
-            domain
-            webPage
-            countryCode
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          privacySettingID
-          privacySetting {
-            id
-            city
-            state
-            school
-            email
-            attendingEvents
-            rides
-            friends
-            photos
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          socialMedia {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        receiver {
-          id
-          sub
-          firstName
-          lastName
-          verified
-          verifySubmitted
-          profilePhotoID
-          bannerPhotoID
-          verifyPhotoID
-          customerID
-          city
-          state
-          school
-          address
-          address2
-          phone
-          email
-          zipcode
-          birthDate
-          hobbies
-          gender
-          attendingEvents {
-            nextToken
-            startedAt
-          }
-          rides {
-            nextToken
-            startedAt
-          }
-          friends {
-            nextToken
-            startedAt
-          }
-          conversations {
-            nextToken
-            startedAt
-          }
-          sentMessages {
-            nextToken
-            startedAt
-          }
-          receivedMessages {
-            nextToken
-            startedAt
-          }
-          photos {
-            nextToken
-            startedAt
-          }
-          collegeGroupId
-          collegeGroup {
-            id
-            name
-            domain
-            webPage
-            countryCode
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          privacySettingID
-          privacySetting {
-            id
-            city
-            state
-            school
-            email
-            attendingEvents
-            rides
-            friends
-            photos
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          socialMedia {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        conversation {
-          id
-          userProfileID
-          friendProfileID
-          userProfile {
-            id
-            sub
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            verifyPhotoID
-            customerID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            birthDate
-            hobbies
-            gender
-            collegeGroupId
-            privacySettingID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          friendProfile {
-            id
-            sub
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            verifyPhotoID
-            customerID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            birthDate
-            hobbies
-            gender
-            collegeGroupId
-            privacySettingID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          messages {
-            nextToken
-            startedAt
-          }
-          unreadMessage
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        unreadMessage
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
-export const messagesByReceiverID = /* GraphQL */ `
-  query MessagesByReceiverID(
-    $receiverID: ID!
-    $sortDirection: ModelSortDirection
-    $filter: ModelMessageFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    messagesByReceiverID(
-      receiverID: $receiverID
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
         content
-        senderID
-        receiverID
-        conversationID
-        sender {
-          id
-          sub
-          firstName
-          lastName
-          verified
-          verifySubmitted
-          profilePhotoID
-          bannerPhotoID
-          verifyPhotoID
-          customerID
-          city
-          state
-          school
-          address
-          address2
-          phone
-          email
-          zipcode
-          birthDate
-          hobbies
-          gender
-          attendingEvents {
-            nextToken
-            startedAt
-          }
-          rides {
-            nextToken
-            startedAt
-          }
-          friends {
-            nextToken
-            startedAt
-          }
-          conversations {
-            nextToken
-            startedAt
-          }
-          sentMessages {
-            nextToken
-            startedAt
-          }
-          receivedMessages {
-            nextToken
-            startedAt
-          }
-          photos {
-            nextToken
-            startedAt
-          }
-          collegeGroupId
-          collegeGroup {
-            id
-            name
-            domain
-            webPage
-            countryCode
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          privacySettingID
-          privacySetting {
-            id
-            city
-            state
-            school
-            email
-            attendingEvents
-            rides
-            friends
-            photos
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          socialMedia {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        receiver {
-          id
-          sub
-          firstName
-          lastName
-          verified
-          verifySubmitted
-          profilePhotoID
-          bannerPhotoID
-          verifyPhotoID
-          customerID
-          city
-          state
-          school
-          address
-          address2
-          phone
-          email
-          zipcode
-          birthDate
-          hobbies
-          gender
-          attendingEvents {
-            nextToken
-            startedAt
-          }
-          rides {
-            nextToken
-            startedAt
-          }
-          friends {
-            nextToken
-            startedAt
-          }
-          conversations {
-            nextToken
-            startedAt
-          }
-          sentMessages {
-            nextToken
-            startedAt
-          }
-          receivedMessages {
-            nextToken
-            startedAt
-          }
-          photos {
-            nextToken
-            startedAt
-          }
-          collegeGroupId
-          collegeGroup {
-            id
-            name
-            domain
-            webPage
-            countryCode
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          privacySettingID
-          privacySetting {
-            id
-            city
-            state
-            school
-            email
-            attendingEvents
-            rides
-            friends
-            photos
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          socialMedia {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        conversation {
-          id
-          userProfileID
-          friendProfileID
-          userProfile {
-            id
-            sub
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            verifyPhotoID
-            customerID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            birthDate
-            hobbies
-            gender
-            collegeGroupId
-            privacySettingID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          friendProfile {
-            id
-            sub
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            verifyPhotoID
-            customerID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            birthDate
-            hobbies
-            gender
-            collegeGroupId
-            privacySettingID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          messages {
-            nextToken
-            startedAt
-          }
-          unreadMessage
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        unreadMessage
+        senderProfileID
+        receiverProfileID
+        unread
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
+        conversationMessagesId
       }
       nextToken
       startedAt
@@ -2447,201 +5371,17 @@ export const messagesByConversationID = /* GraphQL */ `
     ) {
       items {
         id
-        content
-        senderID
-        receiverID
-        conversationID
-        sender {
-          id
-          sub
-          firstName
-          lastName
-          verified
-          verifySubmitted
-          profilePhotoID
-          bannerPhotoID
-          verifyPhotoID
-          customerID
-          city
-          state
-          school
-          address
-          address2
-          phone
-          email
-          zipcode
-          birthDate
-          hobbies
-          gender
-          attendingEvents {
-            nextToken
-            startedAt
-          }
-          rides {
-            nextToken
-            startedAt
-          }
-          friends {
-            nextToken
-            startedAt
-          }
-          conversations {
-            nextToken
-            startedAt
-          }
-          sentMessages {
-            nextToken
-            startedAt
-          }
-          receivedMessages {
-            nextToken
-            startedAt
-          }
-          photos {
-            nextToken
-            startedAt
-          }
-          collegeGroupId
-          collegeGroup {
-            id
-            name
-            domain
-            webPage
-            countryCode
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          privacySettingID
-          privacySetting {
-            id
-            city
-            state
-            school
-            email
-            attendingEvents
-            rides
-            friends
-            photos
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          socialMedia {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        receiver {
-          id
-          sub
-          firstName
-          lastName
-          verified
-          verifySubmitted
-          profilePhotoID
-          bannerPhotoID
-          verifyPhotoID
-          customerID
-          city
-          state
-          school
-          address
-          address2
-          phone
-          email
-          zipcode
-          birthDate
-          hobbies
-          gender
-          attendingEvents {
-            nextToken
-            startedAt
-          }
-          rides {
-            nextToken
-            startedAt
-          }
-          friends {
-            nextToken
-            startedAt
-          }
-          conversations {
-            nextToken
-            startedAt
-          }
-          sentMessages {
-            nextToken
-            startedAt
-          }
-          receivedMessages {
-            nextToken
-            startedAt
-          }
-          photos {
-            nextToken
-            startedAt
-          }
-          collegeGroupId
-          collegeGroup {
-            id
-            name
-            domain
-            webPage
-            countryCode
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          privacySettingID
-          privacySetting {
-            id
-            city
-            state
-            school
-            email
-            attendingEvents
-            rides
-            friends
-            photos
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          socialMedia {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
         conversation {
           id
-          userProfileID
+          profileID
           friendProfileID
-          userProfile {
+          profile {
             id
             sub
             firstName
             lastName
             verified
-            verifySubmitted
+            submitted
             profilePhotoID
             bannerPhotoID
             verifyPhotoID
@@ -2657,13 +5397,13 @@ export const messagesByConversationID = /* GraphQL */ `
             birthDate
             hobbies
             gender
-            collegeGroupId
-            privacySettingID
+            groupID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
+            profilePrivacySettingId
           }
           friendProfile {
             id
@@ -2671,7 +5411,7 @@ export const messagesByConversationID = /* GraphQL */ `
             firstName
             lastName
             verified
-            verifySubmitted
+            submitted
             profilePhotoID
             bannerPhotoID
             verifyPhotoID
@@ -2687,13 +5427,13 @@ export const messagesByConversationID = /* GraphQL */ `
             birthDate
             hobbies
             gender
-            collegeGroupId
-            privacySettingID
+            groupID
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
+            profilePrivacySettingId
           }
           messages {
             nextToken
@@ -2706,7 +5446,341 @@ export const messagesByConversationID = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
-        unreadMessage
+        conversationID
+        content
+        senderProfileID
+        receiverProfileID
+        unread
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        conversationMessagesId
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const getGroup = /* GraphQL */ `
+  query GetGroup($id: ID!) {
+    getGroup(id: $id) {
+      id
+      name
+      domain
+      webPage
+      events {
+        items {
+          id
+          name
+          genre
+          image
+          location
+          state
+          city
+          address
+          startDate
+          endDate
+          type
+          description
+          url
+          customerID
+          hasPaid
+          cancelled
+          subscriptionID
+          approved
+          group {
+            id
+            name
+            domain
+            webPage
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          groupID
+          attendees {
+            nextToken
+            startedAt
+          }
+          rides {
+            nextToken
+            startedAt
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
+      members {
+        items {
+          id
+          sub
+          firstName
+          lastName
+          verified
+          submitted
+          profilePhotoID
+          bannerPhotoID
+          verifyPhotoID
+          customerID
+          city
+          state
+          school
+          address
+          address2
+          phone
+          email
+          zipcode
+          birthDate
+          hobbies
+          gender
+          events {
+            nextToken
+            startedAt
+          }
+          rides {
+            nextToken
+            startedAt
+          }
+          friends {
+            nextToken
+            startedAt
+          }
+          conversations {
+            nextToken
+            startedAt
+          }
+          photos {
+            nextToken
+            startedAt
+          }
+          groupID
+          group {
+            id
+            name
+            domain
+            webPage
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          privacySetting {
+            id
+            city
+            state
+            school
+            email
+            events
+            rides
+            friends
+            photos
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          socialMedia {
+            nextToken
+            startedAt
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          profilePrivacySettingId
+        }
+        nextToken
+        startedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const listGroups = /* GraphQL */ `
+  query ListGroups(
+    $filter: ModelGroupFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listGroups(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
+        domain
+        webPage
+        events {
+          items {
+            id
+            name
+            genre
+            image
+            location
+            state
+            city
+            address
+            startDate
+            endDate
+            type
+            description
+            url
+            customerID
+            hasPaid
+            cancelled
+            subscriptionID
+            approved
+            groupID
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        members {
+          items {
+            id
+            sub
+            firstName
+            lastName
+            verified
+            submitted
+            profilePhotoID
+            bannerPhotoID
+            verifyPhotoID
+            customerID
+            city
+            state
+            school
+            address
+            address2
+            phone
+            email
+            zipcode
+            birthDate
+            hobbies
+            gender
+            groupID
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            profilePrivacySettingId
+          }
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const syncGroups = /* GraphQL */ `
+  query SyncGroups(
+    $filter: ModelGroupFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncGroups(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        name
+        domain
+        webPage
+        events {
+          items {
+            id
+            name
+            genre
+            image
+            location
+            state
+            city
+            address
+            startDate
+            endDate
+            type
+            description
+            url
+            customerID
+            hasPaid
+            cancelled
+            subscriptionID
+            approved
+            groupID
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
+        members {
+          items {
+            id
+            sub
+            firstName
+            lastName
+            verified
+            submitted
+            profilePhotoID
+            bannerPhotoID
+            verifyPhotoID
+            customerID
+            city
+            state
+            school
+            address
+            address2
+            phone
+            email
+            zipcode
+            birthDate
+            hobbies
+            gender
+            groupID
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+            profilePrivacySettingId
+          }
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
@@ -2722,15 +5796,15 @@ export const getEventProfile = /* GraphQL */ `
   query GetEventProfile($id: ID!) {
     getEventProfile(id: $id) {
       id
-      userProfileID
-      eventID
-      userProfile {
+      profileId
+      eventId
+      profile {
         id
         sub
         firstName
         lastName
         verified
-        verifySubmitted
+        submitted
         profilePhotoID
         bannerPhotoID
         verifyPhotoID
@@ -2746,11 +5820,11 @@ export const getEventProfile = /* GraphQL */ `
         birthDate
         hobbies
         gender
-        attendingEvents {
+        events {
           items {
             id
-            userProfileID
-            eventID
+            profileId
+            eventId
             createdAt
             updatedAt
             _version
@@ -2763,9 +5837,8 @@ export const getEventProfile = /* GraphQL */ `
         rides {
           items {
             id
-            rideID
-            userProfileID
-            isDriver
+            profileId
+            rideId
             createdAt
             updatedAt
             _version
@@ -2778,7 +5851,7 @@ export const getEventProfile = /* GraphQL */ `
         friends {
           items {
             id
-            userProfileID
+            profileID
             friendProfileID
             isAccepted
             createdAt
@@ -2793,42 +5866,8 @@ export const getEventProfile = /* GraphQL */ `
         conversations {
           items {
             id
-            userProfileID
+            profileID
             friendProfileID
-            unreadMessage
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        sentMessages {
-          items {
-            id
-            content
-            senderID
-            receiverID
-            conversationID
-            unreadMessage
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        receivedMessages {
-          items {
-            id
-            content
-            senderID
-            receiverID
-            conversationID
             unreadMessage
             createdAt
             updatedAt
@@ -2842,7 +5881,7 @@ export const getEventProfile = /* GraphQL */ `
         photos {
           items {
             id
-            userProfileID
+            profileID
             s3Key
             isPrivate
             identityId
@@ -2856,13 +5895,12 @@ export const getEventProfile = /* GraphQL */ `
           nextToken
           startedAt
         }
-        collegeGroupId
-        collegeGroup {
+        groupID
+        group {
           id
           name
           domain
           webPage
-          countryCode
           events {
             nextToken
             startedAt
@@ -2877,14 +5915,13 @@ export const getEventProfile = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
-        privacySettingID
         privacySetting {
           id
           city
           state
           school
           email
-          attendingEvents
+          events
           rides
           friends
           photos
@@ -2897,7 +5934,6 @@ export const getEventProfile = /* GraphQL */ `
         socialMedia {
           items {
             id
-            userProfileID
             socialMediaType
             accountURL
             createdAt
@@ -2905,6 +5941,7 @@ export const getEventProfile = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            profileSocialMediaId
           }
           nextToken
           startedAt
@@ -2914,6 +5951,7 @@ export const getEventProfile = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        profilePrivacySettingId
       }
       event {
         id
@@ -2931,14 +5969,14 @@ export const getEventProfile = /* GraphQL */ `
         url
         customerID
         hasPaid
-        subID
+        cancelled
+        subscriptionID
         approved
         group {
           id
           name
           domain
           webPage
-          countryCode
           events {
             nextToken
             startedAt
@@ -2957,8 +5995,8 @@ export const getEventProfile = /* GraphQL */ `
         attendees {
           items {
             id
-            userProfileID
-            eventID
+            profileId
+            eventId
             createdAt
             updatedAt
             _version
@@ -2972,6 +6010,7 @@ export const getEventProfile = /* GraphQL */ `
           items {
             id
             eventID
+            driverProfileID
             maxPassengers
             departureTime
             startPoint
@@ -2981,7 +6020,6 @@ export const getEventProfile = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
-            rideDriverId
           }
           nextToken
           startedAt
@@ -3009,15 +6047,15 @@ export const listEventProfiles = /* GraphQL */ `
     listEventProfiles(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        userProfileID
-        eventID
-        userProfile {
+        profileId
+        eventId
+        profile {
           id
           sub
           firstName
           lastName
           verified
-          verifySubmitted
+          submitted
           profilePhotoID
           bannerPhotoID
           verifyPhotoID
@@ -3033,7 +6071,7 @@ export const listEventProfiles = /* GraphQL */ `
           birthDate
           hobbies
           gender
-          attendingEvents {
+          events {
             nextToken
             startedAt
           }
@@ -3049,39 +6087,29 @@ export const listEventProfiles = /* GraphQL */ `
             nextToken
             startedAt
           }
-          sentMessages {
-            nextToken
-            startedAt
-          }
-          receivedMessages {
-            nextToken
-            startedAt
-          }
           photos {
             nextToken
             startedAt
           }
-          collegeGroupId
-          collegeGroup {
+          groupID
+          group {
             id
             name
             domain
             webPage
-            countryCode
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
           }
-          privacySettingID
           privacySetting {
             id
             city
             state
             school
             email
-            attendingEvents
+            events
             rides
             friends
             photos
@@ -3100,6 +6128,7 @@ export const listEventProfiles = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          profilePrivacySettingId
         }
         event {
           id
@@ -3117,14 +6146,14 @@ export const listEventProfiles = /* GraphQL */ `
           url
           customerID
           hasPaid
-          subID
+          cancelled
+          subscriptionID
           approved
           group {
             id
             name
             domain
             webPage
-            countryCode
             createdAt
             updatedAt
             _version
@@ -3172,15 +6201,15 @@ export const syncEventProfiles = /* GraphQL */ `
     ) {
       items {
         id
-        userProfileID
-        eventID
-        userProfile {
+        profileId
+        eventId
+        profile {
           id
           sub
           firstName
           lastName
           verified
-          verifySubmitted
+          submitted
           profilePhotoID
           bannerPhotoID
           verifyPhotoID
@@ -3196,7 +6225,7 @@ export const syncEventProfiles = /* GraphQL */ `
           birthDate
           hobbies
           gender
-          attendingEvents {
+          events {
             nextToken
             startedAt
           }
@@ -3212,39 +6241,29 @@ export const syncEventProfiles = /* GraphQL */ `
             nextToken
             startedAt
           }
-          sentMessages {
-            nextToken
-            startedAt
-          }
-          receivedMessages {
-            nextToken
-            startedAt
-          }
           photos {
             nextToken
             startedAt
           }
-          collegeGroupId
-          collegeGroup {
+          groupID
+          group {
             id
             name
             domain
             webPage
-            countryCode
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
           }
-          privacySettingID
           privacySetting {
             id
             city
             state
             school
             email
-            attendingEvents
+            events
             rides
             friends
             photos
@@ -3263,6 +6282,7 @@ export const syncEventProfiles = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          profilePrivacySettingId
         }
         event {
           id
@@ -3280,14 +6300,14 @@ export const syncEventProfiles = /* GraphQL */ `
           url
           customerID
           hasPaid
-          subID
+          cancelled
+          subscriptionID
           approved
           group {
             id
             name
             domain
             webPage
-            countryCode
             createdAt
             updatedAt
             _version
@@ -3320,16 +6340,16 @@ export const syncEventProfiles = /* GraphQL */ `
     }
   }
 `;
-export const eventProfilesByUserProfileID = /* GraphQL */ `
-  query EventProfilesByUserProfileID(
-    $userProfileID: ID!
+export const eventProfilesByProfileId = /* GraphQL */ `
+  query EventProfilesByProfileId(
+    $profileId: ID!
     $sortDirection: ModelSortDirection
     $filter: ModelEventProfileFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    eventProfilesByUserProfileID(
-      userProfileID: $userProfileID
+    eventProfilesByProfileId(
+      profileId: $profileId
       sortDirection: $sortDirection
       filter: $filter
       limit: $limit
@@ -3337,15 +6357,15 @@ export const eventProfilesByUserProfileID = /* GraphQL */ `
     ) {
       items {
         id
-        userProfileID
-        eventID
-        userProfile {
+        profileId
+        eventId
+        profile {
           id
           sub
           firstName
           lastName
           verified
-          verifySubmitted
+          submitted
           profilePhotoID
           bannerPhotoID
           verifyPhotoID
@@ -3361,7 +6381,7 @@ export const eventProfilesByUserProfileID = /* GraphQL */ `
           birthDate
           hobbies
           gender
-          attendingEvents {
+          events {
             nextToken
             startedAt
           }
@@ -3377,39 +6397,29 @@ export const eventProfilesByUserProfileID = /* GraphQL */ `
             nextToken
             startedAt
           }
-          sentMessages {
-            nextToken
-            startedAt
-          }
-          receivedMessages {
-            nextToken
-            startedAt
-          }
           photos {
             nextToken
             startedAt
           }
-          collegeGroupId
-          collegeGroup {
+          groupID
+          group {
             id
             name
             domain
             webPage
-            countryCode
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
           }
-          privacySettingID
           privacySetting {
             id
             city
             state
             school
             email
-            attendingEvents
+            events
             rides
             friends
             photos
@@ -3428,6 +6438,7 @@ export const eventProfilesByUserProfileID = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          profilePrivacySettingId
         }
         event {
           id
@@ -3445,14 +6456,14 @@ export const eventProfilesByUserProfileID = /* GraphQL */ `
           url
           customerID
           hasPaid
-          subID
+          cancelled
+          subscriptionID
           approved
           group {
             id
             name
             domain
             webPage
-            countryCode
             createdAt
             updatedAt
             _version
@@ -3485,16 +6496,16 @@ export const eventProfilesByUserProfileID = /* GraphQL */ `
     }
   }
 `;
-export const eventProfilesByEventID = /* GraphQL */ `
-  query EventProfilesByEventID(
-    $eventID: ID!
+export const eventProfilesByEventId = /* GraphQL */ `
+  query EventProfilesByEventId(
+    $eventId: ID!
     $sortDirection: ModelSortDirection
     $filter: ModelEventProfileFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    eventProfilesByEventID(
-      eventID: $eventID
+    eventProfilesByEventId(
+      eventId: $eventId
       sortDirection: $sortDirection
       filter: $filter
       limit: $limit
@@ -3502,15 +6513,15 @@ export const eventProfilesByEventID = /* GraphQL */ `
     ) {
       items {
         id
-        userProfileID
-        eventID
-        userProfile {
+        profileId
+        eventId
+        profile {
           id
           sub
           firstName
           lastName
           verified
-          verifySubmitted
+          submitted
           profilePhotoID
           bannerPhotoID
           verifyPhotoID
@@ -3526,7 +6537,7 @@ export const eventProfilesByEventID = /* GraphQL */ `
           birthDate
           hobbies
           gender
-          attendingEvents {
+          events {
             nextToken
             startedAt
           }
@@ -3542,39 +6553,29 @@ export const eventProfilesByEventID = /* GraphQL */ `
             nextToken
             startedAt
           }
-          sentMessages {
-            nextToken
-            startedAt
-          }
-          receivedMessages {
-            nextToken
-            startedAt
-          }
           photos {
             nextToken
             startedAt
           }
-          collegeGroupId
-          collegeGroup {
+          groupID
+          group {
             id
             name
             domain
             webPage
-            countryCode
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
           }
-          privacySettingID
           privacySetting {
             id
             city
             state
             school
             email
-            attendingEvents
+            events
             rides
             friends
             photos
@@ -3593,6 +6594,7 @@ export const eventProfilesByEventID = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          profilePrivacySettingId
         }
         event {
           id
@@ -3610,14 +6612,14 @@ export const eventProfilesByEventID = /* GraphQL */ `
           url
           customerID
           hasPaid
-          subID
+          cancelled
+          subscriptionID
           approved
           group {
             id
             name
             domain
             webPage
-            countryCode
             createdAt
             updatedAt
             _version
@@ -3650,288 +6652,39 @@ export const eventProfilesByEventID = /* GraphQL */ `
     }
   }
 `;
-export const getFestival = /* GraphQL */ `
-  query GetFestival($id: ID!) {
-    getFestival(id: $id) {
+export const getRideProfile = /* GraphQL */ `
+  query GetRideProfile($id: ID!) {
+    getRideProfile(id: $id) {
       id
-      name
-      genre
-      image
-      location
-      state
-      city
-      address
-      startDate
-      endDate
-      type
-      description
-      url
-      customerID
-      hasPaid
-      subID
-      approved
-      group {
+      profileId
+      rideId
+      profile {
         id
-        name
-        domain
-        webPage
-        countryCode
+        sub
+        firstName
+        lastName
+        verified
+        submitted
+        profilePhotoID
+        bannerPhotoID
+        verifyPhotoID
+        customerID
+        city
+        state
+        school
+        address
+        address2
+        phone
+        email
+        zipcode
+        birthDate
+        hobbies
+        gender
         events {
           items {
             id
-            name
-            genre
-            image
-            location
-            state
-            city
-            address
-            startDate
-            endDate
-            type
-            description
-            url
-            customerID
-            hasPaid
-            subID
-            approved
-            groupID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        members {
-          items {
-            id
-            sub
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            verifyPhotoID
-            customerID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            birthDate
-            hobbies
-            gender
-            collegeGroupId
-            privacySettingID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      groupID
-      attendees {
-        items {
-          id
-          userProfileID
-          eventID
-          userProfile {
-            id
-            sub
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            verifyPhotoID
-            customerID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            birthDate
-            hobbies
-            gender
-            collegeGroupId
-            privacySettingID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          event {
-            id
-            name
-            genre
-            image
-            location
-            state
-            city
-            address
-            startDate
-            endDate
-            type
-            description
-            url
-            customerID
-            hasPaid
-            subID
-            approved
-            groupID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        nextToken
-        startedAt
-      }
-      rides {
-        items {
-          id
-          event {
-            id
-            name
-            genre
-            image
-            location
-            state
-            city
-            address
-            startDate
-            endDate
-            type
-            description
-            url
-            customerID
-            hasPaid
-            subID
-            approved
-            groupID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          eventID
-          driver {
-            id
-            rideID
-            userProfileID
-            isDriver
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          passengers {
-            nextToken
-            startedAt
-          }
-          maxPassengers
-          departureTime
-          startPoint
-          endPoint
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          rideDriverId
-        }
-        nextToken
-        startedAt
-      }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const listFestivals = /* GraphQL */ `
-  query ListFestivals(
-    $filter: ModelFestivalFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listFestivals(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        name
-        genre
-        image
-        location
-        state
-        city
-        address
-        startDate
-        endDate
-        type
-        description
-        url
-        customerID
-        hasPaid
-        subID
-        approved
-        group {
-          id
-          name
-          domain
-          webPage
-          countryCode
-          events {
-            nextToken
-            startedAt
-          }
-          members {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        groupID
-        attendees {
-          items {
-            id
-            userProfileID
-            eventID
+            profileId
+            eventId
             createdAt
             updatedAt
             _version
@@ -3944,1049 +6697,8 @@ export const listFestivals = /* GraphQL */ `
         rides {
           items {
             id
-            eventID
-            maxPassengers
-            departureTime
-            startPoint
-            endPoint
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            rideDriverId
-          }
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
-export const syncFestivals = /* GraphQL */ `
-  query SyncFestivals(
-    $filter: ModelFestivalFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncFestivals(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        name
-        genre
-        image
-        location
-        state
-        city
-        address
-        startDate
-        endDate
-        type
-        description
-        url
-        customerID
-        hasPaid
-        subID
-        approved
-        group {
-          id
-          name
-          domain
-          webPage
-          countryCode
-          events {
-            nextToken
-            startedAt
-          }
-          members {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        groupID
-        attendees {
-          items {
-            id
-            userProfileID
-            eventID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        rides {
-          items {
-            id
-            eventID
-            maxPassengers
-            departureTime
-            startPoint
-            endPoint
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            rideDriverId
-          }
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
-export const festivalsBySubID = /* GraphQL */ `
-  query FestivalsBySubID(
-    $subID: String!
-    $sortDirection: ModelSortDirection
-    $filter: ModelFestivalFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    festivalsBySubID(
-      subID: $subID
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        name
-        genre
-        image
-        location
-        state
-        city
-        address
-        startDate
-        endDate
-        type
-        description
-        url
-        customerID
-        hasPaid
-        subID
-        approved
-        group {
-          id
-          name
-          domain
-          webPage
-          countryCode
-          events {
-            nextToken
-            startedAt
-          }
-          members {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        groupID
-        attendees {
-          items {
-            id
-            userProfileID
-            eventID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        rides {
-          items {
-            id
-            eventID
-            maxPassengers
-            departureTime
-            startPoint
-            endPoint
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            rideDriverId
-          }
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
-export const festivalsByGroupID = /* GraphQL */ `
-  query FestivalsByGroupID(
-    $groupID: ID!
-    $sortDirection: ModelSortDirection
-    $filter: ModelFestivalFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    festivalsByGroupID(
-      groupID: $groupID
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        name
-        genre
-        image
-        location
-        state
-        city
-        address
-        startDate
-        endDate
-        type
-        description
-        url
-        customerID
-        hasPaid
-        subID
-        approved
-        group {
-          id
-          name
-          domain
-          webPage
-          countryCode
-          events {
-            nextToken
-            startedAt
-          }
-          members {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        groupID
-        attendees {
-          items {
-            id
-            userProfileID
-            eventID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        rides {
-          items {
-            id
-            eventID
-            maxPassengers
-            departureTime
-            startPoint
-            endPoint
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            rideDriverId
-          }
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
-export const getUserProfile = /* GraphQL */ `
-  query GetUserProfile($id: ID!) {
-    getUserProfile(id: $id) {
-      id
-      sub
-      firstName
-      lastName
-      verified
-      verifySubmitted
-      profilePhotoID
-      bannerPhotoID
-      verifyPhotoID
-      customerID
-      city
-      state
-      school
-      address
-      address2
-      phone
-      email
-      zipcode
-      birthDate
-      hobbies
-      gender
-      attendingEvents {
-        items {
-          id
-          userProfileID
-          eventID
-          userProfile {
-            id
-            sub
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            verifyPhotoID
-            customerID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            birthDate
-            hobbies
-            gender
-            collegeGroupId
-            privacySettingID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          event {
-            id
-            name
-            genre
-            image
-            location
-            state
-            city
-            address
-            startDate
-            endDate
-            type
-            description
-            url
-            customerID
-            hasPaid
-            subID
-            approved
-            groupID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        nextToken
-        startedAt
-      }
-      rides {
-        items {
-          id
-          ride {
-            id
-            eventID
-            maxPassengers
-            departureTime
-            startPoint
-            endPoint
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            rideDriverId
-          }
-          rideID
-          userProfile {
-            id
-            sub
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            verifyPhotoID
-            customerID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            birthDate
-            hobbies
-            gender
-            collegeGroupId
-            privacySettingID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          userProfileID
-          isDriver
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        nextToken
-        startedAt
-      }
-      friends {
-        items {
-          id
-          userProfileID
-          friendProfileID
-          isAccepted
-          userProfile {
-            id
-            sub
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            verifyPhotoID
-            customerID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            birthDate
-            hobbies
-            gender
-            collegeGroupId
-            privacySettingID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          friendProfile {
-            id
-            sub
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            verifyPhotoID
-            customerID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            birthDate
-            hobbies
-            gender
-            collegeGroupId
-            privacySettingID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        nextToken
-        startedAt
-      }
-      conversations {
-        items {
-          id
-          userProfileID
-          friendProfileID
-          userProfile {
-            id
-            sub
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            verifyPhotoID
-            customerID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            birthDate
-            hobbies
-            gender
-            collegeGroupId
-            privacySettingID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          friendProfile {
-            id
-            sub
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            verifyPhotoID
-            customerID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            birthDate
-            hobbies
-            gender
-            collegeGroupId
-            privacySettingID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          messages {
-            nextToken
-            startedAt
-          }
-          unreadMessage
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        nextToken
-        startedAt
-      }
-      sentMessages {
-        items {
-          id
-          content
-          senderID
-          receiverID
-          conversationID
-          sender {
-            id
-            sub
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            verifyPhotoID
-            customerID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            birthDate
-            hobbies
-            gender
-            collegeGroupId
-            privacySettingID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          receiver {
-            id
-            sub
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            verifyPhotoID
-            customerID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            birthDate
-            hobbies
-            gender
-            collegeGroupId
-            privacySettingID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          conversation {
-            id
-            userProfileID
-            friendProfileID
-            unreadMessage
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          unreadMessage
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        nextToken
-        startedAt
-      }
-      receivedMessages {
-        items {
-          id
-          content
-          senderID
-          receiverID
-          conversationID
-          sender {
-            id
-            sub
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            verifyPhotoID
-            customerID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            birthDate
-            hobbies
-            gender
-            collegeGroupId
-            privacySettingID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          receiver {
-            id
-            sub
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            verifyPhotoID
-            customerID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            birthDate
-            hobbies
-            gender
-            collegeGroupId
-            privacySettingID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          conversation {
-            id
-            userProfileID
-            friendProfileID
-            unreadMessage
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          unreadMessage
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        nextToken
-        startedAt
-      }
-      photos {
-        items {
-          id
-          userProfileID
-          userProfile {
-            id
-            sub
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            verifyPhotoID
-            customerID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            birthDate
-            hobbies
-            gender
-            collegeGroupId
-            privacySettingID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          s3Key
-          isPrivate
-          identityId
-          description
-          comments {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        nextToken
-        startedAt
-      }
-      collegeGroupId
-      collegeGroup {
-        id
-        name
-        domain
-        webPage
-        countryCode
-        events {
-          items {
-            id
-            name
-            genre
-            image
-            location
-            state
-            city
-            address
-            startDate
-            endDate
-            type
-            description
-            url
-            customerID
-            hasPaid
-            subID
-            approved
-            groupID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        members {
-          items {
-            id
-            sub
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            verifyPhotoID
-            customerID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            birthDate
-            hobbies
-            gender
-            collegeGroupId
-            privacySettingID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      privacySettingID
-      privacySetting {
-        id
-        city
-        state
-        school
-        email
-        attendingEvents
-        rides
-        friends
-        photos
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      socialMedia {
-        items {
-          id
-          userProfileID
-          userProfile {
-            id
-            sub
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            verifyPhotoID
-            customerID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            birthDate
-            hobbies
-            gender
-            collegeGroupId
-            privacySettingID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          socialMediaType
-          accountURL
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        nextToken
-        startedAt
-      }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const listUserProfiles = /* GraphQL */ `
-  query ListUserProfiles(
-    $filter: ModelUserProfileFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listUserProfiles(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        sub
-        firstName
-        lastName
-        verified
-        verifySubmitted
-        profilePhotoID
-        bannerPhotoID
-        verifyPhotoID
-        customerID
-        city
-        state
-        school
-        address
-        address2
-        phone
-        email
-        zipcode
-        birthDate
-        hobbies
-        gender
-        attendingEvents {
-          items {
-            id
-            userProfileID
-            eventID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        rides {
-          items {
-            id
-            rideID
-            userProfileID
-            isDriver
+            profileId
+            rideId
             createdAt
             updatedAt
             _version
@@ -4999,7 +6711,7 @@ export const listUserProfiles = /* GraphQL */ `
         friends {
           items {
             id
-            userProfileID
+            profileID
             friendProfileID
             isAccepted
             createdAt
@@ -5014,42 +6726,8 @@ export const listUserProfiles = /* GraphQL */ `
         conversations {
           items {
             id
-            userProfileID
+            profileID
             friendProfileID
-            unreadMessage
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        sentMessages {
-          items {
-            id
-            content
-            senderID
-            receiverID
-            conversationID
-            unreadMessage
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        receivedMessages {
-          items {
-            id
-            content
-            senderID
-            receiverID
-            conversationID
             unreadMessage
             createdAt
             updatedAt
@@ -5063,7 +6741,7 @@ export const listUserProfiles = /* GraphQL */ `
         photos {
           items {
             id
-            userProfileID
+            profileID
             s3Key
             isPrivate
             identityId
@@ -5077,1159 +6755,12 @@ export const listUserProfiles = /* GraphQL */ `
           nextToken
           startedAt
         }
-        collegeGroupId
-        collegeGroup {
-          id
-          name
-          domain
-          webPage
-          countryCode
-          events {
-            nextToken
-            startedAt
-          }
-          members {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        privacySettingID
-        privacySetting {
-          id
-          city
-          state
-          school
-          email
-          attendingEvents
-          rides
-          friends
-          photos
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        socialMedia {
-          items {
-            id
-            userProfileID
-            socialMediaType
-            accountURL
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
-export const syncUserProfiles = /* GraphQL */ `
-  query SyncUserProfiles(
-    $filter: ModelUserProfileFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncUserProfiles(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        sub
-        firstName
-        lastName
-        verified
-        verifySubmitted
-        profilePhotoID
-        bannerPhotoID
-        verifyPhotoID
-        customerID
-        city
-        state
-        school
-        address
-        address2
-        phone
-        email
-        zipcode
-        birthDate
-        hobbies
-        gender
-        attendingEvents {
-          items {
-            id
-            userProfileID
-            eventID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        rides {
-          items {
-            id
-            rideID
-            userProfileID
-            isDriver
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        friends {
-          items {
-            id
-            userProfileID
-            friendProfileID
-            isAccepted
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        conversations {
-          items {
-            id
-            userProfileID
-            friendProfileID
-            unreadMessage
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        sentMessages {
-          items {
-            id
-            content
-            senderID
-            receiverID
-            conversationID
-            unreadMessage
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        receivedMessages {
-          items {
-            id
-            content
-            senderID
-            receiverID
-            conversationID
-            unreadMessage
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        photos {
-          items {
-            id
-            userProfileID
-            s3Key
-            isPrivate
-            identityId
-            description
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        collegeGroupId
-        collegeGroup {
-          id
-          name
-          domain
-          webPage
-          countryCode
-          events {
-            nextToken
-            startedAt
-          }
-          members {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        privacySettingID
-        privacySetting {
-          id
-          city
-          state
-          school
-          email
-          attendingEvents
-          rides
-          friends
-          photos
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        socialMedia {
-          items {
-            id
-            userProfileID
-            socialMediaType
-            accountURL
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
-export const userProfilesByCollegeGroupId = /* GraphQL */ `
-  query UserProfilesByCollegeGroupId(
-    $collegeGroupId: ID!
-    $sortDirection: ModelSortDirection
-    $filter: ModelUserProfileFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    userProfilesByCollegeGroupId(
-      collegeGroupId: $collegeGroupId
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        sub
-        firstName
-        lastName
-        verified
-        verifySubmitted
-        profilePhotoID
-        bannerPhotoID
-        verifyPhotoID
-        customerID
-        city
-        state
-        school
-        address
-        address2
-        phone
-        email
-        zipcode
-        birthDate
-        hobbies
-        gender
-        attendingEvents {
-          items {
-            id
-            userProfileID
-            eventID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        rides {
-          items {
-            id
-            rideID
-            userProfileID
-            isDriver
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        friends {
-          items {
-            id
-            userProfileID
-            friendProfileID
-            isAccepted
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        conversations {
-          items {
-            id
-            userProfileID
-            friendProfileID
-            unreadMessage
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        sentMessages {
-          items {
-            id
-            content
-            senderID
-            receiverID
-            conversationID
-            unreadMessage
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        receivedMessages {
-          items {
-            id
-            content
-            senderID
-            receiverID
-            conversationID
-            unreadMessage
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        photos {
-          items {
-            id
-            userProfileID
-            s3Key
-            isPrivate
-            identityId
-            description
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        collegeGroupId
-        collegeGroup {
-          id
-          name
-          domain
-          webPage
-          countryCode
-          events {
-            nextToken
-            startedAt
-          }
-          members {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        privacySettingID
-        privacySetting {
-          id
-          city
-          state
-          school
-          email
-          attendingEvents
-          rides
-          friends
-          photos
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        socialMedia {
-          items {
-            id
-            userProfileID
-            socialMediaType
-            accountURL
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
-export const getSocialMedia = /* GraphQL */ `
-  query GetSocialMedia($id: ID!) {
-    getSocialMedia(id: $id) {
-      id
-      userProfileID
-      userProfile {
-        id
-        sub
-        firstName
-        lastName
-        verified
-        verifySubmitted
-        profilePhotoID
-        bannerPhotoID
-        verifyPhotoID
-        customerID
-        city
-        state
-        school
-        address
-        address2
-        phone
-        email
-        zipcode
-        birthDate
-        hobbies
-        gender
-        attendingEvents {
-          items {
-            id
-            userProfileID
-            eventID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        rides {
-          items {
-            id
-            rideID
-            userProfileID
-            isDriver
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        friends {
-          items {
-            id
-            userProfileID
-            friendProfileID
-            isAccepted
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        conversations {
-          items {
-            id
-            userProfileID
-            friendProfileID
-            unreadMessage
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        sentMessages {
-          items {
-            id
-            content
-            senderID
-            receiverID
-            conversationID
-            unreadMessage
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        receivedMessages {
-          items {
-            id
-            content
-            senderID
-            receiverID
-            conversationID
-            unreadMessage
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        photos {
-          items {
-            id
-            userProfileID
-            s3Key
-            isPrivate
-            identityId
-            description
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        collegeGroupId
-        collegeGroup {
-          id
-          name
-          domain
-          webPage
-          countryCode
-          events {
-            nextToken
-            startedAt
-          }
-          members {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        privacySettingID
-        privacySetting {
-          id
-          city
-          state
-          school
-          email
-          attendingEvents
-          rides
-          friends
-          photos
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        socialMedia {
-          items {
-            id
-            userProfileID
-            socialMediaType
-            accountURL
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      socialMediaType
-      accountURL
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const listSocialMedias = /* GraphQL */ `
-  query ListSocialMedias(
-    $filter: ModelSocialMediaFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listSocialMedias(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        userProfileID
-        userProfile {
-          id
-          sub
-          firstName
-          lastName
-          verified
-          verifySubmitted
-          profilePhotoID
-          bannerPhotoID
-          verifyPhotoID
-          customerID
-          city
-          state
-          school
-          address
-          address2
-          phone
-          email
-          zipcode
-          birthDate
-          hobbies
-          gender
-          attendingEvents {
-            nextToken
-            startedAt
-          }
-          rides {
-            nextToken
-            startedAt
-          }
-          friends {
-            nextToken
-            startedAt
-          }
-          conversations {
-            nextToken
-            startedAt
-          }
-          sentMessages {
-            nextToken
-            startedAt
-          }
-          receivedMessages {
-            nextToken
-            startedAt
-          }
-          photos {
-            nextToken
-            startedAt
-          }
-          collegeGroupId
-          collegeGroup {
-            id
-            name
-            domain
-            webPage
-            countryCode
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          privacySettingID
-          privacySetting {
-            id
-            city
-            state
-            school
-            email
-            attendingEvents
-            rides
-            friends
-            photos
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          socialMedia {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        socialMediaType
-        accountURL
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
-export const syncSocialMedias = /* GraphQL */ `
-  query SyncSocialMedias(
-    $filter: ModelSocialMediaFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncSocialMedias(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        userProfileID
-        userProfile {
-          id
-          sub
-          firstName
-          lastName
-          verified
-          verifySubmitted
-          profilePhotoID
-          bannerPhotoID
-          verifyPhotoID
-          customerID
-          city
-          state
-          school
-          address
-          address2
-          phone
-          email
-          zipcode
-          birthDate
-          hobbies
-          gender
-          attendingEvents {
-            nextToken
-            startedAt
-          }
-          rides {
-            nextToken
-            startedAt
-          }
-          friends {
-            nextToken
-            startedAt
-          }
-          conversations {
-            nextToken
-            startedAt
-          }
-          sentMessages {
-            nextToken
-            startedAt
-          }
-          receivedMessages {
-            nextToken
-            startedAt
-          }
-          photos {
-            nextToken
-            startedAt
-          }
-          collegeGroupId
-          collegeGroup {
-            id
-            name
-            domain
-            webPage
-            countryCode
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          privacySettingID
-          privacySetting {
-            id
-            city
-            state
-            school
-            email
-            attendingEvents
-            rides
-            friends
-            photos
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          socialMedia {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        socialMediaType
-        accountURL
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
-export const socialMediasByUserProfileID = /* GraphQL */ `
-  query SocialMediasByUserProfileID(
-    $userProfileID: ID!
-    $sortDirection: ModelSortDirection
-    $filter: ModelSocialMediaFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    socialMediasByUserProfileID(
-      userProfileID: $userProfileID
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        userProfileID
-        userProfile {
-          id
-          sub
-          firstName
-          lastName
-          verified
-          verifySubmitted
-          profilePhotoID
-          bannerPhotoID
-          verifyPhotoID
-          customerID
-          city
-          state
-          school
-          address
-          address2
-          phone
-          email
-          zipcode
-          birthDate
-          hobbies
-          gender
-          attendingEvents {
-            nextToken
-            startedAt
-          }
-          rides {
-            nextToken
-            startedAt
-          }
-          friends {
-            nextToken
-            startedAt
-          }
-          conversations {
-            nextToken
-            startedAt
-          }
-          sentMessages {
-            nextToken
-            startedAt
-          }
-          receivedMessages {
-            nextToken
-            startedAt
-          }
-          photos {
-            nextToken
-            startedAt
-          }
-          collegeGroupId
-          collegeGroup {
-            id
-            name
-            domain
-            webPage
-            countryCode
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          privacySettingID
-          privacySetting {
-            id
-            city
-            state
-            school
-            email
-            attendingEvents
-            rides
-            friends
-            photos
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          socialMedia {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        socialMediaType
-        accountURL
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
-export const getPrivacySetting = /* GraphQL */ `
-  query GetPrivacySetting($id: ID!) {
-    getPrivacySetting(id: $id) {
-      id
-      city
-      state
-      school
-      email
-      attendingEvents
-      rides
-      friends
-      photos
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const listPrivacySettings = /* GraphQL */ `
-  query ListPrivacySettings(
-    $filter: ModelPrivacySettingFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listPrivacySettings(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        city
-        state
-        school
-        email
-        attendingEvents
-        rides
-        friends
-        photos
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
-export const syncPrivacySettings = /* GraphQL */ `
-  query SyncPrivacySettings(
-    $filter: ModelPrivacySettingFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncPrivacySettings(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        city
-        state
-        school
-        email
-        attendingEvents
-        rides
-        friends
-        photos
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
-export const getRide = /* GraphQL */ `
-  query GetRide($id: ID!) {
-    getRide(id: $id) {
-      id
-      event {
-        id
-        name
-        genre
-        image
-        location
-        state
-        city
-        address
-        startDate
-        endDate
-        type
-        description
-        url
-        customerID
-        hasPaid
-        subID
-        approved
+        groupID
         group {
           id
           name
           domain
           webPage
-          countryCode
           events {
             nextToken
             startedAt
@@ -6244,714 +6775,44 @@ export const getRide = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
-        groupID
-        attendees {
-          items {
-            id
-            userProfileID
-            eventID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        rides {
-          items {
-            id
-            eventID
-            maxPassengers
-            departureTime
-            startPoint
-            endPoint
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            rideDriverId
-          }
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      eventID
-      driver {
-        id
-        ride {
+        privacySetting {
           id
-          event {
-            id
-            name
-            genre
-            image
-            location
-            state
-            city
-            address
-            startDate
-            endDate
-            type
-            description
-            url
-            customerID
-            hasPaid
-            subID
-            approved
-            groupID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          eventID
-          driver {
-            id
-            rideID
-            userProfileID
-            isDriver
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          passengers {
-            nextToken
-            startedAt
-          }
-          maxPassengers
-          departureTime
-          startPoint
-          endPoint
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          rideDriverId
-        }
-        rideID
-        userProfile {
-          id
-          sub
-          firstName
-          lastName
-          verified
-          verifySubmitted
-          profilePhotoID
-          bannerPhotoID
-          verifyPhotoID
-          customerID
           city
           state
           school
-          address
-          address2
-          phone
           email
-          zipcode
-          birthDate
-          hobbies
-          gender
-          attendingEvents {
-            nextToken
-            startedAt
-          }
-          rides {
-            nextToken
-            startedAt
-          }
-          friends {
-            nextToken
-            startedAt
-          }
-          conversations {
-            nextToken
-            startedAt
-          }
-          sentMessages {
-            nextToken
-            startedAt
-          }
-          receivedMessages {
-            nextToken
-            startedAt
-          }
-          photos {
-            nextToken
-            startedAt
-          }
-          collegeGroupId
-          collegeGroup {
-            id
-            name
-            domain
-            webPage
-            countryCode
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          privacySettingID
-          privacySetting {
-            id
-            city
-            state
-            school
-            email
-            attendingEvents
-            rides
-            friends
-            photos
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          socialMedia {
-            nextToken
-            startedAt
-          }
+          events
+          rides
+          friends
+          photos
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
         }
-        userProfileID
-        isDriver
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      passengers {
-        items {
-          id
-          ride {
-            id
-            eventID
-            maxPassengers
-            departureTime
-            startPoint
-            endPoint
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            rideDriverId
-          }
-          rideID
-          userProfile {
-            id
-            sub
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            verifyPhotoID
-            customerID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            birthDate
-            hobbies
-            gender
-            collegeGroupId
-            privacySettingID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          userProfileID
-          isDriver
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        nextToken
-        startedAt
-      }
-      maxPassengers
-      departureTime
-      startPoint
-      endPoint
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-      rideDriverId
-    }
-  }
-`;
-export const listRides = /* GraphQL */ `
-  query ListRides(
-    $filter: ModelRideFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listRides(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        event {
-          id
-          name
-          genre
-          image
-          location
-          state
-          city
-          address
-          startDate
-          endDate
-          type
-          description
-          url
-          customerID
-          hasPaid
-          subID
-          approved
-          group {
-            id
-            name
-            domain
-            webPage
-            countryCode
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          groupID
-          attendees {
-            nextToken
-            startedAt
-          }
-          rides {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        eventID
-        driver {
-          id
-          ride {
-            id
-            eventID
-            maxPassengers
-            departureTime
-            startPoint
-            endPoint
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            rideDriverId
-          }
-          rideID
-          userProfile {
-            id
-            sub
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            verifyPhotoID
-            customerID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            birthDate
-            hobbies
-            gender
-            collegeGroupId
-            privacySettingID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          userProfileID
-          isDriver
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        passengers {
+        socialMedia {
           items {
             id
-            rideID
-            userProfileID
-            isDriver
+            socialMediaType
+            accountURL
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
+            profileSocialMediaId
           }
           nextToken
           startedAt
         }
-        maxPassengers
-        departureTime
-        startPoint
-        endPoint
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
-        rideDriverId
+        profilePrivacySettingId
       }
-      nextToken
-      startedAt
-    }
-  }
-`;
-export const syncRides = /* GraphQL */ `
-  query SyncRides(
-    $filter: ModelRideFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncRides(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        event {
-          id
-          name
-          genre
-          image
-          location
-          state
-          city
-          address
-          startDate
-          endDate
-          type
-          description
-          url
-          customerID
-          hasPaid
-          subID
-          approved
-          group {
-            id
-            name
-            domain
-            webPage
-            countryCode
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          groupID
-          attendees {
-            nextToken
-            startedAt
-          }
-          rides {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        eventID
-        driver {
-          id
-          ride {
-            id
-            eventID
-            maxPassengers
-            departureTime
-            startPoint
-            endPoint
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            rideDriverId
-          }
-          rideID
-          userProfile {
-            id
-            sub
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            verifyPhotoID
-            customerID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            birthDate
-            hobbies
-            gender
-            collegeGroupId
-            privacySettingID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          userProfileID
-          isDriver
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        passengers {
-          items {
-            id
-            rideID
-            userProfileID
-            isDriver
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        maxPassengers
-        departureTime
-        startPoint
-        endPoint
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        rideDriverId
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
-export const ridesByEventID = /* GraphQL */ `
-  query RidesByEventID(
-    $eventID: ID!
-    $sortDirection: ModelSortDirection
-    $filter: ModelRideFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    ridesByEventID(
-      eventID: $eventID
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        event {
-          id
-          name
-          genre
-          image
-          location
-          state
-          city
-          address
-          startDate
-          endDate
-          type
-          description
-          url
-          customerID
-          hasPaid
-          subID
-          approved
-          group {
-            id
-            name
-            domain
-            webPage
-            countryCode
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          groupID
-          attendees {
-            nextToken
-            startedAt
-          }
-          rides {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        eventID
-        driver {
-          id
-          ride {
-            id
-            eventID
-            maxPassengers
-            departureTime
-            startPoint
-            endPoint
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            rideDriverId
-          }
-          rideID
-          userProfile {
-            id
-            sub
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            verifyPhotoID
-            customerID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            birthDate
-            hobbies
-            gender
-            collegeGroupId
-            privacySettingID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          userProfileID
-          isDriver
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        passengers {
-          items {
-            id
-            rideID
-            userProfileID
-            isDriver
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        maxPassengers
-        departureTime
-        startPoint
-        endPoint
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        rideDriverId
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
-export const getRideUser = /* GraphQL */ `
-  query GetRideUser($id: ID!) {
-    getRideUser(id: $id) {
-      id
       ride {
         id
         event {
@@ -6970,14 +6831,14 @@ export const getRideUser = /* GraphQL */ `
           url
           customerID
           hasPaid
-          subID
+          cancelled
+          subscriptionID
           approved
           group {
             id
             name
             domain
             webPage
-            countryCode
             createdAt
             updatedAt
             _version
@@ -7000,67 +6861,12 @@ export const getRideUser = /* GraphQL */ `
           _lastChangedAt
         }
         eventID
-        driver {
-          id
-          ride {
-            id
-            eventID
-            maxPassengers
-            departureTime
-            startPoint
-            endPoint
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            rideDriverId
-          }
-          rideID
-          userProfile {
-            id
-            sub
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            verifyPhotoID
-            customerID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            birthDate
-            hobbies
-            gender
-            collegeGroupId
-            privacySettingID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          userProfileID
-          isDriver
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
+        driverProfileID
         passengers {
           items {
             id
-            rideID
-            userProfileID
-            isDriver
+            profileId
+            rideId
             createdAt
             updatedAt
             _version
@@ -7079,1126 +6885,6 @@ export const getRideUser = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        rideDriverId
-      }
-      rideID
-      userProfile {
-        id
-        sub
-        firstName
-        lastName
-        verified
-        verifySubmitted
-        profilePhotoID
-        bannerPhotoID
-        verifyPhotoID
-        customerID
-        city
-        state
-        school
-        address
-        address2
-        phone
-        email
-        zipcode
-        birthDate
-        hobbies
-        gender
-        attendingEvents {
-          items {
-            id
-            userProfileID
-            eventID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        rides {
-          items {
-            id
-            rideID
-            userProfileID
-            isDriver
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        friends {
-          items {
-            id
-            userProfileID
-            friendProfileID
-            isAccepted
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        conversations {
-          items {
-            id
-            userProfileID
-            friendProfileID
-            unreadMessage
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        sentMessages {
-          items {
-            id
-            content
-            senderID
-            receiverID
-            conversationID
-            unreadMessage
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        receivedMessages {
-          items {
-            id
-            content
-            senderID
-            receiverID
-            conversationID
-            unreadMessage
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        photos {
-          items {
-            id
-            userProfileID
-            s3Key
-            isPrivate
-            identityId
-            description
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        collegeGroupId
-        collegeGroup {
-          id
-          name
-          domain
-          webPage
-          countryCode
-          events {
-            nextToken
-            startedAt
-          }
-          members {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        privacySettingID
-        privacySetting {
-          id
-          city
-          state
-          school
-          email
-          attendingEvents
-          rides
-          friends
-          photos
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        socialMedia {
-          items {
-            id
-            userProfileID
-            socialMediaType
-            accountURL
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      userProfileID
-      isDriver
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const listRideUsers = /* GraphQL */ `
-  query ListRideUsers(
-    $filter: ModelRideUserFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listRideUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        ride {
-          id
-          event {
-            id
-            name
-            genre
-            image
-            location
-            state
-            city
-            address
-            startDate
-            endDate
-            type
-            description
-            url
-            customerID
-            hasPaid
-            subID
-            approved
-            groupID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          eventID
-          driver {
-            id
-            rideID
-            userProfileID
-            isDriver
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          passengers {
-            nextToken
-            startedAt
-          }
-          maxPassengers
-          departureTime
-          startPoint
-          endPoint
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          rideDriverId
-        }
-        rideID
-        userProfile {
-          id
-          sub
-          firstName
-          lastName
-          verified
-          verifySubmitted
-          profilePhotoID
-          bannerPhotoID
-          verifyPhotoID
-          customerID
-          city
-          state
-          school
-          address
-          address2
-          phone
-          email
-          zipcode
-          birthDate
-          hobbies
-          gender
-          attendingEvents {
-            nextToken
-            startedAt
-          }
-          rides {
-            nextToken
-            startedAt
-          }
-          friends {
-            nextToken
-            startedAt
-          }
-          conversations {
-            nextToken
-            startedAt
-          }
-          sentMessages {
-            nextToken
-            startedAt
-          }
-          receivedMessages {
-            nextToken
-            startedAt
-          }
-          photos {
-            nextToken
-            startedAt
-          }
-          collegeGroupId
-          collegeGroup {
-            id
-            name
-            domain
-            webPage
-            countryCode
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          privacySettingID
-          privacySetting {
-            id
-            city
-            state
-            school
-            email
-            attendingEvents
-            rides
-            friends
-            photos
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          socialMedia {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        userProfileID
-        isDriver
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
-export const syncRideUsers = /* GraphQL */ `
-  query SyncRideUsers(
-    $filter: ModelRideUserFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncRideUsers(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        ride {
-          id
-          event {
-            id
-            name
-            genre
-            image
-            location
-            state
-            city
-            address
-            startDate
-            endDate
-            type
-            description
-            url
-            customerID
-            hasPaid
-            subID
-            approved
-            groupID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          eventID
-          driver {
-            id
-            rideID
-            userProfileID
-            isDriver
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          passengers {
-            nextToken
-            startedAt
-          }
-          maxPassengers
-          departureTime
-          startPoint
-          endPoint
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          rideDriverId
-        }
-        rideID
-        userProfile {
-          id
-          sub
-          firstName
-          lastName
-          verified
-          verifySubmitted
-          profilePhotoID
-          bannerPhotoID
-          verifyPhotoID
-          customerID
-          city
-          state
-          school
-          address
-          address2
-          phone
-          email
-          zipcode
-          birthDate
-          hobbies
-          gender
-          attendingEvents {
-            nextToken
-            startedAt
-          }
-          rides {
-            nextToken
-            startedAt
-          }
-          friends {
-            nextToken
-            startedAt
-          }
-          conversations {
-            nextToken
-            startedAt
-          }
-          sentMessages {
-            nextToken
-            startedAt
-          }
-          receivedMessages {
-            nextToken
-            startedAt
-          }
-          photos {
-            nextToken
-            startedAt
-          }
-          collegeGroupId
-          collegeGroup {
-            id
-            name
-            domain
-            webPage
-            countryCode
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          privacySettingID
-          privacySetting {
-            id
-            city
-            state
-            school
-            email
-            attendingEvents
-            rides
-            friends
-            photos
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          socialMedia {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        userProfileID
-        isDriver
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
-export const rideUsersByRideID = /* GraphQL */ `
-  query RideUsersByRideID(
-    $rideID: ID!
-    $sortDirection: ModelSortDirection
-    $filter: ModelRideUserFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    rideUsersByRideID(
-      rideID: $rideID
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        ride {
-          id
-          event {
-            id
-            name
-            genre
-            image
-            location
-            state
-            city
-            address
-            startDate
-            endDate
-            type
-            description
-            url
-            customerID
-            hasPaid
-            subID
-            approved
-            groupID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          eventID
-          driver {
-            id
-            rideID
-            userProfileID
-            isDriver
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          passengers {
-            nextToken
-            startedAt
-          }
-          maxPassengers
-          departureTime
-          startPoint
-          endPoint
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          rideDriverId
-        }
-        rideID
-        userProfile {
-          id
-          sub
-          firstName
-          lastName
-          verified
-          verifySubmitted
-          profilePhotoID
-          bannerPhotoID
-          verifyPhotoID
-          customerID
-          city
-          state
-          school
-          address
-          address2
-          phone
-          email
-          zipcode
-          birthDate
-          hobbies
-          gender
-          attendingEvents {
-            nextToken
-            startedAt
-          }
-          rides {
-            nextToken
-            startedAt
-          }
-          friends {
-            nextToken
-            startedAt
-          }
-          conversations {
-            nextToken
-            startedAt
-          }
-          sentMessages {
-            nextToken
-            startedAt
-          }
-          receivedMessages {
-            nextToken
-            startedAt
-          }
-          photos {
-            nextToken
-            startedAt
-          }
-          collegeGroupId
-          collegeGroup {
-            id
-            name
-            domain
-            webPage
-            countryCode
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          privacySettingID
-          privacySetting {
-            id
-            city
-            state
-            school
-            email
-            attendingEvents
-            rides
-            friends
-            photos
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          socialMedia {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        userProfileID
-        isDriver
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
-export const rideUsersByUserProfileID = /* GraphQL */ `
-  query RideUsersByUserProfileID(
-    $userProfileID: ID!
-    $sortDirection: ModelSortDirection
-    $filter: ModelRideUserFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    rideUsersByUserProfileID(
-      userProfileID: $userProfileID
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        ride {
-          id
-          event {
-            id
-            name
-            genre
-            image
-            location
-            state
-            city
-            address
-            startDate
-            endDate
-            type
-            description
-            url
-            customerID
-            hasPaid
-            subID
-            approved
-            groupID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          eventID
-          driver {
-            id
-            rideID
-            userProfileID
-            isDriver
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          passengers {
-            nextToken
-            startedAt
-          }
-          maxPassengers
-          departureTime
-          startPoint
-          endPoint
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          rideDriverId
-        }
-        rideID
-        userProfile {
-          id
-          sub
-          firstName
-          lastName
-          verified
-          verifySubmitted
-          profilePhotoID
-          bannerPhotoID
-          verifyPhotoID
-          customerID
-          city
-          state
-          school
-          address
-          address2
-          phone
-          email
-          zipcode
-          birthDate
-          hobbies
-          gender
-          attendingEvents {
-            nextToken
-            startedAt
-          }
-          rides {
-            nextToken
-            startedAt
-          }
-          friends {
-            nextToken
-            startedAt
-          }
-          conversations {
-            nextToken
-            startedAt
-          }
-          sentMessages {
-            nextToken
-            startedAt
-          }
-          receivedMessages {
-            nextToken
-            startedAt
-          }
-          photos {
-            nextToken
-            startedAt
-          }
-          collegeGroupId
-          collegeGroup {
-            id
-            name
-            domain
-            webPage
-            countryCode
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          privacySettingID
-          privacySetting {
-            id
-            city
-            state
-            school
-            email
-            attendingEvents
-            rides
-            friends
-            photos
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          socialMedia {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        userProfileID
-        isDriver
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
-export const getPhoto = /* GraphQL */ `
-  query GetPhoto($id: ID!) {
-    getPhoto(id: $id) {
-      id
-      userProfileID
-      userProfile {
-        id
-        sub
-        firstName
-        lastName
-        verified
-        verifySubmitted
-        profilePhotoID
-        bannerPhotoID
-        verifyPhotoID
-        customerID
-        city
-        state
-        school
-        address
-        address2
-        phone
-        email
-        zipcode
-        birthDate
-        hobbies
-        gender
-        attendingEvents {
-          items {
-            id
-            userProfileID
-            eventID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        rides {
-          items {
-            id
-            rideID
-            userProfileID
-            isDriver
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        friends {
-          items {
-            id
-            userProfileID
-            friendProfileID
-            isAccepted
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        conversations {
-          items {
-            id
-            userProfileID
-            friendProfileID
-            unreadMessage
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        sentMessages {
-          items {
-            id
-            content
-            senderID
-            receiverID
-            conversationID
-            unreadMessage
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        receivedMessages {
-          items {
-            id
-            content
-            senderID
-            receiverID
-            conversationID
-            unreadMessage
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        photos {
-          items {
-            id
-            userProfileID
-            s3Key
-            isPrivate
-            identityId
-            description
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        collegeGroupId
-        collegeGroup {
-          id
-          name
-          domain
-          webPage
-          countryCode
-          events {
-            nextToken
-            startedAt
-          }
-          members {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        privacySettingID
-        privacySetting {
-          id
-          city
-          state
-          school
-          email
-          attendingEvents
-          rides
-          friends
-          photos
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        socialMedia {
-          items {
-            id
-            userProfileID
-            socialMediaType
-            accountURL
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      s3Key
-      isPrivate
-      identityId
-      description
-      comments {
-        items {
-          id
-          content
-          photoID
-          photo {
-            id
-            userProfileID
-            s3Key
-            isPrivate
-            identityId
-            description
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        nextToken
-        startedAt
       }
       createdAt
       updatedAt
@@ -8208,23 +6894,24 @@ export const getPhoto = /* GraphQL */ `
     }
   }
 `;
-export const listPhotos = /* GraphQL */ `
-  query ListPhotos(
-    $filter: ModelPhotoFilterInput
+export const listRideProfiles = /* GraphQL */ `
+  query ListRideProfiles(
+    $filter: ModelRideProfileFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listPhotos(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listRideProfiles(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        userProfileID
-        userProfile {
+        profileId
+        rideId
+        profile {
           id
           sub
           firstName
           lastName
           verified
-          verifySubmitted
+          submitted
           profilePhotoID
           bannerPhotoID
           verifyPhotoID
@@ -8240,1162 +6927,10 @@ export const listPhotos = /* GraphQL */ `
           birthDate
           hobbies
           gender
-          attendingEvents {
-            nextToken
-            startedAt
-          }
-          rides {
-            nextToken
-            startedAt
-          }
-          friends {
-            nextToken
-            startedAt
-          }
-          conversations {
-            nextToken
-            startedAt
-          }
-          sentMessages {
-            nextToken
-            startedAt
-          }
-          receivedMessages {
-            nextToken
-            startedAt
-          }
-          photos {
-            nextToken
-            startedAt
-          }
-          collegeGroupId
-          collegeGroup {
-            id
-            name
-            domain
-            webPage
-            countryCode
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          privacySettingID
-          privacySetting {
-            id
-            city
-            state
-            school
-            email
-            attendingEvents
-            rides
-            friends
-            photos
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          socialMedia {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        s3Key
-        isPrivate
-        identityId
-        description
-        comments {
-          items {
-            id
-            content
-            photoID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
-export const syncPhotos = /* GraphQL */ `
-  query SyncPhotos(
-    $filter: ModelPhotoFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncPhotos(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        userProfileID
-        userProfile {
-          id
-          sub
-          firstName
-          lastName
-          verified
-          verifySubmitted
-          profilePhotoID
-          bannerPhotoID
-          verifyPhotoID
-          customerID
-          city
-          state
-          school
-          address
-          address2
-          phone
-          email
-          zipcode
-          birthDate
-          hobbies
-          gender
-          attendingEvents {
-            nextToken
-            startedAt
-          }
-          rides {
-            nextToken
-            startedAt
-          }
-          friends {
-            nextToken
-            startedAt
-          }
-          conversations {
-            nextToken
-            startedAt
-          }
-          sentMessages {
-            nextToken
-            startedAt
-          }
-          receivedMessages {
-            nextToken
-            startedAt
-          }
-          photos {
-            nextToken
-            startedAt
-          }
-          collegeGroupId
-          collegeGroup {
-            id
-            name
-            domain
-            webPage
-            countryCode
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          privacySettingID
-          privacySetting {
-            id
-            city
-            state
-            school
-            email
-            attendingEvents
-            rides
-            friends
-            photos
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          socialMedia {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        s3Key
-        isPrivate
-        identityId
-        description
-        comments {
-          items {
-            id
-            content
-            photoID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
-export const photosByUserProfileID = /* GraphQL */ `
-  query PhotosByUserProfileID(
-    $userProfileID: ID!
-    $sortDirection: ModelSortDirection
-    $filter: ModelPhotoFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    photosByUserProfileID(
-      userProfileID: $userProfileID
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        userProfileID
-        userProfile {
-          id
-          sub
-          firstName
-          lastName
-          verified
-          verifySubmitted
-          profilePhotoID
-          bannerPhotoID
-          verifyPhotoID
-          customerID
-          city
-          state
-          school
-          address
-          address2
-          phone
-          email
-          zipcode
-          birthDate
-          hobbies
-          gender
-          attendingEvents {
-            nextToken
-            startedAt
-          }
-          rides {
-            nextToken
-            startedAt
-          }
-          friends {
-            nextToken
-            startedAt
-          }
-          conversations {
-            nextToken
-            startedAt
-          }
-          sentMessages {
-            nextToken
-            startedAt
-          }
-          receivedMessages {
-            nextToken
-            startedAt
-          }
-          photos {
-            nextToken
-            startedAt
-          }
-          collegeGroupId
-          collegeGroup {
-            id
-            name
-            domain
-            webPage
-            countryCode
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          privacySettingID
-          privacySetting {
-            id
-            city
-            state
-            school
-            email
-            attendingEvents
-            rides
-            friends
-            photos
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          socialMedia {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        s3Key
-        isPrivate
-        identityId
-        description
-        comments {
-          items {
-            id
-            content
-            photoID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
-export const getPhotoComment = /* GraphQL */ `
-  query GetPhotoComment($id: ID!) {
-    getPhotoComment(id: $id) {
-      id
-      content
-      photoID
-      photo {
-        id
-        userProfileID
-        userProfile {
-          id
-          sub
-          firstName
-          lastName
-          verified
-          verifySubmitted
-          profilePhotoID
-          bannerPhotoID
-          verifyPhotoID
-          customerID
-          city
-          state
-          school
-          address
-          address2
-          phone
-          email
-          zipcode
-          birthDate
-          hobbies
-          gender
-          attendingEvents {
-            nextToken
-            startedAt
-          }
-          rides {
-            nextToken
-            startedAt
-          }
-          friends {
-            nextToken
-            startedAt
-          }
-          conversations {
-            nextToken
-            startedAt
-          }
-          sentMessages {
-            nextToken
-            startedAt
-          }
-          receivedMessages {
-            nextToken
-            startedAt
-          }
-          photos {
-            nextToken
-            startedAt
-          }
-          collegeGroupId
-          collegeGroup {
-            id
-            name
-            domain
-            webPage
-            countryCode
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          privacySettingID
-          privacySetting {
-            id
-            city
-            state
-            school
-            email
-            attendingEvents
-            rides
-            friends
-            photos
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          socialMedia {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        s3Key
-        isPrivate
-        identityId
-        description
-        comments {
-          items {
-            id
-            content
-            photoID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const listPhotoComments = /* GraphQL */ `
-  query ListPhotoComments(
-    $filter: ModelPhotoCommentFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listPhotoComments(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        content
-        photoID
-        photo {
-          id
-          userProfileID
-          userProfile {
-            id
-            sub
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            verifyPhotoID
-            customerID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            birthDate
-            hobbies
-            gender
-            collegeGroupId
-            privacySettingID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          s3Key
-          isPrivate
-          identityId
-          description
-          comments {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
-export const syncPhotoComments = /* GraphQL */ `
-  query SyncPhotoComments(
-    $filter: ModelPhotoCommentFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncPhotoComments(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        content
-        photoID
-        photo {
-          id
-          userProfileID
-          userProfile {
-            id
-            sub
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            verifyPhotoID
-            customerID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            birthDate
-            hobbies
-            gender
-            collegeGroupId
-            privacySettingID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          s3Key
-          isPrivate
-          identityId
-          description
-          comments {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
-export const photoCommentsByPhotoID = /* GraphQL */ `
-  query PhotoCommentsByPhotoID(
-    $photoID: ID!
-    $sortDirection: ModelSortDirection
-    $filter: ModelPhotoCommentFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    photoCommentsByPhotoID(
-      photoID: $photoID
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        content
-        photoID
-        photo {
-          id
-          userProfileID
-          userProfile {
-            id
-            sub
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            verifyPhotoID
-            customerID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            birthDate
-            hobbies
-            gender
-            collegeGroupId
-            privacySettingID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          s3Key
-          isPrivate
-          identityId
-          description
-          comments {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
-export const getFriendship = /* GraphQL */ `
-  query GetFriendship($id: ID!) {
-    getFriendship(id: $id) {
-      id
-      userProfileID
-      friendProfileID
-      isAccepted
-      userProfile {
-        id
-        sub
-        firstName
-        lastName
-        verified
-        verifySubmitted
-        profilePhotoID
-        bannerPhotoID
-        verifyPhotoID
-        customerID
-        city
-        state
-        school
-        address
-        address2
-        phone
-        email
-        zipcode
-        birthDate
-        hobbies
-        gender
-        attendingEvents {
-          items {
-            id
-            userProfileID
-            eventID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        rides {
-          items {
-            id
-            rideID
-            userProfileID
-            isDriver
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        friends {
-          items {
-            id
-            userProfileID
-            friendProfileID
-            isAccepted
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        conversations {
-          items {
-            id
-            userProfileID
-            friendProfileID
-            unreadMessage
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        sentMessages {
-          items {
-            id
-            content
-            senderID
-            receiverID
-            conversationID
-            unreadMessage
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        receivedMessages {
-          items {
-            id
-            content
-            senderID
-            receiverID
-            conversationID
-            unreadMessage
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        photos {
-          items {
-            id
-            userProfileID
-            s3Key
-            isPrivate
-            identityId
-            description
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        collegeGroupId
-        collegeGroup {
-          id
-          name
-          domain
-          webPage
-          countryCode
           events {
             nextToken
             startedAt
           }
-          members {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        privacySettingID
-        privacySetting {
-          id
-          city
-          state
-          school
-          email
-          attendingEvents
-          rides
-          friends
-          photos
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        socialMedia {
-          items {
-            id
-            userProfileID
-            socialMediaType
-            accountURL
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      friendProfile {
-        id
-        sub
-        firstName
-        lastName
-        verified
-        verifySubmitted
-        profilePhotoID
-        bannerPhotoID
-        verifyPhotoID
-        customerID
-        city
-        state
-        school
-        address
-        address2
-        phone
-        email
-        zipcode
-        birthDate
-        hobbies
-        gender
-        attendingEvents {
-          items {
-            id
-            userProfileID
-            eventID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        rides {
-          items {
-            id
-            rideID
-            userProfileID
-            isDriver
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        friends {
-          items {
-            id
-            userProfileID
-            friendProfileID
-            isAccepted
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        conversations {
-          items {
-            id
-            userProfileID
-            friendProfileID
-            unreadMessage
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        sentMessages {
-          items {
-            id
-            content
-            senderID
-            receiverID
-            conversationID
-            unreadMessage
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        receivedMessages {
-          items {
-            id
-            content
-            senderID
-            receiverID
-            conversationID
-            unreadMessage
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        photos {
-          items {
-            id
-            userProfileID
-            s3Key
-            isPrivate
-            identityId
-            description
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        collegeGroupId
-        collegeGroup {
-          id
-          name
-          domain
-          webPage
-          countryCode
-          events {
-            nextToken
-            startedAt
-          }
-          members {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        privacySettingID
-        privacySetting {
-          id
-          city
-          state
-          school
-          email
-          attendingEvents
-          rides
-          friends
-          photos
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        socialMedia {
-          items {
-            id
-            userProfileID
-            socialMediaType
-            accountURL
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const listFriendships = /* GraphQL */ `
-  query ListFriendships(
-    $filter: ModelFriendshipFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listFriendships(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        userProfileID
-        friendProfileID
-        isAccepted
-        userProfile {
-          id
-          sub
-          firstName
-          lastName
-          verified
-          verifySubmitted
-          profilePhotoID
-          bannerPhotoID
-          verifyPhotoID
-          customerID
-          city
-          state
-          school
-          address
-          address2
-          phone
-          email
-          zipcode
-          birthDate
-          hobbies
-          gender
-          attendingEvents {
-            nextToken
-            startedAt
-          }
           rides {
             nextToken
             startedAt
@@ -9408,2306 +6943,29 @@ export const listFriendships = /* GraphQL */ `
             nextToken
             startedAt
           }
-          sentMessages {
-            nextToken
-            startedAt
-          }
-          receivedMessages {
-            nextToken
-            startedAt
-          }
           photos {
             nextToken
             startedAt
           }
-          collegeGroupId
-          collegeGroup {
-            id
-            name
-            domain
-            webPage
-            countryCode
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          privacySettingID
-          privacySetting {
-            id
-            city
-            state
-            school
-            email
-            attendingEvents
-            rides
-            friends
-            photos
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          socialMedia {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        friendProfile {
-          id
-          sub
-          firstName
-          lastName
-          verified
-          verifySubmitted
-          profilePhotoID
-          bannerPhotoID
-          verifyPhotoID
-          customerID
-          city
-          state
-          school
-          address
-          address2
-          phone
-          email
-          zipcode
-          birthDate
-          hobbies
-          gender
-          attendingEvents {
-            nextToken
-            startedAt
-          }
-          rides {
-            nextToken
-            startedAt
-          }
-          friends {
-            nextToken
-            startedAt
-          }
-          conversations {
-            nextToken
-            startedAt
-          }
-          sentMessages {
-            nextToken
-            startedAt
-          }
-          receivedMessages {
-            nextToken
-            startedAt
-          }
-          photos {
-            nextToken
-            startedAt
-          }
-          collegeGroupId
-          collegeGroup {
-            id
-            name
-            domain
-            webPage
-            countryCode
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          privacySettingID
-          privacySetting {
-            id
-            city
-            state
-            school
-            email
-            attendingEvents
-            rides
-            friends
-            photos
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          socialMedia {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
-export const syncFriendships = /* GraphQL */ `
-  query SyncFriendships(
-    $filter: ModelFriendshipFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncFriendships(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        userProfileID
-        friendProfileID
-        isAccepted
-        userProfile {
-          id
-          sub
-          firstName
-          lastName
-          verified
-          verifySubmitted
-          profilePhotoID
-          bannerPhotoID
-          verifyPhotoID
-          customerID
-          city
-          state
-          school
-          address
-          address2
-          phone
-          email
-          zipcode
-          birthDate
-          hobbies
-          gender
-          attendingEvents {
-            nextToken
-            startedAt
-          }
-          rides {
-            nextToken
-            startedAt
-          }
-          friends {
-            nextToken
-            startedAt
-          }
-          conversations {
-            nextToken
-            startedAt
-          }
-          sentMessages {
-            nextToken
-            startedAt
-          }
-          receivedMessages {
-            nextToken
-            startedAt
-          }
-          photos {
-            nextToken
-            startedAt
-          }
-          collegeGroupId
-          collegeGroup {
-            id
-            name
-            domain
-            webPage
-            countryCode
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          privacySettingID
-          privacySetting {
-            id
-            city
-            state
-            school
-            email
-            attendingEvents
-            rides
-            friends
-            photos
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          socialMedia {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        friendProfile {
-          id
-          sub
-          firstName
-          lastName
-          verified
-          verifySubmitted
-          profilePhotoID
-          bannerPhotoID
-          verifyPhotoID
-          customerID
-          city
-          state
-          school
-          address
-          address2
-          phone
-          email
-          zipcode
-          birthDate
-          hobbies
-          gender
-          attendingEvents {
-            nextToken
-            startedAt
-          }
-          rides {
-            nextToken
-            startedAt
-          }
-          friends {
-            nextToken
-            startedAt
-          }
-          conversations {
-            nextToken
-            startedAt
-          }
-          sentMessages {
-            nextToken
-            startedAt
-          }
-          receivedMessages {
-            nextToken
-            startedAt
-          }
-          photos {
-            nextToken
-            startedAt
-          }
-          collegeGroupId
-          collegeGroup {
-            id
-            name
-            domain
-            webPage
-            countryCode
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          privacySettingID
-          privacySetting {
-            id
-            city
-            state
-            school
-            email
-            attendingEvents
-            rides
-            friends
-            photos
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          socialMedia {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
-export const friendshipsByUserProfileID = /* GraphQL */ `
-  query FriendshipsByUserProfileID(
-    $userProfileID: ID!
-    $sortDirection: ModelSortDirection
-    $filter: ModelFriendshipFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    friendshipsByUserProfileID(
-      userProfileID: $userProfileID
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        userProfileID
-        friendProfileID
-        isAccepted
-        userProfile {
-          id
-          sub
-          firstName
-          lastName
-          verified
-          verifySubmitted
-          profilePhotoID
-          bannerPhotoID
-          verifyPhotoID
-          customerID
-          city
-          state
-          school
-          address
-          address2
-          phone
-          email
-          zipcode
-          birthDate
-          hobbies
-          gender
-          attendingEvents {
-            nextToken
-            startedAt
-          }
-          rides {
-            nextToken
-            startedAt
-          }
-          friends {
-            nextToken
-            startedAt
-          }
-          conversations {
-            nextToken
-            startedAt
-          }
-          sentMessages {
-            nextToken
-            startedAt
-          }
-          receivedMessages {
-            nextToken
-            startedAt
-          }
-          photos {
-            nextToken
-            startedAt
-          }
-          collegeGroupId
-          collegeGroup {
-            id
-            name
-            domain
-            webPage
-            countryCode
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          privacySettingID
-          privacySetting {
-            id
-            city
-            state
-            school
-            email
-            attendingEvents
-            rides
-            friends
-            photos
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          socialMedia {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        friendProfile {
-          id
-          sub
-          firstName
-          lastName
-          verified
-          verifySubmitted
-          profilePhotoID
-          bannerPhotoID
-          verifyPhotoID
-          customerID
-          city
-          state
-          school
-          address
-          address2
-          phone
-          email
-          zipcode
-          birthDate
-          hobbies
-          gender
-          attendingEvents {
-            nextToken
-            startedAt
-          }
-          rides {
-            nextToken
-            startedAt
-          }
-          friends {
-            nextToken
-            startedAt
-          }
-          conversations {
-            nextToken
-            startedAt
-          }
-          sentMessages {
-            nextToken
-            startedAt
-          }
-          receivedMessages {
-            nextToken
-            startedAt
-          }
-          photos {
-            nextToken
-            startedAt
-          }
-          collegeGroupId
-          collegeGroup {
-            id
-            name
-            domain
-            webPage
-            countryCode
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          privacySettingID
-          privacySetting {
-            id
-            city
-            state
-            school
-            email
-            attendingEvents
-            rides
-            friends
-            photos
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          socialMedia {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
-export const friendshipsByFriendProfileID = /* GraphQL */ `
-  query FriendshipsByFriendProfileID(
-    $friendProfileID: ID!
-    $sortDirection: ModelSortDirection
-    $filter: ModelFriendshipFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    friendshipsByFriendProfileID(
-      friendProfileID: $friendProfileID
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        userProfileID
-        friendProfileID
-        isAccepted
-        userProfile {
-          id
-          sub
-          firstName
-          lastName
-          verified
-          verifySubmitted
-          profilePhotoID
-          bannerPhotoID
-          verifyPhotoID
-          customerID
-          city
-          state
-          school
-          address
-          address2
-          phone
-          email
-          zipcode
-          birthDate
-          hobbies
-          gender
-          attendingEvents {
-            nextToken
-            startedAt
-          }
-          rides {
-            nextToken
-            startedAt
-          }
-          friends {
-            nextToken
-            startedAt
-          }
-          conversations {
-            nextToken
-            startedAt
-          }
-          sentMessages {
-            nextToken
-            startedAt
-          }
-          receivedMessages {
-            nextToken
-            startedAt
-          }
-          photos {
-            nextToken
-            startedAt
-          }
-          collegeGroupId
-          collegeGroup {
-            id
-            name
-            domain
-            webPage
-            countryCode
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          privacySettingID
-          privacySetting {
-            id
-            city
-            state
-            school
-            email
-            attendingEvents
-            rides
-            friends
-            photos
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          socialMedia {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        friendProfile {
-          id
-          sub
-          firstName
-          lastName
-          verified
-          verifySubmitted
-          profilePhotoID
-          bannerPhotoID
-          verifyPhotoID
-          customerID
-          city
-          state
-          school
-          address
-          address2
-          phone
-          email
-          zipcode
-          birthDate
-          hobbies
-          gender
-          attendingEvents {
-            nextToken
-            startedAt
-          }
-          rides {
-            nextToken
-            startedAt
-          }
-          friends {
-            nextToken
-            startedAt
-          }
-          conversations {
-            nextToken
-            startedAt
-          }
-          sentMessages {
-            nextToken
-            startedAt
-          }
-          receivedMessages {
-            nextToken
-            startedAt
-          }
-          photos {
-            nextToken
-            startedAt
-          }
-          collegeGroupId
-          collegeGroup {
-            id
-            name
-            domain
-            webPage
-            countryCode
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          privacySettingID
-          privacySetting {
-            id
-            city
-            state
-            school
-            email
-            attendingEvents
-            rides
-            friends
-            photos
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          socialMedia {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
-export const getConversation = /* GraphQL */ `
-  query GetConversation($id: ID!) {
-    getConversation(id: $id) {
-      id
-      userProfileID
-      friendProfileID
-      userProfile {
-        id
-        sub
-        firstName
-        lastName
-        verified
-        verifySubmitted
-        profilePhotoID
-        bannerPhotoID
-        verifyPhotoID
-        customerID
-        city
-        state
-        school
-        address
-        address2
-        phone
-        email
-        zipcode
-        birthDate
-        hobbies
-        gender
-        attendingEvents {
-          items {
-            id
-            userProfileID
-            eventID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        rides {
-          items {
-            id
-            rideID
-            userProfileID
-            isDriver
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        friends {
-          items {
-            id
-            userProfileID
-            friendProfileID
-            isAccepted
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        conversations {
-          items {
-            id
-            userProfileID
-            friendProfileID
-            unreadMessage
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        sentMessages {
-          items {
-            id
-            content
-            senderID
-            receiverID
-            conversationID
-            unreadMessage
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        receivedMessages {
-          items {
-            id
-            content
-            senderID
-            receiverID
-            conversationID
-            unreadMessage
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        photos {
-          items {
-            id
-            userProfileID
-            s3Key
-            isPrivate
-            identityId
-            description
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        collegeGroupId
-        collegeGroup {
-          id
-          name
-          domain
-          webPage
-          countryCode
-          events {
-            nextToken
-            startedAt
-          }
-          members {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        privacySettingID
-        privacySetting {
-          id
-          city
-          state
-          school
-          email
-          attendingEvents
-          rides
-          friends
-          photos
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        socialMedia {
-          items {
-            id
-            userProfileID
-            socialMediaType
-            accountURL
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      friendProfile {
-        id
-        sub
-        firstName
-        lastName
-        verified
-        verifySubmitted
-        profilePhotoID
-        bannerPhotoID
-        verifyPhotoID
-        customerID
-        city
-        state
-        school
-        address
-        address2
-        phone
-        email
-        zipcode
-        birthDate
-        hobbies
-        gender
-        attendingEvents {
-          items {
-            id
-            userProfileID
-            eventID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        rides {
-          items {
-            id
-            rideID
-            userProfileID
-            isDriver
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        friends {
-          items {
-            id
-            userProfileID
-            friendProfileID
-            isAccepted
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        conversations {
-          items {
-            id
-            userProfileID
-            friendProfileID
-            unreadMessage
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        sentMessages {
-          items {
-            id
-            content
-            senderID
-            receiverID
-            conversationID
-            unreadMessage
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        receivedMessages {
-          items {
-            id
-            content
-            senderID
-            receiverID
-            conversationID
-            unreadMessage
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        photos {
-          items {
-            id
-            userProfileID
-            s3Key
-            isPrivate
-            identityId
-            description
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        collegeGroupId
-        collegeGroup {
-          id
-          name
-          domain
-          webPage
-          countryCode
-          events {
-            nextToken
-            startedAt
-          }
-          members {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        privacySettingID
-        privacySetting {
-          id
-          city
-          state
-          school
-          email
-          attendingEvents
-          rides
-          friends
-          photos
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        socialMedia {
-          items {
-            id
-            userProfileID
-            socialMediaType
-            accountURL
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      messages {
-        items {
-          id
-          content
-          senderID
-          receiverID
-          conversationID
-          sender {
-            id
-            sub
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            verifyPhotoID
-            customerID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            birthDate
-            hobbies
-            gender
-            collegeGroupId
-            privacySettingID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          receiver {
-            id
-            sub
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            verifyPhotoID
-            customerID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            birthDate
-            hobbies
-            gender
-            collegeGroupId
-            privacySettingID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          conversation {
-            id
-            userProfileID
-            friendProfileID
-            unreadMessage
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          unreadMessage
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        nextToken
-        startedAt
-      }
-      unreadMessage
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const listConversations = /* GraphQL */ `
-  query ListConversations(
-    $filter: ModelConversationFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listConversations(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        userProfileID
-        friendProfileID
-        userProfile {
-          id
-          sub
-          firstName
-          lastName
-          verified
-          verifySubmitted
-          profilePhotoID
-          bannerPhotoID
-          verifyPhotoID
-          customerID
-          city
-          state
-          school
-          address
-          address2
-          phone
-          email
-          zipcode
-          birthDate
-          hobbies
-          gender
-          attendingEvents {
-            nextToken
-            startedAt
-          }
-          rides {
-            nextToken
-            startedAt
-          }
-          friends {
-            nextToken
-            startedAt
-          }
-          conversations {
-            nextToken
-            startedAt
-          }
-          sentMessages {
-            nextToken
-            startedAt
-          }
-          receivedMessages {
-            nextToken
-            startedAt
-          }
-          photos {
-            nextToken
-            startedAt
-          }
-          collegeGroupId
-          collegeGroup {
-            id
-            name
-            domain
-            webPage
-            countryCode
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          privacySettingID
-          privacySetting {
-            id
-            city
-            state
-            school
-            email
-            attendingEvents
-            rides
-            friends
-            photos
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          socialMedia {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        friendProfile {
-          id
-          sub
-          firstName
-          lastName
-          verified
-          verifySubmitted
-          profilePhotoID
-          bannerPhotoID
-          verifyPhotoID
-          customerID
-          city
-          state
-          school
-          address
-          address2
-          phone
-          email
-          zipcode
-          birthDate
-          hobbies
-          gender
-          attendingEvents {
-            nextToken
-            startedAt
-          }
-          rides {
-            nextToken
-            startedAt
-          }
-          friends {
-            nextToken
-            startedAt
-          }
-          conversations {
-            nextToken
-            startedAt
-          }
-          sentMessages {
-            nextToken
-            startedAt
-          }
-          receivedMessages {
-            nextToken
-            startedAt
-          }
-          photos {
-            nextToken
-            startedAt
-          }
-          collegeGroupId
-          collegeGroup {
-            id
-            name
-            domain
-            webPage
-            countryCode
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          privacySettingID
-          privacySetting {
-            id
-            city
-            state
-            school
-            email
-            attendingEvents
-            rides
-            friends
-            photos
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          socialMedia {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        messages {
-          items {
-            id
-            content
-            senderID
-            receiverID
-            conversationID
-            unreadMessage
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        unreadMessage
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
-export const syncConversations = /* GraphQL */ `
-  query SyncConversations(
-    $filter: ModelConversationFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncConversations(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        userProfileID
-        friendProfileID
-        userProfile {
-          id
-          sub
-          firstName
-          lastName
-          verified
-          verifySubmitted
-          profilePhotoID
-          bannerPhotoID
-          verifyPhotoID
-          customerID
-          city
-          state
-          school
-          address
-          address2
-          phone
-          email
-          zipcode
-          birthDate
-          hobbies
-          gender
-          attendingEvents {
-            nextToken
-            startedAt
-          }
-          rides {
-            nextToken
-            startedAt
-          }
-          friends {
-            nextToken
-            startedAt
-          }
-          conversations {
-            nextToken
-            startedAt
-          }
-          sentMessages {
-            nextToken
-            startedAt
-          }
-          receivedMessages {
-            nextToken
-            startedAt
-          }
-          photos {
-            nextToken
-            startedAt
-          }
-          collegeGroupId
-          collegeGroup {
-            id
-            name
-            domain
-            webPage
-            countryCode
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          privacySettingID
-          privacySetting {
-            id
-            city
-            state
-            school
-            email
-            attendingEvents
-            rides
-            friends
-            photos
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          socialMedia {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        friendProfile {
-          id
-          sub
-          firstName
-          lastName
-          verified
-          verifySubmitted
-          profilePhotoID
-          bannerPhotoID
-          verifyPhotoID
-          customerID
-          city
-          state
-          school
-          address
-          address2
-          phone
-          email
-          zipcode
-          birthDate
-          hobbies
-          gender
-          attendingEvents {
-            nextToken
-            startedAt
-          }
-          rides {
-            nextToken
-            startedAt
-          }
-          friends {
-            nextToken
-            startedAt
-          }
-          conversations {
-            nextToken
-            startedAt
-          }
-          sentMessages {
-            nextToken
-            startedAt
-          }
-          receivedMessages {
-            nextToken
-            startedAt
-          }
-          photos {
-            nextToken
-            startedAt
-          }
-          collegeGroupId
-          collegeGroup {
-            id
-            name
-            domain
-            webPage
-            countryCode
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          privacySettingID
-          privacySetting {
-            id
-            city
-            state
-            school
-            email
-            attendingEvents
-            rides
-            friends
-            photos
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          socialMedia {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        messages {
-          items {
-            id
-            content
-            senderID
-            receiverID
-            conversationID
-            unreadMessage
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        unreadMessage
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
-export const conversationsByUserProfileID = /* GraphQL */ `
-  query ConversationsByUserProfileID(
-    $userProfileID: ID!
-    $sortDirection: ModelSortDirection
-    $filter: ModelConversationFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    conversationsByUserProfileID(
-      userProfileID: $userProfileID
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        userProfileID
-        friendProfileID
-        userProfile {
-          id
-          sub
-          firstName
-          lastName
-          verified
-          verifySubmitted
-          profilePhotoID
-          bannerPhotoID
-          verifyPhotoID
-          customerID
-          city
-          state
-          school
-          address
-          address2
-          phone
-          email
-          zipcode
-          birthDate
-          hobbies
-          gender
-          attendingEvents {
-            nextToken
-            startedAt
-          }
-          rides {
-            nextToken
-            startedAt
-          }
-          friends {
-            nextToken
-            startedAt
-          }
-          conversations {
-            nextToken
-            startedAt
-          }
-          sentMessages {
-            nextToken
-            startedAt
-          }
-          receivedMessages {
-            nextToken
-            startedAt
-          }
-          photos {
-            nextToken
-            startedAt
-          }
-          collegeGroupId
-          collegeGroup {
-            id
-            name
-            domain
-            webPage
-            countryCode
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          privacySettingID
-          privacySetting {
-            id
-            city
-            state
-            school
-            email
-            attendingEvents
-            rides
-            friends
-            photos
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          socialMedia {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        friendProfile {
-          id
-          sub
-          firstName
-          lastName
-          verified
-          verifySubmitted
-          profilePhotoID
-          bannerPhotoID
-          verifyPhotoID
-          customerID
-          city
-          state
-          school
-          address
-          address2
-          phone
-          email
-          zipcode
-          birthDate
-          hobbies
-          gender
-          attendingEvents {
-            nextToken
-            startedAt
-          }
-          rides {
-            nextToken
-            startedAt
-          }
-          friends {
-            nextToken
-            startedAt
-          }
-          conversations {
-            nextToken
-            startedAt
-          }
-          sentMessages {
-            nextToken
-            startedAt
-          }
-          receivedMessages {
-            nextToken
-            startedAt
-          }
-          photos {
-            nextToken
-            startedAt
-          }
-          collegeGroupId
-          collegeGroup {
-            id
-            name
-            domain
-            webPage
-            countryCode
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          privacySettingID
-          privacySetting {
-            id
-            city
-            state
-            school
-            email
-            attendingEvents
-            rides
-            friends
-            photos
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          socialMedia {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        messages {
-          items {
-            id
-            content
-            senderID
-            receiverID
-            conversationID
-            unreadMessage
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        unreadMessage
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
-export const conversationsByFriendProfileID = /* GraphQL */ `
-  query ConversationsByFriendProfileID(
-    $friendProfileID: ID!
-    $sortDirection: ModelSortDirection
-    $filter: ModelConversationFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    conversationsByFriendProfileID(
-      friendProfileID: $friendProfileID
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        userProfileID
-        friendProfileID
-        userProfile {
-          id
-          sub
-          firstName
-          lastName
-          verified
-          verifySubmitted
-          profilePhotoID
-          bannerPhotoID
-          verifyPhotoID
-          customerID
-          city
-          state
-          school
-          address
-          address2
-          phone
-          email
-          zipcode
-          birthDate
-          hobbies
-          gender
-          attendingEvents {
-            nextToken
-            startedAt
-          }
-          rides {
-            nextToken
-            startedAt
-          }
-          friends {
-            nextToken
-            startedAt
-          }
-          conversations {
-            nextToken
-            startedAt
-          }
-          sentMessages {
-            nextToken
-            startedAt
-          }
-          receivedMessages {
-            nextToken
-            startedAt
-          }
-          photos {
-            nextToken
-            startedAt
-          }
-          collegeGroupId
-          collegeGroup {
-            id
-            name
-            domain
-            webPage
-            countryCode
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          privacySettingID
-          privacySetting {
-            id
-            city
-            state
-            school
-            email
-            attendingEvents
-            rides
-            friends
-            photos
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          socialMedia {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        friendProfile {
-          id
-          sub
-          firstName
-          lastName
-          verified
-          verifySubmitted
-          profilePhotoID
-          bannerPhotoID
-          verifyPhotoID
-          customerID
-          city
-          state
-          school
-          address
-          address2
-          phone
-          email
-          zipcode
-          birthDate
-          hobbies
-          gender
-          attendingEvents {
-            nextToken
-            startedAt
-          }
-          rides {
-            nextToken
-            startedAt
-          }
-          friends {
-            nextToken
-            startedAt
-          }
-          conversations {
-            nextToken
-            startedAt
-          }
-          sentMessages {
-            nextToken
-            startedAt
-          }
-          receivedMessages {
-            nextToken
-            startedAt
-          }
-          photos {
-            nextToken
-            startedAt
-          }
-          collegeGroupId
-          collegeGroup {
-            id
-            name
-            domain
-            webPage
-            countryCode
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          privacySettingID
-          privacySetting {
-            id
-            city
-            state
-            school
-            email
-            attendingEvents
-            rides
-            friends
-            photos
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          socialMedia {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        messages {
-          items {
-            id
-            content
-            senderID
-            receiverID
-            conversationID
-            unreadMessage
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        unreadMessage
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
-export const getCollegeGroup = /* GraphQL */ `
-  query GetCollegeGroup($id: ID!) {
-    getCollegeGroup(id: $id) {
-      id
-      name
-      domain
-      webPage
-      countryCode
-      events {
-        items {
-          id
-          name
-          genre
-          image
-          location
-          state
-          city
-          address
-          startDate
-          endDate
-          type
-          description
-          url
-          customerID
-          hasPaid
-          subID
-          approved
+          groupID
           group {
             id
             name
             domain
             webPage
-            countryCode
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
           }
-          groupID
-          attendees {
-            nextToken
-            startedAt
-          }
-          rides {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        nextToken
-        startedAt
-      }
-      members {
-        items {
-          id
-          sub
-          firstName
-          lastName
-          verified
-          verifySubmitted
-          profilePhotoID
-          bannerPhotoID
-          verifyPhotoID
-          customerID
-          city
-          state
-          school
-          address
-          address2
-          phone
-          email
-          zipcode
-          birthDate
-          hobbies
-          gender
-          attendingEvents {
-            nextToken
-            startedAt
-          }
-          rides {
-            nextToken
-            startedAt
-          }
-          friends {
-            nextToken
-            startedAt
-          }
-          conversations {
-            nextToken
-            startedAt
-          }
-          sentMessages {
-            nextToken
-            startedAt
-          }
-          receivedMessages {
-            nextToken
-            startedAt
-          }
-          photos {
-            nextToken
-            startedAt
-          }
-          collegeGroupId
-          collegeGroup {
-            id
-            name
-            domain
-            webPage
-            countryCode
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          privacySettingID
           privacySetting {
             id
             city
             state
             school
             email
-            attendingEvents
+            events
             rides
             friends
             photos
@@ -11726,33 +6984,11 @@ export const getCollegeGroup = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          profilePrivacySettingId
         }
-        nextToken
-        startedAt
-      }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const listCollegeGroups = /* GraphQL */ `
-  query ListCollegeGroups(
-    $filter: ModelCollegeGroupFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listCollegeGroups(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        name
-        domain
-        webPage
-        countryCode
-        events {
-          items {
+        ride {
+          id
+          event {
             id
             name
             genre
@@ -11768,7 +7004,8 @@ export const listCollegeGroups = /* GraphQL */ `
             url
             customerID
             hasPaid
-            subID
+            cancelled
+            subscriptionID
             approved
             groupID
             createdAt
@@ -11777,42 +7014,21 @@ export const listCollegeGroups = /* GraphQL */ `
             _deleted
             _lastChangedAt
           }
-          nextToken
-          startedAt
-        }
-        members {
-          items {
-            id
-            sub
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            verifyPhotoID
-            customerID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            birthDate
-            hobbies
-            gender
-            collegeGroupId
-            privacySettingID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
+          eventID
+          driverProfileID
+          passengers {
+            nextToken
+            startedAt
           }
-          nextToken
-          startedAt
+          maxPassengers
+          departureTime
+          startPoint
+          endPoint
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
         createdAt
         updatedAt
@@ -11825,14 +7041,14 @@ export const listCollegeGroups = /* GraphQL */ `
     }
   }
 `;
-export const syncCollegeGroups = /* GraphQL */ `
-  query SyncCollegeGroups(
-    $filter: ModelCollegeGroupFilterInput
+export const syncRideProfiles = /* GraphQL */ `
+  query SyncRideProfiles(
+    $filter: ModelRideProfileFilterInput
     $limit: Int
     $nextToken: String
     $lastSync: AWSTimestamp
   ) {
-    syncCollegeGroups(
+    syncRideProfiles(
       filter: $filter
       limit: $limit
       nextToken: $nextToken
@@ -11840,12 +7056,92 @@ export const syncCollegeGroups = /* GraphQL */ `
     ) {
       items {
         id
-        name
-        domain
-        webPage
-        countryCode
-        events {
-          items {
+        profileId
+        rideId
+        profile {
+          id
+          sub
+          firstName
+          lastName
+          verified
+          submitted
+          profilePhotoID
+          bannerPhotoID
+          verifyPhotoID
+          customerID
+          city
+          state
+          school
+          address
+          address2
+          phone
+          email
+          zipcode
+          birthDate
+          hobbies
+          gender
+          events {
+            nextToken
+            startedAt
+          }
+          rides {
+            nextToken
+            startedAt
+          }
+          friends {
+            nextToken
+            startedAt
+          }
+          conversations {
+            nextToken
+            startedAt
+          }
+          photos {
+            nextToken
+            startedAt
+          }
+          groupID
+          group {
+            id
+            name
+            domain
+            webPage
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          privacySetting {
+            id
+            city
+            state
+            school
+            email
+            events
+            rides
+            friends
+            photos
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          socialMedia {
+            nextToken
+            startedAt
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          profilePrivacySettingId
+        }
+        ride {
+          id
+          event {
             id
             name
             genre
@@ -11861,7 +7157,8 @@ export const syncCollegeGroups = /* GraphQL */ `
             url
             customerID
             hasPaid
-            subID
+            cancelled
+            subscriptionID
             approved
             groupID
             createdAt
@@ -11870,42 +7167,331 @@ export const syncCollegeGroups = /* GraphQL */ `
             _deleted
             _lastChangedAt
           }
-          nextToken
-          startedAt
+          eventID
+          driverProfileID
+          passengers {
+            nextToken
+            startedAt
+          }
+          maxPassengers
+          departureTime
+          startPoint
+          endPoint
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
-        members {
-          items {
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const rideProfilesByProfileId = /* GraphQL */ `
+  query RideProfilesByProfileId(
+    $profileId: ID!
+    $sortDirection: ModelSortDirection
+    $filter: ModelRideProfileFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    rideProfilesByProfileId(
+      profileId: $profileId
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        profileId
+        rideId
+        profile {
+          id
+          sub
+          firstName
+          lastName
+          verified
+          submitted
+          profilePhotoID
+          bannerPhotoID
+          verifyPhotoID
+          customerID
+          city
+          state
+          school
+          address
+          address2
+          phone
+          email
+          zipcode
+          birthDate
+          hobbies
+          gender
+          events {
+            nextToken
+            startedAt
+          }
+          rides {
+            nextToken
+            startedAt
+          }
+          friends {
+            nextToken
+            startedAt
+          }
+          conversations {
+            nextToken
+            startedAt
+          }
+          photos {
+            nextToken
+            startedAt
+          }
+          groupID
+          group {
             id
-            sub
-            firstName
-            lastName
-            verified
-            verifySubmitted
-            profilePhotoID
-            bannerPhotoID
-            verifyPhotoID
-            customerID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            birthDate
-            hobbies
-            gender
-            collegeGroupId
-            privacySettingID
+            name
+            domain
+            webPage
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
           }
-          nextToken
-          startedAt
+          privacySetting {
+            id
+            city
+            state
+            school
+            email
+            events
+            rides
+            friends
+            photos
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          socialMedia {
+            nextToken
+            startedAt
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          profilePrivacySettingId
+        }
+        ride {
+          id
+          event {
+            id
+            name
+            genre
+            image
+            location
+            state
+            city
+            address
+            startDate
+            endDate
+            type
+            description
+            url
+            customerID
+            hasPaid
+            cancelled
+            subscriptionID
+            approved
+            groupID
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          eventID
+          driverProfileID
+          passengers {
+            nextToken
+            startedAt
+          }
+          maxPassengers
+          departureTime
+          startPoint
+          endPoint
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const rideProfilesByRideId = /* GraphQL */ `
+  query RideProfilesByRideId(
+    $rideId: ID!
+    $sortDirection: ModelSortDirection
+    $filter: ModelRideProfileFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    rideProfilesByRideId(
+      rideId: $rideId
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        profileId
+        rideId
+        profile {
+          id
+          sub
+          firstName
+          lastName
+          verified
+          submitted
+          profilePhotoID
+          bannerPhotoID
+          verifyPhotoID
+          customerID
+          city
+          state
+          school
+          address
+          address2
+          phone
+          email
+          zipcode
+          birthDate
+          hobbies
+          gender
+          events {
+            nextToken
+            startedAt
+          }
+          rides {
+            nextToken
+            startedAt
+          }
+          friends {
+            nextToken
+            startedAt
+          }
+          conversations {
+            nextToken
+            startedAt
+          }
+          photos {
+            nextToken
+            startedAt
+          }
+          groupID
+          group {
+            id
+            name
+            domain
+            webPage
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          privacySetting {
+            id
+            city
+            state
+            school
+            email
+            events
+            rides
+            friends
+            photos
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          socialMedia {
+            nextToken
+            startedAt
+          }
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          profilePrivacySettingId
+        }
+        ride {
+          id
+          event {
+            id
+            name
+            genre
+            image
+            location
+            state
+            city
+            address
+            startDate
+            endDate
+            type
+            description
+            url
+            customerID
+            hasPaid
+            cancelled
+            subscriptionID
+            approved
+            groupID
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          eventID
+          driverProfileID
+          passengers {
+            nextToken
+            startedAt
+          }
+          maxPassengers
+          departureTime
+          startPoint
+          endPoint
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
         createdAt
         updatedAt

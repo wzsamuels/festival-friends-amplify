@@ -1,70 +1,46 @@
 {
-  "dev": {
+  "staging": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-festivalfriends-dev-143122-authRole",
-      "UnauthRoleArn": "arn:aws:iam::642956558393:role/amplify-festivalfriends-dev-143122-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::642956558393:role/amplify-festivalfriends-dev-143122-authRole",
+      "AuthRoleName": "amplify-eventfriends-staging-194056-authRole",
+      "UnauthRoleArn": "arn:aws:iam::642956558393:role/amplify-eventfriends-staging-194056-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::642956558393:role/amplify-eventfriends-staging-194056-authRole",
       "Region": "us-east-1",
-      "DeploymentBucketName": "amplify-festivalfriends-dev-143122-deployment",
-      "UnauthRoleName": "amplify-festivalfriends-dev-143122-unauthRole",
-      "StackName": "amplify-festivalfriends-dev-143122",
-      "StackId": "arn:aws:cloudformation:us-east-1:642956558393:stack/amplify-festivalfriends-dev-143122/6646afd0-d572-11ed-bb5c-1285e1868ec1",
-      "AmplifyAppId": "d2roywvsx7rezb",
-      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-festivalfriends-dev-143122-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json",
-      "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-festivalfriends-dev-143122-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json"
+      "DeploymentBucketName": "amplify-eventfriends-staging-194056-deployment",
+      "UnauthRoleName": "amplify-eventfriends-staging-194056-unauthRole",
+      "StackName": "amplify-eventfriends-staging-194056",
+      "StackId": "arn:aws:cloudformation:us-east-1:642956558393:stack/amplify-eventfriends-staging-194056/39082a20-056b-11ee-8bdf-12cbd947d061",
+      "AmplifyAppId": "d3h5qswgc4c8q2",
+      "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-eventfriends-staging-194056-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json"
     },
     "categories": {
-      "function": {
-        "festivalfriendsPostConfirmation": {
-          "GROUP": "test-group",
-          "deploymentBucketName": "amplify-festivalfriends-dev-143122-deployment",
-          "s3Key": "amplify-builds/festivalfriendsPostConfirmation-4b45435773374975346b-build.zip"
-        },
-        "stripeCheckout": {
-          "stripeSecretKey": "sk_test_51NF0cnIHoFjkR3tBkYPmguoU7Nkg7fQRF5D7PWq56JYqWic9s7yB5eQsWqwYWzQfrDnTB7QAesYOIY1KgAshbdOE00IGaPgHxJ",
-          "deploymentBucketName": "amplify-festivalfriends-dev-143122-deployment",
-          "s3Key": "amplify-builds/stripeCheckout-4b5a7a5a365272756c30-build.zip"
-        },
-        "AdminQueriese03c7317": {
-          "deploymentBucketName": "amplify-festivalfriends-dev-143122-deployment",
-          "s3Key": "amplify-builds/AdminQueriese03c7317-692b4e41656565377355-build.zip"
-        },
-        "stripeWebhook": {
-          "deploymentBucketName": "amplify-festivalfriends-dev-143122-deployment",
-          "s3Key": "amplify-builds/stripeWebhook-51635150485071687a68-build.zip",
-          "secretsPathAmplifyAppId": "d2roywvsx7rezb"
-        },
-        "festivalfriendsapiLayer": {
-          "deploymentBucketName": "amplify-festivalfriends-dev-143122-deployment",
-          "s3Key": "amplify-builds/festivalfriendsapiLayer-LambdaLayerVersion4755b732-build.zip"
-        },
-        "festivalfriendstestlayer": {
-          "deploymentBucketName": "amplify-festivalfriends-dev-143122-deployment",
-          "s3Key": "amplify-builds/festivalfriendstestlayer-LambdaLayerVersion3d8e6fa5-build.zip"
-        },
-        "createPaymentPortal": {
-          "deploymentBucketName": "amplify-festivalfriends-dev-143122-deployment",
-          "s3Key": "amplify-builds/createPaymentPortal-5a6d38332f536576734d-build.zip"
-        },
-        "test": {
-          "deploymentBucketName": "amplify-festivalfriends-dev-143122-deployment",
-          "s3Key": "amplify-builds/test-7a6e304f5165762b7a70-build.zip"
-        },
-        "cancelSubscription": {
-          "deploymentBucketName": "amplify-festivalfriends-dev-143122-deployment",
-          "s3Key": "amplify-builds/cancelSubscription-39333479477759335453-build.zip"
-        }
-      },
       "auth": {
-        "festivalfriends": {}
+        "eventfriends": {}
       },
       "storage": {
-        "s3festivalfriendsstorage2dfb2266": {}
+        "s3eventfriendsstorage850f3584": {}
       },
       "api": {
-        "festivalfriends": {},
-        "stripeAPI": {},
-        "stripeWebhook": {}
+        "eventfriends": {},
+        "stripe": {}
+      },
+      "function": {
+        "stripeCheckout": {
+          "deploymentBucketName": "amplify-eventfriends-staging-194056-deployment",
+          "s3Key": "amplify-builds/stripeCheckout-626c6b625764316b5042-build.zip"
+        },
+        "eventfriendslayer": {
+          "deploymentBucketName": "amplify-eventfriends-staging-194056-deployment",
+          "s3Key": "amplify-builds/eventfriendslayer-LambdaLayerVersion46c867e4-build.zip"
+        },
+        "stripeCancelSubscription": {
+          "deploymentBucketName": "amplify-eventfriends-staging-194056-deployment",
+          "s3Key": "amplify-builds/stripeCancelSubscription-78737173614176587667-build.zip"
+        },
+        "stripeWebhook": {
+          "secretsPathAmplifyAppId": "d3h5qswgc4c8q2",
+          "deploymentBucketName": "amplify-eventfriends-staging-194056-deployment",
+          "s3Key": "amplify-builds/stripeWebhook-73674d68357a6e2f3848-build.zip"
+        }
       }
     }
   }

@@ -27,6 +27,7 @@ export declare type FestivalCreateFormInputValues = {
     url?: string;
     customerID?: string;
     hasPaid?: boolean;
+    cancelled?: boolean;
     subID?: string;
     approved?: boolean;
 };
@@ -45,6 +46,7 @@ export declare type FestivalCreateFormValidationValues = {
     url?: ValidationFunction<string>;
     customerID?: ValidationFunction<string>;
     hasPaid?: ValidationFunction<boolean>;
+    cancelled?: ValidationFunction<boolean>;
     subID?: ValidationFunction<string>;
     approved?: ValidationFunction<boolean>;
 };
@@ -65,6 +67,7 @@ export declare type FestivalCreateFormOverridesProps = {
     url?: PrimitiveOverrideProps<TextFieldProps>;
     customerID?: PrimitiveOverrideProps<TextFieldProps>;
     hasPaid?: PrimitiveOverrideProps<SwitchFieldProps>;
+    cancelled?: PrimitiveOverrideProps<SwitchFieldProps>;
     subID?: PrimitiveOverrideProps<TextFieldProps>;
     approved?: PrimitiveOverrideProps<SwitchFieldProps>;
 } & EscapeHatchProps;

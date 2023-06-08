@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "paths": {
+    "/checkout": {
+      "name": "/checkout",
+      "lambdaFunction": "stripeCheckout",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "create",
+          "read",
+          "update",
+          "delete"
+        ]
+      }
+    },
+    "/cancelSubscription": {
+      "name": "/cancelSubscription",
+      "lambdaFunction": "stripeCancelSubscription",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "create",
+          "read",
+          "update",
+          "delete"
+        ]
+      }
+    },
+    "/": {
+      "name": "/",
+      "lambdaFunction": "stripeWebhook",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}

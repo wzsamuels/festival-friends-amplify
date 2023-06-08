@@ -16,28 +16,24 @@
     "s3Key": {
       "Type": "String"
     },
-    "apifestivalfriendsGraphQLAPIIdOutput": {
+    "apieventfriendsGraphQLAPIIdOutput": {
       "Type": "String",
-      "Default": "apifestivalfriendsGraphQLAPIIdOutput"
+      "Default": "apieventfriendsGraphQLAPIIdOutput"
     },
-    "apifestivalfriendsGraphQLAPIEndpointOutput": {
+    "apieventfriendsGraphQLAPIEndpointOutput": {
       "Type": "String",
-      "Default": "apifestivalfriendsGraphQLAPIEndpointOutput"
+      "Default": "apieventfriendsGraphQLAPIEndpointOutput"
     },
-    "apifestivalfriendsGraphQLAPIKeyOutput": {
+    "apieventfriendsGraphQLAPIKeyOutput": {
       "Type": "String",
-      "Default": "apifestivalfriendsGraphQLAPIKeyOutput"
+      "Default": "apieventfriendsGraphQLAPIKeyOutput"
+    },
+    "functioneventfriendslayerArn": {
+      "Type": "String",
+      "Default": "functioneventfriendslayerArn"
     },
     "secretsPathAmplifyAppId": {
       "Type": "String"
-    },
-    "functionfestivalfriendsapiLayerArn": {
-      "Type": "String",
-      "Default": "functionfestivalfriendsapiLayerArn"
-    },
-    "functionfestivalfriendstestlayerArn": {
-      "Type": "String",
-      "Default": "functionfestivalfriendstestlayerArn"
     }
   },
   "Conditions": {
@@ -93,14 +89,14 @@
             "REGION": {
               "Ref": "AWS::Region"
             },
-            "API_FESTIVALFRIENDS_GRAPHQLAPIIDOUTPUT": {
-              "Ref": "apifestivalfriendsGraphQLAPIIdOutput"
+            "API_EVENTFRIENDS_GRAPHQLAPIIDOUTPUT": {
+              "Ref": "apieventfriendsGraphQLAPIIdOutput"
             },
-            "API_FESTIVALFRIENDS_GRAPHQLAPIENDPOINTOUTPUT": {
-              "Ref": "apifestivalfriendsGraphQLAPIEndpointOutput"
+            "API_EVENTFRIENDS_GRAPHQLAPIENDPOINTOUTPUT": {
+              "Ref": "apieventfriendsGraphQLAPIEndpointOutput"
             },
-            "API_FESTIVALFRIENDS_GRAPHQLAPIKEYOUTPUT": {
-              "Ref": "apifestivalfriendsGraphQLAPIKeyOutput"
+            "API_EVENTFRIENDS_GRAPHQLAPIKEYOUTPUT": {
+              "Ref": "apieventfriendsGraphQLAPIKeyOutput"
             },
             "STRIPE_SECRET_KEY": {
               "Fn::Join": [
@@ -145,28 +141,6 @@
                   "STRIPE_ENDPOINT_SECRET"
                 ]
               ]
-            },
-            "test": {
-              "Fn::Join": [
-                "",
-                [
-                  {
-                    "Fn::Sub": [
-                      "/amplify/${appId}/${env}/AMPLIFY_${functionName}_",
-                      {
-                        "appId": {
-                          "Ref": "secretsPathAmplifyAppId"
-                        },
-                        "env": {
-                          "Ref": "env"
-                        },
-                        "functionName": "stripeWebhook"
-                      }
-                    ]
-                  },
-                  "test"
-                ]
-              ]
             }
           }
         },
@@ -179,7 +153,7 @@
         "Runtime": "nodejs18.x",
         "Layers": [
           {
-            "Ref": "functionfestivalfriendstestlayerArn"
+            "Ref": "functioneventfriendslayerArn"
           }
         ],
         "Timeout": 25
@@ -191,12 +165,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "festivalfriendsLambdaRole2d78f2c9",
+            "eventfriendsLambdaRole66a3de16",
             {
               "Fn::Join": [
                 "",
                 [
-                  "festivalfriendsLambdaRole2d78f2c9",
+                  "eventfriendsLambdaRole66a3de16",
                   "-",
                   {
                     "Ref": "env"
@@ -302,7 +276,7 @@
                       },
                       ":apis/",
                       {
-                        "Ref": "apifestivalfriendsGraphQLAPIIdOutput"
+                        "Ref": "apieventfriendsGraphQLAPIIdOutput"
                       },
                       "/types/Query/*"
                     ]
@@ -322,7 +296,7 @@
                       },
                       ":apis/",
                       {
-                        "Ref": "apifestivalfriendsGraphQLAPIIdOutput"
+                        "Ref": "apieventfriendsGraphQLAPIIdOutput"
                       },
                       "/types/Mutation/*"
                     ]
@@ -342,7 +316,7 @@
                       },
                       ":apis/",
                       {
-                        "Ref": "apifestivalfriendsGraphQLAPIIdOutput"
+                        "Ref": "apieventfriendsGraphQLAPIIdOutput"
                       },
                       "/types/Subscription/*"
                     ]

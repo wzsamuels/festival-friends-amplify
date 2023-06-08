@@ -1,23 +1,18 @@
 export type AmplifyDependentResourcesAttributes = {
   "api": {
-    "festivalfriends": {
+    "eventfriends": {
       "GraphQLAPIEndpointOutput": "string",
       "GraphQLAPIIdOutput": "string",
       "GraphQLAPIKeyOutput": "string"
     },
-    "stripeAPI": {
-      "ApiId": "string",
-      "ApiName": "string",
-      "RootUrl": "string"
-    },
-    "stripeWebhook": {
+    "stripe": {
       "ApiId": "string",
       "ApiName": "string",
       "RootUrl": "string"
     }
   },
   "auth": {
-    "festivalfriends": {
+    "eventfriends": {
       "AppClientID": "string",
       "AppClientIDWeb": "string",
       "IdentityPoolId": "string",
@@ -28,39 +23,15 @@ export type AmplifyDependentResourcesAttributes = {
     }
   },
   "function": {
-    "AdminQueriese03c7317": {
-      "Arn": "string",
-      "LambdaExecutionRole": "string",
-      "LambdaExecutionRoleArn": "string",
-      "Name": "string",
-      "Region": "string"
-    },
-    "cancelSubscription": {
-      "Arn": "string",
-      "LambdaExecutionRole": "string",
-      "LambdaExecutionRoleArn": "string",
-      "Name": "string",
-      "Region": "string"
-    },
-    "createPaymentPortal": {
-      "Arn": "string",
-      "LambdaExecutionRole": "string",
-      "LambdaExecutionRoleArn": "string",
-      "Name": "string",
-      "Region": "string"
-    },
-    "festivalfriendsPostConfirmation": {
-      "Arn": "string",
-      "LambdaExecutionRole": "string",
-      "LambdaExecutionRoleArn": "string",
-      "Name": "string",
-      "Region": "string"
-    },
-    "festivalfriendsapiLayer": {
+    "eventfriendslayer": {
       "Arn": "string"
     },
-    "festivalfriendstestlayer": {
-      "Arn": "string"
+    "stripeCancelSubscription": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
     },
     "stripeCheckout": {
       "Arn": "string",
@@ -75,17 +46,10 @@ export type AmplifyDependentResourcesAttributes = {
       "LambdaExecutionRoleArn": "string",
       "Name": "string",
       "Region": "string"
-    },
-    "test": {
-      "Arn": "string",
-      "LambdaExecutionRole": "string",
-      "LambdaExecutionRoleArn": "string",
-      "Name": "string",
-      "Region": "string"
     }
   },
   "storage": {
-    "s3festivalfriendsstorage2dfb2266": {
+    "s3eventfriendsstorage850f3584": {
       "BucketName": "string",
       "Region": "string"
     }

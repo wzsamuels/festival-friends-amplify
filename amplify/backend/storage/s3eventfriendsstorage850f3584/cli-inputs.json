@@ -1,0 +1,16 @@
+{
+  "resourceName": "s3eventfriendsstorage850f3584",
+  "bucketName": "eventfriends-storage-850f3584",
+  "policyUUID": "f87ca75c",
+  "storageAccess": "authAndGuest",
+  "guestAccess": [
+    "READ",
+    "CREATE_AND_UPDATE",
+    "DELETE"
+  ],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ]
+}

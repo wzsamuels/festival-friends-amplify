@@ -45,6 +45,7 @@ export default function FestivalUpdateForm(props) {
     url: "",
     customerID: "",
     hasPaid: false,
+    cancelled: false,
     subID: "",
     approved: false,
   };
@@ -64,6 +65,7 @@ export default function FestivalUpdateForm(props) {
   const [url, setUrl] = React.useState(initialValues.url);
   const [customerID, setCustomerID] = React.useState(initialValues.customerID);
   const [hasPaid, setHasPaid] = React.useState(initialValues.hasPaid);
+  const [cancelled, setCancelled] = React.useState(initialValues.cancelled);
   const [subID, setSubID] = React.useState(initialValues.subID);
   const [approved, setApproved] = React.useState(initialValues.approved);
   const [errors, setErrors] = React.useState({});
@@ -85,6 +87,7 @@ export default function FestivalUpdateForm(props) {
     setUrl(cleanValues.url);
     setCustomerID(cleanValues.customerID);
     setHasPaid(cleanValues.hasPaid);
+    setCancelled(cleanValues.cancelled);
     setSubID(cleanValues.subID);
     setApproved(cleanValues.approved);
     setErrors({});
@@ -115,6 +118,7 @@ export default function FestivalUpdateForm(props) {
     url: [],
     customerID: [],
     hasPaid: [],
+    cancelled: [],
     subID: [],
     approved: [],
   };
@@ -158,6 +162,7 @@ export default function FestivalUpdateForm(props) {
           url,
           customerID,
           hasPaid,
+          cancelled,
           subID,
           approved,
         };
@@ -229,6 +234,7 @@ export default function FestivalUpdateForm(props) {
               url,
               customerID,
               hasPaid,
+              cancelled,
               subID,
               approved,
             };
@@ -268,6 +274,7 @@ export default function FestivalUpdateForm(props) {
               url,
               customerID,
               hasPaid,
+              cancelled,
               subID,
               approved,
             };
@@ -307,6 +314,7 @@ export default function FestivalUpdateForm(props) {
               url,
               customerID,
               hasPaid,
+              cancelled,
               subID,
               approved,
             };
@@ -346,6 +354,7 @@ export default function FestivalUpdateForm(props) {
               url,
               customerID,
               hasPaid,
+              cancelled,
               subID,
               approved,
             };
@@ -385,6 +394,7 @@ export default function FestivalUpdateForm(props) {
               url,
               customerID,
               hasPaid,
+              cancelled,
               subID,
               approved,
             };
@@ -424,6 +434,7 @@ export default function FestivalUpdateForm(props) {
               url,
               customerID,
               hasPaid,
+              cancelled,
               subID,
               approved,
             };
@@ -463,6 +474,7 @@ export default function FestivalUpdateForm(props) {
               url,
               customerID,
               hasPaid,
+              cancelled,
               subID,
               approved,
             };
@@ -503,6 +515,7 @@ export default function FestivalUpdateForm(props) {
               url,
               customerID,
               hasPaid,
+              cancelled,
               subID,
               approved,
             };
@@ -543,6 +556,7 @@ export default function FestivalUpdateForm(props) {
               url,
               customerID,
               hasPaid,
+              cancelled,
               subID,
               approved,
             };
@@ -582,6 +596,7 @@ export default function FestivalUpdateForm(props) {
               url,
               customerID,
               hasPaid,
+              cancelled,
               subID,
               approved,
             };
@@ -652,6 +667,7 @@ export default function FestivalUpdateForm(props) {
               url,
               customerID,
               hasPaid,
+              cancelled,
               subID,
               approved,
             };
@@ -691,6 +707,7 @@ export default function FestivalUpdateForm(props) {
               url: value,
               customerID,
               hasPaid,
+              cancelled,
               subID,
               approved,
             };
@@ -730,6 +747,7 @@ export default function FestivalUpdateForm(props) {
               url,
               customerID: value,
               hasPaid,
+              cancelled,
               subID,
               approved,
             };
@@ -769,6 +787,7 @@ export default function FestivalUpdateForm(props) {
               url,
               customerID,
               hasPaid: value,
+              cancelled,
               subID,
               approved,
             };
@@ -784,6 +803,46 @@ export default function FestivalUpdateForm(props) {
         errorMessage={errors.hasPaid?.errorMessage}
         hasError={errors.hasPaid?.hasError}
         {...getOverrideProps(overrides, "hasPaid")}
+      ></SwitchField>
+      <SwitchField
+        label="Cancelled"
+        defaultChecked={false}
+        isDisabled={false}
+        isChecked={cancelled}
+        onChange={(e) => {
+          let value = e.target.checked;
+          if (onChange) {
+            const modelFields = {
+              name,
+              genre,
+              image,
+              location,
+              state,
+              city,
+              address,
+              startDate,
+              endDate,
+              type,
+              description,
+              url,
+              customerID,
+              hasPaid,
+              cancelled: value,
+              subID,
+              approved,
+            };
+            const result = onChange(modelFields);
+            value = result?.cancelled ?? value;
+          }
+          if (errors.cancelled?.hasError) {
+            runValidationTasks("cancelled", value);
+          }
+          setCancelled(value);
+        }}
+        onBlur={() => runValidationTasks("cancelled", cancelled)}
+        errorMessage={errors.cancelled?.errorMessage}
+        hasError={errors.cancelled?.hasError}
+        {...getOverrideProps(overrides, "cancelled")}
       ></SwitchField>
       <TextField
         label="Sub id"
@@ -808,6 +867,7 @@ export default function FestivalUpdateForm(props) {
               url,
               customerID,
               hasPaid,
+              cancelled,
               subID: value,
               approved,
             };
@@ -847,6 +907,7 @@ export default function FestivalUpdateForm(props) {
               url,
               customerID,
               hasPaid,
+              cancelled,
               subID,
               approved: value,
             };

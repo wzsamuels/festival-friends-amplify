@@ -1,6 +1,6 @@
 projects:
-  festivalfriends:
-    schemaPath: amplify/backend/api/festivalfriends/build/schema.graphql
+  eventfriends:
+    schemaPath: amplify/backend/api/eventfriends/build/schema.graphql
     includes:
       - src/graphql/**/*.ts
     excludes:

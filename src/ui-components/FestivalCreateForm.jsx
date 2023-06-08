@@ -44,6 +44,7 @@ export default function FestivalCreateForm(props) {
     url: "",
     customerID: "",
     hasPaid: false,
+    cancelled: false,
     subID: "",
     approved: false,
   };
@@ -63,6 +64,7 @@ export default function FestivalCreateForm(props) {
   const [url, setUrl] = React.useState(initialValues.url);
   const [customerID, setCustomerID] = React.useState(initialValues.customerID);
   const [hasPaid, setHasPaid] = React.useState(initialValues.hasPaid);
+  const [cancelled, setCancelled] = React.useState(initialValues.cancelled);
   const [subID, setSubID] = React.useState(initialValues.subID);
   const [approved, setApproved] = React.useState(initialValues.approved);
   const [errors, setErrors] = React.useState({});
@@ -81,6 +83,7 @@ export default function FestivalCreateForm(props) {
     setUrl(initialValues.url);
     setCustomerID(initialValues.customerID);
     setHasPaid(initialValues.hasPaid);
+    setCancelled(initialValues.cancelled);
     setSubID(initialValues.subID);
     setApproved(initialValues.approved);
     setErrors({});
@@ -100,6 +103,7 @@ export default function FestivalCreateForm(props) {
     url: [],
     customerID: [],
     hasPaid: [],
+    cancelled: [],
     subID: [],
     approved: [],
   };
@@ -143,6 +147,7 @@ export default function FestivalCreateForm(props) {
           url,
           customerID,
           hasPaid,
+          cancelled,
           subID,
           approved,
         };
@@ -213,6 +218,7 @@ export default function FestivalCreateForm(props) {
               url,
               customerID,
               hasPaid,
+              cancelled,
               subID,
               approved,
             };
@@ -252,6 +258,7 @@ export default function FestivalCreateForm(props) {
               url,
               customerID,
               hasPaid,
+              cancelled,
               subID,
               approved,
             };
@@ -291,6 +298,7 @@ export default function FestivalCreateForm(props) {
               url,
               customerID,
               hasPaid,
+              cancelled,
               subID,
               approved,
             };
@@ -330,6 +338,7 @@ export default function FestivalCreateForm(props) {
               url,
               customerID,
               hasPaid,
+              cancelled,
               subID,
               approved,
             };
@@ -369,6 +378,7 @@ export default function FestivalCreateForm(props) {
               url,
               customerID,
               hasPaid,
+              cancelled,
               subID,
               approved,
             };
@@ -408,6 +418,7 @@ export default function FestivalCreateForm(props) {
               url,
               customerID,
               hasPaid,
+              cancelled,
               subID,
               approved,
             };
@@ -447,6 +458,7 @@ export default function FestivalCreateForm(props) {
               url,
               customerID,
               hasPaid,
+              cancelled,
               subID,
               approved,
             };
@@ -487,6 +499,7 @@ export default function FestivalCreateForm(props) {
               url,
               customerID,
               hasPaid,
+              cancelled,
               subID,
               approved,
             };
@@ -527,6 +540,7 @@ export default function FestivalCreateForm(props) {
               url,
               customerID,
               hasPaid,
+              cancelled,
               subID,
               approved,
             };
@@ -566,6 +580,7 @@ export default function FestivalCreateForm(props) {
               url,
               customerID,
               hasPaid,
+              cancelled,
               subID,
               approved,
             };
@@ -636,6 +651,7 @@ export default function FestivalCreateForm(props) {
               url,
               customerID,
               hasPaid,
+              cancelled,
               subID,
               approved,
             };
@@ -675,6 +691,7 @@ export default function FestivalCreateForm(props) {
               url: value,
               customerID,
               hasPaid,
+              cancelled,
               subID,
               approved,
             };
@@ -714,6 +731,7 @@ export default function FestivalCreateForm(props) {
               url,
               customerID: value,
               hasPaid,
+              cancelled,
               subID,
               approved,
             };
@@ -753,6 +771,7 @@ export default function FestivalCreateForm(props) {
               url,
               customerID,
               hasPaid: value,
+              cancelled,
               subID,
               approved,
             };
@@ -768,6 +787,46 @@ export default function FestivalCreateForm(props) {
         errorMessage={errors.hasPaid?.errorMessage}
         hasError={errors.hasPaid?.hasError}
         {...getOverrideProps(overrides, "hasPaid")}
+      ></SwitchField>
+      <SwitchField
+        label="Cancelled"
+        defaultChecked={false}
+        isDisabled={false}
+        isChecked={cancelled}
+        onChange={(e) => {
+          let value = e.target.checked;
+          if (onChange) {
+            const modelFields = {
+              name,
+              genre,
+              image,
+              location,
+              state,
+              city,
+              address,
+              startDate,
+              endDate,
+              type,
+              description,
+              url,
+              customerID,
+              hasPaid,
+              cancelled: value,
+              subID,
+              approved,
+            };
+            const result = onChange(modelFields);
+            value = result?.cancelled ?? value;
+          }
+          if (errors.cancelled?.hasError) {
+            runValidationTasks("cancelled", value);
+          }
+          setCancelled(value);
+        }}
+        onBlur={() => runValidationTasks("cancelled", cancelled)}
+        errorMessage={errors.cancelled?.errorMessage}
+        hasError={errors.cancelled?.hasError}
+        {...getOverrideProps(overrides, "cancelled")}
       ></SwitchField>
       <TextField
         label="Sub id"
@@ -792,6 +851,7 @@ export default function FestivalCreateForm(props) {
               url,
               customerID,
               hasPaid,
+              cancelled,
               subID: value,
               approved,
             };
@@ -831,6 +891,7 @@ export default function FestivalCreateForm(props) {
               url,
               customerID,
               hasPaid,
+              cancelled,
               subID,
               approved: value,
             };

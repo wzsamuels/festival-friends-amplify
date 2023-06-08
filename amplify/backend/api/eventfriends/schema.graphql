@@ -1,0 +1,150 @@
+type Profile @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  sub: String!
+  firstName: String
+  lastName: String
+  verified: Boolean @default(value: "false")
+  submitted: Boolean @default(value: "false")
+  profilePhotoID: String
+  bannerPhotoID: String
+  verifyPhotoID: String
+  customerID: String
+  city: String
+  state: String
+  school: String
+  address: String
+  address2: String
+  phone: String
+  email: String
+  zipcode: String
+  birthDate: String
+  hobbies: String
+  gender: String
+  events: [Event] @manyToMany(relationName: "EventProfile")
+  rides: [Ride] @manyToMany(relationName: "RideProfile")
+  friends: [Friendship] @hasMany(indexName: "byProfile", fields: ["id"])
+  conversations: [Conversation] @hasMany(indexName: "byProfile", fields: ["id"])
+  photos: [Photo] @hasMany(indexName: "byProfile", fields: ["id"])
+  groupID: ID @index(name: "byGroup")
+  group: Group @belongsTo(fields: ["groupID"])
+  privacySetting: PrivacySetting @hasOne
+  socialMedia: [SocialMedia] @hasMany
+}
+
+type SocialMedia @model @auth(rules: [{ allow: public}]) {
+  id: ID!
+  socialMediaType: String!
+  accountURL: String!
+}
+
+type PrivacySetting @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  city: Boolean @default(value: "false")
+  state: Boolean @default(value: "false")
+  school: Boolean @default(value: "false")
+  email: Boolean @default(value: "false")
+  events: Boolean @default(value: "false")
+  rides: Boolean @default(value: "false")
+  friends: Boolean @default(value: "false")
+  photos: Boolean @default(value: "false")
+}
+
+type Event @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  name: String!
+  genre: String!
+  image: String!
+  location: String
+  state: String!
+  city: String!
+  address: String!
+  startDate: AWSDate!
+  endDate: AWSDate!
+  type: EventType
+  description: String
+  url: String
+  customerID: String
+  hasPaid: Boolean @default(value: "false")
+  cancelled: Boolean @default(value: "false")
+  subscriptionID: String @index(name: "bySubID")
+  approved: Boolean @default(value: "true")
+  group: Group @belongsTo(fields: ["groupID"])
+  groupID: ID @index(name: "byGroup")
+  attendees: [Profile] @manyToMany(relationName: "EventProfile")
+  rides: [Ride] @hasMany(indexName: "byEvent", fields: ["id"])
+}
+
+type Ride @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  event: Event! @belongsTo(fields: ["eventID"])
+  eventID: ID! @index(name: "byEvent")
+  driverProfileID: ID!
+  passengers: [Profile] @manyToMany(relationName: "RideProfile")
+  maxPassengers: Int!
+  departureTime: AWSDateTime!
+  startPoint: String!
+  endPoint: String!
+}
+
+type Photo @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  profileID: ID! @index(name: "byProfile")
+  profile: Profile @belongsTo(fields: ["profileID"])
+  s3Key: String!
+  isPrivate: Boolean!
+  identityId: String!
+  description: String
+}
+
+type Friendship @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  profileID: ID! @index(name: "byProfile")
+  friendProfileID: ID! @index(name: "byFriend")
+  isAccepted: Boolean!
+  profile: Profile! @belongsTo(fields: ["profileID"])
+  friendProfile: Profile! @belongsTo(fields: ["friendProfileID"])
+}
+
+type Conversation @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  profileID: ID! @index(name: "byProfile")
+  friendProfileID: ID! @index(name: "byFriendProfile")
+  profile: Profile! @belongsTo(fields: ["profileID"])
+  friendProfile: Profile! @belongsTo(fields: ["friendProfileID"])
+  messages: [Message] @hasMany
+  unreadMessage: Boolean
+}
+
+type Message @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  conversation: Conversation! @belongsTo(fields: ["conversationID"])
+  conversationID: ID! @index(name: "byConversation")
+  content: String!
+  senderProfileID: ID!
+  receiverProfileID: ID!
+  unread: Boolean @default(value: "true")
+}
+
+type Group @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  name: String!
+  domain: String!
+  webPage: String!
+  events: [Event]! @hasMany(indexName: "byGroup", fields: ["id"])
+  members: [Profile]! @hasMany(indexName: "byGroup", fields: ["id"])
+}
+
+enum EventType {
+  SPORT
+  BUSINESS
+  COLLEGE
+  MUSIC
+  ALL
+  TRAVEL
+}
+
+enum SocialMediaType {
+  FACEBOOK,
+  TWITTER,
+  INSTAGRAM
+}

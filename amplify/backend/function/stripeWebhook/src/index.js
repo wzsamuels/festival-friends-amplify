@@ -5,7 +5,7 @@ const aws = require('aws-sdk');
 
 const { Parameters } = await (new aws.SSM())
   .getParameters({
-    Names: ["STRIPE_SECRET_KEY","STRIPE_ENDPOINT_SECRET","test"].map(secretName => process.env[secretName]),
+    Names: ["STRIPE_SECRET_KEY","STRIPE_ENDPOINT_SECRET"].map(secretName => process.env[secretName]),
     WithDecryption: true,
   })
   .promise();
@@ -13,25 +13,13 @@ const { Parameters } = await (new aws.SSM())
 Parameters will be of the form { Name: 'secretName', Value: 'secretValue', ... }[]
 */
 /* Amplify Params - DO NOT EDIT
-	API_FESTIVALFRIENDS_GRAPHQLAPIENDPOINTOUTPUT
-	API_FESTIVALFRIENDS_GRAPHQLAPIIDOUTPUT
-	API_FESTIVALFRIENDS_GRAPHQLAPIKEYOUTPUT
+	API_EVENTFRIENDS_GRAPHQLAPIENDPOINTOUTPUT
+	API_EVENTFRIENDS_GRAPHQLAPIIDOUTPUT
+	API_EVENTFRIENDS_GRAPHQLAPIKEYOUTPUT
 	ENV
 	REGION
-Amplify Params - DO NOT EDIT *//*
-Use the following code to retrieve configured secrets from SSM:
+Amplify Params - DO NOT EDIT */
 
-const aws = require('aws-sdk');
-
-const { Parameters } = await (new aws.SSM())
-  .getParameters({
-    Names: ["STRIPE_SECRET_KEY","STRIPE_ENDPOINT_SECRET","test"].map(secretName => process.env[secretName]),
-    WithDecryption: true,
-  })
-  .promise();
-
-Parameters will be of the form { Name: 'secretName', Value: 'secretValue', ... }[]
-*/
 /**
  * @type {import('@types/aws-lambda').APIGatewayProxyHandler}
  */
@@ -43,217 +31,319 @@ const gql = require('graphql-tag');
 const graphql = require('graphql');
 const { print } = graphql;
 
-const GRAPHQL_API_ENDPOINT = process.env.API_FESTIVALFRIENDS_GRAPHQLAPIENDPOINTOUTPUT
-const GRAPHQL_API_KEY = process.env.API_FESTIVALFRIENDS_GRAPHQLAPIKEYOUTPUT
+const GRAPHQL_API_ENDPOINT = process.env.API_EVENTFRIENDS_GRAPHQLAPIENDPOINTOUTPUT
+const GRAPHQL_API_KEY = process.env.API_EVENTFRIENDS_GRAPHQLAPIKEYOUTPUT
 
-const updateFestivalMutation = gql`
-  mutation UpdateFestival($input: UpdateFestivalInput!) {
-    updateFestival(input: $input) {
+const updateEventMutation = gql`
+  mutation UpdateEvent($input: UpdateEventInput!) {
+    updateEvent(input: $input) {
       id
-      hasPaid
-      subID
+      name
+      genre
+      image
+            location
+            state
+            city
+            address
+            startDate
+            endDate
+            type
+            description
+            url
+            customerID
+            hasPaid
+            cancelled
+            subscriptionID
+            approved
+            groupID
+            _version
+        }
     }
-  }
 `;
 
-const getFestivalQuery = gql`
-  query GetFestival($id: ID!) {
-    getFestival(id: $id) {
-      id
-      _version
-      subID
+const getEventQuery = gql`
+    query GetEvent($id: ID!) {
+        getEvent(id: $id) {
+            id
+            name
+            genre
+            image
+            location
+            state
+            city
+            address
+            startDate
+            endDate
+            type
+            description
+            url
+            customerID
+            hasPaid
+            subscriptionID
+            approved
+            groupID
+            _version
+            cancelled
+            updatedAt
+            createdAt
+        }
     }
-  }
 `
 
-const getFestivalBySubID = gql`
-  query GetFestivalBySubID($subID: String!) {
-    festivalsBySubID(subID: $subID) {
-      items {
-        id
-        name
-        subID
-        customerID
-        _version
-      }
+const getEventBySubID = gql`
+    query GetEventBySubID($subscriptionID: String!) {
+        eventsBySubscriptionID(subscriptionID: $subscriptionID) {
+            items {
+                id
+                name
+                genre
+                image
+                location
+                state
+                city
+                address
+                startDate
+                endDate
+                type
+                description
+                url
+                customerID
+                hasPaid
+                subscriptionID
+                approved
+                groupID
+                _version
+                cancelled
+                updatedAt
+                createdAt
+                _lastChangedAt
+            }
+        }
     }
-  }
 `
-
-const deleteFestival = gql`
-  mutation DeleteFestival($input: DeleteFestivalInput!) {
-      deleteFestival(input: $input) {
-        id
-        name
-        subID
-        customerID
-        _version
-      }
-  }
-`
-
 
 exports.handler = async (event) => {
 
-  const { Parameters } = await (new aws.SSM())
-  .getParameters({
-    Names: ["STRIPE_SECRET_KEY","STRIPE_ENDPOINT_SECRET"].map(secretName => process.env[secretName]),
-    WithDecryption: true,
-  })
-  .promise();
+    const {Parameters} = await (new aws.SSM())
+      .getParameters({
+          Names: ["STRIPE_SECRET_KEY", "STRIPE_ENDPOINT_SECRET"].map(secretName => process.env[secretName]),
+          WithDecryption: true,
+      })
+      .promise();
 
-  const stripeSecret = Parameters.find(p => p.Name === '/amplify/d2roywvsx7rezb/dev/AMPLIFY_stripeWebhook_STRIPE_SECRET_KEY').Value;
-  const endPointSecret = Parameters.find(p => p.Name === '/amplify/d2roywvsx7rezb/dev/AMPLIFY_stripeWebhook_STRIPE_ENDPOINT_SECRET').Value;
+    console.log(JSON.stringify(Parameters))
+    const stripeSecret = Parameters.find(p => p.Name === '/amplify/d3h5qswgc4c8q2/staging/AMPLIFY_stripeWebhook_STRIPE_SECRET_KEY').Value;
+    const endPointSecret = Parameters.find(p => p.Name === '/amplify/d3h5qswgc4c8q2/staging/AMPLIFY_stripeWebhook_STRIPE_ENDPOINT_SECRET').Value;
 
-  // Initialize Stripe with the secret key
-  const stripe = new Stripe(stripeSecret, { apiVersion: '2020-08-27' });
+    // Initialize Stripe with the secret key
+    const stripe = new Stripe(stripeSecret, {apiVersion: '2020-08-27'});
 
-  const sig = event.headers['Stripe-Signature'];
-  let stripeEvent;
-
-  try {
-    stripeEvent = stripe.webhooks.constructEvent(event.body, sig, endPointSecret);
-  } catch (err) {
-    return { statusCode: 400, body: `Webhook Error: ${err.message}` };
-  }
-
-  if(stripeEvent.type === "customer.subscription.deleted") {
-    console.log("Subscription deleted: ", stripeEvent)
-    const session = stripeEvent.data.object;
-    console.log("Session: ", session)
-    const eventID = session.metadata.eventID;
-    console.log("EventID", eventID)
-    const subID = session.id
+    const sig = event.headers['Stripe-Signature'];
+    let stripeEvent;
 
     try {
-      let response = await axios({
-        url: GRAPHQL_API_ENDPOINT,
-        method: 'post',
-        headers: {
-          'x-api-key': GRAPHQL_API_KEY,
-        },
-        data: {
-          query: print(getFestivalBySubID),
-          variables: {
-            subID: subID
-          }
-        },
-      });
-      console.log(response);
-      let { data } = response.data;
+        stripeEvent = stripe.webhooks.constructEvent(event.body, sig, endPointSecret);
+    } catch (err) {
+        return {statusCode: 400, body: `Webhook Error: ${err.message}`};
+    }
 
-      if (data?.errors) {
-        console.error('GraphQL errors:', data?.errors);
-        return {statusCode: 500, body: `GraphQL errors ${JSON.stringify(data?.errors)}`};
-      }
-      console.log("Event queried:", JSON.stringify(data));
+    if (stripeEvent.type === "customer.subscription.deleted") {
+        console.log("Subscription deleted: ", stripeEvent)
+        const session = stripeEvent.data.object;
+        const subscriptionID = session.id
 
-      const eventID = data?.festivalsBySubID.items[0]?.id;
-      const version = data?.festivalsBySubID.items[0]?._version;
+        try {
+            let response = await axios({
+                url: GRAPHQL_API_ENDPOINT,
+                method: 'post',
+                headers: {
+                    'x-api-key': GRAPHQL_API_KEY,
+                },
+                data: {
+                    query: print(getEventBySubID),
+                    variables: {
+                        subscriptionID: subscriptionID
+                    }
+                },
+            });
 
-      response = await axios({
-        url: GRAPHQL_API_ENDPOINT,
-        method: 'post',
-        headers: {
-          'x-api-key': GRAPHQL_API_KEY,
-        },
-        data: {
-          query: print(deleteFestival),
-          variables: {
-            input: {
-              id: eventID,
-              _version: version
+            if (response.data?.errors) {
+                console.error('GraphQL errors:', response.data?.errors);
+                return {
+                    statusCode: 500,
+                    body: `GraphQL errors ${JSON.stringify(response.data?.errors)}`
+                };
             }
-          }
-        },
-      });
-      console.log(response);
+            console.log("Event queried:", JSON.stringify(response.data?.data))
+            const event = response.data?.data.eventsBySubscriptionID.items[0];
 
-      if (data?.errors) {
-        console.error('GraphQL errors:', data?.errors);
-        return {statusCode: 500, body: `GraphQL errors ${JSON.stringify(data?.errors)}`};
-      }
-      console.log("Event deleted:", JSON.stringify(data));
+            const updatedEvent = {
+                id: event.id,
+                name: event.name,
+                genre: event.genre,
+                image: event.image,
+                location: event.location,
+                state: event.state,
+                city: event.city,
+                address: event.address,
+                startDate: event.startDate,
+                endDate: event.endDate,
+                type: event.type,
+                description: event.description,
+                url: event.url,
+                customerID: event.customerID,
+                hasPaid: event.hasPaid,
+                cancelled: true,
+                subscriptionID: event.subscriptionID,
+                approved: event.approved,
+                groupID: event.groupID,
+                _version: event._version,
+            }
 
-    } catch (e) {
-      console.log("Error getting event:", e)
-      return { statusCode: 500, body: `Error getting event ${e?.message}` };
+            response = await axios({
+                url: GRAPHQL_API_ENDPOINT,
+                method: 'post',
+                headers: {
+                    'x-api-key': GRAPHQL_API_KEY,
+                },
+                data: {
+                    query: print(updateEventMutation),
+                    variables: {
+                        input: updatedEvent,
+                    },
+                },
+            });
+            console.log(response);
+
+            if (response.data?.errors) {
+                console.error('GraphQL errors:', response.data?.errors);
+                return {
+                    headers: {
+                        "Access-Control-Allow-Origin": "*"
+                    },
+                    statusCode: 500,
+                    body: `GraphQL errors ${JSON.stringify(response.data?.errors)}`
+                };
+            }
+            console.log("Event updated:", JSON.stringify(response.data?.data));
+
+        } catch (e) {
+            console.log("Error updating event:", e)
+            return {
+                headers: {
+                    "Access-Control-Allow-Origin": "*"
+                },
+                statusCode: 500,
+                body: `Error updating event ${e?.message}`
+            };
+        }
+
+    } else if (stripeEvent.type === 'checkout.session.completed') {
+
+        const session = stripeEvent.data.object;
+        console.log("Checkout session completed!: ", session)
+        const eventID = session.metadata.eventID;
+        console.log("EventID", eventID)
+
+        try {
+            let response = await axios({
+                url: GRAPHQL_API_ENDPOINT,
+                method: 'post',
+                headers: {
+                    'x-api-key': GRAPHQL_API_KEY,
+                },
+                data: {
+                    query: print(getEventQuery),
+                    variables: {
+                        id: eventID
+                    }
+                },
+            });
+            console.log("Response: ", response);
+            let data = response.data;
+            console.log("Data: ", JSON.stringify(data))
+
+            if (data?.errors) {
+                console.error('GraphQL errors:', data?.errors);
+                return {
+                    headers: {
+                        "Access-Control-Allow-Origin": "*"
+                    },
+                    statusCode: 500,
+                    body: `GraphQL errors ${JSON.stringify(data?.errors)}`
+                };
+            }
+            const event = data?.data.getEvent;
+            console.log("Event from query:", JSON.stringify(event));
+
+
+            const updatedEvent = {
+                id: event.id,
+                name: event.name,
+                genre: event.genre,
+                image: event.image,
+                location: event.location,
+                state: event.state,
+                city: event.city,
+                address: event.address,
+                startDate: event.startDate,
+                endDate: event.endDate,
+                type: event.type,
+                description: event.description,
+                url: event.url,
+                customerID: event.customerID,
+                hasPaid: true,
+                cancelled: event.cancelled,
+                subscriptionID: session.subscription,
+                approved: true,
+                groupID: event.groupID,
+                _version: event._version
+            }
+
+            response = await axios({
+                url: GRAPHQL_API_ENDPOINT,
+                method: 'post',
+                headers: {
+                    'x-api-key': GRAPHQL_API_KEY,
+                },
+                data: {
+                    query: print(updateEventMutation),
+                    variables: {
+                        input: updatedEvent,
+                    },
+                },
+            });
+
+            console.log("Updated event Response: ", response);
+            data = response.data;
+            console.log("Updated event data", JSON.stringify(data))
+
+            if (data?.errors) {
+                console.error('GraphQL errors:', data?.errors);
+                return {
+                    headers: {
+                        "Access-Control-Allow-Origin": "*"
+                    },
+                    statusCode: 500,
+                    body: `GraphQL errors ${JSON.stringify(data?.errors)}`
+                };
+            }
+
+            console.log("Session subscription: ", session.subscription)
+        } catch (e) {
+            console.log("Error getting event:", e)
+            return {
+                statusCode: 500,
+                body: `Error getting event ${e?.message}`
+            };
+        }
     }
 
-  } else if (stripeEvent.type === 'checkout.session.completed') {
-
-    const session = stripeEvent.data.object;
-    console.log("Checkout session completed!: ", session)
-    const eventID = session.metadata.eventID;
-    console.log("EventID", eventID)
-    console.log("Trying to get event via axios...")
-    let version;
-
-    try {
-      const response = await axios({
-        url: GRAPHQL_API_ENDPOINT,
-        method: 'post',
+    return {
         headers: {
-          'x-api-key': GRAPHQL_API_KEY,
+            "Access-Control-Allow-Origin": "*"
         },
-        data: {
-          query: print(getFestivalQuery),
-          variables: {
-            id: eventID
-          }
-        },
-      });
-      console.log(response);
-      let { data } = response.data;
-
-      if (data?.errors) {
-        console.error('GraphQL errors:', data?.errors);
-      } else {
-        console.log("Event:", JSON.stringify(data?.getFestival));
-        console.log("Event version:", data?.getFestival._version)
-        version = data?.getFestival._version;
-      }
-    } catch (e) {
-      console.log("Error getting event:", e)
-      return { statusCode: 500, body: `Error getting event ${e?.message}` };
-    }
-    console.log("Session subscription: ", session.subscription)
-    try {
-      const updatedEvent = {
-        id: eventID,
-        hasPaid: true,
-        _version: version,
-        subID: session.subscription
-      }
-
-      const response = await axios({
-        url: GRAPHQL_API_ENDPOINT,
-        method: 'post',
-        headers: {
-          'x-api-key': GRAPHQL_API_KEY,
-        },
-        data: {
-          query: print(updateFestivalMutation),
-          variables: {
-            input: updatedEvent,
-          },
-        },
-      });
-
-      console.log(response);
-
-      const { data } = response.data;
-      if (data?.errors) {
-        console.error('GraphQL errors:', data?.errors);
-      } else {
-        console.log("Event:", JSON.stringify(data?.updateFestival));
-      }
-
-    } catch (e) {
-      console.log("Error updating event", e)
-      return { statusCode: 500, body: `Error updating Event ${e?.message}` };
-    }
-  }
-
-  return { statusCode: 200, body: 'Success' };
+        statusCode: 200,
+        body: 'Success'
+    };
 };

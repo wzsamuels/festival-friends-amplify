@@ -1,518 +1,7 @@
 export const schema = {
     "models": {
-        "Message": {
-            "name": "Message",
-            "fields": {
-                "id": {
-                    "name": "id",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "content": {
-                    "name": "content",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "senderID": {
-                    "name": "senderID",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "receiverID": {
-                    "name": "receiverID",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "conversationID": {
-                    "name": "conversationID",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "sender": {
-                    "name": "sender",
-                    "isArray": false,
-                    "type": {
-                        "model": "UserProfile"
-                    },
-                    "isRequired": true,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "BELONGS_TO",
-                        "targetNames": [
-                            "senderID"
-                        ]
-                    }
-                },
-                "receiver": {
-                    "name": "receiver",
-                    "isArray": false,
-                    "type": {
-                        "model": "UserProfile"
-                    },
-                    "isRequired": true,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "BELONGS_TO",
-                        "targetNames": [
-                            "receiverID"
-                        ]
-                    }
-                },
-                "conversation": {
-                    "name": "conversation",
-                    "isArray": false,
-                    "type": {
-                        "model": "Conversation"
-                    },
-                    "isRequired": true,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "BELONGS_TO",
-                        "targetNames": [
-                            "conversationID"
-                        ]
-                    }
-                },
-                "unreadMessage": {
-                    "name": "unreadMessage",
-                    "isArray": false,
-                    "type": "Boolean",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "createdAt": {
-                    "name": "createdAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                },
-                "updatedAt": {
-                    "name": "updatedAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                }
-            },
-            "syncable": true,
-            "pluralName": "Messages",
-            "attributes": [
-                {
-                    "type": "model",
-                    "properties": {}
-                },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "bySender",
-                        "fields": [
-                            "senderID"
-                        ]
-                    }
-                },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "byReceiver",
-                        "fields": [
-                            "receiverID"
-                        ]
-                    }
-                },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "byConversation",
-                        "fields": [
-                            "conversationID"
-                        ]
-                    }
-                },
-                {
-                    "type": "auth",
-                    "properties": {
-                        "rules": [
-                            {
-                                "allow": "public",
-                                "operations": [
-                                    "create",
-                                    "update",
-                                    "delete",
-                                    "read"
-                                ]
-                            }
-                        ]
-                    }
-                }
-            ]
-        },
-        "EventProfile": {
-            "name": "EventProfile",
-            "fields": {
-                "id": {
-                    "name": "id",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "userProfileID": {
-                    "name": "userProfileID",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "eventID": {
-                    "name": "eventID",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "userProfile": {
-                    "name": "userProfile",
-                    "isArray": false,
-                    "type": {
-                        "model": "UserProfile"
-                    },
-                    "isRequired": true,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "BELONGS_TO",
-                        "targetNames": [
-                            "userProfileID"
-                        ]
-                    }
-                },
-                "event": {
-                    "name": "event",
-                    "isArray": false,
-                    "type": {
-                        "model": "Festival"
-                    },
-                    "isRequired": true,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "BELONGS_TO",
-                        "targetNames": [
-                            "eventID"
-                        ]
-                    }
-                },
-                "createdAt": {
-                    "name": "createdAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                },
-                "updatedAt": {
-                    "name": "updatedAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                }
-            },
-            "syncable": true,
-            "pluralName": "EventProfiles",
-            "attributes": [
-                {
-                    "type": "model",
-                    "properties": {}
-                },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "byUserProfile",
-                        "fields": [
-                            "userProfileID"
-                        ]
-                    }
-                },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "byEvent",
-                        "fields": [
-                            "eventID"
-                        ]
-                    }
-                },
-                {
-                    "type": "auth",
-                    "properties": {
-                        "rules": [
-                            {
-                                "allow": "public",
-                                "operations": [
-                                    "create",
-                                    "update",
-                                    "delete",
-                                    "read"
-                                ]
-                            }
-                        ]
-                    }
-                }
-            ]
-        },
-        "Festival": {
-            "name": "Festival",
-            "fields": {
-                "id": {
-                    "name": "id",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "name": {
-                    "name": "name",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "genre": {
-                    "name": "genre",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "image": {
-                    "name": "image",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "location": {
-                    "name": "location",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "state": {
-                    "name": "state",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "city": {
-                    "name": "city",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "address": {
-                    "name": "address",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "startDate": {
-                    "name": "startDate",
-                    "isArray": false,
-                    "type": "AWSDate",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "endDate": {
-                    "name": "endDate",
-                    "isArray": false,
-                    "type": "AWSDate",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "type": {
-                    "name": "type",
-                    "isArray": false,
-                    "type": {
-                        "enum": "EventType"
-                    },
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "description": {
-                    "name": "description",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "url": {
-                    "name": "url",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "customerID": {
-                    "name": "customerID",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "hasPaid": {
-                    "name": "hasPaid",
-                    "isArray": false,
-                    "type": "Boolean",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "subID": {
-                    "name": "subID",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "approved": {
-                    "name": "approved",
-                    "isArray": false,
-                    "type": "Boolean",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "group": {
-                    "name": "group",
-                    "isArray": false,
-                    "type": {
-                        "model": "CollegeGroup"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "BELONGS_TO",
-                        "targetNames": [
-                            "groupID"
-                        ]
-                    }
-                },
-                "groupID": {
-                    "name": "groupID",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "attendees": {
-                    "name": "attendees",
-                    "isArray": true,
-                    "type": {
-                        "model": "EventProfile"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": [
-                            "event"
-                        ]
-                    }
-                },
-                "rides": {
-                    "name": "rides",
-                    "isArray": true,
-                    "type": {
-                        "model": "Ride"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": [
-                            "event"
-                        ]
-                    }
-                },
-                "createdAt": {
-                    "name": "createdAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                },
-                "updatedAt": {
-                    "name": "updatedAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                }
-            },
-            "syncable": true,
-            "pluralName": "Festivals",
-            "attributes": [
-                {
-                    "type": "model",
-                    "properties": {}
-                },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "bySubID",
-                        "fields": [
-                            "subID"
-                        ]
-                    }
-                },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "byGroup",
-                        "fields": [
-                            "groupID"
-                        ]
-                    }
-                },
-                {
-                    "type": "auth",
-                    "properties": {
-                        "rules": [
-                            {
-                                "allow": "public",
-                                "operations": [
-                                    "create",
-                                    "update",
-                                    "delete",
-                                    "read"
-                                ]
-                            }
-                        ]
-                    }
-                }
-            ]
-        },
-        "UserProfile": {
-            "name": "UserProfile",
+        "Profile": {
+            "name": "Profile",
             "fields": {
                 "id": {
                     "name": "id",
@@ -549,8 +38,8 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "verifySubmitted": {
-                    "name": "verifySubmitted",
+                "submitted": {
+                    "name": "submitted",
                     "isArray": false,
                     "type": "Boolean",
                     "isRequired": false,
@@ -661,8 +150,8 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "attendingEvents": {
-                    "name": "attendingEvents",
+                "events": {
+                    "name": "events",
                     "isArray": true,
                     "type": {
                         "model": "EventProfile"
@@ -673,7 +162,7 @@ export const schema = {
                     "association": {
                         "connectionType": "HAS_MANY",
                         "associatedWith": [
-                            "userProfile"
+                            "profile"
                         ]
                     }
                 },
@@ -681,7 +170,7 @@ export const schema = {
                     "name": "rides",
                     "isArray": true,
                     "type": {
-                        "model": "RideUser"
+                        "model": "RideProfile"
                     },
                     "isRequired": false,
                     "attributes": [],
@@ -689,7 +178,7 @@ export const schema = {
                     "association": {
                         "connectionType": "HAS_MANY",
                         "associatedWith": [
-                            "userProfile"
+                            "profile"
                         ]
                     }
                 },
@@ -705,7 +194,7 @@ export const schema = {
                     "association": {
                         "connectionType": "HAS_MANY",
                         "associatedWith": [
-                            "userProfile"
+                            "profile"
                         ]
                     }
                 },
@@ -721,39 +210,7 @@ export const schema = {
                     "association": {
                         "connectionType": "HAS_MANY",
                         "associatedWith": [
-                            "userProfile"
-                        ]
-                    }
-                },
-                "sentMessages": {
-                    "name": "sentMessages",
-                    "isArray": true,
-                    "type": {
-                        "model": "Message"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": [
-                            "sender"
-                        ]
-                    }
-                },
-                "receivedMessages": {
-                    "name": "receivedMessages",
-                    "isArray": true,
-                    "type": {
-                        "model": "Message"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": [
-                            "receiver"
+                            "profile"
                         ]
                     }
                 },
@@ -769,38 +226,31 @@ export const schema = {
                     "association": {
                         "connectionType": "HAS_MANY",
                         "associatedWith": [
-                            "userProfile"
+                            "profile"
                         ]
                     }
                 },
-                "collegeGroupId": {
-                    "name": "collegeGroupId",
+                "groupID": {
+                    "name": "groupID",
                     "isArray": false,
                     "type": "ID",
                     "isRequired": false,
                     "attributes": []
                 },
-                "collegeGroup": {
-                    "name": "collegeGroup",
+                "group": {
+                    "name": "group",
                     "isArray": false,
                     "type": {
-                        "model": "CollegeGroup"
+                        "model": "Group"
                     },
                     "isRequired": false,
                     "attributes": [],
                     "association": {
                         "connectionType": "BELONGS_TO",
                         "targetNames": [
-                            "collegeGroupId"
+                            "groupID"
                         ]
                     }
-                },
-                "privacySettingID": {
-                    "name": "privacySettingID",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": false,
-                    "attributes": []
                 },
                 "privacySetting": {
                     "name": "privacySetting",
@@ -816,7 +266,7 @@ export const schema = {
                             "id"
                         ],
                         "targetNames": [
-                            "privacySettingID"
+                            "profilePrivacySettingId"
                         ]
                     }
                 },
@@ -832,7 +282,7 @@ export const schema = {
                     "association": {
                         "connectionType": "HAS_MANY",
                         "associatedWith": [
-                            "userProfile"
+                            "profileSocialMediaId"
                         ]
                     }
                 },
@@ -851,10 +301,17 @@ export const schema = {
                     "isRequired": false,
                     "attributes": [],
                     "isReadOnly": true
+                },
+                "profilePrivacySettingId": {
+                    "name": "profilePrivacySettingId",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
                 }
             },
             "syncable": true,
-            "pluralName": "UserProfiles",
+            "pluralName": "Profiles",
             "attributes": [
                 {
                     "type": "model",
@@ -863,9 +320,9 @@ export const schema = {
                 {
                     "type": "key",
                     "properties": {
-                        "name": "byCollegeGroup",
+                        "name": "byGroup",
                         "fields": [
-                            "collegeGroupId"
+                            "groupID"
                         ]
                     }
                 },
@@ -897,28 +354,6 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "userProfileID": {
-                    "name": "userProfileID",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "userProfile": {
-                    "name": "userProfile",
-                    "isArray": false,
-                    "type": {
-                        "model": "UserProfile"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "BELONGS_TO",
-                        "targetNames": [
-                            "userProfileID"
-                        ]
-                    }
-                },
                 "socialMediaType": {
                     "name": "socialMediaType",
                     "isArray": false,
@@ -948,6 +383,13 @@ export const schema = {
                     "isRequired": false,
                     "attributes": [],
                     "isReadOnly": true
+                },
+                "profileSocialMediaId": {
+                    "name": "profileSocialMediaId",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
                 }
             },
             "syncable": true,
@@ -960,9 +402,9 @@ export const schema = {
                 {
                     "type": "key",
                     "properties": {
-                        "name": "byUserProfile",
+                        "name": "gsi-Profile.socialMedia",
                         "fields": [
-                            "userProfileID"
+                            "profileSocialMediaId"
                         ]
                     }
                 },
@@ -1022,8 +464,8 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "attendingEvents": {
-                    "name": "attendingEvents",
+                "events": {
+                    "name": "events",
                     "isArray": false,
                     "type": "Boolean",
                     "isRequired": false,
@@ -1092,6 +534,251 @@ export const schema = {
                 }
             ]
         },
+        "Event": {
+            "name": "Event",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "name": {
+                    "name": "name",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "genre": {
+                    "name": "genre",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "image": {
+                    "name": "image",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "location": {
+                    "name": "location",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "state": {
+                    "name": "state",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "city": {
+                    "name": "city",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "address": {
+                    "name": "address",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "startDate": {
+                    "name": "startDate",
+                    "isArray": false,
+                    "type": "AWSDate",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "endDate": {
+                    "name": "endDate",
+                    "isArray": false,
+                    "type": "AWSDate",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "type": {
+                    "name": "type",
+                    "isArray": false,
+                    "type": {
+                        "enum": "EventType"
+                    },
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "description": {
+                    "name": "description",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "url": {
+                    "name": "url",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "customerID": {
+                    "name": "customerID",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "hasPaid": {
+                    "name": "hasPaid",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "cancelled": {
+                    "name": "cancelled",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "subscriptionID": {
+                    "name": "subscriptionID",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "approved": {
+                    "name": "approved",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "group": {
+                    "name": "group",
+                    "isArray": false,
+                    "type": {
+                        "model": "Group"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetNames": [
+                            "groupID"
+                        ]
+                    }
+                },
+                "groupID": {
+                    "name": "groupID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "attendees": {
+                    "name": "attendees",
+                    "isArray": true,
+                    "type": {
+                        "model": "EventProfile"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": [
+                            "event"
+                        ]
+                    }
+                },
+                "rides": {
+                    "name": "rides",
+                    "isArray": true,
+                    "type": {
+                        "model": "Ride"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": [
+                            "event"
+                        ]
+                    }
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "Events",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "bySubID",
+                        "fields": [
+                            "subscriptionID"
+                        ]
+                    }
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byGroup",
+                        "fields": [
+                            "groupID"
+                        ]
+                    }
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "allow": "public",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
         "Ride": {
             "name": "Ride",
             "fields": {
@@ -1106,7 +793,7 @@ export const schema = {
                     "name": "event",
                     "isArray": false,
                     "type": {
-                        "model": "Festival"
+                        "model": "Event"
                     },
                     "isRequired": true,
                     "attributes": [],
@@ -1124,29 +811,18 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "driver": {
-                    "name": "driver",
+                "driverProfileID": {
+                    "name": "driverProfileID",
                     "isArray": false,
-                    "type": {
-                        "model": "RideUser"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "HAS_ONE",
-                        "associatedWith": [
-                            "id"
-                        ],
-                        "targetNames": [
-                            "rideDriverId"
-                        ]
-                    }
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
                 },
                 "passengers": {
                     "name": "passengers",
                     "isArray": true,
                     "type": {
-                        "model": "RideUser"
+                        "model": "RideProfile"
                     },
                     "isRequired": false,
                     "attributes": [],
@@ -1201,13 +877,6 @@ export const schema = {
                     "isRequired": false,
                     "attributes": [],
                     "isReadOnly": true
-                },
-                "rideDriverId": {
-                    "name": "rideDriverId",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": false,
-                    "attributes": []
                 }
             },
             "syncable": true,
@@ -1244,127 +913,6 @@ export const schema = {
                 }
             ]
         },
-        "RideUser": {
-            "name": "RideUser",
-            "fields": {
-                "id": {
-                    "name": "id",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "ride": {
-                    "name": "ride",
-                    "isArray": false,
-                    "type": {
-                        "model": "Ride"
-                    },
-                    "isRequired": true,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "BELONGS_TO",
-                        "targetNames": [
-                            "rideID"
-                        ]
-                    }
-                },
-                "rideID": {
-                    "name": "rideID",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "userProfile": {
-                    "name": "userProfile",
-                    "isArray": false,
-                    "type": {
-                        "model": "UserProfile"
-                    },
-                    "isRequired": true,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "BELONGS_TO",
-                        "targetNames": [
-                            "userProfileID"
-                        ]
-                    }
-                },
-                "userProfileID": {
-                    "name": "userProfileID",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "isDriver": {
-                    "name": "isDriver",
-                    "isArray": false,
-                    "type": "Boolean",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "createdAt": {
-                    "name": "createdAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                },
-                "updatedAt": {
-                    "name": "updatedAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                }
-            },
-            "syncable": true,
-            "pluralName": "RideUsers",
-            "attributes": [
-                {
-                    "type": "model",
-                    "properties": {}
-                },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "byRide",
-                        "fields": [
-                            "rideID"
-                        ]
-                    }
-                },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "byUserProfile",
-                        "fields": [
-                            "userProfileID"
-                        ]
-                    }
-                },
-                {
-                    "type": "auth",
-                    "properties": {
-                        "rules": [
-                            {
-                                "allow": "public",
-                                "operations": [
-                                    "create",
-                                    "update",
-                                    "delete",
-                                    "read"
-                                ]
-                            }
-                        ]
-                    }
-                }
-            ]
-        },
         "Photo": {
             "name": "Photo",
             "fields": {
@@ -1375,25 +923,25 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "userProfileID": {
-                    "name": "userProfileID",
+                "profileID": {
+                    "name": "profileID",
                     "isArray": false,
                     "type": "ID",
                     "isRequired": true,
                     "attributes": []
                 },
-                "userProfile": {
-                    "name": "userProfile",
+                "profile": {
+                    "name": "profile",
                     "isArray": false,
                     "type": {
-                        "model": "UserProfile"
+                        "model": "Profile"
                     },
                     "isRequired": false,
                     "attributes": [],
                     "association": {
                         "connectionType": "BELONGS_TO",
                         "targetNames": [
-                            "userProfileID"
+                            "profileID"
                         ]
                     }
                 },
@@ -1425,22 +973,6 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "comments": {
-                    "name": "comments",
-                    "isArray": true,
-                    "type": {
-                        "model": "PhotoComment"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": [
-                            "photo"
-                        ]
-                    }
-                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -1468,99 +1000,9 @@ export const schema = {
                 {
                     "type": "key",
                     "properties": {
-                        "name": "byUserProfile",
+                        "name": "byProfile",
                         "fields": [
-                            "userProfileID"
-                        ]
-                    }
-                },
-                {
-                    "type": "auth",
-                    "properties": {
-                        "rules": [
-                            {
-                                "allow": "public",
-                                "operations": [
-                                    "create",
-                                    "update",
-                                    "delete",
-                                    "read"
-                                ]
-                            }
-                        ]
-                    }
-                }
-            ]
-        },
-        "PhotoComment": {
-            "name": "PhotoComment",
-            "fields": {
-                "id": {
-                    "name": "id",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "content": {
-                    "name": "content",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "photoID": {
-                    "name": "photoID",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "photo": {
-                    "name": "photo",
-                    "isArray": false,
-                    "type": {
-                        "model": "Photo"
-                    },
-                    "isRequired": true,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "BELONGS_TO",
-                        "targetNames": [
-                            "photoID"
-                        ]
-                    }
-                },
-                "createdAt": {
-                    "name": "createdAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                },
-                "updatedAt": {
-                    "name": "updatedAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                }
-            },
-            "syncable": true,
-            "pluralName": "PhotoComments",
-            "attributes": [
-                {
-                    "type": "model",
-                    "properties": {}
-                },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "byPhoto",
-                        "fields": [
-                            "photoID"
+                            "profileID"
                         ]
                     }
                 },
@@ -1592,8 +1034,8 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "userProfileID": {
-                    "name": "userProfileID",
+                "profileID": {
+                    "name": "profileID",
                     "isArray": false,
                     "type": "ID",
                     "isRequired": true,
@@ -1613,18 +1055,18 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "userProfile": {
-                    "name": "userProfile",
+                "profile": {
+                    "name": "profile",
                     "isArray": false,
                     "type": {
-                        "model": "UserProfile"
+                        "model": "Profile"
                     },
                     "isRequired": true,
                     "attributes": [],
                     "association": {
                         "connectionType": "BELONGS_TO",
                         "targetNames": [
-                            "userProfileID"
+                            "profileID"
                         ]
                     }
                 },
@@ -1632,7 +1074,7 @@ export const schema = {
                     "name": "friendProfile",
                     "isArray": false,
                     "type": {
-                        "model": "UserProfile"
+                        "model": "Profile"
                     },
                     "isRequired": true,
                     "attributes": [],
@@ -1670,9 +1112,9 @@ export const schema = {
                 {
                     "type": "key",
                     "properties": {
-                        "name": "byUserProfile",
+                        "name": "byProfile",
                         "fields": [
-                            "userProfileID"
+                            "profileID"
                         ]
                     }
                 },
@@ -1713,8 +1155,8 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "userProfileID": {
-                    "name": "userProfileID",
+                "profileID": {
+                    "name": "profileID",
                     "isArray": false,
                     "type": "ID",
                     "isRequired": true,
@@ -1727,18 +1169,18 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "userProfile": {
-                    "name": "userProfile",
+                "profile": {
+                    "name": "profile",
                     "isArray": false,
                     "type": {
-                        "model": "UserProfile"
+                        "model": "Profile"
                     },
                     "isRequired": true,
                     "attributes": [],
                     "association": {
                         "connectionType": "BELONGS_TO",
                         "targetNames": [
-                            "userProfileID"
+                            "profileID"
                         ]
                     }
                 },
@@ -1746,7 +1188,7 @@ export const schema = {
                     "name": "friendProfile",
                     "isArray": false,
                     "type": {
-                        "model": "UserProfile"
+                        "model": "Profile"
                     },
                     "isRequired": true,
                     "attributes": [],
@@ -1769,7 +1211,7 @@ export const schema = {
                     "association": {
                         "connectionType": "HAS_MANY",
                         "associatedWith": [
-                            "conversation"
+                            "conversationMessagesId"
                         ]
                     }
                 },
@@ -1807,16 +1249,16 @@ export const schema = {
                 {
                     "type": "key",
                     "properties": {
-                        "name": "byUserProfile",
+                        "name": "byProfile",
                         "fields": [
-                            "userProfileID"
+                            "profileID"
                         ]
                     }
                 },
                 {
                     "type": "key",
                     "properties": {
-                        "name": "friendProfile",
+                        "name": "byFriendProfile",
                         "fields": [
                             "friendProfileID"
                         ]
@@ -1840,8 +1282,126 @@ export const schema = {
                 }
             ]
         },
-        "CollegeGroup": {
-            "name": "CollegeGroup",
+        "Message": {
+            "name": "Message",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "conversation": {
+                    "name": "conversation",
+                    "isArray": false,
+                    "type": {
+                        "model": "Conversation"
+                    },
+                    "isRequired": true,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetNames": [
+                            "conversationID"
+                        ]
+                    }
+                },
+                "conversationID": {
+                    "name": "conversationID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "content": {
+                    "name": "content",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "senderProfileID": {
+                    "name": "senderProfileID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "receiverProfileID": {
+                    "name": "receiverProfileID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "unread": {
+                    "name": "unread",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "conversationMessagesId": {
+                    "name": "conversationMessagesId",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
+                }
+            },
+            "syncable": true,
+            "pluralName": "Messages",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byConversation",
+                        "fields": [
+                            "conversationID"
+                        ]
+                    }
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "allow": "public",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "Group": {
+            "name": "Group",
             "fields": {
                 "id": {
                     "name": "id",
@@ -1868,25 +1428,18 @@ export const schema = {
                     "name": "webPage",
                     "isArray": false,
                     "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "countryCode": {
-                    "name": "countryCode",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
+                    "isRequired": true,
                     "attributes": []
                 },
                 "events": {
                     "name": "events",
                     "isArray": true,
                     "type": {
-                        "model": "Festival"
+                        "model": "Event"
                     },
                     "isRequired": false,
                     "attributes": [],
-                    "isArrayNullable": true,
+                    "isArrayNullable": false,
                     "association": {
                         "connectionType": "HAS_MANY",
                         "associatedWith": [
@@ -1898,15 +1451,15 @@ export const schema = {
                     "name": "members",
                     "isArray": true,
                     "type": {
-                        "model": "UserProfile"
+                        "model": "Profile"
                     },
                     "isRequired": false,
                     "attributes": [],
-                    "isArrayNullable": true,
+                    "isArrayNullable": false,
                     "association": {
                         "connectionType": "HAS_MANY",
                         "associatedWith": [
-                            "collegeGroup"
+                            "group"
                         ]
                     }
                 },
@@ -1928,7 +1481,7 @@ export const schema = {
                 }
             },
             "syncable": true,
-            "pluralName": "CollegeGroups",
+            "pluralName": "Groups",
             "attributes": [
                 {
                     "type": "model",
@@ -1951,16 +1504,205 @@ export const schema = {
                     }
                 }
             ]
+        },
+        "EventProfile": {
+            "name": "EventProfile",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "profileId": {
+                    "name": "profileId",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "eventId": {
+                    "name": "eventId",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "profile": {
+                    "name": "profile",
+                    "isArray": false,
+                    "type": {
+                        "model": "Profile"
+                    },
+                    "isRequired": true,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetNames": [
+                            "profileId"
+                        ]
+                    }
+                },
+                "event": {
+                    "name": "event",
+                    "isArray": false,
+                    "type": {
+                        "model": "Event"
+                    },
+                    "isRequired": true,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetNames": [
+                            "eventId"
+                        ]
+                    }
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "EventProfiles",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byProfile",
+                        "fields": [
+                            "profileId"
+                        ]
+                    }
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byEvent",
+                        "fields": [
+                            "eventId"
+                        ]
+                    }
+                }
+            ]
+        },
+        "RideProfile": {
+            "name": "RideProfile",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "profileId": {
+                    "name": "profileId",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "rideId": {
+                    "name": "rideId",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "profile": {
+                    "name": "profile",
+                    "isArray": false,
+                    "type": {
+                        "model": "Profile"
+                    },
+                    "isRequired": true,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetNames": [
+                            "profileId"
+                        ]
+                    }
+                },
+                "ride": {
+                    "name": "ride",
+                    "isArray": false,
+                    "type": {
+                        "model": "Ride"
+                    },
+                    "isRequired": true,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetNames": [
+                            "rideId"
+                        ]
+                    }
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "RideProfiles",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byProfile",
+                        "fields": [
+                            "profileId"
+                        ]
+                    }
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byRide",
+                        "fields": [
+                            "rideId"
+                        ]
+                    }
+                }
+            ]
         }
     },
     "enums": {
-        "FriendshipStatus": {
-            "name": "FriendshipStatus",
-            "values": [
-                "REQUESTED",
-                "ACCEPTED"
-            ]
-        },
         "EventType": {
             "name": "EventType",
             "values": [
@@ -1983,5 +1725,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.3",
-    "version": "8f961e14f683c009a19436adcbad3369"
+    "version": "7aa2fe3f025e6a945e7844afb2982077"
 };

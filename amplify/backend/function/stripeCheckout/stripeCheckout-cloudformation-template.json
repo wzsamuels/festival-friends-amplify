@@ -16,8 +16,9 @@
     "s3Key": {
       "Type": "String"
     },
-    "stripeSecretKey": {
-      "Type": "String"
+    "functioneventfriendslayerArn": {
+      "Type": "String",
+      "Default": "functioneventfriendslayerArn"
     }
   },
   "Conditions": {
@@ -72,9 +73,6 @@
             },
             "REGION": {
               "Ref": "AWS::Region"
-            },
-            "STRIPE_SECRET_KEY": {
-              "Ref": "stripeSecretKey"
             }
           }
         },
@@ -85,7 +83,11 @@
           ]
         },
         "Runtime": "nodejs18.x",
-        "Layers": [],
+        "Layers": [
+          {
+            "Ref": "functioneventfriendslayerArn"
+          }
+        ],
         "Timeout": 25
       }
     },
@@ -95,12 +97,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "festivalfriendsLambdaRole9b7d1771",
+            "eventfriendsLambdaRoleaeb2189f",
             {
               "Fn::Join": [
                 "",
                 [
-                  "festivalfriendsLambdaRole9b7d1771",
+                  "eventfriendsLambdaRoleaeb2189f",
                   "-",
                   {
                     "Ref": "env"

@@ -2,11 +2,6 @@
 import { initSchema } from '@aws-amplify/datastore';
 import { schema } from './schema';
 
-const FriendshipStatus = {
-  "REQUESTED": "REQUESTED",
-  "ACCEPTED": "ACCEPTED"
-};
-
 const EventType = {
   "SPORT": "SPORT",
   "BUSINESS": "BUSINESS",
@@ -22,23 +17,21 @@ const SocialMediaType = {
   "INSTAGRAM": "INSTAGRAM"
 };
 
-const { Message, EventProfile, Festival, UserProfile, SocialMedia, PrivacySetting, Ride, RideUser, Photo, PhotoComment, Friendship, Conversation, CollegeGroup } = initSchema(schema);
+const { Profile, SocialMedia, PrivacySetting, Event, Ride, Photo, Friendship, Conversation, Message, Group, EventProfile, RideProfile } = initSchema(schema);
 
 export {
-  Message,
-  EventProfile,
-  Festival,
-  UserProfile,
+  Profile,
   SocialMedia,
   PrivacySetting,
+  Event,
   Ride,
-  RideUser,
   Photo,
-  PhotoComment,
   Friendship,
   Conversation,
-  CollegeGroup,
-  FriendshipStatus,
+  Message,
+  Group,
+  EventProfile,
+  RideProfile,
   EventType,
   SocialMediaType
 };

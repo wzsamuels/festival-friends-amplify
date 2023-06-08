@@ -1,11 +1,6 @@
 import { ModelInit, MutableModel, __modelMeta__, ManagedIdentifier } from "@aws-amplify/datastore";
 // @ts-ignore
-import { LazyLoading, LazyLoadingDisabled, AsyncItem, AsyncCollection } from "@aws-amplify/datastore";
-
-export enum FriendshipStatus {
-  REQUESTED = "REQUESTED",
-  ACCEPTED = "ACCEPTED"
-}
+import { LazyLoading, LazyLoadingDisabled, AsyncCollection, AsyncItem } from "@aws-amplify/datastore";
 
 export enum EventType {
   SPORT = "SPORT",
@@ -24,151 +19,9 @@ export enum SocialMediaType {
 
 
 
-type EagerMessage = {
+type EagerProfile = {
   readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Message, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly content: string;
-  readonly senderID: string;
-  readonly receiverID: string;
-  readonly conversationID: string;
-  readonly sender: UserProfile;
-  readonly receiver: UserProfile;
-  readonly conversation: Conversation;
-  readonly unreadMessage?: boolean | null;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-type LazyMessage = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Message, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly content: string;
-  readonly senderID: string;
-  readonly receiverID: string;
-  readonly conversationID: string;
-  readonly sender: AsyncItem<UserProfile>;
-  readonly receiver: AsyncItem<UserProfile>;
-  readonly conversation: AsyncItem<Conversation>;
-  readonly unreadMessage?: boolean | null;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-export declare type Message = LazyLoading extends LazyLoadingDisabled ? EagerMessage : LazyMessage
-
-export declare const Message: (new (init: ModelInit<Message>) => Message) & {
-  copyOf(source: Message, mutator: (draft: MutableModel<Message>) => MutableModel<Message> | void): Message;
-}
-
-type EagerEventProfile = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<EventProfile, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly userProfileID: string;
-  readonly eventID: string;
-  readonly userProfile: UserProfile;
-  readonly event: Festival;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-type LazyEventProfile = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<EventProfile, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly userProfileID: string;
-  readonly eventID: string;
-  readonly userProfile: AsyncItem<UserProfile>;
-  readonly event: AsyncItem<Festival>;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-export declare type EventProfile = LazyLoading extends LazyLoadingDisabled ? EagerEventProfile : LazyEventProfile
-
-export declare const EventProfile: (new (init: ModelInit<EventProfile>) => EventProfile) & {
-  copyOf(source: EventProfile, mutator: (draft: MutableModel<EventProfile>) => MutableModel<EventProfile> | void): EventProfile;
-}
-
-type EagerFestival = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Festival, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly name: string;
-  readonly genre: string;
-  readonly image: string;
-  readonly location?: string | null;
-  readonly state: string;
-  readonly city: string;
-  readonly address: string;
-  readonly startDate: string;
-  readonly endDate: string;
-  readonly type?: EventType | keyof typeof EventType | null;
-  readonly description?: string | null;
-  readonly url?: string | null;
-  readonly customerID?: string | null;
-  readonly hasPaid?: boolean | null;
-  readonly subID?: string | null;
-  readonly approved?: boolean | null;
-  readonly group?: CollegeGroup | null;
-  readonly groupID?: string | null;
-  readonly attendees?: (EventProfile | null)[] | null;
-  readonly rides?: (Ride | null)[] | null;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-type LazyFestival = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Festival, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly name: string;
-  readonly genre: string;
-  readonly image: string;
-  readonly location?: string | null;
-  readonly state: string;
-  readonly city: string;
-  readonly address: string;
-  readonly startDate: string;
-  readonly endDate: string;
-  readonly type?: EventType | keyof typeof EventType | null;
-  readonly description?: string | null;
-  readonly url?: string | null;
-  readonly customerID?: string | null;
-  readonly hasPaid?: boolean | null;
-  readonly subID?: string | null;
-  readonly approved?: boolean | null;
-  readonly group: AsyncItem<CollegeGroup | undefined>;
-  readonly groupID?: string | null;
-  readonly attendees: AsyncCollection<EventProfile>;
-  readonly rides: AsyncCollection<Ride>;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-export declare type Festival = LazyLoading extends LazyLoadingDisabled ? EagerFestival : LazyFestival
-
-export declare const Festival: (new (init: ModelInit<Festival>) => Festival) & {
-  copyOf(source: Festival, mutator: (draft: MutableModel<Festival>) => MutableModel<Festival> | void): Festival;
-}
-
-type EagerUserProfile = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<UserProfile, 'id'>;
+    identifier: ManagedIdentifier<Profile, 'id'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
@@ -176,7 +29,7 @@ type EagerUserProfile = {
   readonly firstName?: string | null;
   readonly lastName?: string | null;
   readonly verified?: boolean | null;
-  readonly verifySubmitted?: boolean | null;
+  readonly submitted?: boolean | null;
   readonly profilePhotoID?: string | null;
   readonly bannerPhotoID?: string | null;
   readonly verifyPhotoID?: string | null;
@@ -192,25 +45,23 @@ type EagerUserProfile = {
   readonly birthDate?: string | null;
   readonly hobbies?: string | null;
   readonly gender?: string | null;
-  readonly attendingEvents?: (EventProfile | null)[] | null;
-  readonly rides?: (RideUser | null)[] | null;
+  readonly events?: (EventProfile | null)[] | null;
+  readonly rides?: (RideProfile | null)[] | null;
   readonly friends?: (Friendship | null)[] | null;
   readonly conversations?: (Conversation | null)[] | null;
-  readonly sentMessages?: (Message | null)[] | null;
-  readonly receivedMessages?: (Message | null)[] | null;
   readonly photos?: (Photo | null)[] | null;
-  readonly collegeGroupId?: string | null;
-  readonly collegeGroup?: CollegeGroup | null;
-  readonly privacySettingID?: string | null;
+  readonly groupID?: string | null;
+  readonly group?: Group | null;
   readonly privacySetting?: PrivacySetting | null;
   readonly socialMedia?: (SocialMedia | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
+  readonly profilePrivacySettingId?: string | null;
 }
 
-type LazyUserProfile = {
+type LazyProfile = {
   readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<UserProfile, 'id'>;
+    identifier: ManagedIdentifier<Profile, 'id'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
@@ -218,7 +69,7 @@ type LazyUserProfile = {
   readonly firstName?: string | null;
   readonly lastName?: string | null;
   readonly verified?: boolean | null;
-  readonly verifySubmitted?: boolean | null;
+  readonly submitted?: boolean | null;
   readonly profilePhotoID?: string | null;
   readonly bannerPhotoID?: string | null;
   readonly verifyPhotoID?: string | null;
@@ -234,26 +85,24 @@ type LazyUserProfile = {
   readonly birthDate?: string | null;
   readonly hobbies?: string | null;
   readonly gender?: string | null;
-  readonly attendingEvents: AsyncCollection<EventProfile>;
-  readonly rides: AsyncCollection<RideUser>;
+  readonly events: AsyncCollection<EventProfile>;
+  readonly rides: AsyncCollection<RideProfile>;
   readonly friends: AsyncCollection<Friendship>;
   readonly conversations: AsyncCollection<Conversation>;
-  readonly sentMessages: AsyncCollection<Message>;
-  readonly receivedMessages: AsyncCollection<Message>;
   readonly photos: AsyncCollection<Photo>;
-  readonly collegeGroupId?: string | null;
-  readonly collegeGroup: AsyncItem<CollegeGroup | undefined>;
-  readonly privacySettingID?: string | null;
+  readonly groupID?: string | null;
+  readonly group: AsyncItem<Group | undefined>;
   readonly privacySetting: AsyncItem<PrivacySetting | undefined>;
   readonly socialMedia: AsyncCollection<SocialMedia>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
+  readonly profilePrivacySettingId?: string | null;
 }
 
-export declare type UserProfile = LazyLoading extends LazyLoadingDisabled ? EagerUserProfile : LazyUserProfile
+export declare type Profile = LazyLoading extends LazyLoadingDisabled ? EagerProfile : LazyProfile
 
-export declare const UserProfile: (new (init: ModelInit<UserProfile>) => UserProfile) & {
-  copyOf(source: UserProfile, mutator: (draft: MutableModel<UserProfile>) => MutableModel<UserProfile> | void): UserProfile;
+export declare const Profile: (new (init: ModelInit<Profile>) => Profile) & {
+  copyOf(source: Profile, mutator: (draft: MutableModel<Profile>) => MutableModel<Profile> | void): Profile;
 }
 
 type EagerSocialMedia = {
@@ -262,12 +111,11 @@ type EagerSocialMedia = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly userProfileID: string;
-  readonly userProfile?: UserProfile | null;
   readonly socialMediaType: string;
   readonly accountURL: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
+  readonly profileSocialMediaId?: string | null;
 }
 
 type LazySocialMedia = {
@@ -276,12 +124,11 @@ type LazySocialMedia = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly userProfileID: string;
-  readonly userProfile: AsyncItem<UserProfile | undefined>;
   readonly socialMediaType: string;
   readonly accountURL: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
+  readonly profileSocialMediaId?: string | null;
 }
 
 export declare type SocialMedia = LazyLoading extends LazyLoadingDisabled ? EagerSocialMedia : LazySocialMedia
@@ -300,7 +147,7 @@ type EagerPrivacySetting = {
   readonly state?: boolean | null;
   readonly school?: boolean | null;
   readonly email?: boolean | null;
-  readonly attendingEvents?: boolean | null;
+  readonly events?: boolean | null;
   readonly rides?: boolean | null;
   readonly friends?: boolean | null;
   readonly photos?: boolean | null;
@@ -318,7 +165,7 @@ type LazyPrivacySetting = {
   readonly state?: boolean | null;
   readonly school?: boolean | null;
   readonly email?: boolean | null;
-  readonly attendingEvents?: boolean | null;
+  readonly events?: boolean | null;
   readonly rides?: boolean | null;
   readonly friends?: boolean | null;
   readonly photos?: boolean | null;
@@ -332,23 +179,90 @@ export declare const PrivacySetting: (new (init: ModelInit<PrivacySetting>) => P
   copyOf(source: PrivacySetting, mutator: (draft: MutableModel<PrivacySetting>) => MutableModel<PrivacySetting> | void): PrivacySetting;
 }
 
+type EagerEvent = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Event, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly name: string;
+  readonly genre: string;
+  readonly image: string;
+  readonly location?: string | null;
+  readonly state: string;
+  readonly city: string;
+  readonly address: string;
+  readonly startDate: string;
+  readonly endDate: string;
+  readonly type?: EventType | keyof typeof EventType | null;
+  readonly description?: string | null;
+  readonly url?: string | null;
+  readonly customerID?: string | null;
+  readonly hasPaid?: boolean | null;
+  readonly cancelled?: boolean | null;
+  readonly subscriptionID?: string | null;
+  readonly approved?: boolean | null;
+  readonly group?: Group | null;
+  readonly groupID?: string | null;
+  readonly attendees?: (EventProfile | null)[] | null;
+  readonly rides?: (Ride | null)[] | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyEvent = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Event, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly name: string;
+  readonly genre: string;
+  readonly image: string;
+  readonly location?: string | null;
+  readonly state: string;
+  readonly city: string;
+  readonly address: string;
+  readonly startDate: string;
+  readonly endDate: string;
+  readonly type?: EventType | keyof typeof EventType | null;
+  readonly description?: string | null;
+  readonly url?: string | null;
+  readonly customerID?: string | null;
+  readonly hasPaid?: boolean | null;
+  readonly cancelled?: boolean | null;
+  readonly subscriptionID?: string | null;
+  readonly approved?: boolean | null;
+  readonly group: AsyncItem<Group | undefined>;
+  readonly groupID?: string | null;
+  readonly attendees: AsyncCollection<EventProfile>;
+  readonly rides: AsyncCollection<Ride>;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type Event = LazyLoading extends LazyLoadingDisabled ? EagerEvent : LazyEvent
+
+export declare const Event: (new (init: ModelInit<Event>) => Event) & {
+  copyOf(source: Event, mutator: (draft: MutableModel<Event>) => MutableModel<Event> | void): Event;
+}
+
 type EagerRide = {
   readonly [__modelMeta__]: {
     identifier: ManagedIdentifier<Ride, 'id'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly event: Festival;
+  readonly event: Event;
   readonly eventID: string;
-  readonly driver?: RideUser | null;
-  readonly passengers?: (RideUser | null)[] | null;
+  readonly driverProfileID: string;
+  readonly passengers?: (RideProfile | null)[] | null;
   readonly maxPassengers: number;
   readonly departureTime: string;
   readonly startPoint: string;
   readonly endPoint: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
-  readonly rideDriverId?: string | null;
 }
 
 type LazyRide = {
@@ -357,17 +271,16 @@ type LazyRide = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly event: AsyncItem<Festival>;
+  readonly event: AsyncItem<Event>;
   readonly eventID: string;
-  readonly driver: AsyncItem<RideUser | undefined>;
-  readonly passengers: AsyncCollection<RideUser>;
+  readonly driverProfileID: string;
+  readonly passengers: AsyncCollection<RideProfile>;
   readonly maxPassengers: number;
   readonly departureTime: string;
   readonly startPoint: string;
   readonly endPoint: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
-  readonly rideDriverId?: string | null;
 }
 
 export declare type Ride = LazyLoading extends LazyLoadingDisabled ? EagerRide : LazyRide
@@ -376,55 +289,18 @@ export declare const Ride: (new (init: ModelInit<Ride>) => Ride) & {
   copyOf(source: Ride, mutator: (draft: MutableModel<Ride>) => MutableModel<Ride> | void): Ride;
 }
 
-type EagerRideUser = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<RideUser, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly ride: Ride;
-  readonly rideID: string;
-  readonly userProfile: UserProfile;
-  readonly userProfileID: string;
-  readonly isDriver: boolean;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-type LazyRideUser = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<RideUser, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly ride: AsyncItem<Ride>;
-  readonly rideID: string;
-  readonly userProfile: AsyncItem<UserProfile>;
-  readonly userProfileID: string;
-  readonly isDriver: boolean;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-export declare type RideUser = LazyLoading extends LazyLoadingDisabled ? EagerRideUser : LazyRideUser
-
-export declare const RideUser: (new (init: ModelInit<RideUser>) => RideUser) & {
-  copyOf(source: RideUser, mutator: (draft: MutableModel<RideUser>) => MutableModel<RideUser> | void): RideUser;
-}
-
 type EagerPhoto = {
   readonly [__modelMeta__]: {
     identifier: ManagedIdentifier<Photo, 'id'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly userProfileID: string;
-  readonly userProfile?: UserProfile | null;
+  readonly profileID: string;
+  readonly profile?: Profile | null;
   readonly s3Key: string;
   readonly isPrivate: boolean;
   readonly identityId: string;
   readonly description?: string | null;
-  readonly comments?: (PhotoComment | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -435,13 +311,12 @@ type LazyPhoto = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly userProfileID: string;
-  readonly userProfile: AsyncItem<UserProfile | undefined>;
+  readonly profileID: string;
+  readonly profile: AsyncItem<Profile | undefined>;
   readonly s3Key: string;
   readonly isPrivate: boolean;
   readonly identityId: string;
   readonly description?: string | null;
-  readonly comments: AsyncCollection<PhotoComment>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -452,49 +327,17 @@ export declare const Photo: (new (init: ModelInit<Photo>) => Photo) & {
   copyOf(source: Photo, mutator: (draft: MutableModel<Photo>) => MutableModel<Photo> | void): Photo;
 }
 
-type EagerPhotoComment = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<PhotoComment, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly content: string;
-  readonly photoID: string;
-  readonly photo: Photo;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-type LazyPhotoComment = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<PhotoComment, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly content: string;
-  readonly photoID: string;
-  readonly photo: AsyncItem<Photo>;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-export declare type PhotoComment = LazyLoading extends LazyLoadingDisabled ? EagerPhotoComment : LazyPhotoComment
-
-export declare const PhotoComment: (new (init: ModelInit<PhotoComment>) => PhotoComment) & {
-  copyOf(source: PhotoComment, mutator: (draft: MutableModel<PhotoComment>) => MutableModel<PhotoComment> | void): PhotoComment;
-}
-
 type EagerFriendship = {
   readonly [__modelMeta__]: {
     identifier: ManagedIdentifier<Friendship, 'id'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly userProfileID: string;
+  readonly profileID: string;
   readonly friendProfileID: string;
   readonly isAccepted: boolean;
-  readonly userProfile: UserProfile;
-  readonly friendProfile: UserProfile;
+  readonly profile: Profile;
+  readonly friendProfile: Profile;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -505,11 +348,11 @@ type LazyFriendship = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly userProfileID: string;
+  readonly profileID: string;
   readonly friendProfileID: string;
   readonly isAccepted: boolean;
-  readonly userProfile: AsyncItem<UserProfile>;
-  readonly friendProfile: AsyncItem<UserProfile>;
+  readonly profile: AsyncItem<Profile>;
+  readonly friendProfile: AsyncItem<Profile>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -526,10 +369,10 @@ type EagerConversation = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly userProfileID: string;
+  readonly profileID: string;
   readonly friendProfileID: string;
-  readonly userProfile: UserProfile;
-  readonly friendProfile: UserProfile;
+  readonly profile: Profile;
+  readonly friendProfile: Profile;
   readonly messages?: (Message | null)[] | null;
   readonly unreadMessage?: boolean | null;
   readonly createdAt?: string | null;
@@ -542,10 +385,10 @@ type LazyConversation = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly userProfileID: string;
+  readonly profileID: string;
   readonly friendProfileID: string;
-  readonly userProfile: AsyncItem<UserProfile>;
-  readonly friendProfile: AsyncItem<UserProfile>;
+  readonly profile: AsyncItem<Profile>;
+  readonly friendProfile: AsyncItem<Profile>;
   readonly messages: AsyncCollection<Message>;
   readonly unreadMessage?: boolean | null;
   readonly createdAt?: string | null;
@@ -558,40 +401,146 @@ export declare const Conversation: (new (init: ModelInit<Conversation>) => Conve
   copyOf(source: Conversation, mutator: (draft: MutableModel<Conversation>) => MutableModel<Conversation> | void): Conversation;
 }
 
-type EagerCollegeGroup = {
+type EagerMessage = {
   readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<CollegeGroup, 'id'>;
+    identifier: ManagedIdentifier<Message, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly conversation: Conversation;
+  readonly conversationID: string;
+  readonly content: string;
+  readonly senderProfileID: string;
+  readonly receiverProfileID: string;
+  readonly unread?: boolean | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+  readonly conversationMessagesId?: string | null;
+}
+
+type LazyMessage = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Message, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly conversation: AsyncItem<Conversation>;
+  readonly conversationID: string;
+  readonly content: string;
+  readonly senderProfileID: string;
+  readonly receiverProfileID: string;
+  readonly unread?: boolean | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+  readonly conversationMessagesId?: string | null;
+}
+
+export declare type Message = LazyLoading extends LazyLoadingDisabled ? EagerMessage : LazyMessage
+
+export declare const Message: (new (init: ModelInit<Message>) => Message) & {
+  copyOf(source: Message, mutator: (draft: MutableModel<Message>) => MutableModel<Message> | void): Message;
+}
+
+type EagerGroup = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Group, 'id'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
   readonly name: string;
   readonly domain: string;
-  readonly webPage?: string | null;
-  readonly countryCode?: string | null;
-  readonly events?: (Festival | null)[] | null;
-  readonly members?: (UserProfile | null)[] | null;
+  readonly webPage: string;
+  readonly events: (Event | null)[];
+  readonly members: (Profile | null)[];
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
 
-type LazyCollegeGroup = {
+type LazyGroup = {
   readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<CollegeGroup, 'id'>;
+    identifier: ManagedIdentifier<Group, 'id'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
   readonly name: string;
   readonly domain: string;
-  readonly webPage?: string | null;
-  readonly countryCode?: string | null;
-  readonly events: AsyncCollection<Festival>;
-  readonly members: AsyncCollection<UserProfile>;
+  readonly webPage: string;
+  readonly events: AsyncCollection<Event>;
+  readonly members: AsyncCollection<Profile>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
 
-export declare type CollegeGroup = LazyLoading extends LazyLoadingDisabled ? EagerCollegeGroup : LazyCollegeGroup
+export declare type Group = LazyLoading extends LazyLoadingDisabled ? EagerGroup : LazyGroup
 
-export declare const CollegeGroup: (new (init: ModelInit<CollegeGroup>) => CollegeGroup) & {
-  copyOf(source: CollegeGroup, mutator: (draft: MutableModel<CollegeGroup>) => MutableModel<CollegeGroup> | void): CollegeGroup;
+export declare const Group: (new (init: ModelInit<Group>) => Group) & {
+  copyOf(source: Group, mutator: (draft: MutableModel<Group>) => MutableModel<Group> | void): Group;
+}
+
+type EagerEventProfile = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<EventProfile, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly profileId?: string | null;
+  readonly eventId?: string | null;
+  readonly profile: Profile;
+  readonly event: Event;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyEventProfile = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<EventProfile, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly profileId?: string | null;
+  readonly eventId?: string | null;
+  readonly profile: AsyncItem<Profile>;
+  readonly event: AsyncItem<Event>;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type EventProfile = LazyLoading extends LazyLoadingDisabled ? EagerEventProfile : LazyEventProfile
+
+export declare const EventProfile: (new (init: ModelInit<EventProfile>) => EventProfile) & {
+  copyOf(source: EventProfile, mutator: (draft: MutableModel<EventProfile>) => MutableModel<EventProfile> | void): EventProfile;
+}
+
+type EagerRideProfile = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<RideProfile, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly profileId?: string | null;
+  readonly rideId?: string | null;
+  readonly profile: Profile;
+  readonly ride: Ride;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyRideProfile = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<RideProfile, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly profileId?: string | null;
+  readonly rideId?: string | null;
+  readonly profile: AsyncItem<Profile>;
+  readonly ride: AsyncItem<Ride>;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type RideProfile = LazyLoading extends LazyLoadingDisabled ? EagerRideProfile : LazyRideProfile
+
+export declare const RideProfile: (new (init: ModelInit<RideProfile>) => RideProfile) & {
+  copyOf(source: RideProfile, mutator: (draft: MutableModel<RideProfile>) => MutableModel<RideProfile> | void): RideProfile;
 }
