@@ -1,4 +1,4 @@
-import {EventProfile, Festival, Photo, Ride} from "../../../models";
+import {EventProfile, Event, Photo, Ride} from "../../../models";
 import React, {useContext, useEffect, useState} from "react";
 import { DataStore } from "@aws-amplify/datastore";
 import ProfileEditModal from "./Modals/ProfileEditModal";
@@ -9,10 +9,10 @@ import { BsPerson } from "react-icons/all";
 import BannerPhotoModal from "./Modals/BannerPhotoModal";
 import Button from "../../common/Button/Button";
 import PhotoModal from "./Modals/PhotoModal";
-import {Link, useSearchParams} from "react-router-dom";
+import {useSearchParams} from "react-router-dom";
 import useDataClearedStore from "../../../stores/dataClearedStore";
 import useProfileStore from "../../../stores/profileStore";
-import {getBannerPhoto, getEventsAttending, getProfilePhoto} from "../../../services/profileServices";
+import {getBannerPhoto, getProfilePhoto} from "../../../services/profileServices";
 import ImageContext from "../../../context/ImageContext";
 import {getRidesByProfile} from "../../../services/rideServices";
 import EventCard from "../../ui/EventCard";
@@ -37,7 +37,7 @@ const AccountVerified = ({ user }: { user: any }) => {
   const [isProfileImageModalOpen, setIsProfileImageModalOpen] = useState(false);
   const [isPhotoModalOpen, setPhotoModalOpen] = useState(false);
   const [isBannerModalOpen, setIsBannerModalOpen] = useState(false);
-  const [eventsAttending, setEventsAttending] = useState<Festival[]>([]);
+  const [eventsAttending, setEventsAttending] = useState<Event[]>([]);
   const [rides, setRides] = useState<Ride[]>([]);
   const username = user.username as string;
   const userProfile = useProfileStore((state) => state.userProfile);
@@ -74,13 +74,13 @@ const AccountVerified = ({ user }: { user: any }) => {
 
     try {
       const photoSub = DataStore.observeQuery(Photo, (photo) =>
-        photo.userProfileID.eq(userProfile.id)
+        photo.profileID.eq(userProfile.id)
       ).subscribe(({ items }) => {
         setPhotos(items);
       });
 
       const eventSub = DataStore.observeQuery(EventProfile, (eventProfile) =>
-        eventProfile.userProfileID.eq(userProfile.id)
+        eventProfile.profileId.eq(userProfile.id)
       ).subscribe(async ({ items }) => {
         const events = []
         for await(const eventProfile of items) {
@@ -184,7 +184,7 @@ const AccountVerified = ({ user }: { user: any }) => {
               <h2 className="text-2xl">Photos</h2>
               <label
                 htmlFor="upload-photo"
-                className="block bg-green-950 text-white rounded-md uppercase py-2 px-4 cursor-pointer"
+                className="block bg-brandYellow text-white rounded-md uppercase py-2 px-4 cursor-pointer"
               >
                 Upload Photo
               </label>

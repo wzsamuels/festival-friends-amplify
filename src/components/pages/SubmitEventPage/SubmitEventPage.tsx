@@ -11,7 +11,7 @@ import {SubmitHandler, useForm} from "react-hook-form";
 import {v4 as uuidv4} from "uuid";
 import {API, Storage} from "aws-amplify";
 import {DataStore} from "@aws-amplify/datastore";
-import {Festival, UserProfile} from "../../../models";
+import {Event, Profile} from "../../../models";
 import {EventType} from "../../../API";
 import getErrorMessage from "../../../lib/getErrorMessage";
 import Header from "../../layout/Header";
@@ -66,14 +66,15 @@ const SubmitEventPage = () => {
     setSubmitting(true);
 
     try {
-
+      console.log("Creating event image...")
       const id = uuidv4();
       await Storage.put(`event-images/${id}`, selectedFile, {
         contentType: selectedFile.type,
       });
 
+      console.log("Creating event...")
       const newEvent = await DataStore.save(
-        new Festival({
+        new Event({
           ...data,
           image: `event-images/${id}`,
           approved: false,
@@ -81,7 +82,8 @@ const SubmitEventPage = () => {
         })
       );
 
-      const response = await API.post('stripeAPI', '/checkout', {
+      console.log("Creating payment...")
+      const response = await API.post('stripe', '/checkout', {
         body: {
           price: plan === "monthly" ? MONTHLY_PRICE : DAILY_PRICE,
           email: userProfile.email,
@@ -90,19 +92,22 @@ const SubmitEventPage = () => {
         },
       });
 
+      console.log("Updating user profile...")
       if(!userProfile.customerID) {
-        const latestProfile = await DataStore.query(UserProfile, userProfile.id)
+        const latestProfile = await DataStore.query(Profile, userProfile.id)
         if(!latestProfile) return;
-        const updatedProfile =  await DataStore.save(UserProfile.copyOf(latestProfile, (updated) => {
+        const updatedProfile =  await DataStore.save(Profile.copyOf(latestProfile, (updated) => {
           updated.customerID = response.customerID;
         }))
         setProfile(updatedProfile);
       }
 
-      const updatedEvent = await DataStore.save(Festival.copyOf(newEvent, (updated) => {
+      console.log("Updating event...")
+      const updatedEvent = await DataStore.save(Event.copyOf(newEvent, (updated) => {
         updated.customerID = response.customerID;
       }))
 
+      console.log("Redirecting to Stripe...")
       window.location.href = response.url;
     } catch (e) {
       console.log(getErrorMessage(e));
@@ -153,6 +158,7 @@ const SubmitEventPage = () => {
             className="border border-gray-300 p-4 shadow-xl w-full max-w-md"
           >
             <h2>Daily</h2>
+            <div>$4.99 / billed daily</div>
             <Button
               variation="outline"
               onClick={() => {
@@ -170,6 +176,8 @@ const SubmitEventPage = () => {
               <h2>Monthly</h2>
               <span>Most Popular</span>
             </div>
+            <div>$89.82 / billed monthly</div>
+            <div>40% Off Daily Billing!</div>
             <Button
               onClick={() => {
                 setPlan("monthly")
@@ -239,7 +247,7 @@ const SubmitEventPage = () => {
           <div className="flex justify-center">
             <label
               htmlFor="upload-profile-image-photo"
-              className="my-4 cursor-pointer flex justify-center px-4 py-2 uppercase font-light bg-green-950 text-white "
+              className="my-4 cursor-pointer flex justify-center px-4 py-2 uppercase font-light bg-brandYellow text-white "
             >
               Select Event Image
             </label>

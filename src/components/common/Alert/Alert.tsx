@@ -1,5 +1,4 @@
-import React, { Fragment, ReactElement } from "react";
-import { Dialog, Transition } from "@headlessui/react";
+import React, { ReactElement } from "react";
 import Modal from "../Modal/Modal";
 
 interface Button {
@@ -30,7 +29,7 @@ const CustomAlert: React.FC<CustomAlertProps> = ({
         type="button"
         className={`inline-flex justify-center px-4 py-2 text-sm font-medium border border-transparent rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${
           button.role === "confirm"
-            ? "text-white bg-green-950 focus-visible:ring-green-950"
+            ? "text-white bg-brandYellow focus-visible:ring-brandYellow"
             : "text-gray-700 bg-gray-100 hover:bg-gray-200 focus-visible:ring-gray-500"
         }`}
         onClick={() => {

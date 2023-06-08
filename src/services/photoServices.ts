@@ -1,6 +1,6 @@
 import {Auth, Storage} from "aws-amplify";
 import {v4 as uuidv4} from "uuid";
-import {Photo, UserProfile} from "../models";
+import {Photo, Profile} from "../models";
 import {DataStore} from "@aws-amplify/datastore";
 
 export const createNewPhoto = async (sub: string, photoFile: File, profileID: string) => {
@@ -22,7 +22,7 @@ export const createNewPhoto = async (sub: string, photoFile: File, profileID: st
       new Photo({
         s3Key: `${sub}/${id}`,
         isPrivate: false,
-        userProfileID: profileID,
+        profileID: profileID,
         identityId: identityId
       }));
   } catch (e) {
@@ -31,10 +31,10 @@ export const createNewPhoto = async (sub: string, photoFile: File, profileID: st
   }
 }
 
-export const getPhotosByProfile = async (profile: UserProfile) => {
+export const getPhotosByProfile = async (profile: Profile) => {
   try {
     return await DataStore.query(Photo, (c) =>
-      c.userProfileID.eq(profile.id)
+      c.profileID.eq(profile.id)
     );
   } catch (e) {
     console.log("Error getting photos:", e);

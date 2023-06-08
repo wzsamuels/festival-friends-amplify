@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import Modal from "../../../common/Modal/Modal";
 import { ModalProps } from "../../../../@types/modal";
@@ -7,7 +7,7 @@ import Label from "../../../common/Label/Label";
 import Input from "../../../common/Input/Input";
 import Button from "../../../common/Button/Button";
 import { DataStore } from "@aws-amplify/datastore";
-import { CollegeGroup, Festival } from "../../../../models";
+import { Group, Event } from "../../../../models";
 import { v4 as uuidv4 } from "uuid";
 import { Storage } from "aws-amplify";
 import getErrorMessage from "../../../../lib/getErrorMessage";
@@ -29,7 +29,7 @@ interface EventInput {
 }
 
 interface CreateEventModalProps extends ModalProps {
-  group: CollegeGroup;
+  group: Group;
 }
 
 const CreateEventModal = ({
@@ -48,7 +48,7 @@ const CreateEventModal = ({
           contentType: selectedFile.type,
         });
         await DataStore.save(
-          new Festival({
+          new Event({
             ...data,
             image: `event-images/${id}`,
             group: group,
@@ -120,7 +120,7 @@ const CreateEventModal = ({
         <div className="flex justify-center">
           <label
             htmlFor="upload-profile-image-photo"
-            className="my-4 cursor-pointer flex justify-center px-4 py-2 uppercase font-light bg-green-950 text-white "
+            className="my-4 cursor-pointer flex justify-center px-4 py-2 uppercase font-light bg-brandYellow text-white "
           >
             Select Event Image
           </label>

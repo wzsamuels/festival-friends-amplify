@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment } from "react";
 import { useAuthenticator } from "@aws-amplify/ui-react";
 import { DataStore } from "aws-amplify";
 import { FaUser } from "react-icons/all";
@@ -90,7 +90,7 @@ const AccountButton = () => {
   return (
     <>
       <Menu as="div" className="relative">
-        <Menu.Button className="hover:bg-gray-100 text-green-950 mx-1 sm:mx-2">
+        <Menu.Button className="hover:bg-gray-100 text-brandYellow mx-1 sm:mx-2">
           <FaUser />
         </Menu.Button>
         <Transition
@@ -106,14 +106,14 @@ const AccountButton = () => {
             {authStatus === "authenticated" ? (
               <>
                 <Menu.Item
-                  className="border-b border-b-green-950 p-2"
+                  className="border-b border-b-brandYellow p-2"
                   as="div"
                 >
                   {user?.attributes?.email}
                 </Menu.Item>
                 <Menu.Item>
                   <Link
-                    className="hover:bg-green-950 hover:text-white w-full  p-2 "
+                    className="hover:bg-brandYellow hover:text-white w-full  p-2 "
                     to="/account"
                   >
                     Profile
@@ -121,7 +121,7 @@ const AccountButton = () => {
                 </Menu.Item>
                 <Menu.Item>
                   <Link
-                    className="w-full cursor-pointer hover:bg-green-950 hover:text-white p-2 "
+                    className="w-full cursor-pointer hover:bg-brandYellow hover:text-white p-2 "
                     to="/account/settings"
                   >
                     Account Settings
@@ -129,7 +129,7 @@ const AccountButton = () => {
                 </Menu.Item>
                 <Menu.Item>
                   <Link
-                    className="w-full cursor-pointer hover:text-white hover:bg-green-950 p-2 "
+                    className="w-full cursor-pointer hover:text-white hover:bg-brandYellow p-2 "
                     to="/admin"
                   >
                     Admin
@@ -137,7 +137,7 @@ const AccountButton = () => {
                 </Menu.Item>
                 <Menu.Item>
                   <div
-                    className="w-full cursor-pointer hover:text-white hover:bg-green-950 p-2 "
+                    className="w-full cursor-pointer hover:text-white hover:bg-brandYellow p-2 "
                     onClick={handleSignOut}
                   >
                     Sign Out
@@ -147,7 +147,7 @@ const AccountButton = () => {
             ) : (
               <Menu.Item>
                 <Link
-                  className="w-full cursor-pointer hover:text-white hover:bg-green-950 p-2 "
+                  className="w-full cursor-pointer hover:text-white hover:bg-brandYellow p-2 "
                   to="/account"
                 >
                   Login In / Sign Up
@@ -156,7 +156,7 @@ const AccountButton = () => {
             )}
             <Menu.Item>
               <Link
-                className="w-full cursor-pointer hover:text-white hover:bg-green-950 p-2"
+                className="w-full cursor-pointer hover:text-white hover:bg-brandYellow p-2"
                 to="/submit-event"
                 >
                 Submit Event

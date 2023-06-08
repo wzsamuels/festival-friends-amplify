@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Festival, Ride } from "../../models";
+import { Event, Ride } from "../../models";
 import dayjs from "dayjs";
 
 interface RideCardBaseProps {
@@ -7,7 +7,7 @@ interface RideCardBaseProps {
 }
 
 const RideCardBase = ({ ride }: RideCardBaseProps) => {
-  const [event, setEvent] = useState<Festival>();
+  const [event, setEvent] = useState<Event>();
 
   useEffect(() => {
     const getEvent = async () => {

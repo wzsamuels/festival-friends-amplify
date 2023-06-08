@@ -1,4 +1,4 @@
-import {Conversation, UserProfile} from "../models";
+import {Conversation, Profile} from "../models";
 import {create, SetState} from "zustand";
 import {DataStore} from "@aws-amplify/datastore";
 import getErrorMessage from "../lib/getErrorMessage";
@@ -7,7 +7,7 @@ interface ConversationStore {
   conversations: Conversation[];
   //addConversation(conversation: Conversation): void
   clearConversations: () => void;
-  fetchConversations: (userProfile: UserProfile) => void;
+  fetchConversations: (userProfile: Profile) => void;
   loadingConversations: boolean;
 }
 
@@ -15,13 +15,13 @@ const useConversationStore = create<ConversationStore>((set: SetState<Conversati
   conversations: [],
   loadingConversations: false,
   clearConversations: () => set({conversations: []}),
-  fetchConversations: (userProfile: UserProfile) => {
+  fetchConversations: (userProfile: Profile) => {
     set({loadingConversations: true})
     console.log("Fetching conversations for user", userProfile.id)
     try {
       const conversationsSub = DataStore.observeQuery(Conversation, (c) =>
         c.or((c) => [
-          c.userProfileID.eq(userProfile.id),
+          c.profileID.eq(userProfile.id),
           c.friendProfileID.eq(userProfile.id),
         ])
       ).subscribe(({items}) => {

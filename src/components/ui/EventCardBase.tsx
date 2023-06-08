@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 import React, { useContext, useEffect, useState } from "react";
 import ImageContext from "../../context/ImageContext";
-import { LazyFestival } from "../../models";
+import { Event } from "../../models";
 
 interface EventCardBaseProps {
-  festival: LazyFestival
+  festival: Event
   className?: string
 }
 

@@ -1,5 +1,5 @@
 import {DataStore} from "aws-amplify";
-import {Ride, RideUser, UserProfile} from "../models";
+import {Profile, Ride, RideProfile} from "../models";
 
 export const getRidesByEvent  = async (eventID: string) => {
   try {
@@ -10,21 +10,18 @@ export const getRidesByEvent  = async (eventID: string) => {
   }
 }
 
-export const getRidesByProfile = async (profile: UserProfile) => {
+export const getRidesByProfile = async (profile: Profile) => {
   try {
-    const rideUsers = await profile.rides.toArray();
-    return await Promise.all(
-      rideUsers.map(async (rideUser) => await rideUser.ride)
-    );
+    return await DataStore.query(Ride, c => c.passengers.profile.id.eq(profile.id));
   } catch (e) {
     console.log("Error getting rides: ", e);
     return [];
   }
 }
 
-export const getRidersByEvent = async (ride:  Ride) => {
+export const getPassengers = async (ride: Ride) => {
   try {
-    return await DataStore.query(RideUser, c => c.rideID.eq(ride.id));
+    return await DataStore.query(Profile, c => c.rides.ride.id.eq(ride.id));
   } catch (e) {
     console.log("Error getting riders: ", e);
     return [];
@@ -34,8 +31,8 @@ export const getRidersByEvent = async (ride:  Ride) => {
 export const deleteRide = async (id: string) => {
   try {
 
-    const rideUsers =  await DataStore.query(RideUser, c => c.rideID.eq(id));
-    rideUsers.map(async (rideUser) => await DataStore.delete(rideUser));
+   // const rideUsers =  await DataStore.query(RideUser, c => c.rideID.eq(id));
+   // rideUsers.map(async (rideUser) => await DataStore.delete(rideUser));
 
     const originalRide = await DataStore.query(Ride, id);
 
@@ -49,30 +46,27 @@ export const deleteRide = async (id: string) => {
   }
 }
 
-export const leaveRide = async (ride: Ride, profile: UserProfile | null) => {
+export const leaveRide = async (ride: Ride, profile: Profile | null) => {
   if(!profile || !ride) return;
 
   try {
-    await DataStore.delete(RideUser, c => c.and( c => [
-      c.rideID.eq(ride.id),
-      c.userProfileID.eq(profile.id)
+    await DataStore.delete(RideProfile, c => c.and( c => [
+      c.rideId.eq(ride.id),
+      c.profileId.eq(profile.id)
     ]));
   } catch (e) {
     console.log("Error leaving ride: ", e);
   }
 }
 
-export const joinRide = async (ride: Ride, profile: UserProfile) => {
+export const joinRide = async (ride: Ride, profile: Profile) => {
   if(!profile || !ride) return;
 
   try {
     await DataStore.save(
-      new RideUser({
-        isDriver: false,
-        rideID: ride.id,
-        ride: ride,
-        userProfileID: profile.id,
-        userProfile: profile,
+      new RideProfile({
+        profile: profile,
+        ride: ride
       })
     );
   } catch (e) {

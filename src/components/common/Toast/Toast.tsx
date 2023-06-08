@@ -31,7 +31,7 @@ const Toast: React.FC<ToastProps> = ({
   }
 
   const toastColor = {
-    success: "bg-green-950",
+    success: "bg-brandYellow",
     error: "bg-red-500",
     info: "bg-blue-500",
     warning: "bg-yellow-400",

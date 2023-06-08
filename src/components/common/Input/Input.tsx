@@ -11,7 +11,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       <input
         {...props}
         ref={ref}
-        className={`border-b border-b-gray-400 flex-1 focus:border-b-green-950 focus:outline-0  ${className}`}
+        className={`border-b border-b-gray-400 flex-1 focus:border-b-brandYellow focus:outline-0  ${className}`}
       />
     );
   }

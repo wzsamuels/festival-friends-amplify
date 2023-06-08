@@ -1,22 +1,21 @@
-import { Link } from "react-router-dom";
 import React, { useContext, useEffect, useState } from "react";
 import ImageContext from "../../../context/ImageContext";
-import {Festival} from "../../../models";
+import {Event} from "../../../models";
 import Button from "../../common/Button/Button";
 
 interface EventCardBaseProps {
-  event: Festival
+  event: Event
   onApprove: (id: string) => void
   onReject: (id: string) => void
 }
 
 const AdminEventCard = ({ event, onApprove, onReject}: EventCardBaseProps) => {
   const { getSignedURL } = useContext(ImageContext);
-  const [eventImage, setFestivalImage] = useState("");
+  const [eventImage, setEventImage] = useState("");
   useEffect(() => {
     const fetchSignedURL = async () => {
       const url = await getSignedURL(event.image, "public");
-      setFestivalImage(url);
+      setEventImage(url);
     };
 
     fetchSignedURL();

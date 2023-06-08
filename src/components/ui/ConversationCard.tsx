@@ -27,9 +27,9 @@ const ConversationCard = ({
   const friendProfile = friendProfiles.find(
     (profile) =>
       profile.id ===
-      (userProfile?.id === conversation.userProfileID
+      (userProfile?.id === conversation.profileID
         ? conversation.friendProfileID
-        : conversation.userProfileID)
+        : conversation.profileID)
   );
 
   useEffect(() => {
@@ -49,11 +49,11 @@ const ConversationCard = ({
       }
       const lastMessage = messages[messages.length - 1];
       setUnreadMessage(
-        lastMessage.unreadMessage === true &&
-        lastMessage.senderID !== userProfile.id
+        lastMessage.unread === true &&
+        lastMessage.senderProfileID !==  userProfile.id
       );
       const message =
-        lastMessage.senderID === userProfile.id
+        lastMessage.senderProfileID === userProfile.id
           ? "You"
           : friendProfile.firstName;
       setLastMessage(message + ": " + lastMessage.content);
@@ -74,7 +74,7 @@ const ConversationCard = ({
       const lastMessage = messages[messages.length - 1];
       await DataStore.save(
         Message.copyOf(lastMessage, (updated) => {
-          updated.unreadMessage = false;
+          updated.unread = false;
         })
       );
     }
@@ -105,7 +105,7 @@ const ConversationCard = ({
           <div className="text-lg font-bold flex justify-between">
             <span>{friendProfile?.firstName} {friendProfile?.lastName}</span>
             {unreadMessage &&
-              <span className="h-2 w-2 rounded-full bg-green-950"></span>
+              <span className="h-2 w-2 rounded-full bg-brandYellow"></span>
             }
           </div>
           <div className="my-2 truncate">{lastMessage}</div>

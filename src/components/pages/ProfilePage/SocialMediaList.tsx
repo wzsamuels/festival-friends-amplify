@@ -1,7 +1,7 @@
-import {SocialMedia, UserProfile} from "../../../models";
+import {SocialMedia, Profile} from "../../../models";
 import React, {useEffect, useState} from "react";
 
-const SocialMediaList = ({profile} : {profile: UserProfile | null | undefined}) => {
+const SocialMediaList = ({profile} : {profile: Profile | null | undefined}) => {
   const [socialMedia, setSocialMedia] = useState<SocialMedia[]>([]);
   let socialMediaVar: SocialMedia[] = [];
   profile?.socialMedia.toArray()

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Friendship, UserProfile } from "../../../../models";
+import { Friendship, Profile } from "../../../../models";
 import { DataStore } from "aws-amplify";
 import FriendCard from "../../../ui/FriendCard";
 import Modal from "../../../common/Modal/Modal";
@@ -32,9 +32,9 @@ type FriendSearchModalProps = {
 
 const FriendSearchModal = ({ isOpen, setIsOpen }: FriendSearchModalProps) => {
   const { register, handleSubmit, reset } = useForm<SearchInput>();
-  const [results, setResults] = useState<UserProfile[]>([]);
+  const [results, setResults] = useState<Profile[]>([]);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
-  const [currentResult, setCurrentResult] = useState<UserProfile | null>(null);
+  const [currentResult, setCurrentResult] = useState<Profile | null>(null);
   const userProfile = useProfileStore((state) => state.userProfile);
   const [toastData, setToastData] = useState<ToastData | null>(null);
   const [isSearching, setIsSearching] = useState(false);
@@ -45,7 +45,7 @@ const FriendSearchModal = ({ isOpen, setIsOpen }: FriendSearchModalProps) => {
     // Remove empty fields from search
     const filteredData = getFilteredData(data);
     console.log(filteredData)
-    const allProfiles = await DataStore.query(UserProfile, (c) =>
+    const allProfiles = await DataStore.query(Profile, (c) =>
       c.and(() => criteria(c, filteredData))
     );
     // Filter out profiles with the same userProfile.id
@@ -58,10 +58,10 @@ const FriendSearchModal = ({ isOpen, setIsOpen }: FriendSearchModalProps) => {
     const filteredResults = otherProfiles.filter((profile) => {
       const friendShip = allFriends.find(
         (friend) =>
-          (friend.userProfileID === userProfile?.id &&
+          (friend.profileID === userProfile?.id &&
             friend.friendProfileID === profile.id) ||
           (friend.friendProfileID === userProfile?.id &&
-            friend.userProfileID === profile.id)
+            friend.profileID === profile.id)
       );
 
       return !friendShip;
@@ -195,7 +195,7 @@ const FriendSearchModal = ({ isOpen, setIsOpen }: FriendSearchModalProps) => {
             handler: () => {
               createFriendRequest(
                 userProfile,
-                currentResult as UserProfile,
+                currentResult as Profile,
                 setToastData
               );
             },

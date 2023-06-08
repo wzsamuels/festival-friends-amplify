@@ -1,11 +1,11 @@
-import {CollegeGroup} from "../models";
+import {Group} from "../models";
 import {DataStore} from "aws-amplify";
 
-export const getCollegeGroupByEmail = async (email: string) => {
+export const getGroupByEmail = async (email: string) => {
   if (email.endsWith(".edu")) {
     const emailDomain = email.split("@")[1];
     try {
-      const collegeGroups = await DataStore.query(CollegeGroup, (c) =>
+      const collegeGroups = await DataStore.query(Group, (c) =>
         c.domain.eq(emailDomain));
       return collegeGroups[0];
     } catch (e) {

@@ -7,8 +7,8 @@ import {
   Message, Photo,
   PrivacySetting,
   Ride,
-  RideUser,
-  UserProfile
+  RideProfile,
+  Profile
 } from "../../../models";
 import Button from "../../common/Button/Button";
 import LoadingState from "../../ui/LoadingState";
@@ -18,13 +18,13 @@ const ClearDatabase = () => {
   const clearDatabase = async () => {
     setClearing(true);
     try {
-      const userProfiles = await DataStore.query(UserProfile);
+      const userProfiles = await DataStore.query(Profile);
       const privacySettings = await DataStore.query(PrivacySetting);
       const conversations = await DataStore.query(Conversation);
       const messages = await DataStore.query(Message);
       const eventProfiles = await DataStore.query(EventProfile);
       const rides = await DataStore.query(Ride);
-      const rideUsers = await DataStore.query(RideUser);
+      const rideUsers = await DataStore.query(RideProfile);
       const friendShips = await DataStore.query(Friendship);
       const photos = await DataStore.query(Photo)
 

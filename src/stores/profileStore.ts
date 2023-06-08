@@ -1,16 +1,16 @@
-import create, {SetState, } from "zustand";
+import {SetState, create} from "zustand";
 import { DataStore} from "aws-amplify";
-import {UserProfile} from "../models";
+import {Profile} from "../models";
 import getErrorMessage from "../lib/getErrorMessage";
 
 type ProfileStore = {
-  userProfile: UserProfile | null,
+  userProfile: Profile | null,
   fetchUserProfile: (sub: string, route: string) => void,
   clearUserProfile: () => void,
   loadingUserProfile: boolean,
   error: string | null,
   setProfilePhoto: (photoID: string) => void,
-  setProfile: (profile: UserProfile | null) => void,
+  setProfile: (profile: Profile | null) => void,
 }
 
 const useProfileStore = create<ProfileStore>((set: SetState<ProfileStore>,  get) => ({
@@ -21,9 +21,9 @@ const useProfileStore = create<ProfileStore>((set: SetState<ProfileStore>,  get)
     set({loadingUserProfile: true})
     try {
       console.log("Fetching profile, ", sub, route)
-      const profile = await DataStore.query(UserProfile, c => c.sub.eq(sub))
+      const profile = await DataStore.query(Profile, c => c.sub.eq(sub))
       set({userProfile: profile[0]})
-
+      console.log("Profile fetched: ", profile[0])
     }
     catch (e) {
       console.error("Error fetching user profile in ProfileStore: ", e)
@@ -36,7 +36,7 @@ const useProfileStore = create<ProfileStore>((set: SetState<ProfileStore>,  get)
   setProfilePhoto: (photoID: string) => set((state) => ({
     userProfile: state.userProfile ? {...state.userProfile, profilePhotoID: photoID} : null
   })),
-  setProfile: (profile: UserProfile | null) => set(() => ({
+  setProfile: (profile: Profile | null) => set(() => ({
     userProfile: profile
   }))
 }))

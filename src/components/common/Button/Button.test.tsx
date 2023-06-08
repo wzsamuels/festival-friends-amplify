@@ -25,7 +25,7 @@ describe("Button component", () => {
     const buttonElement = screen.getByRole("button", {
       name: /outline button/i,
     });
-    expect(buttonElement).toHaveClass("bg-white text-green-950");
+    expect(buttonElement).toHaveClass("bg-white text-brandYellow");
   });
 
   test("applies filled variation", () => {
@@ -33,7 +33,7 @@ describe("Button component", () => {
     const buttonElement = screen.getByRole("button", {
       name: /filled button/i,
     });
-    expect(buttonElement).toHaveClass("bg-green-950 text-white");
+    expect(buttonElement).toHaveClass("bg-brandYellow text-white");
   });
 
   test("handles onClick event", () => {

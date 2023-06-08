@@ -2,7 +2,7 @@ import React from "react";
 import { SubmitHandler } from "react-hook-form";
 import { ProfileInputs } from "../../../../types";
 import { DataStore } from "@aws-amplify/datastore";
-import { UserProfile } from "../../../../models";
+import { Profile } from "../../../../models";
 import getErrorMessage from "../../../../lib/getErrorMessage";
 import AccountEditForm from "../AccountEditForm";
 import { ProfileModalProps } from "../../../../@types/profile";
@@ -21,14 +21,14 @@ const ProfileEditModal = ({
   const setProfile = useProfileStore((state) => state.setProfile);
   const handleProfileUpdate: SubmitHandler<ProfileInputs> = async (data) => {
     try {
-      const originalProfile = await DataStore.query(UserProfile, profile.id);
+      const originalProfile = await DataStore.query(Profile, profile.id);
       if(!originalProfile) {
         console.error('No profile found');
         return;
       }
 
       const updatedProfile = await DataStore.save(
-        UserProfile.copyOf(originalProfile, (updated) => {
+        Profile.copyOf(originalProfile, (updated) => {
           updated.firstName = data.firstName;
           updated.lastName = data.lastName;
           updated.phone = data.phone;

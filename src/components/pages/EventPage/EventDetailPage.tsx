@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import {UserProfile} from "../../../models";
+import {Profile} from "../../../models";
 import { DataStore } from "@aws-amplify/datastore";
 import ImageContext from "../../../context/ImageContext";
 import FriendCard from "../../ui/FriendCard";
@@ -12,7 +12,7 @@ import RideCard from "../../ui/RideCard";
 import useFriendStore from "../../../stores/friendProfileStore";
 import useEventStore from "../../../stores/eventStore";
 import useDataClearedStore from "../../../stores/dataClearedStore";
-import {getEventAttendeeProfiles} from "../../../services/eventServices";
+import {getAttendees} from "../../../services/eventServices";
 import {useAuthenticator} from "@aws-amplify/ui-react";
 import useProfileStore from "../../../stores/profileStore";
 
@@ -24,8 +24,8 @@ const EventDetailPage = () => {
   const userProfile = useProfileStore(state => state.userProfile)
   const event = useEventStore(state => state.events).find(event => event.id === id)
   const [eventImage, setEventImage] = React.useState("");
-  const [attendees, setAttendees] = useState<UserProfile[]>([]);
-  const [attendeeFriends, setAttendeeFriends] = useState<UserProfile[]>([]);
+  const [attendees, setAttendees] = useState<Profile[]>([]);
+  const [attendeeFriends, setAttendeeFriends] = useState<Profile[]>([]);
   const [rides, setRides] = useState<Ride[]>([]);
   const [isNewRideModalOpen, setIsNewRideModalOpen] = useState(false);
   const dataCleared = useDataClearedStore(state => state.dataCleared)
@@ -39,7 +39,7 @@ const EventDetailPage = () => {
       return await getSignedURL(event.image, "public");
     };
     const fetchEventAttendeeProfiles = async () => {
-      return await getEventAttendeeProfiles(event.id)
+      return await getAttendees(event.id)
     };
     try {
       fetchEventImage()
@@ -164,7 +164,7 @@ const EventDetailPage = () => {
         />
         {/* For screens smaller than 'md', position the event details div normally (i.e., below the image).
       For 'md' screens and larger, position it absolutely as before. */}
-        <div className="sm:rounded-xl shadow-xl z-10 text-primary-default border sm:border-b-green-950 sm:absolute bottom-4 left-4 bg-white p-4 bg-light-default min-w-[250px]">
+        <div className="sm:rounded-xl shadow-xl z-10 text-primary-default border sm:border-b-brandYellow sm:absolute bottom-4 left-4 bg-white p-4 bg-light-default min-w-[250px]">
           <h1 className="text-xl my-2">{event?.name}</h1>
           <p className="my-2">{event?.city}, {event?.state}</p>
           <p className="my-2">{event?.startDate} - {event?.endDate}</p>

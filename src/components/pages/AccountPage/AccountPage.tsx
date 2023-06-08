@@ -41,7 +41,7 @@ const AccountPage = () => {
       return <AccountVerified user={user} />;
     }
 
-    if (!userProfile?.verified && userProfile?.verifySubmitted) {
+    if (!userProfile?.verified && userProfile?.submitted) {
       return (
         <>
           <Header />

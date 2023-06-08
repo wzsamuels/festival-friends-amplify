@@ -12,7 +12,7 @@ const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
     <select
       {...props}
       ref={ref}
-      className={`border border-green-950 rounded ${className}`}
+      className={`border border-brandYellow rounded ${className}`}
     >
       {children}
     </select>

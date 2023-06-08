@@ -1,4 +1,4 @@
-import {UserProfile} from "../../../models";
+import {Profile} from "../../../models";
 import Label from "../../common/Label/Label";
 import Button from "../../common/Button/Button";
 import React, {useContext, useEffect, useState} from "react";
@@ -6,8 +6,8 @@ import ImageContext from "../../../context/ImageContext";
 import {getVerifyPhoto} from "../../../services/profileServices";
 
 interface AccountInfoProps {
-  profile: UserProfile
-  onVerify: (profile: UserProfile) => void
+  profile: Profile
+  onVerify: (profile: Profile) => void
 }
 
 const AccountInfo = ({profile, onVerify} : AccountInfoProps) => {

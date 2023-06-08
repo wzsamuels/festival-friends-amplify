@@ -1,6 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import React, {useContext, useEffect, useState} from "react";
-import {Festival, Photo, PrivacySetting, Ride, UserProfile} from "../../../models";
+import {Event, Photo, PrivacySetting, Ride, Profile} from "../../../models";
 import PhotoImage from "../../ui/PhotoImage";
 import Header from "../../layout/Header";
 import PhotoModal from "../AccountPage/Modals/PhotoModal";
@@ -9,21 +9,22 @@ import { BsPerson, IoArrowBack } from "react-icons/all";
 import getErrorMessage from "../../../lib/getErrorMessage";
 import useDataClearedStore from "../../../stores/dataClearedStore";
 import ImageContext from "../../../context/ImageContext";
-import {getBannerPhoto, getEventsAttending, getProfile, getProfilePhoto} from "../../../services/profileServices";
+import {getBannerPhoto, getProfile, getProfilePhoto} from "../../../services/profileServices";
 import {getRidesByProfile} from "../../../services/rideServices";
 import {getPhotosByProfile} from "../../../services/photoServices";
 import RideCard from "../../ui/RideCard";
 import SocialMediaList from "./SocialMediaList";
+import {getEventsByProfile} from "../../../services/eventServices";
 
 const ProfilePage = () => {
-  const [profile, setProfile] = useState<UserProfile | null | undefined>();
+  const [profile, setProfile] = useState<Profile | null | undefined>();
   const [privacySetting, setPrivacySetting] = useState<PrivacySetting>();
   const [profileImage, setProfileImage] = useState("");
   const [bannerImage, setBannerImage] = useState("");
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [isPhotoModalOpen, setIsPhotoModalOpen] = useState(false);
   const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
-  const [eventsAttending, setEventsAttending] = useState<Festival[]>([]);
+  const [eventsAttending, setEventsAttending] = useState<Event[]>([]);
   const [rides, setRides] = useState<Ride[]>([]);
   const dataCleared = useDataClearedStore(state => state.dataCleared);
   const { getSignedURL } = useContext(ImageContext)
@@ -57,7 +58,7 @@ const ProfilePage = () => {
     getPhotosByProfile(profile)
       .then(photos => setPhotos(photos));
 
-    getEventsAttending(profile)
+    getEventsByProfile(profile)
       .then(eventsAttending => setEventsAttending(eventsAttending));
 
     getRidesByProfile(profile)
@@ -136,11 +137,11 @@ const ProfilePage = () => {
         <section>
           <h1 className="text-2xl my-4">Events Attending</h1>
           {
-            !privacySetting?.attendingEvents ?
+            !privacySetting?.events ?
               (eventsAttending.length > 0 ? eventsAttending.map((event, index) =>
                 <span key={event.id}>
                   <Link
-                    className="hover:underline text-green-950"
+                    className="hover:underline text-brandYellow"
                     to={`/events/${event.id}`}
                   >
                     {event.name}

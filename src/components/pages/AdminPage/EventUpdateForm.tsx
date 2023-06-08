@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from "react";
-import {EventType, Festival} from "../../../models";
+import {EventType, Event} from "../../../models";
 import {SubmitHandler, useForm} from "react-hook-form";
 import Label from "../../common/Label/Label";
 import Input from "../../common/Input/Input";
@@ -17,7 +17,7 @@ import {Storage} from "aws-amplify";
 import {v4 as uuidv4} from "uuid";
 
 const EventUpdateForm = ({eventID} : {eventID: string}) => {
-  const [event, setEvent] = useState<Festival>()
+  const [event, setEvent] = useState<Event>()
   const [eventImage, setEventImage] = useState("");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [preview, setPreview] = useState("");
@@ -27,7 +27,7 @@ const EventUpdateForm = ({eventID} : {eventID: string}) => {
 
   useEffect(() =>{
     try {
-      getEvent(eventID).then(event => setEvent(event as Festival))
+      getEvent(eventID).then(event => setEvent(event as Event))
     } catch(e) {
       console.log("Error getting event", e)
     }
@@ -36,7 +36,7 @@ const EventUpdateForm = ({eventID} : {eventID: string}) => {
 
   const updateEvent: SubmitHandler<EventInputs> = async (data) => {
     if(!event) return;
-    const originalEvent = await DataStore.query(Festival, event?.id);
+    const originalEvent = await DataStore.query(Event, event?.id);
     if(!originalEvent) return;
     let newImage = "";
     if(selectedFile) {
@@ -48,7 +48,7 @@ const EventUpdateForm = ({eventID} : {eventID: string}) => {
       })
       newImage = `event-images/${id}`;
     }
-    await DataStore.save(Festival.copyOf(originalEvent, updatedEvent => {
+    await DataStore.save(Event.copyOf(originalEvent, updatedEvent => {
       updatedEvent.name = data.name;
       updatedEvent.genre = data.genre;
       updatedEvent.location = data.location;

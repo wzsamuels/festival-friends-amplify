@@ -1,4 +1,4 @@
-import {EventProfile, Festival, UserProfile} from "../../models";
+import {EventProfile, Event, Profile} from "../../models";
 import React, {useContext, useEffect, useState} from "react";
 import ImageContext from "../../context/ImageContext";
 import {BsCheck} from "react-icons/all";
@@ -7,21 +7,19 @@ import Button from "../common/Button/Button";
 import EventFriendModal from "../pages/EventPage/Modals/EventFriendModal";
 import useDataClearedStore from "../../stores/dataClearedStore";
 import useProfileStore from "../../stores/profileStore";
-import {createEventProfile, deleteEventProfile, getEventProfile} from "../../services/eventProfileServices";
-import {getEventAttendeeProfiles} from "../../services/eventServices";
+import {getAttendees, joinEvent, leaveEvent} from "../../services/eventServices";
 import useFriendStore from "../../stores/friendProfileStore";
 import dayjs from "dayjs";
 
 interface EventCardProps {
-  event: Festival;
-  attendingFriends: UserProfile[];
+  event: Event;
 }
 
 const EventCard = ({ event }: EventCardProps) => {
-  const [eventImage, setFestivalImage] = useState("");
-  const [attendeeProfiles, setAttendeeProfiles] = useState<UserProfile[]>([]);
+  const [eventImage, setEventImage] = useState("");
+  const [attendeeProfiles, setAttendeeProfiles] = useState<Profile[]>([]);
   const friendProfiles = useFriendStore(state => state.acceptedFriendProfiles);
-  const [friendsAttending, setFriendsAttending] = useState<UserProfile[]>([])
+  const [friendsAttending, setFriendsAttending] = useState<Profile[]>([])
   const [eventProfile, setEventProfile] = useState<EventProfile | null>(null);
   const userProfile = useProfileStore((state) => state.userProfile);
   const [isEventFriendModalOpen, setIsEventFriendModalOpen] = useState(false);
@@ -33,13 +31,13 @@ const EventCard = ({ event }: EventCardProps) => {
       return await getSignedURL(event.image, "public");
     };
 
-    fetchSignedURL().then(url => setFestivalImage(url));
+    fetchSignedURL().then(url => setEventImage(url));
   }, [event.image, getSignedURL]);
 
   useEffect(() => {
     //if(!event || !dataCleared) return;
     try {
-      getEventAttendeeProfiles(event.id).then(profiles => {
+      getAttendees(event.id).then(profiles => {
         setAttendeeProfiles(profiles)
         const attendeeMap = new Map(profiles.map(profile => [profile.id, profile]))
         setFriendsAttending(friendProfiles.filter(profile => attendeeMap.has(profile.id)));
@@ -51,22 +49,27 @@ const EventCard = ({ event }: EventCardProps) => {
 
   useEffect(() => {
     if (!dataCleared || !userProfile) return;
-
-    getEventProfile(event.id, userProfile.id).then(eventProfile => setEventProfile(eventProfile));
+    userProfile.events.toArray()
+      .then(events => events.find(event => event.id === event.id))
+      .then(event => {
+        if (event) {
+          setEventProfile(event);
+        }
+      })
   }, [dataCleared, userProfile]);
 
-  const handleAttendFestival = async () => {
+  const handleAttendEvent = async () => {
     if (!userProfile || !dataCleared) return;
 
     if (eventProfile) {
       // If the user is already attending, remove them from the attendees list
-      await deleteEventProfile(eventProfile);
+      await leaveEvent(event, userProfile);
       setAttendeeProfiles(state => state.filter(profile => profile.id !== userProfile.id))
       setEventProfile(null)
       console.log(`${userProfile.firstName} ${userProfile.lastName} has been removed from the event attendees list`);
     } else {
       // If the user is not attending, add them to the attendees list
-      const newEventProfile = await createEventProfile(event, userProfile);
+      const newEventProfile = await joinEvent(event, userProfile);
       setAttendeeProfiles(state => [...state, userProfile])
       setEventProfile(newEventProfile)
       console.log(`${userProfile.firstName} ${userProfile.lastName} has been added to the event attendees list`);
@@ -92,6 +95,8 @@ const EventCard = ({ event }: EventCardProps) => {
           <div>{event.city}, {event.state}</div>
 
           <div>{dayjs(event.startDate).format("MMMM D, YYYY")}</div>
+          <div>SubID: {event.subscriptionID}</div>
+          <div>CustomerID: {event.customerID}</div>
         </div>
       </Link>
       <div className="p-2 text-base md:text-lg">
@@ -99,7 +104,7 @@ const EventCard = ({ event }: EventCardProps) => {
           <>
             <div>
             <button
-              className="my-2 text-green-950"
+              className="my-2 text-brandYellow"
               disabled={friendsAttending.length === 0}
               onClick={() => setIsEventFriendModalOpen(true)}
             >
@@ -116,7 +121,7 @@ const EventCard = ({ event }: EventCardProps) => {
             </div>
             <div>
             <button
-              className="mb-2 text-green-950">
+              className="mb-2 text-brandYellow">
               {attendeeProfiles.length > 0 ? (
                 <span className="underline my-4">
                   {attendeeProfiles.length}{" "}
@@ -130,7 +135,7 @@ const EventCard = ({ event }: EventCardProps) => {
             </div>
             {eventProfile ? (
               <Button
-                onClick={handleAttendFestival}
+                onClick={handleAttendEvent}
                 className="flex items-center"
               >
                 <span>I&apos;ll be there!</span>
@@ -138,7 +143,7 @@ const EventCard = ({ event }: EventCardProps) => {
               </Button>
             ) : (
               <Button
-                onClick={handleAttendFestival}
+                onClick={handleAttendEvent}
                 variation="outline"
                 className="flex items-center"
               >
@@ -157,28 +162,5 @@ const EventCard = ({ event }: EventCardProps) => {
     </div>
   );
 };
-
-/*
-    const eventProfileSub = DataStore.observeQuery(EventProfile, (c) =>
-      c.eventID.eq(event.id)
-    ).subscribe(({ items }) => {
-      if (userProfile && items.length > 0) {
-        const ep = items.filter(
-          (item) => item.userProfileID === userProfile.id
-        );
-        if (ep.length > 0) {
-          setAttendingEvent(true);
-          setEventProfile(ep[0]);
-        }
-      } else {
-        setAttendingEvent(false);
-        setEventProfile(undefined);
-      }
-    });
-
-    return () => {
-      eventProfileSub.unsubscribe();
-    };
- */
 
 export default EventCard;

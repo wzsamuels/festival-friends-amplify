@@ -1,4 +1,4 @@
-import {Photo, UserProfile} from "../../models";
+import {Photo, Profile} from "../../models";
 import React, {
   useContext,
   useEffect,
@@ -13,12 +13,12 @@ import ConditionalWrapper from "../ConditionalWrapper";
 
 export interface FriendCardButton {
   label: string;
-  onClick: (friendProfile: UserProfile) => void;
+  onClick: (friendProfile: Profile) => void;
   className?: string;
 }
 
 export interface FriendCardProps {
-  profile: UserProfile;
+  profile: Profile;
   link: boolean;
   onClick?: () => void;
   buttons?: FriendCardButton[];

@@ -1,13 +1,13 @@
-import { Ride, RideUser, UserProfile } from "../../models";
+import {Event, Ride, Profile} from "../../models";
 import React, { useEffect, useState } from "react";
-import { DataStore } from "@aws-amplify/datastore";
 import { Link } from "react-router-dom";
 import Button from "../common/Button/Button";
 import dayjs from "dayjs";
 import useProfileStore from "../../stores/profileStore";
 import useDataClearedStore from "../../stores/dataClearedStore";
 import CustomAlert from "../common/Alert/Alert";
-import {deleteRide, getRidersByEvent, joinRide, leaveRide} from "../../services/rideServices";
+import {deleteRide, getPassengers, joinRide, leaveRide} from "../../services/rideServices";
+import {getEventByRide} from "../../services/eventServices";
 
 interface RideCardProps {
   ride: Ride;
@@ -15,46 +15,43 @@ interface RideCardProps {
 }
 
 const RideCard = ({ ride, className }: RideCardProps) => {
-  const [driverProfile, setDriverProfile] = useState<UserProfile>();
-  const [passengerProfiles, setPassengerProfiles] = useState<UserProfile[]>();
+  const [driverProfile, setDriverProfile] = useState<Profile>();
+  const [passengers, setPassengerProfiles] = useState<Profile[]>();
   const [ridersCount, setRidersCount] = useState<number>(0);
   const [deleteAlertOpen, setDeleteAlertOpen] = useState(false);
+  const [event, setEvent] = useState<Event | null | undefined>();
   const userProfile = useProfileStore((state) => state.userProfile);
   const dataCleared = useDataClearedStore((state) => state.dataCleared);
 
   useEffect(() => {
     if(!dataCleared) return;
     const getRiders = async () => {
-      const rideUsers = await getRidersByEvent(ride);
-      const driverUser = rideUsers.find((user) => user.isDriver === true);
-      const driverProfile = await driverUser?.userProfile;
-      const riderUsers = rideUsers.filter((user) => user.isDriver === false);
-      const riderProfiles = await Promise.all(
-        riderUsers.map(async (user) => await user.userProfile)
-      );
-      setRidersCount(rideUsers.length);
-      setDriverProfile(driverProfile);
-      setPassengerProfiles(riderProfiles);
+      const passengers = await getPassengers(ride);
+      const driver = passengers.find((passenger) => ride.driverProfileID === passenger.id);
+      setRidersCount(passengers.length);
+      setDriverProfile(driver);
+      setPassengerProfiles(passengers);
     };
     try {
       getRiders();
+      getEventByRide(ride).then((event) => setEvent(event));
     } catch (e) {
       console.log("Error getting riders", e);
     }
   }, [ride]);
 
   const handleJoinRide = async () => {
-    if (!userProfile || !passengerProfiles) return;
+    if (!userProfile || !passengers) return;
     await joinRide(ride, userProfile);
     setRidersCount(ridersCount + 1);
-    setPassengerProfiles([...passengerProfiles, userProfile]);
+    setPassengerProfiles([...passengers, userProfile]);
   };
 
   const handleLeaveRide = async () => {
-    if (!userProfile || !passengerProfiles) return;
+    if (!userProfile || !passengers) return;
     await leaveRide(ride, userProfile);
     setRidersCount(ridersCount - 1);
-    setPassengerProfiles(passengerProfiles.filter((passenger) => passenger.id !== userProfile.id));
+    setPassengerProfiles(passengers.filter((passenger) => passenger.id !== userProfile.id));
   }
 
   const renderButtons = () => {
@@ -64,7 +61,7 @@ const RideCard = ({ ride, className }: RideCardProps) => {
       )
     }
 
-    if(passengerProfiles?.find((passenger) => passenger.id === userProfile?.id)) {
+    if(passengers?.find((passenger) => passenger.id === userProfile?.id)) {
       return (
         <Button onClick={handleLeaveRide}>Leave Ride</Button>
       )
@@ -78,7 +75,11 @@ const RideCard = ({ ride, className }: RideCardProps) => {
   };
 
   return (
-    <div className={`flex flex-col shadow-xl p-4 rounded-lg ${className}`}>
+    <div className={`flex flex-col shadow-xl p-4 rounded-lg ${className} relative`}>
+      { event?.cancelled === true ? "Cancelled" : "Upcoming"}
+      {
+        event?.cancelled && <div className="absolute inset-0 bg-red-950 opacity-50 w-full h-full">Event Cancelled</div>
+      }
       <div className="flex flex-col md:flex-row gap-4">
         <div className="flex flex-col flex-1">
           <h2>
@@ -94,7 +95,7 @@ const RideCard = ({ ride, className }: RideCardProps) => {
             {driverProfile && (
               <Link
                 to={`/friends/profile/${driverProfile.id}`}
-                className="underline text-green-950"
+                className="underline text-brandYellow"
               >
                 {driverProfile?.firstName} {driverProfile?.lastName}
               </Link>
@@ -107,23 +108,23 @@ const RideCard = ({ ride, className }: RideCardProps) => {
           {driverProfile && (
             <span>
               <Link
-                className="underline text-green-950"
+                className="underline text-brandYellow"
                 to={`/friends/profile/${driverProfile.id}`}
               >
                 {driverProfile.firstName} {driverProfile.lastName}
               </Link>
-              {passengerProfiles?.length === 0 ? "" : `, `}
+              {passengers?.length === 0 ? "" : `, `}
             </span>
           )}
-          {passengerProfiles?.map((passenger, index) => (
+          {passengers?.map((passenger, index) => (
             <span key={passenger.id}>
               <Link
-                className="underline text-green-950"
+                className="underline text-brandYellow"
                 to={`/friends/profile/${passenger.id}`}
               >
                 {passenger.firstName} {passenger.lastName}
               </Link>
-              {index === passengerProfiles.length - 1 ? "" : `, `}
+              {index === passengers.length - 1 ? "" : `, `}
             </span>
           ))}
         </div>

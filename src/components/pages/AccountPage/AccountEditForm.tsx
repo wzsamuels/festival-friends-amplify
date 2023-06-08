@@ -1,7 +1,7 @@
 import {SubmitHandler, useFieldArray, useForm} from "react-hook-form";
 
 import React, { useEffect, useState} from "react";
-import {SocialMedia, UserProfile} from "../../../models";
+import {SocialMedia, Profile} from "../../../models";
 import { ProfileInputs } from "../../../types";
 import states from "../../../data/states";
 import Label from "../../common/Label/Label";
@@ -15,10 +15,8 @@ import socialMediaTypes from "../../../data/socialMediaTypes.json";
 
 interface ProfileFormProps {
   onSubmit: SubmitHandler<ProfileInputs>;
-  profile: UserProfile | null | undefined;
+  profile: Profile | null | undefined;
 }
-
-
 
 const AccountEditForm = ({ onSubmit, profile }: ProfileFormProps) => {
   const [message, setMessage] = useState("");
@@ -75,8 +73,15 @@ const AccountEditForm = ({ onSubmit, profile }: ProfileFormProps) => {
     const newSM = await DataStore.save(new SocialMedia({
       socialMediaType: socialMedia[index].type,
       accountURL: socialMedia[index].url,
-      userProfile: profile,
-      userProfileID: profile?.id as string
+    }))
+
+    const latestProfile = await DataStore.query(Profile, profile?.id as string)
+    await DataStore.save(Profile.copyOf(latestProfile as Profile, updated => {
+      if(updated.socialMedia) {
+        updated.socialMedia.push(newSM)
+      } else {
+        updated.socialMedia = [newSM]
+      }
     }))
 
     socialMedia[index].id = newSM.id

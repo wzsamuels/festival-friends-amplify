@@ -64,7 +64,7 @@ const Segment: React.FC<SegmentProps> = ({
       ))}
       <div
         ref={lineRef}
-        className="absolute bottom-0 h-0.5 bg-green-950 transition-all duration-300"
+        className="absolute bottom-0 h-0.5 bg-brandYellow transition-all duration-300"
       ></div>
     </div>
   );

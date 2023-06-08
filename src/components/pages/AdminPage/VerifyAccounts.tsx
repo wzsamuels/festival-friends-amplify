@@ -1,23 +1,20 @@
 import React, {useEffect, useState} from "react";
-import {UserProfile} from "../../../models";
+import {Profile} from "../../../models";
 import {DataStore} from "aws-amplify";
-import InputWrapper from "../../common/InputWrapper/InputWrapper";
-import Label from "../../common/Label/Label";
-import Button from "../../common/Button/Button";
 import Toast from "../../common/Toast/Toast";
 import getErrorMessage from "../../../lib/getErrorMessage";
 import {ToastData} from "../../../types";
 import AccountInfo from "./AccountInfo";
 
 const VerifyAccounts = () => {
-  const [unverifiedProfiles, setUnverifiedProfiles] = useState<UserProfile[]>([]);
+  const [unverifiedProfiles, setUnverifiedProfiles] = useState<Profile[]>([]);
   const [toastData, setToastData] = useState<ToastData | null>(null);
 
   useEffect(() => {
     const fetchProfiles = async () => {
-      const response = await DataStore.query(UserProfile, (c) => c.and(c => [
+      const response = await DataStore.query(Profile, (c) => c.and(c => [
         c.verified.eq(false),
-        c.verifySubmitted.eq(true)
+        c.submitted.eq(true)
       ]));
       console.log(response);
       setUnverifiedProfiles(response);
@@ -30,14 +27,14 @@ const VerifyAccounts = () => {
     }
   }, []);
 
-  const verifyProfile = async (profile: UserProfile) => {
+  const verifyProfile = async (profile: Profile) => {
     try {
-      const latestProfile = await DataStore.query(UserProfile, profile.id);
+      const latestProfile = await DataStore.query(Profile, profile.id);
       if (!latestProfile) {
         throw new Error("No profile found");
       }
       await DataStore.save(
-        UserProfile.copyOf(latestProfile, (updated) => {
+        Profile.copyOf(latestProfile, (updated) => {
           updated.verified = true;
         })
       );

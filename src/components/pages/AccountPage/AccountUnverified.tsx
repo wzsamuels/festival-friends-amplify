@@ -1,6 +1,6 @@
 import {SubmitHandler, useForm, Controller, useFieldArray} from "react-hook-form";
 import React, {useState} from "react";
-import {PrivacySetting, SocialMedia, UserProfile} from "../../../models";
+import {PrivacySetting, SocialMedia, Profile} from "../../../models";
 import { DataStore } from "@aws-amplify/datastore";
 import { ProfileInputs } from "../../../types";
 import { useAuthenticator } from "@aws-amplify/ui-react";
@@ -12,12 +12,12 @@ import states from "../../../data/states";
 import { useFormattedPhoneInput } from "../../../hooks/useFormattedPhoneInput";
 import useProfileStore from "../../../stores/profileStore";
 import Select from "../../common/Select";
-import {getCollegeGroupByEmail} from "../../../services/collegeGroupServices";
 import {BsPlus} from "react-icons/all";
 import socialMediaTypes from "../../../data/socialMediaTypes.json";
 import {createNewPhoto} from "../../../services/photoServices";
 import ImageUpload from "../../common/ImageUpload";
 import useFilePreview from "../../../hooks/useFilePreview";
+import {getGroupByEmail} from "../../../services/groupServices";
 
 const AccountUnverified = () => {
   const { user } = useAuthenticator((context) => [context.user]);
@@ -38,30 +38,30 @@ const AccountUnverified = () => {
       const sub = user?.attributes?.sub as string;
       const email = user?.attributes?.email as string;
       const newPrivacySetting =  await DataStore.save(new PrivacySetting({}));
-      const collegeGroup = await getCollegeGroupByEmail(email);
+      const collegeGroup = await getGroupByEmail(email);
       const { socialMedia, ...filteredData} = data;
 
+      const socialMediaPromises = socialMedia.map(async (account) =>
+        await DataStore.save(new SocialMedia({
+          socialMediaType: account.type,
+          accountURL: account.url,
+        })));
+      const socialMediaResults = await Promise.all(socialMediaPromises);
 
-      const newUserProfile = await DataStore.save(new UserProfile({
+      const newUserProfile = await DataStore.save(new Profile({
         ...filteredData,
         email: email,
         phone: phone,
         ...(collegeGroup && {collegeGroupId: collegeGroup?.id}),
-        verifySubmitted: true,
-        privacySettingID: newPrivacySetting.id,
-        sub: sub
+        submitted: true,
+        privacySetting: newPrivacySetting,
+        sub: sub,
+        socialMedia: socialMediaResults,
       }));
 
-      socialMedia.map(async (account) =>
-        await DataStore.save(new SocialMedia({
-          socialMediaType: account.type,
-          accountURL: account.url,
-          userProfileID: newUserProfile?.id,
-          userProfile: newUserProfile,
-        }))
-      );
+
       const verifyPhoto = await createNewPhoto(sub, selectedFile, newUserProfile.id);
-      verifyPhoto && await DataStore.save(UserProfile.copyOf(newUserProfile, (updated) => {
+      verifyPhoto && await DataStore.save(Profile.copyOf(newUserProfile, (updated) => {
         updated.verifyPhotoID = verifyPhoto.id;
       }));
       setProfile(newUserProfile);
@@ -74,7 +74,7 @@ const AccountUnverified = () => {
     }
   };
 
-  if (isSubmitted || userProfile?.verifySubmitted) {
+  if (isSubmitted || userProfile?.submitted) {
     return (
       <div className="flex flex-col w-full justify-center items-center mt-4 p-4">
         <h1 className="text-xl md:text-2xl">Profile Created!</h1>

@@ -1,16 +1,16 @@
 import {DataStore} from "aws-amplify";
-import {Conversation, UserProfile} from "../models";
+import {Conversation, Profile} from "../models";
 
-export const createConversation = async (userProfile: UserProfile, friendProfile: UserProfile) => {
+export const createConversation = async (userProfile: Profile, friendProfile: Profile) => {
   try {
     const existingConversations = await DataStore.query(Conversation, (c) =>
       c.or(c => [
         c.and((c) => [
-          c.userProfileID.eq(userProfile?.id),
+          c.profileID.eq(userProfile?.id),
           c.friendProfileID.eq(friendProfile.id),
         ]),
         c.and((c) => [
-          c.userProfileID.eq(friendProfile.id),
+          c.profileID.eq(friendProfile.id),
           c.friendProfileID.eq(userProfile?.id),
         ])
       ]))
@@ -21,10 +21,10 @@ export const createConversation = async (userProfile: UserProfile, friendProfile
 
     return await DataStore.save(
       new Conversation({
-        userProfileID: userProfile?.id,
+        profileID: userProfile?.id,
         friendProfileID: friendProfile.id,
         messages: [],
-        userProfile: userProfile,
+        profile : userProfile,
         friendProfile: friendProfile,
       })
     );

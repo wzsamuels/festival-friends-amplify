@@ -1,41 +1,33 @@
 import React, { useEffect, useState } from "react";
 import { useAuthenticator } from "@aws-amplify/ui-react";
 import {
-  CollegeGroup,
-  Festival,
-  UserProfile,
+  Group,
+  Event,
+  Profile,
 } from "../../../models";
 import { Link } from "react-router-dom";
 import Header from "../../layout/Header";
 import Button from "../../common/Button/Button";
 import EventCard from "../../ui/EventCard";
 import { DataStore } from "aws-amplify";
-import {
-  fetchEventAttendees,
-  getAttendingFriends,
-} from "../../../lib/eventHelpers";
 import CreateEventModal from "./Modals/CreateEventModal";
 import useDataClearedStore from "../../../stores/dataClearedStore";
 import useProfileStore from "../../../stores/profileStore";
 import useFriendStore from "../../../stores/friendProfileStore";
 
 const GroupsPage = () => {
-  const [collegeGroup, setCollegeGroup] = useState<CollegeGroup>();
-  const [events, setGroupEvents] = useState<Festival[]>([]);
-  const [eventAttendees, setEventAttendees] = useState<
-    Map<string, UserProfile[]>
-  >(new Map());
+  const [collegeGroup, setGroup] = useState<Group>();
+  const [events, setGroupEvents] = useState<Event[]>([]);
   const [isCreateEventModalOpen, setIsCreateEventModalOpen] = useState(false);
   const { authStatus } = useAuthenticator((context) => [context.authStatus]);
   const userProfile = useProfileStore((state) => state.userProfile);
   const dataCleared = useDataClearedStore((state) => state.dataCleared);
-  const friendProfiles = useFriendStore((state) => state.acceptedFriendProfiles);
 
   useEffect(() => {
-    const fetchCollegeGroup = async () => {
-      const group = await userProfile?.collegeGroup;
+    const fetchGroup = async () => {
+      const group = await userProfile?.group;
       console.log(group);
-      setCollegeGroup(group);
+      setGroup(group);
 
       const events = await group?.events.toArray();
       if (events) {
@@ -45,16 +37,16 @@ const GroupsPage = () => {
 
     if (
       authStatus === "authenticated" &&
-      userProfile?.collegeGroup !== undefined &&
+      userProfile?.group !== undefined &&
       dataCleared
     ) {
-      fetchCollegeGroup();
+      fetchGroup();
     }
   }, [userProfile]);
 
   useEffect(() => {
     if(!collegeGroup || !dataCleared) return
-      const collegeGroupSub = DataStore.observeQuery(Festival, (festival) =>
+      const collegeGroupSub = DataStore.observeQuery(Event, (festival) =>
         festival.groupID.eq(collegeGroup.id)
       ).subscribe(({ items }) => {
         setGroupEvents(items);
@@ -62,9 +54,6 @@ const GroupsPage = () => {
       return () => collegeGroupSub.unsubscribe();
   }, [collegeGroup, dataCleared]);
 
-  useEffect(() => {
-    fetchEventAttendees(events).then(setEventAttendees);
-  }, [events]);
 
   if (
     authStatus !== "authenticated" ||
@@ -74,7 +63,7 @@ const GroupsPage = () => {
       <>
         <Header />
         <div className='bg-[url("/src/images/group.png")] w-full bg-cover flex flex-col items-center justify-center h-full min-h-screen p-2'>
-          <div className="text-green-950 font-bold flex flex-col items-center justify-center  bg-white p-4 rounded-xl w-full max-w-lg ">
+          <div className="text-brandYellow font-bold flex flex-col items-center justify-center  bg-white p-4 rounded-xl w-full max-w-lg ">
               {authStatus !== "authenticated" ? (
                 <>
                   <h1 className="m-4 text-xl">
@@ -114,11 +103,6 @@ const GroupsPage = () => {
             <EventCard
               event={event}
               key={event.id}
-              attendingFriends={getAttendingFriends({
-                eventAttendees: eventAttendees,
-                friendProfiles: friendProfiles,
-                eventId: event.id,
-              })}
             />
           ))}
         </div>

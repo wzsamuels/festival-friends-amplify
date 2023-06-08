@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useAuthenticator } from "@aws-amplify/ui-react";
 import { DataStore } from "aws-amplify";
-import { Friendship, UserProfile } from "../../../models";
+import { Profile } from "../../../models";
 import FriendCard, { FriendCardButton } from "../../ui/FriendCard";
 import FriendSearchModal from "./Modals/FriendSearchModal";
 import Header from "../../layout/Header";
@@ -11,7 +11,6 @@ import {
   createFriendRequest,
   rejectFriendRequest,
 } from "../../../services/friendsService";
-import LoggedOutState from "../../ui/LoggedOutState";
 import UnverifiedState from "../../ui/UnverifiedState";
 import LoadingState from "../../ui/LoadingState";
 import { ToastData } from "../../../types";
@@ -39,7 +38,7 @@ const FriendsPage: React.FC = () => {
   const acceptedFriendProfiles = useFriendStore(state => state.acceptedFriendProfiles);
   const incomingFriendProfiles = useFriendStore(state => state.incomingFriendProfiles);
   const outgoingFriendProfiles = useFriendStore(state => state.outgoingFriendProfiles);
-  const [suggestedFriends, setSuggestedFriends] = useState<UserProfile[]>([]);
+  const [suggestedFriends, setSuggestedFriends] = useState<Profile[]>([]);
   const [friendType, setFriendType] = useState("accepted");
   const [isFriendsModalOpen, setIsFriendsModalOpen] = useState(false);
   const dataCleared = useDataClearedStore((state) => state.dataCleared);
@@ -52,7 +51,7 @@ const FriendsPage: React.FC = () => {
 
     const fetchSuggestedFriends = async () => {
       try {
-        const allProfiles = await DataStore.query(UserProfile);
+        const allProfiles = await DataStore.query(Profile);
 
         // Filter user profiles based on common attributes
         const suggestedFriends = allProfiles.filter((profile) => {
@@ -116,20 +115,20 @@ const FriendsPage: React.FC = () => {
   }, [allFriendships, acceptedFriendProfiles, incomingFriendProfiles, outgoingFriendProfiles]);
 
   // Accept friend request
-  const handleFriendAccept = async (friendProfile: UserProfile) => {
+  const handleFriendAccept = async (friendProfile: Profile) => {
     await acceptFriendRequest(friendProfile, allFriendships);
   };
 
-  const handleFriendReject = async (friendProfile: UserProfile) => {
+  const handleFriendReject = async (friendProfile: Profile) => {
     await rejectFriendRequest(friendProfile, allFriendships);
   };
 
-  const handleFriendRequest = async (friendProfile: UserProfile) => {
+  const handleFriendRequest = async (friendProfile: Profile) => {
     await createFriendRequest(userProfile, friendProfile, setToastData);
   };
 
   const FriendsList: React.FC<{
-    friends: UserProfile[];
+    friends: Profile[];
     buttons?: FriendCardButton[];
   }> = ({ friends, buttons }) => (
     <>
@@ -159,7 +158,7 @@ const FriendsPage: React.FC = () => {
     if (route !== "authenticated") {
       return (
         <div className='bg-[url("/src/images/friends5.jpeg")] w-full bg-cover flex flex-col items-center justify-center h-full min-h-screen p-2'>
-          <div className="text-green-950 font-bold flex flex-col items-center justify-center  bg-white p-4 rounded-xl w-full max-w-lg ">
+          <div className="text-brandYellow font-bold flex flex-col items-center justify-center  bg-white p-4 rounded-xl w-full max-w-lg ">
             <h1 className="m-4 text-xl">
               Login in to view your friends.
             </h1>
@@ -178,7 +177,7 @@ const FriendsPage: React.FC = () => {
     const friendTypeMap: Record<
       FriendType,
       {
-        friends: UserProfile[];
+        friends: Profile[];
         noFriendsMessage: string;
         buttons?: FriendCardButton[];
       }
@@ -193,7 +192,7 @@ const FriendsPage: React.FC = () => {
         buttons: [
           {
             label: "Cancel",
-            onClick: (friendProfile: UserProfile) =>
+            onClick: (friendProfile: Profile) =>
               handleFriendReject(friendProfile),
           },
         ],
@@ -204,7 +203,7 @@ const FriendsPage: React.FC = () => {
         buttons: [
           {
             label: "Send Request",
-            onClick: (friendProfile: UserProfile) =>
+            onClick: (friendProfile: Profile) =>
               handleFriendRequest(friendProfile),
           },
         ],
@@ -215,12 +214,12 @@ const FriendsPage: React.FC = () => {
         buttons: [
           {
             label: "Accept",
-            onClick: (friendProfile: UserProfile) =>
+            onClick: (friendProfile: Profile) =>
               handleFriendAccept(friendProfile),
           },
           {
             label: "Reject",
-            onClick: (friendProfile: UserProfile) =>
+            onClick: (friendProfile: Profile) =>
               handleFriendReject(friendProfile),
           },
         ],
@@ -266,7 +265,7 @@ const FriendsPage: React.FC = () => {
           <div className="block">Requests</div>
           <div className="hidden text-xl"><MdMoveToInbox/></div>
           {incomingFriendProfiles.length > 0 ? (
-            <div className="bg-green-950 text-white rounded-full mx-2 w-[20px] p-2  h-[20px] justify-center items-center hidden sm:flex">
+            <div className="bg-brandYellow text-white rounded-full mx-2 w-[20px] p-2  h-[20px] justify-center items-center hidden sm:flex">
               {incomingFriendProfiles.length}
             </div>
           ) : null}
@@ -281,7 +280,7 @@ const FriendsPage: React.FC = () => {
           <div className="hidden sm:block">Sent</div>
           <div className="block sm:hidden text-xl"><MdOutlineOutbox/></div>
           {outgoingFriendProfiles.length > 0 ? (
-            <div className="bg-green-950 text-white rounded-full mx-2 w-[20px] p-2 h-[20px] justify-center items-center hidden md:flex">
+            <div className="bg-brandYellow text-white rounded-full mx-2 w-[20px] p-2 h-[20px] justify-center items-center hidden md:flex">
               {outgoingFriendProfiles.length}
             </div>
           ) : null}
@@ -297,7 +296,7 @@ const FriendsPage: React.FC = () => {
           <div className="block">Suggested</div>
           <div className="hidden text-xl"><MdLightbulbOutline/></div>
           {suggestedFriends.length > 0 ? (
-            <div className="bg-green-950 text-white rounded-full mx-2 w-[20px] p-2 h-[20px] justify-center items-center hidden md:flex">
+            <div className="bg-brandYellow text-white rounded-full mx-2 w-[20px] p-2 h-[20px] justify-center items-center hidden md:flex">
               {suggestedFriends.length}
             </div>
           ) : null}

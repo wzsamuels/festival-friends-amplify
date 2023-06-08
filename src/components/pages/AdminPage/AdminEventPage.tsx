@@ -1,20 +1,20 @@
 import React, {useEffect, useState} from "react";
 import {DataStore} from "@aws-amplify/datastore";
-import {Festival} from "../../../models";
-import {FestivalCreateForm} from "../../../ui-components";
+import {Event} from "../../../models";
+import {EventCreateForm} from "../../../ui-components";
 import AdminEventCard from "./AdminEventCard";
 import Select from "../../common/Select";
 import EventUpdateForm from "./EventUpdateForm";
 import useDataClearedStore from "../../../stores/dataClearedStore";
 
 export const loader = async () => {
-  return await DataStore.query(Festival);
+  return await DataStore.query(Event);
 }
 
 const AdminEventPage = () => {
-  //const eventData = useLoaderData() as Festival[];
-  const [events, setEvents] = useState<Festival[]>([]);
-  const [unapprovedEvents, setUnapprovedEvents] = useState<Festival[]>([]);
+  //const eventData = useLoaderData() as Event[];
+  const [events, setEvents] = useState<Event[]>([]);
+  const [unapprovedEvents, setUnapprovedEvents] = useState<Event[]>([]);
   const [selectedEvent, setSelectedEvent] = useState("");
   const dataCleared = useDataClearedStore(state => state.dataCleared);
 
@@ -22,7 +22,7 @@ const AdminEventPage = () => {
     if(!dataCleared) return;
 
     try {
-      const eventSub = DataStore.observeQuery(Festival)
+      const eventSub = DataStore.observeQuery(Event)
         .subscribe(({items}) => {
           setEvents(items);
           setUnapprovedEvents(items.filter(event => !event.approved));
@@ -34,9 +34,9 @@ const AdminEventPage = () => {
   }, [])
 
   const handleEventApproved = async (eventID: string) => {
-    const latestEvent = await DataStore.query(Festival, eventID)
+    const latestEvent = await DataStore.query(Event, eventID)
     if(!latestEvent) return;
-    await DataStore.save(Festival.copyOf(latestEvent, updated => {
+    await DataStore.save(Event.copyOf(latestEvent, updated => {
       updated.approved = true
     }))
 
@@ -44,7 +44,7 @@ const AdminEventPage = () => {
   }
 
   const handleEventRejected = async (eventID: string) => {
-    await DataStore.delete(Festival, eventID);
+    await DataStore.delete(Event, eventID);
     setUnapprovedEvents(state => state.filter(event => event.id !== eventID))
   }
 
@@ -60,7 +60,7 @@ const AdminEventPage = () => {
       </section>
       <section className="w-full max-w-xl my-8 mx-auto">
         <h1 className="text-xl md:text-2xl">Create Event</h1>
-        <FestivalCreateForm />
+        <EventCreateForm />
       </section>
       <section className="w-full max-w-xl my-8 mx-auto flex flex-col items-center">
         <h1 className="text-xl md:text-2xl text-center my-6">Update Events</h1>

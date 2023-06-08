@@ -1,5 +1,5 @@
 import React, { useState} from "react";
-import { Conversation, UserProfile } from "../../../models";
+import { Conversation, Profile } from "../../../models";
 import { useAuthenticator } from "@aws-amplify/ui-react";
 import ConversationModal from "./Modals/ConversationModal";
 import { BsPlus, FaSearch } from "react-icons/all";
@@ -33,7 +33,7 @@ const MessagePage: React.FC = () => {
   const handleNewConversation = async ({
     friendProfile,
   }: {
-    friendProfile: UserProfile;
+    friendProfile: Profile;
   }) => {
     setNewConversationModalOpen(false);
     if (!userProfile || !dataCleared) {
@@ -57,7 +57,7 @@ const MessagePage: React.FC = () => {
     if (route !== "authenticated") {
       return (
         <div className='bg-[url("/src/images/messages.png")] w-full bg-cover flex flex-col items-center justify-center h-full min-h-screen p-2'>
-          <div className="text-green-950 font-bold flex flex-col items-center justify-center  bg-white p-4 rounded-xl w-full max-w-lg ">
+          <div className="text-brandYellow font-bold flex flex-col items-center justify-center  bg-white p-4 rounded-xl w-full max-w-lg ">
             <h1 className="m-4 text-xl">
               You must be logged in to view your messages.
             </h1>
@@ -114,7 +114,7 @@ const MessagePage: React.FC = () => {
           route === "authenticated" &&
           <div className="fixed bottom-20 right-16">
             <button
-              className="flex flex-col items-center rounded-[100%] bg-green-950 text-white p-3"
+              className="flex flex-col items-center rounded-[100%] bg-brandYellow text-white p-3"
               onClick={() => setNewConversationModalOpen(true)}
             >
               <BsPlus className="text-3xl" />

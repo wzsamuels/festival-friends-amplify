@@ -33,7 +33,7 @@ const ConservationSearchModal = ({isOpen, setIsOpen} : ConservationSearchModalPr
       const conversations = await DataStore.query(Conversation, c =>
         c.and(c => [
           c.or(c => [
-            c.userProfileID.eq(userProfile.id),
+            c.profileID.eq(userProfile.id),
             c.friendProfileID.eq(userProfile.id)
           ]),
           c.and(() => criteria(c, filteredData))

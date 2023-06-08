@@ -3,6 +3,9 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      colors: {
+        brandYellow: "#7DB8B1"
+      },
       spacing: {
         header: "40px",
         footer: "56px",

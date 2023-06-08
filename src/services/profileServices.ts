@@ -1,10 +1,10 @@
-import {Festival, Photo, UserProfile} from "../models";
+import {Event, Photo, Profile} from "../models";
 import {DataStore} from "aws-amplify";
 import {S3Levels} from "../@types/s3";
 
 export const getProfile = async (userID: string) => {
   try {
-    return await DataStore.query(UserProfile, userID);
+    return await DataStore.query(Profile, userID);
   } catch (e) {
     console.log("Error getting profile", e)
     return null;
@@ -12,7 +12,7 @@ export const getProfile = async (userID: string) => {
 }
 
 export const getProfilePhoto = async (
-  profile: UserProfile | null | undefined,
+  profile: Profile | null | undefined,
   getSignedURL: (s3Key: string, level: S3Levels, identityId?: string | undefined) => Promise<string>) => {
   if(!profile || !profile.profilePhotoID) return "";
 
@@ -29,7 +29,7 @@ export const getProfilePhoto = async (
 };
 
 export const getBannerPhoto = async (
-  profile: UserProfile | null | undefined,
+  profile: Profile | null | undefined,
   getSignedURL: (s3Key: string, level: S3Levels, identityId?: string | undefined) => Promise<string>) => {
   if(!profile || !profile.bannerPhotoID) return "";
 
@@ -46,7 +46,7 @@ export const getBannerPhoto = async (
 };
 
 export const getVerifyPhoto = async (
-  profile: UserProfile | null | undefined,
+  profile: Profile | null | undefined,
   getSignedURL: (s3Key: string, level: S3Levels, identityId?: string | undefined) => Promise<string>) => {
   if(!profile || !profile.verifyPhotoID) return "";
 
@@ -62,12 +62,12 @@ export const getVerifyPhoto = async (
   return "";
 };
 
-export const updateProfilePhoto = async (profile: UserProfile, photoID: string) => {
+export const updateProfilePhoto = async (profile: Profile, photoID: string) => {
   try {
-    const originalProfile = await DataStore.query(UserProfile, profile.id);
+    const originalProfile = await DataStore.query(Profile, profile.id);
     if(!originalProfile) return null;
 
-    const updatedProfile = UserProfile.copyOf(originalProfile, updated => {
+    const updatedProfile = Profile.copyOf(originalProfile, updated => {
       updated.profilePhotoID = photoID;
     });
 
@@ -79,15 +79,15 @@ export const updateProfilePhoto = async (profile: UserProfile, photoID: string) 
   }
 }
 
-export const updateBannerPhoto = async (profile: UserProfile, photoID: string) => {
+export const updateBannerPhoto = async (profile: Profile, photoID: string) => {
   try {
-    const originalProfile = await DataStore.query(UserProfile, profile.id);
+    const originalProfile = await DataStore.query(Profile, profile.id);
     if(!originalProfile) {
       console.error('No profile found');
       return null;
     }
 
-    const updatedProfile = UserProfile.copyOf(originalProfile, updated => {
+    const updatedProfile = Profile.copyOf(originalProfile, updated => {
       updated.bannerPhotoID = photoID;
     });
 
@@ -99,22 +99,10 @@ export const updateBannerPhoto = async (profile: UserProfile, photoID: string) =
   }
 }
 
-export const getEventsAttending = async (profile: UserProfile) => {
-  try {
-    const eventProfiles = await profile.attendingEvents.toArray();
-    return await Promise.all(
-      eventProfiles.map(async (eventProfile) => await eventProfile.event)
-    );
-  } catch (e) {
-    console.log("Error getting profile", e)
-    return [];
-  }
-}
-
-export const getUserEvents = async (profile: UserProfile | null) => {
+export const getUserEvents = async (profile: Profile | null) => {
   if(!profile) return [];
   try {
-    return await DataStore.query(Festival, c => c.customerID.eq(profile.customerID))
+    return await DataStore.query(Event, c => c.customerID.eq(profile.customerID))
   } catch (e) {
     console.log("Error getting profile", e)
     return [];

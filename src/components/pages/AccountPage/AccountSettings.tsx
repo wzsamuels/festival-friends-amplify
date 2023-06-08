@@ -6,7 +6,7 @@ import {Switch} from "@headlessui/react";
 import classNames from "classnames";
 import Button from "../../common/Button/Button";
 import {DataStore} from "aws-amplify";
-import {PrivacySetting, UserProfile} from "../../../models";
+import {PrivacySetting, Profile} from "../../../models";
 import LoggedOutState from "../../ui/LoggedOutState";
 import UnverifiedState from "../../ui/UnverifiedState";
 import useProfileStore from "../../../stores/profileStore";
@@ -19,7 +19,7 @@ interface AccountSettingsInputs {
   state: boolean
   school: boolean
   email: boolean
-  attendingEvents: boolean
+  events: boolean
   rides: boolean
   friends: boolean
   photos: boolean
@@ -67,7 +67,7 @@ const AccountSettingsPage = () => {
   );
 };
 
-const PrivacySettingForm = ({userProfile}: { userProfile: UserProfile | null}) => {
+const PrivacySettingForm = ({userProfile}: { userProfile: Profile | null}) => {
   const [privacySetting, setPrivacySetting] = useState<PrivacySetting>();
   const [loading, setLoading] = useState(false);
   const [toastData, setToastData] = React.useState<ToastData | null>(null);
@@ -77,7 +77,7 @@ const PrivacySettingForm = ({userProfile}: { userProfile: UserProfile | null}) =
       state: privacySetting?.state || false,
       school: privacySetting?.school || false,
       email: privacySetting?.email || false,
-      attendingEvents: privacySetting?.attendingEvents || false,
+      events: privacySetting?.events || false,
       rides: privacySetting?.rides || false,
       friends: privacySetting?.friends || false,
       photos: privacySetting?.photos || false,
@@ -93,7 +93,7 @@ const PrivacySettingForm = ({userProfile}: { userProfile: UserProfile | null}) =
         updated.state = data.state;
         updated.school = data.school;
         updated.email = data.email;
-        updated.attendingEvents = data.attendingEvents;
+        updated.events = data.events;
         updated.rides = data.rides;
         updated.friends = data.friends;
         updated.photos = data.photos;
@@ -113,14 +113,11 @@ const PrivacySettingForm = ({userProfile}: { userProfile: UserProfile | null}) =
   }
 
   useEffect(() => {
-    if(!userProfile || !userProfile.privacySettingID) return;
-    const fetchPrivacySetting = async () => {
-      const privacySettingData = await DataStore.query(PrivacySetting, userProfile.privacySettingID as string);
-      console.log("privacySettingData", privacySettingData);
-      setPrivacySetting(privacySettingData);
-    }
+    if(!userProfile || !userProfile) return;
+
     setLoading(true);
-    fetchPrivacySetting();
+    userProfile.privacySetting
+      .then(privacySetting => setPrivacySetting(privacySetting))
     setLoading(false);
   }, [userProfile])
 
@@ -132,7 +129,7 @@ const PrivacySettingForm = ({userProfile}: { userProfile: UserProfile | null}) =
         state: privacySetting?.state || false,
         school: privacySetting?.school || false,
         email: privacySetting?.email || false,
-        attendingEvents: privacySetting?.attendingEvents || false,
+        events: privacySetting?.events || false,
         rides: privacySetting?.rides || false,
         friends: privacySetting?.friends || false,
         photos: privacySetting?.photos || false,
@@ -170,7 +167,7 @@ const PrivacySettingForm = ({userProfile}: { userProfile: UserProfile | null}) =
         <Toggle name="email" label="Email" control={control} />
       </Switch.Group>
       <Switch.Group as="div" className='my-4'>
-        <Toggle name="attendingEvents" label="Attending Events" control={control} />
+        <Toggle name="events" label="Attending Events" control={control} />
       </Switch.Group>
       <Switch.Group as="div" className='my-4'>
         <Toggle name="rides" label="Rides" control={control} />
@@ -220,7 +217,7 @@ const Toggle = ({name, control, label}: ToggleProps) => {
         checked={value}
         onChange={onChange}
         className={classNames(
-          value ? "bg-green-950" : "bg-blue-700",
+          value ? "bg-brandYellow" : "bg-blue-700",
           "relative mr-8 inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
         )}
       >
