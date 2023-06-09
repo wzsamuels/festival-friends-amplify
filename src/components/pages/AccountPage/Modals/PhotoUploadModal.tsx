@@ -57,7 +57,7 @@ const PhotoUploadModal = ({
       <div className="flex flex-col items-center justify-center w-full p-4">
         {preview &&
           <div className='max-w-xl'>
-            <img className=" rounded-full" src={preview} alt="Preview" />
+            <img src={preview} alt="Preview" />
           </div>
         }
         <div className="flex justify-center gap-2 my-4">
