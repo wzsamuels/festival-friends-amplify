@@ -6,7 +6,7 @@ import InputWrapper from "../../../common/InputWrapper/InputWrapper";
 import Label from "../../../common/Label/Label";
 import Input from "../../../common/Input/Input";
 import Button from "../../../common/Button/Button";
-import { Festival, Ride, RideUser } from "../../../../models";
+import {Event, Ride, RideProfile} from "../../../../models";
 import { DataStore } from "@aws-amplify/datastore";
 import useProfileStore from "../../../../stores/profileStore";
 
@@ -20,7 +20,7 @@ interface RideInputs {
 }
 
 interface NewRideModalProps extends ModalProps {
-  event: Festival;
+  event: Event;
 }
 
 const NewRideModal = ({ isOpen, setIsOpen, event }: NewRideModalProps) => {
@@ -41,20 +41,13 @@ const NewRideModal = ({ isOpen, setIsOpen, event }: NewRideModalProps) => {
           endPoint: data.endPoint,
           event: event,
           eventID: event.id,
-        })
-      );
-      const newRideUser = await DataStore.save(
-        new RideUser({
-          ride: newRide,
-          rideID: newRide.id,
-          userProfile: userProfile,
-          userProfileID: userProfile.id,
-          isDriver: true,
+          driverProfileID: userProfile.id
         })
       );
       await DataStore.save(
-        Ride.copyOf(newRide, (updated) => {
-          updated.driver = newRideUser;
+        new RideProfile({
+          ride: newRide,
+          profile: userProfile
         })
       );
     } catch (e) {
