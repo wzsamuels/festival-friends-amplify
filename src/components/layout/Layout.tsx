@@ -23,7 +23,7 @@ const Layout = () => {
           <NavLink
             to="/"
             className={({ isActive }) =>
-              `${isActive ? "text-primary-default" : "text-gray-600"} flex-1`
+              `${isActive ? "text-black" : "text-gray-600"} flex-1`
             }
           >
             <PulseButton className="w-full flex flex-col justify-center items-center">
@@ -39,7 +39,7 @@ const Layout = () => {
           <NavLink
             to="/friends"
             className={({ isActive }) =>
-              `${isActive ? "text-brandYellow" : "text-gray-600"} flex-1`
+              `${isActive ? "text-black" : "text-gray-600"} flex-1`
             }
           >
             <PulseButton className="w-full flex flex-col justify-center items-center">
@@ -55,7 +55,7 @@ const Layout = () => {
           <NavLink
             to="/messages"
             className={({ isActive }) =>
-              `${isActive ? "text-brandYellow" : "text-gray-600"} flex-1`
+              `${isActive ? "text-black" : "text-gray-600"} flex-1`
             }
           >
             <PulseButton className="w-full flex flex-col justify-center items-center">
@@ -71,7 +71,7 @@ const Layout = () => {
           <NavLink
             to="/groups"
             className={({ isActive }) =>
-              `${isActive ? "text-brandYellow" : "text-gray-600"} flex-1`
+              `${isActive ? "text-black" : "text-gray-600"} flex-1`
             }
           >
             <PulseButton className="w-full flex flex-col justify-center items-center">
