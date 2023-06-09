@@ -69,16 +69,16 @@ export const createProfile = /* GraphQL */ `
             name
             genre
             image
-            location
             state
             city
-            address
             startDate
             endDate
             type
+            address
             description
             url
             customerID
+            ticketURL
             hasPaid
             cancelled
             subscriptionID
@@ -160,9 +160,6 @@ export const createProfile = /* GraphQL */ `
       friends {
         items {
           id
-          profileID
-          friendProfileID
-          isAccepted
           profile {
             id
             sub
@@ -193,6 +190,7 @@ export const createProfile = /* GraphQL */ `
             _lastChangedAt
             profilePrivacySettingId
           }
+          profileID
           friendProfile {
             id
             sub
@@ -223,6 +221,8 @@ export const createProfile = /* GraphQL */ `
             _lastChangedAt
             profilePrivacySettingId
           }
+          friendProfileID
+          isAccepted
           createdAt
           updatedAt
           _version
@@ -370,16 +370,16 @@ export const createProfile = /* GraphQL */ `
             name
             genre
             image
-            location
             state
             city
-            address
             startDate
             endDate
             type
+            address
             description
             url
             customerID
+            ticketURL
             hasPaid
             cancelled
             subscriptionID
@@ -541,16 +541,16 @@ export const updateProfile = /* GraphQL */ `
             name
             genre
             image
-            location
             state
             city
-            address
             startDate
             endDate
             type
+            address
             description
             url
             customerID
+            ticketURL
             hasPaid
             cancelled
             subscriptionID
@@ -632,9 +632,6 @@ export const updateProfile = /* GraphQL */ `
       friends {
         items {
           id
-          profileID
-          friendProfileID
-          isAccepted
           profile {
             id
             sub
@@ -665,6 +662,7 @@ export const updateProfile = /* GraphQL */ `
             _lastChangedAt
             profilePrivacySettingId
           }
+          profileID
           friendProfile {
             id
             sub
@@ -695,6 +693,8 @@ export const updateProfile = /* GraphQL */ `
             _lastChangedAt
             profilePrivacySettingId
           }
+          friendProfileID
+          isAccepted
           createdAt
           updatedAt
           _version
@@ -842,16 +842,16 @@ export const updateProfile = /* GraphQL */ `
             name
             genre
             image
-            location
             state
             city
-            address
             startDate
             endDate
             type
+            address
             description
             url
             customerID
+            ticketURL
             hasPaid
             cancelled
             subscriptionID
@@ -1013,16 +1013,16 @@ export const deleteProfile = /* GraphQL */ `
             name
             genre
             image
-            location
             state
             city
-            address
             startDate
             endDate
             type
+            address
             description
             url
             customerID
+            ticketURL
             hasPaid
             cancelled
             subscriptionID
@@ -1104,9 +1104,6 @@ export const deleteProfile = /* GraphQL */ `
       friends {
         items {
           id
-          profileID
-          friendProfileID
-          isAccepted
           profile {
             id
             sub
@@ -1137,6 +1134,7 @@ export const deleteProfile = /* GraphQL */ `
             _lastChangedAt
             profilePrivacySettingId
           }
+          profileID
           friendProfile {
             id
             sub
@@ -1167,6 +1165,8 @@ export const deleteProfile = /* GraphQL */ `
             _lastChangedAt
             profilePrivacySettingId
           }
+          friendProfileID
+          isAccepted
           createdAt
           updatedAt
           _version
@@ -1314,16 +1314,16 @@ export const deleteProfile = /* GraphQL */ `
             name
             genre
             image
-            location
             state
             city
-            address
             startDate
             endDate
             type
+            address
             description
             url
             customerID
+            ticketURL
             hasPaid
             cancelled
             subscriptionID
@@ -1551,16 +1551,16 @@ export const createEvent = /* GraphQL */ `
       name
       genre
       image
-      location
       state
       city
-      address
       startDate
       endDate
       type
+      address
       description
       url
       customerID
+      ticketURL
       hasPaid
       cancelled
       subscriptionID
@@ -1576,16 +1576,16 @@ export const createEvent = /* GraphQL */ `
             name
             genre
             image
-            location
             state
             city
-            address
             startDate
             endDate
             type
+            address
             description
             url
             customerID
+            ticketURL
             hasPaid
             cancelled
             subscriptionID
@@ -1681,16 +1681,16 @@ export const createEvent = /* GraphQL */ `
             name
             genre
             image
-            location
             state
             city
-            address
             startDate
             endDate
             type
+            address
             description
             url
             customerID
+            ticketURL
             hasPaid
             cancelled
             subscriptionID
@@ -1719,16 +1719,16 @@ export const createEvent = /* GraphQL */ `
             name
             genre
             image
-            location
             state
             city
-            address
             startDate
             endDate
             type
+            address
             description
             url
             customerID
+            ticketURL
             hasPaid
             cancelled
             subscriptionID
@@ -1777,16 +1777,16 @@ export const updateEvent = /* GraphQL */ `
       name
       genre
       image
-      location
       state
       city
-      address
       startDate
       endDate
       type
+      address
       description
       url
       customerID
+      ticketURL
       hasPaid
       cancelled
       subscriptionID
@@ -1802,16 +1802,16 @@ export const updateEvent = /* GraphQL */ `
             name
             genre
             image
-            location
             state
             city
-            address
             startDate
             endDate
             type
+            address
             description
             url
             customerID
+            ticketURL
             hasPaid
             cancelled
             subscriptionID
@@ -1907,16 +1907,16 @@ export const updateEvent = /* GraphQL */ `
             name
             genre
             image
-            location
             state
             city
-            address
             startDate
             endDate
             type
+            address
             description
             url
             customerID
+            ticketURL
             hasPaid
             cancelled
             subscriptionID
@@ -1945,16 +1945,16 @@ export const updateEvent = /* GraphQL */ `
             name
             genre
             image
-            location
             state
             city
-            address
             startDate
             endDate
             type
+            address
             description
             url
             customerID
+            ticketURL
             hasPaid
             cancelled
             subscriptionID
@@ -2003,16 +2003,16 @@ export const deleteEvent = /* GraphQL */ `
       name
       genre
       image
-      location
       state
       city
-      address
       startDate
       endDate
       type
+      address
       description
       url
       customerID
+      ticketURL
       hasPaid
       cancelled
       subscriptionID
@@ -2028,16 +2028,16 @@ export const deleteEvent = /* GraphQL */ `
             name
             genre
             image
-            location
             state
             city
-            address
             startDate
             endDate
             type
+            address
             description
             url
             customerID
+            ticketURL
             hasPaid
             cancelled
             subscriptionID
@@ -2133,16 +2133,16 @@ export const deleteEvent = /* GraphQL */ `
             name
             genre
             image
-            location
             state
             city
-            address
             startDate
             endDate
             type
+            address
             description
             url
             customerID
+            ticketURL
             hasPaid
             cancelled
             subscriptionID
@@ -2171,16 +2171,16 @@ export const deleteEvent = /* GraphQL */ `
             name
             genre
             image
-            location
             state
             city
-            address
             startDate
             endDate
             type
+            address
             description
             url
             customerID
+            ticketURL
             hasPaid
             cancelled
             subscriptionID
@@ -2231,16 +2231,16 @@ export const createRide = /* GraphQL */ `
         name
         genre
         image
-        location
         state
         city
-        address
         startDate
         endDate
         type
+        address
         description
         url
         customerID
+        ticketURL
         hasPaid
         cancelled
         subscriptionID
@@ -2387,16 +2387,16 @@ export const updateRide = /* GraphQL */ `
         name
         genre
         image
-        location
         state
         city
-        address
         startDate
         endDate
         type
+        address
         description
         url
         customerID
+        ticketURL
         hasPaid
         cancelled
         subscriptionID
@@ -2543,16 +2543,16 @@ export const deleteRide = /* GraphQL */ `
         name
         genre
         image
-        location
         state
         city
-        address
         startDate
         endDate
         type
+        address
         description
         url
         customerID
+        ticketURL
         hasPaid
         cancelled
         subscriptionID
@@ -3219,9 +3219,6 @@ export const createFriendship = /* GraphQL */ `
   ) {
     createFriendship(input: $input, condition: $condition) {
       id
-      profileID
-      friendProfileID
-      isAccepted
       profile {
         id
         sub
@@ -3377,6 +3374,7 @@ export const createFriendship = /* GraphQL */ `
         _lastChangedAt
         profilePrivacySettingId
       }
+      profileID
       friendProfile {
         id
         sub
@@ -3532,6 +3530,8 @@ export const createFriendship = /* GraphQL */ `
         _lastChangedAt
         profilePrivacySettingId
       }
+      friendProfileID
+      isAccepted
       createdAt
       updatedAt
       _version
@@ -3547,9 +3547,6 @@ export const updateFriendship = /* GraphQL */ `
   ) {
     updateFriendship(input: $input, condition: $condition) {
       id
-      profileID
-      friendProfileID
-      isAccepted
       profile {
         id
         sub
@@ -3705,6 +3702,7 @@ export const updateFriendship = /* GraphQL */ `
         _lastChangedAt
         profilePrivacySettingId
       }
+      profileID
       friendProfile {
         id
         sub
@@ -3860,6 +3858,8 @@ export const updateFriendship = /* GraphQL */ `
         _lastChangedAt
         profilePrivacySettingId
       }
+      friendProfileID
+      isAccepted
       createdAt
       updatedAt
       _version
@@ -3875,9 +3875,6 @@ export const deleteFriendship = /* GraphQL */ `
   ) {
     deleteFriendship(input: $input, condition: $condition) {
       id
-      profileID
-      friendProfileID
-      isAccepted
       profile {
         id
         sub
@@ -4033,6 +4030,7 @@ export const deleteFriendship = /* GraphQL */ `
         _lastChangedAt
         profilePrivacySettingId
       }
+      profileID
       friendProfile {
         id
         sub
@@ -4188,6 +4186,8 @@ export const deleteFriendship = /* GraphQL */ `
         _lastChangedAt
         profilePrivacySettingId
       }
+      friendProfileID
+      isAccepted
       createdAt
       updatedAt
       _version
@@ -5919,16 +5919,16 @@ export const createGroup = /* GraphQL */ `
           name
           genre
           image
-          location
           state
           city
-          address
           startDate
           endDate
           type
+          address
           description
           url
           customerID
+          ticketURL
           hasPaid
           cancelled
           subscriptionID
@@ -6071,16 +6071,16 @@ export const updateGroup = /* GraphQL */ `
           name
           genre
           image
-          location
           state
           city
-          address
           startDate
           endDate
           type
+          address
           description
           url
           customerID
+          ticketURL
           hasPaid
           cancelled
           subscriptionID
@@ -6223,16 +6223,16 @@ export const deleteGroup = /* GraphQL */ `
           name
           genre
           image
-          location
           state
           city
-          address
           startDate
           endDate
           type
+          address
           description
           url
           customerID
+          ticketURL
           hasPaid
           cancelled
           subscriptionID
@@ -6528,16 +6528,16 @@ export const createEventProfile = /* GraphQL */ `
         name
         genre
         image
-        location
         state
         city
-        address
         startDate
         endDate
         type
+        address
         description
         url
         customerID
+        ticketURL
         hasPaid
         cancelled
         subscriptionID
@@ -6777,16 +6777,16 @@ export const updateEventProfile = /* GraphQL */ `
         name
         genre
         image
-        location
         state
         city
-        address
         startDate
         endDate
         type
+        address
         description
         url
         customerID
+        ticketURL
         hasPaid
         cancelled
         subscriptionID
@@ -7026,16 +7026,16 @@ export const deleteEventProfile = /* GraphQL */ `
         name
         genre
         image
-        location
         state
         city
-        address
         startDate
         endDate
         type
+        address
         description
         url
         customerID
+        ticketURL
         hasPaid
         cancelled
         subscriptionID
@@ -7277,16 +7277,16 @@ export const createRideProfile = /* GraphQL */ `
           name
           genre
           image
-          location
           state
           city
-          address
           startDate
           endDate
           type
+          address
           description
           url
           customerID
+          ticketURL
           hasPaid
           cancelled
           subscriptionID
@@ -7522,16 +7522,16 @@ export const updateRideProfile = /* GraphQL */ `
           name
           genre
           image
-          location
           state
           city
-          address
           startDate
           endDate
           type
+          address
           description
           url
           customerID
+          ticketURL
           hasPaid
           cancelled
           subscriptionID
@@ -7767,16 +7767,16 @@ export const deleteRideProfile = /* GraphQL */ `
           name
           genre
           image
-          location
           state
           city
-          address
           startDate
           endDate
           type
+          address
           description
           url
           customerID
+          ticketURL
           hasPaid
           cancelled
           subscriptionID

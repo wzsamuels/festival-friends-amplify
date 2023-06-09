@@ -117,10 +117,6 @@ const EventUpdateForm = ({eventID} : {eventID: string}) => {
         <Input {...register("genre",  {required: true})}/>
       </div>
       <div className='flex flex-wrap my-4'>
-        <Label>Location</Label>
-        <Input {...register("location")}/>
-      </div>
-      <div className='flex flex-wrap my-4'>
         <Label>State</Label>
         <Select
           {...register("state", { required: true })}

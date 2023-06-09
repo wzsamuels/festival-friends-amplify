@@ -7,7 +7,6 @@ export enum EventType {
   BUSINESS = "BUSINESS",
   COLLEGE = "COLLEGE",
   MUSIC = "MUSIC",
-  ALL = "ALL",
   TRAVEL = "TRAVEL"
 }
 
@@ -188,16 +187,16 @@ type EagerEvent = {
   readonly name: string;
   readonly genre: string;
   readonly image: string;
-  readonly location?: string | null;
   readonly state: string;
   readonly city: string;
-  readonly address: string;
   readonly startDate: string;
   readonly endDate: string;
-  readonly type?: EventType | keyof typeof EventType | null;
+  readonly type: EventType | keyof typeof EventType;
+  readonly address?: string | null;
   readonly description?: string | null;
   readonly url?: string | null;
   readonly customerID?: string | null;
+  readonly ticketURL?: string | null;
   readonly hasPaid?: boolean | null;
   readonly cancelled?: boolean | null;
   readonly subscriptionID?: string | null;
@@ -219,16 +218,16 @@ type LazyEvent = {
   readonly name: string;
   readonly genre: string;
   readonly image: string;
-  readonly location?: string | null;
   readonly state: string;
   readonly city: string;
-  readonly address: string;
   readonly startDate: string;
   readonly endDate: string;
-  readonly type?: EventType | keyof typeof EventType | null;
+  readonly type: EventType | keyof typeof EventType;
+  readonly address?: string | null;
   readonly description?: string | null;
   readonly url?: string | null;
   readonly customerID?: string | null;
+  readonly ticketURL?: string | null;
   readonly hasPaid?: boolean | null;
   readonly cancelled?: boolean | null;
   readonly subscriptionID?: string | null;
@@ -333,11 +332,11 @@ type EagerFriendship = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly profileID: string;
-  readonly friendProfileID: string;
-  readonly isAccepted: boolean;
   readonly profile: Profile;
+  readonly profileID: string;
   readonly friendProfile: Profile;
+  readonly friendProfileID: string;
+  readonly isAccepted?: boolean | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -348,11 +347,11 @@ type LazyFriendship = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly profileID: string;
-  readonly friendProfileID: string;
-  readonly isAccepted: boolean;
   readonly profile: AsyncItem<Profile>;
+  readonly profileID: string;
   readonly friendProfile: AsyncItem<Profile>;
+  readonly friendProfileID: string;
+  readonly isAccepted?: boolean | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

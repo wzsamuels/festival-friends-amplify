@@ -565,13 +565,6 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "location": {
-                    "name": "location",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
                 "state": {
                     "name": "state",
                     "isArray": false,
@@ -581,13 +574,6 @@ export const schema = {
                 },
                 "city": {
                     "name": "city",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "address": {
-                    "name": "address",
                     "isArray": false,
                     "type": "String",
                     "isRequired": true,
@@ -613,6 +599,13 @@ export const schema = {
                     "type": {
                         "enum": "EventType"
                     },
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "address": {
+                    "name": "address",
+                    "isArray": false,
+                    "type": "String",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -632,6 +625,13 @@ export const schema = {
                 },
                 "customerID": {
                     "name": "customerID",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "ticketURL": {
+                    "name": "ticketURL",
                     "isArray": false,
                     "type": "String",
                     "isRequired": false,
@@ -1034,27 +1034,6 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "profileID": {
-                    "name": "profileID",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "friendProfileID": {
-                    "name": "friendProfileID",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "isAccepted": {
-                    "name": "isAccepted",
-                    "isArray": false,
-                    "type": "Boolean",
-                    "isRequired": true,
-                    "attributes": []
-                },
                 "profile": {
                     "name": "profile",
                     "isArray": false,
@@ -1070,6 +1049,13 @@ export const schema = {
                         ]
                     }
                 },
+                "profileID": {
+                    "name": "profileID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
                 "friendProfile": {
                     "name": "friendProfile",
                     "isArray": false,
@@ -1084,6 +1070,20 @@ export const schema = {
                             "friendProfileID"
                         ]
                     }
+                },
+                "friendProfileID": {
+                    "name": "friendProfileID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "isAccepted": {
+                    "name": "isAccepted",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": false,
+                    "attributes": []
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -1710,7 +1710,6 @@ export const schema = {
                 "BUSINESS",
                 "COLLEGE",
                 "MUSIC",
-                "ALL",
                 "TRAVEL"
             ]
         },
@@ -1725,5 +1724,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.3",
-    "version": "7aa2fe3f025e6a945e7844afb2982077"
+    "version": "3d1eae3a9be652510c94490277daaf2c"
 };

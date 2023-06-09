@@ -37,8 +37,10 @@ const AccountUnverified = () => {
     try {
       const sub = user?.attributes?.sub as string;
       const email = user?.attributes?.email as string;
+      const group = await getGroupByEmail(email);
+      console.log("College Group: ", group)
+
       const newPrivacySetting =  await DataStore.save(new PrivacySetting({}));
-      const collegeGroup = await getGroupByEmail(email);
       const { socialMedia, ...filteredData} = data;
 
       const socialMediaPromises = socialMedia.map(async (account) =>
@@ -52,7 +54,7 @@ const AccountUnverified = () => {
         ...filteredData,
         email: email,
         phone: phone,
-        ...(collegeGroup && {collegeGroupId: collegeGroup?.id}),
+        ...(group && {groupID: group?.id}),
         submitted: true,
         privacySetting: newPrivacySetting,
         sub: sub,
@@ -227,7 +229,7 @@ const AccountUnverified = () => {
             <div className="flex justify-center">
               {preview &&
                 <div className='max-w-xl'>
-                  <img className=" rounded-full" src={preview} alt="Preview" />
+                  <img src={preview} alt="Preview" />
                 </div>
               }
             </div>

@@ -54,16 +54,16 @@ type Event @model @auth(rules: [{ allow: public }]) {
   name: String!
   genre: String!
   image: String!
-  location: String
   state: String!
   city: String!
-  address: String!
   startDate: AWSDate!
   endDate: AWSDate!
-  type: EventType
+  type: EventType!
+  address: String
   description: String
   url: String
   customerID: String
+  ticketURL: String
   hasPaid: Boolean @default(value: "false")
   cancelled: Boolean @default(value: "false")
   subscriptionID: String @index(name: "bySubID")
@@ -98,11 +98,11 @@ type Photo @model @auth(rules: [{ allow: public }]) {
 
 type Friendship @model @auth(rules: [{ allow: public }]) {
   id: ID!
-  profileID: ID! @index(name: "byProfile")
-  friendProfileID: ID! @index(name: "byFriend")
-  isAccepted: Boolean!
   profile: Profile! @belongsTo(fields: ["profileID"])
+  profileID: ID! @index(name: "byProfile")
   friendProfile: Profile! @belongsTo(fields: ["friendProfileID"])
+  friendProfileID: ID! @index(name: "byFriend")
+  isAccepted: Boolean @default(value: "false")
 }
 
 type Conversation @model @auth(rules: [{ allow: public }]) {
@@ -139,7 +139,6 @@ enum EventType {
   BUSINESS
   COLLEGE
   MUSIC
-  ALL
   TRAVEL
 }
 

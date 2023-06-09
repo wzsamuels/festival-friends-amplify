@@ -7,7 +7,6 @@ const EventType = {
   "BUSINESS": "BUSINESS",
   "COLLEGE": "COLLEGE",
   "MUSIC": "MUSIC",
-  "ALL": "ALL",
   "TRAVEL": "TRAVEL"
 };
 

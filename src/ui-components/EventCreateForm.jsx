@@ -33,16 +33,16 @@ export default function EventCreateForm(props) {
     name: "",
     genre: "",
     image: "",
-    location: "",
     state: "",
     city: "",
-    address: "",
     startDate: "",
     endDate: "",
     type: "",
+    address: "",
     description: "",
     url: "",
     customerID: "",
+    ticketURL: "",
     hasPaid: false,
     cancelled: false,
     subscriptionID: "",
@@ -51,18 +51,18 @@ export default function EventCreateForm(props) {
   const [name, setName] = React.useState(initialValues.name);
   const [genre, setGenre] = React.useState(initialValues.genre);
   const [image, setImage] = React.useState(initialValues.image);
-  const [location, setLocation] = React.useState(initialValues.location);
   const [state, setState] = React.useState(initialValues.state);
   const [city, setCity] = React.useState(initialValues.city);
-  const [address, setAddress] = React.useState(initialValues.address);
   const [startDate, setStartDate] = React.useState(initialValues.startDate);
   const [endDate, setEndDate] = React.useState(initialValues.endDate);
   const [type, setType] = React.useState(initialValues.type);
+  const [address, setAddress] = React.useState(initialValues.address);
   const [description, setDescription] = React.useState(
     initialValues.description
   );
   const [url, setUrl] = React.useState(initialValues.url);
   const [customerID, setCustomerID] = React.useState(initialValues.customerID);
+  const [ticketURL, setTicketURL] = React.useState(initialValues.ticketURL);
   const [hasPaid, setHasPaid] = React.useState(initialValues.hasPaid);
   const [cancelled, setCancelled] = React.useState(initialValues.cancelled);
   const [subscriptionID, setSubscriptionID] = React.useState(
@@ -74,16 +74,16 @@ export default function EventCreateForm(props) {
     setName(initialValues.name);
     setGenre(initialValues.genre);
     setImage(initialValues.image);
-    setLocation(initialValues.location);
     setState(initialValues.state);
     setCity(initialValues.city);
-    setAddress(initialValues.address);
     setStartDate(initialValues.startDate);
     setEndDate(initialValues.endDate);
     setType(initialValues.type);
+    setAddress(initialValues.address);
     setDescription(initialValues.description);
     setUrl(initialValues.url);
     setCustomerID(initialValues.customerID);
+    setTicketURL(initialValues.ticketURL);
     setHasPaid(initialValues.hasPaid);
     setCancelled(initialValues.cancelled);
     setSubscriptionID(initialValues.subscriptionID);
@@ -94,16 +94,16 @@ export default function EventCreateForm(props) {
     name: [{ type: "Required" }],
     genre: [{ type: "Required" }],
     image: [{ type: "Required" }],
-    location: [],
     state: [{ type: "Required" }],
     city: [{ type: "Required" }],
-    address: [{ type: "Required" }],
     startDate: [{ type: "Required" }],
     endDate: [{ type: "Required" }],
-    type: [],
+    type: [{ type: "Required" }],
+    address: [],
     description: [],
     url: [],
     customerID: [],
+    ticketURL: [],
     hasPaid: [],
     cancelled: [],
     subscriptionID: [],
@@ -138,16 +138,16 @@ export default function EventCreateForm(props) {
           name,
           genre,
           image,
-          location,
           state,
           city,
-          address,
           startDate,
           endDate,
           type,
+          address,
           description,
           url,
           customerID,
+          ticketURL,
           hasPaid,
           cancelled,
           subscriptionID,
@@ -209,16 +209,16 @@ export default function EventCreateForm(props) {
               name: value,
               genre,
               image,
-              location,
               state,
               city,
-              address,
               startDate,
               endDate,
               type,
+              address,
               description,
               url,
               customerID,
+              ticketURL,
               hasPaid,
               cancelled,
               subscriptionID,
@@ -249,16 +249,16 @@ export default function EventCreateForm(props) {
               name,
               genre: value,
               image,
-              location,
               state,
               city,
-              address,
               startDate,
               endDate,
               type,
+              address,
               description,
               url,
               customerID,
+              ticketURL,
               hasPaid,
               cancelled,
               subscriptionID,
@@ -289,16 +289,16 @@ export default function EventCreateForm(props) {
               name,
               genre,
               image: value,
-              location,
               state,
               city,
-              address,
               startDate,
               endDate,
               type,
+              address,
               description,
               url,
               customerID,
+              ticketURL,
               hasPaid,
               cancelled,
               subscriptionID,
@@ -318,46 +318,6 @@ export default function EventCreateForm(props) {
         {...getOverrideProps(overrides, "image")}
       ></TextField>
       <TextField
-        label="Location"
-        isRequired={false}
-        isReadOnly={false}
-        value={location}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              name,
-              genre,
-              image,
-              location: value,
-              state,
-              city,
-              address,
-              startDate,
-              endDate,
-              type,
-              description,
-              url,
-              customerID,
-              hasPaid,
-              cancelled,
-              subscriptionID,
-              approved,
-            };
-            const result = onChange(modelFields);
-            value = result?.location ?? value;
-          }
-          if (errors.location?.hasError) {
-            runValidationTasks("location", value);
-          }
-          setLocation(value);
-        }}
-        onBlur={() => runValidationTasks("location", location)}
-        errorMessage={errors.location?.errorMessage}
-        hasError={errors.location?.hasError}
-        {...getOverrideProps(overrides, "location")}
-      ></TextField>
-      <TextField
         label="State"
         isRequired={true}
         isReadOnly={false}
@@ -369,16 +329,16 @@ export default function EventCreateForm(props) {
               name,
               genre,
               image,
-              location,
               state: value,
               city,
-              address,
               startDate,
               endDate,
               type,
+              address,
               description,
               url,
               customerID,
+              ticketURL,
               hasPaid,
               cancelled,
               subscriptionID,
@@ -409,16 +369,16 @@ export default function EventCreateForm(props) {
               name,
               genre,
               image,
-              location,
               state,
               city: value,
-              address,
               startDate,
               endDate,
               type,
+              address,
               description,
               url,
               customerID,
+              ticketURL,
               hasPaid,
               cancelled,
               subscriptionID,
@@ -438,46 +398,6 @@ export default function EventCreateForm(props) {
         {...getOverrideProps(overrides, "city")}
       ></TextField>
       <TextField
-        label="Address"
-        isRequired={true}
-        isReadOnly={false}
-        value={address}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              name,
-              genre,
-              image,
-              location,
-              state,
-              city,
-              address: value,
-              startDate,
-              endDate,
-              type,
-              description,
-              url,
-              customerID,
-              hasPaid,
-              cancelled,
-              subscriptionID,
-              approved,
-            };
-            const result = onChange(modelFields);
-            value = result?.address ?? value;
-          }
-          if (errors.address?.hasError) {
-            runValidationTasks("address", value);
-          }
-          setAddress(value);
-        }}
-        onBlur={() => runValidationTasks("address", address)}
-        errorMessage={errors.address?.errorMessage}
-        hasError={errors.address?.hasError}
-        {...getOverrideProps(overrides, "address")}
-      ></TextField>
-      <TextField
         label="Start date"
         isRequired={true}
         isReadOnly={false}
@@ -490,16 +410,16 @@ export default function EventCreateForm(props) {
               name,
               genre,
               image,
-              location,
               state,
               city,
-              address,
               startDate: value,
               endDate,
               type,
+              address,
               description,
               url,
               customerID,
+              ticketURL,
               hasPaid,
               cancelled,
               subscriptionID,
@@ -531,16 +451,16 @@ export default function EventCreateForm(props) {
               name,
               genre,
               image,
-              location,
               state,
               city,
-              address,
               startDate,
               endDate: value,
               type,
+              address,
               description,
               url,
               customerID,
+              ticketURL,
               hasPaid,
               cancelled,
               subscriptionID,
@@ -571,16 +491,16 @@ export default function EventCreateForm(props) {
               name,
               genre,
               image,
-              location,
               state,
               city,
-              address,
               startDate,
               endDate,
               type: value,
+              address,
               description,
               url,
               customerID,
+              ticketURL,
               hasPaid,
               cancelled,
               subscriptionID,
@@ -620,16 +540,51 @@ export default function EventCreateForm(props) {
           {...getOverrideProps(overrides, "typeoption3")}
         ></option>
         <option
-          children="All"
-          value="ALL"
-          {...getOverrideProps(overrides, "typeoption4")}
-        ></option>
-        <option
           children="Travel"
           value="TRAVEL"
-          {...getOverrideProps(overrides, "typeoption5")}
+          {...getOverrideProps(overrides, "typeoption4")}
         ></option>
       </SelectField>
+      <TextField
+        label="Address"
+        isRequired={false}
+        isReadOnly={false}
+        value={address}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              genre,
+              image,
+              state,
+              city,
+              startDate,
+              endDate,
+              type,
+              address: value,
+              description,
+              url,
+              customerID,
+              ticketURL,
+              hasPaid,
+              cancelled,
+              subscriptionID,
+              approved,
+            };
+            const result = onChange(modelFields);
+            value = result?.address ?? value;
+          }
+          if (errors.address?.hasError) {
+            runValidationTasks("address", value);
+          }
+          setAddress(value);
+        }}
+        onBlur={() => runValidationTasks("address", address)}
+        errorMessage={errors.address?.errorMessage}
+        hasError={errors.address?.hasError}
+        {...getOverrideProps(overrides, "address")}
+      ></TextField>
       <TextField
         label="Description"
         isRequired={false}
@@ -642,16 +597,16 @@ export default function EventCreateForm(props) {
               name,
               genre,
               image,
-              location,
               state,
               city,
-              address,
               startDate,
               endDate,
               type,
+              address,
               description: value,
               url,
               customerID,
+              ticketURL,
               hasPaid,
               cancelled,
               subscriptionID,
@@ -682,16 +637,16 @@ export default function EventCreateForm(props) {
               name,
               genre,
               image,
-              location,
               state,
               city,
-              address,
               startDate,
               endDate,
               type,
+              address,
               description,
               url: value,
               customerID,
+              ticketURL,
               hasPaid,
               cancelled,
               subscriptionID,
@@ -722,16 +677,16 @@ export default function EventCreateForm(props) {
               name,
               genre,
               image,
-              location,
               state,
               city,
-              address,
               startDate,
               endDate,
               type,
+              address,
               description,
               url,
               customerID: value,
+              ticketURL,
               hasPaid,
               cancelled,
               subscriptionID,
@@ -750,6 +705,46 @@ export default function EventCreateForm(props) {
         hasError={errors.customerID?.hasError}
         {...getOverrideProps(overrides, "customerID")}
       ></TextField>
+      <TextField
+        label="Ticket url"
+        isRequired={false}
+        isReadOnly={false}
+        value={ticketURL}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              genre,
+              image,
+              state,
+              city,
+              startDate,
+              endDate,
+              type,
+              address,
+              description,
+              url,
+              customerID,
+              ticketURL: value,
+              hasPaid,
+              cancelled,
+              subscriptionID,
+              approved,
+            };
+            const result = onChange(modelFields);
+            value = result?.ticketURL ?? value;
+          }
+          if (errors.ticketURL?.hasError) {
+            runValidationTasks("ticketURL", value);
+          }
+          setTicketURL(value);
+        }}
+        onBlur={() => runValidationTasks("ticketURL", ticketURL)}
+        errorMessage={errors.ticketURL?.errorMessage}
+        hasError={errors.ticketURL?.hasError}
+        {...getOverrideProps(overrides, "ticketURL")}
+      ></TextField>
       <SwitchField
         label="Has paid"
         defaultChecked={false}
@@ -762,16 +757,16 @@ export default function EventCreateForm(props) {
               name,
               genre,
               image,
-              location,
               state,
               city,
-              address,
               startDate,
               endDate,
               type,
+              address,
               description,
               url,
               customerID,
+              ticketURL,
               hasPaid: value,
               cancelled,
               subscriptionID,
@@ -802,16 +797,16 @@ export default function EventCreateForm(props) {
               name,
               genre,
               image,
-              location,
               state,
               city,
-              address,
               startDate,
               endDate,
               type,
+              address,
               description,
               url,
               customerID,
+              ticketURL,
               hasPaid,
               cancelled: value,
               subscriptionID,
@@ -842,16 +837,16 @@ export default function EventCreateForm(props) {
               name,
               genre,
               image,
-              location,
               state,
               city,
-              address,
               startDate,
               endDate,
               type,
+              address,
               description,
               url,
               customerID,
+              ticketURL,
               hasPaid,
               cancelled,
               subscriptionID: value,
@@ -882,16 +877,16 @@ export default function EventCreateForm(props) {
               name,
               genre,
               image,
-              location,
               state,
               city,
-              address,
               startDate,
               endDate,
               type,
+              address,
               description,
               url,
               customerID,
+              ticketURL,
               hasPaid,
               cancelled,
               subscriptionID,
