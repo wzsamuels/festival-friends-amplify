@@ -8,6 +8,10 @@ import Button from "../../../common/Button/Button";
 import useProfileStore from "../../../../stores/profileStore";
 import {updateBannerPhoto} from "../../../../services/profileServices";
 import {createNewPhoto} from "../../../../services/photoServices";
+import ImageUpload from "../../../common/ImageUpload";
+import useFilePreview from "../../../../hooks/useFilePreview";
+import {ToastData} from "../../../../types";
+import Toast from "../../../common/Toast/Toast";
 
 export interface ProfileImageModalProps extends ProfileModalProps {
   photos: Photo[];
@@ -20,11 +24,9 @@ const BannerPhotoModal = ({
   setIsOpen,
   photos,
 }: ProfileImageModalProps) => {
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [uploading, setUploading] = useState(false);
-  const [updating, setUpdating] = useState(false);
-  const [preview, setPreview] = useState("");
+  const { selectedFile, setSelectedFile, preview } = useFilePreview();
   const setProfile = useProfileStore(state => state.setProfile)
+  const [toastData, setToastData] = useState<ToastData>();
 
   const handleProfileBannerUpdate = async () => {
     if (!selectedFile || !profile) return;
@@ -34,9 +36,12 @@ const BannerPhotoModal = ({
 
       updateBannerPhoto(profile, newPhoto?.id)
         .then(profile => setProfile(profile))
-        .catch(err => alert(err.message))
     } catch (error) {
-      alert(`Error uploading file: ${getErrorMessage(error)}`);
+      console.log(`Error uploading file: ${getErrorMessage(error)}`);
+      setToastData({
+        message: getErrorMessage(error),
+        type: "error",
+      })
     } finally {
       dismissModal();
     }
@@ -47,9 +52,12 @@ const BannerPhotoModal = ({
     try {
       updateBannerPhoto(profile, photo?.id)
         .then(profile => setProfile(profile))
-        .catch(err => alert(err.message))
     } catch (error) {
-      alert(`Error uploading file: ${getErrorMessage(error)}`);
+      console.log(error);
+      setToastData({
+        message: getErrorMessage(error),
+        type: "error",
+      })
     } finally {
       dismissModal();
     }
@@ -58,21 +66,7 @@ const BannerPhotoModal = ({
   const dismissModal = () => {
     setIsOpen(false);
     setSelectedFile(null);
-    setPreview("");
   };
-
-  useEffect(() => {
-    if (!selectedFile) {
-      setPreview("");
-      return;
-    }
-    setUploading(true);
-    const objectUrl = URL.createObjectURL(selectedFile);
-    setPreview(objectUrl);
-    setUploading(false);
-    // free memory when ever this component is unmounted
-    return () => URL.revokeObjectURL(objectUrl);
-  }, [selectedFile]);
 
   return (
     <Modal isOpen={isOpen} setIsOpen={setIsOpen} onClose={dismissModal} title="Banner Image">
@@ -92,21 +86,7 @@ const BannerPhotoModal = ({
         </div>
       ) : (
         <div className=" flex flex-col justify-center p-4">
-          <label
-            htmlFor="upload-profile-image-photo"
-            className="my-4 cursor-pointer flex justify-center p-4 border bg-brandYellow text-white border-primary-default"
-          >
-            Upload New Photo
-          </label>
-          <input
-            type="file"
-            id="upload-profile-image-photo"
-            accept="image/png, image/jpeg"
-            onChange={(e) =>
-              e?.target?.files && setSelectedFile(e.target.files[0])
-            }
-            className="my-4 hidden"
-          />
+          <ImageUpload setSelectedFile={setSelectedFile} />
           <h1 className="text-2xl my-4">Select a Photo</h1>
           <div className="grid grid-cols-2 gap-4">
             {photos.map((photo) => (
@@ -121,6 +101,7 @@ const BannerPhotoModal = ({
           </div>
         </div>
       )}
+      {toastData && <Toast toastData={toastData}/>}
     </Modal>
   );
 };
