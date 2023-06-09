@@ -31,8 +31,8 @@ const Toast: React.FC<ToastProps> = ({
   }
 
   const toastColor = {
-    success: "bg-brandYellow",
-    error: "bg-red-500",
+    success: "bg-darkYellow",
+    error: "bg-red-200",
     info: "bg-blue-500",
     warning: "bg-yellow-400",
   };
@@ -42,7 +42,7 @@ const Toast: React.FC<ToastProps> = ({
       <div
         className={`flex justify-between items-center max-w-sm p-4 rounded-lg shadow-lg ${
           toastColor[toastData.type]
-        } text-white`}
+        } text-black`}
       >
         <div>
           <p>{toastData.message}</p>
