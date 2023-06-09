@@ -1,11 +1,14 @@
 import React, {useEffect, useState} from "react";
 import {DataStore} from "@aws-amplify/datastore";
 import {Event} from "../../../models";
-import {EventCreateForm} from "../../../ui-components";
 import AdminEventCard from "./AdminEventCard";
 import Select from "../../common/Select";
-import EventUpdateForm from "./EventUpdateForm";
 import useDataClearedStore from "../../../stores/dataClearedStore";
+import Toast from "../../common/Toast/Toast";
+import {EventInputs, ToastData} from "../../../types";
+import EventForm from "./EventForm";
+import {SubmitHandler} from "react-hook-form";
+import {approveEvent, createEvent, rejectEvent, updateEvent} from "../../../services/eventServices";
 
 export const loader = async () => {
   return await DataStore.query(Event);
@@ -17,6 +20,7 @@ const AdminEventPage = () => {
   const [unapprovedEvents, setUnapprovedEvents] = useState<Event[]>([]);
   const [selectedEvent, setSelectedEvent] = useState("");
   const dataCleared = useDataClearedStore(state => state.dataCleared);
+  const [toastData, setToastData] = useState<ToastData | null>(null);
 
   useEffect(() => {
     if(!dataCleared) return;
@@ -34,18 +38,43 @@ const AdminEventPage = () => {
   }, [])
 
   const handleEventApproved = async (eventID: string) => {
-    const latestEvent = await DataStore.query(Event, eventID)
-    if(!latestEvent) return;
-    await DataStore.save(Event.copyOf(latestEvent, updated => {
-      updated.approved = true
-    }))
-
+    await approveEvent(eventID);
     setUnapprovedEvents(state => state.filter(event => event.id !== eventID))
   }
 
   const handleEventRejected = async (eventID: string) => {
-    await DataStore.delete(Event, eventID);
+    await rejectEvent(eventID);
     setUnapprovedEvents(state => state.filter(event => event.id !== eventID))
+  }
+
+  const handleEventCreate: SubmitHandler<EventInputs> = async (data) => {
+    const newEvent = await createEvent(data);
+    if(newEvent) {
+      setToastData({
+        type: "success",
+        message: "Event created!"
+      })
+    } else {
+      setToastData({
+        type: "error",
+        message: "Error creating event!"
+      })
+    }
+  }
+
+  const handleEventUpdate: SubmitHandler<EventInputs> = async (data) => {
+    const updatedEvent = await updateEvent(selectedEvent, data);
+    if(updatedEvent) {
+      setToastData({
+        type: "success",
+        message: "Event updated!"
+      })
+    } else {
+      setToastData({
+        type: "error",
+        message: "Error updating event!"
+      })
+    }
   }
 
   return (
@@ -60,7 +89,7 @@ const AdminEventPage = () => {
       </section>
       <section className="w-full max-w-xl my-8 mx-auto">
         <h1 className="text-xl md:text-2xl">Create Event</h1>
-        <EventCreateForm />
+        <EventForm eventID={selectedEvent} onSubmit={handleEventCreate} />
       </section>
       <section className="w-full max-w-xl my-8 mx-auto flex flex-col items-center">
         <h1 className="text-xl md:text-2xl text-center my-6">Update Events</h1>
@@ -78,9 +107,11 @@ const AdminEventPage = () => {
             </option>
           ))}
         </Select>
-        { selectedEvent && <EventUpdateForm eventID={selectedEvent} />}
+        { selectedEvent && <EventForm eventID={selectedEvent} onSubmit={handleEventUpdate} />}
       </section>
-
+      {toastData &&
+        <Toast toastData={toastData}/>
+      }
     </>
   )
 }
