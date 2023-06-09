@@ -15,6 +15,7 @@ import useDataClearedStore from "../../../stores/dataClearedStore";
 import {getAttendees} from "../../../services/eventServices";
 import {useAuthenticator} from "@aws-amplify/ui-react";
 import useProfileStore from "../../../stores/profileStore";
+import dayjs from "dayjs";
 
 const EventDetailPage = () => {
   const { id } = useParams();
@@ -35,16 +36,10 @@ const EventDetailPage = () => {
   useEffect(() => {
     if(!event || !dataCleared) return;
 
-    const fetchEventImage = async () => {
-      return await getSignedURL(event.image, "public");
-    };
-    const fetchEventAttendeeProfiles = async () => {
-      return await getAttendees(event.id)
-    };
     try {
-      fetchEventImage()
+      getSignedURL(event.image, "public")
         .then(image => setEventImage(image));
-      fetchEventAttendeeProfiles()
+      getAttendees(event.id)
         .then(attendees => setAttendees(attendees))
 
       // Fetch rides
@@ -156,7 +151,7 @@ const EventDetailPage = () => {
           / {event?.name}
         </span>
       </Header>
-      <div className="flex flex-col sm:flex-row w-screen sm:max-h-[75vh] h-full relative overflow-hidden">
+      <div className="flex flex-col md:flex-row w-screen md:max-h-[75vh] h-full relative overflow-hidden">
         <img
           className="w-full h-full object-cover"
           src={eventImage}
@@ -164,11 +159,11 @@ const EventDetailPage = () => {
         />
         {/* For screens smaller than 'md', position the event details div normally (i.e., below the image).
       For 'md' screens and larger, position it absolutely as before. */}
-        <div className="sm:rounded-xl shadow-xl z-10 text-primary-default border sm:border-b-brandYellow sm:absolute bottom-4 left-4 bg-white p-4 bg-light-default min-w-[250px]">
-          <h1 className="text-xl my-2">{event?.name}</h1>
-          <p className="my-2">{event?.city}, {event?.state}</p>
-          <p className="my-2">{event?.startDate} - {event?.endDate}</p>
-          <p className="my-2">{event?.url}</p>
+        <div className="bottom-4 left-4 bg-white p-4 min-w-[250px] shadow-xl md:z-10 border md:rounded-xl md:border-b-brandYellow md:absolute">
+          <h1 className="text-xl mb-2 font-bold">{event?.name}</h1>
+          <p className="my-1">{event?.city}, {event?.state}</p>
+          <p className="my-1">{dayjs(event?.startDate).format("MMMM D, YYYY")} - {dayjs(event?.endDate).format("MMMM D, YYYY")}</p>
+          <p className="my-1">{event?.url}</p>
         </div>
       </div>
       <div className="p-4">
