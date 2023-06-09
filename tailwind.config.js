@@ -4,7 +4,11 @@ export default {
   theme: {
     extend: {
       colors: {
-        brandYellow: "#7DB8B1"
+        brandYellow: "#7DB8B1",
+        lightYellow: "#F7F570",
+        darkYellow: "#FFE98D",
+        darkGreen: "#7DB8B1",
+        lightGreen: "#AFD7CE"
       },
       spacing: {
         header: "40px",
