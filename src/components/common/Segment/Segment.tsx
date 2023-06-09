@@ -1,4 +1,4 @@
-import React, { ReactNode, useRef, useEffect } from "react";
+import React, {ReactNode} from "react";
 
 interface SegmentProps {
   segmentType: string;
@@ -7,45 +7,7 @@ interface SegmentProps {
   className?: string;
 }
 
-const Segment: React.FC<SegmentProps> = ({
-  segmentType,
-  setSegmentType,
-  items,
-}) => {
-  const lineRef = useRef<HTMLDivElement>(null);
-
-  const generateClassName = (type: string) =>
-    `hover:bg-white flex-1 p-1 sm:p-2 md:p-4 relative text-sm sm:text-base ${
-      segmentType === type ? "active" : ""
-    }`;
-
-  const updateLinePosition = () => {
-    const activeButton = document.querySelector<HTMLButtonElement>(
-      `.segment-button.active`
-    );
-
-    if (lineRef.current && activeButton) {
-      lineRef.current.style.left = `${activeButton.offsetLeft}px`;
-      lineRef.current.style.width = `${activeButton.offsetWidth}px`;
-    }
-  };
-
-  useEffect(() => {
-    updateLinePosition();
-  }, [segmentType]);
-
-  useEffect(() => {
-    const handleResize = () => {
-      updateLinePosition();
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
+const Segment: React.FC<SegmentProps> = ({segmentType, setSegmentType, items,}) => {
   const handleClick = (type: string) => {
     setSegmentType(type);
   };
@@ -55,17 +17,14 @@ const Segment: React.FC<SegmentProps> = ({
       {items.map((item) => (
         <button
           key={item.type}
-          className={`segment-button ${generateClassName(item.type)}`}
+          className={`hover:bg-white flex-1 py-4 px-1 sm:px-2 md:px-4 relative text-sm sm:text-base`}
           onClick={() => handleClick(item.type)}
           data-type={item.type}
         >
           {item.children ? item.children : item.label}
+          <div className={`absolute bottom-0 left-0 right-0 h-0.5 bg-brandYellow transition-all duration-300 ${segmentType === item.type ? 'w-full opacity-100' : 'w-0 opacity-0'}`}></div>
         </button>
       ))}
-      <div
-        ref={lineRef}
-        className="absolute bottom-0 h-0.5 bg-brandYellow transition-all duration-300"
-      ></div>
     </div>
   );
 };
