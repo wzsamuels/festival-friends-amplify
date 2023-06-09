@@ -100,7 +100,7 @@ export const updateBannerPhoto = async (profile: Profile, photoID: string) => {
 }
 
 export const getUserEvents = async (profile: Profile | null) => {
-  if(!profile) return [];
+  if(!profile || !profile.customerID) return [];
   try {
     return await DataStore.query(Event, c => c.customerID.eq(profile.customerID))
   } catch (e) {
