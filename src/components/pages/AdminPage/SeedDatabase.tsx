@@ -43,7 +43,7 @@ const SeedDatabase = () => {
          */
         const newUserProfile = await DataStore.save(new Profile({
           ...profile,
-          ...(collegeGroup && {collegeGroupId: collegeGroup?.id}),
+          ...(collegeGroup && {groupID: collegeGroup?.id}),
           privacySetting: newPrivacySetting
         }));
 
