@@ -5,10 +5,10 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import InputWrapper from "../../../common/InputWrapper/InputWrapper";
 import Label from "../../../common/Label/Label";
 import Input from "../../../common/Input/Input";
-import { Festival } from "../../../../models";
+import { Event } from "../../../../models";
 import Button from "../../../common/Button/Button";
-import EventCardBase from "../../../ui/EventCardBase";
 import useEventStore from "../../../../stores/eventStore";
+import EventCard from "../../../ui/EventCard";
 
 interface EventSearchInput {
   state: string;
@@ -21,7 +21,7 @@ interface EventSearchInput {
 }
 
 const EventSearchModal = ({ isOpen, setIsOpen }: ModalProps) => {
-  const [eventResults, setEventResults] = useState<Festival[]>([]);
+  const [eventResults, setEventResults] = useState<Event[]>([]);
   const events = useEventStore(state => state.events);
   const { register, handleSubmit } = useForm<EventSearchInput>();
 
@@ -59,7 +59,7 @@ const EventSearchModal = ({ isOpen, setIsOpen }: ModalProps) => {
     <Modal
       isOpen={isOpen}
       setIsOpen={setIsOpen}
-      title="Search Festivals"
+      title="Search Events"
       className="max-w-4xl"
     >
       <div className='flex flex-col items-center justify-center'>
@@ -108,9 +108,9 @@ const EventSearchModal = ({ isOpen, setIsOpen }: ModalProps) => {
             <Button type="submit">Search</Button>
           </div>
         </form>
-        <div className="mt-4 flex flex-wrap justify-center">
+        <div className="grid gap-0 sm:gap-2 md:gap-4 justify-items-center grid-cols-1 md:grid-cols-2 items-center">
           {eventResults.map((event) => (
-            <EventCardBase className='my-4 md:m-4' festival={event} key={event.id} />
+            <EventCard className='m-4' event={event} key={event.id} />
           ))}
         </div>
       </div>
