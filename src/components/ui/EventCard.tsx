@@ -10,12 +10,14 @@ import useProfileStore from "../../stores/profileStore";
 import {getAttendees, joinEvent, leaveEvent} from "../../services/eventServices";
 import useFriendStore from "../../stores/friendProfileStore";
 import dayjs from "dayjs";
+import {DataStore} from "@aws-amplify/datastore";
 
 interface EventCardProps {
   event: Event;
+  className?: string;
 }
 
-const EventCard = ({ event }: EventCardProps) => {
+const EventCard = ({ event, className }: EventCardProps) => {
   const [eventImage, setEventImage] = useState("");
   const [attendeeProfiles, setAttendeeProfiles] = useState<Profile[]>([]);
   const friendProfiles = useFriendStore(state => state.acceptedFriendProfiles);
@@ -27,15 +29,11 @@ const EventCard = ({ event }: EventCardProps) => {
   const dataCleared = useDataClearedStore(state => state.dataCleared)
 
   useEffect(() => {
-    const fetchSignedURL = async () => {
-      return await getSignedURL(event.image, "public");
-    };
-
-    fetchSignedURL().then(url => setEventImage(url));
+    getSignedURL(event.image, "public").then(url => setEventImage(url));
   }, [event.image, getSignedURL]);
 
   useEffect(() => {
-    //if(!event || !dataCleared) return;
+    if(!event || !dataCleared) return;
     try {
       getAttendees(event.id).then(profiles => {
         setAttendeeProfiles(profiles)
@@ -48,15 +46,11 @@ const EventCard = ({ event }: EventCardProps) => {
   }, [event])
 
   useEffect(() => {
-    if (!dataCleared || !userProfile) return;
-    userProfile.events.toArray()
-      .then(events => events.find(event => event.id === event.id))
-      .then(event => {
-        if (event) {
-          setEventProfile(event);
-        }
-      })
-  }, [dataCleared, userProfile]);
+    if (!dataCleared || !userProfile || !event) return;
+    // TODO
+    DataStore.query(EventProfile, c => c.eventId.eq(event.id))
+      .then(([eventProfile]) => setEventProfile(eventProfile))
+  }, [dataCleared, userProfile, event]);
 
   const handleAttendEvent = async () => {
     if (!userProfile || !dataCleared) return;
@@ -77,9 +71,8 @@ const EventCard = ({ event }: EventCardProps) => {
   };
 
   return (
-    <div className="m-4 rounded-xl shadow-md w-full  max-w-[350px] bg-light-default">
+    <div className={`rounded-xl shadow-md w-full max-w-[350px] ${className}`}>
       <Link className="relative" to={`/events/${event.id}`}>
-        <div className="w-full max-w-[350px] min-h-[350px] h-full max-h-[350px]  flex items-center justify-center">
           {eventImage ? (
             <img
               className="w-full h-full object-cover aspect-square"
@@ -87,16 +80,14 @@ const EventCard = ({ event }: EventCardProps) => {
               alt={event.name}
             />
           ) : null}
-        </div>
         <div className=" bottom-4 left-4 rounded-xl z-10 w-full p-4 ">
-          <div className="font-bold min-h-[3rem]">
+          <div className="font-bold mb-2">
             {event.name}
           </div>
           <div>{event.city}, {event.state}</div>
-
-          <div>{dayjs(event.startDate).format("MMMM D, YYYY")}</div>
-          <div>SubID: {event.subscriptionID}</div>
-          <div>CustomerID: {event.customerID}</div>
+          <div>
+            {dayjs(event.startDate).format("MMMM D, YYYY")} - {dayjs(event.endDate).format("MMMM D, YYYY")}
+          </div>
         </div>
       </Link>
       <div className="p-2 text-base md:text-lg">
@@ -104,7 +95,7 @@ const EventCard = ({ event }: EventCardProps) => {
           <>
             <div>
             <button
-              className="my-2 text-brandYellow"
+              className="my-2"
               disabled={friendsAttending.length === 0}
               onClick={() => setIsEventFriendModalOpen(true)}
             >
@@ -121,7 +112,7 @@ const EventCard = ({ event }: EventCardProps) => {
             </div>
             <div>
             <button
-              className="mb-2 text-brandYellow">
+              className="mb-2">
               {attendeeProfiles.length > 0 ? (
                 <span className="underline my-4">
                   {attendeeProfiles.length}{" "}
