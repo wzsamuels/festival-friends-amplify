@@ -34,7 +34,7 @@ const EventCardBase = ({ festival, className }: EventCardBaseProps) => {
         </div>
         <div className=" bottom-4 left-4 rounded-xl z-10 w-full p-4 font-bold ">
           <div className="bold min-h-[3rem]">
-            {festival.name} - {festival.location}
+            {festival.name} - {festival.startDate}
           </div>
 
           <div>{festival.startDate}</div>
