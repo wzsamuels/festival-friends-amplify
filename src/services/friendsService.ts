@@ -1,14 +1,14 @@
 import { DataStore } from "aws-amplify";
-import { Friendship, UserProfile } from "../models";
+import { Friendship, Profile } from "../models";
 import { Dispatch, SetStateAction } from "react";
 import { ToastData } from "../types";
 
 export async function acceptFriendRequest(
-  friendProfile: UserProfile,
+  friendProfile: Profile,
   allFriends: Friendship[]
 ) {
   const friendShip = allFriends.filter(
-    (friendship) => friendship.userProfileID === friendProfile.id
+    (friendship) => friendship.profileID === friendProfile.id
   );
   return await DataStore.save(
     Friendship.copyOf(friendShip[0], (updated) => {
@@ -18,20 +18,20 @@ export async function acceptFriendRequest(
 }
 
 export async function rejectFriendRequest(
-  friendProfile: UserProfile,
+  friendProfile: Profile,
   allFriends: Friendship[]
 ) {
   const friendShip = allFriends.filter(
     (friendship) =>
-      friendship.userProfileID === friendProfile.id ||
+      friendship.profileID === friendProfile.id ||
       friendship.friendProfileID === friendProfile.id
   );
   return await DataStore.delete(friendShip[0]);
 }
 
 export const createFriendRequest = async (
-  userProfile: UserProfile | null,
-  friendProfile: UserProfile,
+  userProfile: Profile | null,
+  friendProfile: Profile,
   setToastData: Dispatch<SetStateAction<ToastData | null>>
 ) => {
   if (!userProfile) return;
@@ -47,11 +47,11 @@ export const createFriendRequest = async (
   const existingFriendships = await DataStore.query(Friendship, (c) =>
     c.or((c) => [
       c.and((c) => [
-        c.userProfile.id.eq(userProfile.id),
+        c.profileID.eq(userProfile.id),
         c.friendProfileID.eq(friendProfile.id),
       ]),
       c.and((c) => [
-        c.userProfile.id.eq(friendProfile.id),
+        c.profileID.eq(friendProfile.id),
         c.friendProfileID.eq(userProfile.id),
       ]),
     ])
@@ -68,11 +68,10 @@ export const createFriendRequest = async (
 
   await DataStore.save(
     new Friendship({
-      userProfileID: userProfile.id,
+      profile: userProfile,
+      profileID: userProfile.id,
       friendProfileID: friendProfile.id,
-      isAccepted: false,
       friendProfile: friendProfile,
-      userProfile: userProfile,
     })
   );
   setToastData({ message: "Friend request sent!", type: "success" });
