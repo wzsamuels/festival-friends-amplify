@@ -9,7 +9,7 @@ interface SearchButtonProps {
 const SearchButton = ({ onClick, className }: SearchButtonProps) => {
   return (
     <button
-      className={`hover:bg-gray-100 text-brandYellow ${className}`}
+      className={`hover:text-darkGreen h-9 w-9 m-1 flex justify-center items-center rounded-full ${className}`}
       onClick={onClick}
     >
       <FaSearch />
