@@ -5,9 +5,9 @@ export const getGroupByEmail = async (email: string) => {
   if (email.endsWith(".edu")) {
     const emailDomain = email.split("@")[1];
     try {
-      const collegeGroups = await DataStore.query(Group, (c) =>
+      const groups = await DataStore.query(Group, (c) =>
         c.domain.eq(emailDomain));
-      return collegeGroups[0];
+      return groups[0];
     } catch (e) {
       console.log("Error getting college group by email", e)
     }
