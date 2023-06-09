@@ -41,7 +41,6 @@ const updateEventMutation = gql`
       name
       genre
       image
-            location
             state
             city
             address
@@ -68,7 +67,6 @@ const getEventQuery = gql`
             name
             genre
             image
-            location
             state
             city
             address
@@ -98,7 +96,6 @@ const getEventBySubID = gql`
                 name
                 genre
                 image
-                location
                 state
                 city
                 address
@@ -182,7 +179,6 @@ exports.handler = async (event) => {
                 name: event.name,
                 genre: event.genre,
                 image: event.image,
-                location: event.location,
                 state: event.state,
                 city: event.city,
                 address: event.address,
@@ -282,7 +278,6 @@ exports.handler = async (event) => {
                 name: event.name,
                 genre: event.genre,
                 image: event.image,
-                location: event.location,
                 state: event.state,
                 city: event.city,
                 address: event.address,
