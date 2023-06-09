@@ -95,7 +95,7 @@ const RideCard = ({ ride, className }: RideCardProps) => {
             {driverProfile && (
               <Link
                 to={`/friends/profile/${driverProfile.id}`}
-                className="underline text-brandYellow"
+                className="underline"
               >
                 {driverProfile?.firstName} {driverProfile?.lastName}
               </Link>
@@ -105,21 +105,10 @@ const RideCard = ({ ride, className }: RideCardProps) => {
             Passengers: {ridersCount} / {ride.maxPassengers}
           </h5>
           <div>Passenger List:</div>
-          {driverProfile && (
-            <span>
-              <Link
-                className="underline text-brandYellow"
-                to={`/friends/profile/${driverProfile.id}`}
-              >
-                {driverProfile.firstName} {driverProfile.lastName}
-              </Link>
-              {passengers?.length === 0 ? "" : `, `}
-            </span>
-          )}
           {passengers?.map((passenger, index) => (
             <span key={passenger.id}>
               <Link
-                className="underline text-brandYellow"
+                className="underline"
                 to={`/friends/profile/${passenger.id}`}
               >
                 {passenger.firstName} {passenger.lastName}
