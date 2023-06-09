@@ -8,6 +8,8 @@ import Button from "../../../common/Button/Button";
 import {createNewPhoto} from "../../../../services/photoServices";
 import useProfileStore from "../../../../stores/profileStore";
 import {updateProfilePhoto} from "../../../../services/profileServices";
+import ImageUpload from "../../../common/ImageUpload";
+import useFilePreview from "../../../../hooks/useFilePreview";
 
 export interface ProfileImageModalProps extends ProfileModalProps {
   photos: Photo[];
@@ -20,26 +22,16 @@ const ProfileImageModal = ({
   setIsOpen,
   photos,
 }: ProfileImageModalProps) => {
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [preview, setPreview] = useState("");
-  const [uploading, setUploading] = useState(false);
-  const [updating, setUpdating] = useState(false);
-
+  const { selectedFile, setSelectedFile, preview} = useFilePreview();
   const setProfile = useProfileStore(state => state.setProfile)
   // Upload new profile image to S3 bucket, create new Photo, and update user profile image
   const handleProfileImageUpdate = async () => {
     if (selectedFile) {
       try {
-        setUploading(true);
         const newPhoto = await createNewPhoto(sub, selectedFile, profile.id);
-        setUploading(false);
-
         if(!newPhoto) throw new Error("Error creating new photo");
-
-        setUpdating(true);
         const updatedProfile = await updateProfilePhoto(profile, newPhoto.id);
         setProfile(updatedProfile);
-        setUpdating(false);
       } catch (error) {
         alert(`Error uploading file: ${getErrorMessage(error)}`);
       } finally {
@@ -61,30 +53,12 @@ const ProfileImageModal = ({
     }
   };
 
-  useEffect(() => {
-    if (!selectedFile) {
-      setPreview("");
-      return;
-    }
-    setUploading(true);
-    const objectUrl = URL.createObjectURL(selectedFile);
-    setPreview(objectUrl);
-    setUploading(false);
-    // free memory when ever this component is unmounted
-    return () => URL.revokeObjectURL(objectUrl);
-  }, [selectedFile]);
-
   const dismissModal = () => {
     setIsOpen(false);
     setSelectedFile(null);
-    setUpdating(false);
-    setUploading(false);
-    setPreview("");
   };
 
   const renderModalContent = () => {
-    if(updating) return <div className='p-4'>Updating profile photo...</div>
-    if(uploading) return <div className='p-4'>Uploading photo...</div>
     if(preview) {
       return (
         <div className="flex flex-col items-center justify-center w-full p-4">
@@ -102,21 +76,7 @@ const ProfileImageModal = ({
     }
     return (
       <div className=" flex flex-col justify-center p-4">
-        <label
-          htmlFor="upload-profile-image-photo"
-          className="my-4 cursor-pointer flex justify-center p-4 border bg-brandYellow text-white border-primary-default"
-        >
-          Upload New Photo
-        </label>
-        <input
-          type="file"
-          id="upload-profile-image-photo"
-          accept="image/png, image/jpeg"
-          onChange={(e) =>
-            e?.target?.files && setSelectedFile(e.target.files[0])
-          }
-          className="my-4 hidden"
-        />
+        <ImageUpload setSelectedFile={setSelectedFile}/>
         <h1 className="text-2xl my-4">Select a Photo</h1>
         <div className="grid grid-cols-2 gap-4">
           {photos.length > 0 ? photos.map((photo) => (
