@@ -59,13 +59,19 @@ const ProfilePage = () => {
       .then(photos => setPhotos(photos));
 
     getEventsByProfile(profile)
-      .then(eventsAttending => setEventsAttending(eventsAttending));
+      .then(eventsAttending => {
+        console.log("Events attending:", eventsAttending)
+        setEventsAttending(eventsAttending)
+      });
 
     getRidesByProfile(profile)
       .then(rides => setRides(rides));
 
     profile.privacySetting
-      .then(privacySetting => setPrivacySetting(privacySetting));
+      .then(privacySetting => {
+        console.log(privacySetting)
+        setPrivacySetting(privacySetting)
+      });
   }, [dataCleared, profile]);
 
   return (
@@ -92,7 +98,7 @@ const ProfilePage = () => {
         <div className="flex flex-col justify-center items-center w-full h-full absolute top-0 left-0">
           {profileImage ? (
             <img
-              className="aspect-square max-w-[350px] w-full rounded-full cursor-pointer"
+              className="aspect-square max-w-[350px] w-full rounded-full"
               src={profileImage}
               alt="Profile Image"
             />
