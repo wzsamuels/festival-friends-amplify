@@ -1,6 +1,6 @@
 import { useAuthenticator } from "@aws-amplify/ui-react";
 import React, {lazy, Suspense, useEffect } from "react";
-
+import { ErrorBoundary } from "react-error-boundary";
 const MessagePage = lazy(
   () => import("./components/pages/MessagePage/MessagePage")
 );
@@ -42,6 +42,7 @@ import VerifyAccounts from "./components/pages/AdminPage/VerifyAccounts";
 import AdminDatabasePage from "./components/pages/AdminPage/AdminDatabasePage";
 import useEventStore from "./stores/eventStore";
 import SubmitEventPage from "./components/pages/SubmitEventPage/SubmitEventPage";
+import Fallback from "./components/ui/Fallback";
 
 const Router = () => {
   const { user } = useAuthenticator((context) => [context.user]);
@@ -91,6 +92,7 @@ const Router = () => {
         {
           path: "friends",
           element: <FriendsPage />,
+          errorElement: <LayoutErrorBoundary/>,
         },
         {
           path: "messages",
@@ -141,11 +143,13 @@ const Router = () => {
   ]);
 
   return (
+    <ErrorBoundary FallbackComponent={Fallback}>
     <ImageProvider>
       <Suspense fallback={<div className='flex justify-center items-center h-screen'><LoadingState/></div>}>
         <RouterProvider router={router} />
       </Suspense>
     </ImageProvider>
+    </ErrorBoundary>
   );
 };
 
