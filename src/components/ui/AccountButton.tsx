@@ -90,8 +90,8 @@ const AccountButton = () => {
   return (
     <>
       <Menu as="div" className="relative">
-        <Menu.Button className="hover:bg-gray-100 text-brandYellow mx-1 sm:mx-2">
-          <FaUser />
+        <Menu.Button className="flex justify-center items-center rounded-full">
+          <FaUser className="hover:text-darkGreen" />
         </Menu.Button>
         <Transition
           as={Fragment}
