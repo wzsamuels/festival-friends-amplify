@@ -11,10 +11,10 @@ const Button = ({ children, className, variation, ...props }: ButtonProps) => {
   return (
     <button
       {...props}
-      className={`font-light disabled:opacity-50 disabled:cursor-not-allowed px-4 py-2 rounded-md uppercase border border-primary-default ${className} ${
+      className={`disabled:opacity-50 disabled:cursor-not-allowed px-4 py-2 rounded-md border ${className} ${
         variation === "outline"
-          ? "bg-white text-brandYellow"
-          : "bg-brandYellow text-white"
+          ? "bg-white text-black border-black"
+          : "bg-lightYellow text-black border-lightYellow"
       }`}
     >
       {children}
