@@ -1,10 +1,10 @@
 [
   {
-    "sub": "8b15bfdd-51a1-48ab-b73a-bd61e254615b",
+    "sub": "c438f468-c071-7085-67ba-ac4ff6b75cb4",
     "firstName": "Emma",
     "lastName": "Smith",
     "verified": true,
-    "verifySubmitted": true,
+    "submitted": true,
     "city": "Cambridge",
     "state": "Massachusetts",
     "school": "Harvard University",
@@ -15,11 +15,11 @@
     "zipcode": "02138"
   },
   {
-    "sub": "415be7b8-a6eb-44fc-9a03-3087ebe990bf",
+    "sub": "a428f458-30d1-70a9-2162-91689d13c463",
     "firstName": "Liam",
     "lastName": "Johnson",
     "verified": true,
-    "verifySubmitted": true,
+    "submitted": true,
     "city": "Stanford",
     "state": "California",
     "school": "Stanford University",
@@ -30,11 +30,11 @@
     "zipcode": "94305"
   },
   {
-    "sub": "3a9e9e1e-bb40-4cbe-bd7f-049587c2d4ad",
+    "sub": "c4b88498-30b1-70f3-7ce2-e191d6bc1642",
     "firstName": "Olivia",
     "lastName": "Williams",
     "verified": true,
-    "verifySubmitted": true,
+    "submitted": true,
     "city": "Princeton",
     "state": "New Jersey",
     "school": "Princeton University",
@@ -45,11 +45,11 @@
     "zipcode": "08544"
   },
   {
-    "sub": "5997ec0a-6372-4a83-bb61-d2ef77d86e6a",
+    "sub": "a488f408-0001-7043-b037-3304ac875107",
     "firstName": "Noah",
     "lastName": "Brown",
     "verified": true,
-    "verifySubmitted": true,
+    "submitted": true,
     "city": "Cambridge",
     "state": "Massachusetts",
     "school": "Harvard University",
@@ -60,11 +60,11 @@
     "zipcode": "02140"
   },
   {
-    "sub": "3bfdd2a2-5578-44c7-a231-e1f78d3e3f3d",
+    "sub": "d4b88488-0071-70b2-1385-fc561f6f8cb1",
     "firstName": "Ava",
     "lastName": "Jones",
     "verified": true,
-    "verifySubmitted": true,
+    "submitted": true,
     "city": "Durham",
     "state": "North Carolina",
     "school": "Duke University",
@@ -75,11 +75,11 @@
     "zipcode": "27708"
   },
   {
-    "sub": "379c8736-14f0-4876-85d0-c625052e70c7",
+    "sub": "648824b8-10c1-70fb-56a1-f379207ee5b5",
     "firstName": "Ethan",
     "lastName": "Miller",
     "verified": true,
-    "verifySubmitted": true,
+    "submitted": true,
     "city": "Chicago",
     "state": "Illinois",
     "school": "University of Chicago",
@@ -90,11 +90,11 @@
     "zipcode": "60637"
   },
   {
-    "sub": "d5a6df5a-1e09-4f43-98a7-be48a198540e",
+    "sub": "5418c4d8-80d1-706b-5b66-d221427a3f1e",
     "firstName": "Sophia",
     "lastName": "Davis",
     "verified": true,
-    "verifySubmitted": true,
+    "submitted": true,
     "city": "New Haven",
     "state": "Connecticut",
     "school": "Yale University",
@@ -105,11 +105,11 @@
     "zipcode": "06520"
   },
   {
-    "sub": "ae9ed16b-48a1-4d5a-8526-c702fbd1032c",
+    "sub": "d4b894a8-1061-70fd-11b8-836a1f9fe052",
     "firstName": "Jackson",
     "lastName": "Garcia",
     "verified": true,
-    "verifySubmitted": true,
+    "submitted": true,
     "city": "Durham",
     "state": "North Carolina",
     "school": "Duke University",
@@ -120,11 +120,11 @@
     "zipcode": "27708"
   },
   {
-    "sub": "1218ae59-d926-4ed8-a3f9-ecef31b5bab5",
+    "sub": "64387458-10c1-7069-cb1b-2ff0999e641f",
     "firstName": "Isabella",
     "lastName": "Rodriguez",
     "verified": true,
-    "verifySubmitted": true,
+    "submitted": true,
     "city": "Pasadena",
     "state": "California",
     "school": "California Institute of Technology",
@@ -135,11 +135,11 @@
     "zipcode": "91125"
   },
   {
-    "sub": "1fbfcdd1-1c88-4d4b-b28e-95c0718d4b70",
+    "sub": "a4387478-4041-7062-19c1-b3facc385ce6",
     "firstName": "Aiden",
     "lastName": "Martinez",
     "verified": true,
-    "verifySubmitted": true,
+    "submitted": true,
     "city": "Ithaca",
     "state": "New York",
     "school": "Cornell University",
