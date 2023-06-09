@@ -26,6 +26,7 @@ import {
   FaUserFriends,
   MdLightbulbOutline, MdMoveToInbox,
 } from "react-icons/all";
+import { useErrorBoundary } from "react-error-boundary";
 
 type FriendType = "accepted" | "sent" | "suggestions" | "pending";
 
@@ -43,6 +44,7 @@ const FriendsPage: React.FC = () => {
   const [isFriendsModalOpen, setIsFriendsModalOpen] = useState(false);
   const dataCleared = useDataClearedStore((state) => state.dataCleared);
   const [toastData, setToastData] = useState<ToastData | null>(null);
+  const { showBoundary } = useErrorBoundary();
 
   useEffect(() => {
     if (route !== "authenticated" || !userProfile || !dataCleared) {
@@ -60,29 +62,17 @@ const FriendsPage: React.FC = () => {
             return false;
           }
           // Exclude the current user's friends from the suggestions
-          if (
-            acceptedFriendProfiles.find(
-              (acceptedProfile) => acceptedProfile.id === profile.id
-            )
-          ) {
+          if (acceptedFriendProfiles.find((acceptedProfile) => acceptedProfile.id === profile.id)) {
             return false;
           }
 
           // Exclude the current user's pending friend requests from the suggestions
-          if (
-            incomingFriendProfiles.find(
-              (pendingFriendProfile) => pendingFriendProfile.id === profile.id
-            )
-          ) {
+          if (incomingFriendProfiles.find((pendingFriendProfile) => pendingFriendProfile.id === profile.id)) {
             return false;
           }
 
           // Exclude the current user's sent friend requests from the suggestions
-          if (
-            outgoingFriendProfiles.find(
-              (sentFriendProfile) => sentFriendProfile.id === profile.id
-            )
-          ) {
+          if (outgoingFriendProfiles.find((sentFriendProfile) => sentFriendProfile.id === profile.id)) {
             return false;
           }
 
@@ -116,15 +106,27 @@ const FriendsPage: React.FC = () => {
 
   // Accept friend request
   const handleFriendAccept = async (friendProfile: Profile) => {
-    await acceptFriendRequest(friendProfile, allFriendships);
+    try {
+      await acceptFriendRequest(friendProfile, allFriendships);
+    } catch (e) {
+      showBoundary(e);
+    }
   };
 
   const handleFriendReject = async (friendProfile: Profile) => {
-    await rejectFriendRequest(friendProfile, allFriendships);
-  };
+    try {
+      await rejectFriendRequest(friendProfile, allFriendships);
+    } catch (e) {
+      showBoundary(e);
+    }
+  }
 
   const handleFriendRequest = async (friendProfile: Profile) => {
-    await createFriendRequest(userProfile, friendProfile, setToastData);
+    try {
+      await createFriendRequest(userProfile, friendProfile, setToastData);
+    } catch (e) {
+      showBoundary(e)
+    }
   };
 
   const FriendsList: React.FC<{
@@ -265,7 +267,7 @@ const FriendsPage: React.FC = () => {
           <div className="block">Requests</div>
           <div className="hidden text-xl"><MdMoveToInbox/></div>
           {incomingFriendProfiles.length > 0 ? (
-            <div className="bg-brandYellow text-white rounded-full mx-2 w-[20px] p-2  h-[20px] justify-center items-center hidden sm:flex">
+            <div className="bg-lightYellow text-black rounded-full mx-2 w-[20px] p-2  h-[20px] justify-center items-center hidden sm:flex">
               {incomingFriendProfiles.length}
             </div>
           ) : null}
@@ -280,7 +282,7 @@ const FriendsPage: React.FC = () => {
           <div className="hidden sm:block">Sent</div>
           <div className="block sm:hidden text-xl"><MdOutlineOutbox/></div>
           {outgoingFriendProfiles.length > 0 ? (
-            <div className="bg-brandYellow text-white rounded-full mx-2 w-[20px] p-2 h-[20px] justify-center items-center hidden md:flex">
+            <div className="bg-lightYellow text-black rounded-full mx-2 w-[20px] p-2 h-[20px] justify-center items-center hidden md:flex">
               {outgoingFriendProfiles.length}
             </div>
           ) : null}
@@ -296,7 +298,7 @@ const FriendsPage: React.FC = () => {
           <div className="block">Suggested</div>
           <div className="hidden text-xl"><MdLightbulbOutline/></div>
           {suggestedFriends.length > 0 ? (
-            <div className="bg-brandYellow text-white rounded-full mx-2 w-[20px] p-2 h-[20px] justify-center items-center hidden md:flex">
+            <div className="bg-lightYellow text-black rounded-full mx-2 w-[20px] p-2 h-[20px] justify-center items-center hidden md:flex">
               {suggestedFriends.length}
             </div>
           ) : null}
