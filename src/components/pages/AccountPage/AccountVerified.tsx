@@ -20,6 +20,7 @@ import RideCard from "../../ui/RideCard";
 import Header from "../../layout/Header";
 import Segment from "../../common/Segment/Segment";
 import EventManagement from "./EventManagement";
+import ImageUpload from "../../common/ImageUpload";
 
 const segmentItems = [
   { type: "profile", label: "Profile" },
@@ -156,11 +157,11 @@ const AccountVerified = ({ user }: { user: any }) => {
             </div>
           </section>
 
-          <section className="p-4">
-            <h1 className="text-2xl my-4">Events Attending</h1>
-            <div className='flex flex-wrap'>
-              {eventsAttending.length > 0 ? eventsAttending?.map((event, index) => (
-                  <EventCard key={event.id} event={event} attendingFriends={[]}/>
+          <section>
+            <h1 className="text-2xl m-4">Events Attending</h1>
+            <div className="grid gap-0 sm:gap-2 md:gap-4 justify-items-center grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 items-center">
+              {eventsAttending.length > 0 ? eventsAttending?.map(event => (
+                  <EventCard className="m-2 sm:m-4" key={event.id} event={event}/>
                 ))
                 :
                 <div>Not attending any events.</div>
@@ -169,8 +170,8 @@ const AccountVerified = ({ user }: { user: any }) => {
           <hr className="my-8 border border-primary-default w-full" />
           <section className="p-4">
             <h1 className="text-2xl my-4">Rides</h1>
-            <div className='flex flex-wrap'>
-              {rides.length > 0 ? rides?.map((ride, index) => (
+            <div className="grid gap-0 sm:gap-2 md:gap-4 justify-items-center grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 items-center">
+              {rides.length > 0 ? rides?.map((ride) => (
                   <RideCard ride={ride} key={ride.id} className='m-4'/>
                 ))
                 :
@@ -178,25 +179,11 @@ const AccountVerified = ({ user }: { user: any }) => {
               }
             </div>
           </section>
-          <hr className="my-8 border border-primary-default w-full" />
+          <hr className="my-4 border border-primary-default w-full" />
           <section className="p-4">
-            <div className="flex justify-between w-full">
+            <div className="flex justify-between items-center w-full">
               <h2 className="text-2xl">Photos</h2>
-              <label
-                htmlFor="upload-photo"
-                className="block bg-brandYellow text-white rounded-md uppercase py-2 px-4 cursor-pointer"
-              >
-                Upload Photo
-              </label>
-              <input
-                type="file"
-                accept="image/png, image/jpeg"
-                onChange={(e) =>
-                  e?.target?.files && setSelectedFile(e.target.files[0])
-                }
-                className="my-4 hidden"
-                id="upload-photo"
-              />
+              <ImageUpload setSelectedFile={setSelectedFile}/>
             </div>
             <div className="flex justify-center gap-4 flex-wrap w-full my-8">
               {photos?.map((photo) => (
