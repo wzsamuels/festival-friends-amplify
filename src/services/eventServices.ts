@@ -1,5 +1,7 @@
-import {DataStore} from "aws-amplify";
+import {DataStore, Storage} from "aws-amplify";
 import {Event, Ride, Profile, EventProfile} from "../models";
+import {EventInputs} from "../types";
+import {v4 as uuidv4} from "uuid";
 
 export const getEvent = async (eventId: string) => {
   try {
@@ -47,7 +49,7 @@ export const leaveEvent = async (event: Event, profile: Profile) => {
 
 export const getEventsByProfile = async (profile: Profile) => {
   try {
-    return await DataStore.query(Event, c => c.attendees.event.id.eq(profile.id))
+    return await DataStore.query(Event, c => c.attendees.profile.id.eq(profile.id))
   } catch (error) {
     console.log("Error getting events by profile", error)
     return [];
@@ -63,12 +65,84 @@ export const getAllEvents = async () => {
   }
 }
 
-export const createEvent = async (event: Event) => {
+export const createEvent = async (data: EventInputs) => {
   try {
-    return await DataStore.save(event);
+    const {selectedFile, ...restData} = data;
+    if(!selectedFile) return null;
+    const id = uuidv4();
+    await Storage.put(`event-images/${id}`, selectedFile, {
+      level: "public",
+      contentType: selectedFile.type
+    })
+    const newImage = `event-images/${id}`;
+    return await DataStore.save(
+      new Event({
+        ...restData,
+        image: newImage,
+      }
+    ));
   } catch (error) {
     console.log("Error creating event", error)
     return null;
+  }
+}
+
+export const updateEvent = async (eventID: string, data: EventInputs) => {
+  try {
+    const latestEvent = await DataStore.query(Event, eventID);
+    if (!latestEvent) return null
+
+    const {selectedFile} = data;
+    let newImage = "";
+    if (selectedFile) {
+      const id = uuidv4();
+      await Storage.remove(latestEvent.image);
+      await Storage.put(`event-images/${id}`, selectedFile, {
+        level: "public",
+        contentType: selectedFile.type
+      })
+      newImage = `event-images/${id}`;
+    }
+    return await DataStore.save(Event.copyOf(latestEvent, updatedEvent => {
+      updatedEvent.name = data.name;
+      updatedEvent.genre = data.genre;
+      updatedEvent.state = data.state;
+      updatedEvent.city = data.city;
+      updatedEvent.address = data.address;
+      updatedEvent.startDate = data.startDate;
+      updatedEvent.endDate = data.endDate;
+      updatedEvent.type = data.type;
+      updatedEvent.description = data.description;
+      updatedEvent.url = data.url;
+      newImage && (updatedEvent.image = newImage);
+    }))
+  } catch (e) {
+    console.log("Error updating event", e)
+    return null;
+  }
+}
+
+export const approveEvent = async (eventID: string) => {
+  try {
+    const latestEvent = await DataStore.query(Event, eventID)
+    if(!latestEvent) return;
+    const updatedEvent = await DataStore.save(Event.copyOf(latestEvent, updated => {
+      updated.approved = true
+    }))
+    console.log("Event approved:", updatedEvent);
+    return updatedEvent;
+  } catch (e) {
+    console.log("Error approving event", e)
+  }
+}
+
+export const rejectEvent = async (eventID: string) => {
+  try {
+    const deletedEvent = await DataStore.delete(Event, eventID);
+    console.log("Event rejected:", deletedEvent);
+    return deletedEvent;
+  } catch (e) {
+    console.log("Error rejecting event", e)
   }
 }
 
