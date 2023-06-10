@@ -1,24 +1,6 @@
 import { useAuthenticator } from "@aws-amplify/ui-react";
 import React, {lazy, Suspense, useEffect } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-const MessagePage = lazy(
-  () => import("./components/pages/MessagePage/MessagePage")
-);
-
-const FriendsPage = lazy(() => import("./components/pages/FriendPage/Friends"));
-const EventPage = lazy(() => import("./components/pages/EventPage/EventPage"));
-const AccountSettingsPage = lazy(
-  () => import("./components/pages/AccountPage/AccountSettings")
-);
-const EventDetailPage = lazy(
-  () => import("./components/pages/EventPage/EventDetailPage")
-);
-const ProfilePage = lazy(() => import("./components/pages/ProfilePage/ProfilePage"));
-const GroupsPage = lazy(() => import("./components/pages/GroupPage/GroupPage"));
-const Layout = lazy(() => import("./components/layout/Layout"));
-const AccountPage = lazy(
-  () => import("./components/pages/AccountPage/AccountPage")
-);
 
 import { loader as adminEventLoader} from './components/pages/AdminPage/AdminEventPage'
 
@@ -43,6 +25,17 @@ import AdminDatabasePage from "./components/pages/AdminPage/AdminDatabasePage";
 import useEventStore from "./stores/eventStore";
 import SubmitEventPage from "./components/pages/SubmitEventPage/SubmitEventPage";
 import Fallback from "./components/ui/Fallback";
+import AccountLayout from "./components/pages/AccountPage/AccountLayout";
+import AccountProfilePage from "./components/pages/AccountPage/AccountProfilePage";
+import AccountEventPage from "./components/pages/AccountPage/AccountEventPage";
+import Layout from "./components/layout/Layout";
+import EventPage from "./components/pages/EventPage/EventPage";
+import EventDetailPage from "./components/pages/EventPage/EventDetailPage";
+import FriendsPage from "./components/pages/FriendPage/Friends";
+import MessagePage from "./components/pages/MessagePage/MessagePage";
+import GroupsPage from "./components/pages/GroupPage/GroupPage";
+import AccountSettingsPage from "./components/pages/AccountPage/AccountSettingsPage";
+import ProfilePage from "./components/pages/ProfilePage/ProfilePage";
 
 const Router = () => {
   const { user } = useAuthenticator((context) => [context.user]);
@@ -92,7 +85,6 @@ const Router = () => {
         {
           path: "friends",
           element: <FriendsPage />,
-          errorElement: <LayoutErrorBoundary/>,
         },
         {
           path: "messages",
@@ -103,13 +95,22 @@ const Router = () => {
           element: <GroupsPage />,
         },
         {
-          path: "account/settings",
-          element: <AccountSettingsPage />,
-        },
-        {
           path: "account",
-          element: <AccountPage />,
-          errorElement: <LayoutErrorBoundary/>,
+          element: <AccountLayout />,
+          children: [
+            {
+              index: true,
+              element: <AccountProfilePage />,
+            },
+            {
+              path: "events",
+              element: <AccountEventPage />,
+            },
+            {
+              path: "settings",
+              element: <AccountSettingsPage />,
+            }
+          ]
         },
         {
           path: "submit-event",
