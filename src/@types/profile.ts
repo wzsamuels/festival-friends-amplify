@@ -1,9 +1,8 @@
-import { UserProfile } from "../models";
+import { Profile } from "../models";
 
 export interface ProfileModalProps {
-  profile: UserProfile;
+  profile: Profile;
   profileImage?: string;
-  sub: string;
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
   callback?: () => void;
