@@ -2,11 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "Helvetica Neue Medium";
+  src: url(./assests/helvetica-neue-medium.ttf);
+}
+
+@font-face {
+  font-family: "Helvetica Neue Bold";
+  src: url(./assests/helvetica-neue-bold.ttf);
+}
+
 html,
 body {
   height: 100%;
   overflow: auto;
   position: relative;
+  font-family: "Helvetica Neue Bold";
 }
 
 /*
