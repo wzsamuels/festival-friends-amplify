@@ -1,6 +1,6 @@
-import React, { Fragment } from "react";
+import React, {Fragment, useEffect} from "react";
 import { useAuthenticator } from "@aws-amplify/ui-react";
-import { DataStore } from "aws-amplify";
+import {Auth, DataStore} from "aws-amplify";
 import { FaUser } from "react-icons/all";
 import { Link } from "react-router-dom";
 import { Menu, Transition } from "@headlessui/react";
@@ -13,6 +13,8 @@ import useConversationStore from "../../stores/conversationStore";
 import useEventStore from "../../stores/eventStore";
 const AccountButton = () => {
   const { user, signOut } = useAuthenticator((context) => [context.user]);
+  const { route } = useAuthenticator((context) => [context.route]);
+  const [ group, setGroup] = React.useState("");
   const setDataCleared = useDataClearedStore(state => state.setDataCleared);
   const [alertIsOpen, setAlertIsOpen] = React.useState(false);
   const { authStatus } = useAuthenticator((context) => [context.authStatus]);
@@ -21,6 +23,14 @@ const AccountButton = () => {
   const clearConversations = useConversationStore(state => state.clearConversations);
   const friendUnsubscribe = useFriendStore(state => state.friendUnsubscribe);
   const eventsUnsubscribe = useEventStore(state => state.eventsUnsubscribe);
+
+  useEffect(() => {
+    if(route !== "authenticated") return;
+    Auth.currentAuthenticatedUser()
+      .then(user => {
+        setGroup(user.signInUserSession.accessToken.payload["cognito:groups"].find((group: string) => group === "admin")?.toString() ?? "")
+      })
+  }, [route])
 
   const clearStores = () => {
     clearProfile();
@@ -113,31 +123,34 @@ const AccountButton = () => {
                 </Menu.Item>
                 <Menu.Item>
                   <Link
-                    className="hover:bg-brandYellow hover:text-white w-full  p-2 "
+                    className="hover:bg-brandYellow hover:text-white w-full p-2 "
                     to="/account"
                   >
-                    Profile
+                    Account
                   </Link>
                 </Menu.Item>
+                { group === "admin" &&
+
+                  <Menu.Item>
+                    <Link
+                      className="w-full hover:text-white hover:bg-brandYellow p-2 "
+                      to="/admin"
+                    >
+                      Admin
+                    </Link>
+                  </Menu.Item>
+                }
                 <Menu.Item>
                   <Link
-                    className="w-full cursor-pointer hover:bg-brandYellow hover:text-white p-2 "
-                    to="/account/settings"
+                    className="w-full hover:text-white hover:bg-brandYellow p-2"
+                    to="/submit-event"
                   >
-                    Account Settings
-                  </Link>
-                </Menu.Item>
-                <Menu.Item>
-                  <Link
-                    className="w-full cursor-pointer hover:text-white hover:bg-brandYellow p-2 "
-                    to="/admin"
-                  >
-                    Admin
+                    Submit Event
                   </Link>
                 </Menu.Item>
                 <Menu.Item>
                   <div
-                    className="w-full cursor-pointer hover:text-white hover:bg-brandYellow p-2 "
+                    className="w-full cursor-pointer hover:text-white hover:bg-brandYellow p-2 border-t border-t-darkGreen"
                     onClick={handleSignOut}
                   >
                     Sign Out
@@ -147,21 +160,13 @@ const AccountButton = () => {
             ) : (
               <Menu.Item>
                 <Link
-                  className="w-full cursor-pointer hover:text-white hover:bg-brandYellow p-2 "
+                  className="w-full hover:text-white hover:bg-brandYellow p-2 "
                   to="/account"
                 >
                   Login In / Sign Up
                 </Link>
               </Menu.Item>
             )}
-            <Menu.Item>
-              <Link
-                className="w-full cursor-pointer hover:text-white hover:bg-brandYellow p-2"
-                to="/submit-event"
-                >
-                Submit Event
-              </Link>
-            </Menu.Item>
           </Menu.Items>
         </Transition>
       </Menu>
