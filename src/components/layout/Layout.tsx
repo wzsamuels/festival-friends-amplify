@@ -15,7 +15,7 @@ const Layout = () => {
   }, []);
   return (
     <div className="relative min-h-screen max-w-[100vw] overflow-hidden">
-      <div className="pt-header pb-footer">
+      <div className="pt-16 pb-footer">
         <Outlet />
       </div>
       <footer className="shadow-dropdown max-h-[56px] fixed bg-white bottom-0 left-0 right-0 flex justify-around items-center p-2">
