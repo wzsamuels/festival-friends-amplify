@@ -2,13 +2,10 @@ import React, {useEffect, useState} from "react";
 import {DataStore} from "@aws-amplify/datastore";
 import {Event} from "../../../models";
 import AdminEventCard from "./AdminEventCard";
-import Select from "../../common/Select";
 import useDataClearedStore from "../../../stores/dataClearedStore";
-import Toast from "../../common/Toast/Toast";
-import {EventInputs, ToastData} from "../../../types";
-import EventForm from "./EventForm";
-import {SubmitHandler} from "react-hook-form";
-import {approveEvent, createEvent, rejectEvent, updateEvent} from "../../../services/eventServices";
+import {approveEvent, rejectEvent} from "../../../services/eventServices";
+import CreateEvent from "./CreateEvent";
+import UpdateEvent from "./UpdateEvent";
 
 export const loader = async () => {
   return await DataStore.query(Event);
@@ -18,9 +15,8 @@ const AdminEventPage = () => {
   //const eventData = useLoaderData() as Event[];
   const [events, setEvents] = useState<Event[]>([]);
   const [unapprovedEvents, setUnapprovedEvents] = useState<Event[]>([]);
-  const [selectedEvent, setSelectedEvent] = useState("");
+
   const dataCleared = useDataClearedStore(state => state.dataCleared);
-  const [toastData, setToastData] = useState<ToastData | null>(null);
 
   useEffect(() => {
     if(!dataCleared) return;
@@ -47,36 +43,6 @@ const AdminEventPage = () => {
     setUnapprovedEvents(state => state.filter(event => event.id !== eventID))
   }
 
-  const handleEventCreate: SubmitHandler<EventInputs> = async (data) => {
-    const newEvent = await createEvent(data);
-    if(newEvent) {
-      setToastData({
-        type: "success",
-        message: "Event created!"
-      })
-    } else {
-      setToastData({
-        type: "error",
-        message: "Error creating event!"
-      })
-    }
-  }
-
-  const handleEventUpdate: SubmitHandler<EventInputs> = async (data) => {
-    const updatedEvent = await updateEvent(selectedEvent, data);
-    if(updatedEvent) {
-      setToastData({
-        type: "success",
-        message: "Event updated!"
-      })
-    } else {
-      setToastData({
-        type: "error",
-        message: "Error updating event!"
-      })
-    }
-  }
-
   return (
     <>
       <section className="w-full">
@@ -88,30 +54,11 @@ const AdminEventPage = () => {
         </div>
       </section>
       <section className="w-full max-w-xl my-8 mx-auto">
-        <h1 className="text-xl md:text-2xl">Create Event</h1>
-        <EventForm eventID={selectedEvent} onSubmit={handleEventCreate} />
+        <CreateEvent/>
       </section>
       <section className="w-full max-w-xl my-8 mx-auto flex flex-col items-center">
-        <h1 className="text-xl md:text-2xl text-center my-6">Update Events</h1>
-        <Select
-          onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSelectedEvent(e.target.value)}
-          name="state"
-          defaultValue=""
-        >
-          <option value="" disabled>
-            Select event
-          </option>
-          {events.map((event) => (
-            <option key={event.id} value={event.id}>
-              {event.name}
-            </option>
-          ))}
-        </Select>
-        { selectedEvent && <EventForm eventID={selectedEvent} onSubmit={handleEventUpdate} />}
+        <UpdateEvent events={events}/>
       </section>
-      {toastData &&
-        <Toast toastData={toastData}/>
-      }
     </>
   )
 }
