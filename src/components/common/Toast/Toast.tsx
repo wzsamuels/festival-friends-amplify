@@ -31,7 +31,7 @@ const Toast: React.FC<ToastProps> = ({
   }
 
   const toastColor = {
-    success: "bg-darkYellow",
+    success: "bg-lightYellow",
     error: "bg-red-200",
     info: "bg-blue-500",
     warning: "bg-yellow-400",
@@ -45,10 +45,10 @@ const Toast: React.FC<ToastProps> = ({
         } text-black`}
       >
         <div>
-          <p>{toastData.message}</p>
+          <p className="text-black">{toastData.message}</p>
         </div>
         <button
-          className="ml-4 text-white hover:text-gray-300"
+          className="ml-4 text-black hover:text-gray-300"
           onClick={() => {
             setVisible(false);
             onClose && onClose();
