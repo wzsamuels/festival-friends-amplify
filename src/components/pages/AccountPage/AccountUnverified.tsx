@@ -27,7 +27,7 @@ const AccountUnverified = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const {selectedFile, setSelectedFile, preview} = useFilePreview()
-  const { register, handleSubmit, control } = useForm<ProfileInputs>();
+  const { register, handleSubmit, control, formState: { errors } } = useForm<ProfileInputs>();
   const { fields, append, remove } = useFieldArray({name: "socialMedia", control})
 
   const createNewProfile: SubmitHandler<ProfileInputs> = async (data) => {
@@ -103,19 +103,17 @@ const AccountUnverified = () => {
   }
 
   return (
-    <div className="flex flex-col justify-center items-center mt-4 p-4">
-      <h1 className="text-xl md:text-2xl">Create Profile</h1>
-      <p className="my-6">
-        This personal information will be used to verify your identity for the
-        safety of our community. Please use a <span className="font-bold">new</span> photograph of yourself that Once your profile is verified, all your
-        information will be set to private until you specify otherwise.
-      </p>
-      <div className="flex justify-center w-full">
+    <div className="flex flex-col justify-center items-center mt-4 p-4 ">
+      <div className="w-full max-w-4xl shadow-xl p-4 my-4 rounded">
+        <h1 className="text-xl md:text-2xl text-center">Create Profile</h1>
+        <p className="my-6">
+          This personal information will be used to verify your identity for the
+          safety of our community. Please use a <span className="italic">new</span> photograph of yourself that is not anywhere else online. Once your profile is verified, you can control the privacy of your information.
+        </p>
         <form
-          className="w-full max-w-4xl shadow-xl p-4 my-4 rounded"
           onSubmit={handleSubmit(createNewProfile)}
         >
-          <div className="flex flex-col md:flex-row">
+          <div className="flex flex-col gap-4 md:flex-row">
             <InputWrapper className="my-4 flex-1">
               <Label className="">First Name</Label>
               <Input
@@ -128,7 +126,7 @@ const AccountUnverified = () => {
               <Input {...register("lastName", { required: true })} />
             </InputWrapper>
           </div>
-          <div className="flex flex-col md:flex-row">
+          <div className="flex flex-col gap-4 md:flex-row">
             <InputWrapper className="my-4 flex-1">
               <Label>City</Label>
               <Input {...register("city", { required: true })} name="city" />
@@ -151,15 +149,17 @@ const AccountUnverified = () => {
               </Select>
             </InputWrapper>
           </div>
-          <InputWrapper className="my-4">
-            <label className="basis-[150px]">Address</label>
-            <Input {...register("address", { required: true })} />
-          </InputWrapper>
-          <InputWrapper className="my-4">
-            <label className="basis-[150px]">Address 2</label>
-            <Input {...register("address2")} />
-          </InputWrapper>
-          <InputWrapper className="my-4">
+          <div className="flex flex-col gap-4 md:flex-row">
+            <InputWrapper className="my-4 flex-1">
+              <Label>Address</Label>
+              <Input {...register("address", { required: true })} />
+            </InputWrapper>
+            <InputWrapper className="my-4 flex-1">
+              <Label>Zip Code</Label>
+              <Input {...register("zipcode", { required: true })} />
+            </InputWrapper>
+          </div>
+          <InputWrapper className="my-8">
             <label className="basis-[150px]">Phone</label>
             <Controller
               name="phone"
@@ -173,6 +173,7 @@ const AccountUnverified = () => {
                   required
                   onChange={handlePhoneChange}
                   ref={inputRef}
+                  className="max-w-[150px]"
                 />
               )}
             />
@@ -235,6 +236,14 @@ const AccountUnverified = () => {
             </div>
             <ImageUpload setSelectedFile={setSelectedFile}/>
           </section>
+          {errors && <div>Error submitting form:</div>}
+          {errors.firstName && <div className="mt-2 text-red-500">First name is required</div>}
+          {errors.lastName && <div className="mt-2 text-red-500">Last name is required</div>}
+          {errors.city && <div className="mt-2 text-red-500">City is required</div>}
+          {errors.state && <div className="mt-2 text-red-500">State is required</div>}
+          {errors.address && <div className="mt-2 text-red-500">Address is required</div>}
+          {errors.phone && <div className="mt-2 text-red-500">Phone is required</div>}
+          {errors.zipcode && <div className="mt-2 text-red-500">Zipcode is required</div>}
           <div className="flex justify-center items-center my-6">
             <Button
               className="bg-primary-default text-light-default rounded-md px-8 py-2"
