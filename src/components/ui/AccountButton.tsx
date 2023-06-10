@@ -28,7 +28,7 @@ const AccountButton = () => {
     if(route !== "authenticated") return;
     Auth.currentAuthenticatedUser()
       .then(user => {
-        setGroup(user.signInUserSession.accessToken.payload["cognito:groups"].find((group: string) => group === "admin")?.toString() ?? "")
+        setGroup(user.signInUserSession.accessToken.payload["cognito:groups"]?.find((group: string) => group === "admin")?.toString() ?? "")
       })
   }, [route])
 
