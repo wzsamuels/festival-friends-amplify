@@ -1,36 +1,17 @@
-import InputWrapper from "../../common/InputWrapper/InputWrapper";
-import Label from "../../common/Label/Label";
-import Input from "../../common/Input/Input";
-import Select from "../../common/Select";
-import states from "../../../data/states";
-import TextArea from "../../common/TextArea";
 import Button from "../../common/Button/Button";
 import React, {useEffect, useState} from "react";
-import useFilePreview from "../../../hooks/useFilePreview";
-import {SubmitHandler, useForm} from "react-hook-form";
+import {SubmitHandler} from "react-hook-form";
 import {v4 as uuidv4} from "uuid";
 import {API, Storage} from "aws-amplify";
 import {DataStore} from "@aws-amplify/datastore";
 import {Event, Profile} from "../../../models";
-import {EventType} from "../../../API";
 import getErrorMessage from "../../../lib/getErrorMessage";
 import Header from "../../layout/Header";
 import {useAuthenticator} from "@aws-amplify/ui-react";
 import useProfileStore from "../../../stores/profileStore";
 import { useSearchParams } from "react-router-dom";
-
-interface EventInput {
-  name: string;
-  genre: string;
-  startDate: string;
-  endDate: string;
-  city: string;
-  state: string;
-  address: string;
-  description: string;
-  type: EventType;
-  url: string;
-}
+import EventForm from "../AdminPage/EventForm";
+import {EventInputs} from "../../../types";
 
 type EventPlan = "monthly" | "daily"
 type FormState = "plan" | "details" | "success"
@@ -39,8 +20,6 @@ const MONTHLY_PRICE = "price_1NF7b9IHoFjkR3tBgIOyZIV2"
 const DAILY_PRICE = "price_1NF70gIHoFjkR3tBDMNf67Cd"
 
 const SubmitEventPage = () => {
-  const { register, handleSubmit, reset, getValues } = useForm<EventInput>();
-  const { selectedFile, setSelectedFile, preview } = useFilePreview();
   const [plan, setPlan] = useState<EventPlan>("monthly")
   const [formState, setFormState] = useState<FormState>("plan")
   const [success, setSuccess] = useState(false)
@@ -61,22 +40,26 @@ const SubmitEventPage = () => {
     }
   }, [searchParams])
 
-  const makePayment:SubmitHandler<EventInput> = async (data) => {
+  const makePayment:SubmitHandler<EventInputs> = async (data) => {
+    const { selectedFile, ...restData } = data;
     if(!userProfile || !selectedFile) return;
     setSubmitting(true);
 
     try {
       console.log("Creating event image...")
       const id = uuidv4();
-      await Storage.put(`event-images/${id}`, selectedFile, {
+      alert(selectedFile.type);
+      const key = `event-images/${id}.${selectedFile.type.split("/")[1]}`
+      alert(key)
+      await Storage.put(key, selectedFile, {
         contentType: selectedFile.type,
       });
 
       console.log("Creating event...")
       const newEvent = await DataStore.save(
         new Event({
-          ...data,
-          image: `event-images/${id}`,
+          ...restData,
+          image: key,
           approved: false,
           hasPaid: false
         })
@@ -193,100 +176,10 @@ const SubmitEventPage = () => {
 
     if(formState === "details") {
       return (
-        <form onSubmit={handleSubmit(makePayment)} className='p-4 max-w-xl w-full'>
-          <InputWrapper className='my-4'>
-            <Label className="font-light uppercase">Name</Label>
-            <Input {...register("name", {required: true})}/>
-          </InputWrapper>
-          <InputWrapper className='my-4'>
-            <Label>Genre</Label>
-            <Input {...register("genre", {required: true})} />
-          </InputWrapper>
-          <InputWrapper className='my-4'>
-            <Label>Start date</Label>
-            <Input type="date" {...register("startDate", {required: true})} />
-          </InputWrapper>
-          <InputWrapper className='my-4'>
-            <Label>End date</Label>
-            <Input type="date" {...register("endDate", {required: true})} />
-          </InputWrapper>
-          <InputWrapper className='my-4'>
-            <Label>City</Label>
-            <Input {...register("city", {required: true})} />
-          </InputWrapper>
-          <div className="flex flex-wrap my-4">
-            <Label>State</Label>
-            <Select
-              {...register("state", { required: true })}
-              name="state"
-              defaultValue=""
-            >
-              <option value="" disabled>
-                Select state
-              </option>
-              {states.map((state) => (
-                <option key={state.code} value={state.name}>
-                  {state.name}
-                </option>
-              ))}
-            </Select>
-          </div>
-          <div className='flex flex-wrap my-4 items-center'>
-            <Label>Address</Label>
-            <Input {...register("address", {required: true})} />
-          </div>
-          <h2 className="my-4">Event image</h2>
-          {
-            preview ?
-              <img src={preview} alt="preview" className="w-full h-full" />
-              :
-              <div className="w-full h-full text-center min-h-[24rem] bg-gray-500 relative">
-                <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-2xl">No image selected</span>
-              </div>
-          }
-          <div className="flex justify-center">
-            <label
-              htmlFor="upload-profile-image-photo"
-              className="my-4 cursor-pointer flex justify-center px-4 py-2 uppercase font-light bg-brandYellow text-white "
-            >
-              Select Event Image
-            </label>
-            <input
-              type="file"
-              id="upload-profile-image-photo"
-              accept="image/png, image/jpeg"
-              onChange={(e) =>
-                e?.target?.files && setSelectedFile(e.target.files[0])
-              }
-              className="my-4 hidden"
-            />
-          </div>
-          <div className='flex flex-wrap my-4 items-center'>
-            <Label>Event description</Label>
-            <TextArea {...register("description", {required: true})} />
-          </div>
-          <div className='flex flex-wrap my-4 items-center'>
-            <Label>Event type</Label>
-            <Select
-              {...register("type", { required: true })}
-              name="type"
-              defaultValue=""
-            >
-              <option value="" disabled>
-                Select event type
-              </option>
-              {Object.values(EventType).map((type) => (
-                <option key={type} value={type}>
-                  {type}
-                </option>
-              ))}
-            </Select>
-          </div>
-          <div className="flex justify-between my-4">
-            <Button type="button" variation="outline" onClick={() => setFormState("plan")} className="mr-4">Back</Button>
-            <Button type="submit" className="disabled:opacity-50" disabled={submitting}>{submitting ? "Submitting..." : " Submit"}</Button>
-          </div>
-        </form>
+        <>
+          <EventForm onSubmit={makePayment} submitting={submitting}/>
+          <Button type="button" variation="outline" onClick={() => setFormState("plan")} className="mr-4">Back</Button>
+        </>
       )
     }
   }
