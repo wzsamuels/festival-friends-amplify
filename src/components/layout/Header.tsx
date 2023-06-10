@@ -1,7 +1,6 @@
 import React from "react";
 import AccountButton from "../ui/AccountButton";
 import SearchButton from "../ui/SearchButton";
-import { useAuthenticator } from "@aws-amplify/ui-react";
 import {Link} from "react-router-dom";
 
 interface HeaderProps {
@@ -10,7 +9,6 @@ interface HeaderProps {
 }
 
 const Header = ({ children, onSearch }: HeaderProps) => {
-  const { route } = useAuthenticator((context) => [context.route]);
 
   return (
     <header className="bg-white shadow-xl w-full flex items-center fixed  top-0 z-10">
@@ -25,7 +23,6 @@ const Header = ({ children, onSearch }: HeaderProps) => {
       <div className="mr-2 sm:mx-4 md:mx-4 ">
         <AccountButton />
       </div>
-
     </header>
   );
 };
