@@ -9,7 +9,7 @@ import {DataStore} from "@aws-amplify/datastore";
 import {ToastData} from "../../../types";
 import Toast from "../../common/Toast/Toast";
 
-const EventManagement = () => {
+const AccountEventPage = () => {
   const [events, setEvents] = useState<Event[]>([])
   const userProfile = useProfileStore(state => state.userProfile)
   const setProfile = useProfileStore(state => state.setProfile)
@@ -73,21 +73,23 @@ const EventManagement = () => {
 
   return (
     <div>
-      { events.map(event =>
-        <div key={event.id}>
-          <div>Event: {event.name}</div>
-          <div>Event SubID: {event.subscriptionID}</div>
-          <div>Event CustomerID: {event.customerID}</div>
-          {event.cancelled && <div className="text-red-500">Event Cancelled</div>}
-          <Button
-            disabled={cancelling === event.id || event.cancelled}
-            className="disabled:opacity-50"
-            onClick={() => cancelSubscription(event.subscriptionID, event.id)}
-          >
-            {renderButtonText(event)}
-          </Button>
-        </div>
-      )}
+      <div className="flex flex-wrap justify-center">
+        { events.map(event =>
+          <div className="m-4 shadow-xl rounded-xl p-4" key={event.id}>
+            <div>Event: {event.name}</div>
+            <div>Event SubID: {event.subscriptionID}</div>
+            <div>Event CustomerID: {event.customerID}</div>
+            {event.cancelled && <div className="text-red-500">Event Cancelled</div>}
+            <Button
+              disabled={cancelling === event.id || event.cancelled}
+              className="disabled:opacity-50"
+              onClick={() => cancelSubscription(event.subscriptionID, event.id)}
+            >
+              {renderButtonText(event)}
+            </Button>
+          </div>
+        )}
+      </div>
       <Button onClick={deleteAllEvents}>Delete All Events</Button>
       <Button onClick={clearCustomerID}>Clear Customer ID</Button>
       { toastData && <Toast toastData={toastData} />}
@@ -95,4 +97,4 @@ const EventManagement = () => {
   )
 }
 
-export default EventManagement
+export default AccountEventPage
