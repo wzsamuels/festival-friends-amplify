@@ -1,13 +1,19 @@
 import { Authenticator, useAuthenticator } from "@aws-amplify/ui-react";
 import React, { } from "react";
 import AccountUnverified from "./AccountUnverified";
-import AccountVerified from "./AccountVerified";
 import Header from "../../layout/Header";
 import LoadingState from "../../ui/LoadingState";
 import useProfileStore from "../../../stores/profileStore";
+import Nav from "../../layout/Nav";
+import {Outlet} from "react-router-dom";
 
-const AccountPage = () => {
-  const { user } = useAuthenticator((context) => [context.user]);
+const NavItems = [
+  { content: "Profile", link: "/account" },
+  { content: "Events", link: "/account/events" },
+  { content: "Settings", link: "/account/settings" }
+]
+
+const AccountLayout = () => {
   const { route } = useAuthenticator((context) => [context.route]);
   const { loadingUserProfile, userProfile } = useProfileStore();
 
@@ -38,7 +44,15 @@ const AccountPage = () => {
     }
 
     if (userProfile?.verified) {
-      return <AccountVerified user={user} />;
+      return (
+        <>
+          <Header>
+            <Nav items={NavItems}/>
+          </Header>
+          <Outlet/>
+        </>
+
+      );
     }
 
     if (!userProfile?.verified && userProfile?.submitted) {
@@ -73,4 +87,4 @@ const AccountPage = () => {
   );
 };
 
-export default AccountPage;
+export default AccountLayout;
