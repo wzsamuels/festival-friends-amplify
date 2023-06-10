@@ -47,8 +47,11 @@ const EventCard = ({ event, className }: EventCardProps) => {
 
   useEffect(() => {
     if (!dataCleared || !userProfile || !event) return;
-    // TODO
-    DataStore.query(EventProfile, c => c.eventId.eq(event.id))
+
+    DataStore.query(EventProfile, c => c.and(c => [
+      c.eventId.eq(event.id),
+      c.profileId.eq(userProfile.id)
+      ]))
       .then(([eventProfile]) => setEventProfile(eventProfile))
   }, [dataCleared, userProfile, event]);
 
