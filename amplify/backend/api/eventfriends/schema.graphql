@@ -66,8 +66,8 @@ type Event @model @auth(rules: [{ allow: public }]) {
   ticketURL: String
   hasPaid: Boolean @default(value: "false")
   cancelled: Boolean @default(value: "false")
+  approved: Boolean @default(value: "false")
   subscriptionID: String @index(name: "bySubID")
-  approved: Boolean @default(value: "true")
   group: Group @belongsTo(fields: ["groupID"])
   groupID: ID @index(name: "byGroup")
   attendees: [Profile] @manyToMany(relationName: "EventProfile")
