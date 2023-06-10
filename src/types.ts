@@ -1,4 +1,10 @@
 import {EventType} from "./models";
+import {ReactNode} from "react";
+
+export interface NavItem  {
+  content: ReactNode;
+  link: string;
+}
 
 export type ProfileInputs = {
   firstName: string;
@@ -11,6 +17,9 @@ export type ProfileInputs = {
   zipcode: string;
   address: string;
   address2: string;
+  gender: string;
+  hobbies: string;
+  birthdate: string;
   socialMedia: SocialMediaInput[];
 };
 
@@ -25,6 +34,7 @@ export interface EventInputs {
   type: EventType;
   description: string | null;
   url: string | null;
+  ticketURL: string | null;
   selectedFile: File | null;
 }
 
