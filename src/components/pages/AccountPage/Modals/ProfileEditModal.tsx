@@ -11,14 +11,9 @@ import { BsPerson } from "react-icons/all";
 import Modal from "../../../common/Modal/Modal";
 import useProfileStore from "../../../../stores/profileStore";
 
-const ProfileEditModal = ({
-  profile,
-  profileImage,
-  isOpen,
-  setIsOpen,
-  callback,
-}: ProfileModalProps) => {
+const ProfileEditModal = ({profile, profileImage, isOpen, setIsOpen, callback}: ProfileModalProps) => {
   const setProfile = useProfileStore((state) => state.setProfile);
+
   const handleProfileUpdate: SubmitHandler<ProfileInputs> = async (data) => {
     try {
       const originalProfile = await DataStore.query(Profile, profile.id);

@@ -12,6 +12,7 @@ import ImageUpload from "../../../common/ImageUpload";
 import useFilePreview from "../../../../hooks/useFilePreview";
 import {ToastData} from "../../../../types";
 import Toast from "../../../common/Toast/Toast";
+import {useAuthenticator} from "@aws-amplify/ui-react";
 
 export interface ProfileImageModalProps extends ProfileModalProps {
   photos: Photo[];
@@ -19,7 +20,6 @@ export interface ProfileImageModalProps extends ProfileModalProps {
 
 const BannerPhotoModal = ({
   profile,
-  sub,
   isOpen,
   setIsOpen,
   photos,
@@ -27,6 +27,8 @@ const BannerPhotoModal = ({
   const { selectedFile, setSelectedFile, preview } = useFilePreview();
   const setProfile = useProfileStore(state => state.setProfile)
   const [toastData, setToastData] = useState<ToastData>();
+  const { user } = useAuthenticator((context) => [context.user]);
+  const sub = user?.username as string;
 
   const handleProfileBannerUpdate = async () => {
     if (!selectedFile || !profile) return;

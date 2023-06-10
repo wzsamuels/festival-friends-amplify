@@ -3,6 +3,7 @@ import {createNewPhoto} from '../../../../services/photoServices'
 import { ProfileModalProps } from "../../../../@types/profile";
 import Modal from "../../../common/Modal/Modal";
 import Button from "../../../common/Button/Button";
+import {useAuthenticator} from "@aws-amplify/ui-react";
 
 export interface PhotoUploadModalProps extends ProfileModalProps {
   photoFile: File | null;
@@ -11,16 +12,11 @@ export interface PhotoUploadModalProps extends ProfileModalProps {
 
 // TODO: Give UI feedback on upload progress
 
-const PhotoUploadModal = ({
-  profile,
-  sub,
-  isOpen,
-  setIsOpen,
-  photoFile,
-  setPhotoFile,
-
-}: PhotoUploadModalProps) => {
+const PhotoUploadModal = ({profile, isOpen, setIsOpen, photoFile, setPhotoFile}: PhotoUploadModalProps) => {
   const [preview, setPreview] = useState("");
+  const { user } = useAuthenticator((context) => [context.user]);
+  const sub = user?.username as string;
+
   const handlePhotoUpload = async () => {
     if (photoFile && profile) {
       try {
