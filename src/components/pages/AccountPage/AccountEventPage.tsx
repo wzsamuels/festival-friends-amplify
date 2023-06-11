@@ -8,6 +8,7 @@ import {API} from "aws-amplify";
 import {DataStore} from "@aws-amplify/datastore";
 import {ToastData} from "../../../types";
 import Toast from "../../common/Toast/Toast";
+import {Link} from "react-router-dom";
 
 const AccountEventPage = () => {
   const [events, setEvents] = useState<Event[]>([])
@@ -33,9 +34,10 @@ const AccountEventPage = () => {
         },
       });
       console.log(response)
-      //setEvents(events => events.filter(event => event.subID !== subID))
-      setEvents(events => events.map(event => event.id === eventID ? {...event, cancelled: true} : event))
-      setCancelling("")
+
+      await DataStore.delete(Event, eventID);
+      setEvents(events => events.filter(event => event.id !== eventID))
+      //setEvents(events => events.map(event => event.id === eventID ? {...event, cancelled: true} : event))
       setToastData({
         message: "Subscription Cancelled",
         type: "success"
@@ -43,6 +45,12 @@ const AccountEventPage = () => {
       setCancelling("");
     } catch (e) {
       console.log("Error canceling sub:", e)
+      setToastData({
+        message: "Error canceling subscription",
+        type: "error"
+      })
+    } finally {
+      setCancelling("")
     }
   }
 
@@ -72,9 +80,10 @@ const AccountEventPage = () => {
   }
 
   return (
-    <div>
-      <div className="flex flex-wrap justify-center">
-        { events.map(event =>
+    <div className="my-6 flex flex-col items-center justify-center">
+      <Link to="/submit-event" className="my-4"><Button>Submit New Event</Button></Link>
+      <div className="flex flex-wrap justify-center ">
+        { events.length ? events.map(event =>
           <div className="m-4 shadow-xl rounded-xl p-4" key={event.id}>
             <div>Event: {event.name}</div>
             <div>Event SubID: {event.subscriptionID}</div>
@@ -88,10 +97,17 @@ const AccountEventPage = () => {
               {renderButtonText(event)}
             </Button>
           </div>
-        )}
+          )
+          :
+          <div>
+            <div>No events found</div>
+          </div>
+        }
       </div>
+      {/*
       <Button onClick={deleteAllEvents}>Delete All Events</Button>
       <Button onClick={clearCustomerID}>Clear Customer ID</Button>
+      */}
       { toastData && <Toast toastData={toastData} />}
     </div>
   )
