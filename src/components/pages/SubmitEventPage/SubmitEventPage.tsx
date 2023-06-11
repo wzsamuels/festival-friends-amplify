@@ -22,9 +22,8 @@ const DAILY_PRICE = "price_1NF70gIHoFjkR3tBDMNf67Cd"
 const SubmitEventPage = () => {
   const [plan, setPlan] = useState<EventPlan>("monthly")
   const [formState, setFormState] = useState<FormState>("plan")
-  const [success, setSuccess] = useState(false)
   const [sessionID, setSessionID] = useState("")
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const [submitting, setSubmitting] = useState(false);
   const { route } = useAuthenticator((context) => [context.route]);
   const userProfile = useProfileStore((state) => state.userProfile);
