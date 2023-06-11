@@ -114,6 +114,7 @@ export const updateEvent = async (eventID: string, data: EventInputs) => {
       updatedEvent.type = data.type;
       updatedEvent.description = data.description;
       updatedEvent.url = data.url;
+      updatedEvent.ticketURL = data.ticketURL;
       newImage && (updatedEvent.image = newImage);
     }))
   } catch (e) {

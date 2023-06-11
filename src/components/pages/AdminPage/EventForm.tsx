@@ -59,6 +59,7 @@ const EventForm = ({eventID, onSubmit, submitting, className} : EventFormProps) 
         endDate: event?.endDate,
         type: event?.type as EventType,
         description: event?.description,
+        ticketURL: event?.ticketURL,
         url: event?.url
       })
     } catch (e) {
