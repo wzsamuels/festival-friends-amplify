@@ -68,14 +68,14 @@ const NewRideModal = ({ isOpen, setIsOpen, event }: NewRideModalProps) => {
       <form className="p-4" onSubmit={handleSubmit(onSubmit)}>
         <InputWrapper className="my-4">
           <Label>Max passengers</Label>
-          <Input {...register("maxPassengers")} />
+          <Input className="max-w-[3rem]" type="number" {...register("maxPassengers")} />
         </InputWrapper>
         <InputWrapper className="my-4">
           <Label>Departure time</Label>
           <Input type="datetime-local" {...register("departureTime")} />
         </InputWrapper>
         <InputWrapper className="my-4">
-          <Label>Start point</Label>
+          <Label>Departure point</Label>
           <Input {...register("startPoint")} />
         </InputWrapper>
         <InputWrapper className="my-4">
