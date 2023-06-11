@@ -34,11 +34,18 @@ const AdminEventCard = ({ event, onApprove, onReject}: EventCardBaseProps) => {
       </div>
       <div className=" bottom-4 left-4 rounded-xl z-10 w-full p-4 font-bold ">
         <div className="bold min-h-[3rem]">
-          {event.name} - {event.location}
+          {event.name}
         </div>
-
-        <div>{event.startDate} - {event.endDate}</div>
-        <div>{event.description}</div>
+        <div>
+          <p>{event.city}, {event.state}</p>
+          <p>{event.address}</p>
+          <p>{event.startDate} - {event.endDate}</p>
+          <p>{event.genre}</p>
+          <p>{event.type}</p>
+          <p>{event.description}</p>
+          <p>{event.url}</p>
+          <p>{event.ticketURL}</p>
+        </div>
       </div>
       <div className='flex justify-center gap-4 mb-4'>
         <Button onClick={() => onReject(event.id)}>Reject</Button>
