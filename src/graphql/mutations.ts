@@ -81,8 +81,8 @@ export const createProfile = /* GraphQL */ `
             ticketURL
             hasPaid
             cancelled
-            subscriptionID
             approved
+            subscriptionID
             groupID
             createdAt
             updatedAt
@@ -382,8 +382,8 @@ export const createProfile = /* GraphQL */ `
             ticketURL
             hasPaid
             cancelled
-            subscriptionID
             approved
+            subscriptionID
             groupID
             createdAt
             updatedAt
@@ -553,8 +553,8 @@ export const updateProfile = /* GraphQL */ `
             ticketURL
             hasPaid
             cancelled
-            subscriptionID
             approved
+            subscriptionID
             groupID
             createdAt
             updatedAt
@@ -854,8 +854,8 @@ export const updateProfile = /* GraphQL */ `
             ticketURL
             hasPaid
             cancelled
-            subscriptionID
             approved
+            subscriptionID
             groupID
             createdAt
             updatedAt
@@ -1025,8 +1025,8 @@ export const deleteProfile = /* GraphQL */ `
             ticketURL
             hasPaid
             cancelled
-            subscriptionID
             approved
+            subscriptionID
             groupID
             createdAt
             updatedAt
@@ -1326,8 +1326,8 @@ export const deleteProfile = /* GraphQL */ `
             ticketURL
             hasPaid
             cancelled
-            subscriptionID
             approved
+            subscriptionID
             groupID
             createdAt
             updatedAt
@@ -1563,8 +1563,8 @@ export const createEvent = /* GraphQL */ `
       ticketURL
       hasPaid
       cancelled
-      subscriptionID
       approved
+      subscriptionID
       group {
         id
         name
@@ -1588,8 +1588,8 @@ export const createEvent = /* GraphQL */ `
             ticketURL
             hasPaid
             cancelled
-            subscriptionID
             approved
+            subscriptionID
             groupID
             createdAt
             updatedAt
@@ -1693,8 +1693,8 @@ export const createEvent = /* GraphQL */ `
             ticketURL
             hasPaid
             cancelled
-            subscriptionID
             approved
+            subscriptionID
             groupID
             createdAt
             updatedAt
@@ -1731,8 +1731,8 @@ export const createEvent = /* GraphQL */ `
             ticketURL
             hasPaid
             cancelled
-            subscriptionID
             approved
+            subscriptionID
             groupID
             createdAt
             updatedAt
@@ -1789,8 +1789,8 @@ export const updateEvent = /* GraphQL */ `
       ticketURL
       hasPaid
       cancelled
-      subscriptionID
       approved
+      subscriptionID
       group {
         id
         name
@@ -1814,8 +1814,8 @@ export const updateEvent = /* GraphQL */ `
             ticketURL
             hasPaid
             cancelled
-            subscriptionID
             approved
+            subscriptionID
             groupID
             createdAt
             updatedAt
@@ -1919,8 +1919,8 @@ export const updateEvent = /* GraphQL */ `
             ticketURL
             hasPaid
             cancelled
-            subscriptionID
             approved
+            subscriptionID
             groupID
             createdAt
             updatedAt
@@ -1957,8 +1957,8 @@ export const updateEvent = /* GraphQL */ `
             ticketURL
             hasPaid
             cancelled
-            subscriptionID
             approved
+            subscriptionID
             groupID
             createdAt
             updatedAt
@@ -2015,8 +2015,8 @@ export const deleteEvent = /* GraphQL */ `
       ticketURL
       hasPaid
       cancelled
-      subscriptionID
       approved
+      subscriptionID
       group {
         id
         name
@@ -2040,8 +2040,8 @@ export const deleteEvent = /* GraphQL */ `
             ticketURL
             hasPaid
             cancelled
-            subscriptionID
             approved
+            subscriptionID
             groupID
             createdAt
             updatedAt
@@ -2145,8 +2145,8 @@ export const deleteEvent = /* GraphQL */ `
             ticketURL
             hasPaid
             cancelled
-            subscriptionID
             approved
+            subscriptionID
             groupID
             createdAt
             updatedAt
@@ -2183,8 +2183,8 @@ export const deleteEvent = /* GraphQL */ `
             ticketURL
             hasPaid
             cancelled
-            subscriptionID
             approved
+            subscriptionID
             groupID
             createdAt
             updatedAt
@@ -2243,8 +2243,8 @@ export const createRide = /* GraphQL */ `
         ticketURL
         hasPaid
         cancelled
-        subscriptionID
         approved
+        subscriptionID
         group {
           id
           name
@@ -2399,8 +2399,8 @@ export const updateRide = /* GraphQL */ `
         ticketURL
         hasPaid
         cancelled
-        subscriptionID
         approved
+        subscriptionID
         group {
           id
           name
@@ -2555,8 +2555,8 @@ export const deleteRide = /* GraphQL */ `
         ticketURL
         hasPaid
         cancelled
-        subscriptionID
         approved
+        subscriptionID
         group {
           id
           name
@@ -5931,8 +5931,8 @@ export const createGroup = /* GraphQL */ `
           ticketURL
           hasPaid
           cancelled
-          subscriptionID
           approved
+          subscriptionID
           group {
             id
             name
@@ -6083,8 +6083,8 @@ export const updateGroup = /* GraphQL */ `
           ticketURL
           hasPaid
           cancelled
-          subscriptionID
           approved
+          subscriptionID
           group {
             id
             name
@@ -6235,8 +6235,8 @@ export const deleteGroup = /* GraphQL */ `
           ticketURL
           hasPaid
           cancelled
-          subscriptionID
           approved
+          subscriptionID
           group {
             id
             name
@@ -6540,8 +6540,8 @@ export const createEventProfile = /* GraphQL */ `
         ticketURL
         hasPaid
         cancelled
-        subscriptionID
         approved
+        subscriptionID
         group {
           id
           name
@@ -6789,8 +6789,8 @@ export const updateEventProfile = /* GraphQL */ `
         ticketURL
         hasPaid
         cancelled
-        subscriptionID
         approved
+        subscriptionID
         group {
           id
           name
@@ -7038,8 +7038,8 @@ export const deleteEventProfile = /* GraphQL */ `
         ticketURL
         hasPaid
         cancelled
-        subscriptionID
         approved
+        subscriptionID
         group {
           id
           name
@@ -7289,8 +7289,8 @@ export const createRideProfile = /* GraphQL */ `
           ticketURL
           hasPaid
           cancelled
-          subscriptionID
           approved
+          subscriptionID
           group {
             id
             name
@@ -7534,8 +7534,8 @@ export const updateRideProfile = /* GraphQL */ `
           ticketURL
           hasPaid
           cancelled
-          subscriptionID
           approved
+          subscriptionID
           group {
             id
             name
@@ -7779,8 +7779,8 @@ export const deleteRideProfile = /* GraphQL */ `
           ticketURL
           hasPaid
           cancelled
-          subscriptionID
           approved
+          subscriptionID
           group {
             id
             name

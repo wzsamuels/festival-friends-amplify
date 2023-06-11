@@ -651,17 +651,17 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "subscriptionID": {
-                    "name": "subscriptionID",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
                 "approved": {
                     "name": "approved",
                     "isArray": false,
                     "type": "Boolean",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "subscriptionID": {
+                    "name": "subscriptionID",
+                    "isArray": false,
+                    "type": "String",
                     "isRequired": false,
                     "attributes": []
                 },

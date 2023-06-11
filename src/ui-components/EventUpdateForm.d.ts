@@ -29,8 +29,8 @@ export declare type EventUpdateFormInputValues = {
     ticketURL?: string;
     hasPaid?: boolean;
     cancelled?: boolean;
-    subscriptionID?: string;
     approved?: boolean;
+    subscriptionID?: string;
 };
 export declare type EventUpdateFormValidationValues = {
     name?: ValidationFunction<string>;
@@ -48,8 +48,8 @@ export declare type EventUpdateFormValidationValues = {
     ticketURL?: ValidationFunction<string>;
     hasPaid?: ValidationFunction<boolean>;
     cancelled?: ValidationFunction<boolean>;
-    subscriptionID?: ValidationFunction<string>;
     approved?: ValidationFunction<boolean>;
+    subscriptionID?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type EventUpdateFormOverridesProps = {
@@ -69,8 +69,8 @@ export declare type EventUpdateFormOverridesProps = {
     ticketURL?: PrimitiveOverrideProps<TextFieldProps>;
     hasPaid?: PrimitiveOverrideProps<SwitchFieldProps>;
     cancelled?: PrimitiveOverrideProps<SwitchFieldProps>;
-    subscriptionID?: PrimitiveOverrideProps<TextFieldProps>;
     approved?: PrimitiveOverrideProps<SwitchFieldProps>;
+    subscriptionID?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type EventUpdateFormProps = React.PropsWithChildren<{
     overrides?: EventUpdateFormOverridesProps | undefined | null;

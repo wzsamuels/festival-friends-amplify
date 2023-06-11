@@ -28,8 +28,8 @@ export declare type EventCreateFormInputValues = {
     ticketURL?: string;
     hasPaid?: boolean;
     cancelled?: boolean;
-    subscriptionID?: string;
     approved?: boolean;
+    subscriptionID?: string;
 };
 export declare type EventCreateFormValidationValues = {
     name?: ValidationFunction<string>;
@@ -47,8 +47,8 @@ export declare type EventCreateFormValidationValues = {
     ticketURL?: ValidationFunction<string>;
     hasPaid?: ValidationFunction<boolean>;
     cancelled?: ValidationFunction<boolean>;
-    subscriptionID?: ValidationFunction<string>;
     approved?: ValidationFunction<boolean>;
+    subscriptionID?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type EventCreateFormOverridesProps = {
@@ -68,8 +68,8 @@ export declare type EventCreateFormOverridesProps = {
     ticketURL?: PrimitiveOverrideProps<TextFieldProps>;
     hasPaid?: PrimitiveOverrideProps<SwitchFieldProps>;
     cancelled?: PrimitiveOverrideProps<SwitchFieldProps>;
-    subscriptionID?: PrimitiveOverrideProps<TextFieldProps>;
     approved?: PrimitiveOverrideProps<SwitchFieldProps>;
+    subscriptionID?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type EventCreateFormProps = React.PropsWithChildren<{
     overrides?: EventCreateFormOverridesProps | undefined | null;

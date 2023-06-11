@@ -46,8 +46,8 @@ export default function EventUpdateForm(props) {
     ticketURL: "",
     hasPaid: false,
     cancelled: false,
-    subscriptionID: "",
     approved: false,
+    subscriptionID: "",
   };
   const [name, setName] = React.useState(initialValues.name);
   const [genre, setGenre] = React.useState(initialValues.genre);
@@ -66,10 +66,10 @@ export default function EventUpdateForm(props) {
   const [ticketURL, setTicketURL] = React.useState(initialValues.ticketURL);
   const [hasPaid, setHasPaid] = React.useState(initialValues.hasPaid);
   const [cancelled, setCancelled] = React.useState(initialValues.cancelled);
+  const [approved, setApproved] = React.useState(initialValues.approved);
   const [subscriptionID, setSubscriptionID] = React.useState(
     initialValues.subscriptionID
   );
-  const [approved, setApproved] = React.useState(initialValues.approved);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = eventRecord
@@ -90,8 +90,8 @@ export default function EventUpdateForm(props) {
     setTicketURL(cleanValues.ticketURL);
     setHasPaid(cleanValues.hasPaid);
     setCancelled(cleanValues.cancelled);
-    setSubscriptionID(cleanValues.subscriptionID);
     setApproved(cleanValues.approved);
+    setSubscriptionID(cleanValues.subscriptionID);
     setErrors({});
   };
   const [eventRecord, setEventRecord] = React.useState(eventModelProp);
@@ -121,8 +121,8 @@ export default function EventUpdateForm(props) {
     ticketURL: [],
     hasPaid: [],
     cancelled: [],
-    subscriptionID: [],
     approved: [],
+    subscriptionID: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -165,8 +165,8 @@ export default function EventUpdateForm(props) {
           ticketURL,
           hasPaid,
           cancelled,
-          subscriptionID,
           approved,
+          subscriptionID,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -237,8 +237,8 @@ export default function EventUpdateForm(props) {
               ticketURL,
               hasPaid,
               cancelled,
-              subscriptionID,
               approved,
+              subscriptionID,
             };
             const result = onChange(modelFields);
             value = result?.name ?? value;
@@ -277,8 +277,8 @@ export default function EventUpdateForm(props) {
               ticketURL,
               hasPaid,
               cancelled,
-              subscriptionID,
               approved,
+              subscriptionID,
             };
             const result = onChange(modelFields);
             value = result?.genre ?? value;
@@ -317,8 +317,8 @@ export default function EventUpdateForm(props) {
               ticketURL,
               hasPaid,
               cancelled,
-              subscriptionID,
               approved,
+              subscriptionID,
             };
             const result = onChange(modelFields);
             value = result?.image ?? value;
@@ -357,8 +357,8 @@ export default function EventUpdateForm(props) {
               ticketURL,
               hasPaid,
               cancelled,
-              subscriptionID,
               approved,
+              subscriptionID,
             };
             const result = onChange(modelFields);
             value = result?.state ?? value;
@@ -397,8 +397,8 @@ export default function EventUpdateForm(props) {
               ticketURL,
               hasPaid,
               cancelled,
-              subscriptionID,
               approved,
+              subscriptionID,
             };
             const result = onChange(modelFields);
             value = result?.city ?? value;
@@ -438,8 +438,8 @@ export default function EventUpdateForm(props) {
               ticketURL,
               hasPaid,
               cancelled,
-              subscriptionID,
               approved,
+              subscriptionID,
             };
             const result = onChange(modelFields);
             value = result?.startDate ?? value;
@@ -479,8 +479,8 @@ export default function EventUpdateForm(props) {
               ticketURL,
               hasPaid,
               cancelled,
-              subscriptionID,
               approved,
+              subscriptionID,
             };
             const result = onChange(modelFields);
             value = result?.endDate ?? value;
@@ -519,8 +519,8 @@ export default function EventUpdateForm(props) {
               ticketURL,
               hasPaid,
               cancelled,
-              subscriptionID,
               approved,
+              subscriptionID,
             };
             const result = onChange(modelFields);
             value = result?.type ?? value;
@@ -585,8 +585,8 @@ export default function EventUpdateForm(props) {
               ticketURL,
               hasPaid,
               cancelled,
-              subscriptionID,
               approved,
+              subscriptionID,
             };
             const result = onChange(modelFields);
             value = result?.address ?? value;
@@ -625,8 +625,8 @@ export default function EventUpdateForm(props) {
               ticketURL,
               hasPaid,
               cancelled,
-              subscriptionID,
               approved,
+              subscriptionID,
             };
             const result = onChange(modelFields);
             value = result?.description ?? value;
@@ -665,8 +665,8 @@ export default function EventUpdateForm(props) {
               ticketURL,
               hasPaid,
               cancelled,
-              subscriptionID,
               approved,
+              subscriptionID,
             };
             const result = onChange(modelFields);
             value = result?.url ?? value;
@@ -705,8 +705,8 @@ export default function EventUpdateForm(props) {
               ticketURL,
               hasPaid,
               cancelled,
-              subscriptionID,
               approved,
+              subscriptionID,
             };
             const result = onChange(modelFields);
             value = result?.customerID ?? value;
@@ -745,8 +745,8 @@ export default function EventUpdateForm(props) {
               ticketURL: value,
               hasPaid,
               cancelled,
-              subscriptionID,
               approved,
+              subscriptionID,
             };
             const result = onChange(modelFields);
             value = result?.ticketURL ?? value;
@@ -785,8 +785,8 @@ export default function EventUpdateForm(props) {
               ticketURL,
               hasPaid: value,
               cancelled,
-              subscriptionID,
               approved,
+              subscriptionID,
             };
             const result = onChange(modelFields);
             value = result?.hasPaid ?? value;
@@ -825,8 +825,8 @@ export default function EventUpdateForm(props) {
               ticketURL,
               hasPaid,
               cancelled: value,
-              subscriptionID,
               approved,
+              subscriptionID,
             };
             const result = onChange(modelFields);
             value = result?.cancelled ?? value;
@@ -840,6 +840,46 @@ export default function EventUpdateForm(props) {
         errorMessage={errors.cancelled?.errorMessage}
         hasError={errors.cancelled?.hasError}
         {...getOverrideProps(overrides, "cancelled")}
+      ></SwitchField>
+      <SwitchField
+        label="Approved"
+        defaultChecked={false}
+        isDisabled={false}
+        isChecked={approved}
+        onChange={(e) => {
+          let value = e.target.checked;
+          if (onChange) {
+            const modelFields = {
+              name,
+              genre,
+              image,
+              state,
+              city,
+              startDate,
+              endDate,
+              type,
+              address,
+              description,
+              url,
+              customerID,
+              ticketURL,
+              hasPaid,
+              cancelled,
+              approved: value,
+              subscriptionID,
+            };
+            const result = onChange(modelFields);
+            value = result?.approved ?? value;
+          }
+          if (errors.approved?.hasError) {
+            runValidationTasks("approved", value);
+          }
+          setApproved(value);
+        }}
+        onBlur={() => runValidationTasks("approved", approved)}
+        errorMessage={errors.approved?.errorMessage}
+        hasError={errors.approved?.hasError}
+        {...getOverrideProps(overrides, "approved")}
       ></SwitchField>
       <TextField
         label="Subscription id"
@@ -865,8 +905,8 @@ export default function EventUpdateForm(props) {
               ticketURL,
               hasPaid,
               cancelled,
-              subscriptionID: value,
               approved,
+              subscriptionID: value,
             };
             const result = onChange(modelFields);
             value = result?.subscriptionID ?? value;
@@ -881,46 +921,6 @@ export default function EventUpdateForm(props) {
         hasError={errors.subscriptionID?.hasError}
         {...getOverrideProps(overrides, "subscriptionID")}
       ></TextField>
-      <SwitchField
-        label="Approved"
-        defaultChecked={false}
-        isDisabled={false}
-        isChecked={approved}
-        onChange={(e) => {
-          let value = e.target.checked;
-          if (onChange) {
-            const modelFields = {
-              name,
-              genre,
-              image,
-              state,
-              city,
-              startDate,
-              endDate,
-              type,
-              address,
-              description,
-              url,
-              customerID,
-              ticketURL,
-              hasPaid,
-              cancelled,
-              subscriptionID,
-              approved: value,
-            };
-            const result = onChange(modelFields);
-            value = result?.approved ?? value;
-          }
-          if (errors.approved?.hasError) {
-            runValidationTasks("approved", value);
-          }
-          setApproved(value);
-        }}
-        onBlur={() => runValidationTasks("approved", approved)}
-        errorMessage={errors.approved?.errorMessage}
-        hasError={errors.approved?.hasError}
-        {...getOverrideProps(overrides, "approved")}
-      ></SwitchField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}

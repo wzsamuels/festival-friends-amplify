@@ -199,8 +199,8 @@ type EagerEvent = {
   readonly ticketURL?: string | null;
   readonly hasPaid?: boolean | null;
   readonly cancelled?: boolean | null;
-  readonly subscriptionID?: string | null;
   readonly approved?: boolean | null;
+  readonly subscriptionID?: string | null;
   readonly group?: Group | null;
   readonly groupID?: string | null;
   readonly attendees?: (EventProfile | null)[] | null;
@@ -230,8 +230,8 @@ type LazyEvent = {
   readonly ticketURL?: string | null;
   readonly hasPaid?: boolean | null;
   readonly cancelled?: boolean | null;
-  readonly subscriptionID?: string | null;
   readonly approved?: boolean | null;
+  readonly subscriptionID?: string | null;
   readonly group: AsyncItem<Group | undefined>;
   readonly groupID?: string | null;
   readonly attendees: AsyncCollection<EventProfile>;
