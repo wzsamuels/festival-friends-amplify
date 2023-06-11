@@ -40,9 +40,12 @@ const GroupsPage = () => {
 
   useEffect(() => {
     if(!collegeGroup || !dataCleared) return
-      const collegeGroupSub = DataStore.observeQuery(Event, (festival) =>
-        festival.groupID.eq(collegeGroup.id)
-      ).subscribe(({ items }) => {
+      const collegeGroupSub = DataStore.observeQuery(Event, c => c.and( c => [
+        c.groupID.eq(collegeGroup.id),
+        c.approved.eq(true),
+        c.cancelled.eq(false),
+        c.endDate.ge(new Date().toString()),
+      ])).subscribe(({ items }) => {
         setGroupEvents(items);
       });
       return () => collegeGroupSub.unsubscribe();
