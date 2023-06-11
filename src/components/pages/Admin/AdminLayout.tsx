@@ -3,6 +3,13 @@ import {Link, Outlet} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import {useAuthenticator} from "@aws-amplify/ui-react";
 import {Auth} from "aws-amplify";
+import Nav from "../../layout/Nav";
+
+const NavItems = [
+  { content: "Events", link: "/admin/events" },
+  { content: "Accounts", link: "/admin/accounts" },
+  { content: "Database", link: "/admin/database" }
+]
 
 const AdminLayout = () => {
   const [group, setGroup] = useState("")
@@ -30,15 +37,9 @@ const AdminLayout = () => {
   return (
     <>
       <Header>
-        <div className='w-full flex justify-around'>
-          <Link to="/admin">Events</Link>
-          <Link to="/admin/accounts">Accounts</Link>
-          <Link to="/admin/database">Database</Link>
-        </div>
+        <Nav items={NavItems}/>
       </Header>
-      <div className='my-8 p-4'>
-        <Outlet/>
-      </div>
+      <Outlet/>
     </>
   )
 }

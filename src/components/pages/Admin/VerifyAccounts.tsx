@@ -55,8 +55,7 @@ const VerifyAccounts = () => {
   };
 
   return (
-    <div className="w-full items-center flex flex-col">
-      <div className="max-w-lg w-full">
+    <div className="flex flex-col items-center justify-center">
         <h1 className="text-xl md:text-2xl">Profiles Needing Verification</h1>
         {unverifiedProfiles.map((profile) =>
           <AccountInfo key={profile.id} profile={profile} onVerify={verifyProfile} />
@@ -72,7 +71,6 @@ const VerifyAccounts = () => {
             }}
           />
         )}
-      </div>
     </div>
   );
 }

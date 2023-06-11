@@ -7,7 +7,7 @@ import colleges from "../../../data/colleges.json";
 import Button from "../../common/Button/Button";
 import React, {useEffect, useState} from "react";
 
-const SeedDatabase = () => {
+const SeedDatabasePage = () => {
   const [groups, setGroups] = useState<Group[]>([]);
 
   useEffect(() => {
@@ -120,4 +120,4 @@ const SeedDatabase = () => {
   )
 }
 
-export default SeedDatabase;
+export default SeedDatabasePage;
