@@ -76,10 +76,6 @@ const RideCard = ({ ride, className }: RideCardProps) => {
 
   return (
     <div className={`flex flex-col shadow-xl p-4 rounded-lg ${className} relative`}>
-      { event?.cancelled === true ? "Cancelled" : "Upcoming"}
-      {
-        event?.cancelled && <div className="absolute inset-0 bg-red-950 opacity-50 w-full h-full">Event Cancelled</div>
-      }
       <div className="flex flex-col md:flex-row gap-4">
         <div className="flex flex-col flex-1">
           <h2>

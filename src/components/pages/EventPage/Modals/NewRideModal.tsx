@@ -44,6 +44,7 @@ const NewRideModal = ({ isOpen, setIsOpen, event }: NewRideModalProps) => {
           driverProfileID: userProfile.id
         })
       );
+      console.log("new ride:  ", newRide);
       await DataStore.save(
         new RideProfile({
           ride: newRide,

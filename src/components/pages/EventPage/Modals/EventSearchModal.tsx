@@ -35,8 +35,6 @@ const EventSearchModal = ({ isOpen, setIsOpen }: ModalProps) => {
       }
     });
 
-    console.log(data);
-
     const eventResults = events.filter(event =>
       // Check if location is included in the search criteria and if it matches the event's location.
       (!data['state'] || (event?.state && event.state.includes(data['state']))) &&

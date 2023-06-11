@@ -1,11 +1,8 @@
 // React imports
-import React, { useState } from "react";
+import React, {useState} from "react";
 
 // Local imports
-import {
-  EventType,
-  Event
-} from "../../../models";
+import {EventType, Event} from "../../../models";
 import EventCard from "../../ui/EventCard";
 import Header from "../../layout/Header";
 import Segment from "../../common/Segment/Segment";
@@ -16,6 +13,7 @@ import LoadingState from "../../ui/LoadingState";
 const EventPage = () => {
   // Filter events by type
   const events = useEventStore(state => state.events).filter((event) => !event.cancelled);
+  //const [events, setEvents] = useState<Event[]>([]);
   const loadingEvents = useEventStore(state => state.loadingEvents)
   const sportEvents = events.filter((event) => event.type === EventType.SPORT);
   const musicEvents = events.filter((event) => event.type === EventType.MUSIC);
@@ -23,6 +21,22 @@ const EventPage = () => {
   const travelEvents = events.filter((event) => event.type === EventType.TRAVEL)
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
   const [eventType, setEventType] = useState("music");
+  //const dataCleared = useDataClearedStore(state => state.dataCleared)
+
+  /*
+  useEffect(() => {
+    if(!dataCleared) return;
+
+    DataStore.query(Event, c => c.and(c => [
+      c.cancelled.eq(false),
+      c.hasPaid.eq(true),
+      c.approved.eq(true)
+    ]))
+      .then(events => setEvents(events))
+      .catch(err => console.log(err))
+  },[])
+
+   */
 
   // Render festival cards
   const renderFestivalCards = (events: Event[]) => {
