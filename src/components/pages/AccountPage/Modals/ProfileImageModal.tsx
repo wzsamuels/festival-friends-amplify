@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Photo } from "../../../../models";
 import { ProfileModalProps } from "../../../../@types/profile";
 import PhotoImage from "../../../ui/PhotoImage";
