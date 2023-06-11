@@ -9,6 +9,7 @@ import {DataStore} from "@aws-amplify/datastore";
 import {ToastData} from "../../../types";
 import Toast from "../../common/Toast/Toast";
 import {Link} from "react-router-dom";
+import {deleteEvent} from "../../../services/eventServices";
 
 const AccountEventPage = () => {
   const [events, setEvents] = useState<Event[]>([])
@@ -35,7 +36,7 @@ const AccountEventPage = () => {
       });
       console.log(response)
 
-      await DataStore.delete(Event, eventID);
+      await deleteEvent(eventID);
       setEvents(events => events.filter(event => event.id !== eventID))
       //setEvents(events => events.map(event => event.id === eventID ? {...event, cancelled: true} : event))
       setToastData({

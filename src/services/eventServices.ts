@@ -1,5 +1,5 @@
 import {DataStore, Storage} from "aws-amplify";
-import {Event, Ride, Profile, EventProfile} from "../models";
+import {Event, Ride, Profile, EventProfile, RideProfile} from "../models";
 import {EventInputs} from "../types";
 import {v4 as uuidv4} from "uuid";
 
@@ -146,11 +146,28 @@ export const rejectEvent = async (eventID: string) => {
   }
 }
 
-export const getAttendees = async (eventId: string) => {
+export const getAttendees = async (eventID: string) => {
   try {
-    return await DataStore.query(Profile, c => c.events.event.id.eq(eventId))
+    return await DataStore.query(Profile, c => c.events.event.id.eq(eventID))
   } catch (error) {
     console.log("Error getting event attendees", error)
     return [];
+  }
+}
+
+export const deleteEvent = async (eventID: string) => {
+  try {
+    await DataStore.delete(EventProfile, c => c.eventId.eq(eventID))
+    const rides = await DataStore.query(Ride, c => c.eventID.eq(eventID))
+    for (const ride of rides) {
+      await DataStore.delete(RideProfile, c => c.rideId.eq(ride.id))
+      await DataStore.delete(Ride, ride.id)
+    }
+    const deletedEvent = await DataStore.delete(Event, eventID);
+    console.log("Event deleted:", deletedEvent);
+    return deletedEvent;
+  } catch (e) {
+    console.log("Error deleting event", e)
+    return null;
   }
 }
