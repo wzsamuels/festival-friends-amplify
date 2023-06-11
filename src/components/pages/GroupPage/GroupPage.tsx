@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAuthenticator } from "@aws-amplify/ui-react";
-import {
-  Group,
-  Event,
-  Profile,
-} from "../../../models";
+import {Group, Event} from "../../../models";
 import { Link } from "react-router-dom";
 import Header from "../../layout/Header";
 import Button from "../../common/Button/Button";
@@ -13,8 +9,6 @@ import { DataStore } from "aws-amplify";
 import CreateEventModal from "./Modals/CreateEventModal";
 import useDataClearedStore from "../../../stores/dataClearedStore";
 import useProfileStore from "../../../stores/profileStore";
-import useFriendStore from "../../../stores/friendProfileStore";
-
 const GroupsPage = () => {
   const [collegeGroup, setGroup] = useState<Group>();
   const [events, setGroupEvents] = useState<Event[]>([]);
@@ -62,8 +56,8 @@ const GroupsPage = () => {
     return (
       <>
         <Header />
-        <div className='bg-[url("/src/images/group.png")] w-full bg-cover flex flex-col items-center justify-center h-full min-h-screen p-2'>
-          <div className="text-brandYellow font-bold flex flex-col items-center justify-center  bg-white p-4 rounded-xl w-full max-w-lg ">
+        <div className='bg-[url("/src/images/group.png")] w-full bg-cover relative min-h-[calc(100vh-7rem)] h-full'>
+          <div className="flex flex-col items-center justify-center  bg-white p-4 rounded-xl w-full max-w-lg absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
               {authStatus !== "authenticated" ? (
                 <>
                   <h1 className="m-4 text-xl">

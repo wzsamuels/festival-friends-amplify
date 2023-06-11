@@ -159,8 +159,8 @@ const FriendsPage: React.FC = () => {
 
     if (route !== "authenticated") {
       return (
-        <div className='bg-[url("/src/images/friends5.jpeg")] w-full bg-cover flex flex-col items-center justify-center h-full min-h-screen p-2'>
-          <div className="text-brandYellow font-bold flex flex-col items-center justify-center  bg-white p-4 rounded-xl w-full max-w-lg ">
+        <div className='bg-[url("/src/images/friends5.jpeg")] w-full bg-cover relative min-h-[calc(100vh-7rem)] h-full'>
+          <div className="flex flex-col items-center justify-center  bg-white p-4 rounded-xl w-full max-w-lg absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
             <h1 className="m-4 text-xl">
               Login in to view your friends.
             </h1>
@@ -232,7 +232,7 @@ const FriendsPage: React.FC = () => {
 
     if (currentType.friends.length === 0) {
       return (
-        <div>
+        <div className={"p-4 w-full flex-col items-center justify-center"}>
           <h1 className="text-xl my-4">{currentType.noFriendsMessage}</h1>
           <p>
             Want more friends? Try searching for them or checking out the
@@ -243,10 +243,12 @@ const FriendsPage: React.FC = () => {
     }
 
     return (
-      <FriendsList
-        buttons={currentType.buttons}
-        friends={currentType.friends}
-      />
+      <div className={"p-4 w-full flex-col items-center justify-center"}>
+        <FriendsList
+          buttons={currentType.buttons}
+          friends={currentType.friends}
+        />
+      </div>
     );
   };
 
@@ -316,7 +318,7 @@ const FriendsPage: React.FC = () => {
           items={segmentItems}
         />
       </Header>
-      <div className={"p-4 w-full flex-col items-center justify-center"}>{renderFriends()}</div>
+      {renderFriends()}
       <FriendSearchModal
         isOpen={isFriendsModalOpen}
         setIsOpen={setIsFriendsModalOpen}
