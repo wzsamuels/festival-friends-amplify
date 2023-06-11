@@ -94,58 +94,64 @@ const EventCard = ({ event, className }: EventCardProps) => {
         </div>
       </Link>
       <div className="p-2 text-base md:text-lg">
-        {userProfile ? (
+        {userProfile &&
           <>
             <div>
-            <button
-              className="my-2"
-              disabled={friendsAttending.length === 0}
-              onClick={() => setIsEventFriendModalOpen(true)}
-            >
-              {friendsAttending.length > 0 ? (
-                <span className="underline">
-                  {friendsAttending.length} friend
-                  {friendsAttending.length > 1 ? "s" : ""}{" "}
-                  {friendsAttending.length > 1 ? "are" : "is"} attending
-                </span>
-              ) : (
-                <span>&nbsp;</span>
-              )}
-            </button>
+              <button
+                className="my-2"
+                disabled={friendsAttending.length === 0}
+                onClick={() => setIsEventFriendModalOpen(true)}
+              >
+                {friendsAttending.length > 0 ? (
+                  <span className="underline">
+                    {friendsAttending.length} friend
+                    {friendsAttending.length > 1 ? "s" : ""}{" "}
+                    {friendsAttending.length > 1 ? "are" : "is"} attending
+                  </span>
+                ) : (
+                  <span>&nbsp;</span>
+                )}
+              </button>
             </div>
             <div>
-            <button
-              className="mb-2">
-              {attendeeProfiles.length > 0 ? (
-                <span className="underline my-4">
-                  {attendeeProfiles.length}{" "}
-                  {attendeeProfiles.length > 1 ? "people" : "person"}{" "}
-                  {attendeeProfiles.length > 1 ? "are" : "is"} attending
-                </span>
-              ) : (
-                <span>&nbsp;</span>
-              )}
-            </button>
+              <button
+                className="mb-2">
+                { attendeeProfiles.length > 0 ?
+                  <span className="underline my-4">
+                    {attendeeProfiles.length}{" "}
+                    {attendeeProfiles.length > 1 ? "people" : "person"}{" "}
+                    {attendeeProfiles.length > 1 ? "are" : "is"} attending
+                  </span>
+                  :
+                  <span>&nbsp;</span>
+                }
+              </button>
             </div>
-            {eventProfile ? (
-              <Button
-                onClick={handleAttendEvent}
-                className="flex items-center"
-              >
-                <span>I&apos;ll be there!</span>
-                <BsCheck />
-              </Button>
-            ) : (
-              <Button
-                onClick={handleAttendEvent}
-                variation="outline"
-                className="flex items-center"
-              >
-                <span>I&apos;ll be there!</span>
-              </Button>
-            )}
+
           </>
-        ) : null}
+        }
+        <div className="flex gap-4">
+          {userProfile && (eventProfile ?
+            <Button
+              onClick={handleAttendEvent}
+              className="flex items-center"
+            >
+              <span>I&apos;ll be there!</span>
+              <BsCheck />
+            </Button>
+          :
+            <Button
+              onClick={handleAttendEvent}
+              variation="outline"
+              className="flex items-center"
+            >
+              <span>I&apos;ll be there!</span>
+            </Button>
+          )}
+          { event.ticketURL &&
+            <Link to={event.ticketURL} target="_blank" rel="noreferrer"><Button>Buy Tickets</Button></Link>
+          }
+        </div>
       </div>
       <EventFriendModal
         event={event}
