@@ -33,8 +33,7 @@ const CreateEventModal = ({isOpen, setIsOpen, group,}: CreateEventModalProps) =>
             image: `event-images/${id}`,
             group: group,
             groupID: group.id,
-            hasPaid: true,
-            type: EventType.COLLEGE
+            hasPaid: true
           })
         );
       } catch (e) {
