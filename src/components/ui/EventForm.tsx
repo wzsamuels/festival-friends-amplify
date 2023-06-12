@@ -1,17 +1,17 @@
-import Input from "../../common/Input/Input";
-import Select from "../../common/Select";
-import states from "../../../data/states";
-import {EventType} from "../../../models";
-import TextArea from "../../common/TextArea";
-import Button from "../../common/Button/Button";
-import ImageUpload from "../../common/ImageUpload";
+import Input from "../common/Input/Input";
+import Select from "../common/Select";
+import states from "../../data/states";
+import {EventType} from "../../models";
+import TextArea from "../common/TextArea";
+import Button from "../common/Button/Button";
+import ImageUpload from "../common/ImageUpload";
 import React, {useContext, useEffect, useState} from "react";
-import useFilePreview from "../../../hooks/useFilePreview";
+import useFilePreview from "../../hooks/useFilePreview";
 import {SubmitHandler, useForm} from "react-hook-form";
-import {EventInputs} from "../../../types";
-import { Event } from "../../../models";
-import ImageContext from "../../../context/ImageContext";
-import {getEvent} from "../../../services/eventServices";
+import {EventInputs} from "../../types";
+import { Event } from "../../models";
+import ImageContext from "../../context/ImageContext";
+import {getEvent} from "../../services/eventServices";
 
 interface EventFormProps {
   eventID?: string;

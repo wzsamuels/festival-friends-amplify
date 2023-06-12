@@ -4,40 +4,38 @@ import ImageContext from "../../context/ImageContext";
 import { Event } from "../../models";
 
 interface EventCardBaseProps {
-  festival: Event
+  event: Event
   className?: string
 }
 
-const EventCardBase = ({ festival, className }: EventCardBaseProps) => {
+const EventCardBase = ({ event, className }: EventCardBaseProps) => {
   const { getSignedURL } = useContext(ImageContext);
-  const [festivalImage, setFestivalImage] = useState("");
+  const [eventImage, setFestivalImage] = useState("");
   useEffect(() => {
     const fetchSignedURL = async () => {
-      const url = await getSignedURL(festival.image, "public");
+      const url = await getSignedURL(event.image, "public");
       setFestivalImage(url);
     };
 
     fetchSignedURL();
-  }, [festival.image, getSignedURL]);
+  }, [event.image, getSignedURL]);
 
   return (
     <div className={`rounded-xl shadow-md w-full max-w-[350px] bg-light-default ${className}`}>
-      <Link className="relative" to={`/events/${festival.id}`}>
+      <Link className="relative" to={`/events/${event.id}`}>
         <div className="w-full max-w-[350px] min-h-[350px] h-full max-h-[350px] object-cover flex items-center justify-center">
-          {festivalImage ? (
+          {eventImage ? (
             <img
               className="w-full h-full"
-              src={festivalImage}
-              alt={festival.name}
+              src={eventImage}
+              alt={event.name}
             />
           ) : null}
         </div>
         <div className=" bottom-4 left-4 rounded-xl z-10 w-full p-4 font-bold ">
           <div className="bold min-h-[3rem]">
-            {festival.name} - {festival.startDate}
+            {event.name} - {event.startDate}
           </div>
-
-          <div>{festival.startDate}</div>
         </div>
       </Link>
     </div>

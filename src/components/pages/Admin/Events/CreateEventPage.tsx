@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {SubmitHandler} from "react-hook-form";
 import {EventInputs, ToastData} from "../../../../types";
 import {createEvent} from "../../../../services/eventServices";
-import EventForm from "../EventForm";
+import EventForm from "../../../ui/EventForm";
 import Toast from "../../../common/Toast/Toast";
 
 const CreateEventPage = () => {

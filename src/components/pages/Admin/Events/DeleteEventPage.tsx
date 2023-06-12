@@ -1,14 +1,14 @@
-import Select from "../../../common/Select";
 import React, {useEffect, useState} from "react";
-import EventForm from "../../../ui/EventForm";
-import {SubmitHandler} from "react-hook-form";
-import {EventInputs, ToastData} from "../../../../types";
-import {getAllEvents, updateEvent} from "../../../../services/eventServices";
+import {ToastData} from "../../../../types";
+import Select from "../../../common/Select";
 import Toast from "../../../common/Toast/Toast";
 import {Event} from "../../../../models";
+import Button from "../../../common/Button/Button";
+import {deleteEvent, getAllEvents} from "../../../../services/eventServices";
 import useDataClearedStore from "../../../../stores/dataClearedStore";
+import EventCardBase from "../../../ui/EventCardBase";
 
-const UpdateEventPage = () => {
+const DeleteEventPage = () => {
   const [toastData, setToastData] = useState<ToastData | null>(null);
   const [selectedEvent, setSelectedEvent] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -25,26 +25,29 @@ const UpdateEventPage = () => {
     }
   }, [])
 
-  const handleEventUpdate: SubmitHandler<EventInputs> = async (data) => {
+  const handleDeleteEvent = async () => {
     setSubmitting(true);
-    const updatedEvent = await updateEvent(selectedEvent, data);
-    if(updatedEvent) {
+    try {
+      await deleteEvent(selectedEvent);
+      setEvents(events.filter((event) => event.id !== selectedEvent));
+      setSelectedEvent("");
       setToastData({
+        message: "Event deleted successfully",
         type: "success",
-        message: "Event updated!"
       })
-    } else {
+    } catch (e) {
       setToastData({
+        message: "Error deleting event",
         type: "error",
-        message: "Error updating event!"
-      })
+      });
+    } finally {
+      setSubmitting(false);
     }
-    setSubmitting(false);
-  }
+  };
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <h1 className="text-xl md:text-2xl text-center">Update Events</h1>
+      <h1 className="text-xl md:text-2xl text-center">Delete Events</h1>
       <Select
         onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSelectedEvent(e.target.value)}
         name="state"
@@ -60,7 +63,14 @@ const UpdateEventPage = () => {
           </option>
         ))}
       </Select>
-      { selectedEvent && <EventForm eventID={selectedEvent} onSubmit={handleEventUpdate} submitting={submitting}/>}
+      { selectedEvent &&
+        <div>
+          <EventCardBase event={events.find((event) => event.id === selectedEvent) as Event}/>
+          <div>
+            <Button onClick={handleDeleteEvent} disabled={submitting}>Delete Event</Button>
+          </div>
+        </div>
+      }
       {toastData &&
         <Toast toastData={toastData}/>
       }
@@ -68,4 +78,4 @@ const UpdateEventPage = () => {
   )
 }
 
-export default UpdateEventPage;
+export default DeleteEventPage;

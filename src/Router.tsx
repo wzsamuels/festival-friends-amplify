@@ -1,8 +1,6 @@
 import { useAuthenticator } from "@aws-amplify/ui-react";
-import React, {lazy, Suspense, useEffect } from "react";
+import React, {Suspense, useEffect } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-
-import { loader as adminEventLoader} from './components/pages/AdminPage/AdminEventPage'
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
@@ -18,10 +16,10 @@ import useFriendStore from "./stores/friendProfileStore";
 import useConversationStore from "./stores/conversationStore";
 import LoadingState from "./components/ui/LoadingState";
 import LayoutErrorBoundary from "./components/ui/LayoutErrorBoundary";
-import AdminEventPage from "./components/pages/AdminPage/AdminEventPage";
-import AdminLayout from "./components/pages/AdminPage/AdminLayout";
-import VerifyAccounts from "./components/pages/AdminPage/VerifyAccounts";
-import AdminDatabasePage from "./components/pages/AdminPage/AdminDatabasePage";
+import AdminEventLayout from "./components/pages/Admin/Events/AdminEventLayout";
+import AdminLayout from "./components/pages/Admin/AdminLayout";
+import VerifyAccounts from "./components/pages/Admin/VerifyAccounts";
+import AdminDatabasePage from "./components/pages/Admin/AdminDatabasePage";
 import useEventStore from "./stores/eventStore";
 import SubmitEventPage from "./components/pages/SubmitEventPage/SubmitEventPage";
 import Fallback from "./components/ui/Fallback";
@@ -36,6 +34,10 @@ import MessagePage from "./components/pages/MessagePage/MessagePage";
 import GroupsPage from "./components/pages/GroupPage/GroupPage";
 import AccountSettingsPage from "./components/pages/AccountPage/AccountSettingsPage";
 import ProfilePage from "./components/pages/ProfilePage/ProfilePage";
+import ApproveEventPage from "./components/pages/Admin/Events/ApproveEventPage";
+import CreateEventPage from "./components/pages/Admin/Events/CreateEventPage";
+import UpdateEventPage from "./components/pages/Admin/Events/UpdateEventPage";
+import DeleteEventPage from "./components/pages/Admin/Events/DeleteEventPage";
 
 const Router = () => {
   const { user } = useAuthenticator((context) => [context.user]);
@@ -121,9 +123,26 @@ const Router = () => {
           element: <AdminLayout/>,
           children: [
             {
-              index: true,
-              element: <AdminEventPage/>,
-              loader: adminEventLoader
+              path: "events",
+              element: <AdminEventLayout/>,
+              children: [
+                {
+                  index: true,
+                  element: <ApproveEventPage/>
+                },
+                {
+                  path: "create",
+                  element: <CreateEventPage/>
+                },
+                {
+                  path: "update",
+                  element: <UpdateEventPage/>
+                },
+                {
+                  path: "delete",
+                  element: <DeleteEventPage/>
+                }
+              ]
             },
             {
               path: "accounts",
