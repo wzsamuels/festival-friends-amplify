@@ -6,6 +6,7 @@ import LoadingState from "../../ui/LoadingState";
 import useProfileStore from "../../../stores/profileStore";
 import Nav from "../../layout/Nav";
 import {Outlet} from "react-router-dom";
+import '@aws-amplify/ui-react/styles.css';
 
 const NavItems = [
   { content: "Profile", link: "/account" },
