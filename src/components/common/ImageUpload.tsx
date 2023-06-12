@@ -1,4 +1,4 @@
-import React, {Dispatch, SetStateAction, useRef, useState} from "react";
+import React, {Dispatch, SetStateAction, useRef} from "react";
 import {v4 as uuidv4} from "uuid";
 const ImageUpload = ({setSelectedFile} : {setSelectedFile : Dispatch<SetStateAction<File | null>>}) => {
   const id = useRef<string>(uuidv4());
