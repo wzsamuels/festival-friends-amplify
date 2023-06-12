@@ -1,12 +1,12 @@
 import { ModalProps } from "../../../../@types/modal";
-import { Festival, UserProfile } from "../../../../models";
+import { Event, Profile } from "../../../../models";
 import Modal from "../../../common/Modal/Modal";
 import React from "react";
 import FriendCard from "../../../ui/FriendCard";
 
 interface EventFriendModalProps extends ModalProps {
-  event: Festival;
-  attendingFriends: UserProfile[];
+  event: Event;
+  attendingFriends: Profile[];
 }
 const EventFriendModal = ({
   event,
