@@ -1,27 +1,26 @@
-import React, { ReactNode, useRef, useEffect } from "react";
+import React, {ReactNode, useRef, useEffect, Dispatch, SetStateAction} from "react";
+import {SegmentItem} from "../ListboxSegmentTypes";
+import {v4 as uuidv4} from "uuid";
 
 interface SegmentProps {
-  segmentType: string;
-  setSegmentType: (segmentType: string) => void;
-  items: Array<{ type: string; label?: string; children?: ReactNode }>;
+  selected: string;
+  setSelected: Dispatch<SetStateAction<string>>;
+  items: SegmentItem[];
   className?: string;
 }
 
-const Segment: React.FC<SegmentProps> = ({
-  segmentType,
-  setSegmentType,
-  items,
-}) => {
+const Segment = ({selected, setSelected, items, className} : SegmentProps) => {
   const lineRef = useRef<HTMLDivElement>(null);
+  const id = useRef<string>(uuidv4());
 
   const generateClassName = (type: string) =>
-    `hover:bg-white flex-1 p-1 sm:p-2 md:p-4 relative text-sm sm:text-base ${
-      segmentType === type ? "active" : ""
+    `hover:bg-white flex-1 pt-2 pb-3 relative text-sm sm:text-base ${
+      selected === type ? "active" : ""
     }`;
 
   const updateLinePosition = () => {
     const activeButton = document.querySelector<HTMLButtonElement>(
-      `.segment-button.active`
+      `.segment-button-${id.current}.active`
     );
 
     if (lineRef.current && activeButton) {
@@ -32,7 +31,7 @@ const Segment: React.FC<SegmentProps> = ({
 
   useEffect(() => {
     updateLinePosition();
-  }, [segmentType]);
+  }, [selected]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -47,24 +46,24 @@ const Segment: React.FC<SegmentProps> = ({
   }, []);
 
   const handleClick = (type: string) => {
-    setSegmentType(type);
+    setSelected(type);
   };
 
   return (
-    <div className="w-full flex justify-between h-full relative flex-wrap">
+    <div className={`w-full justify-between h-full relative flex-wrap ${className}`}>
       {items.map((item) => (
         <button
           key={item.type}
-          className={`segment-button ${generateClassName(item.type)}`}
+          className={`segment-button-${id.current} ${generateClassName(item.type)}`}
           onClick={() => handleClick(item.type)}
           data-type={item.type}
         >
-          {item.children ? item.children : item.label}
+          {item.label}
         </button>
       ))}
       <div
         ref={lineRef}
-        className="absolute bottom-0 h-0.5 bg-brandYellow transition-all duration-300"
+        className="absolute bottom-0 h-0.5 bg-darkGreen transition-all duration-300"
       ></div>
     </div>
   );

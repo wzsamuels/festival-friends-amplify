@@ -1,13 +1,14 @@
 import {Dispatch, ReactNode, SetStateAction} from "react";
 
-export interface ListboxSegmentItem {
+export interface SegmentItem {
   id: number;
-  label: string;
+  label: ReactNode;
   type: string;
 }
 
 export interface ListboxSegmentProps {
-  items: ListboxSegmentItem[];
-  selected: ListboxSegmentItem;
-  setSelected: Dispatch<SetStateAction<ListboxSegmentItem>>
+  items: SegmentItem[];
+  selected: string;
+  setSelected: Dispatch<SetStateAction<string>>;
+  className?: string;
 }

@@ -24,9 +24,10 @@ import {Link} from "react-router-dom";
 import Button from "../../common/Button/Button";
 import {
   FaUserFriends,
-  MdLightbulbOutline, MdMoveToInbox,
+  MdLightbulbOutline, MdMoveToInbox, MdOutlineOutbox,
 } from "react-icons/all";
 import { useErrorBoundary } from "react-error-boundary";
+import SegmentSlide from "../../common/Segment/SegmentSlide";
 
 type FriendType = "accepted" | "sent" | "suggestions" | "pending";
 
@@ -254,8 +255,9 @@ const FriendsPage: React.FC = () => {
 
   const segmentItems = [
     {
+      id: 0,
       type: "accepted",
-      children: (
+      label: (
         <div className="flex justify-center items-center">
           <div className="block mx-4">Friends</div>
           <div className="hidden text-xl"><FaUserFriends/></div>
@@ -263,8 +265,9 @@ const FriendsPage: React.FC = () => {
       )
     },
     {
+      id: 1,
       type: "pending",
-      children: (
+      label: (
         <div className="flex justify-center items-center">
           <div className="block">Requests</div>
           <div className="hidden text-xl"><MdMoveToInbox/></div>
@@ -278,8 +281,9 @@ const FriendsPage: React.FC = () => {
     },
     /*
     {
+      id: 2,
       type: "sent",
-      children: (
+      label: (
         <div className="flex justify-center items-center">
           <div className="hidden sm:block">Sent</div>
           <div className="block sm:hidden text-xl"><MdOutlineOutbox/></div>
@@ -294,8 +298,9 @@ const FriendsPage: React.FC = () => {
 
      */
     {
+      id: 3,
       type: "suggestions",
-      children: (
+      label: (
         <div className="flex justify-center items-center">
           <div className="block">Suggested</div>
           <div className="hidden text-xl"><MdLightbulbOutline/></div>
@@ -312,16 +317,16 @@ const FriendsPage: React.FC = () => {
   return (
     <div className="flex flex-wrap w-full">
       <Header onSearch={() => setIsFriendsModalOpen(true)}>
-        <Segment
-          segmentType={friendType}
-          setSegmentType={setFriendType}
+        <SegmentSlide
+          selected={friendType}
+          setSelected={setFriendType}
           items={segmentItems}
           className="hidden md:flex"
         />
       </Header>
-      <Segment
-        segmentType={friendType}
-        setSegmentType={setFriendType}
+      <SegmentSlide
+        selected={friendType}
+        setSelected={setFriendType}
         items={segmentItems}
         className="flex md:hidden shadow-xl"
       />

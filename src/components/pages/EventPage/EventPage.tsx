@@ -10,6 +10,9 @@ import EventSearchModal from "./Modals/EventSearchModal";
 import useEventStore from "../../../stores/eventStore";
 import LoadingState from "../../ui/LoadingState";
 import Nav from "../../layout/Nav";
+import ListboxSegment from "../../common/ListboxSegment";
+import {SegmentItem} from "../../common/ListboxSegmentTypes";
+import SegmentSlide from "../../common/Segment/SegmentSlide";
 
 const navItems = [
   {
@@ -28,8 +31,7 @@ const segmentItems = [
   },
   {
     id: 2,
-    type: "sport",
-    label: "Sports"
+    type: "sport", label: "Sports"
   },
   {
     id: 3,
@@ -37,11 +39,7 @@ const segmentItems = [
   },
   {
     id: 4,
-    type: "college", label: "College"
-  },
-  {
-    id: 5,
-    type: "all", label: "All"
+    type: "travel", label: "Travel"
   }
 ];
 
@@ -55,7 +53,7 @@ const EventPage = () => {
   const businessEvents = events.filter((event) => event.type === EventType.BUSINESS);
   const travelEvents = events.filter((event) => event.type === EventType.TRAVEL)
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
-  const [eventType, setEventType] = useState("music");
+  const [eventType, setEventType] = useState("all");
   //const dataCleared = useDataClearedStore(state => state.dataCleared)
 
   /*
@@ -107,20 +105,27 @@ const EventPage = () => {
   return (
     <div>
       <Header onSearch={() => setIsSearchModalOpen(true)}>
-        <Segment
-          segmentType={eventType}
-          setSegmentType={setEventType}
+        <SegmentSlide
+          selected={eventType}
+          setSelected={setEventType}
           items={segmentItems}
-          className="hidden md:flex"
+          className="hidden md:flex "
         />
+        {/*
+        <ListboxSegment
+          items={segmentItems}
+          selected={eventType}
+          setSelected={setEventType}
+          className="flex md:hidden shadow-xl"
+        />
+        */}
       </Header>
-      <Segment
-        segmentType={eventType}
-        setSegmentType={setEventType}
+      <SegmentSlide
+        selected={eventType}
+        setSelected={setEventType}
         items={segmentItems}
         className="flex md:hidden shadow-xl"
       />
-
       <div className="grid gap-0 sm:gap-2 md:gap-4 justify-items-center grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 items-center">
         {renderFestivalCards(filteredEvents)}
       </div>

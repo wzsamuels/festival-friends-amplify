@@ -1,15 +1,16 @@
-import React, {ReactNode} from "react";
+import React, {Dispatch, ReactNode, SetStateAction} from "react";
+import {SegmentItem} from "../ListboxSegmentTypes";
 
 interface SegmentProps {
-  segmentType: string;
-  setSegmentType: (segmentType: string) => void;
-  items: Array<{ type: string; label?: string; children?: ReactNode }>;
+  selected: string;
+  setSelected: Dispatch<SetStateAction<string>>;
+  items: SegmentItem[];
   className?: string;
 }
 
-const Segment: React.FC<SegmentProps> = ({segmentType, setSegmentType, items, className}) => {
+const Segment: React.FC<SegmentProps> = ({selected, setSelected, items, className}) => {
   const handleClick = (type: string) => {
-    setSegmentType(type);
+    setSelected(type);
   };
 
   return (
@@ -21,8 +22,8 @@ const Segment: React.FC<SegmentProps> = ({segmentType, setSegmentType, items, cl
           onClick={() => handleClick(item.type)}
           data-type={item.type}
         >
-          {item.children ? item.children : item.label}
-          <div className={`absolute bottom-0 left-0 right-0 h-0.5 bg-brandYellow transition-all duration-300 ${segmentType === item.type ? 'w-full opacity-100' : 'w-0 opacity-0'}`}></div>
+          {item.label}
+          <div className={`absolute bottom-0 left-0 right-0 h-0.5 bg-brandYellow transition-all duration-300 ${selected === item.type ? 'w-full opacity-100' : 'w-0 opacity-0'}`}></div>
         </button>
       ))}
     </div>

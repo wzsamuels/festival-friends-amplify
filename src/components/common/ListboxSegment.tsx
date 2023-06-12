@@ -1,15 +1,18 @@
 import React, { Fragment, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
-import {ListboxSegmentItem, ListboxSegmentProps} from "./ListboxSegmentTypes";
+import {SegmentItem, ListboxSegmentProps} from "./ListboxSegmentTypes";
 
-const ListboxSegment = ({setSelected, selected, items} : ListboxSegmentProps) => {
+const ListboxSegment = ({setSelected, selected, items, className} : ListboxSegmentProps) => {
+
+  console.log("selected:  ", selected)
+  console.log(items.find(item => item.type === selected)?.label)
 
   return (
-    <Listbox value={selected} onChange={setSelected}>
-      <div className="relative mt-1">
+    <Listbox value={selected} onChange={(value => setSelected(value))}>
+      <div className={`relative mt-1 ${className}`}>
         <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
-          <span className="block truncate">{selected.label}</span>
+          <span className="block truncate">{items.find(item => item.type === selected)?.label}</span>
             <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
               <ChevronUpDownIcon
                 className="h-5 w-5 text-gray-400"
@@ -32,7 +35,7 @@ const ListboxSegment = ({setSelected, selected, items} : ListboxSegmentProps) =>
                   active ? 'bg-amber-100 text-amber-900' : 'text-gray-900'
                   }`
                 }
-                value={item}
+                value={item.type}
               >
                 {({ selected }) => (
                   <>

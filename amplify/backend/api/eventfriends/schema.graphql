@@ -137,7 +137,6 @@ type Group @model @auth(rules: [{ allow: public }]) {
 enum EventType {
   SPORT
   BUSINESS
-  COLLEGE
   MUSIC
   TRAVEL
 }
