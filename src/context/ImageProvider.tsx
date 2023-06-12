@@ -1,6 +1,6 @@
 // ImageProvider.tsx
 import React, { useState } from "react";
-import { Storage } from "aws-amplify";
+import { Storage } from "@aws-amplify/storage";
 import ImageContext from "./ImageContext";
 import getErrorMessage from "../lib/getErrorMessage";
 import {S3Levels} from "../@types/s3";

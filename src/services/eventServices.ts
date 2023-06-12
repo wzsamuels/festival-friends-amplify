@@ -1,4 +1,5 @@
-import {DataStore, Storage} from "aws-amplify";
+import {DataStore} from "@aws-amplify/datastore";
+import {Storage} from "@aws-amplify/storage";
 import {Event, Ride, Profile, EventProfile, RideProfile} from "../models";
 import {EventInputs} from "../types";
 import {v4 as uuidv4} from "uuid";

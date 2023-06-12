@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {AccountSettings, useAuthenticator} from "@aws-amplify/ui-react";
 import {SubmitHandler, useForm} from "react-hook-form";
 import Button from "../../common/Button/Button";
-import {DataStore} from "aws-amplify";
+import {DataStore} from "@aws-amplify/datastore";
 import {PrivacySetting, Profile} from "../../../models";
 import LoggedOutState from "../../ui/LoggedOutState";
 import UnverifiedState from "../../ui/UnverifiedState";
@@ -63,6 +63,8 @@ const AccountSettingsPage = () => {
     </>
   );
 };
+
+// TODO: Move to separate file
 
 const PrivacySettingForm = ({userProfile}: { userProfile: Profile | null}) => {
   const [privacySetting, setPrivacySetting] = useState<PrivacySetting>();

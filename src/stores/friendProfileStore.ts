@@ -1,6 +1,6 @@
 import {create, SetState} from "zustand";
 import {Friendship, Profile} from "../models";
-import {DataStore} from "aws-amplify";
+import { DataStore} from "@aws-amplify/datastore";
 
 interface FriendStore {
   clearFriends: () => void;

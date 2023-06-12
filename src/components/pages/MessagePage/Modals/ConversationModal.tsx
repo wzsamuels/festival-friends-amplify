@@ -1,7 +1,7 @@
 import { ModalProps } from "../../../../@types/modal";
 import { Conversation, Message, Profile } from "../../../../models";
 import React, {useContext, useEffect, useState} from "react";
-import {DataStore} from "aws-amplify";
+import {DataStore} from "@aws-amplify/datastore";
 import Modal from "../../../common/Modal/Modal";
 import { SubmitHandler, useForm } from "react-hook-form";
 import {getProfilePhoto} from "../../../../services/profileServices";

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Modal from "../../../common/Modal/Modal";
 import { Photo } from "../../../../models";
 import getErrorMessage from "../../../../lib/getErrorMessage";

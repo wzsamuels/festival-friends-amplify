@@ -1,5 +1,5 @@
 import {Group} from "../models";
-import {DataStore} from "aws-amplify";
+import {DataStore} from "@aws-amplify/datastore";
 
 export const getGroupByEmail = async (email: string) => {
   if (email.endsWith(".edu")) {

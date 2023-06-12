@@ -8,7 +8,7 @@ import ImageContext from "../../context/ImageContext";
 import { Link } from "react-router-dom";
 import Button from "../common/Button/Button";
 import {BsPerson} from "react-icons/all";
-import {DataStore} from "aws-amplify";
+import {DataStore} from "@aws-amplify/datastore";
 import ConditionalWrapper from "../ConditionalWrapper";
 
 export interface FriendCardButton {

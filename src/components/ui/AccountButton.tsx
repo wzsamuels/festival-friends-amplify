@@ -1,6 +1,7 @@
 import React, {Fragment, useEffect} from "react";
 import { useAuthenticator } from "@aws-amplify/ui-react";
-import {Auth, DataStore} from "aws-amplify";
+import {Auth} from "@aws-amplify/auth";
+import {DataStore} from "@aws-amplify/datastore";
 import { FaUser } from "react-icons/all";
 import { Link } from "react-router-dom";
 import { Menu, Transition } from "@headlessui/react";

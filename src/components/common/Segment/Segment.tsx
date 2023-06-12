@@ -7,17 +7,17 @@ interface SegmentProps {
   className?: string;
 }
 
-const Segment: React.FC<SegmentProps> = ({segmentType, setSegmentType, items,}) => {
+const Segment: React.FC<SegmentProps> = ({segmentType, setSegmentType, items, className}) => {
   const handleClick = (type: string) => {
     setSegmentType(type);
   };
 
   return (
-    <div className="w-full flex justify-between h-full relative flex-wrap">
+    <div className={`w-full  justify-between h-full relative flex-wrap ${className}`}>
       {items.map((item) => (
         <button
           key={item.type}
-          className={`hover:bg-white flex-1 py-4 px-1 sm:px-2 md:px-4 relative text-sm sm:text-base`}
+          className={`hover:bg-white flex-1 py-2 px-1 sm:px-2 md:px-4 relative text-sm sm:text-base`}
           onClick={() => handleClick(item.type)}
           data-type={item.type}
         >

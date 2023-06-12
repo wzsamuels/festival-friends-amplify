@@ -1,5 +1,5 @@
 import { EventProfile, Event, Profile } from "../models";
-import { DataStore } from "aws-amplify";
+import { DataStore} from "@aws-amplify/datastore";
 
 export const fetchEventAttendees = async (
   events: Event[]

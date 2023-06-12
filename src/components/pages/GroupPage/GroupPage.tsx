@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import Header from "../../layout/Header";
 import Button from "../../common/Button/Button";
 import EventCard from "../../ui/EventCard";
-import { DataStore } from "aws-amplify";
+import { DataStore } from "@aws-amplify/datastore";
 import CreateEventModal from "./Modals/CreateEventModal";
 import useDataClearedStore from "../../../stores/dataClearedStore";
 import useProfileStore from "../../../stores/profileStore";

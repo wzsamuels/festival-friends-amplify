@@ -5,7 +5,7 @@ import { ModalProps } from "../../../../@types/modal";
 import { DataStore } from "@aws-amplify/datastore";
 import { Group, Event } from "../../../../models";
 import { v4 as uuidv4 } from "uuid";
-import { Storage } from "aws-amplify";
+import { Storage } from "@aws-amplify/storage";
 import getErrorMessage from "../../../../lib/getErrorMessage";
 import {EventType} from "../../../../API";
 import EventForm from "../../../ui/EventForm";

@@ -1,4 +1,4 @@
-import {DataStore} from "aws-amplify";
+import { DataStore} from "@aws-amplify/datastore";
 import {Conversation, Profile} from "../models";
 
 export const createConversation = async (userProfile: Profile, friendProfile: Profile) => {

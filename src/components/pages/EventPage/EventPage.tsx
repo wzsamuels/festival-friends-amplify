@@ -9,6 +9,41 @@ import Segment from "../../common/Segment/Segment";
 import EventSearchModal from "./Modals/EventSearchModal";
 import useEventStore from "../../../stores/eventStore";
 import LoadingState from "../../ui/LoadingState";
+import Nav from "../../layout/Nav";
+
+const navItems = [
+  {
+    content: "Music", link: "/"
+  }
+]
+
+const segmentItems = [
+  {
+    id: 0,
+    type: "all", label: "All"
+  },
+  {
+    id: 1,
+    type: "music", label: "Music"
+  },
+  {
+    id: 2,
+    type: "sport",
+    label: "Sports"
+  },
+  {
+    id: 3,
+    type: "business", label: "Business"
+  },
+  {
+    id: 4,
+    type: "college", label: "College"
+  },
+  {
+    id: 5,
+    type: "all", label: "All"
+  }
+];
 
 const EventPage = () => {
   // Filter events by type
@@ -61,12 +96,7 @@ const EventPage = () => {
     travel: travelEvents
   };
 
-  const segmentItems = [
-    { type: "music", label: "Music" },
-    { type: "sport", label: "Sports" },
-    { type: "business", label: "Business" },
-    { type: "travel", label: "Travel" }
-  ];
+
 
   // Filter events by type, map to array, and flatten
   const filteredEvents = Object.entries(eventMapping)
@@ -81,8 +111,16 @@ const EventPage = () => {
           segmentType={eventType}
           setSegmentType={setEventType}
           items={segmentItems}
+          className="hidden md:flex"
         />
       </Header>
+      <Segment
+        segmentType={eventType}
+        setSegmentType={setEventType}
+        items={segmentItems}
+        className="flex md:hidden shadow-xl"
+      />
+
       <div className="grid gap-0 sm:gap-2 md:gap-4 justify-items-center grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 items-center">
         {renderFestivalCards(filteredEvents)}
       </div>

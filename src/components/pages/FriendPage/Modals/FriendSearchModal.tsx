@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Friendship, Profile } from "../../../../models";
-import { DataStore } from "aws-amplify";
+import { DataStore } from "@aws-amplify/datastore";
 import FriendCard from "../../../ui/FriendCard";
 import Modal from "../../../common/Modal/Modal";
 import Label from "../../../common/Label/Label";

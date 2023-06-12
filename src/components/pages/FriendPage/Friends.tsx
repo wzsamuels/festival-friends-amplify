@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAuthenticator } from "@aws-amplify/ui-react";
-import { DataStore } from "aws-amplify";
+import { DataStore } from "@aws-amplify/datastore";
 import { Profile } from "../../../models";
 import FriendCard, { FriendCardButton } from "../../ui/FriendCard";
 import FriendSearchModal from "./Modals/FriendSearchModal";
@@ -316,8 +316,15 @@ const FriendsPage: React.FC = () => {
           segmentType={friendType}
           setSegmentType={setFriendType}
           items={segmentItems}
+          className="hidden md:flex"
         />
       </Header>
+      <Segment
+        segmentType={friendType}
+        setSegmentType={setFriendType}
+        items={segmentItems}
+        className="flex md:hidden shadow-xl"
+      />
       {renderFriends()}
       <FriendSearchModal
         isOpen={isFriendsModalOpen}

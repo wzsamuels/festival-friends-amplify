@@ -1,5 +1,5 @@
 import {SetState, create} from "zustand";
-import { DataStore} from "aws-amplify";
+import { DataStore} from "@aws-amplify/datastore";
 import {Profile} from "../models";
 import getErrorMessage from "../lib/getErrorMessage";
 

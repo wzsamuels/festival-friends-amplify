@@ -1,7 +1,7 @@
 import {create, SetState} from "zustand";
 import {Event} from "../models";
 import getErrorMessage from "../lib/getErrorMessage";
-import { DataStore} from "aws-amplify";
+import { DataStore} from "@aws-amplify/datastore";
 
 type EventStore = {
   events: Event[],

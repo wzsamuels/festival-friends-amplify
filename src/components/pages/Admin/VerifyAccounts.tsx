@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Profile} from "../../../models";
-import {DataStore} from "aws-amplify";
+import {DataStore} from "@aws-amplify/datastore";
 import Toast from "../../common/Toast/Toast";
 import getErrorMessage from "../../../lib/getErrorMessage";
 import {ToastData} from "../../../types";

@@ -1,4 +1,4 @@
-import { DataStore } from "aws-amplify";
+import {DataStore} from "@aws-amplify/datastore";
 import { Friendship, Profile } from "../models";
 import { Dispatch, SetStateAction } from "react";
 import { ToastData } from "../types";

@@ -1,5 +1,5 @@
 import {Event, Photo, Profile} from "../models";
-import {DataStore} from "aws-amplify";
+import {DataStore} from "@aws-amplify/datastore";
 import {S3Levels} from "../@types/s3";
 
 export const getProfile = async (userID: string) => {

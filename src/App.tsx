@@ -3,7 +3,9 @@ import Router from "./Router";
 import React, {useEffect} from "react";
 import useEventStore from "./stores/eventStore";
 import awsExports from "./aws-exports";
-import {Amplify, AuthModeStrategyType} from "aws-amplify";
+import Amplify from "@aws-amplify/core";
+import {AuthModeStrategyType} from "@aws-amplify/datastore";
+//import {AuthModeStrategyType} from "aws-amplify";
 
 Amplify.configure({
   ...awsExports,

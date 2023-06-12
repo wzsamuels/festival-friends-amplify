@@ -1,4 +1,4 @@
-import {DataStore} from "aws-amplify";
+import {DataStore} from "@aws-amplify/datastore";
 import {Profile, Ride, RideProfile} from "../models";
 
 export const getRidesByEvent  = async (eventID: string) => {

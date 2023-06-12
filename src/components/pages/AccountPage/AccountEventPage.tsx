@@ -4,7 +4,7 @@ import {getUserEvents} from "../../../services/profileServices";
 import useProfileStore from "../../../stores/profileStore";
 import React from "react";
 import Button from "../../common/Button/Button";
-import {API} from "aws-amplify";
+import {API} from "@aws-amplify/api";
 import {DataStore} from "@aws-amplify/datastore";
 import {ToastData} from "../../../types";
 import Toast from "../../common/Toast/Toast";

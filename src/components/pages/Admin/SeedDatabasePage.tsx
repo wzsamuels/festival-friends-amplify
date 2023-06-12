@@ -1,4 +1,4 @@
-import {DataStore} from "aws-amplify";
+import {DataStore} from "@aws-amplify/datastore";
 import {Group, PrivacySetting, Profile} from "../../../models";
 import mockUserProfiles from "../../../data/profiles.json";
 import {getGroupByEmail} from "../../../services/groupServices";

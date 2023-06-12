@@ -1,4 +1,5 @@
-import {Auth, Storage} from "aws-amplify";
+import {Auth} from "@aws-amplify/auth";
+import {Storage} from "@aws-amplify/storage";
 import {v4 as uuidv4} from "uuid";
 import {Photo, Profile} from "../models";
 import {DataStore} from "@aws-amplify/datastore";

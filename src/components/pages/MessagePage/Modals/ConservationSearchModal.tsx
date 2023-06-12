@@ -7,7 +7,7 @@ import Input from "../../../common/Input/Input";
 import Button from "../../../common/Button/Button";
 import {ModalProps} from "../../../../@types/modal";
 import {Conversation} from "../../../../models";
-import {DataStore} from "aws-amplify";
+import {DataStore} from "@aws-amplify/datastore";
 import {criteria, getFilteredData} from "../../../../lib/searchHelpers";
 import ConversationCard from "../../../ui/ConversationCard";
 import useProfileStore from "../../../../stores/profileStore";

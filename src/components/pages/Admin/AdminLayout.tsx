@@ -2,7 +2,7 @@ import Header from "../../layout/Header";
 import {Link, Outlet} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import {useAuthenticator} from "@aws-amplify/ui-react";
-import {Auth} from "aws-amplify";
+import {Auth} from "@aws-amplify/auth";
 import Nav from "../../layout/Nav";
 
 const NavItems = [
