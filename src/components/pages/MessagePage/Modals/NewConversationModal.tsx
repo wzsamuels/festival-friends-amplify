@@ -2,11 +2,11 @@ import {ModalProps} from "../../../../@types/modal";
 import Modal from "../../../common/Modal/Modal";
 import FriendCard from "../../../ui/FriendCard";
 import React from "react";
-import {UserProfile} from "../../../../models";
+import {Profile} from "../../../../models";
 
 interface NewConversationModalProps extends ModalProps {
-  friendProfiles: UserProfile[];
-  handleNewConversation: (data: { friendProfile: UserProfile }) => void;
+  friendProfiles: Profile[];
+  handleNewConversation: (data: { friendProfile: Profile }) => void;
 }
 
 const NewConversationModal = ({isOpen, setIsOpen, friendProfiles, handleNewConversation} : NewConversationModalProps) => {

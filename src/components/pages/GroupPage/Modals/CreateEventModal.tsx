@@ -8,7 +8,7 @@ import { v4 as uuidv4 } from "uuid";
 import { Storage } from "aws-amplify";
 import getErrorMessage from "../../../../lib/getErrorMessage";
 import {EventType} from "../../../../API";
-import EventForm from "../../AdminPage/EventForm";
+import EventForm from "../../../ui/EventForm";
 import {EventInputs} from "../../../../types";
 
 interface CreateEventModalProps extends ModalProps {
