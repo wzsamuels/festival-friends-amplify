@@ -216,7 +216,6 @@ export type Event = {
 export enum EventType {
   SPORT = "SPORT",
   BUSINESS = "BUSINESS",
-  COLLEGE = "COLLEGE",
   MUSIC = "MUSIC",
   TRAVEL = "TRAVEL",
 }

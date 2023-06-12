@@ -5,7 +5,6 @@ import { schema } from './schema';
 const EventType = {
   "SPORT": "SPORT",
   "BUSINESS": "BUSINESS",
-  "COLLEGE": "COLLEGE",
   "MUSIC": "MUSIC",
   "TRAVEL": "TRAVEL"
 };

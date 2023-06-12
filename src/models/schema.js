@@ -1708,7 +1708,6 @@ export const schema = {
             "values": [
                 "SPORT",
                 "BUSINESS",
-                "COLLEGE",
                 "MUSIC",
                 "TRAVEL"
             ]
