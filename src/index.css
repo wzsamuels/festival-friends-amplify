@@ -17,9 +17,14 @@ body {
   height: 100%;
   overflow: auto;
   position: relative;
-  font-family: "Helvetica Neue Bold";
+  font-family: "Helvetica Neue Bold", sans-serif;
+  --lightYellow: #F7F570;
+  --darkYellow: #FFE98D;
+  --darkGreen: #7DB8B1;
+  --lightGreen: #AFD7CE;
   --amplify-components-button-primary-color: black;
-  --amplify-components-button-primary-background-color: #F7F570;
+  --amplify-components-button-primary-background-color: var(--lightYellow);
+  --amplify-components-button-primary-hover-background-color: var(--darkGreen);
   --amplify-colors-brand-primary-100: #F7F570;
   --amplify-colors-brand-primary-90: #F7F570;
   --amplify-colors-brand-primary-80: #F7F570;
