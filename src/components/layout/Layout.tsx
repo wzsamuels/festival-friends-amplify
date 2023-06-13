@@ -18,7 +18,7 @@ const Layout = () => {
       <div className="pt-9 md:pt-16 pb-footer">
         <Outlet />
       </div>
-      <footer className="shadow-dropdown max-h-[56px] fixed bg-white bottom-0 left-0 right-0 flex justify-around items-center p-2">
+      <footer className="shadow-dropdown max-h-[56px] fixed  bottom-0 left-0 right-0 flex justify-around items-center p-2 bg-lightYellow">
         <div className="flex flex-1 flex-shrink">
           <NavLink
             to="/"

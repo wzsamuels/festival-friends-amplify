@@ -4,6 +4,7 @@ import SearchButton from "../ui/SearchButton";
 import {Link} from "react-router-dom";
 import logo from "../../images/logo1.jpg"
 import logo2 from "../../images/logo2.jpg"
+import logo3 from "../../images/logo1.png"
 interface HeaderProps {
   children?: React.ReactNode;
   onSearch?: () => void;
@@ -12,9 +13,9 @@ interface HeaderProps {
 const Header = ({ children, onSearch }: HeaderProps) => {
 
   return (
-    <header className="bg-white w-full flex items-center fixed top-0 z-10 border-b border-b-gray-100 md:border-b-0 md:shadow-xl">
+    <header className="w-full flex items-center fixed top-0 z-10 md:shadow-xl bg-lightYellow">
       <Link to="/" className="w-[220px] md:w-[245px] mr-1 bg-lightYellow flex justify-center items-center rounded-full font-bold">
-        <img src={logo} alt="logo" className="h-full w-full" />
+        <img src={logo3} alt="logo" className="h-full w-full" />
       </Link>
       <div className="flex-1 w-full md:mr-2">{children}</div>
         {onSearch &&
