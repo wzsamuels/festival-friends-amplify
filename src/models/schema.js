@@ -1292,28 +1292,6 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "conversation": {
-                    "name": "conversation",
-                    "isArray": false,
-                    "type": {
-                        "model": "Conversation"
-                    },
-                    "isRequired": true,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "BELONGS_TO",
-                        "targetNames": [
-                            "conversationID"
-                        ]
-                    }
-                },
-                "conversationID": {
-                    "name": "conversationID",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
                 "content": {
                     "name": "content",
                     "isArray": false,
@@ -1376,9 +1354,9 @@ export const schema = {
                 {
                     "type": "key",
                     "properties": {
-                        "name": "byConversation",
+                        "name": "gsi-Conversation.messages",
                         "fields": [
-                            "conversationID"
+                            "conversationMessagesId"
                         ]
                     }
                 },
@@ -1723,5 +1701,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.3",
-    "version": "3d1eae3a9be652510c94490277daaf2c"
+    "version": "5c87e120adb242d4627a5988c74e5c13"
 };

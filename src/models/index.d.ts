@@ -405,8 +405,6 @@ type EagerMessage = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly conversation: Conversation;
-  readonly conversationID: string;
   readonly content: string;
   readonly senderProfileID: string;
   readonly receiverProfileID: string;
@@ -422,8 +420,6 @@ type LazyMessage = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly conversation: AsyncItem<Conversation>;
-  readonly conversationID: string;
   readonly content: string;
   readonly senderProfileID: string;
   readonly receiverProfileID: string;

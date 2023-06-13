@@ -117,8 +117,6 @@ type Conversation @model @auth(rules: [{ allow: public }]) {
 
 type Message @model @auth(rules: [{ allow: public }]) {
   id: ID!
-  conversation: Conversation! @belongsTo(fields: ["conversationID"])
-  conversationID: ID! @index(name: "byConversation")
   content: String!
   senderProfileID: ID!
   receiverProfileID: ID!

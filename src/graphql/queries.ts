@@ -4068,18 +4068,6 @@ export const getConversation = /* GraphQL */ `
       messages {
         items {
           id
-          conversation {
-            id
-            profileID
-            friendProfileID
-            unreadMessage
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          conversationID
           content
           senderProfileID
           receiverProfileID
@@ -4279,7 +4267,6 @@ export const listConversations = /* GraphQL */ `
         messages {
           items {
             id
-            conversationID
             content
             senderProfileID
             receiverProfileID
@@ -4488,7 +4475,6 @@ export const syncConversations = /* GraphQL */ `
         messages {
           items {
             id
-            conversationID
             content
             senderProfileID
             receiverProfileID
@@ -4699,7 +4685,6 @@ export const conversationsByProfileID = /* GraphQL */ `
         messages {
           items {
             id
-            conversationID
             content
             senderProfileID
             receiverProfileID
@@ -4910,7 +4895,6 @@ export const conversationsByFriendProfileID = /* GraphQL */ `
         messages {
           items {
             id
-            conversationID
             content
             senderProfileID
             receiverProfileID
@@ -4941,198 +4925,6 @@ export const getMessage = /* GraphQL */ `
   query GetMessage($id: ID!) {
     getMessage(id: $id) {
       id
-      conversation {
-        id
-        profileID
-        friendProfileID
-        profile {
-          id
-          sub
-          firstName
-          lastName
-          verified
-          submitted
-          profilePhotoID
-          bannerPhotoID
-          verifyPhotoID
-          customerID
-          city
-          state
-          school
-          address
-          address2
-          phone
-          email
-          zipcode
-          birthDate
-          hobbies
-          gender
-          events {
-            nextToken
-            startedAt
-          }
-          rides {
-            nextToken
-            startedAt
-          }
-          friends {
-            nextToken
-            startedAt
-          }
-          conversations {
-            nextToken
-            startedAt
-          }
-          photos {
-            nextToken
-            startedAt
-          }
-          groupID
-          group {
-            id
-            name
-            domain
-            webPage
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          privacySetting {
-            id
-            city
-            state
-            school
-            email
-            events
-            rides
-            friends
-            photos
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          socialMedia {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          profilePrivacySettingId
-        }
-        friendProfile {
-          id
-          sub
-          firstName
-          lastName
-          verified
-          submitted
-          profilePhotoID
-          bannerPhotoID
-          verifyPhotoID
-          customerID
-          city
-          state
-          school
-          address
-          address2
-          phone
-          email
-          zipcode
-          birthDate
-          hobbies
-          gender
-          events {
-            nextToken
-            startedAt
-          }
-          rides {
-            nextToken
-            startedAt
-          }
-          friends {
-            nextToken
-            startedAt
-          }
-          conversations {
-            nextToken
-            startedAt
-          }
-          photos {
-            nextToken
-            startedAt
-          }
-          groupID
-          group {
-            id
-            name
-            domain
-            webPage
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          privacySetting {
-            id
-            city
-            state
-            school
-            email
-            events
-            rides
-            friends
-            photos
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          socialMedia {
-            nextToken
-            startedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          profilePrivacySettingId
-        }
-        messages {
-          items {
-            id
-            conversationID
-            content
-            senderProfileID
-            receiverProfileID
-            unread
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            conversationMessagesId
-          }
-          nextToken
-          startedAt
-        }
-        unreadMessage
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      conversationID
       content
       senderProfileID
       receiverProfileID
@@ -5155,82 +4947,6 @@ export const listMessages = /* GraphQL */ `
     listMessages(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        conversation {
-          id
-          profileID
-          friendProfileID
-          profile {
-            id
-            sub
-            firstName
-            lastName
-            verified
-            submitted
-            profilePhotoID
-            bannerPhotoID
-            verifyPhotoID
-            customerID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            birthDate
-            hobbies
-            gender
-            groupID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            profilePrivacySettingId
-          }
-          friendProfile {
-            id
-            sub
-            firstName
-            lastName
-            verified
-            submitted
-            profilePhotoID
-            bannerPhotoID
-            verifyPhotoID
-            customerID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            birthDate
-            hobbies
-            gender
-            groupID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            profilePrivacySettingId
-          }
-          messages {
-            nextToken
-            startedAt
-          }
-          unreadMessage
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        conversationID
         content
         senderProfileID
         receiverProfileID
@@ -5262,191 +4978,6 @@ export const syncMessages = /* GraphQL */ `
     ) {
       items {
         id
-        conversation {
-          id
-          profileID
-          friendProfileID
-          profile {
-            id
-            sub
-            firstName
-            lastName
-            verified
-            submitted
-            profilePhotoID
-            bannerPhotoID
-            verifyPhotoID
-            customerID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            birthDate
-            hobbies
-            gender
-            groupID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            profilePrivacySettingId
-          }
-          friendProfile {
-            id
-            sub
-            firstName
-            lastName
-            verified
-            submitted
-            profilePhotoID
-            bannerPhotoID
-            verifyPhotoID
-            customerID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            birthDate
-            hobbies
-            gender
-            groupID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            profilePrivacySettingId
-          }
-          messages {
-            nextToken
-            startedAt
-          }
-          unreadMessage
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        conversationID
-        content
-        senderProfileID
-        receiverProfileID
-        unread
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        conversationMessagesId
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
-export const messagesByConversationID = /* GraphQL */ `
-  query MessagesByConversationID(
-    $conversationID: ID!
-    $sortDirection: ModelSortDirection
-    $filter: ModelMessageFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    messagesByConversationID(
-      conversationID: $conversationID
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        conversation {
-          id
-          profileID
-          friendProfileID
-          profile {
-            id
-            sub
-            firstName
-            lastName
-            verified
-            submitted
-            profilePhotoID
-            bannerPhotoID
-            verifyPhotoID
-            customerID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            birthDate
-            hobbies
-            gender
-            groupID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            profilePrivacySettingId
-          }
-          friendProfile {
-            id
-            sub
-            firstName
-            lastName
-            verified
-            submitted
-            profilePhotoID
-            bannerPhotoID
-            verifyPhotoID
-            customerID
-            city
-            state
-            school
-            address
-            address2
-            phone
-            email
-            zipcode
-            birthDate
-            hobbies
-            gender
-            groupID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            profilePrivacySettingId
-          }
-          messages {
-            nextToken
-            startedAt
-          }
-          unreadMessage
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        conversationID
         content
         senderProfileID
         receiverProfileID
