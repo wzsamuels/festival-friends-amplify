@@ -11,12 +11,7 @@ interface PhotoModalProps extends ModalProps {
   deletePhoto: boolean;
 }
 
-const PhotoModal = ({
-  isOpen,
-  setIsOpen,
-  photo,
-  deletePhoto,
-}: PhotoModalProps) => {
+const PhotoModal = ({isOpen, setIsOpen, photo, deletePhoto}: PhotoModalProps) => {
   const handleDeletePhoto = async () => {
     if (photo) {
       await deletePhotoFunction(photo)
@@ -28,9 +23,7 @@ const PhotoModal = ({
   return (
     <Modal isOpen={isOpen} setIsOpen={setIsOpen} title="Photo" >
       {photo &&
-      <div className="l">
-        <PhotoImage photo={photo} />
-      </div>
+        <PhotoImage level="protected" className="w-full h-full" photo={photo} />
       }
       <div className="flex justify-center my-4">
         {deletePhoto && <Button onClick={handleDeletePhoto}>Delete</Button>}
