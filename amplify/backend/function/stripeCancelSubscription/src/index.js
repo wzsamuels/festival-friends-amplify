@@ -26,7 +26,7 @@ exports.handler = async (event) => {
       })
       .promise();
 
-    const stripeSecret = Parameters.find(p => p.Name === '/amplify/d3h5qswgc4c8q2/staging/AMPLIFY_stripeWebhook_STRIPE_SECRET_KEY').Value;
+    const stripeSecret = Parameters.find(p => p.Name === process.env.STRIPE_SECRET_KEY).Value;
     const stripe = new Stripe(stripeSecret, {apiVersion: '2020-08-27'});
 
     console.log(`EVENT: ${JSON.stringify(event)}`);

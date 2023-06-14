@@ -21,6 +21,7 @@ const aws = require('aws-sdk');
 exports.handler = async (event) => {
     console.log(`EVENT: ${JSON.stringify(event)}`);
     const body = JSON.parse(event.body);
+    console.log("Body: ", body)
     const price = body.price;
     let customerID = body.customerID;
     const email = body.email;
@@ -34,7 +35,7 @@ exports.handler = async (event) => {
       })
       .promise();
 
-    const stripeSecret = Parameters.find(p => p.Name === '/amplify/d3h5qswgc4c8q2/staging/AMPLIFY_stripeWebhook_STRIPE_SECRET_KEY').Value;
+    const stripeSecret = Parameters.find(p => p.Name === process.env.STRIPE_SECRET_KEY).Value;
     const stripe = new Stripe(stripeSecret, {apiVersion: '2020-08-27'});
 
     // If customerID is not provided, create a new customer

@@ -142,8 +142,8 @@ exports.handler = async (event) => {
       })
       .promise();
 
-    const stripeSecret = Parameters.find(p => p.Name === '/amplify/d3h5qswgc4c8q2/staging/AMPLIFY_stripeWebhook_STRIPE_SECRET_KEY').Value;
-    const endPointSecret = Parameters.find(p => p.Name === '/amplify/d3h5qswgc4c8q2/staging/AMPLIFY_stripeWebhook_STRIPE_ENDPOINT_SECRET').Value;
+    const stripeSecret = Parameters.find(p => p.Name === process.env.STRIPE_SECRET_KEY).Value;
+    const endPointSecret = Parameters.find(p => p.Name === process.env.STRIPE_ENDPOINT_SECRET).Value;
 
     // Initialize Stripe with the secret key
     const stripe = new Stripe(stripeSecret, {apiVersion: '2020-08-27'});

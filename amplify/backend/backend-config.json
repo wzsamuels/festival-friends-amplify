@@ -85,6 +85,11 @@
     }
   },
   "function": {
+    "email": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
     "eventfriendslayer": {
       "build": true,
       "providerPlugin": "awscloudformation",
@@ -143,6 +148,22 @@
     }
   },
   "parameters": {
+    "AMPLIFY_function_email_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "email"
+        }
+      ]
+    },
+    "AMPLIFY_function_email_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "email"
+        }
+      ]
+    },
     "AMPLIFY_function_eventfriendslayer_deploymentBucketName": {
       "usedBy": [
         {
@@ -175,6 +196,14 @@
         }
       ]
     },
+    "AMPLIFY_function_stripeCancelSubscription_secretsPathAmplifyAppId": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "stripeCancelSubscription"
+        }
+      ]
+    },
     "AMPLIFY_function_stripeCheckout_deploymentBucketName": {
       "usedBy": [
         {
@@ -184,6 +213,14 @@
       ]
     },
     "AMPLIFY_function_stripeCheckout_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "stripeCheckout"
+        }
+      ]
+    },
+    "AMPLIFY_function_stripeCheckout_secretsPathAmplifyAppId": {
       "usedBy": [
         {
           "category": "function",

@@ -26,7 +26,7 @@
       "function": {
         "stripeCheckout": {
           "deploymentBucketName": "amplify-eventfriends-staging-194056-deployment",
-          "s3Key": "amplify-builds/stripeCheckout-57636d534c76377a2f76-build.zip",
+          "s3Key": "amplify-builds/stripeCheckout-446f6a71397077413042-build.zip",
           "secretsPathAmplifyAppId": "d3h5qswgc4c8q2"
         },
         "eventfriendslayer": {
@@ -35,13 +35,13 @@
         },
         "stripeCancelSubscription": {
           "deploymentBucketName": "amplify-eventfriends-staging-194056-deployment",
-          "s3Key": "amplify-builds/stripeCancelSubscription-395a5946385746374c4a-build.zip",
+          "s3Key": "amplify-builds/stripeCancelSubscription-70686433346967325872-build.zip",
           "secretsPathAmplifyAppId": "d3h5qswgc4c8q2"
         },
         "stripeWebhook": {
           "secretsPathAmplifyAppId": "d3h5qswgc4c8q2",
           "deploymentBucketName": "amplify-eventfriends-staging-194056-deployment",
-          "s3Key": "amplify-builds/stripeWebhook-397168764251726c6b32-build.zip"
+          "s3Key": "amplify-builds/stripeWebhook-774c586e4f50684a3678-build.zip"
         },
         "email": {
           "deploymentBucketName": "amplify-eventfriends-staging-194056-deployment",
