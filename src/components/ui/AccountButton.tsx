@@ -168,7 +168,20 @@ const AccountButton = () => {
                 </Link>
               </Menu.Item>
             )}
+            <Menu.Item>
+              <Link
+                className="w-full hover:text-white hover:bg-brandYellow p-2 border-t border-t-darkGreen"
+                to="/account"
+              >
+              Terms & Policies
+              </Link>
+            </Menu.Item>
+            <div className="p-2 border-t border-t-darkGreen">
+              <div className="text-sm">&copy; {new Date().getFullYear()} Event Friends</div>
+              <div className="text-xs">Design by Twin Silver</div>
+            </div>
           </Menu.Items>
+
         </Transition>
       </Menu>
       <Modal
