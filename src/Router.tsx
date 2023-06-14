@@ -3,10 +3,6 @@ import React, {Suspense, useEffect } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-
-import ImageProvider from "./context/ImageProvider";
-/* Theme variables */
-import "./theme/variables.css";
 // Tailwind CSS
 import "./index.css";
 import useDataClearedStore from "./stores/dataClearedStore";
@@ -51,13 +47,6 @@ const Router = () => {
   const fetchEvents = useEventStore(state => state.fetchEvents)
 
   useEffect(() => {
-    console.log("Router mounted")
-  },[])
-
-  useEffect(() => {
-    console.log("sub", sub);
-    console.log("route", route)
-    console.log("dataCleared", dataCleared)
     if(!dataCleared || !sub || route !== 'authenticated') return;
     fetchEvents();
     fetchUserProfile(sub, route)
@@ -164,11 +153,9 @@ const Router = () => {
 
   return (
     <ErrorBoundary FallbackComponent={Fallback}>
-    <ImageProvider>
       <Suspense fallback={<div className='flex justify-center items-center h-screen'><LoadingState/></div>}>
         <RouterProvider router={router} />
       </Suspense>
-    </ImageProvider>
     </ErrorBoundary>
   );
 };
