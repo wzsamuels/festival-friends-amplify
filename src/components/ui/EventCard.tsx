@@ -10,6 +10,7 @@ import {getAttendees, joinEvent, leaveEvent} from "../../services/eventServices"
 import useFriendStore from "../../stores/friendProfileStore";
 import dayjs from "dayjs";
 import {DataStore} from "@aws-amplify/datastore";
+import Image from "./Image";
 
 interface EventCardProps {
   event: Event;
@@ -69,7 +70,7 @@ const EventCard = ({ event, className }: EventCardProps) => {
   return (
     <div className={`rounded-xl shadow-md w-full max-w-[350px] ${className}`}>
       <Link className="relative" to={`/events/${event.id}`}>
-        <img
+        <Image
           className="w-full h-full object-cover aspect-square"
           src={`${import.meta.env.VITE_CLOUDINARY_URL}/public/${event.image}${import.meta.env.VITE_CLOUDINARY_TRANSFORM}`}
           alt={event.name}
