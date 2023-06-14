@@ -13,13 +13,11 @@ import useProfileStore from "../../../stores/profileStore";
 import { useSearchParams } from "react-router-dom";
 import EventForm from "../../ui/EventForm";
 import {EventInputs} from "../../../types";
-import {BiCheck, BsCheck} from "react-icons/all";
+import {BiCheck} from "react-icons/all";
+import {Capacitor} from "@capacitor/core";
 
 type EventPlan = "monthly" | "daily"
 type FormState = "plan" | "details" | "success"
-
-const MONTHLY_PRICE = "price_1NF7b9IHoFjkR3tBgIOyZIV2"
-const DAILY_PRICE = "price_1NF70gIHoFjkR3tBDMNf67Cd"
 
 const SubmitEventPage = () => {
   const [plan, setPlan] = useState<EventPlan>("monthly")
@@ -69,10 +67,11 @@ const SubmitEventPage = () => {
       console.log("Creating payment...")
       const response = await API.post('stripe', '/checkout', {
         body: {
-          price: plan === "monthly" ? MONTHLY_PRICE : DAILY_PRICE,
+          price: plan === "monthly" ? import.meta.env.VITE_MONTHLY_PRICE : import.meta.env.VITE_DAILY_PRICE,
           email: userProfile.email,
           customerID: userProfile.customerID,
           eventID: newEvent.id,
+          domain: import.meta.env.VITE_DOMAIN
         },
       });
 
@@ -95,24 +94,25 @@ const SubmitEventPage = () => {
       window.location.href = response.url;
     } catch (e) {
       console.log(getErrorMessage(e));
-      alert(getErrorMessage(e));
     } finally {
       setSubmitting(false);
     }
   }
 
-  const createPortal = async () => {
-    const response = await API.post('stripeAPI', '/create-payment-portal', {
-      body: {
-        customerID: userProfile?.customerID,
-      },
-    });
-    console.log(response)
-    window.location.href = response;
-  }
-
   if(route !== 'authenticated') {
     return null;
+  }
+
+  if (Capacitor.getPlatform() === 'ios' || Capacitor.getPlatform() === "android") {
+    return (
+      <>
+        <Header />
+        <p>We currently do not support submitting events on iOS or Android.</p>
+        <p>Please visit <a href="https://eventfriends.app" target="_blank" rel="noreferrer">https://eventfriends.app</a> to submit your event.</p>
+        <p>If you have any questions about the event submission process, please contact us at <a href="mailto:XXXXXXXXXXXXXXXXXXXXXX">placeholder@test.com</a></p>
+        <p>Thank you for your patience!</p>
+      </>
+    )
   }
 
   if(sessionID) {
@@ -124,11 +124,6 @@ const SubmitEventPage = () => {
           <p className="text-xl">
             We will review your submission and get back to you as soon as possible.
           </p>
-          <div className="mt-4">
-            <Button variation="outline" onClick={() => createPortal()}>
-              Manage Subscription
-            </Button>
-          </div>
         </div>
       </div>
     )
