@@ -113,7 +113,7 @@ const AccountButton = () => {
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <Menu.Items className="text-lg flex flex-col absolute right-2 top-10 bg-white transition-all z-50 shadow-dropdown w-[250px]">
+          <Menu.Items className="text-lg flex flex-col absolute right-0 top-6 bg-white transition-all z-50 shadow-dropdown w-[250px]">
             {authStatus === "authenticated" ? (
               <>
                 <Menu.Item
