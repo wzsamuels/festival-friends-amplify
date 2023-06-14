@@ -1,9 +1,34 @@
-const stripe = require('stripe')('sk_test_51NF0cnIHoFjkR3tBkYPmguoU7Nkg7fQRF5D7PWq56JYqWic9s7yB5eQsWqwYWzQfrDnTB7QAesYOIY1KgAshbdOE00IGaPgHxJ');
+/*
+Use the following code to retrieve configured secrets from SSM:
+
+const aws = require('aws-sdk');
+
+const { Parameters } = await (new aws.SSM())
+  .getParameters({
+    Names: ["STRIPE_SECRET_KEY"].map(secretName => process.env[secretName]),
+    WithDecryption: true,
+  })
+  .promise();
+
+Parameters will be of the form { Name: 'secretName', Value: 'secretValue', ... }[]
+*/
+const Stripe = require('stripe');
+const aws = require('aws-sdk');
 
 /**
  * @type {import('@types/aws-lambda').APIGatewayProxyHandler}
  */
 exports.handler = async (event) => {
+    const {Parameters} = await (new aws.SSM())
+      .getParameters({
+          Names: ["STRIPE_SECRET_KEY"].map(secretName => process.env[secretName]),
+          WithDecryption: true,
+      })
+      .promise();
+
+    const stripeSecret = Parameters.find(p => p.Name === '/amplify/d3h5qswgc4c8q2/staging/AMPLIFY_stripeWebhook_STRIPE_SECRET_KEY').Value;
+    const stripe = new Stripe(stripeSecret, {apiVersion: '2020-08-27'});
+
     console.log(`EVENT: ${JSON.stringify(event)}`);
 
     if (!event.body) {
@@ -25,7 +50,8 @@ exports.handler = async (event) => {
         const deletedSubscription = await stripe.subscriptions.del(subscriptionID);
         return {
             headers: {
-                "Access-Control-Allow-Origin": "*"
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Headers": "*"
             },
             statusCode: 200,
             body: JSON.stringify(deletedSubscription),

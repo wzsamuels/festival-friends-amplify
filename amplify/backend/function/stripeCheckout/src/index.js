@@ -1,6 +1,19 @@
-const stripe = require('stripe')('sk_test_51NF0cnIHoFjkR3tBkYPmguoU7Nkg7fQRF5D7PWq56JYqWic9s7yB5eQsWqwYWzQfrDnTB7QAesYOIY1KgAshbdOE00IGaPgHxJ');
+/*
+Use the following code to retrieve configured secrets from SSM:
 
-const YOUR_DOMAIN = 'http://localhost:5173';
+const aws = require('aws-sdk');
+
+const { Parameters } = await (new aws.SSM())
+  .getParameters({
+    Names: ["STRIPE_SECRET_KEY"].map(secretName => process.env[secretName]),
+    WithDecryption: true,
+  })
+  .promise();
+
+Parameters will be of the form { Name: 'secretName', Value: 'secretValue', ... }[]
+*/
+const Stripe = require('stripe');
+const aws = require('aws-sdk');
 
 /**
  * @type {import('@types/aws-lambda').APIGatewayProxyHandler}
@@ -12,6 +25,17 @@ exports.handler = async (event) => {
     let customerID = body.customerID;
     const email = body.email;
     const eventID = body.eventID;
+    const domain = body.domain;
+
+    const {Parameters} = await (new aws.SSM())
+      .getParameters({
+          Names: ["STRIPE_SECRET_KEY"].map(secretName => process.env[secretName]),
+          WithDecryption: true,
+      })
+      .promise();
+
+    const stripeSecret = Parameters.find(p => p.Name === '/amplify/d3h5qswgc4c8q2/staging/AMPLIFY_stripeWebhook_STRIPE_SECRET_KEY').Value;
+    const stripe = new Stripe(stripeSecret, {apiVersion: '2020-08-27'});
 
     // If customerID is not provided, create a new customer
     if (!customerID) {
@@ -32,8 +56,8 @@ exports.handler = async (event) => {
             },
         ],
         mode: 'subscription',
-        success_url: `${YOUR_DOMAIN}/submit-event?success=true&session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `${YOUR_DOMAIN}/submit-event?canceled=true`,
+        success_url: `${domain}/submit-event?success=true&session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${domain}/submit-event?canceled=true`,
         metadata: {
             eventID: eventID
         }
