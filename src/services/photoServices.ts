@@ -4,6 +4,28 @@ import {v4 as uuidv4} from "uuid";
 import {Photo, Profile} from "../models";
 import {DataStore} from "@aws-amplify/datastore";
 
+export const getPhoto = async (photoID: string | null | undefined) => {
+  if(!photoID) return null;
+  try {
+    return await DataStore.query(Photo, photoID);
+  } catch (e) {
+    console.log("Error getting photo:", e);
+    return null;
+  }
+}
+
+export const getPhotoURL = async (photoID: string | null | undefined) => {
+  if(!photoID) return "";
+  try {
+    const photo = await DataStore.query(Photo, photoID);
+    if(!photo) return "";
+    return `${import.meta.env.VITE_CLOUDINARY_URL}/protected/${photo.identityId}/${photo.s3Key}${import.meta.env.VITE_CLOUDINARY_TRANSFORM}`
+  } catch (e) {
+    console.log("Error getting photo URL:", e);
+    return "";
+  }
+}
+
 export const createNewPhoto = async (sub: string, photoFile: File, profileID: string) => {
   const id = uuidv4();
   const credentials = await Auth.currentCredentials();
