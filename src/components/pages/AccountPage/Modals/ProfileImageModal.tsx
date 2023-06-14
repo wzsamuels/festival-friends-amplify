@@ -61,7 +61,7 @@ const ProfileImageModal = ({profile, isOpen, setIsOpen, photos }: ProfileImageMo
       return (
         <div className="flex flex-col items-center justify-center w-full p-4">
           <div className='max-w-xl'>
-            <img className=" rounded-full" src={preview} alt="Preview" />
+            <img className=" rounded-full aspect-square" src={preview} alt="Preview" />
           </div>
           <div className="mt-6 flex justify-center w-full">
             <Button onClick={() => setSelectedFile(null)}>Cancel</Button>
