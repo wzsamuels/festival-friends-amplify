@@ -1,9 +1,8 @@
 import {Profile} from "../../../models";
 import Label from "../../common/Label/Label";
 import Button from "../../common/Button/Button";
-import React, {useContext, useEffect, useState} from "react";
-import ImageContext from "../../../context/ImageContext";
-import {getVerifyPhoto} from "../../../services/profileServices";
+import React, {useEffect, useState} from "react";
+import {getPhotoURL} from "../../../services/photoServices";
 
 interface AccountInfoProps {
   profile: Profile
@@ -12,10 +11,9 @@ interface AccountInfoProps {
 
 const AccountInfo = ({profile, onVerify} : AccountInfoProps) => {
   const [profileImage, setProfileImage] = useState("")
-  const { getSignedURL } = useContext(ImageContext)
 
   useEffect(() => {
-    getVerifyPhoto(profile, getSignedURL).then(res => setProfileImage(res))
+    getPhotoURL(profile.profilePhotoID).then(photoURL => setProfileImage(photoURL))
   }, [profile])
 
   return (

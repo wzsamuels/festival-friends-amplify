@@ -1,5 +1,5 @@
 import {EventProfile, Event, Photo, Ride} from "../../../models";
-import React, {useContext, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import { DataStore } from "@aws-amplify/datastore";
 import ProfileEditModal from "./Modals/ProfileEditModal";
 import ProfileImageModal from "./Modals/ProfileImageModal";
@@ -11,12 +11,12 @@ import Button from "../../common/Button/Button";
 import PhotoModal from "./Modals/PhotoModal";
 import useDataClearedStore from "../../../stores/dataClearedStore";
 import useProfileStore from "../../../stores/profileStore";
-import {getBannerPhoto, getProfilePhoto} from "../../../services/profileServices";
-import ImageContext from "../../../context/ImageContext";
 import {getRidesByProfile} from "../../../services/rideServices";
 import EventCard from "../../ui/EventCard";
 import RideCard from "../../ui/RideCard";
 import ImageUpload from "../../common/ImageUpload";
+import {getPhotoURL} from "../../../services/photoServices";
+import Image from "../../ui/Image";
 
 const AccountProfilePage = () => {
   const [profileImage, setProfileImage] = useState("");
@@ -33,25 +33,18 @@ const AccountProfilePage = () => {
   const [rides, setRides] = useState<Ride[]>([]);
   const userProfile = useProfileStore((state) => state.userProfile);
   const dataCleared = useDataClearedStore((state) => state.dataCleared);
-  const { getSignedURL } = useContext(ImageContext)
 
   useEffect(() => {
     if (!dataCleared || !userProfile) return;
-    const fetchProfilePhoto = async () => {
-      return await getProfilePhoto(userProfile, getSignedURL)
-    }
-    const fetchProfileBanner = async () => {
-      return await getBannerPhoto(userProfile, getSignedURL)
-    }
 
     const fetchRides = async () => {
       return await getRidesByProfile(userProfile);
     };
 
     try {
-      fetchProfilePhoto()
+      getPhotoURL(userProfile.profilePhotoID)
         .then(image => setProfileImage(image));
-      fetchProfileBanner()
+      getPhotoURL(userProfile.bannerPhotoID)
         .then(image => setBannerImage(image));
       fetchRides()
         .then(rides => setRides(rides));
@@ -103,7 +96,7 @@ const AccountProfilePage = () => {
         }
       >
         {bannerImage ? (
-          <img
+          <Image
             src={bannerImage}
             alt="Banner"
             className="w-full h-full  object-cover top-0 left-0"
@@ -114,7 +107,7 @@ const AccountProfilePage = () => {
         <div className="flex flex-col justify-center items-center w-full h-full absolute top-0 left-0">
           <div className="bg-light-default rounded-2xl p-4 flex-1 max-h-[450px] ">
             {profileImage ? (
-              <img
+              <Image
                 onClick={() => setIsProfileImageModalOpen(true)}
                 className="aspect-square max-w-[350px] w-full rounded-full cursor-pointer"
                 src={profileImage}

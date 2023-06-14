@@ -1,11 +1,10 @@
 import {Conversation, Message} from "../../models";
-import React, {useContext, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import { DataStore } from "@aws-amplify/datastore";
-import ImageContext from "../../context/ImageContext";
-import {getProfilePhoto} from "../../services/profileServices";
 import useProfileStore from "../../stores/profileStore";
 import useFriendStore from "../../stores/friendProfileStore";
 import {BsPerson} from "react-icons/all";
+import {getPhotoURL} from "../../services/photoServices";
 
 interface ConversationCardProps {
   conversation: Conversation;
@@ -22,7 +21,6 @@ const ConversationCard = ({
   const [unreadMessage, setUnreadMessage] = useState<boolean>(false);
   const userProfile = useProfileStore((state) => state.userProfile);
   const friendProfiles = useFriendStore(state => state.acceptedFriendProfiles)
-  const { getSignedURL } = useContext(ImageContext);
 
   const friendProfile = friendProfiles.find(
     (profile) =>
@@ -33,10 +31,6 @@ const ConversationCard = ({
   );
 
   useEffect(() => {
-    const fetchFriendProfileImage = async () => {
-      getProfilePhoto(friendProfile, getSignedURL).then(image => setFriendProfileImage(image))
-    };
-
     const fetchLastMessage = async () => {
       if (!userProfile || !friendProfile) {
         return;
@@ -60,12 +54,12 @@ const ConversationCard = ({
     }
 
     try {
-      fetchFriendProfileImage();
+      getPhotoURL(friendProfile?.profilePhotoID).then(photoURL => setFriendProfileImage(photoURL))
       fetchLastMessage();
     } catch (e) {
       console.log("Error fetching friend profile image or last message", e);
     }
-  }, [userProfile, friendProfiles, conversation]);
+  }, [userProfile, friendProfile, conversation]);
 
   const handleOnClick = async () => {
     const messages = await conversation.messages.toArray();

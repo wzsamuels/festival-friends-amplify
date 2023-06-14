@@ -1,15 +1,14 @@
 import { ModalProps } from "../../../../@types/modal";
 import { Conversation, Message, Profile } from "../../../../models";
-import React, {useContext, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {DataStore} from "@aws-amplify/datastore";
 import Modal from "../../../common/Modal/Modal";
 import { SubmitHandler, useForm } from "react-hook-form";
-import {getProfilePhoto} from "../../../../services/profileServices";
-import ImageContext from "../../../../context/ImageContext";
 import useProfileStore from "../../../../stores/profileStore";
 import useDataClearedStore from "../../../../stores/dataClearedStore";
 import Button from "../../../common/Button/Button";
 import Input from "../../../common/Input/Input";
+import {getPhotoURL} from "../../../../services/photoServices";
 
 interface ConversationModalProps extends ModalProps {
   conversation: Conversation | undefined;
@@ -25,19 +24,19 @@ const ConversationModal = ({
 }: ConversationModalProps) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const { register, handleSubmit, reset } = useForm<MessageInput>();
-  const [friendProfileImage, setFriendProfileImage] = useState<string | undefined>();
+  const [friendProfileImage, setFriendProfileImage] = useState("");
   const [friendProfile, setFriendProfile] = useState<Profile | undefined>();
   const userProfile = useProfileStore(state => state.userProfile);
   const dataCleared = useDataClearedStore(state => state.dataCleared);
-  const { getSignedURL } = useContext(ImageContext);
 
   const handleSendMessage: SubmitHandler<MessageInput> = async (data) => {
     if (data.message && friendProfile && userProfile && conversation) {
       const message = await DataStore.save(
         new Message({
           content: data.message,
-          conversation: conversation,
-          conversationID: conversation.id,
+          conversationMessagesId: conversation.id,
+   //       conversation: conversation,
+   //       conversationID: conversation.id,
           senderProfileID: userProfile.id,
           receiverProfileID: friendProfile.id,
         })
@@ -60,7 +59,8 @@ const ConversationModal = ({
             : conversation?.profileID) as string
       );
       // Fetch the profile images of the participants of the conversation
-      getProfilePhoto(friendProfile, getSignedURL).then(image => setFriendProfileImage(image))
+      getPhotoURL(friendProfile?.profilePhotoID)
+        .then(photoURL => setFriendProfileImage(photoURL))
       setFriendProfile(friendProfile);
     };
 
@@ -69,19 +69,7 @@ const ConversationModal = ({
     // Fetch the messages of the conversation
     conversation?.messages.toArray()
       .then(messages => setMessages(messages));
-    /*
-    const profileSub = DataStore.observeQuery(Message, (c) =>
-      c.conversationID.eq(conversation?.id as string), {sort: s => s.createdAt(SortDirection.ASCENDING)}
-    ).subscribe(({ items }) => {
-      console.log(items);
-      setMessages(items);
-    });
 
-    return () => {
-      profileSub.unsubscribe();
-    };
-
-     */
   }, [conversation, userProfile]);
 
   return (
@@ -111,8 +99,8 @@ const ConversationModal = ({
             <div
               className={`p-4 rounded-xl ${
                 message.senderProfileID === userProfile?.id
-                  ? "bg-brandYellow text-white"
-                  : "bg-teal-600 text-white"
+                  ? "bg-lightGreen text-black"
+                  : "bg-lightYellow text-black"
               } w-1/2`}
             >
               {message.content}

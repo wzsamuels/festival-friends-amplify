@@ -1,17 +1,15 @@
-import Input from "../common/Input/Input";
 import Select from "../common/Select";
 import states from "../../data/states";
 import {EventType} from "../../models";
 import TextArea from "../common/TextArea";
 import Button from "../common/Button/Button";
 import ImageUpload from "../common/ImageUpload";
-import React, {useContext, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import useFilePreview from "../../hooks/useFilePreview";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {EventInputs} from "../../types";
 import { Event } from "../../models";
-import ImageContext from "../../context/ImageContext";
-import {getEvent} from "../../services/eventServices";
+import {getEvent, getEventImageURL} from "../../services/eventServices";
 
 interface EventFormProps {
   eventID?: string;
@@ -20,16 +18,10 @@ interface EventFormProps {
   className?: string;
 }
 
-const eventTypes = ["SPORT", "BUSINESS", "MUSIC", "TRAVEL", "COLLEGE"];
-
 const EventForm = ({eventID, onSubmit, submitting, className} : EventFormProps) => {
   const [event, setEvent] = useState<Event>();
-  const [eventImage, setEventImage] = useState("");
   const { preview, selectedFile, setSelectedFile } = useFilePreview();
   const { register, reset, handleSubmit, setValue, formState: { errors } } = useForm<EventInputs>();
-  const { getSignedURL } = useContext(ImageContext);
-
-  console.log(Object.values(EventType))
 
   useEffect(() => {
     register("selectedFile",{ required: true});
@@ -64,12 +56,6 @@ const EventForm = ({eventID, onSubmit, submitting, className} : EventFormProps) 
       })
     } catch (e) {
       console.log("Error resetting form", e)
-    }
-
-    try {
-      getSignedURL(event.image, "public").then(url => setEventImage(url));
-    } catch(e) {
-      console.log("Error getting signed URL", e)
     }
   }, [event])
 
@@ -147,8 +133,8 @@ const EventForm = ({eventID, onSubmit, submitting, className} : EventFormProps) 
 
       <h2 className="my-4">Event Image</h2>
       {
-        preview || eventImage ?
-          <img src={preview || eventImage || ""} alt="Preview" className="w-full h-full" />
+        preview || event?.image ?
+          <img src={preview || getEventImageURL(event?.image) || ""} alt="Preview" className="w-full h-full" />
           :
           <div className="w-full h-full text-center min-h-[24rem] bg-gray-500 relative">
             <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-2xl">No image selected</span>

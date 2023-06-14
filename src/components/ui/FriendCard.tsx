@@ -1,15 +1,10 @@
-import {Photo, Profile} from "../../models";
-import React, {
-  useContext,
-  useEffect,
-  useState,
-} from "react";
-import ImageContext from "../../context/ImageContext";
+import {Profile} from "../../models";
+import React, {useEffect, useState} from "react";
 import { Link } from "react-router-dom";
 import Button from "../common/Button/Button";
 import {BsPerson} from "react-icons/all";
-import {DataStore} from "@aws-amplify/datastore";
 import ConditionalWrapper from "../ConditionalWrapper";
+import {getPhotoURL} from "../../services/photoServices";
 
 export interface FriendCardButton {
   label: string;
@@ -25,29 +20,15 @@ export interface FriendCardProps {
   className?: string;
 }
 
-const FriendCard = ({
-  profile,
-  link,
-  onClick,
-  className,
-  buttons,
-}: FriendCardProps) => {
-  const [profileImage, setProfileImage] = useState("");
+const FriendCard = ({profile, link, onClick, className, buttons,}: FriendCardProps) => {
+  const [profilePhotoURL, setProfilePhotoURL] = useState("");
   const profileUrl = `/friends/profile/${profile.id}`;
-  const { getSignedURL } = useContext(ImageContext);
 
   useEffect(() => {
-    const fetchSignedURL = async () => {
-      let url = ''
-      if (profile.profilePhotoID) {
-        const photo = await DataStore.query(Photo, profile.profilePhotoID)
-        url = await getSignedURL(photo?.s3Key as string, "protected", photo?.identityId as string);
-      }
-      setProfileImage(url);
-    };
-
-    fetchSignedURL();
-  }, [profile.profilePhotoID, getSignedURL]);
+    getPhotoURL(profile.profilePhotoID)
+      .then(photoURL => setProfilePhotoURL(photoURL))
+      .catch(err => console.log(err))
+  }, [profile]);
 
   if (!profile) {
     return null;
@@ -64,18 +45,18 @@ const FriendCard = ({
       >
         <div className="flex flex-col items-center">
           {
-            profileImage ?
+            profilePhotoURL ?
               <img
                 className={"rounded-full aspect-square"}
                 width={200}
                 height={200}
-                src={profileImage}
+                src={profilePhotoURL}
                 alt={`${profile.firstName} ${profile.lastName}'s Profile Image`}
               />
               :
               <div
                 className={"flex justify-center items-center rounded-full bg-gray-300 h-[200px] w-[200px]"}>
-                <BsPerson className="w-1/2 h-1/2 text-medium-default text-center" />
+                { !profile.profilePhotoID && <BsPerson className="w-1/2 h-1/2 text-medium-default text-center" />}
               </div>
           }
 

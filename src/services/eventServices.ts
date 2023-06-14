@@ -13,6 +13,11 @@ export const getEvent = async (eventId: string) => {
   }
 }
 
+export const getEventImageURL = (eventImage: string | null | undefined) => {
+  if(!eventImage) return "";
+  return `${import.meta.env.VITE_CLOUDINARY_URL}/public/${eventImage}${import.meta.env.VITE_CLOUDINARY_TRANSFORM}`
+}
+
 export const getEventByRide = async (ride: Ride) => {
   try {
     return await DataStore.query(Event, ride.eventID)

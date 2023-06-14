@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {Profile} from "../../../models";
 import { DataStore } from "@aws-amplify/datastore";
-import ImageContext from "../../../context/ImageContext";
 import FriendCard from "../../ui/FriendCard";
 import { Link, useParams } from "react-router-dom";
 import Header from "../../layout/Header";
@@ -12,7 +11,7 @@ import RideCard from "../../ui/RideCard";
 import useFriendStore from "../../../stores/friendProfileStore";
 import useEventStore from "../../../stores/eventStore";
 import useDataClearedStore from "../../../stores/dataClearedStore";
-import {getAttendees} from "../../../services/eventServices";
+import {getAttendees, getEventImageURL} from "../../../services/eventServices";
 import {useAuthenticator} from "@aws-amplify/ui-react";
 import useProfileStore from "../../../stores/profileStore";
 import dayjs from "dayjs";
@@ -24,21 +23,16 @@ const EventDetailPage = () => {
   const loadingFriendProfiles = useFriendStore(state => state.loadingFriends)
   const userProfile = useProfileStore(state => state.userProfile)
   const event = useEventStore(state => state.events).find(event => event.id === id)
-  const [eventImage, setEventImage] = React.useState("");
   const [attendees, setAttendees] = useState<Profile[]>([]);
   const [attendeeFriends, setAttendeeFriends] = useState<Profile[]>([]);
   const [rides, setRides] = useState<Ride[]>([]);
   const [isNewRideModalOpen, setIsNewRideModalOpen] = useState(false);
   const dataCleared = useDataClearedStore(state => state.dataCleared)
-  const { getSignedURL } = useContext(ImageContext);
-
 
   useEffect(() => {
     if(!event || !dataCleared) return;
 
     try {
-      getSignedURL(event.image, "public")
-        .then(image => setEventImage(image));
       getAttendees(event.id)
         .then(attendees => setAttendees(attendees))
 
@@ -154,7 +148,7 @@ const EventDetailPage = () => {
       <div className="flex flex-col md:flex-row w-screen md:max-h-[75vh] h-full relative overflow-hidden">
         <img
           className="w-full h-full object-cover"
-          src={eventImage}
+          src={getEventImageURL(event?.image)}
           alt={event?.name}
         />
         {/* For screens smaller than 'md', position the event details div normally (i.e., below the image).
@@ -163,7 +157,7 @@ const EventDetailPage = () => {
           <h1 className="text-xl mb-2 font-bold">{event?.name}</h1>
           <p className="my-1">{event?.city}, {event?.state}</p>
           <p className="my-1">{dayjs(event?.startDate).format("MMMM D, YYYY")} - {dayjs(event?.endDate).format("MMMM D, YYYY")}</p>
-          <p className="my-1">{event?.url}</p>
+          <a href={event?.url || ""} target="_blank" rel="noreferrer" className="my-1 underline text-darkGreen">{event?.url}</a>
         </div>
       </div>
       <div className="p-4">

@@ -1,6 +1,5 @@
 import {EventProfile, Event, Profile} from "../../models";
-import React, {useContext, useEffect, useState} from "react";
-import ImageContext from "../../context/ImageContext";
+import React, {useEffect, useState} from "react";
 import {BsCheck} from "react-icons/all";
 import {Link} from "react-router-dom";
 import Button from "../common/Button/Button";
@@ -18,19 +17,13 @@ interface EventCardProps {
 }
 
 const EventCard = ({ event, className }: EventCardProps) => {
-  const [eventImage, setEventImage] = useState("");
   const [attendeeProfiles, setAttendeeProfiles] = useState<Profile[]>([]);
   const friendProfiles = useFriendStore(state => state.acceptedFriendProfiles);
   const [friendsAttending, setFriendsAttending] = useState<Profile[]>([])
   const [eventProfile, setEventProfile] = useState<EventProfile | null>(null);
   const userProfile = useProfileStore((state) => state.userProfile);
   const [isEventFriendModalOpen, setIsEventFriendModalOpen] = useState(false);
-  const { getSignedURL } = useContext(ImageContext);
   const dataCleared = useDataClearedStore(state => state.dataCleared)
-
-  useEffect(() => {
-    getSignedURL(event.image, "public").then(url => setEventImage(url));
-  }, [event.image, getSignedURL]);
 
   useEffect(() => {
     if(!event || !dataCleared) return;
@@ -76,13 +69,11 @@ const EventCard = ({ event, className }: EventCardProps) => {
   return (
     <div className={`rounded-xl shadow-md w-full max-w-[350px] ${className}`}>
       <Link className="relative" to={`/events/${event.id}`}>
-          {eventImage ? (
-            <img
-              className="w-full h-full object-cover aspect-square"
-              src={eventImage}
-              alt={event.name}
-            />
-          ) : null}
+        <img
+          className="w-full h-full object-cover aspect-square"
+          src={`${import.meta.env.VITE_CLOUDINARY_URL}/public/${event.image}${import.meta.env.VITE_CLOUDINARY_TRANSFORM}`}
+          alt={event.name}
+        />
         <div className=" bottom-4 left-4 rounded-xl z-10 w-full p-4 ">
           <div className="font-bold mb-2">
             {event.name}
@@ -149,7 +140,7 @@ const EventCard = ({ event, className }: EventCardProps) => {
             </Button>
           )}
           { event.ticketURL &&
-            <Link to={event.ticketURL} target="_blank" rel="noreferrer"><Button>Buy Tickets</Button></Link>
+            <a href={event.ticketURL} target="_blank" rel="noreferrer"><Button>Buy Tickets</Button></a>
           }
         </div>
       </div>

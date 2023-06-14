@@ -1,7 +1,7 @@
-import React, { ComponentProps, useContext, useEffect, useState } from "react";
+import React, {ComponentProps, useState} from "react";
 import { Photo } from "../../models";
-import ImageContext from "../../context/ImageContext";
 import {S3Levels} from "../../@types/s3";
+import Spinner from "../common/Spinner/Spinner";
 
 interface PhotoProps extends ComponentProps<"img"> {
   photo: Photo;
@@ -9,34 +9,29 @@ interface PhotoProps extends ComponentProps<"img"> {
 }
 
 const PhotoImage = ({ photo, className, onClick, level }: PhotoProps) => {
-  const [photoUrl, setPhotoUrl] = useState("");
-  const { getSignedURL } = useContext(ImageContext);
+  const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    const fetchSignedURL = async () => {
-      getSignedURL(photo.s3Key, level || "public",  photo.identityId)
-        .then(signedUrl => {
-          setPhotoUrl(signedUrl);
-        })
-        .catch(err => {
-          console.log("Error", err)
-          setPhotoUrl("")
-        });
-    };
-
-    fetchSignedURL();
-  }, [photo.s3Key, getSignedURL]);
+  const handleImageLoad = () => {
+    setLoading(false);
+  }
 
   if (!photo) {
     return null;
   }
+
   return (
-    <img
-      onClick={onClick}
-      className={`w-full h-full ${className}`}
-      src={photoUrl}
-      alt={`${photo.description ? photo.description : "Photo"}`}
-    />
+    <>
+      <div className={`h-full w-full justify-center items-center flex ${loading ? 'block' : 'hidden'}`}>
+        <Spinner/>
+      </div>
+      <img
+        onLoad={handleImageLoad}
+        onClick={onClick}
+        className={`w-full h-full ${loading ? 'hidden' : 'block'} ${className}`}
+        src={`${import.meta.env.VITE_CLOUDINARY_URL}/${level ? level : "public"}/${photo.identityId}/${photo.s3Key}${import.meta.env.VITE_CLOUDINARY_TRANSFORM}`}
+        alt={`${photo.description ? photo.description : "Photo"}`}
+      />
+    </>
   );
 };
 

@@ -1,5 +1,5 @@
 import { Link, useParams } from "react-router-dom";
-import React, {useContext, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Event, Photo, PrivacySetting, Ride, Profile} from "../../../models";
 import PhotoImage from "../../ui/PhotoImage";
 import Header from "../../layout/Header";
@@ -8,10 +8,9 @@ import { useNavigate } from "react-router-dom";
 import { BsPerson, IoArrowBack } from "react-icons/all";
 import getErrorMessage from "../../../lib/getErrorMessage";
 import useDataClearedStore from "../../../stores/dataClearedStore";
-import ImageContext from "../../../context/ImageContext";
-import {getBannerPhoto, getProfile, getProfilePhoto} from "../../../services/profileServices";
+import {getProfile} from "../../../services/profileServices";
 import {getRidesByProfile} from "../../../services/rideServices";
-import {getPhotosByProfile} from "../../../services/photoServices";
+import {getPhotosByProfile, getPhotoURL} from "../../../services/photoServices";
 import RideCard from "../../ui/RideCard";
 import SocialMediaList from "./SocialMediaList";
 import {getEventsByProfile} from "../../../services/eventServices";
@@ -27,7 +26,6 @@ const ProfilePage = () => {
   const [eventsAttending, setEventsAttending] = useState<Event[]>([]);
   const [rides, setRides] = useState<Ride[]>([]);
   const dataCleared = useDataClearedStore(state => state.dataCleared);
-  const { getSignedURL } = useContext(ImageContext)
   const { profileId } = useParams();
   const navigate = useNavigate();
 
@@ -48,11 +46,13 @@ const ProfilePage = () => {
   useEffect(() => {
     if(!dataCleared || !profile) return;
 
-    getProfilePhoto(profile, getSignedURL)
-      .then(image => setProfileImage(image))
-      .catch(error => console.log("Error fetching profile image: ", getErrorMessage(error)));
+    getPhotoURL(profile.profilePhotoID)
+      .then(photoURL => {
+        console.log("Profile photo: ", photoURL)
+        setProfileImage(photoURL)
+      })
 
-    getBannerPhoto(profile, getSignedURL)
+    getPhotoURL(profile.bannerPhotoID)
       .then(bannerImage => setBannerImage(bannerImage))
 
     getPhotosByProfile(profile)
