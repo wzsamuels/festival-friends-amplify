@@ -56,7 +56,7 @@ const MessagePage: React.FC = () => {
 
     if (route !== "authenticated") {
       return (
-        <div className='bg-[url("/src/images/messages.png")] w-full bg-cover relative h-full min-h-[calc(100vh-7rem)] p-2'>
+        <div className='bg-[url("https://twinsilver.mo.cloudinary.net/eventfriends/public/website/messages.png?tx=q_auto,f_auto")] w-full bg-cover relative h-full min-h-[calc(100vh-5rem)] p-2'>
           <div className="flex flex-col items-center justify-center  bg-white p-4 rounded-xl w-full max-w-lg absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
             <h1 className="m-4 text-xl">
               You must be logged in to view your messages.
