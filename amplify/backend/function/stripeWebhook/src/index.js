@@ -347,26 +347,26 @@ exports.handler = async (event) => {
                     Body: {
                         Html: {
                             Charset: "UTF-8",
-                            Data: `<html>
+                            Data: `<html lang="en">
                                     <body>
-                                    <h1>New Event!</h1>
-                                    <img src="https://twinsilver.mo.cloudinary.net/eventfriends/public/${updatedEvent.image}?tx=q_auto,f_auto"/>
+                                    <h2>Event Details</h2>                               
                                     <p>Name: ${updatedEvent.name}</p>
                                     <p>Date: ${updatedEvent.startDate} - ${updatedEvent.endDate}</p>
                                     <p>Genre: ${updatedEvent.genre}</p>
                                     <p>City: ${updatedEvent.city}</p>
                                     <p>State: ${updatedEvent.state}</p>
                                     <p>Description: ${updatedEvent.description}</p>
-                                    <p>University Event: ${updatedEvent.groupID ? "true" : "false"}</p>
                                     <p>Paid: ${updatedEvent.hasPaid}</p>
-                                    <p>Approved: ${updatedEvent.approved}</p>
+                                    <p>Description: ${updatedEvent.description}</p>
+                                    <p>Website: ${updatedEvent.url}</p>
+                                    <p>Visit <a href="https://eventfriends.app/admin">https://eventfriends.app/admin</a> to approve this event.</p>
                                     </body>
                                     </html>
                                     `
                         },
                     },
 
-                    Subject: { Data: "New Event!" },
+                    Subject: { Data: "New Paid Event Needs Approval!" },
                 },
                 Source: 'auto-mail@twinsilverdesign.com',
             };
