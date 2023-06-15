@@ -8,6 +8,8 @@ exports.handler = async function (event) {
     const body = JSON.parse(event.body)
     const {subject, emailBody, toAddress} = body;
 
+    console.log(body);
+
     const params = {
         Destination: {
             ToAddresses: [toAddress],
