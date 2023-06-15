@@ -347,17 +347,21 @@ exports.handler = async (event) => {
                     Body: {
                         Html: {
                             Charset: "UTF-8",
-                            Data: `<div>
+                            Data: `<html>
+                                    <body>
                                     <h1>New Event!</h1>
-                                    <img src=https://twinsilver.mo.cloudinary.net/eventfriends/public/${event.image}?tx=q_auto,f_auto
+                                    <img src="https://twinsilver.mo.cloudinary.net/eventfriends/public/${updatedEvent.image}?tx=q_auto,f_auto"/>
                                     <p>Name: ${updatedEvent.name}</p>
                                     <p>Date: ${updatedEvent.startDate} - ${updatedEvent.endDate}</p>
                                     <p>Genre: ${updatedEvent.genre}</p>
                                     <p>City: ${updatedEvent.city}</p>
                                     <p>State: ${updatedEvent.state}</p>
                                     <p>Description: ${updatedEvent.description}</p>
+                                    <p>University Event: ${updatedEvent.groupID ? "true" : "false"}</p>
                                     <p>Paid: ${updatedEvent.hasPaid}</p>
-                                    <p>Approved: ${updatedEvent.approved}</p> 
+                                    <p>Approved: ${updatedEvent.approved}</p>
+                                    </body>
+                                    </html>
                                     `
                         },
                     },
