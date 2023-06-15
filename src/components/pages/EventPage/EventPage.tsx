@@ -5,20 +5,10 @@ import React, {useState} from "react";
 import {EventType, Event} from "../../../models";
 import EventCard from "../../ui/EventCard";
 import Header from "../../layout/Header";
-import Segment from "../../common/Segment/Segment";
 import EventSearchModal from "./Modals/EventSearchModal";
 import useEventStore from "../../../stores/eventStore";
 import LoadingState from "../../ui/LoadingState";
-import Nav from "../../layout/Nav";
-import ListboxSegment from "../../common/ListboxSegment";
-import {SegmentItem} from "../../common/ListboxSegmentTypes";
 import SegmentSlide from "../../common/Segment/SegmentSlide";
-
-const navItems = [
-  {
-    content: "Music", link: "/"
-  }
-]
 
 const segmentItems = [
   {

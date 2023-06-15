@@ -47,9 +47,7 @@ const SubmitEventPage = () => {
     try {
       console.log("Creating event image...")
       const id = uuidv4();
-      alert(selectedFile.type);
       const key = `event-images/${id}.${selectedFile.type.split("/")[1]}`
-      alert(key)
       await Storage.put(key, selectedFile, {
         contentType: selectedFile.type,
       });
@@ -117,15 +115,24 @@ const SubmitEventPage = () => {
 
   if(sessionID) {
     return (
-      <div className="flex flex-col items-center justify-center h-screen">
+      <>
         <Header/>
-        <div className="flex flex-col items-center justify-center h-full">
+        <div className="relative w-full h-full min-h-[calc(100vh-5rem)]">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-xl">
           <h1 className="text-4xl font-bold">Thank you for your submission!</h1>
-          <p className="text-xl">
+          <p className="text-xl my-4">
             We will review your submission and get back to you as soon as possible.
           </p>
+          <Button
+            className="mt-4 flex justify-center"
+            onClick={() => {
+              setSessionID("")
+              setFormState("plan")
+            }}
+            >Submit Another Event</Button>
         </div>
-      </div>
+        </div>
+      </>
     )
   }
 
