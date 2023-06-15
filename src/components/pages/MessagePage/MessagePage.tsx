@@ -98,16 +98,7 @@ const MessagePage: React.FC = () => {
 
   return (
     <>
-      <Header>
-        {
-          route === "authenticated" &&
-            <div className="w-full flex justify-end">
-              <button onClick={() => setConversationSearchModalOpen(true)}>
-                <FaSearch />
-              </button>
-            </div>
-        }
-      </Header>
+      <Header onSearch={() => setConversationSearchModalOpen(true)}/>
       <div className="min-h-full h-full relative">
         {renderMessages()}
         {
