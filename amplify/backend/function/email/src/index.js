@@ -27,5 +27,23 @@ exports.handler = async function (event) {
         Source: 'auto-mail@twinsilverdesign.com',
     };
 
-    return ses.sendEmail(params).promise()
+    try {
+        const emailResponse = await ses.sendEmail(params).promise();
+        return {
+            headers: {
+                "Access-Control-Allow-Origin": "*"
+            },
+            statusCode: 200,
+            body: JSON.stringify(emailResponse)
+        }
+    } catch (e) {
+        console.log('Error sending email: ', e);
+        return {
+            headers: {
+                "Access-Control-Allow-Origin": "*"
+            },
+            statusCode: 500,
+            body: `Error sending email: ${e.message}`
+        }
+    }
 };
