@@ -113,11 +113,11 @@ const AccountButton = () => {
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <Menu.Items className="text-lg flex flex-col absolute right-0 top-6 bg-white transition-all z-50 shadow-dropdown w-[250px]">
+          <Menu.Items className="text-lg flex flex-col absolute right-0 top-6 bg-white transition-all z-50 shadow-dropdown">
             {authStatus === "authenticated" ? (
               <>
                 <Menu.Item
-                  className="border-b border-b-brandYellow p-2"
+                  className="border-b border-b-brandYellow p-2 text-sm"
                   as="div"
                 >
                   {user?.attributes?.email}
@@ -151,7 +151,7 @@ const AccountButton = () => {
                 </Menu.Item>
                 <Menu.Item>
                   <div
-                    className="w-full cursor-pointer hover:text-white hover:bg-brandYellow p-2 border-t border-t-darkGreen"
+                    className="w-full cursor-pointer hover:text-white hover:bg-brandYellow p-2"
                     onClick={handleSignOut}
                   >
                     Sign Out
@@ -170,7 +170,7 @@ const AccountButton = () => {
             )}
             <Menu.Item>
               <Link
-                className="w-full hover:text-white hover:bg-brandYellow p-2 border-t border-t-darkGreen"
+                className="w-full hover:text-white hover:bg-brandYellow p-2"
                 to="/account"
               >
               Terms & Policies
