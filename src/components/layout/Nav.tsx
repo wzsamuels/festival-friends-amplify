@@ -44,7 +44,7 @@ const Nav = ({items, className} : NavProps) => {
   }, []);
 
   return (
-    <div className={`w-full flex justify-between h-full relative flex-wrap ${className} nav-container-${id.current}`}>
+    <div className={`w-full justify-between h-full relative flex-wrap bg-lightYellow ${className} nav-container-${id.current}`}>
       {items.map((item, index) => (
         <NavLink
           key={index}

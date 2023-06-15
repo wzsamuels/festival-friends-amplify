@@ -48,8 +48,9 @@ const AccountLayout = () => {
       return (
         <>
           <Header>
-            <Nav items={NavItems}/>
+            <Nav items={NavItems} className="hidden md:flex"/>
           </Header>
+          <Nav items={NavItems} className="flex md:hidden"/>
           <Outlet/>
         </>
 

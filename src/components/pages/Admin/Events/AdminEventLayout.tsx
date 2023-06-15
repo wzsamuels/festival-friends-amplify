@@ -14,7 +14,7 @@ const AdminEventLayout = () => {
 
   return (
     <>
-      <Nav items={navItems} className="shadow-xl"/>
+      <Nav items={navItems} className="shadow-xl flex pt-4 fixed"/>
       <div className="mt-4">
         <Outlet/>
       </div>
