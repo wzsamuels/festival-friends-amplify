@@ -116,9 +116,14 @@ const EventPage = () => {
         items={segmentItems}
         className="flex md:hidden shadow-xl"
       />
-      <div className="grid gap-0 sm:gap-2 md:gap-4 justify-items-center grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 items-center">
-        {renderFestivalCards(filteredEvents)}
-      </div>
+      {
+        loadingEvents ?
+          <LoadingState/>
+          :
+          <div className="grid gap-0 sm:gap-2 md:gap-4 justify-items-center grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 items-center">
+            {renderFestivalCards(filteredEvents)}
+          </div>
+      }
       <EventSearchModal
         isOpen={isSearchModalOpen}
         setIsOpen={setIsSearchModalOpen}
