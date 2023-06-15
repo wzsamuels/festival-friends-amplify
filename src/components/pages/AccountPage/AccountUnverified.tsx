@@ -18,6 +18,7 @@ import {createNewPhoto} from "../../../services/photoServices";
 import ImageUpload from "../../common/ImageUpload";
 import useFilePreview from "../../../hooks/useFilePreview";
 import {getGroupByEmail} from "../../../services/groupServices";
+import {API} from "@aws-amplify/api";
 
 const AccountUnverified = () => {
   const { user } = useAuthenticator((context) => [context.user]);
@@ -67,6 +68,15 @@ const AccountUnverified = () => {
         updated.verifyPhotoID = verifyPhoto.id;
       }));
       setProfile(newUserProfile);
+
+      const emailResponse = await API.post('email', '/', {
+        body: {
+          subject: "New Account Needs Verification",
+          emailBody: `<div>Verify new accounts at <a href='http://localhost:5173/admin/accounts'>http://localhost:5173/admin/accounts</a></div>`,
+          toAddress: "wzsamuels@gmail.com"
+        }
+      })
+      console.log(emailResponse)
       console.log(`New profile: `, newUserProfile, "\nNew Privacy Setting: ", newPrivacySetting);
     } catch (err) {
       console.error("Error saving profile:", err);
@@ -106,9 +116,12 @@ const AccountUnverified = () => {
     <div className="flex flex-col justify-center items-center mt-4 p-4 ">
       <div className="w-full max-w-4xl shadow-xl p-4 my-4 rounded">
         <h1 className="text-xl md:text-2xl text-center">Create Profile</h1>
-        <p className="my-6">
+        <p className="mt-6">
           This personal information will be used to verify your identity for the
           safety of our community. Please use a <span className="italic">new</span> photograph of yourself that is not anywhere else online. Once your profile is verified, you can control the privacy of your information.
+        </p>
+        <p className="my-4">
+          Adding social media accounts will speed up the verification process.
         </p>
         <form
           onSubmit={handleSubmit(createNewProfile)}
@@ -236,7 +249,6 @@ const AccountUnverified = () => {
             </div>
             <ImageUpload setSelectedFile={setSelectedFile}/>
           </section>
-          {errors && <div>Error submitting form:</div>}
           {errors.firstName && <div className="mt-2 text-red-500">First name is required</div>}
           {errors.lastName && <div className="mt-2 text-red-500">Last name is required</div>}
           {errors.city && <div className="mt-2 text-red-500">City is required</div>}
