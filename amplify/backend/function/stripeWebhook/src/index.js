@@ -349,7 +349,7 @@ exports.handler = async (event) => {
                             Charset: "UTF-8",
                             Data: `<div>
                                     <h1>New Event!</h1>
-                                    <img src=''
+                                    <img src=https://twinsilver.mo.cloudinary.net/eventfriends/public/${event.image}?tx=q_auto,f_auto
                                     <p>Name: ${updatedEvent.name}</p>
                                     <p>Date: ${updatedEvent.startDate} - ${updatedEvent.endDate}</p>
                                     <p>Genre: ${updatedEvent.genre}</p>
