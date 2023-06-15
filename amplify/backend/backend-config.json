@@ -1,5 +1,19 @@
 {
   "api": {
+    "email": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "email"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
     "eventfriends": {
       "dependsOn": [],
       "output": {

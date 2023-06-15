@@ -13,6 +13,9 @@
     },
     "stripe": {
       "Type": "String"
+    },
+    "email": {
+      "Type": "String"
     }
   },
   "Conditions": {

@@ -38,7 +38,8 @@ Amplify Params - DO NOT EDIT */
  * @type {import('@types/aws-lambda').APIGatewayProxyHandler}
  */
 
-const aws = require('aws-sdk');
+const aws = require("aws-sdk");
+const ses = new aws.SES({ region: "us-east-1" });
 const Stripe = require('stripe');
 const axios = require("axios");
 const gql = require('graphql-tag');
@@ -338,9 +339,42 @@ exports.handler = async (event) => {
             }
 
             console.log("Session subscription: ", session.subscription)
+            const params = {
+                Destination: {
+                    ToAddresses: ["wzsamuels@gmail.com"],
+                },
+                Message: {
+                    Body: {
+                        Html: {
+                            Charset: "UTF-8",
+                            Data: `<div>
+                                    <h1>New Event!</h1>
+                                    <img src=''
+                                    <p>Name: ${updatedEvent.name}</p>
+                                    <p>Date: ${updatedEvent.startDate} - ${updatedEvent.endDate}</p>
+                                    <p>Genre: ${updatedEvent.genre}</p>
+                                    <p>City: ${updatedEvent.city}</p>
+                                    <p>State: ${updatedEvent.state}</p>
+                                    <p>Description: ${updatedEvent.description}</p>
+                                    <p>Paid: ${updatedEvent.hasPaid}</p>
+                                    <p>Approved: ${updatedEvent.approved}</p> 
+                                    `
+                        },
+                    },
+
+                    Subject: { Data: "New Event!" },
+                },
+                Source: 'auto-mail@twinsilverdesign.com',
+            };
+            const result = await ses.sendEmail(params).promise();
+            console.log("SES Result: ", result)
+
         } catch (e) {
             console.log("Error getting event:", e)
             return {
+                headers: {
+                    "Access-Control-Allow-Origin": "*"
+                },
                 statusCode: 500,
                 body: `Error getting event ${e?.message}`
             };
