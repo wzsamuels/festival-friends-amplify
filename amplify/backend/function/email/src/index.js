@@ -14,7 +14,8 @@ exports.handler = async function (event) {
         },
         Message: {
             Body: {
-                Text: {
+                Html: {
+                    Charset: "UTF-8",
                     Data: emailBody
                 },
             },
