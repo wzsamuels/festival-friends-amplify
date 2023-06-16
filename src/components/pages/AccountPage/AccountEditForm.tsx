@@ -73,6 +73,7 @@ const AccountEditForm = ({ onSubmit, profile }: ProfileFormProps) => {
     const newSM = await DataStore.save(new SocialMedia({
       socialMediaType: socialMedia[index].type,
       accountURL: socialMedia[index].url,
+      profileSocialMediaId: profile?.id
     }))
 
     const latestProfile = await DataStore.query(Profile, profile?.id as string)
