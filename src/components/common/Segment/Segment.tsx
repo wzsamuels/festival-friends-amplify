@@ -14,11 +14,11 @@ const Segment: React.FC<SegmentProps> = ({selected, setSelected, items, classNam
   };
 
   return (
-    <div className={`w-full  justify-between h-full relative flex-wrap ${className}`}>
+    <div className={`w-full  justify-between h-full relative  ${className}`}>
       {items.map((item) => (
         <button
           key={item.type}
-          className={`hover:bg-white flex-1 py-2 px-1 sm:px-2 md:px-4 relative text-sm sm:text-base`}
+          className={`hover:bg-white flex-1 py-2 px-2 md:px-4 relative text-sm sm:text-base`}
           onClick={() => handleClick(item.type)}
           data-type={item.type}
         >

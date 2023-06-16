@@ -14,7 +14,7 @@ const Segment = ({selected, setSelected, items, className} : SegmentProps) => {
   const id = useRef<string>(uuidv4());
 
   const generateClassName = (type: string) =>
-    `flex-1 pt-2 pb-3 relative text-sm sm:text-base ${
+    `flex-1 pt-2 pb-3 px-1 relative text-sm sm:text-base ${
       selected === type ? "active" : ""
     }`;
 
@@ -50,7 +50,7 @@ const Segment = ({selected, setSelected, items, className} : SegmentProps) => {
   };
 
   return (
-    <div className={`w-full justify-between h-full relative flex-wrap bg-lightYellow ${className}`}>
+    <div className={`w-full justify-between flex-wrap bg-lightYellow ${className}`}>
       {items.map((item) => (
         <button
           key={item.type}
