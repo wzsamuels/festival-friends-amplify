@@ -148,7 +148,7 @@ const SubmitEventPage = () => {
             >
               <div>
                 <h2 className="text-lg my-1">Daily Plan</h2>
-                <div>$4.99 / billed daily</div>
+                <div className="my-2">$4.99 / billed daily</div>
                 <SellingPoints/>
               </div>
               <Button
@@ -169,8 +169,15 @@ const SubmitEventPage = () => {
                   <h2 className='text-lg'>Monthly Plan</h2>
                   <span className='bg-lightYellow px-2 py-1 rounded-xl' >Most Popular!</span>
                 </div>
-                <div>$89.82 / billed monthly</div>
-                <span className="flex items-center"><BiCheck className="mr-2 text-xl text-darkGreen"/><span className="text-lg">40% Off Daily Billing!</span></span>
+                <div className="my-2">$89.82 / billed monthly</div>
+                <span className="flex items-center my-2">
+                  <BiCheck className="mr-2 text-xl text-darkGreen"/>
+                  <span className="bg-lightGreen px-2 py-1 rounded-xl">40% Off Daily Billing!</span>
+                </span>
+                <span className="flex items-center my-2">
+                  <BiCheck className="mr-2 text-xl text-darkGreen"/>
+                  <span className="bg-lightGreen px-2 py-1 rounded-xl">Boost your event! Monthly billed events appear before daily billed events.</span>
+                </span>
                 <SellingPoints/>
               </div>
               <Button
