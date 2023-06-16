@@ -28,13 +28,24 @@ const EventDetailPage = () => {
   const [rides, setRides] = useState<Ride[]>([]);
   const [isNewRideModalOpen, setIsNewRideModalOpen] = useState(false);
   const dataCleared = useDataClearedStore(state => state.dataCleared)
+  const [eventsData, setEventsData] = useState(new Map());
 
   useEffect(() => {
     if(!event || !dataCleared) return;
 
     try {
       getAttendees(event.id)
-        .then(attendees => setAttendees(attendees))
+        .then(async (attendees) => {
+          setAttendees(attendees);
+          const eventsMap = new Map();
+          await Promise.all(attendees.map(async (attendee) => {
+            const privacy = await attendee.privacySetting;
+            const events = privacy?.events;
+            eventsMap.set(attendee, events);
+            return attendee;
+          }));
+          setEventsData(eventsMap);
+        })
 
       // Fetch rides
       const rideSub = DataStore.observeQuery(Ride, (c) => c.eventID.eq(id as string)
@@ -118,14 +129,19 @@ const EventDetailPage = () => {
           <h2 className="text-2xl my-4">People Attending</h2>
           {attendees.length > 0 ? (
             <div className="flex flex-wrap w-full">
-              {attendees.map((attendee) => (
-                <FriendCard
-                  profile={attendee}
-                  link={true}
-                  key={attendee.id}
-                  className="m-4"
-                />
-              ))}
+              {attendees.map((attendee) => {
+                if (!eventsData.get(attendee)) {
+                  return (
+                    <FriendCard
+                      profile={attendee}
+                      link={true}
+                      key={attendee.id}
+                      className="m-4"
+                    />
+                  );
+                }
+                return null;
+              })}
             </div>
           ) : (
             <p>No one is attending this event</p>
