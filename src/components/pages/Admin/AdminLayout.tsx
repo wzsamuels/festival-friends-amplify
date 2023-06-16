@@ -1,5 +1,5 @@
 import Header from "../../layout/Header";
-import {Link, Outlet} from "react-router-dom";
+import {Outlet} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import {useAuthenticator} from "@aws-amplify/ui-react";
 import {Auth} from "@aws-amplify/auth";
@@ -8,7 +8,7 @@ import Nav from "../../layout/Nav";
 const NavItems = [
   { content: "Events", link: "/admin/events" },
   { content: "Accounts", link: "/admin/accounts" },
-  { content: "Database", link: "/admin/database" }
+ // { content: "Database", link: "/admin/database" }
 ]
 
 const AdminLayout = () => {
@@ -36,10 +36,9 @@ const AdminLayout = () => {
 
   return (
     <>
-      <Header>
-        <Nav items={NavItems} className="hidden md:flex"/>
+      <Header className="">
+        <Nav items={NavItems} className="flex"/>
       </Header>
-      <Nav items={NavItems} className="flex md:hidden"/>
       <Outlet/>
     </>
   )
