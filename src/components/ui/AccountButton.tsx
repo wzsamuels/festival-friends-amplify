@@ -113,11 +113,11 @@ const AccountButton = () => {
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <Menu.Items className="text-lg flex flex-col absolute right-0 top-6 bg-white transition-all z-50 shadow-dropdown">
+          <Menu.Items className="text-base md:text-lg flex flex-col absolute right-0 top-6 bg-white transition-all z-50 shadow-dropdown min-w-[15rem]">
             {authStatus === "authenticated" ? (
               <>
                 <Menu.Item
-                  className="border-b border-b-brandYellow p-2 text-sm"
+                  className="border-b border-b-brandYellow p-2"
                   as="div"
                 >
                   {user?.attributes?.email}
@@ -168,17 +168,15 @@ const AccountButton = () => {
                 </Link>
               </Menu.Item>
             )}
-            <Menu.Item>
-              <Link
-                className="w-full hover:text-white hover:bg-brandYellow p-2"
-                to="/account"
-              >
-              Terms & Policies
-              </Link>
-            </Menu.Item>
-            <div className="p-2 border-t border-t-darkGreen">
-              <div className="text-sm">&copy; {new Date().getFullYear()} Event Friends</div>
-              <div className="text-xs">Design by Twin Silver</div>
+            <div className="p-2 border-t border-t-darkGreen text-sm">
+                <Link
+                  className="underline my-2"
+                  to="/privacy-policy"
+                >
+                  Privacy Policy
+                </Link>
+                <div className="my-1">&copy; {new Date().getFullYear()} Event Friends</div>
+              <div className="text-xs">Website by <a href="https://twinsilverdesign.com" className="underline"  target="_blank" rel="noreferrer">Twin Silver</a></div>
             </div>
           </Menu.Items>
 
