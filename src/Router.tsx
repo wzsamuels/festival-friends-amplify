@@ -34,6 +34,7 @@ import ApproveEventPage from "./components/pages/Admin/Events/ApproveEventPage";
 import CreateEventPage from "./components/pages/Admin/Events/CreateEventPage";
 import UpdateEventPage from "./components/pages/Admin/Events/UpdateEventPage";
 import DeleteEventPage from "./components/pages/Admin/Events/DeleteEventPage";
+import PolicyPage from "./components/pages/Policies/page";
 
 const Router = () => {
   const { user } = useAuthenticator((context) => [context.user]);
@@ -106,6 +107,10 @@ const Router = () => {
         {
           path: "submit-event",
           element: <SubmitEventPage />,
+        },
+        {
+          path: "privacy-policy",
+          element: <PolicyPage/>,
         },
         {
           path: "admin",
