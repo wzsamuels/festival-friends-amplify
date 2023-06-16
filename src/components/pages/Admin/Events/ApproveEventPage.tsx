@@ -2,7 +2,7 @@ import AdminEventCard from "../AdminEventCard";
 import React, {useEffect, useState} from "react";
 import {Event} from "../../../../models";
 import useDataClearedStore from "../../../../stores/dataClearedStore";
-import {approveEvent, getAllEvents, rejectEvent} from "../../../../services/eventServices";
+import {approveEvent, deleteEvent, getAllEvents} from "../../../../services/eventServices";
 
 const ApproveEventPage = () => {
   const [unapprovedEvents, setUnapprovedEvents] = useState<Event[]>([]);
@@ -24,7 +24,7 @@ const ApproveEventPage = () => {
   }
 
   const handleEventRejected = async (eventID: string) => {
-    await rejectEvent(eventID);
+    await deleteEvent(eventID);
     setUnapprovedEvents(state => state.filter(event => event.id !== eventID))
   }
 
