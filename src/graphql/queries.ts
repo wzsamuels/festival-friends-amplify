@@ -76,6 +76,7 @@ export const getProfile = /* GraphQL */ `
             url
             customerID
             ticketURL
+            collegeEvent
             hasPaid
             cancelled
             approved
@@ -377,6 +378,7 @@ export const getProfile = /* GraphQL */ `
             url
             customerID
             ticketURL
+            collegeEvent
             hasPaid
             cancelled
             approved
@@ -1152,6 +1154,7 @@ export const getEvent = /* GraphQL */ `
       url
       customerID
       ticketURL
+      collegeEvent
       hasPaid
       cancelled
       approved
@@ -1177,6 +1180,7 @@ export const getEvent = /* GraphQL */ `
             url
             customerID
             ticketURL
+            collegeEvent
             hasPaid
             cancelled
             approved
@@ -1282,6 +1286,7 @@ export const getEvent = /* GraphQL */ `
             url
             customerID
             ticketURL
+            collegeEvent
             hasPaid
             cancelled
             approved
@@ -1320,6 +1325,7 @@ export const getEvent = /* GraphQL */ `
             url
             customerID
             ticketURL
+            collegeEvent
             hasPaid
             cancelled
             approved
@@ -1380,6 +1386,7 @@ export const listEvents = /* GraphQL */ `
         url
         customerID
         ticketURL
+        collegeEvent
         hasPaid
         cancelled
         approved
@@ -1475,6 +1482,7 @@ export const syncEvents = /* GraphQL */ `
         url
         customerID
         ticketURL
+        collegeEvent
         hasPaid
         cancelled
         approved
@@ -1572,6 +1580,7 @@ export const eventsBySubscriptionID = /* GraphQL */ `
         url
         customerID
         ticketURL
+        collegeEvent
         hasPaid
         cancelled
         approved
@@ -1669,6 +1678,7 @@ export const eventsByGroupID = /* GraphQL */ `
         url
         customerID
         ticketURL
+        collegeEvent
         hasPaid
         cancelled
         approved
@@ -1755,6 +1765,7 @@ export const getRide = /* GraphQL */ `
         url
         customerID
         ticketURL
+        collegeEvent
         hasPaid
         cancelled
         approved
@@ -1913,6 +1924,7 @@ export const listRides = /* GraphQL */ `
           url
           customerID
           ticketURL
+          collegeEvent
           hasPaid
           cancelled
           approved
@@ -2004,6 +2016,7 @@ export const syncRides = /* GraphQL */ `
           url
           customerID
           ticketURL
+          collegeEvent
           hasPaid
           cancelled
           approved
@@ -2097,6 +2110,7 @@ export const ridesByEventID = /* GraphQL */ `
           url
           customerID
           ticketURL
+          collegeEvent
           hasPaid
           cancelled
           approved
@@ -5017,6 +5031,7 @@ export const getGroup = /* GraphQL */ `
           url
           customerID
           ticketURL
+          collegeEvent
           hasPaid
           cancelled
           approved
@@ -5171,6 +5186,7 @@ export const listGroups = /* GraphQL */ `
             url
             customerID
             ticketURL
+            collegeEvent
             hasPaid
             cancelled
             approved
@@ -5264,6 +5280,7 @@ export const syncGroups = /* GraphQL */ `
             url
             customerID
             ticketURL
+            collegeEvent
             hasPaid
             cancelled
             approved
@@ -5499,6 +5516,7 @@ export const getEventProfile = /* GraphQL */ `
         url
         customerID
         ticketURL
+        collegeEvent
         hasPaid
         cancelled
         approved
@@ -5676,6 +5694,7 @@ export const listEventProfiles = /* GraphQL */ `
           url
           customerID
           ticketURL
+          collegeEvent
           hasPaid
           cancelled
           approved
@@ -5830,6 +5849,7 @@ export const syncEventProfiles = /* GraphQL */ `
           url
           customerID
           ticketURL
+          collegeEvent
           hasPaid
           cancelled
           approved
@@ -5986,6 +6006,7 @@ export const eventProfilesByProfileId = /* GraphQL */ `
           url
           customerID
           ticketURL
+          collegeEvent
           hasPaid
           cancelled
           approved
@@ -6142,6 +6163,7 @@ export const eventProfilesByEventId = /* GraphQL */ `
           url
           customerID
           ticketURL
+          collegeEvent
           hasPaid
           cancelled
           approved
@@ -6361,6 +6383,7 @@ export const getRideProfile = /* GraphQL */ `
           url
           customerID
           ticketURL
+          collegeEvent
           hasPaid
           cancelled
           approved
@@ -6534,6 +6557,7 @@ export const listRideProfiles = /* GraphQL */ `
             url
             customerID
             ticketURL
+            collegeEvent
             hasPaid
             cancelled
             approved
@@ -6687,6 +6711,7 @@ export const syncRideProfiles = /* GraphQL */ `
             url
             customerID
             ticketURL
+            collegeEvent
             hasPaid
             cancelled
             approved
@@ -6842,6 +6867,7 @@ export const rideProfilesByProfileId = /* GraphQL */ `
             url
             customerID
             ticketURL
+            collegeEvent
             hasPaid
             cancelled
             approved
@@ -6997,6 +7023,7 @@ export const rideProfilesByRideId = /* GraphQL */ `
             url
             customerID
             ticketURL
+            collegeEvent
             hasPaid
             cancelled
             approved

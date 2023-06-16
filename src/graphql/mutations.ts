@@ -79,6 +79,7 @@ export const createProfile = /* GraphQL */ `
             url
             customerID
             ticketURL
+            collegeEvent
             hasPaid
             cancelled
             approved
@@ -380,6 +381,7 @@ export const createProfile = /* GraphQL */ `
             url
             customerID
             ticketURL
+            collegeEvent
             hasPaid
             cancelled
             approved
@@ -551,6 +553,7 @@ export const updateProfile = /* GraphQL */ `
             url
             customerID
             ticketURL
+            collegeEvent
             hasPaid
             cancelled
             approved
@@ -852,6 +855,7 @@ export const updateProfile = /* GraphQL */ `
             url
             customerID
             ticketURL
+            collegeEvent
             hasPaid
             cancelled
             approved
@@ -1023,6 +1027,7 @@ export const deleteProfile = /* GraphQL */ `
             url
             customerID
             ticketURL
+            collegeEvent
             hasPaid
             cancelled
             approved
@@ -1324,6 +1329,7 @@ export const deleteProfile = /* GraphQL */ `
             url
             customerID
             ticketURL
+            collegeEvent
             hasPaid
             cancelled
             approved
@@ -1561,6 +1567,7 @@ export const createEvent = /* GraphQL */ `
       url
       customerID
       ticketURL
+      collegeEvent
       hasPaid
       cancelled
       approved
@@ -1586,6 +1593,7 @@ export const createEvent = /* GraphQL */ `
             url
             customerID
             ticketURL
+            collegeEvent
             hasPaid
             cancelled
             approved
@@ -1691,6 +1699,7 @@ export const createEvent = /* GraphQL */ `
             url
             customerID
             ticketURL
+            collegeEvent
             hasPaid
             cancelled
             approved
@@ -1729,6 +1738,7 @@ export const createEvent = /* GraphQL */ `
             url
             customerID
             ticketURL
+            collegeEvent
             hasPaid
             cancelled
             approved
@@ -1787,6 +1797,7 @@ export const updateEvent = /* GraphQL */ `
       url
       customerID
       ticketURL
+      collegeEvent
       hasPaid
       cancelled
       approved
@@ -1812,6 +1823,7 @@ export const updateEvent = /* GraphQL */ `
             url
             customerID
             ticketURL
+            collegeEvent
             hasPaid
             cancelled
             approved
@@ -1917,6 +1929,7 @@ export const updateEvent = /* GraphQL */ `
             url
             customerID
             ticketURL
+            collegeEvent
             hasPaid
             cancelled
             approved
@@ -1955,6 +1968,7 @@ export const updateEvent = /* GraphQL */ `
             url
             customerID
             ticketURL
+            collegeEvent
             hasPaid
             cancelled
             approved
@@ -2013,6 +2027,7 @@ export const deleteEvent = /* GraphQL */ `
       url
       customerID
       ticketURL
+      collegeEvent
       hasPaid
       cancelled
       approved
@@ -2038,6 +2053,7 @@ export const deleteEvent = /* GraphQL */ `
             url
             customerID
             ticketURL
+            collegeEvent
             hasPaid
             cancelled
             approved
@@ -2143,6 +2159,7 @@ export const deleteEvent = /* GraphQL */ `
             url
             customerID
             ticketURL
+            collegeEvent
             hasPaid
             cancelled
             approved
@@ -2181,6 +2198,7 @@ export const deleteEvent = /* GraphQL */ `
             url
             customerID
             ticketURL
+            collegeEvent
             hasPaid
             cancelled
             approved
@@ -2241,6 +2259,7 @@ export const createRide = /* GraphQL */ `
         url
         customerID
         ticketURL
+        collegeEvent
         hasPaid
         cancelled
         approved
@@ -2397,6 +2416,7 @@ export const updateRide = /* GraphQL */ `
         url
         customerID
         ticketURL
+        collegeEvent
         hasPaid
         cancelled
         approved
@@ -2553,6 +2573,7 @@ export const deleteRide = /* GraphQL */ `
         url
         customerID
         ticketURL
+        collegeEvent
         hasPaid
         cancelled
         approved
@@ -5317,6 +5338,7 @@ export const createGroup = /* GraphQL */ `
           url
           customerID
           ticketURL
+          collegeEvent
           hasPaid
           cancelled
           approved
@@ -5469,6 +5491,7 @@ export const updateGroup = /* GraphQL */ `
           url
           customerID
           ticketURL
+          collegeEvent
           hasPaid
           cancelled
           approved
@@ -5621,6 +5644,7 @@ export const deleteGroup = /* GraphQL */ `
           url
           customerID
           ticketURL
+          collegeEvent
           hasPaid
           cancelled
           approved
@@ -5926,6 +5950,7 @@ export const createEventProfile = /* GraphQL */ `
         url
         customerID
         ticketURL
+        collegeEvent
         hasPaid
         cancelled
         approved
@@ -6175,6 +6200,7 @@ export const updateEventProfile = /* GraphQL */ `
         url
         customerID
         ticketURL
+        collegeEvent
         hasPaid
         cancelled
         approved
@@ -6424,6 +6450,7 @@ export const deleteEventProfile = /* GraphQL */ `
         url
         customerID
         ticketURL
+        collegeEvent
         hasPaid
         cancelled
         approved
@@ -6675,6 +6702,7 @@ export const createRideProfile = /* GraphQL */ `
           url
           customerID
           ticketURL
+          collegeEvent
           hasPaid
           cancelled
           approved
@@ -6920,6 +6948,7 @@ export const updateRideProfile = /* GraphQL */ `
           url
           customerID
           ticketURL
+          collegeEvent
           hasPaid
           cancelled
           approved
@@ -7165,6 +7194,7 @@ export const deleteRideProfile = /* GraphQL */ `
           url
           customerID
           ticketURL
+          collegeEvent
           hasPaid
           cancelled
           approved

@@ -341,7 +341,8 @@ exports.handler = async (event) => {
             console.log("Session subscription: ", session.subscription)
             const params = {
                 Destination: {
-                    ToAddresses: ["wzsamuels@gmail.com"],
+                    //ToAddresses: [],
+                    ToAddresses: ["contact@twinsilverdesign.com", "gabrielle@eventfriends.app"]
                 },
                 Message: {
                     Body: {
@@ -359,14 +360,14 @@ exports.handler = async (event) => {
                                     <p>Paid: ${updatedEvent.hasPaid}</p>
                                     <p>Description: ${updatedEvent.description}</p>
                                     <p>Website: ${updatedEvent.url}</p>
-                                    <p>Visit <a href="https://eventfriends.app/admin">https://eventfriends.app/admin</a> to approve this event.</p>
+                                    <p>Visit <a href="https://eventfriends.app/admin">https://eventfriends.app/admin/even</a> to manage events.</p>
                                     </body>
                                     </html>
                                     `
                         },
                     },
 
-                    Subject: { Data: "New Paid Event Needs Approval!" },
+                    Subject: { Data: "A new paid event has been posted!" },
                 },
                 Source: 'auto-mail@twinsilverdesign.com',
             };

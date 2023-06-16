@@ -12,7 +12,7 @@ exports.handler = async function (event) {
 
     const params = {
         Destination: {
-            ToAddresses: [toAddress],
+            ToAddresses: toAddress,
         },
         Message: {
             Body: {
