@@ -1,8 +1,9 @@
-import {Profile} from "../../../models";
+import {Profile, SocialMedia} from "../../../models";
 import Label from "../../common/Label/Label";
 import Button from "../../common/Button/Button";
 import React, {useEffect, useState} from "react";
 import {getPhotoURL} from "../../../services/photoServices";
+import useDataClearedStore from "../../../stores/dataClearedStore";
 
 interface AccountInfoProps {
   profile: Profile
@@ -11,9 +12,15 @@ interface AccountInfoProps {
 
 const AccountInfo = ({profile, onVerify} : AccountInfoProps) => {
   const [profileImage, setProfileImage] = useState("")
+  const [socialMedia, setSocialMedia] = useState<SocialMedia[]>([])
+  const dataCleared = useDataClearedStore(state => state.dataCleared)
 
   useEffect(() => {
-    getPhotoURL(profile.profilePhotoID).then(photoURL => setProfileImage(photoURL))
+    if(!profile || !dataCleared) return;
+
+    getPhotoURL(profile.verifyPhotoID).then(photoURL => setProfileImage(photoURL))
+    profile.socialMedia.toArray()
+      .then(socialMedia => setSocialMedia(socialMedia))
   }, [profile])
 
   return (
@@ -48,12 +55,21 @@ const AccountInfo = ({profile, onVerify} : AccountInfoProps) => {
         </div>
         <div className="text-wrap">{profile.school}</div>
       </div>
+      <h2 className='text-xl'>Social Media</h2>
+      <ul className="p-2">
+        {socialMedia.map(sm =>
+          <li key={sm.id} className="my-2">
+            <p>{sm.socialMediaType}</p>
+            <p>{sm.accountURL}</p>
+          </li>
+        )}
+      </ul>
       <div className="flex justify-center my-4">
-      <img
-        className="aspect-square max-w-[350px] w-full"
-        src={profileImage}
-        alt="Profile Image"
-      />
+        <img
+          className="aspect-square max-w-[350px] w-full"
+          src={profileImage}
+          alt="Profile Image"
+        />
       </div>
       <div className="flex justify-center my-4">
         <Button onClick={() => onVerify(profile)}>
