@@ -26,7 +26,7 @@ const useEventStore = create<EventStore>((set: SetState<EventStore>, get) => ({
       const eventSub = await DataStore.observeQuery(Event, c => c.and(c => [
         c.cancelled.eq(false),
         c.hasPaid.eq(true),
-        c.approved.eq(true),
+        c.collegeEvent.eq(false),
         c.endDate.ge(new Date().toISOString()),
       ])).subscribe(({items}) => {
         console.log("Events in store", items)
