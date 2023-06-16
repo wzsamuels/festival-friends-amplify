@@ -42,9 +42,8 @@ const GroupsPage = () => {
     if(!collegeGroup || !dataCleared) return
       const collegeGroupSub = DataStore.observeQuery(Event, c => c.and( c => [
         c.groupID.eq(collegeGroup.id),
-        c.approved.eq(true),
         c.cancelled.eq(false),
-        c.endDate.ge(new Date().toString()),
+        c.endDate.ge(new Date().toISOString()),
       ])).subscribe(({ items }) => {
         setGroupEvents(items);
       });
@@ -85,7 +84,7 @@ const GroupsPage = () => {
 
   return (
     <>
-      <Header />
+      <Header className=" shadow-xl" />
       <div className="p-4 mt-4">
         <div className="text-xl sm:text-2xl lg:text-3xl text-center w-full">
           Welcome to the {collegeGroup?.name} community page!

@@ -98,7 +98,9 @@ const MessagePage: React.FC = () => {
 
   return (
     <>
-      <Header onSearch={() => setConversationSearchModalOpen(true)}/>
+      <Header
+        className=" shadow-xl"
+        onSearch={() => setConversationSearchModalOpen(true)}/>
       <div className="min-h-full h-full relative">
         {renderMessages()}
         {

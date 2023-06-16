@@ -10,7 +10,7 @@ import getErrorMessage from "../../../lib/getErrorMessage";
 import Header from "../../layout/Header";
 import {useAuthenticator} from "@aws-amplify/ui-react";
 import useProfileStore from "../../../stores/profileStore";
-import { useSearchParams } from "react-router-dom";
+import {Link, useSearchParams} from "react-router-dom";
 import EventForm from "../../ui/EventForm";
 import {EventInputs} from "../../../types";
 import {BiCheck} from "react-icons/all";
@@ -121,8 +121,9 @@ const SubmitEventPage = () => {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-xl">
           <h1 className="text-4xl font-bold">Thank you for your submission!</h1>
           <p className="text-xl my-4">
-            We will review your submission and get back to you as soon as possible.
+            Your event has been submitted successfully! You can cancel your event at any time by visiting your <Link to="/account/events">account.</Link>
           </p>
+          <p>Please note that your payment is reoccurring until you cancel the subscription. It is your responsible to cancel your subscription after your event has ended. Your event will be immediately published on our site, but we reserve the right to remove it if we find the content to be harmful to our community.</p>
           <Button
             className="mt-4 flex justify-center"
             onClick={() => {

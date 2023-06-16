@@ -78,7 +78,7 @@ const ProfilePage = () => {
     <>
       <Header>
         <button className="mx-4 text-xl" onClick={() => navigate(-1)}>
-          <IoArrowBack />
+          <IoArrowBack />Back
         </button>
       </Header>
       <section

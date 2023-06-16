@@ -174,7 +174,11 @@ const FriendsPage: React.FC = () => {
     }
 
     if (!loadingUserProfile && (!userProfile || !userProfile.verified)) {
-      return <UnverifiedState />;
+      return (
+        <div className="pt-8 min-[375px]:pt-0">
+          <UnverifiedState />
+        </div>
+      )
     }
 
     const friendTypeMap: Record<
@@ -233,7 +237,7 @@ const FriendsPage: React.FC = () => {
 
     if (currentType.friends.length === 0) {
       return (
-        <div className={"p-4 w-full flex-col items-center justify-center"}>
+        <div className={"p-4 w-full flex-col items-center justify-center pt-8 min-[375px]:pt-0"}>
           <h1 className="text-xl my-4">{currentType.noFriendsMessage}</h1>
           <p>
             Want more friends? Try searching for them or checking out the
@@ -244,7 +248,7 @@ const FriendsPage: React.FC = () => {
     }
 
     return (
-      <div className={"p-4 w-full flex-col items-center justify-center"}>
+      <div className={"p-4 w-full flex-col items-center justify-center pt-8 min-[375px]:pt-0"}>
         <FriendsList
           buttons={currentType.buttons}
           friends={currentType.friends}
@@ -316,19 +320,21 @@ const FriendsPage: React.FC = () => {
 
   return (
     <div className="flex flex-wrap w-full">
-      <Header onSearch={() => setIsFriendsModalOpen(true)}>
+      <Header
+        className="min-[375px]:shadow-xl"
+        onSearch={() => setIsFriendsModalOpen(true)}>
         <SegmentSlide
           selected={friendType}
           setSelected={setFriendType}
           items={segmentItems}
-          className="hidden md:flex"
+          className="hidden min-[375px]:flex "
         />
       </Header>
       <SegmentSlide
         selected={friendType}
         setSelected={setFriendType}
         items={segmentItems}
-        className="flex md:hidden shadow-xl"
+        className="flex min-[375px]:hidden shadow-xl fixed w-full z-10 top-8"
       />
       {renderFriends()}
       <FriendSearchModal
