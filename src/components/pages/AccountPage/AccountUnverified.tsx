@@ -44,13 +44,6 @@ const AccountUnverified = () => {
       const newPrivacySetting =  await DataStore.save(new PrivacySetting({}));
       const { socialMedia, ...filteredData} = data;
 
-      const socialMediaPromises = socialMedia.map(async (account) =>
-        await DataStore.save(new SocialMedia({
-          socialMediaType: account.type,
-          accountURL: account.url,
-        })));
-      const socialMediaResults = await Promise.all(socialMediaPromises);
-
       const newUserProfile = await DataStore.save(new Profile({
         ...filteredData,
         email: email,
@@ -58,10 +51,15 @@ const AccountUnverified = () => {
         ...(group && {groupID: group?.id}),
         submitted: true,
         privacySetting: newPrivacySetting,
-        sub: sub,
-        socialMedia: socialMediaResults,
+        sub: sub
       }));
 
+      socialMedia.map(async (account) =>
+        await DataStore.save(new SocialMedia({
+          socialMediaType: account.type,
+          accountURL: account.url,
+          profileSocialMediaId: newUserProfile.id
+        })));
 
       const verifyPhoto = await createNewPhoto(sub, selectedFile, newUserProfile.id);
       verifyPhoto && await DataStore.save(Profile.copyOf(newUserProfile, (updated) => {
@@ -72,8 +70,13 @@ const AccountUnverified = () => {
       const emailResponse = await API.post('email', '/', {
         body: {
           subject: "New Account Needs Verification",
-          emailBody: `<div>Verify new accounts at <a href='http://localhost:5173/admin/accounts'>http://localhost:5173/admin/accounts</a></div>`,
-          toAddress: "wzsamuels@gmail.com"
+          emailBody: `
+            <html lang="en">
+              <body>
+                <div>Verify new accounts at <a href='http://localhost:5173/admin/accounts'>http://localhost:5173/admin/accounts</a></div>
+              </body>
+            </html>`,
+          toAddress: ["gabrielle@eventfriends.app", "contact@twinsilverdesign.com"],
         }
       })
       console.log(emailResponse)
