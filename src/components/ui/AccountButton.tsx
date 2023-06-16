@@ -135,7 +135,7 @@ const AccountButton = () => {
                   <Menu.Item>
                     <Link
                       className="w-full hover:text-white hover:bg-brandYellow p-2 "
-                      to="/admin"
+                      to="/admin/events"
                     >
                       Admin
                     </Link>
