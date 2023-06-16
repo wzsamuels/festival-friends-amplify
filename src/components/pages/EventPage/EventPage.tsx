@@ -36,7 +36,6 @@ const segmentItems = [
 const EventPage = () => {
   // Filter events by type
   const events = useEventStore(state => state.events).filter((event) => !event.cancelled);
-  //const [events, setEvents] = useState<Event[]>([]);
   const loadingEvents = useEventStore(state => state.loadingEvents)
   const sportEvents = events.filter((event) => event.type === EventType.SPORT);
   const musicEvents = events.filter((event) => event.type === EventType.MUSIC);
@@ -44,22 +43,6 @@ const EventPage = () => {
   const travelEvents = events.filter((event) => event.type === EventType.TRAVEL)
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
   const [eventType, setEventType] = useState("all");
-  //const dataCleared = useDataClearedStore(state => state.dataCleared)
-
-  /*
-  useEffect(() => {
-    if(!dataCleared) return;
-
-    DataStore.query(Event, c => c.and(c => [
-      c.cancelled.eq(false),
-      c.hasPaid.eq(true),
-      c.approved.eq(true)
-    ]))
-      .then(events => setEvents(events))
-      .catch(err => console.log(err))
-  },[])
-
-   */
 
   // Render festival cards
   const renderFestivalCards = (events: Event[]) => {
@@ -84,8 +67,6 @@ const EventPage = () => {
     travel: travelEvents
   };
 
-
-
   // Filter events by type, map to array, and flatten
   const filteredEvents = Object.entries(eventMapping)
     .filter(([key, events]) => eventType === key || eventType === "all")
@@ -94,33 +75,27 @@ const EventPage = () => {
 
   return (
     <div>
-      <Header onSearch={() => setIsSearchModalOpen(true)}>
+      <Header
+        className="min-[400px]:shadow-xl"
+        onSearch={() => setIsSearchModalOpen(true)}>
         <SegmentSlide
           selected={eventType}
           setSelected={setEventType}
           items={segmentItems}
-          className="hidden md:flex "
+          className="hidden min-[400px]:flex"
         />
-        {/*
-        <ListboxSegment
-          items={segmentItems}
-          selected={eventType}
-          setSelected={setEventType}
-          className="flex md:hidden shadow-xl"
-        />
-        */}
       </Header>
       <SegmentSlide
         selected={eventType}
         setSelected={setEventType}
         items={segmentItems}
-        className="flex md:hidden shadow-xl"
+        className="flex min-[400px]:hidden shadow-xl fixed w-full z-10 top-8"
       />
       {
         loadingEvents ?
           <LoadingState/>
           :
-          <div className="grid gap-0 sm:gap-2 md:gap-4 justify-items-center grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 items-center">
+          <div className="pt-8 min-[400px]:pt-0 grid gap-0 sm:gap-2 md:gap-4 justify-items-center grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 items-center">
             {renderFestivalCards(filteredEvents)}
           </div>
       }
