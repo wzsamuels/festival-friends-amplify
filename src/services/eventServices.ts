@@ -143,16 +143,6 @@ export const approveEvent = async (eventID: string) => {
   }
 }
 
-export const rejectEvent = async (eventID: string) => {
-  try {
-    const deletedEvent = await DataStore.delete(Event, eventID);
-    console.log("Event rejected:", deletedEvent);
-    return deletedEvent;
-  } catch (e) {
-    console.log("Error rejecting event", e)
-  }
-}
-
 export const getAttendees = async (eventID: string) => {
   try {
     return await DataStore.query(Profile, c => c.events.event.id.eq(eventID))
@@ -164,6 +154,8 @@ export const getAttendees = async (eventID: string) => {
 
 export const deleteEvent = async (eventID: string) => {
   try {
+    const latestEvent = await DataStore.query(Event, eventID);
+    await Storage.remove(latestEvent?.image || "");
     await DataStore.delete(EventProfile, c => c.eventId.eq(eventID))
     const rides = await DataStore.query(Ride, c => c.eventID.eq(eventID))
     for (const ride of rides) {
