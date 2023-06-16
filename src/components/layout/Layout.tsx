@@ -7,6 +7,7 @@ import {
   BsMusicNoteBeamed,
 } from "react-icons/bs";
 import PulseButton from "../common/PulseButton/PulseButton";
+import {CalendarDaysIcon} from "@heroicons/react/24/solid";
 
 const Layout = () => {
 
@@ -27,7 +28,7 @@ const Layout = () => {
             }
           >
             <PulseButton className="w-full flex flex-col justify-center items-center">
-              <BsMusicNoteBeamed
+              <CalendarDaysIcon
                 className="text-base sm:text-lg"
                 aria-hidden="true"
               />

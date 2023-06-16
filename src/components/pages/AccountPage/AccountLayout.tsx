@@ -26,7 +26,7 @@ const AccountLayout = () => {
     if (route !== "authenticated") {
       return (
         <>
-          <Header />
+          <Header className="shadow-xl" />
           <div className="w-screen h-screen translate-y-[-15%] flex justify-center items-center">
             <Authenticator />
           </div>
@@ -37,7 +37,7 @@ const AccountLayout = () => {
     if (!userProfile) {
       return (
         <>
-          <Header />
+          <Header className="shadow-xl" />
           <AccountUnverified />
         </>
       )
@@ -47,10 +47,10 @@ const AccountLayout = () => {
     if (userProfile?.verified) {
       return (
         <>
-          <Header>
-            <Nav items={NavItems} className="hidden md:flex"/>
+          <Header className="shadow-xl">
+            <Nav items={NavItems} className="flex"/>
           </Header>
-          <Nav items={NavItems} className="flex md:hidden"/>
+
           <Outlet/>
         </>
 
@@ -60,7 +60,7 @@ const AccountLayout = () => {
     if (!userProfile?.verified && userProfile?.submitted) {
       return (
         <>
-          <Header />
+          <Header className="shadow-xl" />
           <div className="flex w-full h-full justify-center items-center flex-col p-4">
             <div className="max-w-lg">
               <div className="my-4">
