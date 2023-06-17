@@ -15,14 +15,12 @@ type EventStore = {
 
 const useEventStore = create<EventStore>((set: SetState<EventStore>, get) => ({
   events: [] as Event[],
-  loadingEvents: false,
+  loadingEvents: true,
   error: null,
   eventSubscription: null,
   fetchEvents: async () => {
     set({loadingEvents: true})
     try {
-
-
       const eventSub = await DataStore.observeQuery(Event, c => c.and(c => [
         c.cancelled.eq(false),
         c.hasPaid.eq(true),

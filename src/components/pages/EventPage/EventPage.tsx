@@ -9,6 +9,7 @@ import EventSearchModal from "./Modals/EventSearchModal";
 import useEventStore from "../../../stores/eventStore";
 import LoadingState from "../../ui/LoadingState";
 import SegmentSlide from "../../common/Segment/SegmentSlide";
+import Spinner from "../../common/Spinner/Spinner";
 
 const segmentItems = [
   {
@@ -94,8 +95,11 @@ const EventPage = () => {
         />
       </div>
       {
-        loadingEvents ?
-          <LoadingState/>
+        (loadingEvents || events.length === 0 )?
+          <div className="flex flex-col items-center justify-center min-h-screen">
+            <div className="text-xl md:text-2xl p-8">Loading Events</div>
+            <Spinner/>
+          </div>
           :
           <div className="pt-8 min-[400px]:pt-0 grid gap-0 sm:gap-2 md:gap-4 justify-items-center grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 items-center">
             {renderFestivalCards(filteredEvents)}
