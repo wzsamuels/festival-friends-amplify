@@ -47,7 +47,7 @@ const AccountUnverified = () => {
       const newUserProfile = await DataStore.save(new Profile({
         ...filteredData,
         email: email,
-        phone: phone,
+        ...(phone && {phone: phone}),
         ...(group && {groupID: group?.id}),
         submitted: true,
         privacySetting: newPrivacySetting,
@@ -73,7 +73,7 @@ const AccountUnverified = () => {
           emailBody: `
             <html lang="en">
               <body>
-                <div>Verify new accounts at <a href='http://localhost:5173/admin/accounts'>http://localhost:5173/admin/accounts</a></div>
+                <div>Verify new accounts at <a href='https://www.eventfriends.app/admin/accounts'>https://www.eventfriends.app/admin/accounts</a></div>
               </body>
             </html>`,
           toAddress: ["gabrielle@eventfriends.app", "contact@twinsilverdesign.com"],
@@ -165,17 +165,11 @@ const AccountUnverified = () => {
               </Select>
             </InputWrapper>
           </div>
-          <div className="flex flex-col gap-4 md:flex-row">
-            <InputWrapper className="my-4 flex-1">
-              <Label>Address</Label>
-              <Input {...register("address", { required: true })} />
-            </InputWrapper>
-            <InputWrapper className="my-4 flex-1">
-              <Label>Zip Code</Label>
-              <Input {...register("zipcode", { required: true })} />
-            </InputWrapper>
-          </div>
-          <InputWrapper className="my-8">
+          <InputWrapper className="my-4 flex-1">
+            <Label>Zip Code</Label>
+            <Input className="max-w-[150px]" {...register("zipcode", { required: true })} />
+          </InputWrapper>
+          <InputWrapper className="mt-8">
             <label className="basis-[150px]">Phone</label>
             <Controller
               name="phone"
@@ -194,7 +188,9 @@ const AccountUnverified = () => {
               )}
             />
           </InputWrapper>
-          <section>
+          <div className="text-sm">(optional)</div>
+
+          <section className="mt-8">
             <div className='flex justify-between items-center'>
               <h2 className='font-bold'>Social Media Accounts</h2>
               <Button

@@ -30,8 +30,6 @@ const ProfileEditModal = ({profile, profileImage, isOpen, setIsOpen, callback}: 
           updated.city = data.city;
           updated.state = data.state;
           updated.zipcode = data.zipcode;
-          updated.address = data.address;
-          updated.address2 = data.address2;
           updated.school = data.school;
         })
       );

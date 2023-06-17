@@ -37,9 +37,6 @@ const AccountEditForm = ({ onSubmit, profile }: ProfileFormProps) => {
       city: profile?.city || "",
       state: profile?.state || "",
       zipcode: profile?.zipcode || "",
-      address: profile?.address || "",
-      address2: profile?.address2 || "",
-      //socialMedia: [],
     },
   });
 
@@ -109,20 +106,12 @@ const AccountEditForm = ({ onSubmit, profile }: ProfileFormProps) => {
       {errors.lastName && <div className="text-red-700">This is a required field</div>}
       <div className="flex flex-wrap">
         <Label>Phone</Label>
-        <Input {...register("phone", { required: true })} type="tel" />
+        <Input {...register("phone")} type="tel" />
       </div>
-      {errors.phone && <div className="text-red-700">This is a required field</div>}
+      <div className="text-sm">(optional)</div>
       <div className="flex flex-wrap">
         <Label>School</Label>
         <Input {...register("school")} />
-      </div>
-      <div className="flex flex-wrap">
-        <Label>Address</Label>
-        <Input {...register("address")} />
-      </div>
-      <div className="flex flex-wrap">
-        <Label className="ion-text-wrap">Address Line 2</Label>
-        <Input {...register("address2")} />
       </div>
       <div className="flex flex-wrap">
         <Label>City</Label>
