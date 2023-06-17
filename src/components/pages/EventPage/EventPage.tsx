@@ -85,12 +85,14 @@ const EventPage = () => {
           className="hidden min-[400px]:flex"
         />
       </Header>
-      <SegmentSlide
-        selected={eventType}
-        setSelected={setEventType}
-        items={segmentItems}
-        className="flex min-[400px]:hidden shadow-xl fixed w-full z-10 top-8"
-      />
+      <div className="fixed w-full z-10 min-[400px]:hidden shadow-xl">
+        <SegmentSlide
+          selected={eventType}
+          setSelected={setEventType}
+          items={segmentItems}
+          className="flex"
+        />
+      </div>
       {
         loadingEvents ?
           <LoadingState/>

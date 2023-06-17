@@ -330,12 +330,14 @@ const FriendsPage: React.FC = () => {
           className="hidden min-[375px]:flex "
         />
       </Header>
+      <div className="fixed w-full z-10 min-[400px]:hidden shadow-xl min-[375px]:hidden">
       <SegmentSlide
         selected={friendType}
         setSelected={setFriendType}
         items={segmentItems}
-        className="flex min-[375px]:hidden shadow-xl fixed w-full z-10 top-8"
+        className="flex"
       />
+      </div>
       {renderFriends()}
       <FriendSearchModal
         isOpen={isFriendsModalOpen}
