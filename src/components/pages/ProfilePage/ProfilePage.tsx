@@ -5,7 +5,7 @@ import PhotoImage from "../../ui/PhotoImage";
 import Header from "../../layout/Header";
 import PhotoModal from "../AccountPage/Modals/PhotoModal";
 import { useNavigate } from "react-router-dom";
-import { BsPerson, IoArrowBack } from "react-icons/all";
+import {BsFlag, BsPerson, IoArrowBack} from "react-icons/all";
 import getErrorMessage from "../../../lib/getErrorMessage";
 import useDataClearedStore from "../../../stores/dataClearedStore";
 import {getProfile} from "../../../services/profileServices";
@@ -14,6 +14,7 @@ import {getPhotosByProfile, getPhotoURL} from "../../../services/photoServices";
 import RideCard from "../../ui/RideCard";
 import SocialMediaList from "./SocialMediaList";
 import {getEventsByProfile} from "../../../services/eventServices";
+import ReportModal from "./Modals/ReportModal";
 
 const ProfilePage = () => {
   const [profile, setProfile] = useState<Profile | null | undefined>();
@@ -22,6 +23,7 @@ const ProfilePage = () => {
   const [bannerImage, setBannerImage] = useState("");
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [isPhotoModalOpen, setIsPhotoModalOpen] = useState(false);
+  const [reportModalOpen, setReportModalOpen] = useState(false);
   const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
   const [eventsAttending, setEventsAttending] = useState<Event[]>([]);
   const [rides, setRides] = useState<Ride[]>([]);
@@ -77,15 +79,12 @@ const ProfilePage = () => {
   return (
     <>
       <Header>
-        <button className="mx-4 text-xl" onClick={() => navigate(-1)}>
-          <IoArrowBack />Back
+        <button className="mx-4 text-xl flex items-center" onClick={() => navigate(-1)}>
+          <IoArrowBack className="mr-2" />Back
         </button>
       </Header>
       <section
-        className={
-          "flex justify-center flex-col relative w-full h-screen max-h-[500px]"
-        }
-      >
+        className="flex justify-center flex-col relative w-full h-screen  max-h-[500px]">
         {bannerImage ? (
           <img
             src={bannerImage}
@@ -140,6 +139,12 @@ const ProfilePage = () => {
           <h2 className="text-base md:text-lg font-bold">Social Media</h2>
           <SocialMediaList profile={profile}/>
         </div>
+        <button
+          onClick={() => setReportModalOpen(true)}
+          className="hover:bg-darkGreen hover:text-white text-sm my-4 flex items-center border border-darkGreen rounded-xl w-fit p-2">
+          <BsFlag/>
+          <span className="text-sm ml-2">Report User</span>
+        </button>
         <section>
           <h1 className="text-2xl my-4">Events Attending</h1>
           {
@@ -147,7 +152,7 @@ const ProfilePage = () => {
               (eventsAttending.length > 0 ? eventsAttending.map((event, index) =>
                 <span key={event.id}>
                   <Link
-                    className="hover:underline text-brandYellow"
+                    className="hover:text-darkGreen underline"
                     to={`/events/${event.id}`}
                   >
                     {event.name}
@@ -197,13 +202,14 @@ const ProfilePage = () => {
             }
           </div>
         </section>
-        <PhotoModal
-          photo={selectedPhoto}
-          isOpen={isPhotoModalOpen}
-          setIsOpen={setIsPhotoModalOpen}
-          deletePhoto={false}
-        />
       </div>
+      <PhotoModal
+        photo={selectedPhoto}
+        isOpen={isPhotoModalOpen}
+        setIsOpen={setIsPhotoModalOpen}
+        deletePhoto={false}
+      />
+      { profile && <ReportModal profile={profile} isOpen={reportModalOpen} setIsOpen={setReportModalOpen} />}
     </>
   );
 };
