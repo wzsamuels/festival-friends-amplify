@@ -180,7 +180,6 @@ const AccountUnverified = () => {
                   type="tel"
                   {...field}
                   value={phone}
-                  required
                   onChange={handlePhoneChange}
                   ref={inputRef}
                   className="max-w-[150px]"
