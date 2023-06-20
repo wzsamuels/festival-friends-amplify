@@ -109,7 +109,7 @@ const EventForm = ({eventID, onSubmit, submitting, className} : EventFormProps) 
       {errors.city && <p className='text-red-500 text-sm'>This field is required</p>}
 
       <div className='flex flex-col sm:flex-row mt-4 mb-1'>
-        <label className="sm:basis-[150px]">Address</label>
+        <label className="sm:basis-[150px]">Venue</label>
         <input
           className="border-b border-b-gray-400 flex-1 focus:border-b-brandYellow focus:outline-0 mt-2 sm:m-0"
           {...register("address")}/>

@@ -71,7 +71,7 @@ export const getAllEvents = async () => {
   }
 }
 
-export const createEvent = async (data: EventInputs) => {
+export const createEvent = async (data: EventInputs, extraData?: any) => {
   try {
     const {selectedFile, ...restData} = data;
     if(!selectedFile) return null;
@@ -84,6 +84,7 @@ export const createEvent = async (data: EventInputs) => {
     return await DataStore.save(
       new Event({
         ...restData,
+        ...(extraData && {...extraData}),
         image: newImage,
       }
     ));

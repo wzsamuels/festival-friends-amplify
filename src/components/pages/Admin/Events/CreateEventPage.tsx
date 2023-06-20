@@ -11,7 +11,7 @@ const CreateEventPage = () => {
 
   const handleEventCreate: SubmitHandler<EventInputs> = async (data) => {
     setSubmitting(true);
-    const newEvent = await createEvent(data);
+    const newEvent = await createEvent(data, {hasPaid: true});
     if(newEvent) {
       setToastData({
         type: "success",
