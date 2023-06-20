@@ -36,12 +36,14 @@ const Nav = ({items, className} : NavProps) => {
       updateUnderlinePosition();
     };
 
+    if(!window) return;
+
     window.addEventListener("resize", handleResize);
 
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, [window]);
 
   return (
     <div className={`w-full justify-between h-full relative flex-wrap bg-lightYellow ${className} nav-container-${id.current}`}>

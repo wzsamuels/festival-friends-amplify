@@ -22,6 +22,8 @@ const PulseButton: React.FC<PulseButtonProps> = ({
     if (pulseEffectRef.current) {
       const pulseEffect = pulseEffectRef.current;
 
+      if(!pulseEffect) return;
+
       // Add the animate-pulse-effect class when clicked
       pulseEffect.classList.add("animate-pulse-effect");
 
