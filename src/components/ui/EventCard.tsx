@@ -68,7 +68,7 @@ const EventCard = ({ event, className }: EventCardProps) => {
   };
 
   return (
-    <div className={`rounded-xl shadow-md w-full max-w-[350px] ${className}`}>
+    <div className={`rounded-xl shadow-md w-full max-w-[350px] min-h-[36rem] flex flex-col justify-between ${className}`}>
       <Link className="relative" to={`/events/${event.id}`}>
         <Image
           className="w-full h-full object-cover aspect-square"
@@ -76,32 +76,31 @@ const EventCard = ({ event, className }: EventCardProps) => {
           alt={event.name}
         />
         <div className=" bottom-4 left-4 rounded-xl z-10 w-full p-4 ">
-          <div className="font-bold mb-2">
-            {event.name}
-          </div>
+          <div className="text-lg">{event.name}</div>
+          <div className="mb-2">{event.genre}</div>
           <div>{event.city}, {event.state}</div>
+          <div>{event.country}</div>
           <div>
             {dayjs(event.startDate).format("MMMM D, YYYY")} - {dayjs(event.endDate).format("MMMM D, YYYY")}
           </div>
         </div>
       </Link>
-      <div className="p-2 text-base md:text-lg">
+      <div className="p-2 text-base md:text-lg  h-full items-end">
         {userProfile &&
           <>
             <div>
               <button
                 className="my-2"
                 disabled={friendsAttending.length === 0}
-                onClick={() => setIsEventFriendModalOpen(true)}
               >
                 {friendsAttending.length > 0 ? (
-                  <span className="underline">
+                  <Link to={`/events/${event.id}#friends`} className="underline">
                     {friendsAttending.length} friend
                     {friendsAttending.length > 1 ? "s" : ""}{" "}
                     {friendsAttending.length > 1 ? "are" : "is"} attending
-                  </span>
+                  </Link>
                 ) : (
-                  <span>&nbsp;</span>
+                  <div>&nbsp;</div>
                 )}
               </button>
             </div>
@@ -109,11 +108,11 @@ const EventCard = ({ event, className }: EventCardProps) => {
               <button
                 className="mb-2">
                 { attendeeProfiles.length > 0 ?
-                  <span className="underline my-4">
+                  <Link to={`/events/${event.id}#people`} className="underline my-4">
                     {attendeeProfiles.length}{" "}
                     {attendeeProfiles.length > 1 ? "people" : "person"}{" "}
                     {attendeeProfiles.length > 1 ? "are" : "is"} attending
-                  </span>
+                  </Link>
                   :
                   <span>&nbsp;</span>
                 }
