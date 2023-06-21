@@ -27,7 +27,6 @@ import EventPage from "./components/pages/EventPage/EventPage";
 import EventDetailPage from "./components/pages/EventPage/EventDetailPage";
 import FriendsPage from "./components/pages/FriendPage/Friends";
 import MessagePage from "./components/pages/MessagePage/MessagePage";
-import GroupsPage from "./components/pages/GroupPage/GroupPage";
 import AccountSettingsPage from "./components/pages/AccountPage/AccountSettingsPage";
 import ProfilePage from "./components/pages/ProfilePage/ProfilePage";
 import ApproveEventPage from "./components/pages/Admin/Events/ApproveEventPage";
@@ -35,6 +34,10 @@ import CreateEventPage from "./components/pages/Admin/Events/CreateEventPage";
 import UpdateEventPage from "./components/pages/Admin/Events/UpdateEventPage";
 import DeleteEventPage from "./components/pages/Admin/Events/DeleteEventPage";
 import PolicyPage from "./components/pages/Policies/page";
+import GroupLayout from "./components/pages/GroupPage/layout";
+import UniversityPage from "./components/pages/GroupPage/University/page";
+import GroupPage from "./components/pages/GroupPage/page";
+import BrandPage from "./components/pages/GroupPage/Brands/page";
 
 const Router = () => {
   const { user } = useAuthenticator((context) => [context.user]);
@@ -84,7 +87,21 @@ const Router = () => {
         },
         {
           path: "groups",
-          element: <GroupsPage />,
+          element: <GroupLayout/>,
+          children: [
+            {
+              index: true,
+              element: <GroupPage />
+            },
+            {
+              path: "university",
+              element: <UniversityPage/>
+            },
+            {
+              path: "brand",
+              element: <BrandPage/>
+            }
+          ]
         },
         {
           path: "account",
