@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
 import {Profile} from "../../../models";
-import { DataStore } from "@aws-amplify/datastore";
 import FriendCard from "../../ui/FriendCard";
 import { Link, useParams } from "react-router-dom";
 import Header from "../../layout/Header";
 import { Ride } from "../../../models";
-import Button from "../../common/Button/Button";
 import NewRideModal from "./Modals/NewRideModal";
-import RideCard from "../../ui/RideCard";
 import useFriendStore from "../../../stores/friendProfileStore";
 import useEventStore from "../../../stores/eventStore";
 import useDataClearedStore from "../../../stores/dataClearedStore";
@@ -25,7 +22,7 @@ const EventDetailPage = () => {
   const event = useEventStore(state => state.events).find(event => event.id === id)
   const [attendees, setAttendees] = useState<Profile[]>([]);
   const [attendeeFriends, setAttendeeFriends] = useState<Profile[]>([]);
-  const [rides, setRides] = useState<Ride[]>([]);
+  //const [rides, setRides] = useState<Ride[]>([]);
   const [isNewRideModalOpen, setIsNewRideModalOpen] = useState(false);
   const dataCleared = useDataClearedStore(state => state.dataCleared)
   const [eventsData, setEventsData] = useState(new Map());
@@ -47,15 +44,16 @@ const EventDetailPage = () => {
           setEventsData(eventsMap);
         })
 
-      // Fetch rides
+      /*
       const rideSub = DataStore.observeQuery(Ride, (c) => c.eventID.eq(id as string)
       ).subscribe(({ items }) => {
-        // Todo: Remove old rides
         setRides(items);
       });
       return () => {
         rideSub.unsubscribe();
       };
+
+       */
     } catch (e) {
       console.log("Error fetching event data: ", e);
     }
@@ -92,7 +90,7 @@ const EventDetailPage = () => {
 
     return (
       <>
-        {/* Ride Section */}
+      {/* Ride Section
         <section className="w-full p-4">
           <div className=" my-4 flex justify-between">
             <h1 className="text-2xl">Rides</h1>
@@ -110,10 +108,11 @@ const EventDetailPage = () => {
             <div>No rides yet</div>
           )}
         </section>
+        */}
         <section className="w-full p-4">
           {attendeeFriends.length > 0 && (
             <>
-              <h2 className="text-2xl my-4">Friends Attending</h2>
+              <h2 id="friends" className="text-2xl my-4">Friends Attending</h2>
               <div className="flex flex-wrap w-full">
                 {attendeeFriends.map((attendee) => (
                   <FriendCard
@@ -126,7 +125,7 @@ const EventDetailPage = () => {
               </div>
             </>
           )}
-          <h2 className="text-2xl my-4">People Attending</h2>
+          <h2 id="people" className="text-2xl my-4">People Attending</h2>
           {attendees.length > 0 ? (
             <div className="flex flex-wrap w-full">
               {attendees.map((attendee) => {
@@ -169,9 +168,10 @@ const EventDetailPage = () => {
         />
         {/* For screens smaller than 'md', position the event details div normally (i.e., below the image).
       For 'md' screens and larger, position it absolutely as before. */}
-        <div className="bottom-4 left-4 bg-white p-4 min-w-[250px] shadow-xl md:z-10 border md:rounded-xl md:border-b-brandYellow md:absolute">
+        <div className="bottom-4 left-4 bg-white p-4 min-w-[250px] shadow-xl md:z-10 border md:rounded-xl md:border-b-brandYellow md:absolute ">
           <h1 className="text-xl mb-2 font-bold">{event?.name}</h1>
-          <p className="my-1">{event?.city}, {event?.state}</p>
+          <p className="my-1">{event?.city}{event?.state && `, ${event?.state}`}{event?.country && `, ${event?.country}`}</p>
+          <p className="my-1">{event?.address}</p>
           <p className="my-1">{dayjs(event?.startDate).format("MMMM D, YYYY")} - {dayjs(event?.endDate).format("MMMM D, YYYY")}</p>
           <a href={event?.url || ""} target="_blank" rel="noreferrer" className="my-1 underline text-darkGreen">{event?.url}</a>
         </div>

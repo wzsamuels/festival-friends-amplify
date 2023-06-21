@@ -1,6 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import React, {useEffect, useState} from "react";
-import {Event, Photo, PrivacySetting, Ride, Profile} from "../../../models";
+import {Event, Photo, PrivacySetting, Profile} from "../../../models";
 import PhotoImage from "../../ui/PhotoImage";
 import Header from "../../layout/Header";
 import PhotoModal from "../AccountPage/Modals/PhotoModal";
@@ -9,9 +9,7 @@ import {BsFlag, BsPerson, IoArrowBack} from "react-icons/all";
 import getErrorMessage from "../../../lib/getErrorMessage";
 import useDataClearedStore from "../../../stores/dataClearedStore";
 import {getProfile} from "../../../services/profileServices";
-import {getRidesByProfile} from "../../../services/rideServices";
 import {getPhotosByProfile, getPhotoURL} from "../../../services/photoServices";
-import RideCard from "../../ui/RideCard";
 import SocialMediaList from "./SocialMediaList";
 import {getEventsByProfile} from "../../../services/eventServices";
 import ReportModal from "./Modals/ReportModal";
@@ -26,7 +24,7 @@ const ProfilePage = () => {
   const [reportModalOpen, setReportModalOpen] = useState(false);
   const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
   const [eventsAttending, setEventsAttending] = useState<Event[]>([]);
-  const [rides, setRides] = useState<Ride[]>([]);
+  //const [rides, setRides] = useState<Ride[]>([]);
   const dataCleared = useDataClearedStore(state => state.dataCleared);
   const { profileId } = useParams();
   const navigate = useNavigate();
@@ -66,8 +64,10 @@ const ProfilePage = () => {
         setEventsAttending(eventsAttending)
       });
 
+    /*
     getRidesByProfile(profile)
       .then(rides => setRides(rides));
+     */
 
     profile.privacySetting
       .then(privacySetting => {
@@ -165,6 +165,7 @@ const ProfilePage = () => {
             <span>This user has set their privacy setting to hide events.</span>
           }
         </section>
+        {/*
         <section>
           <h1 className="text-2xl my-4">Rides</h1>
           <div className='flex flex-wrap'>
@@ -179,6 +180,7 @@ const ProfilePage = () => {
           }
           </div>
         </section>
+        */}
         <section>
           <h1 className="text-2xl my-4">Photos</h1>
           <div className="flex flex-wrap gap-4">

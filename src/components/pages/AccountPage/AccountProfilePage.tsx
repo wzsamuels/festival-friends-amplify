@@ -30,7 +30,7 @@ const AccountProfilePage = () => {
   const [isPhotoModalOpen, setPhotoModalOpen] = useState(false);
   const [isBannerModalOpen, setIsBannerModalOpen] = useState(false);
   const [eventsAttending, setEventsAttending] = useState<Event[]>([]);
-  const [rides, setRides] = useState<Ride[]>([]);
+  //const [rides, setRides] = useState<Ride[]>([]);
   const userProfile = useProfileStore((state) => state.userProfile);
   const dataCleared = useDataClearedStore((state) => state.dataCleared);
 
@@ -46,8 +46,11 @@ const AccountProfilePage = () => {
         .then(image => setProfileImage(image));
       getPhotoURL(userProfile.bannerPhotoID)
         .then(image => setBannerImage(image));
+      /*
       fetchRides()
         .then(rides => setRides(rides));
+
+       */
     } catch (e) {
       console.log(e);
     }
@@ -147,6 +150,7 @@ const AccountProfilePage = () => {
           }</div>
       </section>
       <hr className="my-8 border border-primary-default w-full" />
+      {/*
       <section className="p-4">
         <h1 className="text-2xl my-4">Rides</h1>
         <div className="grid gap-0 sm:gap-2 md:gap-4 justify-items-center grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 items-center">
@@ -158,6 +162,7 @@ const AccountProfilePage = () => {
           }
         </div>
       </section>
+      */}
       <hr className="my-4 border border-primary-default w-full" />
       <section className="p-4">
         <div className="flex justify-between items-center w-full">
