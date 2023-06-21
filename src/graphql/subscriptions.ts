@@ -68,6 +68,7 @@ export const onCreateProfile = /* GraphQL */ `
             image
             state
             city
+            country
             startDate
             endDate
             type
@@ -370,6 +371,7 @@ export const onCreateProfile = /* GraphQL */ `
             image
             state
             city
+            country
             startDate
             endDate
             type
@@ -539,6 +541,7 @@ export const onUpdateProfile = /* GraphQL */ `
             image
             state
             city
+            country
             startDate
             endDate
             type
@@ -841,6 +844,7 @@ export const onUpdateProfile = /* GraphQL */ `
             image
             state
             city
+            country
             startDate
             endDate
             type
@@ -1010,6 +1014,7 @@ export const onDeleteProfile = /* GraphQL */ `
             image
             state
             city
+            country
             startDate
             endDate
             type
@@ -1312,6 +1317,7 @@ export const onDeleteProfile = /* GraphQL */ `
             image
             state
             city
+            country
             startDate
             endDate
             type
@@ -1541,6 +1547,7 @@ export const onCreateEvent = /* GraphQL */ `
       image
       state
       city
+      country
       startDate
       endDate
       type
@@ -1567,6 +1574,7 @@ export const onCreateEvent = /* GraphQL */ `
             image
             state
             city
+            country
             startDate
             endDate
             type
@@ -1673,6 +1681,7 @@ export const onCreateEvent = /* GraphQL */ `
             image
             state
             city
+            country
             startDate
             endDate
             type
@@ -1712,6 +1721,7 @@ export const onCreateEvent = /* GraphQL */ `
             image
             state
             city
+            country
             startDate
             endDate
             type
@@ -1768,6 +1778,7 @@ export const onUpdateEvent = /* GraphQL */ `
       image
       state
       city
+      country
       startDate
       endDate
       type
@@ -1794,6 +1805,7 @@ export const onUpdateEvent = /* GraphQL */ `
             image
             state
             city
+            country
             startDate
             endDate
             type
@@ -1900,6 +1912,7 @@ export const onUpdateEvent = /* GraphQL */ `
             image
             state
             city
+            country
             startDate
             endDate
             type
@@ -1939,6 +1952,7 @@ export const onUpdateEvent = /* GraphQL */ `
             image
             state
             city
+            country
             startDate
             endDate
             type
@@ -1995,6 +2009,7 @@ export const onDeleteEvent = /* GraphQL */ `
       image
       state
       city
+      country
       startDate
       endDate
       type
@@ -2021,6 +2036,7 @@ export const onDeleteEvent = /* GraphQL */ `
             image
             state
             city
+            country
             startDate
             endDate
             type
@@ -2127,6 +2143,7 @@ export const onDeleteEvent = /* GraphQL */ `
             image
             state
             city
+            country
             startDate
             endDate
             type
@@ -2166,6 +2183,7 @@ export const onDeleteEvent = /* GraphQL */ `
             image
             state
             city
+            country
             startDate
             endDate
             type
@@ -2224,6 +2242,7 @@ export const onCreateRide = /* GraphQL */ `
         image
         state
         city
+        country
         startDate
         endDate
         type
@@ -2378,6 +2397,7 @@ export const onUpdateRide = /* GraphQL */ `
         image
         state
         city
+        country
         startDate
         endDate
         type
@@ -2532,6 +2552,7 @@ export const onDeleteRide = /* GraphQL */ `
         image
         state
         city
+        country
         startDate
         endDate
         type
@@ -5270,6 +5291,7 @@ export const onCreateGroup = /* GraphQL */ `
           image
           state
           city
+          country
           startDate
           endDate
           type
@@ -5420,6 +5442,7 @@ export const onUpdateGroup = /* GraphQL */ `
           image
           state
           city
+          country
           startDate
           endDate
           type
@@ -5570,6 +5593,7 @@ export const onDeleteGroup = /* GraphQL */ `
           image
           state
           city
+          country
           startDate
           endDate
           type
@@ -5875,6 +5899,7 @@ export const onCreateEventProfile = /* GraphQL */ `
         image
         state
         city
+        country
         startDate
         endDate
         type
@@ -6124,6 +6149,7 @@ export const onUpdateEventProfile = /* GraphQL */ `
         image
         state
         city
+        country
         startDate
         endDate
         type
@@ -6373,6 +6399,7 @@ export const onDeleteEventProfile = /* GraphQL */ `
         image
         state
         city
+        country
         startDate
         endDate
         type
@@ -6624,6 +6651,7 @@ export const onCreateRideProfile = /* GraphQL */ `
           image
           state
           city
+          country
           startDate
           endDate
           type
@@ -6869,6 +6897,7 @@ export const onUpdateRideProfile = /* GraphQL */ `
           image
           state
           city
+          country
           startDate
           endDate
           type
@@ -7114,6 +7143,7 @@ export const onDeleteRideProfile = /* GraphQL */ `
           image
           state
           city
+          country
           startDate
           endDate
           type

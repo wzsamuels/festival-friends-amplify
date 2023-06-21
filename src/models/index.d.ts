@@ -186,8 +186,9 @@ type EagerEvent = {
   readonly name: string;
   readonly genre: string;
   readonly image: string;
-  readonly state: string;
+  readonly state?: string | null;
   readonly city: string;
+  readonly country?: string | null;
   readonly startDate: string;
   readonly endDate: string;
   readonly type: EventType | keyof typeof EventType;
@@ -218,8 +219,9 @@ type LazyEvent = {
   readonly name: string;
   readonly genre: string;
   readonly image: string;
-  readonly state: string;
+  readonly state?: string | null;
   readonly city: string;
+  readonly country?: string | null;
   readonly startDate: string;
   readonly endDate: string;
   readonly type: EventType | keyof typeof EventType;

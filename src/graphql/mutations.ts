@@ -71,6 +71,7 @@ export const createProfile = /* GraphQL */ `
             image
             state
             city
+            country
             startDate
             endDate
             type
@@ -373,6 +374,7 @@ export const createProfile = /* GraphQL */ `
             image
             state
             city
+            country
             startDate
             endDate
             type
@@ -545,6 +547,7 @@ export const updateProfile = /* GraphQL */ `
             image
             state
             city
+            country
             startDate
             endDate
             type
@@ -847,6 +850,7 @@ export const updateProfile = /* GraphQL */ `
             image
             state
             city
+            country
             startDate
             endDate
             type
@@ -1019,6 +1023,7 @@ export const deleteProfile = /* GraphQL */ `
             image
             state
             city
+            country
             startDate
             endDate
             type
@@ -1321,6 +1326,7 @@ export const deleteProfile = /* GraphQL */ `
             image
             state
             city
+            country
             startDate
             endDate
             type
@@ -1559,6 +1565,7 @@ export const createEvent = /* GraphQL */ `
       image
       state
       city
+      country
       startDate
       endDate
       type
@@ -1585,6 +1592,7 @@ export const createEvent = /* GraphQL */ `
             image
             state
             city
+            country
             startDate
             endDate
             type
@@ -1691,6 +1699,7 @@ export const createEvent = /* GraphQL */ `
             image
             state
             city
+            country
             startDate
             endDate
             type
@@ -1730,6 +1739,7 @@ export const createEvent = /* GraphQL */ `
             image
             state
             city
+            country
             startDate
             endDate
             type
@@ -1789,6 +1799,7 @@ export const updateEvent = /* GraphQL */ `
       image
       state
       city
+      country
       startDate
       endDate
       type
@@ -1815,6 +1826,7 @@ export const updateEvent = /* GraphQL */ `
             image
             state
             city
+            country
             startDate
             endDate
             type
@@ -1921,6 +1933,7 @@ export const updateEvent = /* GraphQL */ `
             image
             state
             city
+            country
             startDate
             endDate
             type
@@ -1960,6 +1973,7 @@ export const updateEvent = /* GraphQL */ `
             image
             state
             city
+            country
             startDate
             endDate
             type
@@ -2019,6 +2033,7 @@ export const deleteEvent = /* GraphQL */ `
       image
       state
       city
+      country
       startDate
       endDate
       type
@@ -2045,6 +2060,7 @@ export const deleteEvent = /* GraphQL */ `
             image
             state
             city
+            country
             startDate
             endDate
             type
@@ -2151,6 +2167,7 @@ export const deleteEvent = /* GraphQL */ `
             image
             state
             city
+            country
             startDate
             endDate
             type
@@ -2190,6 +2207,7 @@ export const deleteEvent = /* GraphQL */ `
             image
             state
             city
+            country
             startDate
             endDate
             type
@@ -2251,6 +2269,7 @@ export const createRide = /* GraphQL */ `
         image
         state
         city
+        country
         startDate
         endDate
         type
@@ -2408,6 +2427,7 @@ export const updateRide = /* GraphQL */ `
         image
         state
         city
+        country
         startDate
         endDate
         type
@@ -2565,6 +2585,7 @@ export const deleteRide = /* GraphQL */ `
         image
         state
         city
+        country
         startDate
         endDate
         type
@@ -5330,6 +5351,7 @@ export const createGroup = /* GraphQL */ `
           image
           state
           city
+          country
           startDate
           endDate
           type
@@ -5483,6 +5505,7 @@ export const updateGroup = /* GraphQL */ `
           image
           state
           city
+          country
           startDate
           endDate
           type
@@ -5636,6 +5659,7 @@ export const deleteGroup = /* GraphQL */ `
           image
           state
           city
+          country
           startDate
           endDate
           type
@@ -5942,6 +5966,7 @@ export const createEventProfile = /* GraphQL */ `
         image
         state
         city
+        country
         startDate
         endDate
         type
@@ -6192,6 +6217,7 @@ export const updateEventProfile = /* GraphQL */ `
         image
         state
         city
+        country
         startDate
         endDate
         type
@@ -6442,6 +6468,7 @@ export const deleteEventProfile = /* GraphQL */ `
         image
         state
         city
+        country
         startDate
         endDate
         type
@@ -6694,6 +6721,7 @@ export const createRideProfile = /* GraphQL */ `
           image
           state
           city
+          country
           startDate
           endDate
           type
@@ -6940,6 +6968,7 @@ export const updateRideProfile = /* GraphQL */ `
           image
           state
           city
+          country
           startDate
           endDate
           type
@@ -7186,6 +7215,7 @@ export const deleteRideProfile = /* GraphQL */ `
           image
           state
           city
+          country
           startDate
           endDate
           type

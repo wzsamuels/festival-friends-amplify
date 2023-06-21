@@ -27,7 +27,7 @@
         "stripeWebhook": {
           "secretsPathAmplifyAppId": "d3h5qswgc4c8q2",
           "deploymentBucketName": "amplify-eventfriends-staging-194056-deployment",
-          "s3Key": "amplify-builds/stripeWebhook-6c6a50686d6e4b2b2b2f-build.zip"
+          "s3Key": "amplify-builds/stripeWebhook-4d742f4c534132553268-build.zip"
         },
         "email": {
           "deploymentBucketName": "amplify-eventfriends-staging-194056-deployment",

@@ -68,6 +68,7 @@ export const getProfile = /* GraphQL */ `
             image
             state
             city
+            country
             startDate
             endDate
             type
@@ -370,6 +371,7 @@ export const getProfile = /* GraphQL */ `
             image
             state
             city
+            country
             startDate
             endDate
             type
@@ -1146,6 +1148,7 @@ export const getEvent = /* GraphQL */ `
       image
       state
       city
+      country
       startDate
       endDate
       type
@@ -1172,6 +1175,7 @@ export const getEvent = /* GraphQL */ `
             image
             state
             city
+            country
             startDate
             endDate
             type
@@ -1278,6 +1282,7 @@ export const getEvent = /* GraphQL */ `
             image
             state
             city
+            country
             startDate
             endDate
             type
@@ -1317,6 +1322,7 @@ export const getEvent = /* GraphQL */ `
             image
             state
             city
+            country
             startDate
             endDate
             type
@@ -1378,6 +1384,7 @@ export const listEvents = /* GraphQL */ `
         image
         state
         city
+        country
         startDate
         endDate
         type
@@ -1474,6 +1481,7 @@ export const syncEvents = /* GraphQL */ `
         image
         state
         city
+        country
         startDate
         endDate
         type
@@ -1572,6 +1580,7 @@ export const eventsBySubscriptionID = /* GraphQL */ `
         image
         state
         city
+        country
         startDate
         endDate
         type
@@ -1670,6 +1679,7 @@ export const eventsByGroupID = /* GraphQL */ `
         image
         state
         city
+        country
         startDate
         endDate
         type
@@ -1757,6 +1767,7 @@ export const getRide = /* GraphQL */ `
         image
         state
         city
+        country
         startDate
         endDate
         type
@@ -1916,6 +1927,7 @@ export const listRides = /* GraphQL */ `
           image
           state
           city
+          country
           startDate
           endDate
           type
@@ -2008,6 +2020,7 @@ export const syncRides = /* GraphQL */ `
           image
           state
           city
+          country
           startDate
           endDate
           type
@@ -2102,6 +2115,7 @@ export const ridesByEventID = /* GraphQL */ `
           image
           state
           city
+          country
           startDate
           endDate
           type
@@ -5023,6 +5037,7 @@ export const getGroup = /* GraphQL */ `
           image
           state
           city
+          country
           startDate
           endDate
           type
@@ -5178,6 +5193,7 @@ export const listGroups = /* GraphQL */ `
             image
             state
             city
+            country
             startDate
             endDate
             type
@@ -5272,6 +5288,7 @@ export const syncGroups = /* GraphQL */ `
             image
             state
             city
+            country
             startDate
             endDate
             type
@@ -5508,6 +5525,7 @@ export const getEventProfile = /* GraphQL */ `
         image
         state
         city
+        country
         startDate
         endDate
         type
@@ -5686,6 +5704,7 @@ export const listEventProfiles = /* GraphQL */ `
           image
           state
           city
+          country
           startDate
           endDate
           type
@@ -5841,6 +5860,7 @@ export const syncEventProfiles = /* GraphQL */ `
           image
           state
           city
+          country
           startDate
           endDate
           type
@@ -5998,6 +6018,7 @@ export const eventProfilesByProfileId = /* GraphQL */ `
           image
           state
           city
+          country
           startDate
           endDate
           type
@@ -6155,6 +6176,7 @@ export const eventProfilesByEventId = /* GraphQL */ `
           image
           state
           city
+          country
           startDate
           endDate
           type
@@ -6375,6 +6397,7 @@ export const getRideProfile = /* GraphQL */ `
           image
           state
           city
+          country
           startDate
           endDate
           type
@@ -6549,6 +6572,7 @@ export const listRideProfiles = /* GraphQL */ `
             image
             state
             city
+            country
             startDate
             endDate
             type
@@ -6703,6 +6727,7 @@ export const syncRideProfiles = /* GraphQL */ `
             image
             state
             city
+            country
             startDate
             endDate
             type
@@ -6859,6 +6884,7 @@ export const rideProfilesByProfileId = /* GraphQL */ `
             image
             state
             city
+            country
             startDate
             endDate
             type
@@ -7015,6 +7041,7 @@ export const rideProfilesByRideId = /* GraphQL */ `
             image
             state
             city
+            country
             startDate
             endDate
             type

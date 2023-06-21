@@ -569,7 +569,7 @@ export const schema = {
                     "name": "state",
                     "isArray": false,
                     "type": "String",
-                    "isRequired": true,
+                    "isRequired": false,
                     "attributes": []
                 },
                 "city": {
@@ -577,6 +577,13 @@ export const schema = {
                     "isArray": false,
                     "type": "String",
                     "isRequired": true,
+                    "attributes": []
+                },
+                "country": {
+                    "name": "country",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
                     "attributes": []
                 },
                 "startDate": {
@@ -1708,5 +1715,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.3",
-    "version": "e9c667402d10d7ba450a32a075649740"
+    "version": "cdd94b711e38d6b418a95f8e63568332"
 };

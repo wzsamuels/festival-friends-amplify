@@ -27,6 +27,7 @@ export interface EventInputs {
   name: string;
   genre: string;
   state: string;
+  country: string;
   city: string;
   address: string;
   startDate: string;
