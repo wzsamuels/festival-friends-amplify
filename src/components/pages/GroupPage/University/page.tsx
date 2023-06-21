@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useAuthenticator } from "@aws-amplify/ui-react";
-import {Group, Event} from "../../../models";
-import { Link } from "react-router-dom";
-import Header from "../../layout/Header";
-import Button from "../../common/Button/Button";
-import EventCard from "../../ui/EventCard";
+import {Group, Event} from "../../../../models";
+import Button from "../../../common/Button/Button";
+import EventCard from "../../../ui/EventCard";
 import { DataStore } from "@aws-amplify/datastore";
-import CreateEventModal from "./Modals/CreateEventModal";
-import useDataClearedStore from "../../../stores/dataClearedStore";
-import useProfileStore from "../../../stores/profileStore";
-const GroupsPage = () => {
+import CreateEventModal from "../Modals/CreateEventModal";
+import useDataClearedStore from "../../../../stores/dataClearedStore";
+import useProfileStore from "../../../../stores/profileStore";
+const UniversityPage = () => {
   const [collegeGroup, setGroup] = useState<Group>();
   const [events, setGroupEvents] = useState<Event[]>([]);
   const [isCreateEventModalOpen, setIsCreateEventModalOpen] = useState(false);
@@ -51,40 +49,22 @@ const GroupsPage = () => {
   }, [collegeGroup, dataCleared]);
 
 
-  if (
-    authStatus !== "authenticated" ||
-    (!collegeGroup && authStatus === "authenticated")
-  ) {
+  if (!collegeGroup) {
     return (
-      <>
-        <Header />
-        <div className='bg-[url("https://twinsilver.mo.cloudinary.net/eventfriends/public/website/Untitled-2.png?tx=q_auto,f_auto")] w-full bg-cover relative min-h-[calc(100vh-5rem)] h-full'>
-          <div className="flex flex-col items-center justify-center  bg-white p-4 rounded-xl w-full max-w-lg absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-              {authStatus !== "authenticated" ? (
-                <>
-                  <h1 className="m-4 text-xl">
-                    Connect with your community
-                  </h1>
-                  <Link to="/account">
-                    <Button>Sign In</Button>
-                  </Link>
-                </>
-              ) : (
-                <h1 className="m-4 text-xl">
-                  Our community features is restricted to college students only.
-                  If you&apos;re a college student and believe you should be
-                  able to access this feature, please contact us.
-                </h1>
-              )}
-            </div>
+      <div className='bg-[url("https://twinsilver.mo.cloudinary.net/eventfriends/public/website/Untitled-2.png?tx=q_auto,f_auto")] w-full bg-cover relative min-h-[calc(100vh-5rem)] h-full'>
+        <div className="flex flex-col items-center justify-center  bg-white p-4 rounded-xl w-full max-w-lg absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+          <h1 className="m-4 text-lg md:text-xl">
+            Our community features is restricted to college students only.
+            If you&apos;re a college student and believe you should be
+            able to access this feature, please contact us.
+          </h1>
           </div>
-      </>
+        </div>
     );
   }
 
   return (
     <>
-      <Header className=" shadow-xl" />
       <div className="p-4 mt-4">
         <div className="text-xl sm:text-2xl lg:text-3xl text-center w-full">
           Welcome to the {collegeGroup?.name} community page!
@@ -115,4 +95,4 @@ const GroupsPage = () => {
   );
 };
 
-export default GroupsPage;
+export default UniversityPage;
