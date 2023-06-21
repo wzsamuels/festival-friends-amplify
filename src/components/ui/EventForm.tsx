@@ -10,6 +10,7 @@ import {SubmitHandler, useForm} from "react-hook-form";
 import {EventInputs} from "../../types";
 import { Event } from "../../models";
 import {getEvent, getEventImageURL} from "../../services/eventServices";
+import countries from "../../data/countries";
 
 interface EventFormProps {
   eventID?: string;
@@ -44,6 +45,7 @@ const EventForm = ({eventID, onSubmit, submitting, className} : EventFormProps) 
       reset({
         name: event?.name,
         genre: event?.genre,
+        country: event?.country || "",
         state: event?.state || "",
         city: event?.city || "",
         address: event?.address || "",
@@ -72,6 +74,7 @@ const EventForm = ({eventID, onSubmit, submitting, className} : EventFormProps) 
           {...register("name",  {required: true})}/>
       </div>
       {errors.name && <p className='text-red-500 text-sm'>This field is required</p>}
+
       <div className='flex flex-col sm:flex-row mt-4 mb-1'>
         <label className="sm:basis-[150px]">Genre / Category</label>
         <input
@@ -79,16 +82,17 @@ const EventForm = ({eventID, onSubmit, submitting, className} : EventFormProps) 
           placeholder="Ex. Rock, Beach Trip, Business Conference"
           {...register("genre",  {required: true})}/>
       </div>
-        {errors.genre && <p className='text-red-500 text-sm'>This field is required</p>}
+      {errors.genre && <p className='text-red-500 text-sm'>This field is required</p>}
+
       <div className='flex flex-col sm:flex-row mt-4 mb-1'>
-        <label className="sm:basis-[150px]">State</label>
+        <label className="sm:basis-[150px]">State<small> (US only)</small></label>
         <Select
-          {...register("state", { required: true })}
+          {...register("state")}
           name="state"
           defaultValue=""
           className="border-b border-b-gray-400 flex-1 focus:border-b-brandYellow focus:outline-0 mt-2 sm:m-0 max-w-[10rem]"
         >
-          <option value="" disabled>
+          <option value="">
             Select state
           </option>
           {states.map((state) => (
@@ -98,7 +102,26 @@ const EventForm = ({eventID, onSubmit, submitting, className} : EventFormProps) 
           ))}
         </Select>
       </div>
-      {errors.state && <p className='text-red-500 text-sm'>This field is required</p>}
+
+      <div className='flex flex-col sm:flex-row mt-4 mb-1'>
+        <label className="sm:basis-[150px]">Country</label>
+        <Select
+          {...register("country", { required: true })}
+          name="country"
+          defaultValue=""
+          className="border-b border-b-gray-400 flex-1 focus:border-b-brandYellow focus:outline-0 mt-2 sm:m-0 max-w-[10rem]"
+        >
+          <option value="">
+            Select country
+          </option>
+          {countries.map((country) => (
+            <option key={country.code} value={country.name}>
+              {country.name}
+            </option>
+          ))}
+        </Select>
+      </div>
+      {errors.country && <p className='text-red-500 text-sm'>This field is required</p>}
 
       <div className='flex flex-col sm:flex-row mt-4 mb-1'>
         <label className="sm:basis-[150px]">City</label>
@@ -109,7 +132,7 @@ const EventForm = ({eventID, onSubmit, submitting, className} : EventFormProps) 
       {errors.city && <p className='text-red-500 text-sm'>This field is required</p>}
 
       <div className='flex flex-col sm:flex-row mt-4 mb-1'>
-        <label className="sm:basis-[150px]">Venue</label>
+        <label className="sm:basis-[150px]">Venue<span className="text-sm"> (optional)</span></label>
         <input
           className="border-b border-b-gray-400 flex-1 focus:border-b-brandYellow focus:outline-0 mt-2 sm:m-0"
           {...register("address")}/>
@@ -149,6 +172,7 @@ const EventForm = ({eventID, onSubmit, submitting, className} : EventFormProps) 
         <label className="sm:basis-[150px]">Description</label>
         <TextArea className="mt-2" {...register("description",  {required: true})}/>
       </div>
+      {errors.description && <p className='text-red-500 text-sm'>This field is required</p>}
 
       <div className='flex flex-col sm:flex-row mt-4 mb-1'>
         <label className="sm:basis-[150px]">Type</label>
@@ -171,20 +195,22 @@ const EventForm = ({eventID, onSubmit, submitting, className} : EventFormProps) 
       {errors.type && <p className='text-red-500 text-sm'>This field is required</p>}
 
       <div className='flex flex-col sm:flex-row mt-4 mb-1'>
-        <label className="sm:basis-[150px]">Website Link</label>
+        <label className="sm:basis-[150px]">Website Link<span className="text-sm"> (optional)</span></label>
         <input
           className="border-b border-b-gray-400 flex-1 focus:border-b-brandYellow focus:outline-0 mt-2 sm:m-0"
           {...register("url")}/>
       </div>
+
       <div className='flex flex-col sm:flex-row mt-4 mb-1'>
-        <label className="sm:basis-[150px]">Ticket Link</label>
+        <label className="sm:basis-[150px]">Ticket Link<span className="text-sm"> (optional)</span></label>
         <input
           className="border-b border-b-gray-400 flex-1 focus:border-b-brandYellow focus:outline-0 mt-2 sm:m-0"
           {...register("ticketURL")}/>
       </div>
 
 
-      <div className='flex justify-center my-6'>
+      <div className='flex justify-center my-6 gap-4'>
+        <Button variation="outline" type="button" onClick={() => {reset(); setSelectedFile(null);}}>Clear</Button>
         <Button type="submit" className="disabled:opacity-50" disabled={submitting}>{submitting ? "Submitting..." : " Submit"}</Button>
       </div>
     </form>
