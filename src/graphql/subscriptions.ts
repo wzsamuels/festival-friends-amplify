@@ -11,6 +11,7 @@ export const onCreateProfile = /* GraphQL */ `
       lastName
       verified
       submitted
+      brandSubmitted
       profilePhotoID
       bannerPhotoID
       verifyPhotoID
@@ -38,6 +39,7 @@ export const onCreateProfile = /* GraphQL */ `
             lastName
             verified
             submitted
+            brandSubmitted
             profilePhotoID
             bannerPhotoID
             verifyPhotoID
@@ -110,6 +112,7 @@ export const onCreateProfile = /* GraphQL */ `
             lastName
             verified
             submitted
+            brandSubmitted
             profilePhotoID
             bannerPhotoID
             verifyPhotoID
@@ -166,6 +169,7 @@ export const onCreateProfile = /* GraphQL */ `
             lastName
             verified
             submitted
+            brandSubmitted
             profilePhotoID
             bannerPhotoID
             verifyPhotoID
@@ -197,6 +201,7 @@ export const onCreateProfile = /* GraphQL */ `
             lastName
             verified
             submitted
+            brandSubmitted
             profilePhotoID
             bannerPhotoID
             verifyPhotoID
@@ -243,6 +248,7 @@ export const onCreateProfile = /* GraphQL */ `
             lastName
             verified
             submitted
+            brandSubmitted
             profilePhotoID
             bannerPhotoID
             verifyPhotoID
@@ -273,6 +279,7 @@ export const onCreateProfile = /* GraphQL */ `
             lastName
             verified
             submitted
+            brandSubmitted
             profilePhotoID
             bannerPhotoID
             verifyPhotoID
@@ -321,6 +328,7 @@ export const onCreateProfile = /* GraphQL */ `
             lastName
             verified
             submitted
+            brandSubmitted
             profilePhotoID
             bannerPhotoID
             verifyPhotoID
@@ -403,6 +411,7 @@ export const onCreateProfile = /* GraphQL */ `
             lastName
             verified
             submitted
+            brandSubmitted
             profilePhotoID
             bannerPhotoID
             verifyPhotoID
@@ -484,6 +493,7 @@ export const onUpdateProfile = /* GraphQL */ `
       lastName
       verified
       submitted
+      brandSubmitted
       profilePhotoID
       bannerPhotoID
       verifyPhotoID
@@ -511,6 +521,7 @@ export const onUpdateProfile = /* GraphQL */ `
             lastName
             verified
             submitted
+            brandSubmitted
             profilePhotoID
             bannerPhotoID
             verifyPhotoID
@@ -583,6 +594,7 @@ export const onUpdateProfile = /* GraphQL */ `
             lastName
             verified
             submitted
+            brandSubmitted
             profilePhotoID
             bannerPhotoID
             verifyPhotoID
@@ -639,6 +651,7 @@ export const onUpdateProfile = /* GraphQL */ `
             lastName
             verified
             submitted
+            brandSubmitted
             profilePhotoID
             bannerPhotoID
             verifyPhotoID
@@ -670,6 +683,7 @@ export const onUpdateProfile = /* GraphQL */ `
             lastName
             verified
             submitted
+            brandSubmitted
             profilePhotoID
             bannerPhotoID
             verifyPhotoID
@@ -716,6 +730,7 @@ export const onUpdateProfile = /* GraphQL */ `
             lastName
             verified
             submitted
+            brandSubmitted
             profilePhotoID
             bannerPhotoID
             verifyPhotoID
@@ -746,6 +761,7 @@ export const onUpdateProfile = /* GraphQL */ `
             lastName
             verified
             submitted
+            brandSubmitted
             profilePhotoID
             bannerPhotoID
             verifyPhotoID
@@ -794,6 +810,7 @@ export const onUpdateProfile = /* GraphQL */ `
             lastName
             verified
             submitted
+            brandSubmitted
             profilePhotoID
             bannerPhotoID
             verifyPhotoID
@@ -876,6 +893,7 @@ export const onUpdateProfile = /* GraphQL */ `
             lastName
             verified
             submitted
+            brandSubmitted
             profilePhotoID
             bannerPhotoID
             verifyPhotoID
@@ -957,6 +975,7 @@ export const onDeleteProfile = /* GraphQL */ `
       lastName
       verified
       submitted
+      brandSubmitted
       profilePhotoID
       bannerPhotoID
       verifyPhotoID
@@ -984,6 +1003,7 @@ export const onDeleteProfile = /* GraphQL */ `
             lastName
             verified
             submitted
+            brandSubmitted
             profilePhotoID
             bannerPhotoID
             verifyPhotoID
@@ -1056,6 +1076,7 @@ export const onDeleteProfile = /* GraphQL */ `
             lastName
             verified
             submitted
+            brandSubmitted
             profilePhotoID
             bannerPhotoID
             verifyPhotoID
@@ -1112,6 +1133,7 @@ export const onDeleteProfile = /* GraphQL */ `
             lastName
             verified
             submitted
+            brandSubmitted
             profilePhotoID
             bannerPhotoID
             verifyPhotoID
@@ -1143,6 +1165,7 @@ export const onDeleteProfile = /* GraphQL */ `
             lastName
             verified
             submitted
+            brandSubmitted
             profilePhotoID
             bannerPhotoID
             verifyPhotoID
@@ -1189,6 +1212,7 @@ export const onDeleteProfile = /* GraphQL */ `
             lastName
             verified
             submitted
+            brandSubmitted
             profilePhotoID
             bannerPhotoID
             verifyPhotoID
@@ -1219,6 +1243,7 @@ export const onDeleteProfile = /* GraphQL */ `
             lastName
             verified
             submitted
+            brandSubmitted
             profilePhotoID
             bannerPhotoID
             verifyPhotoID
@@ -1267,6 +1292,7 @@ export const onDeleteProfile = /* GraphQL */ `
             lastName
             verified
             submitted
+            brandSubmitted
             profilePhotoID
             bannerPhotoID
             verifyPhotoID
@@ -1349,6 +1375,7 @@ export const onDeleteProfile = /* GraphQL */ `
             lastName
             verified
             submitted
+            brandSubmitted
             profilePhotoID
             bannerPhotoID
             verifyPhotoID
@@ -1606,6 +1633,7 @@ export const onCreateEvent = /* GraphQL */ `
             lastName
             verified
             submitted
+            brandSubmitted
             profilePhotoID
             bannerPhotoID
             verifyPhotoID
@@ -1651,6 +1679,7 @@ export const onCreateEvent = /* GraphQL */ `
             lastName
             verified
             submitted
+            brandSubmitted
             profilePhotoID
             bannerPhotoID
             verifyPhotoID
@@ -1837,6 +1866,7 @@ export const onUpdateEvent = /* GraphQL */ `
             lastName
             verified
             submitted
+            brandSubmitted
             profilePhotoID
             bannerPhotoID
             verifyPhotoID
@@ -1882,6 +1912,7 @@ export const onUpdateEvent = /* GraphQL */ `
             lastName
             verified
             submitted
+            brandSubmitted
             profilePhotoID
             bannerPhotoID
             verifyPhotoID
@@ -2068,6 +2099,7 @@ export const onDeleteEvent = /* GraphQL */ `
             lastName
             verified
             submitted
+            brandSubmitted
             profilePhotoID
             bannerPhotoID
             verifyPhotoID
@@ -2113,6 +2145,7 @@ export const onDeleteEvent = /* GraphQL */ `
             lastName
             verified
             submitted
+            brandSubmitted
             profilePhotoID
             bannerPhotoID
             verifyPhotoID
@@ -2328,6 +2361,7 @@ export const onCreateRide = /* GraphQL */ `
             lastName
             verified
             submitted
+            brandSubmitted
             profilePhotoID
             bannerPhotoID
             verifyPhotoID
@@ -2483,6 +2517,7 @@ export const onUpdateRide = /* GraphQL */ `
             lastName
             verified
             submitted
+            brandSubmitted
             profilePhotoID
             bannerPhotoID
             verifyPhotoID
@@ -2638,6 +2673,7 @@ export const onDeleteRide = /* GraphQL */ `
             lastName
             verified
             submitted
+            brandSubmitted
             profilePhotoID
             bannerPhotoID
             verifyPhotoID
@@ -2708,6 +2744,7 @@ export const onCreatePhoto = /* GraphQL */ `
         lastName
         verified
         submitted
+        brandSubmitted
         profilePhotoID
         bannerPhotoID
         verifyPhotoID
@@ -2880,6 +2917,7 @@ export const onUpdatePhoto = /* GraphQL */ `
         lastName
         verified
         submitted
+        brandSubmitted
         profilePhotoID
         bannerPhotoID
         verifyPhotoID
@@ -3052,6 +3090,7 @@ export const onDeletePhoto = /* GraphQL */ `
         lastName
         verified
         submitted
+        brandSubmitted
         profilePhotoID
         bannerPhotoID
         verifyPhotoID
@@ -3225,6 +3264,7 @@ export const onCreateFriendship = /* GraphQL */ `
         lastName
         verified
         submitted
+        brandSubmitted
         profilePhotoID
         bannerPhotoID
         verifyPhotoID
@@ -3381,6 +3421,7 @@ export const onCreateFriendship = /* GraphQL */ `
         lastName
         verified
         submitted
+        brandSubmitted
         profilePhotoID
         bannerPhotoID
         verifyPhotoID
@@ -3552,6 +3593,7 @@ export const onUpdateFriendship = /* GraphQL */ `
         lastName
         verified
         submitted
+        brandSubmitted
         profilePhotoID
         bannerPhotoID
         verifyPhotoID
@@ -3708,6 +3750,7 @@ export const onUpdateFriendship = /* GraphQL */ `
         lastName
         verified
         submitted
+        brandSubmitted
         profilePhotoID
         bannerPhotoID
         verifyPhotoID
@@ -3879,6 +3922,7 @@ export const onDeleteFriendship = /* GraphQL */ `
         lastName
         verified
         submitted
+        brandSubmitted
         profilePhotoID
         bannerPhotoID
         verifyPhotoID
@@ -4035,6 +4079,7 @@ export const onDeleteFriendship = /* GraphQL */ `
         lastName
         verified
         submitted
+        brandSubmitted
         profilePhotoID
         bannerPhotoID
         verifyPhotoID
@@ -4208,6 +4253,7 @@ export const onCreateConversation = /* GraphQL */ `
         lastName
         verified
         submitted
+        brandSubmitted
         profilePhotoID
         bannerPhotoID
         verifyPhotoID
@@ -4363,6 +4409,7 @@ export const onCreateConversation = /* GraphQL */ `
         lastName
         verified
         submitted
+        brandSubmitted
         profilePhotoID
         bannerPhotoID
         verifyPhotoID
@@ -4552,6 +4599,7 @@ export const onUpdateConversation = /* GraphQL */ `
         lastName
         verified
         submitted
+        brandSubmitted
         profilePhotoID
         bannerPhotoID
         verifyPhotoID
@@ -4707,6 +4755,7 @@ export const onUpdateConversation = /* GraphQL */ `
         lastName
         verified
         submitted
+        brandSubmitted
         profilePhotoID
         bannerPhotoID
         verifyPhotoID
@@ -4896,6 +4945,7 @@ export const onDeleteConversation = /* GraphQL */ `
         lastName
         verified
         submitted
+        brandSubmitted
         profilePhotoID
         bannerPhotoID
         verifyPhotoID
@@ -5051,6 +5101,7 @@ export const onDeleteConversation = /* GraphQL */ `
         lastName
         verified
         submitted
+        brandSubmitted
         profilePhotoID
         bannerPhotoID
         verifyPhotoID
@@ -5342,6 +5393,7 @@ export const onCreateGroup = /* GraphQL */ `
           lastName
           verified
           submitted
+          brandSubmitted
           profilePhotoID
           bannerPhotoID
           verifyPhotoID
@@ -5493,6 +5545,7 @@ export const onUpdateGroup = /* GraphQL */ `
           lastName
           verified
           submitted
+          brandSubmitted
           profilePhotoID
           bannerPhotoID
           verifyPhotoID
@@ -5644,6 +5697,7 @@ export const onDeleteGroup = /* GraphQL */ `
           lastName
           verified
           submitted
+          brandSubmitted
           profilePhotoID
           bannerPhotoID
           verifyPhotoID
@@ -5744,6 +5798,7 @@ export const onCreateEventProfile = /* GraphQL */ `
         lastName
         verified
         submitted
+        brandSubmitted
         profilePhotoID
         bannerPhotoID
         verifyPhotoID
@@ -5994,6 +6049,7 @@ export const onUpdateEventProfile = /* GraphQL */ `
         lastName
         verified
         submitted
+        brandSubmitted
         profilePhotoID
         bannerPhotoID
         verifyPhotoID
@@ -6244,6 +6300,7 @@ export const onDeleteEventProfile = /* GraphQL */ `
         lastName
         verified
         submitted
+        brandSubmitted
         profilePhotoID
         bannerPhotoID
         verifyPhotoID
@@ -6494,6 +6551,7 @@ export const onCreateRideProfile = /* GraphQL */ `
         lastName
         verified
         submitted
+        brandSubmitted
         profilePhotoID
         bannerPhotoID
         verifyPhotoID
@@ -6740,6 +6798,7 @@ export const onUpdateRideProfile = /* GraphQL */ `
         lastName
         verified
         submitted
+        brandSubmitted
         profilePhotoID
         bannerPhotoID
         verifyPhotoID
@@ -6986,6 +7045,7 @@ export const onDeleteRideProfile = /* GraphQL */ `
         lastName
         verified
         submitted
+        brandSubmitted
         profilePhotoID
         bannerPhotoID
         verifyPhotoID

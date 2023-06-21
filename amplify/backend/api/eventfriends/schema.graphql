@@ -5,6 +5,7 @@ type Profile @model @auth(rules: [{ allow: public }]) {
   lastName: String
   verified: Boolean @default(value: "false")
   submitted: Boolean @default(value: "false")
+  brandSubmitted: Boolean
   profilePhotoID: String
   bannerPhotoID: String
   verifyPhotoID: String

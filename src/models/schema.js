@@ -45,6 +45,13 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "brandSubmitted": {
+                    "name": "brandSubmitted",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "profilePhotoID": {
                     "name": "profilePhotoID",
                     "isArray": false,
@@ -1715,5 +1722,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.3",
-    "version": "cdd94b711e38d6b418a95f8e63568332"
+    "version": "441f6e3ed4d7f9424e8e56eefeb85f1f"
 };

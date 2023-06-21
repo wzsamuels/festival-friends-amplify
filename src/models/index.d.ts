@@ -28,6 +28,7 @@ type EagerProfile = {
   readonly lastName?: string | null;
   readonly verified?: boolean | null;
   readonly submitted?: boolean | null;
+  readonly brandSubmitted?: boolean | null;
   readonly profilePhotoID?: string | null;
   readonly bannerPhotoID?: string | null;
   readonly verifyPhotoID?: string | null;
@@ -68,6 +69,7 @@ type LazyProfile = {
   readonly lastName?: string | null;
   readonly verified?: boolean | null;
   readonly submitted?: boolean | null;
+  readonly brandSubmitted?: boolean | null;
   readonly profilePhotoID?: string | null;
   readonly bannerPhotoID?: string | null;
   readonly verifyPhotoID?: string | null;
