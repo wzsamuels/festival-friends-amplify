@@ -4,12 +4,11 @@ import Spinner from "../common/Spinner/Spinner";
 const Image = ({className, onClick, src, alt}: ComponentProps<"img">) => {
   const [loading, setLoading] = useState(true)
 
-  const handleImageLoad = () => {
-    setLoading(false);
-  }
-
   useEffect(() => {
     setLoading(true);
+    const img = new window.Image();
+    img.onload = () => setLoading(false);
+    img.src = src || "";
   }, [src])
 
   return (
@@ -18,7 +17,6 @@ const Image = ({className, onClick, src, alt}: ComponentProps<"img">) => {
         <Spinner/>
       </div>
       <img
-        onLoad={handleImageLoad}
         onClick={onClick}
         className={`${loading ? 'hidden' : 'block'} ${className}`}
         src={src}
@@ -28,4 +26,4 @@ const Image = ({className, onClick, src, alt}: ComponentProps<"img">) => {
   );
 }
 
-export default Image
+export default Image;
