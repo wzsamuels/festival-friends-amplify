@@ -12,32 +12,33 @@ import useFriendStore from "./stores/friendProfileStore";
 import useConversationStore from "./stores/conversationStore";
 import LoadingState from "./components/ui/LoadingState";
 import LayoutErrorBoundary from "./components/ui/LayoutErrorBoundary";
-import AdminEventLayout from "./components/pages/Admin/Events/AdminEventLayout";
-import AdminLayout from "./components/pages/Admin/AdminLayout";
-import VerifyAccounts from "./components/pages/Admin/VerifyAccounts";
-import AdminDatabasePage from "./components/pages/Admin/AdminDatabasePage";
+import AdminEventLayout from "./pages/Admin/Events/AdminEventLayout";
+import AdminLayout from "./pages/Admin/AdminLayout";
+import VerifyAccounts from "./pages/Admin/VerifyAccounts";
+import AdminDatabasePage from "./pages/Admin/AdminDatabasePage";
 import useEventStore from "./stores/eventStore";
-import SubmitEventPage from "./components/pages/SubmitEventPage/SubmitEventPage";
+import SubmitEventPage from "./pages/SubmitEventPage/SubmitEventPage";
 import Fallback from "./components/ui/Fallback";
-import AccountLayout from "./components/pages/AccountPage/AccountLayout";
-import AccountProfilePage from "./components/pages/AccountPage/AccountProfilePage";
-import AccountEventPage from "./components/pages/AccountPage/AccountEventPage";
+import AccountLayout from "./pages/AccountPage/AccountLayout";
+import AccountProfilePage from "./pages/AccountPage/AccountProfilePage";
+import AccountEventPage from "./pages/AccountPage/AccountEventPage";
 import Layout from "./components/layout/Layout";
-import EventPage from "./components/pages/EventPage/EventPage";
-import EventDetailPage from "./components/pages/EventPage/EventDetailPage";
-import FriendsPage from "./components/pages/FriendPage/Friends";
-import MessagePage from "./components/pages/MessagePage/MessagePage";
-import AccountSettingsPage from "./components/pages/AccountPage/AccountSettingsPage";
-import ProfilePage from "./components/pages/ProfilePage/ProfilePage";
-import ApproveEventPage from "./components/pages/Admin/Events/ApproveEventPage";
-import CreateEventPage from "./components/pages/Admin/Events/CreateEventPage";
-import UpdateEventPage from "./components/pages/Admin/Events/UpdateEventPage";
-import DeleteEventPage from "./components/pages/Admin/Events/DeleteEventPage";
-import PolicyPage from "./components/pages/Policies/page";
-import GroupLayout from "./components/pages/GroupPage/layout";
-import UniversityPage from "./components/pages/GroupPage/University/page";
-import GroupPage from "./components/pages/GroupPage/page";
-import BrandPage from "./components/pages/GroupPage/Brands/page";
+import EventPage from "./pages/EventPage/EventPage";
+import EventDetailPage from "./pages/EventPage/EventDetailPage";
+import FriendsPage from "./pages/FriendPage/Friends";
+import MessagePage from "./pages/MessagePage/MessagePage";
+import AccountSettingsPage from "./pages/AccountPage/AccountSettingsPage";
+import ProfilePage from "./pages/ProfilePage/ProfilePage";
+import ApproveEventPage from "./pages/Admin/Events/ApproveEventPage";
+import CreateEventPage from "./pages/Admin/Events/CreateEventPage";
+import UpdateEventPage from "./pages/Admin/Events/UpdateEventPage";
+import DeleteEventPage from "./pages/Admin/Events/DeleteEventPage";
+import PolicyPage from "./pages/Policies/page";
+import GroupLayout from "./pages/GroupPage/layout";
+import UniversityPage from "./pages/GroupPage/University/page";
+import GroupPage from "./pages/GroupPage/page";
+import BrandPage from "./pages/GroupPage/Brands/page";
+import SupportPage from "./pages/support/page";
 
 const Router = () => {
   const { user } = useAuthenticator((context) => [context.user]);
@@ -164,6 +165,10 @@ const Router = () => {
               element: <AdminDatabasePage/>
             }
           ]
+        },
+        {
+          path: "support",
+          element: <SupportPage/>
         },
         {
           path: "/friends/profile/:profileId",
