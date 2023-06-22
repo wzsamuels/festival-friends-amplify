@@ -70,7 +70,7 @@ const EventCard = ({ event, className }: EventCardProps) => {
   return (
     <div className={`rounded-xl shadow-md w-full max-w-[350px] min-h-[36rem] flex flex-col justify-between ${className}`}>
       <Link className="relative" to={`/events/${event.id}`}>
-        <Image
+        <img
           className="w-full h-full object-cover aspect-square"
           src={`${import.meta.env.VITE_CLOUDINARY_URL}/public/${event.image}${import.meta.env.VITE_CLOUDINARY_TRANSFORM}`}
           alt={event.name}
