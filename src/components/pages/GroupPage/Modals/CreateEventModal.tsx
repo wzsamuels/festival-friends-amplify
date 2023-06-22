@@ -42,8 +42,9 @@ const CreateEventModal = ({isOpen, setIsOpen, group,}: CreateEventModalProps) =>
         );
         const apiResponse = await API.post("email", "/", {
           body: {
-            subject: "A new university event has been posted!",
+            subject: "A new university or brand event has been posted!",
             toAddress: ["gabrielle@eventfriends.app", "contact@twinsilverdesign.com"],
+            //toAddress: ["contact@twinsilverdesign.com"],
             emailBody: `
                          <html lang="en">
                           <body>
@@ -55,7 +56,7 @@ const CreateEventModal = ({isOpen, setIsOpen, group,}: CreateEventModalProps) =>
                             <p>State: ${newEvent.state}</p>
                             <p>Description: ${newEvent.description}</p>
                             <p>Website: ${newEvent.url}</p>
-                            <p>Visit <a href="https://eventfriends.app/admin">https://eventfriends.app/admin</a> to manage events.</p>
+                            <p>Visit <a href="https://www.eventfriends.app/admin/events">https://www.eventfriends.app/admin/events</a> to manage events.</p>
                           </body>
                         </html>
                         `
@@ -78,7 +79,8 @@ const CreateEventModal = ({isOpen, setIsOpen, group,}: CreateEventModalProps) =>
       {
         submitted ? (
           <div className="flex flex-col items-center justify-center">
-            <h1 className="text-2xl my-4">Event created!</h1>
+            <h1 className="text-2xl my-4">Your event has been submitted!</h1>
+            <p className="my-2">Our moderators will review your event shortly.</p>
             <Button onClick={() => setSubmitted(false)}>Submit another event</Button>
           </div>
           ) : (
