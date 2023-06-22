@@ -36,7 +36,7 @@ const AdminLayout = () => {
 
   return (
     <>
-      <Header className="">
+      <Header>
         <Nav items={NavItems} className="flex"/>
       </Header>
       <Outlet/>
