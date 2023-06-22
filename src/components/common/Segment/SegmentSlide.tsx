@@ -36,6 +36,18 @@ const Segment = ({selected, setSelected, items, className} : SegmentProps) => {
     }`;
 
   useEffect(() => {
+    const handleWindowLoad = () => {
+      updateLinePosition();
+    };
+
+    window.addEventListener("load", handleWindowLoad);
+
+    return () => {
+      window.removeEventListener("load", handleWindowLoad);
+    };
+  }, []);
+
+  useEffect(() => {
     updateLinePosition();
   }, [selected]);
 
@@ -44,14 +56,12 @@ const Segment = ({selected, setSelected, items, className} : SegmentProps) => {
       updateLinePosition();
     };
 
-    if(!window) return;
-
     window.addEventListener("resize", handleResize);
 
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, [window]);
+  }, []);
 
   const handleClick = (type: string) => {
     setSelected(type);

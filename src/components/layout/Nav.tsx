@@ -26,6 +26,17 @@ const Nav = ({items, className} : NavProps) => {
     }
   };
 
+  useEffect(() => {
+    const handleWindowLoad = () => {
+      updateUnderlinePosition();
+    };
+
+    window.addEventListener("load", handleWindowLoad);
+
+    return () => {
+      window.removeEventListener("load", handleWindowLoad);
+    };
+  }, []);
 
   useEffect(() => {
     updateUnderlinePosition();
@@ -36,17 +47,16 @@ const Nav = ({items, className} : NavProps) => {
       updateUnderlinePosition();
     };
 
-    if(!window) return;
-
     window.addEventListener("resize", handleResize);
 
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, [window]);
+  }, []);
+
 
   return (
-    <div className={`w-full justify-between h-full relative flex-wrap bg-lightYellow ${className} nav-container-${id.current}`}>
+    <div className={`w-full justify-between h-full relative flex flex-wrap bg-lightYellow ${className} nav-container-${id.current}`}>
       {items.map((item, index) => (
         <NavLink
           key={index}
