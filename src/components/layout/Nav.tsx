@@ -1,46 +1,58 @@
-import React, { useEffect, useRef } from "react";
-import {NavLink, useLocation} from "react-router-dom";
-import {NavItem} from "../../types";
-import {v4 as uuidv4} from "uuid";
+import React, { useEffect, useRef, useState } from "react";
+import { NavLink, useLocation } from "react-router-dom";
+import { NavItem } from "../../types";
+import { v4 as uuidv4 } from "uuid";
 
 interface NavProps {
   items: NavItem[];
   className?: string;
 }
 
-const Nav = ({items, className} : NavProps) => {
+const Nav = ({ items, className }: NavProps) => {
   const underlineRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
   const activePath = location.pathname;
   const id = useRef<string>(uuidv4());
+  const [size, setSize] = useState({ width: 0, height: 0 });
 
   const updateUnderlinePosition = () => {
     const activeLink = document.querySelector(`.nav-link-${id.current}[href='${activePath}']`);
-    const parent = document.querySelector(`.nav-container-${id.current}`);
-
-    if (underlineRef.current && activeLink && parent) {
+    if (underlineRef.current && activeLink && containerRef.current) {
       const linkRect = activeLink.getBoundingClientRect();
-      const parentRect = parent.getBoundingClientRect();
-      underlineRef.current.style.left = `${linkRect.left - parentRect.left + window.scrollX}px`;
+      const containerRect = containerRef.current.getBoundingClientRect();
+      underlineRef.current.style.left = `${linkRect.left - containerRect.left + window.scrollX}px`;
       underlineRef.current.style.width = `${linkRect.width}px`;
     }
   };
 
-  useEffect(() => {
-    const handleWindowLoad = () => {
-      updateUnderlinePosition();
-    };
 
-    window.addEventListener("load", handleWindowLoad);
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    // Initialize ResizeObserver
+    const resizeObserver = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        setSize({
+          width: entry.contentRect.width,
+          height: entry.contentRect.height,
+        });
+      }
+    });
+
+    resizeObserver.observe(container);
 
     return () => {
-      window.removeEventListener("load", handleWindowLoad);
+      if (resizeObserver) {
+        resizeObserver.disconnect();
+      }
     };
   }, []);
 
   useEffect(() => {
     updateUnderlinePosition();
-  }, [activePath]);
+  }, [activePath, size]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -54,9 +66,8 @@ const Nav = ({items, className} : NavProps) => {
     };
   }, []);
 
-
   return (
-    <div className={`w-full justify-between h-full relative flex flex-wrap bg-lightYellow ${className} nav-container-${id.current}`}>
+    <div ref={containerRef} className={`w-full justify-between h-full relative flex flex-wrap bg-lightYellow ${className} nav-container-${id.current}`}>
       {items.map((item, index) => (
         <NavLink
           key={index}

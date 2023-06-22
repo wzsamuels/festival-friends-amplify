@@ -1,6 +1,6 @@
-import React, {useRef, useEffect, Dispatch, SetStateAction} from "react";
-import {SegmentItem} from "../ListboxSegmentTypes";
-import {v4 as uuidv4} from "uuid";
+import React, { useState, useRef, useEffect, Dispatch, SetStateAction } from "react";
+import { SegmentItem } from "../ListboxSegmentTypes";
+import { v4 as uuidv4 } from "uuid";
 
 interface SegmentProps {
   selected: string;
@@ -9,8 +9,10 @@ interface SegmentProps {
   className?: string;
 }
 
-const Segment = ({selected, setSelected, items, className} : SegmentProps) => {
+const Segment = ({ selected, setSelected, items, className }: SegmentProps) => {
   const lineRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null); // Create a ref for the container div
+  const [size, setSize] = useState({ width: 0, height: 0 });
   const id = useRef<string>(uuidv4());
 
   const buttonRefs = useRef<{ [type: string]: React.RefObject<HTMLButtonElement> }>({});
@@ -36,20 +38,31 @@ const Segment = ({selected, setSelected, items, className} : SegmentProps) => {
     }`;
 
   useEffect(() => {
-    const handleWindowLoad = () => {
-      updateLinePosition();
-    };
+    const container = containerRef.current;
+    if (!container) return;
 
-    window.addEventListener("load", handleWindowLoad);
+    // Initialize ResizeObserver
+    let resizeObserver = new ResizeObserver((entries) => {
+      for(let entry of entries) {
+        setSize({
+          width: entry.contentRect.width,
+          height: entry.contentRect.height
+        });
+      }
+    });
+
+    resizeObserver.observe(container);
 
     return () => {
-      window.removeEventListener("load", handleWindowLoad);
-    };
+      if (resizeObserver) {
+        resizeObserver.disconnect();
+      }
+    }
   }, []);
 
   useEffect(() => {
     updateLinePosition();
-  }, [selected]);
+  }, [selected, size]); // add size to dependency array
 
   useEffect(() => {
     const handleResize = () => {
@@ -68,7 +81,7 @@ const Segment = ({selected, setSelected, items, className} : SegmentProps) => {
   };
 
   return (
-    <div className={`w-full justify-between relative flex-wrap bg-lightYellow ${className}`}>
+    <div ref={containerRef} className={`w-full justify-between relative flex-wrap bg-lightYellow ${className}`}>
       {items.map((item) => (
         <button
           key={item.type}
