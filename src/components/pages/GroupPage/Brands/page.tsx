@@ -8,6 +8,11 @@ import Button from "../../../common/Button/Button";
 import EventCard from "../../../ui/EventCard";
 import CreateEventModal from "../Modals/CreateEventModal";
 import {SubmitHandler, useForm} from "react-hook-form";
+import {API} from "@aws-amplify/api";
+
+interface brandInputs {
+  information: string
+}
 
 const BrandPage = () => {
   const [group, setGroup] = useState<Group | null>(null);
@@ -16,12 +21,12 @@ const BrandPage = () => {
   const { authStatus } = useAuthenticator((context) => [context.authStatus]);
   const userProfile = useProfileStore((state) => state.userProfile);
   const dataCleared = useDataClearedStore((state) => state.dataCleared);
-  const { register, handleSubmit, formState: { errors }} = useForm<{information: string}>();
+  const { register, handleSubmit, formState: { errors }} = useForm<brandInputs>();
   const [errorMessage, setErrorMessage] = useState("")
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  const sendApplication: SubmitHandler<{ information: string }> = async (data) => {
+  const sendApplication: SubmitHandler<brandInputs> = async (data) => {
     setSubmitting(true);
     if(!userProfile || !dataCleared) {
       console.log("Not ready");
@@ -39,12 +44,31 @@ const BrandPage = () => {
       await DataStore.save(Profile.copyOf(latestProfile, (updated) => {
         updated.brandSubmitted = true;
       }))
+
+      await API.post("email", "/", {
+        body: {
+          subject: "A brand / influencer application has been submitted!",
+          //toAddress: ["contact@twinsilverdesign.com"],
+          toAddress: ["gabrielle@eventfriends.app", "contact@twinsilverdesign.com"],
+          emailBody: `
+            <html lang="en">  
+              <body>
+                <h2>Application</h2>
+                <p>${latestProfile.firstName} ${latestProfile.lastName}</p>
+                <p>${data.information}</p>
+                <p>Visit <a href="https://www.eventfriends.app/admin/accounts">https://www.eventfriends.app/admin/accounts</a> to approve the application.</p>
+              </body>
+            </html>
+          `
+        }
+      })
+      setSubmitted(true)
     } catch (e) {
-      
+      console.log("Error submitting")
     }
-
-
-    setSubmitting(false);
+    finally {
+      setSubmitting(false);
+    }
   }
 
   useEffect(() => {
@@ -88,15 +112,23 @@ const BrandPage = () => {
   if (!group) {
     return (
       <div className='bg-[url("https://twinsilver.mo.cloudinary.net/eventfriends/public/website/Untitled-2.png?tx=q_auto,f_auto")] w-full bg-cover relative min-h-[calc(100vh-5rem)] h-full'>
-        <div className="flex flex-col items-center justify-center  bg-white p-4 rounded-xl w-full max-w-lg absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-          <h1 className="m-4 text-lg md:text-xl">
+        <div className="bg-white p-4 rounded-xl w-full max-w-lg absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+          <h1 className="my-4 text-lg md:text-xl">
             This feature is restricted to influencers, brands, and content creators only.
           </h1>
-          <p>The apply to access this feature, please fill out the form below. Please provide as much information about as possible about your work as a content creator, influencer, or brand. Your account and profile information will automatically be sent as well.</p>
-          <form onSubmit={handleSubmit(sendApplication)}>
-            <textarea rows={5} {...register("information")} className="w-full p-2 my-4 rounded-md border-2 border-gray-300" placeholder="Please provide as much information about your work as a content creator, influencer, or brand."></textarea>
-            <Button type="submit">Submit</Button>
-          </form>
+          <p>To apply to access this feature, please fill out the form below. Please provide as much information about as possible about your work as a content creator, influencer, or brand. Your account and profile information will automatically be sent as well.</p>
+          { !submitted ?
+              <form onSubmit={handleSubmit(sendApplication)}>
+                <textarea rows={5} {...register("information")} className="w-full p-2 my-4 rounded-md border-2 border-gray-300" placeholder="Please provide as much information about your work as a content creator, influencer, or brand."></textarea>
+                <div className="flex justify-center">
+                  <Button disabled={submitting} className="disabled:opacity-50" type="submit">{submitting ? "Submitting..." : "Submit"}</Button>
+                </div>
+              </form>
+            :
+            <div className="my-4 text-lg">
+              Thank you, your application has been submitted!
+            </div>
+          }
         </div>
       </div>
     );
