@@ -360,7 +360,7 @@ exports.handler = async (event) => {
                                     <p>Paid: ${updatedEvent.hasPaid}</p>
                                     <p>Description: ${updatedEvent.description}</p>
                                     <p>Website: ${updatedEvent.url}</p>
-                                    <p>Visit <a href="https://eventfriends.app/admin">https://eventfriends.app/admin/even</a> to manage events.</p>
+                                    <p>Visit <a href="https://www.eventfriends.app/admin/events">https://www.eventfriends.app/admin/events</a> to manage events.</p>
                                     </body>
                                     </html>
                                     `
