@@ -8,6 +8,7 @@ import AccountInfo from "./AccountInfo";
 
 const VerifyAccounts = () => {
   const [unverifiedProfiles, setUnverifiedProfiles] = useState<Profile[]>([]);
+  const [brandProfiles, setBrandProfiles] = useState<Profile[]>([]);
   const [toastData, setToastData] = useState<ToastData | null>(null);
 
   useEffect(() => {
@@ -20,8 +21,15 @@ const VerifyAccounts = () => {
       setUnverifiedProfiles(response);
     };
 
+    const fetchBrandProfiles = async () => {
+      const response = await DataStore.query(Profile, c => c.brandSubmitted.eq(true))
+      console.log("Brand profiles: ", response);
+      return response
+    }
+
     try {
       fetchProfiles();
+      fetchBrandProfiles().then(profiles => setBrandProfiles(profiles))
     } catch (e) {
       console.log("Error fetching profiles in VerifyAccounts.tsx", getErrorMessage(e));
     }
@@ -54,23 +62,55 @@ const VerifyAccounts = () => {
     }
   };
 
+  const approveApplication = async (profile: Profile) => {
+    try {
+      const latestProfile = await DataStore.query(Profile, profile.id);
+      if(!latestProfile) return;
+      await DataStore.save(Profile.copyOf(latestProfile, (updated) => {
+        updated.brandSubmitted = false;
+        updated.groupID = "aff79b4e-3141-4c3a-bdcc-29a1cf4814bc"
+      }))
+      setBrandProfiles(
+        brandProfiles.filter((p) => p.id !== profile.id)
+      );
+      setToastData({
+        message: `Profile ${profile.firstName} ${profile.lastName} verified`,
+        type: "success",
+      });
+    } catch (e) {
+      setToastData({
+        message: `Error verifying profile ${profile.firstName} ${profile.lastName}`,
+        type: "error",
+      });
+      console.log("Error approving application: ", e)
+    }
+  }
+
   return (
     <div className="flex flex-col items-center justify-center pt-8">
-        <h1 className="text-xl md:text-2xl">Profiles Needing Verification</h1>
-        {unverifiedProfiles.map((profile) =>
-          <AccountInfo key={profile.id} profile={profile} onVerify={verifyProfile} />
-        )}
-        <h2 className="text-lg text-center my-4">
-          {unverifiedProfiles.length} profiles to verify
-        </h2>
-        {toastData && (
-          <Toast
-            toastData={toastData}
-            onClose={() => {
-              setToastData(null);
-            }}
-          />
-        )}
+      <h1 className="text-xl md:text-2xl">Profiles Needing Verification</h1>
+      <h2 className="text-lg text-center my-4">
+        {unverifiedProfiles.length} profiles to verify
+      </h2>
+      {unverifiedProfiles.map((profile) =>
+        <AccountInfo key={profile.id} profile={profile} onVerify={verifyProfile} />
+      )}
+      <h1 className="text-xl md:text-2xl">Brands / Influencers Needing Verification</h1>
+      <h2 className="text-lg text-center my-4">
+        {brandProfiles.length} profiles to verify
+      </h2>
+      {brandProfiles.map((profile) =>
+        <AccountInfo key={profile.id} profile={profile} onVerify={approveApplication} />
+      )}
+
+      {toastData && (
+        <Toast
+          toastData={toastData}
+          onClose={() => {
+            setToastData(null);
+          }}
+        />
+      )}
     </div>
   );
 }
