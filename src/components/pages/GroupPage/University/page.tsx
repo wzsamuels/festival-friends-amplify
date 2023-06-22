@@ -19,6 +19,7 @@ const UniversityPage = () => {
     const fetchGroup = async () => {
       const group = await userProfile?.group;
       console.log(group);
+      if(group?.id === "aff79b4e-3141-4c3a-bdcc-29a1cf4814bc") return;
       setGroup(group);
 
       const events = await group?.events.toArray();
