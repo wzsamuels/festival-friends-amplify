@@ -5,6 +5,7 @@ import Toast from "../../components/common/Toast/Toast";
 import getErrorMessage from "../../lib/getErrorMessage";
 import {ToastData} from "../../types";
 import AccountInfo from "./AccountInfo";
+import {API} from "@aws-amplify/api";
 
 const VerifyAccounts = () => {
   const [unverifiedProfiles, setUnverifiedProfiles] = useState<Profile[]>([]);
@@ -46,6 +47,21 @@ const VerifyAccounts = () => {
           updated.verified = true;
         })
       );
+
+      await API.post("email", "/", {
+        body: {
+          subject: "Your Event Friends account has been verified!",
+          toAddress: [latestProfile.email, "contact@twinsilverdesign.com"],
+          emailBody: `
+            <html lang="en">
+              <body>
+                <div>Sign in to your account at <a href='https://www.eventfriends.app/account'>Event Friends</a></div>
+              </body>
+            </html>
+          `
+        }
+      })
+
       setUnverifiedProfiles(
         unverifiedProfiles.filter((p) => p.id !== profile.id)
       );
@@ -73,6 +89,21 @@ const VerifyAccounts = () => {
       setBrandProfiles(
         brandProfiles.filter((p) => p.id !== profile.id)
       );
+
+      await API.post("email", "/", {
+        body: {
+          subject: "Your Event Friends brand / influencer application has been approved!",
+          toAddress: [latestProfile.email, "contact@twinsilverdesign.com"],
+          emailBody: `
+            <html lang="en">
+              <body>
+                <div>Sign in to your account at <a href='https://www.eventfriends.app/account'>Event Friends</a></div>
+              </body>
+            </html>
+          `
+        }
+      })
+
       setToastData({
         message: `Profile ${profile.firstName} ${profile.lastName} verified`,
         type: "success",
@@ -90,14 +121,14 @@ const VerifyAccounts = () => {
     <div className="flex flex-col items-center justify-center pt-8">
       <h1 className="text-xl md:text-2xl">Profiles Needing Verification</h1>
       <h2 className="text-lg text-center my-4">
-        {unverifiedProfiles.length} profiles to verify
+        {unverifiedProfiles.length} profile(s) to verify
       </h2>
       {unverifiedProfiles.map((profile) =>
         <AccountInfo key={profile.id} profile={profile} onVerify={verifyProfile} />
       )}
       <h1 className="text-xl md:text-2xl">Brands / Influencers Needing Verification</h1>
       <h2 className="text-lg text-center my-4">
-        {brandProfiles.length} profiles to verify
+        {brandProfiles.length} application(s) to approve
       </h2>
       {brandProfiles.map((profile) =>
         <AccountInfo key={profile.id} profile={profile} onVerify={approveApplication} />
