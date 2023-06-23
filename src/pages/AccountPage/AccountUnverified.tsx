@@ -30,9 +30,13 @@ const AccountUnverified = () => {
   const {selectedFile, setSelectedFile, preview} = useFilePreview()
   const { register, handleSubmit, control, formState: { errors } } = useForm<ProfileInputs>();
   const { fields, append, remove } = useFieldArray({name: "socialMedia", control})
+  const [errorMessage, setErrorMessage] = useState("");
 
   const createNewProfile: SubmitHandler<ProfileInputs> = async (data) => {
-    if(!selectedFile) return;
+    if(!selectedFile) {
+      setErrorMessage("A photo is required.")
+      return;
+    }
 
     setIsSubmitting(true);
     try {
@@ -72,7 +76,7 @@ const AccountUnverified = () => {
           subject: "New Account Needs Verification",
           emailBody: `
             <html lang="en">
-              <body>
+              <body>                
                 <div>Verify new accounts at <a href='https://www.eventfriends.app/admin/accounts'>https://www.eventfriends.app/admin/accounts</a></div>
               </body>
             </html>`,
@@ -252,8 +256,8 @@ const AccountUnverified = () => {
           {errors.city && <div className="mt-2 text-red-500">City is required</div>}
           {errors.state && <div className="mt-2 text-red-500">State is required</div>}
           {errors.address && <div className="mt-2 text-red-500">Address is required</div>}
-          {errors.phone && <div className="mt-2 text-red-500">Phone is required</div>}
           {errors.zipcode && <div className="mt-2 text-red-500">Zipcode is required</div>}
+          {errorMessage && <div className="mt-2 text-red-500">{errorMessage}</div>}
           <div className="flex justify-center items-center my-6">
             <Button
               className="bg-primary-default text-light-default rounded-md px-8 py-2"
