@@ -13,6 +13,7 @@ import {getPhotosByProfile, getPhotoURL} from "../../services/photoServices";
 import SocialMediaList from "./SocialMediaList";
 import {getEventsByProfile} from "../../services/eventServices";
 import ReportModal from "./Modals/ReportModal";
+import Image from "../../components/ui/Image";
 
 const ProfilePage = () => {
   const [profile, setProfile] = useState<Profile | null | undefined>();
@@ -86,17 +87,17 @@ const ProfilePage = () => {
       <section
         className="flex justify-center flex-col relative w-full h-screen  max-h-[500px]">
         {bannerImage ? (
-          <img
+          <Image
             src={bannerImage}
             alt="Banner"
-            className="w-full h-full  object-cover top-0 left-0"
+            className="w-full h-full object-cover top-0 left-0"
           />
         ) : (
-          <div className="w-full h-full  object-cover top-0 left-0 bg-light-default" />
+          <div className="w-full h-full object-cover top-0 left-0" />
         )}
         <div className="flex flex-col justify-center items-center w-full h-full absolute top-0 left-0">
           {profileImage ? (
-            <img
+            <Image
               className="aspect-square max-w-[350px] w-full rounded-full"
               src={profileImage}
               alt="Profile Image"
