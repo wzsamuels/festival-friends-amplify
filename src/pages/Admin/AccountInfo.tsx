@@ -4,6 +4,7 @@ import Button from "../../components/common/Button/Button";
 import React, {useEffect, useState} from "react";
 import {getPhotoURL} from "../../services/photoServices";
 import useDataClearedStore from "../../stores/dataClearedStore";
+import Image from "../../components/ui/Image";
 
 interface AccountInfoProps {
   profile: Profile
@@ -49,12 +50,6 @@ const AccountInfo = ({profile, onVerify} : AccountInfoProps) => {
         <Label>Address</Label>
         <div className="text-wrap">{profile.address}</div>
       </div>
-      <div className="flex flex-wrap my-4">
-        <div slot="start" className="text-wrap">
-          School
-        </div>
-        <div className="text-wrap">{profile.school}</div>
-      </div>
       <h2 className='text-xl'>Social Media</h2>
       <ul className="p-2">
         {socialMedia.map(sm =>
@@ -65,8 +60,8 @@ const AccountInfo = ({profile, onVerify} : AccountInfoProps) => {
         )}
       </ul>
       <div className="flex justify-center my-4">
-        <img
-          className="aspect-square max-w-[350px] w-full"
+        <Image
+          className="max-w-[350px] w-full"
           src={profileImage}
           alt="Profile Image"
         />
