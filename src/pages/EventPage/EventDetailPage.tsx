@@ -1,34 +1,54 @@
 import React, { useEffect, useState } from "react";
-import {Profile} from "../../models";
+import {LazyEvent, Profile} from "../../models";
 import FriendCard from "../../components/ui/FriendCard";
 import { Link, useParams } from "react-router-dom";
 import Header from "../../components/layout/Header";
-import { Ride } from "../../models";
 import NewRideModal from "./Modals/NewRideModal";
 import useFriendStore from "../../stores/friendProfileStore";
 import useEventStore from "../../stores/eventStore";
 import useDataClearedStore from "../../stores/dataClearedStore";
-import {getAttendees, getEventImageURL} from "../../services/eventServices";
+import {getAttendees, getEvent, getEventImageURL} from "../../services/eventServices";
 import {useAuthenticator} from "@aws-amplify/ui-react";
 import useProfileStore from "../../stores/profileStore";
 import dayjs from "dayjs";
+import Spinner from "../../components/common/Spinner/Spinner";
 
 const EventDetailPage = () => {
   const { id } = useParams();
   const { route } = useAuthenticator(context => [context.route])
+  const { authStatus } = useAuthenticator(context => [context.authStatus])
   const friendProfiles = useFriendStore(state => state.acceptedFriendProfiles)
   const loadingFriendProfiles = useFriendStore(state => state.loadingFriends)
   const userProfile = useProfileStore(state => state.userProfile)
-  const event = useEventStore(state => state.events).find(event => event.id === id)
+  const eventFromStore = useEventStore(state => state.events).find(event => event.id === id)
+  const [event, setEvent] = useState<LazyEvent | undefined | null>(() => { return eventFromStore});
   const [attendees, setAttendees] = useState<Profile[]>([]);
   const [attendeeFriends, setAttendeeFriends] = useState<Profile[]>([]);
   //const [rides, setRides] = useState<Ride[]>([]);
   const [isNewRideModalOpen, setIsNewRideModalOpen] = useState(false);
   const dataCleared = useDataClearedStore(state => state.dataCleared)
   const [eventsData, setEventsData] = useState(new Map());
+  const [errorMessage, setErrorMessage] = useState("");
+  const [loadingEvent, setLoadingEvent] = useState(true);
+
+  console.log("EventDetailPage: ", id);
+  console.log("EventDetailPage: ", event?.groupID);
+  console.log("UserProfile: ", userProfile?.groupID);
 
   useEffect(() => {
-    if(!event || !dataCleared) return;
+    if(!dataCleared || !id) return;
+
+    getEvent(id).then(event => {
+      setEvent(event)
+      setLoadingEvent(false);
+      if(!event) {
+        setErrorMessage("Event not found!");
+      }
+    });
+  }, [id])
+
+  useEffect(() => {
+    if(!dataCleared || !event) return;
 
     try {
       getAttendees(event.id)
@@ -75,7 +95,7 @@ const EventDetailPage = () => {
     if(route !== "authenticated") {
       return (
         <div className='my-6 text-2xl p-4'>
-          You must be signed in to view rides and attend events.
+          You must be signed in to view event attendees.
         </div>
       )
     }
@@ -83,7 +103,7 @@ const EventDetailPage = () => {
     if(!userProfile?.verified) {
       return (
         <div className='my-6 text-2xl p-4'>
-          Your account must be verified to view rides and attend events.
+          Your account must be verified to view event attendees.
         </div>
       )
     }
@@ -148,6 +168,64 @@ const EventDetailPage = () => {
         </section>
       </>
     )
+  }
+
+  if(loadingEvent) {
+    return (
+      <>
+        <Header/>
+        <div className="flex flex-col items-center justify-center w-screen h-screen">
+          <div className="my-4 text-xl">Loading Event...</div>
+          <Spinner/>
+        </div>
+      </>
+    )
+  }
+
+  if(errorMessage) {
+    return (
+      <>
+        <Header/>
+        <div className="flex flex-col items-center justify-center w-screen h-screen">
+          <h1 className="text-2xl">{errorMessage}</h1>
+          <Link className="underline text-primary-default" to="/">
+            Go back to events
+          </Link>
+        </div>
+      </>
+    )
+  }
+
+  if(event?.groupID) {
+    if(userProfile?.groupID && userProfile?.groupID !== event?.groupID) {
+      return (
+        <>
+          <Header/>
+          <div className="flex flex-col items-center justify-center w-screen h-screen">
+            <h1 className="text-2xl">You are not a member of this event&apos;s group.</h1>
+            <Link className="underline text-primary-default" to="/">
+              Go back to events
+            </Link>
+          </div>
+        </>
+      )
+    }
+
+    if(authStatus !== "authenticated") {
+      return (
+        <>
+          <Header/>
+          <div className="flex flex-col items-center justify-center w-screen h-screen">
+            <h1 className="text-2xl">This event is part of a private group.</h1>
+            <h2 className="text-xl my-4">If you are a member of this group, <Link to="/account" className="underline">log
+              in</Link> to view it.</h2>
+            <Link className="underline text-primary-default" to="/">
+              Go back to events
+            </Link>
+          </div>
+        </>
+      )
+    }
   }
 
   return (
