@@ -5,6 +5,7 @@ import Button from "../common/Button/Button";
 import {BsPerson} from "react-icons/all";
 import ConditionalWrapper from "../ConditionalWrapper";
 import {getPhotoURL} from "../../services/photoServices";
+import Image from "./Image";
 
 export interface FriendCardButton {
   label: string;
@@ -46,8 +47,8 @@ const FriendCard = ({profile, link, onClick, className, buttons,}: FriendCardPro
         <div className="flex flex-col items-center">
           {
             profilePhotoURL ?
-              <img
-                className={"rounded-full aspect-square"}
+              <Image
+                className={"rounded-full aspect-square max-w-[200px] object-cover"}
                 width={200}
                 height={200}
                 src={profilePhotoURL}
