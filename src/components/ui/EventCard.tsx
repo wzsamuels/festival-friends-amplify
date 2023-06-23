@@ -3,15 +3,13 @@ import React, {useEffect, useState} from "react";
 import {BsCheck} from "react-icons/all";
 import {Link} from "react-router-dom";
 import Button from "../common/Button/Button";
-import EventFriendModal from "../pages/EventPage/Modals/EventFriendModal";
+import EventFriendModal from "../../pages/EventPage/Modals/EventFriendModal";
 import useDataClearedStore from "../../stores/dataClearedStore";
 import useProfileStore from "../../stores/profileStore";
 import {getAttendees, joinEvent, leaveEvent} from "../../services/eventServices";
 import useFriendStore from "../../stores/friendProfileStore";
 import dayjs from "dayjs";
 import {DataStore} from "@aws-amplify/datastore";
-import Image from "./Image";
-
 interface EventCardProps {
   event: Event;
   className?: string;
