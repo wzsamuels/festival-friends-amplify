@@ -169,6 +169,13 @@ const AccountButton = () => {
               </Menu.Item>
             )}
             <div className="p-2 border-t border-t-darkGreen text-sm">
+              <Link
+                className="underline my-2"
+                to="/support"
+              >
+                Contact Us
+              </Link>
+              {' '}
                 <Link
                   className="underline my-2"
                   to="/privacy-policy"
