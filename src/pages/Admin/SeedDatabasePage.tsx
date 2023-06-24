@@ -3,7 +3,6 @@ import {Group, PrivacySetting, Profile} from "../../models";
 import mockUserProfiles from "../../data/profiles.json";
 import {getGroupByEmail} from "../../services/groupServices";
 import getErrorMessage from "../../lib/getErrorMessage";
-import colleges from "../../data/colleges.json";
 import Button from "../../components/common/Button/Button";
 import React, {useEffect, useState} from "react";
 
@@ -56,6 +55,7 @@ const SeedDatabasePage = () => {
   }
 
 
+  /*
   const seedGroups = async () => {
     try {
       const collegeGroups = await DataStore.query(Group);
@@ -91,6 +91,8 @@ const SeedDatabasePage = () => {
     }
   };
 
+   */
+
   const deleteAllCollegeGroups = async () => {
     let groups = await DataStore.query(Group);
     console.log(`Deleting ${groups.length} college groups`)
@@ -108,13 +110,13 @@ const SeedDatabasePage = () => {
       <h1 className="text-xl md:text-2xl text-center">Seed Database</h1>
       <section>
         <h2>College Groups</h2>
-        <div>{colleges.length} groups in file.</div>
+        {/*<div>{colleges.length} groups in file.</div>*/}
         <div>{groups.length} groups in database.</div>
         <Button onClick={deleteAllCollegeGroups}>Delete All College Groups</Button>
       </section>
       <div className='flex justify-center gap-4'>
         <Button className="my-4" onClick={seedUserProfiles}>Seed User Profiles</Button>
-        <Button className="my-4" onClick={seedGroups}>Seed College Groups</Button>
+        {/*<Button className="my-4" onClick={seedGroups}>Seed College Groups</Button>*/}
       </div>
     </>
   )
