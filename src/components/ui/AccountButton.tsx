@@ -194,7 +194,7 @@ const AccountButton = () => {
         setIsOpen={setAlertIsOpen}
         title="Logging Out..."
       >
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center max-w-[200px]">
           <span>Log Out in Progress</span>
           <Spinner />
         </div>
