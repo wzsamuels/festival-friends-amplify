@@ -651,6 +651,13 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "boost": {
+                    "name": "boost",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "collegeEvent": {
                     "name": "collegeEvent",
                     "isArray": false,
@@ -1722,5 +1729,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.3",
-    "version": "441f6e3ed4d7f9424e8e56eefeb85f1f"
+    "version": "9fb777a963b33992f5431a52c9933204"
 };

@@ -82,6 +82,7 @@ export const createProfile = /* GraphQL */ `
             url
             customerID
             ticketURL
+            boost
             collegeEvent
             hasPaid
             cancelled
@@ -391,6 +392,7 @@ export const createProfile = /* GraphQL */ `
             url
             customerID
             ticketURL
+            boost
             collegeEvent
             hasPaid
             cancelled
@@ -567,6 +569,7 @@ export const updateProfile = /* GraphQL */ `
             url
             customerID
             ticketURL
+            boost
             collegeEvent
             hasPaid
             cancelled
@@ -876,6 +879,7 @@ export const updateProfile = /* GraphQL */ `
             url
             customerID
             ticketURL
+            boost
             collegeEvent
             hasPaid
             cancelled
@@ -1052,6 +1056,7 @@ export const deleteProfile = /* GraphQL */ `
             url
             customerID
             ticketURL
+            boost
             collegeEvent
             hasPaid
             cancelled
@@ -1361,6 +1366,7 @@ export const deleteProfile = /* GraphQL */ `
             url
             customerID
             ticketURL
+            boost
             collegeEvent
             hasPaid
             cancelled
@@ -1601,6 +1607,7 @@ export const createEvent = /* GraphQL */ `
       url
       customerID
       ticketURL
+      boost
       collegeEvent
       hasPaid
       cancelled
@@ -1628,6 +1635,7 @@ export const createEvent = /* GraphQL */ `
             url
             customerID
             ticketURL
+            boost
             collegeEvent
             hasPaid
             cancelled
@@ -1737,6 +1745,7 @@ export const createEvent = /* GraphQL */ `
             url
             customerID
             ticketURL
+            boost
             collegeEvent
             hasPaid
             cancelled
@@ -1777,6 +1786,7 @@ export const createEvent = /* GraphQL */ `
             url
             customerID
             ticketURL
+            boost
             collegeEvent
             hasPaid
             cancelled
@@ -1837,6 +1847,7 @@ export const updateEvent = /* GraphQL */ `
       url
       customerID
       ticketURL
+      boost
       collegeEvent
       hasPaid
       cancelled
@@ -1864,6 +1875,7 @@ export const updateEvent = /* GraphQL */ `
             url
             customerID
             ticketURL
+            boost
             collegeEvent
             hasPaid
             cancelled
@@ -1973,6 +1985,7 @@ export const updateEvent = /* GraphQL */ `
             url
             customerID
             ticketURL
+            boost
             collegeEvent
             hasPaid
             cancelled
@@ -2013,6 +2026,7 @@ export const updateEvent = /* GraphQL */ `
             url
             customerID
             ticketURL
+            boost
             collegeEvent
             hasPaid
             cancelled
@@ -2073,6 +2087,7 @@ export const deleteEvent = /* GraphQL */ `
       url
       customerID
       ticketURL
+      boost
       collegeEvent
       hasPaid
       cancelled
@@ -2100,6 +2115,7 @@ export const deleteEvent = /* GraphQL */ `
             url
             customerID
             ticketURL
+            boost
             collegeEvent
             hasPaid
             cancelled
@@ -2209,6 +2225,7 @@ export const deleteEvent = /* GraphQL */ `
             url
             customerID
             ticketURL
+            boost
             collegeEvent
             hasPaid
             cancelled
@@ -2249,6 +2266,7 @@ export const deleteEvent = /* GraphQL */ `
             url
             customerID
             ticketURL
+            boost
             collegeEvent
             hasPaid
             cancelled
@@ -2311,6 +2329,7 @@ export const createRide = /* GraphQL */ `
         url
         customerID
         ticketURL
+        boost
         collegeEvent
         hasPaid
         cancelled
@@ -2470,6 +2489,7 @@ export const updateRide = /* GraphQL */ `
         url
         customerID
         ticketURL
+        boost
         collegeEvent
         hasPaid
         cancelled
@@ -2629,6 +2649,7 @@ export const deleteRide = /* GraphQL */ `
         url
         customerID
         ticketURL
+        boost
         collegeEvent
         hasPaid
         cancelled
@@ -5411,6 +5432,7 @@ export const createGroup = /* GraphQL */ `
           url
           customerID
           ticketURL
+          boost
           collegeEvent
           hasPaid
           cancelled
@@ -5566,6 +5588,7 @@ export const updateGroup = /* GraphQL */ `
           url
           customerID
           ticketURL
+          boost
           collegeEvent
           hasPaid
           cancelled
@@ -5721,6 +5744,7 @@ export const deleteGroup = /* GraphQL */ `
           url
           customerID
           ticketURL
+          boost
           collegeEvent
           hasPaid
           cancelled
@@ -6030,6 +6054,7 @@ export const createEventProfile = /* GraphQL */ `
         url
         customerID
         ticketURL
+        boost
         collegeEvent
         hasPaid
         cancelled
@@ -6282,6 +6307,7 @@ export const updateEventProfile = /* GraphQL */ `
         url
         customerID
         ticketURL
+        boost
         collegeEvent
         hasPaid
         cancelled
@@ -6534,6 +6560,7 @@ export const deleteEventProfile = /* GraphQL */ `
         url
         customerID
         ticketURL
+        boost
         collegeEvent
         hasPaid
         cancelled
@@ -6788,6 +6815,7 @@ export const createRideProfile = /* GraphQL */ `
           url
           customerID
           ticketURL
+          boost
           collegeEvent
           hasPaid
           cancelled
@@ -7036,6 +7064,7 @@ export const updateRideProfile = /* GraphQL */ `
           url
           customerID
           ticketURL
+          boost
           collegeEvent
           hasPaid
           cancelled
@@ -7284,6 +7313,7 @@ export const deleteRideProfile = /* GraphQL */ `
           url
           customerID
           ticketURL
+          boost
           collegeEvent
           hasPaid
           cancelled

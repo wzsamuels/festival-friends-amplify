@@ -199,6 +199,7 @@ type EagerEvent = {
   readonly url?: string | null;
   readonly customerID?: string | null;
   readonly ticketURL?: string | null;
+  readonly boost?: boolean | null;
   readonly collegeEvent?: boolean | null;
   readonly hasPaid?: boolean | null;
   readonly cancelled?: boolean | null;
@@ -232,6 +233,7 @@ type LazyEvent = {
   readonly url?: string | null;
   readonly customerID?: string | null;
   readonly ticketURL?: string | null;
+  readonly boost?: boolean | null;
   readonly collegeEvent?: boolean | null;
   readonly hasPaid?: boolean | null;
   readonly cancelled?: boolean | null;

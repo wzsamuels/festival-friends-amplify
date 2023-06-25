@@ -79,6 +79,7 @@ export const getProfile = /* GraphQL */ `
             url
             customerID
             ticketURL
+            boost
             collegeEvent
             hasPaid
             cancelled
@@ -388,6 +389,7 @@ export const getProfile = /* GraphQL */ `
             url
             customerID
             ticketURL
+            boost
             collegeEvent
             hasPaid
             cancelled
@@ -1169,6 +1171,7 @@ export const getEvent = /* GraphQL */ `
       url
       customerID
       ticketURL
+      boost
       collegeEvent
       hasPaid
       cancelled
@@ -1196,6 +1199,7 @@ export const getEvent = /* GraphQL */ `
             url
             customerID
             ticketURL
+            boost
             collegeEvent
             hasPaid
             cancelled
@@ -1305,6 +1309,7 @@ export const getEvent = /* GraphQL */ `
             url
             customerID
             ticketURL
+            boost
             collegeEvent
             hasPaid
             cancelled
@@ -1345,6 +1350,7 @@ export const getEvent = /* GraphQL */ `
             url
             customerID
             ticketURL
+            boost
             collegeEvent
             hasPaid
             cancelled
@@ -1407,6 +1413,7 @@ export const listEvents = /* GraphQL */ `
         url
         customerID
         ticketURL
+        boost
         collegeEvent
         hasPaid
         cancelled
@@ -1504,6 +1511,7 @@ export const syncEvents = /* GraphQL */ `
         url
         customerID
         ticketURL
+        boost
         collegeEvent
         hasPaid
         cancelled
@@ -1603,6 +1611,7 @@ export const eventsBySubscriptionID = /* GraphQL */ `
         url
         customerID
         ticketURL
+        boost
         collegeEvent
         hasPaid
         cancelled
@@ -1702,6 +1711,7 @@ export const eventsByGroupID = /* GraphQL */ `
         url
         customerID
         ticketURL
+        boost
         collegeEvent
         hasPaid
         cancelled
@@ -1790,6 +1800,7 @@ export const getRide = /* GraphQL */ `
         url
         customerID
         ticketURL
+        boost
         collegeEvent
         hasPaid
         cancelled
@@ -1951,6 +1962,7 @@ export const listRides = /* GraphQL */ `
           url
           customerID
           ticketURL
+          boost
           collegeEvent
           hasPaid
           cancelled
@@ -2044,6 +2056,7 @@ export const syncRides = /* GraphQL */ `
           url
           customerID
           ticketURL
+          boost
           collegeEvent
           hasPaid
           cancelled
@@ -2139,6 +2152,7 @@ export const ridesByEventID = /* GraphQL */ `
           url
           customerID
           ticketURL
+          boost
           collegeEvent
           hasPaid
           cancelled
@@ -5085,6 +5099,7 @@ export const getGroup = /* GraphQL */ `
           url
           customerID
           ticketURL
+          boost
           collegeEvent
           hasPaid
           cancelled
@@ -5242,6 +5257,7 @@ export const listGroups = /* GraphQL */ `
             url
             customerID
             ticketURL
+            boost
             collegeEvent
             hasPaid
             cancelled
@@ -5338,6 +5354,7 @@ export const syncGroups = /* GraphQL */ `
             url
             customerID
             ticketURL
+            boost
             collegeEvent
             hasPaid
             cancelled
@@ -5577,6 +5594,7 @@ export const getEventProfile = /* GraphQL */ `
         url
         customerID
         ticketURL
+        boost
         collegeEvent
         hasPaid
         cancelled
@@ -5757,6 +5775,7 @@ export const listEventProfiles = /* GraphQL */ `
           url
           customerID
           ticketURL
+          boost
           collegeEvent
           hasPaid
           cancelled
@@ -5914,6 +5933,7 @@ export const syncEventProfiles = /* GraphQL */ `
           url
           customerID
           ticketURL
+          boost
           collegeEvent
           hasPaid
           cancelled
@@ -6073,6 +6093,7 @@ export const eventProfilesByProfileId = /* GraphQL */ `
           url
           customerID
           ticketURL
+          boost
           collegeEvent
           hasPaid
           cancelled
@@ -6232,6 +6253,7 @@ export const eventProfilesByEventId = /* GraphQL */ `
           url
           customerID
           ticketURL
+          boost
           collegeEvent
           hasPaid
           cancelled
@@ -6454,6 +6476,7 @@ export const getRideProfile = /* GraphQL */ `
           url
           customerID
           ticketURL
+          boost
           collegeEvent
           hasPaid
           cancelled
@@ -6630,6 +6653,7 @@ export const listRideProfiles = /* GraphQL */ `
             url
             customerID
             ticketURL
+            boost
             collegeEvent
             hasPaid
             cancelled
@@ -6786,6 +6810,7 @@ export const syncRideProfiles = /* GraphQL */ `
             url
             customerID
             ticketURL
+            boost
             collegeEvent
             hasPaid
             cancelled
@@ -6944,6 +6969,7 @@ export const rideProfilesByProfileId = /* GraphQL */ `
             url
             customerID
             ticketURL
+            boost
             collegeEvent
             hasPaid
             cancelled
@@ -7102,6 +7128,7 @@ export const rideProfilesByRideId = /* GraphQL */ `
             url
             customerID
             ticketURL
+            boost
             collegeEvent
             hasPaid
             cancelled
