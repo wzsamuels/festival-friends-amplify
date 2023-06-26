@@ -1,5 +1,5 @@
 // React imports
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 
 // Local imports
 import {EventType, Event} from "../../models";
@@ -12,6 +12,8 @@ import SegmentSlide from "../../components/common/Segment/SegmentSlide";
 import Spinner from "../../components/common/Spinner/Spinner";
 import { FixedSizeGrid as Grid, GridChildComponentProps } from 'react-window';
 import AutoSizer from 'react-virtualized-auto-sizer';
+import {DataStore} from "@aws-amplify/datastore";
+import {Predicates} from "aws-amplify";
 
 const segmentItems = [
   {
@@ -39,6 +41,7 @@ const segmentItems = [
 const EventPage = () => {
   // Filter events by type
   const events = useEventStore(state => state.events).filter((event) => !event.cancelled);
+  //const [events, setEvents] = useState<Event[]>([]);
   const loadingEvents = useEventStore(state => state.loadingEvents)
   const sportEvents = events.filter((event) => event.type === EventType.SPORT);
   const musicEvents = events.filter((event) => event.type === EventType.MUSIC);
@@ -61,6 +64,16 @@ const EventPage = () => {
     .flat();
 
   console.log(filteredEvents)
+
+  /*
+  useEffect(() => {
+    const eventData = DataStore.query(Event, Predicates.ALL, {
+      page: 0,
+      limit: 10,
+    }).then((results) => setEvents(results));
+  }, [])
+
+   */
 
   const renderCell = ({ columnIndex, rowIndex, style }: GridChildComponentProps) => {
     const index = rowIndex * numColumns + columnIndex;
@@ -108,7 +121,7 @@ const EventPage = () => {
             <Spinner/>
           </div>
           :
-          <div className="pt-8 min-[400px]:pt-0 h-full min-h-[calc(100vh-3.8rem)] min-[400px]:min-h-[calc(100vh-5.8rem)]">
+          <div className="pt-8 min-[400px]:pt-0 h-full min-h-[calc(100vh-3.8rem)] min-[400px]:min-h-[calc(100vh-6rem)] overflow-hidded">
             <AutoSizer>
               {({ height, width }: {height: number; width: number}) => {
                 const numColumns = window.innerWidth > 1600 ? 4 : window.innerWidth > 1200 ? 3 : window.innerWidth > 800 ? 2 : 1; // replace these values with actual breakpoint widths
@@ -122,7 +135,7 @@ const EventPage = () => {
                     rowCount={Math.ceil(filteredEvents.length / numColumns)}
                     rowHeight={700} // replace with the actual row height
                     width={width}
-                    style={{ display: "flex", justifyContent: "center"}}
+                    style={{ display: "flex", justifyContent: "center", overflowX: "hidden"}}
                   >
                     {renderCell}
                   </Grid>
