@@ -10,6 +10,8 @@ import useEventStore from "../../stores/eventStore";
 import LoadingState from "../../components/ui/LoadingState";
 import SegmentSlide from "../../components/common/Segment/SegmentSlide";
 import Spinner from "../../components/common/Spinner/Spinner";
+import { FixedSizeGrid as Grid, GridChildComponentProps } from 'react-window';
+import AutoSizer from 'react-virtualized-auto-sizer';
 
 const segmentItems = [
   {
@@ -44,22 +46,6 @@ const EventPage = () => {
   const travelEvents = events.filter((event) => event.type === EventType.TRAVEL)
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
   const [eventType, setEventType] = useState("all");
-
-  // Render festival cards
-  const renderFestivalCards = (events: Event[]) => {
-    if(loadingEvents) {
-      return <LoadingState/>
-    }
-
-    return events?.map((event) => (
-      <EventCard
-        event={event}
-        key={event.id}
-        className="m-4"
-      />
-    ));
-  };
-
   // Event mapping
   const eventMapping = {
     music: musicEvents,
@@ -74,8 +60,29 @@ const EventPage = () => {
     .map(([_, events]) => events)
     .flat();
 
+  console.log(filteredEvents)
+
+  const renderCell = ({ columnIndex, rowIndex, style }: GridChildComponentProps) => {
+    const index = rowIndex * numColumns + columnIndex;
+    if(index >= filteredEvents.length) {
+      return null;
+    }
+    const event = filteredEvents[index];
+    return (
+      <div style={{ ...style, display: 'flex', justifyContent: 'center', alignItems: 'flex-start', padding: '1rem'}}>
+        <EventCard
+          event={event}
+
+        />
+      </div>
+    );
+  };
+
+  // Decide on the number of columns based on the viewport size.
+  const numColumns = window.innerWidth > 1400 ? 4 : window.innerWidth > 1200 ? 3 : window.innerWidth > 800 ? 2 : 1; // replace these values with actual breakpoint widths
+
   return (
-    <div>
+    <>
       <Header
         className="min-[400px]:shadow-xl"
         onSearch={() => setIsSearchModalOpen(true)}>
@@ -101,15 +108,34 @@ const EventPage = () => {
             <Spinner/>
           </div>
           :
-          <div className="pt-8 min-[400px]:pt-0 grid gap-0 sm:gap-2 md:gap-4 justify-items-center grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 items-center">
-            {renderFestivalCards(filteredEvents)}
+          <div className="pt-8 min-[400px]:pt-0 h-full min-h-[calc(100vh-3.8rem)] min-[400px]:min-h-[calc(100vh-5.8rem)]">
+            <AutoSizer>
+              {({ height, width }: {height: number; width: number}) => {
+                const numColumns = window.innerWidth > 1600 ? 4 : window.innerWidth > 1200 ? 3 : window.innerWidth > 800 ? 2 : 1; // replace these values with actual breakpoint widths
+                console.log(numColumns)
+                return (
+                  <Grid
+                    key={numColumns}
+                    columnCount={numColumns}
+                    columnWidth={width / numColumns}
+                    height={height}
+                    rowCount={Math.ceil(filteredEvents.length / numColumns)}
+                    rowHeight={700} // replace with the actual row height
+                    width={width}
+                    style={{ display: "flex", justifyContent: "center"}}
+                  >
+                    {renderCell}
+                  </Grid>
+                );
+              }}
+            </AutoSizer>
           </div>
       }
       <EventSearchModal
         isOpen={isSearchModalOpen}
         setIsOpen={setIsSearchModalOpen}
       />
-    </div>
+    </>
   );
 };
 

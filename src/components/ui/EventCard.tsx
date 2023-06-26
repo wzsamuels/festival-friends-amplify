@@ -3,7 +3,6 @@ import React, {useEffect, useState} from "react";
 import {BsCheck} from "react-icons/all";
 import {Link} from "react-router-dom";
 import Button from "../common/Button/Button";
-import EventFriendModal from "../../pages/EventPage/Modals/EventFriendModal";
 import useDataClearedStore from "../../stores/dataClearedStore";
 import useProfileStore from "../../stores/profileStore";
 import {getAttendees, joinEvent, leaveEvent} from "../../services/eventServices";
@@ -21,7 +20,6 @@ const EventCard = ({ event, className }: EventCardProps) => {
   const [friendsAttending, setFriendsAttending] = useState<Profile[]>([])
   const [eventProfile, setEventProfile] = useState<EventProfile | null>(null);
   const userProfile = useProfileStore((state) => state.userProfile);
-  const [isEventFriendModalOpen, setIsEventFriendModalOpen] = useState(false);
   const dataCleared = useDataClearedStore(state => state.dataCleared)
 
   useEffect(() => {
@@ -35,7 +33,7 @@ const EventCard = ({ event, className }: EventCardProps) => {
     } catch (e) {
       console.log("Error fetching event attendee profiles", e);
     }
-  }, [event])
+  }, [dataCleared])
 
   useEffect(() => {
     if (!dataCleared || !userProfile || !event) return;
@@ -45,7 +43,7 @@ const EventCard = ({ event, className }: EventCardProps) => {
       c.profileId.eq(userProfile.id)
       ]))
       .then(([eventProfile]) => setEventProfile(eventProfile))
-  }, [dataCleared, userProfile, event]);
+  }, [dataCleared, userProfile]);
 
   const handleAttendEvent = async () => {
     if (!userProfile || !dataCleared) return;
@@ -66,7 +64,7 @@ const EventCard = ({ event, className }: EventCardProps) => {
   };
 
   return (
-    <div className={`rounded-xl shadow-md w-full max-w-[350px] min-h-[36rem] flex flex-col justify-between ${className}`}>
+    <div className={`rounded-xl shadow-md w-full max-w-[350px] min-h-[calc(700px-2rem)] max-h-[calc(700px-2rem)] flex flex-col justify-between ${className}`}>
       <Link className="relative" to={`/events/${event.id}`}>
         <img
           className="w-full h-full object-cover aspect-square"
@@ -142,12 +140,6 @@ const EventCard = ({ event, className }: EventCardProps) => {
           }
         </div>
       </div>
-      <EventFriendModal
-        event={event}
-        attendingFriends={friendsAttending}
-        isOpen={isEventFriendModalOpen}
-        setIsOpen={setIsEventFriendModalOpen}
-      />
     </div>
   );
 };
