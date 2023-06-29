@@ -26,6 +26,20 @@ const { Parameters } = await (new aws.SSM())
 
 Parameters will be of the form { Name: 'secretName', Value: 'secretValue', ... }[]
 */
+/*
+Use the following code to retrieve configured secrets from SSM:
+
+const aws = require('aws-sdk');
+
+const { Parameters } = await (new aws.SSM())
+  .getParameters({
+    Names: ["STRIPE_SECRET_KEY","STRIPE_ENDPOINT_SECRET"].map(secretName => process.env[secretName]),
+    WithDecryption: true,
+  })
+  .promise();
+
+Parameters will be of the form { Name: 'secretName', Value: 'secretValue', ... }[]
+*/
 /* Amplify Params - DO NOT EDIT
 	API_EVENTFRIENDS_GRAPHQLAPIENDPOINTOUTPUT
 	API_EVENTFRIENDS_GRAPHQLAPIIDOUTPUT
