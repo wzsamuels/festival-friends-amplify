@@ -5,7 +5,8 @@ import PhotoImage from "../../components/ui/PhotoImage";
 import Header from "../../components/layout/Header";
 import PhotoModal from "../AccountPage/Modals/PhotoModal";
 import { useNavigate } from "react-router-dom";
-import {BsFlag, BsPerson, IoArrowBack} from "react-icons/all";
+import {BsFlag, BsPerson} from "react-icons/bs";
+import { IoMdArrowBack} from "react-icons/io"
 import getErrorMessage from "../../lib/getErrorMessage";
 import useDataClearedStore from "../../stores/dataClearedStore";
 import {getProfile} from "../../services/profileServices";
@@ -81,7 +82,7 @@ const ProfilePage = () => {
     <>
       <Header>
         <button className="mx-4 text-xl flex items-center" onClick={() => navigate(-1)}>
-          <IoArrowBack className="mr-2" />Back
+          <IoMdArrowBack className="mr-2" />Back
         </button>
       </Header>
       <section

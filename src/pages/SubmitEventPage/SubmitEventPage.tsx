@@ -13,8 +13,8 @@ import useProfileStore from "../../stores/profileStore";
 import {Link, useSearchParams} from "react-router-dom";
 import EventForm from "../../components/ui/EventForm";
 import {EventInputs} from "../../types";
-import {BiCheck} from "react-icons/all";
 import {Capacitor} from "@capacitor/core";
+import {CheckIcon} from "@heroicons/react/24/solid";
 
 type EventPlan = "monthly" | "daily"
 type FormState = "plan" | "details" | "success"
@@ -171,11 +171,11 @@ const SubmitEventPage = () => {
                 </div>
                 <div className="my-2">$89.82 / billed monthly</div>
                 <span className="flex items-center my-2">
-                  <BiCheck className="mr-2 text-xl text-darkGreen"/>
+                  <CheckIcon className="mr-2 h-6 text-darkGreen"/>
                   <span className="bg-lightGreen px-2 py-1 rounded-xl">40% Off Daily Billing!</span>
                 </span>
                 <span className="flex items-center my-2">
-                  <BiCheck className="mr-2 text-xl text-darkGreen"/>
+                  <CheckIcon className="mr-2 h-6 text-darkGreen basis-[35px]"/>
                   <span className="bg-lightGreen px-2 py-1 rounded-xl">Boost your event! Monthly billed events appear before daily billed events.</span>
                 </span>
                 <SellingPoints/>
@@ -220,9 +220,9 @@ export default SubmitEventPage;
 const SellingPoints = () => {
   return (
     <>
-      <span className="flex items-center"><BiCheck className="mr-2 text-xl text-darkGreen"/>Have your event featured on Event Friends!</span>
-      <span className="flex items-center"><BiCheck className="mr-2 text-xl text-darkGreen"/>Let users shared their interest in your event!</span>
-      <span className="flex items-center"><BiCheck className="mr-2 text-xl text-darkGreen"/>Let users purchase tickets to your event!</span>
+      <span className="flex items-center"><CheckIcon className="mr-2 h-6 text-darkGreen"/>Have your event featured on Event Friends!</span>
+      <span className="flex items-center"><CheckIcon className="mr-2 h-6 text-darkGreen"/>Let users shared their interest in your event!</span>
+      <span className="flex items-center"><CheckIcon className="mr-2 h-6 text-darkGreen"/>Let users purchase tickets to your event!</span>
     </>
   )
 }
