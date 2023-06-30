@@ -2,7 +2,6 @@ import React, { useState} from "react";
 import { Conversation, Profile } from "../../models";
 import { useAuthenticator } from "@aws-amplify/ui-react";
 import ConversationModal from "./Modals/ConversationModal";
-import { BsPlus, FaSearch } from "react-icons/all";
 import { Link } from "react-router-dom";
 import Header from "../../components/layout/Header";
 import ConservationSearchModal from "./Modals/ConservationSearchModal";
@@ -15,6 +14,7 @@ import useConversationStore from "../../stores/conversationStore";
 import useDataClearedStore from "../../stores/dataClearedStore";
 import {createConversation} from "../../services/conversationServices";
 import NewConversationModal from "./Modals/NewConversationModal";
+import {PlusIcon} from "@heroicons/react/24/outline";
 
 const MessagePage: React.FC = () => {
   const [currentConversation, setCurrentConversation] = useState<Conversation>();
@@ -110,7 +110,7 @@ const MessagePage: React.FC = () => {
               className="flex flex-col items-center rounded-[100%] bg-lightYellow p-3"
               onClick={() => setNewConversationModalOpen(true)}
             >
-              <BsPlus className="text-3xl" />
+              <PlusIcon className="h-6" />
             </button>
           </div>
         }

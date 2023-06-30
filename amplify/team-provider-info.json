@@ -17,17 +17,17 @@
         "stripeCancelSubscription": {
           "secretsPathAmplifyAppId": "d3h5qswgc4c8q2",
           "deploymentBucketName": "amplify-eventfriends-staging-194056-deployment",
-          "s3Key": "amplify-builds/stripeCancelSubscription-4c4341355a50314c6f48-build.zip"
+          "s3Key": "amplify-builds/stripeCancelSubscription-626e72592b686739376b-build.zip"
         },
         "stripeCheckout": {
           "secretsPathAmplifyAppId": "d3h5qswgc4c8q2",
           "deploymentBucketName": "amplify-eventfriends-staging-194056-deployment",
-          "s3Key": "amplify-builds/stripeCheckout-31734e716c4462686a69-build.zip"
+          "s3Key": "amplify-builds/stripeCheckout-54524d46744a6a453536-build.zip"
         },
         "stripeWebhook": {
           "secretsPathAmplifyAppId": "d3h5qswgc4c8q2",
           "deploymentBucketName": "amplify-eventfriends-staging-194056-deployment",
-          "s3Key": "amplify-builds/stripeWebhook-2f4b4253726631357157-build.zip"
+          "s3Key": "amplify-builds/stripeWebhook-6c3768507a4c746c6f67-build.zip"
         },
         "email": {
           "deploymentBucketName": "amplify-eventfriends-staging-194056-deployment",
@@ -35,7 +35,7 @@
         },
         "eventfriendslayer": {
           "deploymentBucketName": "amplify-eventfriends-staging-194056-deployment",
-          "s3Key": "amplify-builds/eventfriendslayer-LambdaLayerVersion46c867e4-build.zip"
+          "s3Key": "amplify-builds/eventfriendslayer-LambdaLayerVersion93424af1-build.zip"
         }
       },
       "auth": {

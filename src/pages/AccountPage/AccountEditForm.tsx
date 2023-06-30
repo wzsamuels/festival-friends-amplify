@@ -9,9 +9,9 @@ import Input from "../../components/common/Input/Input";
 import Button from "../../components/common/Button/Button";
 import Select from "../../components/common/Select";
 import useDataClearedStore from "../../stores/dataClearedStore";
-import {BsPlus} from "react-icons/all";
 import {DataStore} from "@aws-amplify/datastore";
 import socialMediaTypes from "../../data/socialMediaTypes.json";
+import {PlusIcon} from "@heroicons/react/24/outline";
 
 interface ProfileFormProps {
   onSubmit: SubmitHandler<ProfileInputs>;
@@ -152,7 +152,7 @@ const AccountEditForm = ({ onSubmit, profile }: ProfileFormProps) => {
               saved: false
             })}
           >
-            <BsPlus/>
+            <PlusIcon className='h-4'/>
           </Button>
         </div>
         <div className="my-4">

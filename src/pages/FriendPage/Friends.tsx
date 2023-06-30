@@ -22,10 +22,6 @@ import {shallow} from "zustand/shallow";
 import useFriendStore from "../../stores/friendProfileStore";
 import {Link} from "react-router-dom";
 import Button from "../../components/common/Button/Button";
-import {
-  FaUserFriends,
-  MdLightbulbOutline, MdMoveToInbox, MdOutlineOutbox,
-} from "react-icons/all";
 import { useErrorBoundary } from "react-error-boundary";
 import SegmentSlide from "../../components/common/Segment/SegmentSlide";
 
@@ -263,8 +259,7 @@ const FriendsPage: React.FC = () => {
       type: "accepted",
       label: (
         <div className="flex justify-center items-center">
-          <div className="block mx-4">Friends</div>
-          <div className="hidden text-xl"><FaUserFriends/></div>
+          <div>Friends</div>
         </div>
       )
     },
@@ -273,8 +268,7 @@ const FriendsPage: React.FC = () => {
       type: "pending",
       label: (
         <div className="flex justify-center items-center">
-          <div className="block">Requests</div>
-          <div className="hidden text-xl"><MdMoveToInbox/></div>
+          <div>Requests</div>
           {incomingFriendProfiles.length > 0 ? (
             <div className="bg-lightYellow text-black rounded-full mx-2 w-[20px] p-2  h-[20px] justify-center items-center hidden sm:flex">
               {incomingFriendProfiles.length}
@@ -306,8 +300,7 @@ const FriendsPage: React.FC = () => {
       type: "suggestions",
       label: (
         <div className="flex justify-center items-center">
-          <div className="block">Suggested</div>
-          <div className="hidden text-xl"><MdLightbulbOutline/></div>
+          <div>Suggested</div>
           {suggestedFriends.length > 0 ? (
             <div className="bg-lightYellow text-black rounded-full mx-2 w-[20px] p-2 h-[20px] justify-center items-center hidden md:flex">
               {suggestedFriends.length}

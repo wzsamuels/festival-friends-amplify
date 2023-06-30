@@ -1,5 +1,5 @@
-import { FaSearch } from "react-icons/all";
 import React from "react";
+import {MagnifyingGlassIcon} from "@heroicons/react/24/outline";
 
 interface SearchButtonProps {
   onClick?: () => void;
@@ -12,7 +12,7 @@ const SearchButton = ({ onClick, className }: SearchButtonProps) => {
       className={`hover:text-darkGreen h-9 w-9 flex justify-center items-center rounded-full ${className}`}
       onClick={onClick}
     >
-      <FaSearch />
+      <MagnifyingGlassIcon className='h-5'/>
     </button>
   );
 };

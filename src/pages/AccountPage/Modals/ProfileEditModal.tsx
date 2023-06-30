@@ -7,9 +7,9 @@ import getErrorMessage from "../../../lib/getErrorMessage";
 import AccountEditForm from "../AccountEditForm";
 import { ProfileModalProps } from "../../../@types/profile";
 import Button from "../../../components/common/Button/Button";
-import { BsPerson } from "react-icons/all";
 import Modal from "../../../components/common/Modal/Modal";
 import useProfileStore from "../../../stores/profileStore";
+import {UserCircleIcon} from "@heroicons/react/24/solid";
 
 const ProfileEditModal = ({profile, profileImage, isOpen, setIsOpen, callback}: ProfileModalProps) => {
   const setProfile = useProfileStore((state) => state.setProfile);
@@ -59,7 +59,7 @@ const ProfileEditModal = ({profile, profileImage, isOpen, setIsOpen, callback}: 
             />
           ) : (
             <div className="flex justify-center items-center  w-full h-full max-w-[350px] max-h-[350px] border border-medium-default">
-              <BsPerson className="w-3/4 h-3/4 text-medium-default text-center" />
+              <UserCircleIcon  className="w-3/4 h-3/4 text-medium-default text-center" />
             </div>
           )}
         </div>

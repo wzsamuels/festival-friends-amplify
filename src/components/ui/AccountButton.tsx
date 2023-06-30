@@ -2,7 +2,6 @@ import React, {Fragment, useEffect} from "react";
 import { useAuthenticator } from "@aws-amplify/ui-react";
 import {Auth} from "@aws-amplify/auth";
 import {DataStore} from "@aws-amplify/datastore";
-import { FaUser } from "react-icons/all";
 import { Link } from "react-router-dom";
 import { Menu, Transition } from "@headlessui/react";
 import Modal from "../common/Modal/Modal";
@@ -12,6 +11,7 @@ import useProfileStore from "../../stores/profileStore";
 import useFriendStore from "../../stores/friendProfileStore";
 import useConversationStore from "../../stores/conversationStore";
 import useEventStore from "../../stores/eventStore";
+import {UserIcon} from "@heroicons/react/24/solid";
 const AccountButton = () => {
   const { user, signOut } = useAuthenticator((context) => [context.user]);
   const { route } = useAuthenticator((context) => [context.route]);
@@ -102,7 +102,7 @@ const AccountButton = () => {
     <>
       <Menu as="div" className="relative">
         <Menu.Button className="flex justify-center items-center rounded-full">
-          <FaUser className="hover:text-darkGreen" />
+          <UserIcon className="hover:text-darkGreen h-5" />
         </Menu.Button>
         <Transition
           as={Fragment}

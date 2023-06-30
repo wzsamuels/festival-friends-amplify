@@ -1,6 +1,6 @@
 import React, { Fragment, ReactNode } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { GrClose } from "react-icons/all";
+import {XMarkIcon} from "@heroicons/react/24/solid";
 
 interface ModalProps {
   isOpen: boolean;
@@ -68,7 +68,7 @@ const Modal = ({
                           onClose && onClose();
                         }}
                       >
-                        <GrClose />
+                        <XMarkIcon className='h-6'/>
                       </button>
                     </Dialog.Title>
                   )}

@@ -1,11 +1,10 @@
-import {EventProfile, Event, Photo, Ride} from "../../models";
+import {EventProfile, Event, Photo} from "../../models";
 import React, {useEffect, useState} from "react";
 import { DataStore } from "@aws-amplify/datastore";
 import ProfileEditModal from "./Modals/ProfileEditModal";
 import ProfileImageModal from "./Modals/ProfileImageModal";
 import PhotoUploadModal from "./Modals/PhotoUploadModal";
 import PhotoImage from "../../components/ui/PhotoImage";
-import { BsPerson } from "react-icons/all";
 import BannerPhotoModal from "./Modals/BannerPhotoModal";
 import Button from "../../components/common/Button/Button";
 import PhotoModal from "./Modals/PhotoModal";
@@ -13,10 +12,10 @@ import useDataClearedStore from "../../stores/dataClearedStore";
 import useProfileStore from "../../stores/profileStore";
 import {getRidesByProfile} from "../../services/rideServices";
 import EventCard from "../../components/ui/EventCard";
-import RideCard from "../../components/ui/RideCard";
 import ImageUpload from "../../components/common/ImageUpload";
 import {getPhotoURL} from "../../services/photoServices";
 import Image from "../../components/ui/Image";
+import {UserCircleIcon} from "@heroicons/react/24/solid";
 
 const AccountProfilePage = () => {
   const [profileImage, setProfileImage] = useState("");
@@ -118,7 +117,7 @@ const AccountProfilePage = () => {
               />
             ) : (
               <div className="flex justify-center items-center w-full h-full max-w-[350px] max-h-[350px] border border-medium-default">
-                <BsPerson className="w-3/4 h-3/4 text-medium-default text-center" />
+                <UserCircleIcon className="w-3/4 h-3/4 text-medium-default text-center" />
               </div>
             )}
             <div className="flex justify-center my-2">

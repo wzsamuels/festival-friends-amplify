@@ -1,6 +1,5 @@
 import {EventProfile, Event, Profile} from "../../models";
 import React, {useEffect, useState} from "react";
-import {BsCheck} from "react-icons/all";
 import {Link} from "react-router-dom";
 import Button from "../common/Button/Button";
 import useDataClearedStore from "../../stores/dataClearedStore";
@@ -9,6 +8,7 @@ import {getAttendees, joinEvent, leaveEvent} from "../../services/eventServices"
 import useFriendStore from "../../stores/friendProfileStore";
 import dayjs from "dayjs";
 import {DataStore} from "@aws-amplify/datastore";
+import {CheckIcon} from "@heroicons/react/20/solid";
 interface EventCardProps {
   event: Event;
   className?: string;
@@ -124,7 +124,7 @@ const EventCard = ({ event, className }: EventCardProps) => {
               className="flex items-center"
             >
               <span>I&apos;ll be there!</span>
-              <BsCheck />
+              <CheckIcon className='ml-4 h-4' />
             </Button>
           :
             <Button

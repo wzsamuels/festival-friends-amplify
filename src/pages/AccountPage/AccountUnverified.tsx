@@ -12,13 +12,13 @@ import states from "../../data/states";
 import { useFormattedPhoneInput } from "../../hooks/useFormattedPhoneInput";
 import useProfileStore from "../../stores/profileStore";
 import Select from "../../components/common/Select";
-import {BsPlus} from "react-icons/all";
 import socialMediaTypes from "../../data/socialMediaTypes.json";
 import {createNewPhoto} from "../../services/photoServices";
 import ImageUpload from "../../components/common/ImageUpload";
 import useFilePreview from "../../hooks/useFilePreview";
 import {getGroupByEmail} from "../../services/groupServices";
 import {API} from "@aws-amplify/api";
+import {PlusIcon} from "@heroicons/react/24/outline";
 
 const AccountUnverified = () => {
   const { user } = useAuthenticator((context) => [context.user]);
@@ -206,7 +206,7 @@ const AccountUnverified = () => {
                   saved: false
                 })}
               >
-                <BsPlus/>
+                <PlusIcon className='h-4'/>
               </Button>
             </div>
             <div className="my-4">

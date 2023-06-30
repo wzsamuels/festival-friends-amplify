@@ -3,8 +3,8 @@ import React, {useEffect, useState} from "react";
 import { DataStore } from "@aws-amplify/datastore";
 import useProfileStore from "../../stores/profileStore";
 import useFriendStore from "../../stores/friendProfileStore";
-import {BsPerson} from "react-icons/all";
 import {getPhotoURL} from "../../services/photoServices";
+import {UserCircleIcon} from "@heroicons/react/24/solid";
 
 interface ConversationCardProps {
   conversation: Conversation;
@@ -91,8 +91,8 @@ const ConversationCard = ({
             />
             :
             <div
-              className={"flex mx-4 justify-center items-center rounded-full bg-gray-300 h-[75px] w-[75px]"}>
-              <BsPerson className="w-1/2 h-1/2 text-medium-default text-center" />
+              className={"flex mx-4 justify-center items-center rounded-full h-[75px] w-[75px]"}>
+              <UserCircleIcon className="w-1/2 h-1/2 text-medium-default text-center" />
             </div>
         }
         <div className="flex flex-col flex-grow overflow-hidden">

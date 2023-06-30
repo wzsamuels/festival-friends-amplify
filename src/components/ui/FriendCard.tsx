@@ -2,10 +2,10 @@ import {Profile} from "../../models";
 import React, {useEffect, useState} from "react";
 import { Link } from "react-router-dom";
 import Button from "../common/Button/Button";
-import {BsPerson} from "react-icons/all";
 import ConditionalWrapper from "../ConditionalWrapper";
 import {getPhotoURL} from "../../services/photoServices";
 import Image from "./Image";
+import {UserCircleIcon} from "@heroicons/react/24/solid";
 
 export interface FriendCardButton {
   label: string;
@@ -56,8 +56,8 @@ const FriendCard = ({profile, link, onClick, className, buttons,}: FriendCardPro
               />
               :
               <div
-                className={"flex justify-center items-center rounded-full bg-gray-300 h-[200px] w-[200px]"}>
-                { !profile.profilePhotoID && <BsPerson className="w-1/2 h-1/2 text-medium-default text-center" />}
+                className={"flex justify-center items-center rounded-full h-[200px] w-[200px]"}>
+                { !profile.profilePhotoID && <UserCircleIcon className="w-1/2 h-1/2 text-medium-default text-center" />}
               </div>
           }
 

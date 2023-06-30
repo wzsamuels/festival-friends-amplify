@@ -6,7 +6,7 @@ import {
   BsFillPeopleFill,
 } from "react-icons/bs";
 import PulseButton from "../common/PulseButton/PulseButton";
-import {BiCalendar} from "react-icons/all";
+import {CalendarDaysIcon} from "@heroicons/react/24/outline";
 
 const Layout = () => {
 
@@ -27,8 +27,8 @@ const Layout = () => {
             }
           >
             <PulseButton className="w-full flex flex-col justify-center items-center">
-              <BiCalendar
-                className="text-base sm:text-lg"
+              <CalendarDaysIcon
+                className="h-5"
                 aria-hidden="true"
               />
               <div className="text-xs sm:text-sm md:text-base">Events</div>
