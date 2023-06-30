@@ -13,6 +13,10 @@ const Toggle = <T extends FieldValues,>({name, control, label}: ToggleProps<T>) 
     field: { value, onChange }
   } = useController({name, control});
 
+  const handleChange = (checked: boolean) => {
+    onChange({ target: { value: checked } } as unknown as React.ChangeEvent<HTMLInputElement>);
+  };
+
   return (
     <Switch.Group as="div" className="flex items-center justify-between my-4">
       <span className="flex-grow flex flex-col">
@@ -26,7 +30,7 @@ const Toggle = <T extends FieldValues,>({name, control, label}: ToggleProps<T>) 
 
       <Switch
         checked={value}
-        onChange={onChange}
+        onChange={handleChange}
         className={`${value ? "bg-darkGreen" : "bg-darkYellow"} relative mr-8 inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black`}
       >
         <span
