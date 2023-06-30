@@ -52,8 +52,12 @@ const Router = () => {
   const fetchEvents = useEventStore(state => state.fetchEvents)
 
   useEffect(() => {
-    if(!dataCleared || !sub || route !== 'authenticated') return;
     fetchEvents();
+  },[])
+
+  useEffect(() => {
+    if(!dataCleared || !sub || route !== 'authenticated') return;
+
     fetchUserProfile(sub, route)
   }, [sub, dataCleared, route]);
 

@@ -1,7 +1,9 @@
 import {create, SetState} from "zustand";
 import {Event} from "../models";
 import getErrorMessage from "../lib/getErrorMessage";
-import { DataStore} from "@aws-amplify/datastore";
+import {API} from "@aws-amplify/api";
+import {graphqlOperation} from "aws-amplify";
+import {listEvents} from "../graphql/queries";
 
 type EventStore = {
   events: Event[],
@@ -21,6 +23,8 @@ const useEventStore = create<EventStore>((set: SetState<EventStore>, get) => ({
   fetchEvents: async () => {
     set({loadingEvents: true})
     try {
+      console.log("Fetching events...");
+      /*
       const eventSub = await DataStore.observeQuery(Event, c => c.and(c => [
         c.cancelled.eq(false),
         c.hasPaid.eq(true),
@@ -32,28 +36,37 @@ const useEventStore = create<EventStore>((set: SetState<EventStore>, get) => ({
       })
       set({eventSubscription: eventSub})
 
+       */
+
 /*
       await DataStore.start()
       const eventData = await DataStore.query(Event);
       console.log("Fetching events in store: ", eventData)
       set({events: eventData})
 */
-      /*
-
-      const eventData = await API.graphql(graphqlOperation(listEvents)) as GraphQLResultExtended;
-      if(eventData.errors) {
-        set({error: eventData.errors[0].message || "Unknown error"})
+      // Only fetch public events that are paid for, not cancelled, not a group event, and aren't in the past
+      const eventData = await API.graphql(graphqlOperation(listEvents, { filter: {
+        and: [
+          { cancelled: { eq: false } },
+          { hasPaid: { eq: true } },
+          { collegeEvent: { eq: false } },
+          { endDate: { ge: new Date().toISOString()}}
+        ]
+      }}));
+      if ("errors" in eventData || "data" in eventData) {
+        if (eventData.errors) {
+          set({ error: eventData.errors[0].message || "Unknown error" });
+        } else {
+          const events = eventData.data.listEvents.items;
+          console.log("Events in store", events);
+          set({ events });
+        }
       } else {
-        const events = eventData.data.listEvents.items
-        console.log("Events in store", events)
-        set({events})
+        console.error("eventData is an Observable, not a GraphQLResult");
       }
 
-       */
-
-
     } catch (e) {
-      console.log("Error observing events in EventPage.tsx", getErrorMessage(e));
+      console.error("Error fetching events in store", getErrorMessage(e));
     } finally {
       set({loadingEvents: false})
     }
