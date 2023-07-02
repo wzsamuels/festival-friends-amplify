@@ -14,7 +14,6 @@ type EventStore = {
   error: string | null,
 }
 
-
 const useEventStore = create<EventStore>((set: SetState<EventStore>, get) => ({
   events: [] as Event[],
   loadingEvents: true,
@@ -23,27 +22,6 @@ const useEventStore = create<EventStore>((set: SetState<EventStore>, get) => ({
   fetchEvents: async () => {
     set({loadingEvents: true})
     try {
-      console.log("Fetching events...");
-      /*
-      const eventSub = await DataStore.observeQuery(Event, c => c.and(c => [
-        c.cancelled.eq(false),
-        c.hasPaid.eq(true),
-        c.collegeEvent.eq(false),
-        c.endDate.ge(new Date().toISOString()),
-      ])).subscribe(({items}) => {
-        console.log("Events in store", items)
-        set({events: items})
-      })
-      set({eventSubscription: eventSub})
-
-       */
-
-/*
-      await DataStore.start()
-      const eventData = await DataStore.query(Event);
-      console.log("Fetching events in store: ", eventData)
-      set({events: eventData})
-*/
       // Only fetch public events that are paid for, not cancelled, not a group event, and aren't in the past
       const eventData = await API.graphql(graphqlOperation(listEvents, { filter: {
         and: [
