@@ -6,10 +6,18 @@ import {v4 as uuidv4} from "uuid";
 import {API} from "@aws-amplify/api";
 import {graphqlOperation} from "aws-amplify";
 import {listEvents} from "../graphql/queries";
+import {getEvent as getEventQuery} from "../graphql/queries";
 
-export const getEvent = async (eventId: string) => {
+export const getEvent = async (eventId: string | null | undefined) => {
+  if(!eventId) return;
   try {
-    return await DataStore.query(Event, eventId);
+    const eventData = await API.graphql(graphqlOperation(getEventQuery, {id: eventId}));
+    if("data" in eventData && "getEvent" in eventData.data) {
+      return eventData.data.getEvent;
+    } else if("errors" in eventData) {
+      console.error("Error getting event: ", eventData.errors)
+      return null;
+    }
   } catch (error) {
     console.log("Error getting event", error)
     return null;
@@ -76,22 +84,29 @@ export const getAllEvents = async () => {
 
 export const getPublicEvents = async () => {
   console.log("Fetching events...");
-
-  // Only fetch public events that are paid for, not cancelled, not a group event, and aren't in the past
-  const eventData = await API.graphql(graphqlOperation(listEvents, { filter: {
-      and: [
-        { cancelled: { eq: false } },
-        { hasPaid: { eq: true } },
-        { collegeEvent: { eq: false } },
-        { endDate: { ge: new Date().toISOString()}}
-      ]
-    }}));
-  if ("data" in eventData) {
-    const events = eventData.data.listEvents.items;
-    console.log("Events in store", events);
-    return(events);
-  } else if ("errors" in eventData) {
-    throw new Error(`Error fetching public events: ${eventData.errors}`);
+  try {
+    // Only fetch public events that are paid for, not cancelled, not a group event, and aren't in the past
+    const eventData = await API.graphql(graphqlOperation(listEvents, {
+      filter: {
+        and: [
+          {cancelled: {eq: false}},
+          {hasPaid: {eq: true}},
+          {collegeEvent: {eq: false}},
+          {endDate: {ge: new Date().toISOString()}}
+        ]
+      }
+    }));
+    if ("data" in eventData) {
+      const events = eventData.data.listEvents.items;
+      console.log("Events in store", events);
+      return (events);
+    } else if ("errors" in eventData) {
+      console.error(`Error fetching public events: `, eventData.errors);
+      return [];
+    }
+  } catch (e) {
+    console.error("Error fetching public events: ", e);
+    return [];
   }
 }
 
