@@ -9,9 +9,8 @@ import Spinner from "../common/Spinner/Spinner";
 import useDataClearedStore from "../../stores/dataClearedStore";
 import useProfileStore from "../../stores/profileStore";
 import useFriendStore from "../../stores/friendProfileStore";
-import useConversationStore from "../../stores/conversationStore";
-import useEventStore from "../../stores/eventStore";
 import {UserIcon} from "@heroicons/react/24/solid";
+import useQueueStore from "../../stores/queueStore";
 const AccountButton = () => {
   const { user, signOut } = useAuthenticator((context) => [context.user]);
   const { route } = useAuthenticator((context) => [context.route]);
@@ -21,9 +20,8 @@ const AccountButton = () => {
   const { authStatus } = useAuthenticator((context) => [context.authStatus]);
   const clearProfile = useProfileStore(state => state.clearUserProfile);
   const clearFriendProfiles = useFriendStore(state => state.clearFriends);
-  const clearConversations = useConversationStore(state => state.clearConversations);
   const friendUnsubscribe = useFriendStore(state => state.friendUnsubscribe);
-  const eventsUnsubscribe = useEventStore(state => state.eventsUnsubscribe);
+  const { dataStoreQueue } = useQueueStore();
 
   useEffect(() => {
     if(route !== "authenticated") return;
@@ -36,7 +34,6 @@ const AccountButton = () => {
   const clearStores = () => {
     clearProfile();
     clearFriendProfiles();
-    clearConversations();
   }
 
   // TODO: Move to  a separate file
@@ -54,7 +51,6 @@ const AccountButton = () => {
     try {
       console.log("Stopping subscriptions...");
       friendUnsubscribe();
-      eventsUnsubscribe();
       console.log("subscriptions stopped.");
     } catch (e) {
       console.log("Error stopping subscriptions: ", e);
@@ -64,7 +60,9 @@ const AccountButton = () => {
     try {
       console.log("Clearing DataStore...");
       setDataCleared(false);
-      await DataStore.clear();
+      dataStoreQueue.enqueue(async () => {
+        await DataStore.clear();
+      });
       console.log("DataStore cleared.");
     } catch (e) {
       console.log("Error clearing DataStore: ", e);
@@ -91,7 +89,9 @@ const AccountButton = () => {
 
     try {
       console.log("Starting datastore...");
-      await DataStore.start();
+      dataStoreQueue.enqueue(async () => {
+        await DataStore.start();
+      });
       console.log("Datastore started.");
     } catch (e) {
       console.log("Error starting datastore: ", e);
