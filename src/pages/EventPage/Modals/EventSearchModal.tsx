@@ -7,8 +7,9 @@ import Label from "../../../components/common/Label/Label";
 import Input from "../../../components/common/Input/Input";
 import { Event } from "../../../models";
 import Button from "../../../components/common/Button/Button";
-import useEventStore from "../../../stores/eventStore";
 import EventCard from "../../../components/ui/EventCard";
+import {useQuery} from "react-query";
+import {getPublicEvents} from "../../../services/eventServices";
 
 interface EventSearchInput {
   state: string;
@@ -22,7 +23,8 @@ interface EventSearchInput {
 
 const EventSearchModal = ({ isOpen, setIsOpen }: ModalProps) => {
   const [eventResults, setEventResults] = useState<Event[]>([]);
-  const events = useEventStore(state => state.events);
+  const { data, isLoading, isError } = useQuery('publicEvents', getPublicEvents);
+  const events = data as Event[];
   const { register, handleSubmit } = useForm<EventSearchInput>();
 
   const handleEventSearch: SubmitHandler<EventSearchInput> = async (data) => {
