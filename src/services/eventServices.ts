@@ -3,6 +3,9 @@ import {Storage} from "@aws-amplify/storage";
 import {Event, Ride, Profile, EventProfile, RideProfile} from "../models";
 import {EventInputs} from "../types";
 import {v4 as uuidv4} from "uuid";
+import {API} from "@aws-amplify/api";
+import {graphqlOperation} from "aws-amplify";
+import {listEvents} from "../graphql/queries";
 
 export const getEvent = async (eventId: string) => {
   try {
@@ -68,6 +71,27 @@ export const getAllEvents = async () => {
   } catch (error) {
     console.log("Error getting all events", error)
     return [];
+  }
+}
+
+export const getPublicEvents = async () => {
+  console.log("Fetching events...");
+
+  // Only fetch public events that are paid for, not cancelled, not a group event, and aren't in the past
+  const eventData = await API.graphql(graphqlOperation(listEvents, { filter: {
+      and: [
+        { cancelled: { eq: false } },
+        { hasPaid: { eq: true } },
+        { collegeEvent: { eq: false } },
+        { endDate: { ge: new Date().toISOString()}}
+      ]
+    }}));
+  if ("data" in eventData) {
+    const events = eventData.data.listEvents.items;
+    console.log("Events in store", events);
+    return(events);
+  } else if ("errors" in eventData) {
+    throw new Error(`Error fetching public events: ${eventData.errors}`);
   }
 }
 
