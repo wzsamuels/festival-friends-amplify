@@ -6,16 +6,10 @@ import useFriendStore from "../../stores/friendProfileStore";
 import {getPhotoURL} from "../../services/photoServices";
 import {UserCircleIcon} from "@heroicons/react/24/solid";
 
-interface ConversationCardProps {
-  conversation: Conversation;
-  onClick: (arg: Conversation) => void;
-  className?: string;
+interface ConversationCardProps {conversation: Conversation;
+  onClick: (arg: Conversation) => void;className?: string;
 }
-const ConversationCard = ({
-  conversation,
-  onClick,
-  className,
-}: ConversationCardProps) => {
+const ConversationCard = ({conversation, onClick, className}: ConversationCardProps) => {
   const [friendProfileImage, setFriendProfileImage] = useState<string>();
   const [lastMessage, setLastMessage] = useState<string>();
   const [unreadMessage, setUnreadMessage] = useState<boolean>(false);
