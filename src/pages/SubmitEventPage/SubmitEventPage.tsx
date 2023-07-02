@@ -57,7 +57,6 @@ const SubmitEventPage = () => {
         new Event({
           ...restData,
           image: key,
-          approved: false,
           hasPaid: false
         })
       );
