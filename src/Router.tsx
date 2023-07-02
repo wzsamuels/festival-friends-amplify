@@ -8,8 +8,8 @@ import "./index.css";
 import useDataClearedStore from "./stores/dataClearedStore";
 import useProfileStore from "./stores/profileStore";
 import useFriendStore from "./stores/friendProfileStore";
-import useEventStore from "./stores/eventStore";
 import useConversationStore from "./stores/conversationStore";
+import {QueryClient, QueryClientProvider} from "react-query";
 
 const LoadingState = lazy(() => import("./components/ui/LoadingState"));
 const LayoutErrorBoundary = lazy(() => import("./components/ui/LayoutErrorBoundary"));
@@ -29,7 +29,6 @@ const FriendsPage = lazy(() => import("./pages/FriendPage/Friends"));
 const MessagePage = lazy(() => import("./pages/MessagePage/MessagePage"));
 const AccountSettingsPage = lazy(() => import("./pages/AccountPage/AccountSettingsPage"));
 const ProfilePage = lazy(() => import("./pages/ProfilePage/ProfilePage"));
-const ApproveEventPage = lazy(() => import("./pages/Admin/Events/ApproveEventPage"));
 const CreateEventPage = lazy(() => import("./pages/Admin/Events/CreateEventPage"));
 const UpdateEventPage = lazy(() => import("./pages/Admin/Events/UpdateEventPage"));
 const DeleteEventPage = lazy(() => import("./pages/Admin/Events/DeleteEventPage"));
@@ -40,6 +39,8 @@ const GroupPage =  lazy(() => import("./pages/GroupPage/page"));
 const BrandPage = lazy(() => import("./pages/GroupPage/Brands/page"));
 const SupportPage = lazy(() => import("./pages/support/page"));
 
+const queryClient = new QueryClient();
+
 const Router = () => {
   const { user } = useAuthenticator((context) => [context.user]);
   const fetchUserProfile = useProfileStore(state => state.fetchUserProfile)
@@ -49,11 +50,6 @@ const Router = () => {
   const sub = user?.username as string;
   const dataCleared = useDataClearedStore(state => state.dataCleared)
   const { route } = useAuthenticator((context) => [context.route]);
-  const fetchEvents = useEventStore(state => state.fetchEvents)
-
-  useEffect(() => {
-    fetchEvents();
-  },[])
 
   useEffect(() => {
     if(!dataCleared || !sub || route !== 'authenticated') return;
@@ -144,10 +140,6 @@ const Router = () => {
               children: [
                 {
                   index: true,
-                  element: <ApproveEventPage/>
-                },
-                {
-                  path: "create",
                   element: <CreateEventPage/>
                 },
                 {
@@ -183,11 +175,13 @@ const Router = () => {
   ]);
 
   return (
-    <ErrorBoundary FallbackComponent={Fallback}>
-      <Suspense fallback={<div className='flex justify-center items-center h-screen'><LoadingState/></div>}>
-        <RouterProvider router={router} />
-      </Suspense>
-    </ErrorBoundary>
+    <QueryClientProvider client={queryClient}>
+      <ErrorBoundary FallbackComponent={Fallback}>
+        <Suspense fallback={<div className='flex justify-center items-center h-screen'><LoadingState/></div>}>
+          <RouterProvider router={router} />
+        </Suspense>
+      </ErrorBoundary>
+    </QueryClientProvider>
   );
 };
 
