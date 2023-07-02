@@ -3,8 +3,8 @@ import { Outlet} from "react-router-dom";
 import Nav from "../../../components/layout/Nav";
 
 const navItems = [
-  { content: 'Approve', link: '/admin/events'},
-  { content: "Create", link: '/admin/events/create'},
+  //{ content: 'Approve', link: '/admin/events'},
+  { content: "Create", link: '/admin/events'},
   { content: "Update", link: "/admin/events/update"},
   { content: "Delete", link: "/admin/events/delete"}
 ]
