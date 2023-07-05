@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, {useEffect, useState} from "react";
 import { Conversation, Profile } from "../../models";
 import { useAuthenticator } from "@aws-amplify/ui-react";
 import ConversationModal from "./Modals/ConversationModal";
@@ -10,11 +10,12 @@ import ConversationCard from "../../components/ui/ConversationCard";
 import LoadingState from "../../components/ui/LoadingState";
 import useProfileStore from "../../stores/profileStore";
 import useFriendStore from "../../stores/friendProfileStore";
-import useConversationStore from "../../stores/conversationStore";
 import useDataClearedStore from "../../stores/dataClearedStore";
 import {createConversation} from "../../services/conversationServices";
 import NewConversationModal from "./Modals/NewConversationModal";
 import {PlusIcon} from "@heroicons/react/24/outline";
+import useQueueStore from "../../stores/queueStore";
+import {DataStore} from "@aws-amplify/datastore";
 
 const MessagePage: React.FC = () => {
   const [currentConversation, setCurrentConversation] = useState<Conversation>();
@@ -25,23 +26,43 @@ const MessagePage: React.FC = () => {
   const userProfile = useProfileStore((state) => state.userProfile);
   const loadingUserProfile = useProfileStore((state) => state.loadingUserProfile);
   const friendProfiles = useFriendStore((state) => state.acceptedFriendProfiles);
-  const conversations = useConversationStore((state) => state.conversations);
+  const [conversations, setConversations] = useState<Conversation[]>([])
+  const [loadingConversations, setLoadingConversations] = useState(false)
   const dataCleared = useDataClearedStore(state => state.dataCleared)
+  const { dataStoreQueue } = useQueueStore()
 
   console.log("MessagePage friends: ", friendProfiles)
 
-  const handleNewConversation = async ({
-    friendProfile,
-  }: {
-    friendProfile: Profile;
-  }) => {
+  useEffect(() => {
+    if(!userProfile) return;
+
+    dataStoreQueue.enqueue(async () => {
+      setLoadingConversations(true);
+      const conversations = await DataStore.query(Conversation, (c) =>
+        c.or((c) => [
+          c.profileID.eq(userProfile.id),
+          c.friendProfileID.eq(userProfile.id),
+        ])
+      )
+      setConversations(conversations);
+      setLoadingConversations(false);
+    })
+  }, [userProfile])
+
+  const handleNewConversation = async ({friendProfile}: { friendProfile: Profile;}) => {
     setNewConversationModalOpen(false);
+
+    // Shouldn't be possible to get here without a user profile, but just in case
     if (!userProfile || !dataCleared) {
       return;
     }
-    const conversation = await createConversation(userProfile, friendProfile)
-    setCurrentConversation(conversation);
-    setConversationModalOpen(true);
+
+    dataStoreQueue.enqueue(async () => {
+      const conversation = await createConversation(userProfile, friendProfile)
+      setCurrentConversation(conversation);
+      setConversationModalOpen(true);
+      setConversations(conversations => [...conversations, conversation])
+    });
   };
 
   const openConversationModal = (conversation: Conversation) => {
@@ -50,7 +71,7 @@ const MessagePage: React.FC = () => {
   };
 
   const renderMessages = () => {
-    if (loadingUserProfile || route === "idle") {
+    if (loadingUserProfile || loadingConversations || route === "idle") {
       return <LoadingState />;
     }
 
@@ -100,7 +121,8 @@ const MessagePage: React.FC = () => {
     <>
       <Header
         className=" shadow-xl"
-        onSearch={() => setConversationSearchModalOpen(true)}/>
+        onSearch={() => setConversationSearchModalOpen(true)}
+      />
       <div className="min-h-full h-full relative">
         {renderMessages()}
         {

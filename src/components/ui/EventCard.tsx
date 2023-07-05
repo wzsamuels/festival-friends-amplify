@@ -2,13 +2,13 @@ import {EventProfile, Event, Profile} from "../../models";
 import React, {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import Button from "../common/Button/Button";
-import useDataClearedStore from "../../stores/dataClearedStore";
 import useProfileStore from "../../stores/profileStore";
 import {getAttendees, joinEvent, leaveEvent} from "../../services/eventServices";
 import useFriendStore from "../../stores/friendProfileStore";
 import dayjs from "dayjs";
 import {DataStore} from "@aws-amplify/datastore";
 import {CheckIcon} from "@heroicons/react/20/solid";
+import useQueueStore from "../../stores/queueStore";
 interface EventCardProps {
   event: Event;
   className?: string;
@@ -20,10 +20,11 @@ const EventCard = ({ event, className }: EventCardProps) => {
   const [friendsAttending, setFriendsAttending] = useState<Profile[]>([])
   const [eventProfile, setEventProfile] = useState<EventProfile | null>(null);
   const userProfile = useProfileStore((state) => state.userProfile);
-  const dataCleared = useDataClearedStore(state => state.dataCleared)
+  const { dataStoreQueue } = useQueueStore();
 
   useEffect(() => {
-    if(!event || !dataCleared) return;
+    if(!event) return;
+
     try {
       getAttendees(event.id).then(profiles => {
         setAttendeeProfiles(profiles)
@@ -33,20 +34,23 @@ const EventCard = ({ event, className }: EventCardProps) => {
     } catch (e) {
       console.log("Error fetching event attendee profiles", e);
     }
-  }, [dataCleared])
+  }, [])
 
   useEffect(() => {
-    if (!dataCleared || !userProfile || !event) return;
+    if (!userProfile || !event) return;
 
-    DataStore.query(EventProfile, c => c.and(c => [
-      c.eventId.eq(event.id),
-      c.profileId.eq(userProfile.id)
+    dataStoreQueue.enqueue(async () => {
+      // TODO: Move API call to service file
+      const [eventProfile] = await DataStore.query(EventProfile, c => c.and(c => [
+        c.eventId.eq(event.id),
+        c.profileId.eq(userProfile.id)
       ]))
-      .then(([eventProfile]) => setEventProfile(eventProfile))
-  }, [dataCleared, userProfile]);
+      setEventProfile(eventProfile)
+    });
+  },[userProfile]);
 
   const handleAttendEvent = async () => {
-    if (!userProfile || !dataCleared) return;
+    if (!userProfile) return;
 
     if (eventProfile) {
       // If the user is already attending, remove them from the attendees list

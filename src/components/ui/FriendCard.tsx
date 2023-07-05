@@ -2,10 +2,11 @@ import {Profile} from "../../models";
 import React, {useEffect, useState} from "react";
 import { Link } from "react-router-dom";
 import Button from "../common/Button/Button";
-import ConditionalWrapper from "../ConditionalWrapper";
+import ConditionalWrapper from "../common/ConditionalWrapper";
 import {getPhotoURL} from "../../services/photoServices";
 import Image from "./Image";
 import {UserCircleIcon} from "@heroicons/react/24/solid";
+import useQueueStore from "../../stores/queueStore";
 
 export interface FriendCardButton {
   label: string;
@@ -24,12 +25,15 @@ export interface FriendCardProps {
 const FriendCard = ({profile, link, onClick, className, buttons,}: FriendCardProps) => {
   const [profilePhotoURL, setProfilePhotoURL] = useState("");
   const profileUrl = `/friends/profile/${profile.id}`;
+  const { dataStoreQueue } = useQueueStore();
 
   useEffect(() => {
-    getPhotoURL(profile.profilePhotoID)
-      .then(photoURL => setProfilePhotoURL(photoURL))
-      .catch(err => console.log(err))
-  }, [profile]);
+    dataStoreQueue.enqueue(async () => {
+      getPhotoURL(profile.profilePhotoID)
+        .then(photoURL => setProfilePhotoURL(photoURL))
+        .catch(err => console.log(err))
+    })
+  }, []);
 
   if (!profile) {
     return null;
