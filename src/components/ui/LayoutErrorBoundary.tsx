@@ -1,6 +1,5 @@
 import { useRouteError, isRouteErrorResponse } from 'react-router-dom'
 import React, {useEffect, useState} from "react";
-import Layout from "../layout/Layout";
 import Header from "../layout/Header";
 
 const LayoutErrorBoundary = () => {

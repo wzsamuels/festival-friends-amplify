@@ -17,11 +17,7 @@ interface ConversationModalProps extends ModalProps {
 interface MessageInput {
   message: string;
 }
-const ConversationModal = ({
-  conversation,
-  isOpen,
-  setIsOpen,
-}: ConversationModalProps) => {
+const ConversationModal = ({conversation, isOpen, setIsOpen,}: ConversationModalProps) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const { register, handleSubmit, reset } = useForm<MessageInput>();
   const [friendProfileImage, setFriendProfileImage] = useState("");
@@ -29,14 +25,14 @@ const ConversationModal = ({
   const userProfile = useProfileStore(state => state.userProfile);
   const dataCleared = useDataClearedStore(state => state.dataCleared);
 
+  console.log(messages)
+
   const handleSendMessage: SubmitHandler<MessageInput> = async (data) => {
     if (data.message && friendProfile && userProfile && conversation) {
       const message = await DataStore.save(
         new Message({
           content: data.message,
           conversationMessagesId: conversation.id,
-   //       conversation: conversation,
-   //       conversationID: conversation.id,
           senderProfileID: userProfile.id,
           receiverProfileID: friendProfile.id,
         })

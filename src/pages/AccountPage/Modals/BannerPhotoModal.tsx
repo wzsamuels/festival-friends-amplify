@@ -18,12 +18,7 @@ export interface ProfileImageModalProps extends ProfileModalProps {
   photos: Photo[];
 }
 
-const BannerPhotoModal = ({
-  profile,
-  isOpen,
-  setIsOpen,
-  photos,
-}: ProfileImageModalProps) => {
+const BannerPhotoModal = ({profile, isOpen, setIsOpen, photos}: ProfileImageModalProps) => {
   const { selectedFile, setSelectedFile, preview } = useFilePreview();
   const setProfile = useProfileStore(state => state.setProfile)
   const [toastData, setToastData] = useState<ToastData>();
