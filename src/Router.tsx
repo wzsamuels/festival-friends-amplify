@@ -8,7 +8,6 @@ import "./index.css";
 import useDataClearedStore from "./stores/dataClearedStore";
 import useProfileStore from "./stores/profileStore";
 import useFriendStore from "./stores/friendProfileStore";
-import useConversationStore from "./stores/conversationStore";
 import {QueryClient, QueryClientProvider} from "react-query";
 
 const LoadingState = lazy(() => import("./components/ui/LoadingState"));
@@ -46,7 +45,6 @@ const Router = () => {
   const fetchUserProfile = useProfileStore(state => state.fetchUserProfile)
   const userProfile = useProfileStore(state => state.userProfile)
   const fetchFriendProfiles = useFriendStore(state => state.fetchFriends)
-  const fetchConversations = useConversationStore(state => state.fetchConversations)
   const sub = user?.username as string;
   const dataCleared = useDataClearedStore(state => state.dataCleared)
   const { route } = useAuthenticator((context) => [context.route]);
@@ -59,8 +57,7 @@ const Router = () => {
 
   useEffect(() => {
     if(!dataCleared || !userProfile) return;
-
-    fetchConversations(userProfile);
+    
     fetchFriendProfiles(userProfile);
   }, [dataCleared, userProfile])
 
