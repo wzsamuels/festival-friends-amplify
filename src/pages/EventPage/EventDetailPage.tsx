@@ -12,6 +12,7 @@ import useProfileStore from "../../stores/profileStore";
 import dayjs from "dayjs";
 import Spinner from "../../components/common/Spinner/Spinner";
 import {useQuery} from "react-query";
+import getErrorMessage from "../../lib/getErrorMessage";
 
 const EventDetailPage = () => {
   const { id } = useParams();
@@ -25,8 +26,7 @@ const EventDetailPage = () => {
   const [isNewRideModalOpen, setIsNewRideModalOpen] = useState(false);
   const dataCleared = useDataClearedStore(state => state.dataCleared)
   const [eventsData, setEventsData] = useState(new Map());
-  const [errorMessage, setErrorMessage] = useState("");
-  const { data, isLoading, isError }  = useQuery(["event", id], () => getEvent(id))
+  const { data, isLoading, isError, error }  = useQuery(["event", id], () => getEvent(id))
   console.log(data)
   const event = data;
 
@@ -50,17 +50,6 @@ const EventDetailPage = () => {
           }));
           setEventsData(eventsMap);
         })
-
-      /*
-      const rideSub = DataStore.observeQuery(Ride, (c) => c.eventID.eq(id as string)
-      ).subscribe(({ items }) => {
-        setRides(items);
-      });
-      return () => {
-        rideSub.unsubscribe();
-      };
-
-       */
     } catch (e) {
       console.log("Error fetching event data: ", e);
     }
@@ -97,25 +86,6 @@ const EventDetailPage = () => {
 
     return (
       <>
-      {/* Ride Section
-        <section className="w-full p-4">
-          <div className=" my-4 flex justify-between">
-            <h1 className="text-2xl">Rides</h1>
-            <Button onClick={() => setIsNewRideModalOpen(true)}>
-              Create Ride
-            </Button>
-          </div>
-          {rides.length > 0 ? (
-            <div className="flex flex-wrap w-full">
-              {rides.map((ride) => (
-                <RideCard ride={ride} key={ride.id} className="w-full max-w-xl" />
-              ))}
-            </div>
-          ) : (
-            <div>No rides yet</div>
-          )}
-        </section>
-        */}
         <section className="w-full p-4">
           {attendeeFriends.length > 0 && (
             <>
@@ -169,12 +139,12 @@ const EventDetailPage = () => {
     )
   }
 
-  if(errorMessage) {
+  if(isError) {
     return (
       <>
         <Header/>
         <div className="flex flex-col items-center justify-center w-screen h-screen">
-          <h1 className="text-2xl">{errorMessage}</h1>
+          <h1 className="text-2xl">{getErrorMessage(error)}</h1>
           <Link className="underline text-primary-default" to="/">
             Go back to events
           </Link>
