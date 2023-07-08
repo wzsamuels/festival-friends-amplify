@@ -1,6 +1,5 @@
 // React imports
-import React, {useState} from "react";
-import { useQuery } from "react-query"
+import React, {useState, useMemo} from "react";
 // Local imports
 import {EventType, Event} from "../../models";
 import EventCard from "../../components/ui/EventCard";
@@ -11,7 +10,7 @@ import SegmentSlide from "../../components/common/Segment/SegmentSlide";
 import Spinner from "../../components/common/Spinner/Spinner";
 import { FixedSizeGrid as Grid, GridChildComponentProps } from 'react-window';
 import AutoSizer from 'react-virtualized-auto-sizer';
-import {getPublicEvents} from "../../services/eventServices";
+import useEventStore from "../../stores/eventStore";
 
 const segmentItems = [
   {
@@ -38,15 +37,35 @@ const segmentItems = [
 
 const EventPage = () => {
   // Filter events by type
-  const { data, isLoading, isError } = useQuery('publicEvents', getPublicEvents);
-  const events = data as Event[];
-  //const events = useEventStore(state => state.events).filter((event) => !event.cancelled);
-  //const [events, setEvents] = useState<Event[]>([]);
-  //const loadingEvents = useEventStore(state => state.loadingEvents)
-  const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
-  const [eventType, setEventType] = useState("all");
+  const events = useEventStore(state => state.events)
+  const { loadingEvents, error} = useEventStore();
+  const [isSearchModalOpen, setIsSearchModalOpen] = useState<boolean>(false);
+  const [eventType, setEventType] = useState<string>("all");
 
-  if(isLoading) {
+  const eventMapping = useMemo<{ [key: string]: Event[] }>(() => {
+    const eventTypes: { [key: string]: EventType } = {
+      music: EventType.MUSIC,
+      sport: EventType.SPORT,
+      business: EventType.BUSINESS,
+      travel: EventType.TRAVEL
+    };
+
+    const mapping: { [key: string]: Event[] } = {};
+    for (const type in eventTypes) {
+      mapping[type] = events.filter(event => event.type === eventTypes[type]);
+    }
+    return mapping;
+  }, [events]);
+
+  const filteredEvents = useMemo<Event[]>(() => {
+    if (eventType === 'all') {
+      return events;
+    } else {
+      return eventMapping[eventType] || [];
+    }
+  }, [eventType, eventMapping, events]);
+
+  if(loadingEvents) {
     return (
       <>
         <Header/>
@@ -58,7 +77,7 @@ const EventPage = () => {
     )
   }
 
-  if(isError) {
+  if(error) {
     return (
       <>
         <Header/>
@@ -69,28 +88,7 @@ const EventPage = () => {
     )
   }
 
-  const sportEvents = events.filter((event) => event.type === EventType.SPORT);
-  const musicEvents = events.filter((event) => event.type === EventType.MUSIC);
-  const businessEvents = events.filter((event) => event.type === EventType.BUSINESS);
-  const travelEvents = events.filter((event) => event.type === EventType.TRAVEL)
-
-  // Event mapping
-  const eventMapping = {
-    music: musicEvents,
-    sport: sportEvents,
-    business: businessEvents,
-    travel: travelEvents
-  };
-
-  // Filter events by type, map to array, and flatten
-  const filteredEvents = Object.entries(eventMapping)
-    .filter(([key, events]) => eventType === key || eventType === "all")
-    .map(([_, events]) => events)
-    .flat();
-
-  console.log(filteredEvents)
-
-  const renderCell = ({ columnIndex, rowIndex, style, isScrolling }: GridChildComponentProps) => {
+  const renderCell = ({ columnIndex, rowIndex, style }: GridChildComponentProps) => {
     const index = rowIndex * numColumns + columnIndex;
     if(index >= filteredEvents.length) {
       return null;
@@ -131,10 +129,10 @@ const EventPage = () => {
       <div className="pt-10 min-[400px]:pt-0 h-full min-h-[calc(100vh-6rem)] overflow-hidded">
         <AutoSizer>
           {({ height, width }: {height: number; width: number}) => {
-            const numColumns = window.innerWidth > 1600 ? 4 : window.innerWidth > 1200 ? 3 : window.innerWidth > 800 ? 2 : 1; // replace these values with actual breakpoint widths
+            const numColumns = width > 1600 ? 4 : width > 1200 ? 3 : width > 800 ? 2 : 1; // replace these values with actual breakpoint widths
             return (
               <Grid
-                key={numColumns}
+                key={eventType}
                 columnCount={numColumns}
                 columnWidth={width / numColumns}
                 height={height}

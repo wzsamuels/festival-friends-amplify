@@ -79,20 +79,14 @@ const AccountButton = () => {
     }
 
     try {
-      console.log("Setting dataCleared to true...");
-      setDataCleared(true);
-      console.log("dataCleared set to true.");
-      setAlertIsOpen(false);
-    } catch (e) {
-      console.log("Error setting dataCleared: ", e);
-    }
-
-    try {
       console.log("Starting datastore...");
       dataStoreQueue.enqueue(async () => {
         await DataStore.start();
       });
       console.log("Datastore started.");
+      console.log("Setting dataCleared to true...");
+      setDataCleared(true);
+      setAlertIsOpen(false);
     } catch (e) {
       console.log("Error starting datastore: ", e);
     }

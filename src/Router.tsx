@@ -9,6 +9,7 @@ import useDataClearedStore from "./stores/dataClearedStore";
 import useProfileStore from "./stores/profileStore";
 import useFriendStore from "./stores/friendProfileStore";
 import {QueryClient, QueryClientProvider} from "react-query";
+import useEventStore from "./stores/eventStore";
 
 const LoadingState = lazy(() => import("./components/ui/LoadingState"));
 const LayoutErrorBoundary = lazy(() => import("./components/ui/LayoutErrorBoundary"));
@@ -48,6 +49,11 @@ const Router = () => {
   const sub = user?.username as string;
   const dataCleared = useDataClearedStore(state => state.dataCleared)
   const { route } = useAuthenticator((context) => [context.route]);
+  const fetchEvents = useEventStore(state => state.fetchEvents)
+
+  useEffect(() => {
+    fetchEvents();
+  }, []);
 
   useEffect(() => {
     if(!dataCleared || !sub || route !== 'authenticated') return;

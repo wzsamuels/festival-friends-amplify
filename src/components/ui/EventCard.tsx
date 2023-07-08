@@ -1,5 +1,5 @@
 import {EventProfile, Event, Profile} from "../../models";
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import Button from "../common/Button/Button";
 import useProfileStore from "../../stores/profileStore";
@@ -8,6 +8,7 @@ import useFriendStore from "../../stores/friendProfileStore";
 import dayjs from "dayjs";
 import {DataStore} from "@aws-amplify/datastore";
 import {CheckIcon} from "@heroicons/react/20/solid";
+import useDataClearedStore from "../../stores/dataClearedStore";
 import useQueueStore from "../../stores/queueStore";
 interface EventCardProps {
   event: Event;
@@ -20,34 +21,36 @@ const EventCard = ({ event, className }: EventCardProps) => {
   const [friendsAttending, setFriendsAttending] = useState<Profile[]>([])
   const [eventProfile, setEventProfile] = useState<EventProfile | null>(null);
   const userProfile = useProfileStore((state) => state.userProfile);
+  const dataCleared = useDataClearedStore(state => state.dataCleared);
   const { dataStoreQueue } = useQueueStore();
 
-  useEffect(() => {
-    if(!event) return;
-
-    try {
-      getAttendees(event.id).then(profiles => {
-        setAttendeeProfiles(profiles)
-        const attendeeMap = new Map(profiles.map(profile => [profile.id, profile]))
-        setFriendsAttending(friendProfiles.filter(profile => attendeeMap.has(profile.id)));
-      })
-    } catch (e) {
-      console.log("Error fetching event attendee profiles", e);
-    }
-  }, [])
-
-  useEffect(() => {
-    if (!userProfile || !event) return;
+  const getAttendeesEffect = useCallback(async () => {
+    if(!event || !dataCleared) return;
 
     dataStoreQueue.enqueue(async () => {
+      try {        
+        const profiles = await getAttendees(event.id);
+        setAttendeeProfiles(profiles);
+        const attendeeMap = new Map(profiles.map(profile => [profile.id, profile]));
+        setFriendsAttending(friendProfiles.filter(profile => attendeeMap.has(profile.id)));
+      } catch (e) {
+        console.log("Error fetching event attendee profiles:", e);
+      }
+    });
+  }, [event, friendProfiles, dataCleared]);
+
+  useEffect(() => {
+    getAttendeesEffect();
+  }, [getAttendeesEffect]);
+
+  useEffect(() => {
+    if (!userProfile || !event || !dataCleared) return;
       // TODO: Move API call to service file
-      const [eventProfile] = await DataStore.query(EventProfile, c => c.and(c => [
+      DataStore.query(EventProfile, c => c.and(c => [
         c.eventId.eq(event.id),
         c.profileId.eq(userProfile.id)
-      ]))
-      setEventProfile(eventProfile)
-    });
-  },[userProfile]);
+      ])).then(([eventProfile]) => setEventProfile(eventProfile));
+  },[userProfile, event, dataCleared]);
 
   const handleAttendEvent = async () => {
     if (!userProfile) return;
@@ -71,6 +74,7 @@ const EventCard = ({ event, className }: EventCardProps) => {
     <div className={`rounded-xl shadow-md w-full max-w-[350px] min-h-[calc(700px-2rem)] max-h-[calc(700px-2rem)] flex flex-col justify-between ${className}`}>
       <Link className="relative" to={`/events/${event.id}`}>
         <img
+          loading="lazy"
           className="w-full h-full object-cover aspect-square"
           src={`${import.meta.env.VITE_CLOUDINARY_URL}/public/${event.image}${import.meta.env.VITE_CLOUDINARY_TRANSFORM}`}
           alt={event.name}
