@@ -21,6 +21,7 @@ const AccountButton = () => {
   const clearProfile = useProfileStore(state => state.clearUserProfile);
   const clearFriendProfiles = useFriendStore(state => state.clearFriends);
   const friendUnsubscribe = useFriendStore(state => state.friendUnsubscribe);
+  const unsubscribeProfile = useProfileStore(state => state.unsubscribeProfile);
   const { dataStoreQueue } = useQueueStore();
 
   useEffect(() => {
@@ -51,6 +52,7 @@ const AccountButton = () => {
     try {
       console.log("Stopping subscriptions...");
       friendUnsubscribe();
+      unsubscribeProfile();
       console.log("subscriptions stopped.");
     } catch (e) {
       console.log("Error stopping subscriptions: ", e);
