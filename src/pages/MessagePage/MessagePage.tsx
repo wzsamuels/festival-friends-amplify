@@ -75,30 +75,6 @@ const MessagePage: React.FC = () => {
       return <LoadingState />;
     }
 
-    if (route !== "authenticated") {
-      return (
-        <div className='bg-[url("https://twinsilver.mo.cloudinary.net/eventfriends/public/website/messages.png?tx=q_auto,f_auto")] w-full bg-cover relative h-full min-h-[calc(100vh-5rem)] p-2'>
-          <div className="flex flex-col items-center justify-center  bg-white p-4 rounded-xl w-full max-w-lg absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-            <h1 className="m-4 text-xl">
-              You must be logged in to view your messages.
-            </h1>
-            <Link to="/account">
-              <Button>Sign In</Button>
-            </Link>
-          </div>
-        </div>
-      );
-    }
-
-    if (!loadingUserProfile && (!userProfile || !userProfile.verified)) {
-      return (
-        <div className="m-4 text-xl">
-          Your profile is not verified yet. Once your profile has been verified,
-          you will be able to view your messages.
-        </div>
-      );
-    }
-
     return (
       <section className="my-4 grid grid-cols-1 md:grid-cols-2 gap-4 items-stretch justify-items-center">
         {conversations.length > 0 && userProfile ? (
