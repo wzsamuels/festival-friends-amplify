@@ -35,7 +35,7 @@
         },
         "eventfriendslayer": {
           "deploymentBucketName": "amplify-eventfriends-staging-194056-deployment",
-          "s3Key": "amplify-builds/eventfriendslayer-LambdaLayerVersion93424af1-build.zip"
+          "s3Key": "amplify-builds/eventfriendslayer-LambdaLayerVersiona928b312-build.zip"
         }
       },
       "auth": {
@@ -48,6 +48,21 @@
         "eventfriends": {},
         "stripe": {},
         "email": {}
+      },
+      "analytics": {
+        "eventfriends": {},
+        "Pinpoint": {
+          "Name": "eventfriends-staging",
+          "Id": "d5f9d4eb51a745bcbf04940649499be1",
+          "Region": "us-east-1"
+        }
+      },
+      "notifications": {
+        "Pinpoint": {
+          "Name": "eventfriends-staging",
+          "Id": "d5f9d4eb51a745bcbf04940649499be1",
+          "Region": "us-east-1"
+        }
       }
     }
   }

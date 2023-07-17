@@ -62,6 +62,7 @@ export const getProfile = /* GraphQL */ `
             _deleted
             _lastChangedAt
             profilePrivacySettingId
+            __typename
           }
           event {
             id
@@ -91,15 +92,18 @@ export const getProfile = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
+          __typename
         }
         nextToken
         startedAt
+        __typename
       }
       rides {
         items {
@@ -136,6 +140,7 @@ export const getProfile = /* GraphQL */ `
             _deleted
             _lastChangedAt
             profilePrivacySettingId
+            __typename
           }
           ride {
             id
@@ -150,15 +155,18 @@ export const getProfile = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
+          __typename
         }
         nextToken
         startedAt
+        __typename
       }
       friends {
         items {
@@ -193,6 +201,7 @@ export const getProfile = /* GraphQL */ `
             _deleted
             _lastChangedAt
             profilePrivacySettingId
+            __typename
           }
           profileID
           friendProfile {
@@ -225,6 +234,7 @@ export const getProfile = /* GraphQL */ `
             _deleted
             _lastChangedAt
             profilePrivacySettingId
+            __typename
           }
           friendProfileID
           isAccepted
@@ -233,9 +243,11 @@ export const getProfile = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          __typename
         }
         nextToken
         startedAt
+        __typename
       }
       conversations {
         items {
@@ -272,6 +284,7 @@ export const getProfile = /* GraphQL */ `
             _deleted
             _lastChangedAt
             profilePrivacySettingId
+            __typename
           }
           friendProfile {
             id
@@ -303,10 +316,12 @@ export const getProfile = /* GraphQL */ `
             _deleted
             _lastChangedAt
             profilePrivacySettingId
+            __typename
           }
           messages {
             nextToken
             startedAt
+            __typename
           }
           unreadMessage
           createdAt
@@ -314,9 +329,11 @@ export const getProfile = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          __typename
         }
         nextToken
         startedAt
+        __typename
       }
       photos {
         items {
@@ -352,6 +369,7 @@ export const getProfile = /* GraphQL */ `
             _deleted
             _lastChangedAt
             profilePrivacySettingId
+            __typename
           }
           s3Key
           isPrivate
@@ -362,9 +380,11 @@ export const getProfile = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          __typename
         }
         nextToken
         startedAt
+        __typename
       }
       groupID
       group {
@@ -401,9 +421,11 @@ export const getProfile = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         members {
           items {
@@ -436,15 +458,18 @@ export const getProfile = /* GraphQL */ `
             _deleted
             _lastChangedAt
             profilePrivacySettingId
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
+        __typename
       }
       privacySetting {
         id
@@ -461,6 +486,7 @@ export const getProfile = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        __typename
       }
       socialMedia {
         items {
@@ -473,9 +499,11 @@ export const getProfile = /* GraphQL */ `
           _deleted
           _lastChangedAt
           profileSocialMediaId
+          __typename
         }
         nextToken
         startedAt
+        __typename
       }
       createdAt
       updatedAt
@@ -483,6 +511,7 @@ export const getProfile = /* GraphQL */ `
       _deleted
       _lastChangedAt
       profilePrivacySettingId
+      __typename
     }
   }
 `;
@@ -526,9 +555,11 @@ export const listProfiles = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         rides {
           items {
@@ -540,9 +571,11 @@ export const listProfiles = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         friends {
           items {
@@ -555,9 +588,11 @@ export const listProfiles = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         conversations {
           items {
@@ -570,9 +605,11 @@ export const listProfiles = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         photos {
           items {
@@ -587,9 +624,11 @@ export const listProfiles = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         groupID
         group {
@@ -600,16 +639,19 @@ export const listProfiles = /* GraphQL */ `
           events {
             nextToken
             startedAt
+            __typename
           }
           members {
             nextToken
             startedAt
+            __typename
           }
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
+          __typename
         }
         privacySetting {
           id
@@ -626,6 +668,7 @@ export const listProfiles = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          __typename
         }
         socialMedia {
           items {
@@ -638,9 +681,11 @@ export const listProfiles = /* GraphQL */ `
             _deleted
             _lastChangedAt
             profileSocialMediaId
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         createdAt
         updatedAt
@@ -648,9 +693,11 @@ export const listProfiles = /* GraphQL */ `
         _deleted
         _lastChangedAt
         profilePrivacySettingId
+        __typename
       }
       nextToken
       startedAt
+      __typename
     }
   }
 `;
@@ -700,9 +747,11 @@ export const syncProfiles = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         rides {
           items {
@@ -714,9 +763,11 @@ export const syncProfiles = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         friends {
           items {
@@ -729,9 +780,11 @@ export const syncProfiles = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         conversations {
           items {
@@ -744,9 +797,11 @@ export const syncProfiles = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         photos {
           items {
@@ -761,9 +816,11 @@ export const syncProfiles = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         groupID
         group {
@@ -774,16 +831,19 @@ export const syncProfiles = /* GraphQL */ `
           events {
             nextToken
             startedAt
+            __typename
           }
           members {
             nextToken
             startedAt
+            __typename
           }
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
+          __typename
         }
         privacySetting {
           id
@@ -800,6 +860,7 @@ export const syncProfiles = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          __typename
         }
         socialMedia {
           items {
@@ -812,9 +873,11 @@ export const syncProfiles = /* GraphQL */ `
             _deleted
             _lastChangedAt
             profileSocialMediaId
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         createdAt
         updatedAt
@@ -822,9 +885,11 @@ export const syncProfiles = /* GraphQL */ `
         _deleted
         _lastChangedAt
         profilePrivacySettingId
+        __typename
       }
       nextToken
       startedAt
+      __typename
     }
   }
 `;
@@ -876,9 +941,11 @@ export const profilesByGroupID = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         rides {
           items {
@@ -890,9 +957,11 @@ export const profilesByGroupID = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         friends {
           items {
@@ -905,9 +974,11 @@ export const profilesByGroupID = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         conversations {
           items {
@@ -920,9 +991,11 @@ export const profilesByGroupID = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         photos {
           items {
@@ -937,9 +1010,11 @@ export const profilesByGroupID = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         groupID
         group {
@@ -950,16 +1025,19 @@ export const profilesByGroupID = /* GraphQL */ `
           events {
             nextToken
             startedAt
+            __typename
           }
           members {
             nextToken
             startedAt
+            __typename
           }
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
+          __typename
         }
         privacySetting {
           id
@@ -976,6 +1054,7 @@ export const profilesByGroupID = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          __typename
         }
         socialMedia {
           items {
@@ -988,9 +1067,11 @@ export const profilesByGroupID = /* GraphQL */ `
             _deleted
             _lastChangedAt
             profileSocialMediaId
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         createdAt
         updatedAt
@@ -998,9 +1079,11 @@ export const profilesByGroupID = /* GraphQL */ `
         _deleted
         _lastChangedAt
         profilePrivacySettingId
+        __typename
       }
       nextToken
       startedAt
+      __typename
     }
   }
 `;
@@ -1016,6 +1099,7 @@ export const getSocialMedia = /* GraphQL */ `
       _deleted
       _lastChangedAt
       profileSocialMediaId
+      __typename
     }
   }
 `;
@@ -1036,9 +1120,11 @@ export const listSocialMedias = /* GraphQL */ `
         _deleted
         _lastChangedAt
         profileSocialMediaId
+        __typename
       }
       nextToken
       startedAt
+      __typename
     }
   }
 `;
@@ -1065,9 +1151,11 @@ export const syncSocialMedias = /* GraphQL */ `
         _deleted
         _lastChangedAt
         profileSocialMediaId
+        __typename
       }
       nextToken
       startedAt
+      __typename
     }
   }
 `;
@@ -1088,6 +1176,7 @@ export const getPrivacySetting = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      __typename
     }
   }
 `;
@@ -1113,9 +1202,11 @@ export const listPrivacySettings = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        __typename
       }
       nextToken
       startedAt
+      __typename
     }
   }
 `;
@@ -1147,9 +1238,11 @@ export const syncPrivacySettings = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        __typename
       }
       nextToken
       startedAt
+      __typename
     }
   }
 `;
@@ -1211,9 +1304,11 @@ export const getEvent = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         members {
           items {
@@ -1246,15 +1341,18 @@ export const getEvent = /* GraphQL */ `
             _deleted
             _lastChangedAt
             profilePrivacySettingId
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
+        __typename
       }
       groupID
       attendees {
@@ -1292,6 +1390,7 @@ export const getEvent = /* GraphQL */ `
             _deleted
             _lastChangedAt
             profilePrivacySettingId
+            __typename
           }
           event {
             id
@@ -1321,15 +1420,18 @@ export const getEvent = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
+          __typename
         }
         nextToken
         startedAt
+        __typename
       }
       rides {
         items {
@@ -1362,12 +1464,14 @@ export const getEvent = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           eventID
           driverProfileID
           passengers {
             nextToken
             startedAt
+            __typename
           }
           maxPassengers
           departureTime
@@ -1378,15 +1482,18 @@ export const getEvent = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          __typename
         }
         nextToken
         startedAt
+        __typename
       }
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
+      __typename
     }
   }
 `;
@@ -1427,16 +1534,19 @@ export const listEvents = /* GraphQL */ `
           events {
             nextToken
             startedAt
+            __typename
           }
           members {
             nextToken
             startedAt
+            __typename
           }
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
+          __typename
         }
         groupID
         attendees {
@@ -1449,9 +1559,11 @@ export const listEvents = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         rides {
           items {
@@ -1467,18 +1579,22 @@ export const listEvents = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
+        __typename
       }
       nextToken
       startedAt
+      __typename
     }
   }
 `;
@@ -1525,16 +1641,19 @@ export const syncEvents = /* GraphQL */ `
           events {
             nextToken
             startedAt
+            __typename
           }
           members {
             nextToken
             startedAt
+            __typename
           }
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
+          __typename
         }
         groupID
         attendees {
@@ -1547,9 +1666,11 @@ export const syncEvents = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         rides {
           items {
@@ -1565,18 +1686,22 @@ export const syncEvents = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
+        __typename
       }
       nextToken
       startedAt
+      __typename
     }
   }
 `;
@@ -1625,16 +1750,19 @@ export const eventsBySubscriptionID = /* GraphQL */ `
           events {
             nextToken
             startedAt
+            __typename
           }
           members {
             nextToken
             startedAt
+            __typename
           }
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
+          __typename
         }
         groupID
         attendees {
@@ -1647,9 +1775,11 @@ export const eventsBySubscriptionID = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         rides {
           items {
@@ -1665,18 +1795,22 @@ export const eventsBySubscriptionID = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
+        __typename
       }
       nextToken
       startedAt
+      __typename
     }
   }
 `;
@@ -1725,16 +1859,19 @@ export const eventsByGroupID = /* GraphQL */ `
           events {
             nextToken
             startedAt
+            __typename
           }
           members {
             nextToken
             startedAt
+            __typename
           }
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
+          __typename
         }
         groupID
         attendees {
@@ -1747,9 +1884,11 @@ export const eventsByGroupID = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         rides {
           items {
@@ -1765,18 +1904,22 @@ export const eventsByGroupID = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
+        __typename
       }
       nextToken
       startedAt
+      __typename
     }
   }
 `;
@@ -1814,16 +1957,19 @@ export const getRide = /* GraphQL */ `
           events {
             nextToken
             startedAt
+            __typename
           }
           members {
             nextToken
             startedAt
+            __typename
           }
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
+          __typename
         }
         groupID
         attendees {
@@ -1836,9 +1982,11 @@ export const getRide = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         rides {
           items {
@@ -1854,15 +2002,18 @@ export const getRide = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
+        __typename
       }
       eventID
       driverProfileID
@@ -1901,6 +2052,7 @@ export const getRide = /* GraphQL */ `
             _deleted
             _lastChangedAt
             profilePrivacySettingId
+            __typename
           }
           ride {
             id
@@ -1915,15 +2067,18 @@ export const getRide = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
+          __typename
         }
         nextToken
         startedAt
+        __typename
       }
       maxPassengers
       departureTime
@@ -1934,6 +2089,7 @@ export const getRide = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      __typename
     }
   }
 `;
@@ -1978,21 +2134,25 @@ export const listRides = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           groupID
           attendees {
             nextToken
             startedAt
+            __typename
           }
           rides {
             nextToken
             startedAt
+            __typename
           }
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
+          __typename
         }
         eventID
         driverProfileID
@@ -2006,9 +2166,11 @@ export const listRides = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         maxPassengers
         departureTime
@@ -2019,9 +2181,11 @@ export const listRides = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        __typename
       }
       nextToken
       startedAt
+      __typename
     }
   }
 `;
@@ -2072,21 +2236,25 @@ export const syncRides = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           groupID
           attendees {
             nextToken
             startedAt
+            __typename
           }
           rides {
             nextToken
             startedAt
+            __typename
           }
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
+          __typename
         }
         eventID
         driverProfileID
@@ -2100,9 +2268,11 @@ export const syncRides = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         maxPassengers
         departureTime
@@ -2113,9 +2283,11 @@ export const syncRides = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        __typename
       }
       nextToken
       startedAt
+      __typename
     }
   }
 `;
@@ -2168,21 +2340,25 @@ export const ridesByEventID = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           groupID
           attendees {
             nextToken
             startedAt
+            __typename
           }
           rides {
             nextToken
             startedAt
+            __typename
           }
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
+          __typename
         }
         eventID
         driverProfileID
@@ -2196,9 +2372,11 @@ export const ridesByEventID = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         maxPassengers
         departureTime
@@ -2209,9 +2387,11 @@ export const ridesByEventID = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        __typename
       }
       nextToken
       startedAt
+      __typename
     }
   }
 `;
@@ -2253,9 +2433,11 @@ export const getPhoto = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         rides {
           items {
@@ -2267,9 +2449,11 @@ export const getPhoto = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         friends {
           items {
@@ -2282,9 +2466,11 @@ export const getPhoto = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         conversations {
           items {
@@ -2297,9 +2483,11 @@ export const getPhoto = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         photos {
           items {
@@ -2314,9 +2502,11 @@ export const getPhoto = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         groupID
         group {
@@ -2327,16 +2517,19 @@ export const getPhoto = /* GraphQL */ `
           events {
             nextToken
             startedAt
+            __typename
           }
           members {
             nextToken
             startedAt
+            __typename
           }
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
+          __typename
         }
         privacySetting {
           id
@@ -2353,6 +2546,7 @@ export const getPhoto = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          __typename
         }
         socialMedia {
           items {
@@ -2365,9 +2559,11 @@ export const getPhoto = /* GraphQL */ `
             _deleted
             _lastChangedAt
             profileSocialMediaId
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         createdAt
         updatedAt
@@ -2375,6 +2571,7 @@ export const getPhoto = /* GraphQL */ `
         _deleted
         _lastChangedAt
         profilePrivacySettingId
+        __typename
       }
       s3Key
       isPrivate
@@ -2385,6 +2582,7 @@ export const getPhoto = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      __typename
     }
   }
 `;
@@ -2424,22 +2622,27 @@ export const listPhotos = /* GraphQL */ `
           events {
             nextToken
             startedAt
+            __typename
           }
           rides {
             nextToken
             startedAt
+            __typename
           }
           friends {
             nextToken
             startedAt
+            __typename
           }
           conversations {
             nextToken
             startedAt
+            __typename
           }
           photos {
             nextToken
             startedAt
+            __typename
           }
           groupID
           group {
@@ -2452,6 +2655,7 @@ export const listPhotos = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           privacySetting {
             id
@@ -2468,10 +2672,12 @@ export const listPhotos = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           socialMedia {
             nextToken
             startedAt
+            __typename
           }
           createdAt
           updatedAt
@@ -2479,6 +2685,7 @@ export const listPhotos = /* GraphQL */ `
           _deleted
           _lastChangedAt
           profilePrivacySettingId
+          __typename
         }
         s3Key
         isPrivate
@@ -2489,9 +2696,11 @@ export const listPhotos = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        __typename
       }
       nextToken
       startedAt
+      __typename
     }
   }
 `;
@@ -2537,22 +2746,27 @@ export const syncPhotos = /* GraphQL */ `
           events {
             nextToken
             startedAt
+            __typename
           }
           rides {
             nextToken
             startedAt
+            __typename
           }
           friends {
             nextToken
             startedAt
+            __typename
           }
           conversations {
             nextToken
             startedAt
+            __typename
           }
           photos {
             nextToken
             startedAt
+            __typename
           }
           groupID
           group {
@@ -2565,6 +2779,7 @@ export const syncPhotos = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           privacySetting {
             id
@@ -2581,10 +2796,12 @@ export const syncPhotos = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           socialMedia {
             nextToken
             startedAt
+            __typename
           }
           createdAt
           updatedAt
@@ -2592,6 +2809,7 @@ export const syncPhotos = /* GraphQL */ `
           _deleted
           _lastChangedAt
           profilePrivacySettingId
+          __typename
         }
         s3Key
         isPrivate
@@ -2602,9 +2820,11 @@ export const syncPhotos = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        __typename
       }
       nextToken
       startedAt
+      __typename
     }
   }
 `;
@@ -2652,22 +2872,27 @@ export const photosByProfileID = /* GraphQL */ `
           events {
             nextToken
             startedAt
+            __typename
           }
           rides {
             nextToken
             startedAt
+            __typename
           }
           friends {
             nextToken
             startedAt
+            __typename
           }
           conversations {
             nextToken
             startedAt
+            __typename
           }
           photos {
             nextToken
             startedAt
+            __typename
           }
           groupID
           group {
@@ -2680,6 +2905,7 @@ export const photosByProfileID = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           privacySetting {
             id
@@ -2696,10 +2922,12 @@ export const photosByProfileID = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           socialMedia {
             nextToken
             startedAt
+            __typename
           }
           createdAt
           updatedAt
@@ -2707,6 +2935,7 @@ export const photosByProfileID = /* GraphQL */ `
           _deleted
           _lastChangedAt
           profilePrivacySettingId
+          __typename
         }
         s3Key
         isPrivate
@@ -2717,9 +2946,11 @@ export const photosByProfileID = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        __typename
       }
       nextToken
       startedAt
+      __typename
     }
   }
 `;
@@ -2760,9 +2991,11 @@ export const getFriendship = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         rides {
           items {
@@ -2774,9 +3007,11 @@ export const getFriendship = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         friends {
           items {
@@ -2789,9 +3024,11 @@ export const getFriendship = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         conversations {
           items {
@@ -2804,9 +3041,11 @@ export const getFriendship = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         photos {
           items {
@@ -2821,9 +3060,11 @@ export const getFriendship = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         groupID
         group {
@@ -2834,16 +3075,19 @@ export const getFriendship = /* GraphQL */ `
           events {
             nextToken
             startedAt
+            __typename
           }
           members {
             nextToken
             startedAt
+            __typename
           }
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
+          __typename
         }
         privacySetting {
           id
@@ -2860,6 +3104,7 @@ export const getFriendship = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          __typename
         }
         socialMedia {
           items {
@@ -2872,9 +3117,11 @@ export const getFriendship = /* GraphQL */ `
             _deleted
             _lastChangedAt
             profileSocialMediaId
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         createdAt
         updatedAt
@@ -2882,6 +3129,7 @@ export const getFriendship = /* GraphQL */ `
         _deleted
         _lastChangedAt
         profilePrivacySettingId
+        __typename
       }
       profileID
       friendProfile {
@@ -2917,9 +3165,11 @@ export const getFriendship = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         rides {
           items {
@@ -2931,9 +3181,11 @@ export const getFriendship = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         friends {
           items {
@@ -2946,9 +3198,11 @@ export const getFriendship = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         conversations {
           items {
@@ -2961,9 +3215,11 @@ export const getFriendship = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         photos {
           items {
@@ -2978,9 +3234,11 @@ export const getFriendship = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         groupID
         group {
@@ -2991,16 +3249,19 @@ export const getFriendship = /* GraphQL */ `
           events {
             nextToken
             startedAt
+            __typename
           }
           members {
             nextToken
             startedAt
+            __typename
           }
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
+          __typename
         }
         privacySetting {
           id
@@ -3017,6 +3278,7 @@ export const getFriendship = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          __typename
         }
         socialMedia {
           items {
@@ -3029,9 +3291,11 @@ export const getFriendship = /* GraphQL */ `
             _deleted
             _lastChangedAt
             profileSocialMediaId
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         createdAt
         updatedAt
@@ -3039,6 +3303,7 @@ export const getFriendship = /* GraphQL */ `
         _deleted
         _lastChangedAt
         profilePrivacySettingId
+        __typename
       }
       friendProfileID
       isAccepted
@@ -3047,6 +3312,7 @@ export const getFriendship = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      __typename
     }
   }
 `;
@@ -3085,22 +3351,27 @@ export const listFriendships = /* GraphQL */ `
           events {
             nextToken
             startedAt
+            __typename
           }
           rides {
             nextToken
             startedAt
+            __typename
           }
           friends {
             nextToken
             startedAt
+            __typename
           }
           conversations {
             nextToken
             startedAt
+            __typename
           }
           photos {
             nextToken
             startedAt
+            __typename
           }
           groupID
           group {
@@ -3113,6 +3384,7 @@ export const listFriendships = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           privacySetting {
             id
@@ -3129,10 +3401,12 @@ export const listFriendships = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           socialMedia {
             nextToken
             startedAt
+            __typename
           }
           createdAt
           updatedAt
@@ -3140,6 +3414,7 @@ export const listFriendships = /* GraphQL */ `
           _deleted
           _lastChangedAt
           profilePrivacySettingId
+          __typename
         }
         profileID
         friendProfile {
@@ -3168,22 +3443,27 @@ export const listFriendships = /* GraphQL */ `
           events {
             nextToken
             startedAt
+            __typename
           }
           rides {
             nextToken
             startedAt
+            __typename
           }
           friends {
             nextToken
             startedAt
+            __typename
           }
           conversations {
             nextToken
             startedAt
+            __typename
           }
           photos {
             nextToken
             startedAt
+            __typename
           }
           groupID
           group {
@@ -3196,6 +3476,7 @@ export const listFriendships = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           privacySetting {
             id
@@ -3212,10 +3493,12 @@ export const listFriendships = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           socialMedia {
             nextToken
             startedAt
+            __typename
           }
           createdAt
           updatedAt
@@ -3223,6 +3506,7 @@ export const listFriendships = /* GraphQL */ `
           _deleted
           _lastChangedAt
           profilePrivacySettingId
+          __typename
         }
         friendProfileID
         isAccepted
@@ -3231,9 +3515,11 @@ export const listFriendships = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        __typename
       }
       nextToken
       startedAt
+      __typename
     }
   }
 `;
@@ -3278,22 +3564,27 @@ export const syncFriendships = /* GraphQL */ `
           events {
             nextToken
             startedAt
+            __typename
           }
           rides {
             nextToken
             startedAt
+            __typename
           }
           friends {
             nextToken
             startedAt
+            __typename
           }
           conversations {
             nextToken
             startedAt
+            __typename
           }
           photos {
             nextToken
             startedAt
+            __typename
           }
           groupID
           group {
@@ -3306,6 +3597,7 @@ export const syncFriendships = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           privacySetting {
             id
@@ -3322,10 +3614,12 @@ export const syncFriendships = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           socialMedia {
             nextToken
             startedAt
+            __typename
           }
           createdAt
           updatedAt
@@ -3333,6 +3627,7 @@ export const syncFriendships = /* GraphQL */ `
           _deleted
           _lastChangedAt
           profilePrivacySettingId
+          __typename
         }
         profileID
         friendProfile {
@@ -3361,22 +3656,27 @@ export const syncFriendships = /* GraphQL */ `
           events {
             nextToken
             startedAt
+            __typename
           }
           rides {
             nextToken
             startedAt
+            __typename
           }
           friends {
             nextToken
             startedAt
+            __typename
           }
           conversations {
             nextToken
             startedAt
+            __typename
           }
           photos {
             nextToken
             startedAt
+            __typename
           }
           groupID
           group {
@@ -3389,6 +3689,7 @@ export const syncFriendships = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           privacySetting {
             id
@@ -3405,10 +3706,12 @@ export const syncFriendships = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           socialMedia {
             nextToken
             startedAt
+            __typename
           }
           createdAt
           updatedAt
@@ -3416,6 +3719,7 @@ export const syncFriendships = /* GraphQL */ `
           _deleted
           _lastChangedAt
           profilePrivacySettingId
+          __typename
         }
         friendProfileID
         isAccepted
@@ -3424,9 +3728,11 @@ export const syncFriendships = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        __typename
       }
       nextToken
       startedAt
+      __typename
     }
   }
 `;
@@ -3473,22 +3779,27 @@ export const friendshipsByProfileID = /* GraphQL */ `
           events {
             nextToken
             startedAt
+            __typename
           }
           rides {
             nextToken
             startedAt
+            __typename
           }
           friends {
             nextToken
             startedAt
+            __typename
           }
           conversations {
             nextToken
             startedAt
+            __typename
           }
           photos {
             nextToken
             startedAt
+            __typename
           }
           groupID
           group {
@@ -3501,6 +3812,7 @@ export const friendshipsByProfileID = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           privacySetting {
             id
@@ -3517,10 +3829,12 @@ export const friendshipsByProfileID = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           socialMedia {
             nextToken
             startedAt
+            __typename
           }
           createdAt
           updatedAt
@@ -3528,6 +3842,7 @@ export const friendshipsByProfileID = /* GraphQL */ `
           _deleted
           _lastChangedAt
           profilePrivacySettingId
+          __typename
         }
         profileID
         friendProfile {
@@ -3556,22 +3871,27 @@ export const friendshipsByProfileID = /* GraphQL */ `
           events {
             nextToken
             startedAt
+            __typename
           }
           rides {
             nextToken
             startedAt
+            __typename
           }
           friends {
             nextToken
             startedAt
+            __typename
           }
           conversations {
             nextToken
             startedAt
+            __typename
           }
           photos {
             nextToken
             startedAt
+            __typename
           }
           groupID
           group {
@@ -3584,6 +3904,7 @@ export const friendshipsByProfileID = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           privacySetting {
             id
@@ -3600,10 +3921,12 @@ export const friendshipsByProfileID = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           socialMedia {
             nextToken
             startedAt
+            __typename
           }
           createdAt
           updatedAt
@@ -3611,6 +3934,7 @@ export const friendshipsByProfileID = /* GraphQL */ `
           _deleted
           _lastChangedAt
           profilePrivacySettingId
+          __typename
         }
         friendProfileID
         isAccepted
@@ -3619,9 +3943,11 @@ export const friendshipsByProfileID = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        __typename
       }
       nextToken
       startedAt
+      __typename
     }
   }
 `;
@@ -3668,22 +3994,27 @@ export const friendshipsByFriendProfileID = /* GraphQL */ `
           events {
             nextToken
             startedAt
+            __typename
           }
           rides {
             nextToken
             startedAt
+            __typename
           }
           friends {
             nextToken
             startedAt
+            __typename
           }
           conversations {
             nextToken
             startedAt
+            __typename
           }
           photos {
             nextToken
             startedAt
+            __typename
           }
           groupID
           group {
@@ -3696,6 +4027,7 @@ export const friendshipsByFriendProfileID = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           privacySetting {
             id
@@ -3712,10 +4044,12 @@ export const friendshipsByFriendProfileID = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           socialMedia {
             nextToken
             startedAt
+            __typename
           }
           createdAt
           updatedAt
@@ -3723,6 +4057,7 @@ export const friendshipsByFriendProfileID = /* GraphQL */ `
           _deleted
           _lastChangedAt
           profilePrivacySettingId
+          __typename
         }
         profileID
         friendProfile {
@@ -3751,22 +4086,27 @@ export const friendshipsByFriendProfileID = /* GraphQL */ `
           events {
             nextToken
             startedAt
+            __typename
           }
           rides {
             nextToken
             startedAt
+            __typename
           }
           friends {
             nextToken
             startedAt
+            __typename
           }
           conversations {
             nextToken
             startedAt
+            __typename
           }
           photos {
             nextToken
             startedAt
+            __typename
           }
           groupID
           group {
@@ -3779,6 +4119,7 @@ export const friendshipsByFriendProfileID = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           privacySetting {
             id
@@ -3795,10 +4136,12 @@ export const friendshipsByFriendProfileID = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           socialMedia {
             nextToken
             startedAt
+            __typename
           }
           createdAt
           updatedAt
@@ -3806,6 +4149,7 @@ export const friendshipsByFriendProfileID = /* GraphQL */ `
           _deleted
           _lastChangedAt
           profilePrivacySettingId
+          __typename
         }
         friendProfileID
         isAccepted
@@ -3814,9 +4158,11 @@ export const friendshipsByFriendProfileID = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        __typename
       }
       nextToken
       startedAt
+      __typename
     }
   }
 `;
@@ -3859,9 +4205,11 @@ export const getConversation = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         rides {
           items {
@@ -3873,9 +4221,11 @@ export const getConversation = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         friends {
           items {
@@ -3888,9 +4238,11 @@ export const getConversation = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         conversations {
           items {
@@ -3903,9 +4255,11 @@ export const getConversation = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         photos {
           items {
@@ -3920,9 +4274,11 @@ export const getConversation = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         groupID
         group {
@@ -3933,16 +4289,19 @@ export const getConversation = /* GraphQL */ `
           events {
             nextToken
             startedAt
+            __typename
           }
           members {
             nextToken
             startedAt
+            __typename
           }
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
+          __typename
         }
         privacySetting {
           id
@@ -3959,6 +4318,7 @@ export const getConversation = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          __typename
         }
         socialMedia {
           items {
@@ -3971,9 +4331,11 @@ export const getConversation = /* GraphQL */ `
             _deleted
             _lastChangedAt
             profileSocialMediaId
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         createdAt
         updatedAt
@@ -3981,6 +4343,7 @@ export const getConversation = /* GraphQL */ `
         _deleted
         _lastChangedAt
         profilePrivacySettingId
+        __typename
       }
       friendProfile {
         id
@@ -4015,9 +4378,11 @@ export const getConversation = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         rides {
           items {
@@ -4029,9 +4394,11 @@ export const getConversation = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         friends {
           items {
@@ -4044,9 +4411,11 @@ export const getConversation = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         conversations {
           items {
@@ -4059,9 +4428,11 @@ export const getConversation = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         photos {
           items {
@@ -4076,9 +4447,11 @@ export const getConversation = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         groupID
         group {
@@ -4089,16 +4462,19 @@ export const getConversation = /* GraphQL */ `
           events {
             nextToken
             startedAt
+            __typename
           }
           members {
             nextToken
             startedAt
+            __typename
           }
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
+          __typename
         }
         privacySetting {
           id
@@ -4115,6 +4491,7 @@ export const getConversation = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          __typename
         }
         socialMedia {
           items {
@@ -4127,9 +4504,11 @@ export const getConversation = /* GraphQL */ `
             _deleted
             _lastChangedAt
             profileSocialMediaId
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         createdAt
         updatedAt
@@ -4137,6 +4516,7 @@ export const getConversation = /* GraphQL */ `
         _deleted
         _lastChangedAt
         profilePrivacySettingId
+        __typename
       }
       messages {
         items {
@@ -4151,9 +4531,11 @@ export const getConversation = /* GraphQL */ `
           _deleted
           _lastChangedAt
           conversationMessagesId
+          __typename
         }
         nextToken
         startedAt
+        __typename
       }
       unreadMessage
       createdAt
@@ -4161,6 +4543,7 @@ export const getConversation = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      __typename
     }
   }
 `;
@@ -4201,22 +4584,27 @@ export const listConversations = /* GraphQL */ `
           events {
             nextToken
             startedAt
+            __typename
           }
           rides {
             nextToken
             startedAt
+            __typename
           }
           friends {
             nextToken
             startedAt
+            __typename
           }
           conversations {
             nextToken
             startedAt
+            __typename
           }
           photos {
             nextToken
             startedAt
+            __typename
           }
           groupID
           group {
@@ -4229,6 +4617,7 @@ export const listConversations = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           privacySetting {
             id
@@ -4245,10 +4634,12 @@ export const listConversations = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           socialMedia {
             nextToken
             startedAt
+            __typename
           }
           createdAt
           updatedAt
@@ -4256,6 +4647,7 @@ export const listConversations = /* GraphQL */ `
           _deleted
           _lastChangedAt
           profilePrivacySettingId
+          __typename
         }
         friendProfile {
           id
@@ -4283,22 +4675,27 @@ export const listConversations = /* GraphQL */ `
           events {
             nextToken
             startedAt
+            __typename
           }
           rides {
             nextToken
             startedAt
+            __typename
           }
           friends {
             nextToken
             startedAt
+            __typename
           }
           conversations {
             nextToken
             startedAt
+            __typename
           }
           photos {
             nextToken
             startedAt
+            __typename
           }
           groupID
           group {
@@ -4311,6 +4708,7 @@ export const listConversations = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           privacySetting {
             id
@@ -4327,10 +4725,12 @@ export const listConversations = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           socialMedia {
             nextToken
             startedAt
+            __typename
           }
           createdAt
           updatedAt
@@ -4338,6 +4738,7 @@ export const listConversations = /* GraphQL */ `
           _deleted
           _lastChangedAt
           profilePrivacySettingId
+          __typename
         }
         messages {
           items {
@@ -4352,9 +4753,11 @@ export const listConversations = /* GraphQL */ `
             _deleted
             _lastChangedAt
             conversationMessagesId
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         unreadMessage
         createdAt
@@ -4362,9 +4765,11 @@ export const listConversations = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        __typename
       }
       nextToken
       startedAt
+      __typename
     }
   }
 `;
@@ -4411,22 +4816,27 @@ export const syncConversations = /* GraphQL */ `
           events {
             nextToken
             startedAt
+            __typename
           }
           rides {
             nextToken
             startedAt
+            __typename
           }
           friends {
             nextToken
             startedAt
+            __typename
           }
           conversations {
             nextToken
             startedAt
+            __typename
           }
           photos {
             nextToken
             startedAt
+            __typename
           }
           groupID
           group {
@@ -4439,6 +4849,7 @@ export const syncConversations = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           privacySetting {
             id
@@ -4455,10 +4866,12 @@ export const syncConversations = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           socialMedia {
             nextToken
             startedAt
+            __typename
           }
           createdAt
           updatedAt
@@ -4466,6 +4879,7 @@ export const syncConversations = /* GraphQL */ `
           _deleted
           _lastChangedAt
           profilePrivacySettingId
+          __typename
         }
         friendProfile {
           id
@@ -4493,22 +4907,27 @@ export const syncConversations = /* GraphQL */ `
           events {
             nextToken
             startedAt
+            __typename
           }
           rides {
             nextToken
             startedAt
+            __typename
           }
           friends {
             nextToken
             startedAt
+            __typename
           }
           conversations {
             nextToken
             startedAt
+            __typename
           }
           photos {
             nextToken
             startedAt
+            __typename
           }
           groupID
           group {
@@ -4521,6 +4940,7 @@ export const syncConversations = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           privacySetting {
             id
@@ -4537,10 +4957,12 @@ export const syncConversations = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           socialMedia {
             nextToken
             startedAt
+            __typename
           }
           createdAt
           updatedAt
@@ -4548,6 +4970,7 @@ export const syncConversations = /* GraphQL */ `
           _deleted
           _lastChangedAt
           profilePrivacySettingId
+          __typename
         }
         messages {
           items {
@@ -4562,9 +4985,11 @@ export const syncConversations = /* GraphQL */ `
             _deleted
             _lastChangedAt
             conversationMessagesId
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         unreadMessage
         createdAt
@@ -4572,9 +4997,11 @@ export const syncConversations = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        __typename
       }
       nextToken
       startedAt
+      __typename
     }
   }
 `;
@@ -4623,22 +5050,27 @@ export const conversationsByProfileID = /* GraphQL */ `
           events {
             nextToken
             startedAt
+            __typename
           }
           rides {
             nextToken
             startedAt
+            __typename
           }
           friends {
             nextToken
             startedAt
+            __typename
           }
           conversations {
             nextToken
             startedAt
+            __typename
           }
           photos {
             nextToken
             startedAt
+            __typename
           }
           groupID
           group {
@@ -4651,6 +5083,7 @@ export const conversationsByProfileID = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           privacySetting {
             id
@@ -4667,10 +5100,12 @@ export const conversationsByProfileID = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           socialMedia {
             nextToken
             startedAt
+            __typename
           }
           createdAt
           updatedAt
@@ -4678,6 +5113,7 @@ export const conversationsByProfileID = /* GraphQL */ `
           _deleted
           _lastChangedAt
           profilePrivacySettingId
+          __typename
         }
         friendProfile {
           id
@@ -4705,22 +5141,27 @@ export const conversationsByProfileID = /* GraphQL */ `
           events {
             nextToken
             startedAt
+            __typename
           }
           rides {
             nextToken
             startedAt
+            __typename
           }
           friends {
             nextToken
             startedAt
+            __typename
           }
           conversations {
             nextToken
             startedAt
+            __typename
           }
           photos {
             nextToken
             startedAt
+            __typename
           }
           groupID
           group {
@@ -4733,6 +5174,7 @@ export const conversationsByProfileID = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           privacySetting {
             id
@@ -4749,10 +5191,12 @@ export const conversationsByProfileID = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           socialMedia {
             nextToken
             startedAt
+            __typename
           }
           createdAt
           updatedAt
@@ -4760,6 +5204,7 @@ export const conversationsByProfileID = /* GraphQL */ `
           _deleted
           _lastChangedAt
           profilePrivacySettingId
+          __typename
         }
         messages {
           items {
@@ -4774,9 +5219,11 @@ export const conversationsByProfileID = /* GraphQL */ `
             _deleted
             _lastChangedAt
             conversationMessagesId
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         unreadMessage
         createdAt
@@ -4784,9 +5231,11 @@ export const conversationsByProfileID = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        __typename
       }
       nextToken
       startedAt
+      __typename
     }
   }
 `;
@@ -4835,22 +5284,27 @@ export const conversationsByFriendProfileID = /* GraphQL */ `
           events {
             nextToken
             startedAt
+            __typename
           }
           rides {
             nextToken
             startedAt
+            __typename
           }
           friends {
             nextToken
             startedAt
+            __typename
           }
           conversations {
             nextToken
             startedAt
+            __typename
           }
           photos {
             nextToken
             startedAt
+            __typename
           }
           groupID
           group {
@@ -4863,6 +5317,7 @@ export const conversationsByFriendProfileID = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           privacySetting {
             id
@@ -4879,10 +5334,12 @@ export const conversationsByFriendProfileID = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           socialMedia {
             nextToken
             startedAt
+            __typename
           }
           createdAt
           updatedAt
@@ -4890,6 +5347,7 @@ export const conversationsByFriendProfileID = /* GraphQL */ `
           _deleted
           _lastChangedAt
           profilePrivacySettingId
+          __typename
         }
         friendProfile {
           id
@@ -4917,22 +5375,27 @@ export const conversationsByFriendProfileID = /* GraphQL */ `
           events {
             nextToken
             startedAt
+            __typename
           }
           rides {
             nextToken
             startedAt
+            __typename
           }
           friends {
             nextToken
             startedAt
+            __typename
           }
           conversations {
             nextToken
             startedAt
+            __typename
           }
           photos {
             nextToken
             startedAt
+            __typename
           }
           groupID
           group {
@@ -4945,6 +5408,7 @@ export const conversationsByFriendProfileID = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           privacySetting {
             id
@@ -4961,10 +5425,12 @@ export const conversationsByFriendProfileID = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           socialMedia {
             nextToken
             startedAt
+            __typename
           }
           createdAt
           updatedAt
@@ -4972,6 +5438,7 @@ export const conversationsByFriendProfileID = /* GraphQL */ `
           _deleted
           _lastChangedAt
           profilePrivacySettingId
+          __typename
         }
         messages {
           items {
@@ -4986,9 +5453,11 @@ export const conversationsByFriendProfileID = /* GraphQL */ `
             _deleted
             _lastChangedAt
             conversationMessagesId
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         unreadMessage
         createdAt
@@ -4996,9 +5465,11 @@ export const conversationsByFriendProfileID = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        __typename
       }
       nextToken
       startedAt
+      __typename
     }
   }
 `;
@@ -5016,6 +5487,7 @@ export const getMessage = /* GraphQL */ `
       _deleted
       _lastChangedAt
       conversationMessagesId
+      __typename
     }
   }
 `;
@@ -5038,9 +5510,11 @@ export const listMessages = /* GraphQL */ `
         _deleted
         _lastChangedAt
         conversationMessagesId
+        __typename
       }
       nextToken
       startedAt
+      __typename
     }
   }
 `;
@@ -5069,9 +5543,11 @@ export const syncMessages = /* GraphQL */ `
         _deleted
         _lastChangedAt
         conversationMessagesId
+        __typename
       }
       nextToken
       startedAt
+      __typename
     }
   }
 `;
@@ -5115,24 +5591,29 @@ export const getGroup = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           groupID
           attendees {
             nextToken
             startedAt
+            __typename
           }
           rides {
             nextToken
             startedAt
+            __typename
           }
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
+          __typename
         }
         nextToken
         startedAt
+        __typename
       }
       members {
         items {
@@ -5161,22 +5642,27 @@ export const getGroup = /* GraphQL */ `
           events {
             nextToken
             startedAt
+            __typename
           }
           rides {
             nextToken
             startedAt
+            __typename
           }
           friends {
             nextToken
             startedAt
+            __typename
           }
           conversations {
             nextToken
             startedAt
+            __typename
           }
           photos {
             nextToken
             startedAt
+            __typename
           }
           groupID
           group {
@@ -5189,6 +5675,7 @@ export const getGroup = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           privacySetting {
             id
@@ -5205,10 +5692,12 @@ export const getGroup = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           socialMedia {
             nextToken
             startedAt
+            __typename
           }
           createdAt
           updatedAt
@@ -5216,15 +5705,18 @@ export const getGroup = /* GraphQL */ `
           _deleted
           _lastChangedAt
           profilePrivacySettingId
+          __typename
         }
         nextToken
         startedAt
+        __typename
       }
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
+      __typename
     }
   }
 `;
@@ -5269,9 +5761,11 @@ export const listGroups = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         members {
           items {
@@ -5304,18 +5798,22 @@ export const listGroups = /* GraphQL */ `
             _deleted
             _lastChangedAt
             profilePrivacySettingId
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
+        __typename
       }
       nextToken
       startedAt
+      __typename
     }
   }
 `;
@@ -5366,9 +5864,11 @@ export const syncGroups = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         members {
           items {
@@ -5401,18 +5901,22 @@ export const syncGroups = /* GraphQL */ `
             _deleted
             _lastChangedAt
             profilePrivacySettingId
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
+        __typename
       }
       nextToken
       startedAt
+      __typename
     }
   }
 `;
@@ -5455,9 +5959,11 @@ export const getEventProfile = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         rides {
           items {
@@ -5469,9 +5975,11 @@ export const getEventProfile = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         friends {
           items {
@@ -5484,9 +5992,11 @@ export const getEventProfile = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         conversations {
           items {
@@ -5499,9 +6009,11 @@ export const getEventProfile = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         photos {
           items {
@@ -5516,9 +6028,11 @@ export const getEventProfile = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         groupID
         group {
@@ -5529,16 +6043,19 @@ export const getEventProfile = /* GraphQL */ `
           events {
             nextToken
             startedAt
+            __typename
           }
           members {
             nextToken
             startedAt
+            __typename
           }
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
+          __typename
         }
         privacySetting {
           id
@@ -5555,6 +6072,7 @@ export const getEventProfile = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          __typename
         }
         socialMedia {
           items {
@@ -5567,9 +6085,11 @@ export const getEventProfile = /* GraphQL */ `
             _deleted
             _lastChangedAt
             profileSocialMediaId
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         createdAt
         updatedAt
@@ -5577,6 +6097,7 @@ export const getEventProfile = /* GraphQL */ `
         _deleted
         _lastChangedAt
         profilePrivacySettingId
+        __typename
       }
       event {
         id
@@ -5608,16 +6129,19 @@ export const getEventProfile = /* GraphQL */ `
           events {
             nextToken
             startedAt
+            __typename
           }
           members {
             nextToken
             startedAt
+            __typename
           }
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
+          __typename
         }
         groupID
         attendees {
@@ -5630,9 +6154,11 @@ export const getEventProfile = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         rides {
           items {
@@ -5648,21 +6174,25 @@ export const getEventProfile = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
+        __typename
       }
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
+      __typename
     }
   }
 `;
@@ -5703,22 +6233,27 @@ export const listEventProfiles = /* GraphQL */ `
           events {
             nextToken
             startedAt
+            __typename
           }
           rides {
             nextToken
             startedAt
+            __typename
           }
           friends {
             nextToken
             startedAt
+            __typename
           }
           conversations {
             nextToken
             startedAt
+            __typename
           }
           photos {
             nextToken
             startedAt
+            __typename
           }
           groupID
           group {
@@ -5731,6 +6266,7 @@ export const listEventProfiles = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           privacySetting {
             id
@@ -5747,10 +6283,12 @@ export const listEventProfiles = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           socialMedia {
             nextToken
             startedAt
+            __typename
           }
           createdAt
           updatedAt
@@ -5758,6 +6296,7 @@ export const listEventProfiles = /* GraphQL */ `
           _deleted
           _lastChangedAt
           profilePrivacySettingId
+          __typename
         }
         event {
           id
@@ -5791,30 +6330,36 @@ export const listEventProfiles = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           groupID
           attendees {
             nextToken
             startedAt
+            __typename
           }
           rides {
             nextToken
             startedAt
+            __typename
           }
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
+          __typename
         }
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
+        __typename
       }
       nextToken
       startedAt
+      __typename
     }
   }
 `;
@@ -5861,22 +6406,27 @@ export const syncEventProfiles = /* GraphQL */ `
           events {
             nextToken
             startedAt
+            __typename
           }
           rides {
             nextToken
             startedAt
+            __typename
           }
           friends {
             nextToken
             startedAt
+            __typename
           }
           conversations {
             nextToken
             startedAt
+            __typename
           }
           photos {
             nextToken
             startedAt
+            __typename
           }
           groupID
           group {
@@ -5889,6 +6439,7 @@ export const syncEventProfiles = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           privacySetting {
             id
@@ -5905,10 +6456,12 @@ export const syncEventProfiles = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           socialMedia {
             nextToken
             startedAt
+            __typename
           }
           createdAt
           updatedAt
@@ -5916,6 +6469,7 @@ export const syncEventProfiles = /* GraphQL */ `
           _deleted
           _lastChangedAt
           profilePrivacySettingId
+          __typename
         }
         event {
           id
@@ -5949,30 +6503,36 @@ export const syncEventProfiles = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           groupID
           attendees {
             nextToken
             startedAt
+            __typename
           }
           rides {
             nextToken
             startedAt
+            __typename
           }
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
+          __typename
         }
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
+        __typename
       }
       nextToken
       startedAt
+      __typename
     }
   }
 `;
@@ -6021,22 +6581,27 @@ export const eventProfilesByProfileId = /* GraphQL */ `
           events {
             nextToken
             startedAt
+            __typename
           }
           rides {
             nextToken
             startedAt
+            __typename
           }
           friends {
             nextToken
             startedAt
+            __typename
           }
           conversations {
             nextToken
             startedAt
+            __typename
           }
           photos {
             nextToken
             startedAt
+            __typename
           }
           groupID
           group {
@@ -6049,6 +6614,7 @@ export const eventProfilesByProfileId = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           privacySetting {
             id
@@ -6065,10 +6631,12 @@ export const eventProfilesByProfileId = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           socialMedia {
             nextToken
             startedAt
+            __typename
           }
           createdAt
           updatedAt
@@ -6076,6 +6644,7 @@ export const eventProfilesByProfileId = /* GraphQL */ `
           _deleted
           _lastChangedAt
           profilePrivacySettingId
+          __typename
         }
         event {
           id
@@ -6109,30 +6678,36 @@ export const eventProfilesByProfileId = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           groupID
           attendees {
             nextToken
             startedAt
+            __typename
           }
           rides {
             nextToken
             startedAt
+            __typename
           }
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
+          __typename
         }
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
+        __typename
       }
       nextToken
       startedAt
+      __typename
     }
   }
 `;
@@ -6181,22 +6756,27 @@ export const eventProfilesByEventId = /* GraphQL */ `
           events {
             nextToken
             startedAt
+            __typename
           }
           rides {
             nextToken
             startedAt
+            __typename
           }
           friends {
             nextToken
             startedAt
+            __typename
           }
           conversations {
             nextToken
             startedAt
+            __typename
           }
           photos {
             nextToken
             startedAt
+            __typename
           }
           groupID
           group {
@@ -6209,6 +6789,7 @@ export const eventProfilesByEventId = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           privacySetting {
             id
@@ -6225,10 +6806,12 @@ export const eventProfilesByEventId = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           socialMedia {
             nextToken
             startedAt
+            __typename
           }
           createdAt
           updatedAt
@@ -6236,6 +6819,7 @@ export const eventProfilesByEventId = /* GraphQL */ `
           _deleted
           _lastChangedAt
           profilePrivacySettingId
+          __typename
         }
         event {
           id
@@ -6269,30 +6853,36 @@ export const eventProfilesByEventId = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           groupID
           attendees {
             nextToken
             startedAt
+            __typename
           }
           rides {
             nextToken
             startedAt
+            __typename
           }
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
+          __typename
         }
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
+        __typename
       }
       nextToken
       startedAt
+      __typename
     }
   }
 `;
@@ -6335,9 +6925,11 @@ export const getRideProfile = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         rides {
           items {
@@ -6349,9 +6941,11 @@ export const getRideProfile = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         friends {
           items {
@@ -6364,9 +6958,11 @@ export const getRideProfile = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         conversations {
           items {
@@ -6379,9 +6975,11 @@ export const getRideProfile = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         photos {
           items {
@@ -6396,9 +6994,11 @@ export const getRideProfile = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         groupID
         group {
@@ -6409,16 +7009,19 @@ export const getRideProfile = /* GraphQL */ `
           events {
             nextToken
             startedAt
+            __typename
           }
           members {
             nextToken
             startedAt
+            __typename
           }
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
+          __typename
         }
         privacySetting {
           id
@@ -6435,6 +7038,7 @@ export const getRideProfile = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          __typename
         }
         socialMedia {
           items {
@@ -6447,9 +7051,11 @@ export const getRideProfile = /* GraphQL */ `
             _deleted
             _lastChangedAt
             profileSocialMediaId
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         createdAt
         updatedAt
@@ -6457,6 +7063,7 @@ export const getRideProfile = /* GraphQL */ `
         _deleted
         _lastChangedAt
         profilePrivacySettingId
+        __typename
       }
       ride {
         id
@@ -6492,21 +7099,25 @@ export const getRideProfile = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           groupID
           attendees {
             nextToken
             startedAt
+            __typename
           }
           rides {
             nextToken
             startedAt
+            __typename
           }
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
+          __typename
         }
         eventID
         driverProfileID
@@ -6520,9 +7131,11 @@ export const getRideProfile = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           nextToken
           startedAt
+          __typename
         }
         maxPassengers
         departureTime
@@ -6533,12 +7146,14 @@ export const getRideProfile = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        __typename
       }
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
+      __typename
     }
   }
 `;
@@ -6579,22 +7194,27 @@ export const listRideProfiles = /* GraphQL */ `
           events {
             nextToken
             startedAt
+            __typename
           }
           rides {
             nextToken
             startedAt
+            __typename
           }
           friends {
             nextToken
             startedAt
+            __typename
           }
           conversations {
             nextToken
             startedAt
+            __typename
           }
           photos {
             nextToken
             startedAt
+            __typename
           }
           groupID
           group {
@@ -6607,6 +7227,7 @@ export const listRideProfiles = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           privacySetting {
             id
@@ -6623,10 +7244,12 @@ export const listRideProfiles = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           socialMedia {
             nextToken
             startedAt
+            __typename
           }
           createdAt
           updatedAt
@@ -6634,6 +7257,7 @@ export const listRideProfiles = /* GraphQL */ `
           _deleted
           _lastChangedAt
           profilePrivacySettingId
+          __typename
         }
         ride {
           id
@@ -6665,12 +7289,14 @@ export const listRideProfiles = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           eventID
           driverProfileID
           passengers {
             nextToken
             startedAt
+            __typename
           }
           maxPassengers
           departureTime
@@ -6681,15 +7307,18 @@ export const listRideProfiles = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          __typename
         }
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
+        __typename
       }
       nextToken
       startedAt
+      __typename
     }
   }
 `;
@@ -6736,22 +7365,27 @@ export const syncRideProfiles = /* GraphQL */ `
           events {
             nextToken
             startedAt
+            __typename
           }
           rides {
             nextToken
             startedAt
+            __typename
           }
           friends {
             nextToken
             startedAt
+            __typename
           }
           conversations {
             nextToken
             startedAt
+            __typename
           }
           photos {
             nextToken
             startedAt
+            __typename
           }
           groupID
           group {
@@ -6764,6 +7398,7 @@ export const syncRideProfiles = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           privacySetting {
             id
@@ -6780,10 +7415,12 @@ export const syncRideProfiles = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           socialMedia {
             nextToken
             startedAt
+            __typename
           }
           createdAt
           updatedAt
@@ -6791,6 +7428,7 @@ export const syncRideProfiles = /* GraphQL */ `
           _deleted
           _lastChangedAt
           profilePrivacySettingId
+          __typename
         }
         ride {
           id
@@ -6822,12 +7460,14 @@ export const syncRideProfiles = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           eventID
           driverProfileID
           passengers {
             nextToken
             startedAt
+            __typename
           }
           maxPassengers
           departureTime
@@ -6838,15 +7478,18 @@ export const syncRideProfiles = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          __typename
         }
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
+        __typename
       }
       nextToken
       startedAt
+      __typename
     }
   }
 `;
@@ -6895,22 +7538,27 @@ export const rideProfilesByProfileId = /* GraphQL */ `
           events {
             nextToken
             startedAt
+            __typename
           }
           rides {
             nextToken
             startedAt
+            __typename
           }
           friends {
             nextToken
             startedAt
+            __typename
           }
           conversations {
             nextToken
             startedAt
+            __typename
           }
           photos {
             nextToken
             startedAt
+            __typename
           }
           groupID
           group {
@@ -6923,6 +7571,7 @@ export const rideProfilesByProfileId = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           privacySetting {
             id
@@ -6939,10 +7588,12 @@ export const rideProfilesByProfileId = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           socialMedia {
             nextToken
             startedAt
+            __typename
           }
           createdAt
           updatedAt
@@ -6950,6 +7601,7 @@ export const rideProfilesByProfileId = /* GraphQL */ `
           _deleted
           _lastChangedAt
           profilePrivacySettingId
+          __typename
         }
         ride {
           id
@@ -6981,12 +7633,14 @@ export const rideProfilesByProfileId = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           eventID
           driverProfileID
           passengers {
             nextToken
             startedAt
+            __typename
           }
           maxPassengers
           departureTime
@@ -6997,15 +7651,18 @@ export const rideProfilesByProfileId = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          __typename
         }
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
+        __typename
       }
       nextToken
       startedAt
+      __typename
     }
   }
 `;
@@ -7054,22 +7711,27 @@ export const rideProfilesByRideId = /* GraphQL */ `
           events {
             nextToken
             startedAt
+            __typename
           }
           rides {
             nextToken
             startedAt
+            __typename
           }
           friends {
             nextToken
             startedAt
+            __typename
           }
           conversations {
             nextToken
             startedAt
+            __typename
           }
           photos {
             nextToken
             startedAt
+            __typename
           }
           groupID
           group {
@@ -7082,6 +7744,7 @@ export const rideProfilesByRideId = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           privacySetting {
             id
@@ -7098,10 +7761,12 @@ export const rideProfilesByRideId = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           socialMedia {
             nextToken
             startedAt
+            __typename
           }
           createdAt
           updatedAt
@@ -7109,6 +7774,7 @@ export const rideProfilesByRideId = /* GraphQL */ `
           _deleted
           _lastChangedAt
           profilePrivacySettingId
+          __typename
         }
         ride {
           id
@@ -7140,12 +7806,14 @@ export const rideProfilesByRideId = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            __typename
           }
           eventID
           driverProfileID
           passengers {
             nextToken
             startedAt
+            __typename
           }
           maxPassengers
           departureTime
@@ -7156,15 +7824,18 @@ export const rideProfilesByRideId = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          __typename
         }
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
+        __typename
       }
       nextToken
       startedAt
+      __typename
     }
   }
 `;
