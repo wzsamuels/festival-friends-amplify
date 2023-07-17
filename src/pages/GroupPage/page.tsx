@@ -1,10 +1,8 @@
-import {useAuthenticator} from "@aws-amplify/ui-react";
 import {Link} from "react-router-dom";
 import Button from "../../components/common/Button/Button";
 import React from "react";
 
 const GroupPage = () => {
-  const { authStatus } = useAuthenticator(context => [context.authStatus]);
 
     return (
       <>
@@ -13,21 +11,10 @@ const GroupPage = () => {
             <h1 className="m-4 text-xl">
               Connect with your community!
             </h1>
-            { authStatus !== "authenticated" ?
-              <>
-                <p>The Event Friends groups feature allows university students and teachers to connect with each other in order to share events and make friends.</p>
-                <p className="my-2">Content creators and influencers can also connect with brands and sponsored events.</p>
-                <p className="my-2">Sign in to get started!</p>
-                <Link to="/account">
-                  <Button>Sign In</Button>
-                </Link>
-              </>
-              :
-              <div className="flex justify-center gap-4">
-                <Link to="university"><Button>University Groups</Button></Link>
-                <Link to="brand"><Button>Influencer Groups</Button></Link>
-              </div>
-            }
+            <div className="flex justify-center gap-4">
+              <Link to="university"><Button>University Groups</Button></Link>
+              <Link to="brand"><Button>Influencer Groups</Button></Link>
+            </div>
           </div>
         </div>
       </>
