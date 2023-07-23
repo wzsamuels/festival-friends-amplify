@@ -11,6 +11,13 @@ import Spinner from "../../components/common/Spinner/Spinner";
 import { FixedSizeGrid as Grid, GridChildComponentProps } from 'react-window';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import useEventStore from "../../stores/eventStore";
+import {Link} from "react-router-dom";
+import {AnimatePresence, motion} from "framer-motion";
+import {XMarkIcon} from "@heroicons/react/24/solid";
+import {ModalProps} from "../../@types/modal";
+import Modal from "../../components/common/Modal/Modal";
+
+import promoteImage from "../../assests/images/promote_image.jpeg"
 
 const segmentItems = [
   {
@@ -41,6 +48,11 @@ const EventPage = () => {
   const { loadingEvents, error} = useEventStore();
   const [isSearchModalOpen, setIsSearchModalOpen] = useState<boolean>(false);
   const [eventType, setEventType] = useState<string>("all");
+  const [shareOpen, setShareOpen] = useState(true);
+  const [promoteModalOpen, setPromoteModalOpen] = useState(false);
+  //const [attendees, setAttendees] = useState<Map
+
+  // TODO Determine is performance boost from fetching attendees here instead of inside each EventCard component
 
   const eventMapping = useMemo<{ [key: string]: Event[] }>(() => {
     const eventTypes: { [key: string]: EventType } = {
@@ -149,6 +161,36 @@ const EventPage = () => {
           }}
         </AutoSizer>
       </div>
+      <AnimatePresence>
+        {shareOpen && (
+          <motion.div
+            className="fixed w-full flex justify-center"
+            initial={{opacity: 0, bottom:  -50}}
+            animate={{opacity: 1, bottom:  60}}
+            exit={{opacity: 0, bottom:  -50}}
+            transition={{duration: 1, type: "spring"}}
+          >
+            <div className="max-w-xl z-10 shadow-xl bg-darkYellow px-2 md:px-4 md:py-2 py-1 text-base md:text-lg flex flex-nowrap">
+              <div>
+                Share Event Friends and receive a free event posting!
+                <span
+                  className="underline cursor-pointer"
+                  onClick={() => {setPromoteModalOpen(true); setShareOpen(false)}}
+                >
+                  {' '}Learn more.
+                </span>
+              </div>
+              <div className="px-2 cursor-pointer" onClick={() => setShareOpen(false)}>
+                <XMarkIcon height={20} />
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+      <PromoteModal
+        isOpen={promoteModalOpen}
+        setIsOpen={setPromoteModalOpen}
+      />
       <EventSearchModal
         isOpen={isSearchModalOpen}
         setIsOpen={setIsSearchModalOpen}
@@ -156,5 +198,17 @@ const EventPage = () => {
     </>
   );
 };
+
+const PromoteModal = ({isOpen, setIsOpen} : ModalProps) => {
+  return (
+    <Modal isOpen={isOpen} setIsOpen={setIsOpen} className="max-w-xl" title="Share Events Friends and Promote Your Event!">
+      <img src={promoteImage} className="w-full h-full"/>
+      <div className="p-4">
+        <h1 className="text-xl my-4">Want to share your event with friends and help build our community?</h1>
+        <p className="">Send us a link to a social media post sharing https://www.eventfriends.app and we'll give you a free event posting!</p>
+      </div>
+    </Modal>
+  )
+}
 
 export default EventPage;
