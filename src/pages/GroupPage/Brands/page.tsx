@@ -111,7 +111,7 @@ const BrandPage = () => {
 
   if (!group) {
     return (
-      <div className='bg-[url("https://twinsilver.mo.cloudinary.net/eventfriends/public/website/Untitled-2.png?tx=q_auto,f_auto")] w-full bg-cover relative min-h-[calc(100vh-5rem)] h-full'>
+      <div className='bg-[url("https://twinsilver.mo.cloudinary.net/eventfriends/public/website/friends.png?tx=q_auto,f_auto")] w-full bg-cover relative min-h-[calc(100vh-5rem)] h-full'>
         <div className="bg-white p-4 rounded-xl w-full max-w-lg absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
           <h1 className="my-4 text-lg md:text-xl">
             This feature is restricted to influencers, brands, and content creators only.
