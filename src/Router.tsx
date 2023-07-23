@@ -2,14 +2,18 @@ import { useAuthenticator } from "@aws-amplify/ui-react";
 import React, {lazy, Suspense, useEffect} from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {createBrowserRouter, RouterProvider} from "react-router-dom";
 // Tailwind CSS
 import "./index.css";
+import '@aws-amplify/ui-react/styles.css';
+
 import useDataClearedStore from "./stores/dataClearedStore";
 import useProfileStore from "./stores/profileStore";
 import useFriendStore from "./stores/friendProfileStore";
 import {QueryClient, QueryClientProvider} from "react-query";
 import useEventStore from "./stores/eventStore";
+import {DataStore} from "@aws-amplify/datastore";
+import useQueueStore from "./stores/queueStore";
 
 const LoadingState = lazy(() => import("./components/ui/LoadingState"));
 const LayoutErrorBoundary = lazy(() => import("./components/ui/LayoutErrorBoundary"));
@@ -46,20 +50,25 @@ const Router = () => {
   const fetchUserProfile = useProfileStore(state => state.fetchUserProfile)
   const userProfile = useProfileStore(state => state.userProfile)
   const fetchFriendProfiles = useFriendStore(state => state.fetchFriends)
-  const sub = user?.username as string;
+  const email = user?.attributes?.email;
   const dataCleared = useDataClearedStore(state => state.dataCleared)
   const { route } = useAuthenticator((context) => [context.route]);
   const fetchEvents = useEventStore(state => state.fetchEvents)
+  const { dataStoreQueue } = useQueueStore();
 
   useEffect(() => {
-    fetchEvents();
+    DataStore.start().then(() => console.log("DataStore started"))
+    fetchEvents()
   }, []);
 
   useEffect(() => {
-    if(!dataCleared || !sub || route !== 'authenticated') return;
-
-    fetchUserProfile(sub, route)
-  }, [sub, dataCleared, route]);
+    if(!dataCleared || !email || route !== 'authenticated') return;
+    console.log("Data cleared: ", dataCleared, ", email: ", email, ", route: ", route)
+    dataStoreQueue.enqueue(async () => {
+      //
+      fetchUserProfile(email, route);
+    });
+  }, [email, dataCleared, route]);
 
   useEffect(() => {
     if(!dataCleared || !userProfile) return;
@@ -170,11 +179,12 @@ const Router = () => {
           element: <SupportPage/>
         },
         {
-          path: "/friends/profile/:profileId",
+          path: "friends/profile/:profileId",
           element: <ProfilePage />,
         },
       ],
     },
+
   ]);
 
   return (
