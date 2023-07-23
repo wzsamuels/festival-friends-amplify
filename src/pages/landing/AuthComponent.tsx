@@ -15,7 +15,7 @@ const AuthComponent = () => {
 
   if (route !== "authenticated") {
     return (
-      <div className="w-screen h-screen translate-y-[-15%] flex justify-center items-center">
+      <div className="w-screen h-screen translate-y-[-50%] top-1/2 absolute flex justify-center items-center">
         <Authenticator />
       </div>
     );
