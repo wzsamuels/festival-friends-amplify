@@ -7,6 +7,10 @@ const config: CapacitorConfig = {
   bundledWebRuntime: false,
   "ios": {
     "contentInset": "always"
+  },
+  "server": {
+    cleartext: true,
+    "androidScheme": "eventfriends",
   }
 };
 
