@@ -24,15 +24,19 @@ const useProfileStore = create<ProfileStore>((set: SetState<ProfileStore>,  get)
     set({loadingUserProfile: true})
     try {
       console.log("Fetching profile, ", email, route)
-      //const profile = await DataStore.query(Profile, c => c.email.eq(email))
+      /*
       const profileSub = DataStore.observeQuery(Profile, c => c.email.eq(email)).subscribe(({items}) =>
       {
         set({userProfile: items[0]})
         console.log("Profile fetched: ", items)
       })
-      //set({userProfile: profile[0]})
-      //console.log("Profile fetched: ", profile[0])
-      set({subscription: profileSub})
+
+       */
+     // set({subscription: profileSub})
+      const profile = await DataStore.query(Profile, c => c.email.eq(email))
+      set({userProfile: profile[0]})
+      console.log("Profile fetched: ", profile[0])
+
     }
     catch (e) {
       console.error("Error fetching user profile in ProfileStore: ", e)
