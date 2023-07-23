@@ -11,13 +11,12 @@ import Spinner from "../../components/common/Spinner/Spinner";
 import { FixedSizeGrid as Grid, GridChildComponentProps } from 'react-window';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import useEventStore from "../../stores/eventStore";
-import {Link} from "react-router-dom";
 import {AnimatePresence, motion} from "framer-motion";
 import {XMarkIcon} from "@heroicons/react/24/solid";
 import {ModalProps} from "../../@types/modal";
 import Modal from "../../components/common/Modal/Modal";
 
-import promoteImage from "../../assests/images/promote_image.jpeg"
+import promoteImage from "../../assests/images/promote_image.jpg"
 
 const segmentItems = [
   {
