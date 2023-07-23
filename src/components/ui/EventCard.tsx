@@ -10,6 +10,7 @@ import {DataStore} from "@aws-amplify/datastore";
 import {CheckIcon} from "@heroicons/react/20/solid";
 import useDataClearedStore from "../../stores/dataClearedStore";
 import useQueueStore from "../../stores/queueStore";
+
 interface EventCardProps {
   event: Event;
   className?: string;
@@ -63,7 +64,10 @@ const EventCard = ({ event, className }: EventCardProps) => {
       console.log(`${userProfile.firstName} ${userProfile.lastName} has been removed from the event attendees list`);
     } else {
       // If the user is not attending, add them to the attendees list
-      const newEventProfile = await joinEvent(event, userProfile);
+      const latestEvent = await DataStore.query(Event, event.id);
+      console.log("Latest event: ", latestEvent);
+      const newEventProfile = await joinEvent(latestEvent, userProfile);
+      console.log(newEventProfile)
       setAttendeeProfiles(state => [...state, userProfile])
       setEventProfile(newEventProfile)
       console.log(`${userProfile.firstName} ${userProfile.lastName} has been added to the event attendees list`);
@@ -90,6 +94,7 @@ const EventCard = ({ event, className }: EventCardProps) => {
         </div>
       </Link>
       <div className="p-2 text-base md:text-lg  h-full items-end">
+        {/*<div>Distance: {Number(distance).toFixed(0)} miles</div>*/}
         {userProfile &&
           <>
             <div>
@@ -108,6 +113,7 @@ const EventCard = ({ event, className }: EventCardProps) => {
                 )}
               </button>
             </div>
+            {/*
             <div>
               <button
                 className="mb-2">
@@ -122,6 +128,7 @@ const EventCard = ({ event, className }: EventCardProps) => {
                 }
               </button>
             </div>
+            */}
 
           </>
         }
