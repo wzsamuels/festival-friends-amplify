@@ -75,6 +75,8 @@ export const createProfile = /* GraphQL */ `
             state
             city
             country
+            latitude
+            longitude
             startDate
             endDate
             type
@@ -404,6 +406,8 @@ export const createProfile = /* GraphQL */ `
             state
             city
             country
+            latitude
+            longitude
             startDate
             endDate
             type
@@ -591,6 +595,8 @@ export const updateProfile = /* GraphQL */ `
             state
             city
             country
+            latitude
+            longitude
             startDate
             endDate
             type
@@ -920,6 +926,8 @@ export const updateProfile = /* GraphQL */ `
             state
             city
             country
+            latitude
+            longitude
             startDate
             endDate
             type
@@ -1107,6 +1115,8 @@ export const deleteProfile = /* GraphQL */ `
             state
             city
             country
+            latitude
+            longitude
             startDate
             endDate
             type
@@ -1436,6 +1446,8 @@ export const deleteProfile = /* GraphQL */ `
             state
             city
             country
+            latitude
+            longitude
             startDate
             endDate
             type
@@ -1692,6 +1704,8 @@ export const createEvent = /* GraphQL */ `
       state
       city
       country
+      latitude
+      longitude
       startDate
       endDate
       type
@@ -1720,6 +1734,8 @@ export const createEvent = /* GraphQL */ `
             state
             city
             country
+            latitude
+            longitude
             startDate
             endDate
             type
@@ -1836,6 +1852,8 @@ export const createEvent = /* GraphQL */ `
             state
             city
             country
+            latitude
+            longitude
             startDate
             endDate
             type
@@ -1880,6 +1898,8 @@ export const createEvent = /* GraphQL */ `
             state
             city
             country
+            latitude
+            longitude
             startDate
             endDate
             type
@@ -1946,6 +1966,8 @@ export const updateEvent = /* GraphQL */ `
       state
       city
       country
+      latitude
+      longitude
       startDate
       endDate
       type
@@ -1974,6 +1996,8 @@ export const updateEvent = /* GraphQL */ `
             state
             city
             country
+            latitude
+            longitude
             startDate
             endDate
             type
@@ -2090,6 +2114,8 @@ export const updateEvent = /* GraphQL */ `
             state
             city
             country
+            latitude
+            longitude
             startDate
             endDate
             type
@@ -2134,6 +2160,8 @@ export const updateEvent = /* GraphQL */ `
             state
             city
             country
+            latitude
+            longitude
             startDate
             endDate
             type
@@ -2200,6 +2228,8 @@ export const deleteEvent = /* GraphQL */ `
       state
       city
       country
+      latitude
+      longitude
       startDate
       endDate
       type
@@ -2228,6 +2258,8 @@ export const deleteEvent = /* GraphQL */ `
             state
             city
             country
+            latitude
+            longitude
             startDate
             endDate
             type
@@ -2344,6 +2376,8 @@ export const deleteEvent = /* GraphQL */ `
             state
             city
             country
+            latitude
+            longitude
             startDate
             endDate
             type
@@ -2388,6 +2422,8 @@ export const deleteEvent = /* GraphQL */ `
             state
             city
             country
+            latitude
+            longitude
             startDate
             endDate
             type
@@ -2456,6 +2492,8 @@ export const createRide = /* GraphQL */ `
         state
         city
         country
+        latitude
+        longitude
         startDate
         endDate
         type
@@ -2629,6 +2667,8 @@ export const updateRide = /* GraphQL */ `
         state
         city
         country
+        latitude
+        longitude
         startDate
         endDate
         type
@@ -2802,6 +2842,8 @@ export const deleteRide = /* GraphQL */ `
         state
         city
         country
+        latitude
+        longitude
         startDate
         endDate
         type
@@ -5871,6 +5913,8 @@ export const createGroup = /* GraphQL */ `
           state
           city
           country
+          latitude
+          longitude
           startDate
           endDate
           type
@@ -6043,6 +6087,8 @@ export const updateGroup = /* GraphQL */ `
           state
           city
           country
+          latitude
+          longitude
           startDate
           endDate
           type
@@ -6215,6 +6261,8 @@ export const deleteGroup = /* GraphQL */ `
           state
           city
           country
+          latitude
+          longitude
           startDate
           endDate
           type
@@ -6558,6 +6606,8 @@ export const createEventProfile = /* GraphQL */ `
         state
         city
         country
+        latitude
+        longitude
         startDate
         endDate
         type
@@ -6837,6 +6887,8 @@ export const updateEventProfile = /* GraphQL */ `
         state
         city
         country
+        latitude
+        longitude
         startDate
         endDate
         type
@@ -7116,6 +7168,8 @@ export const deleteEventProfile = /* GraphQL */ `
         state
         city
         country
+        latitude
+        longitude
         startDate
         endDate
         type
@@ -7397,6 +7451,8 @@ export const createRideProfile = /* GraphQL */ `
           state
           city
           country
+          latitude
+          longitude
           startDate
           endDate
           type
@@ -7671,6 +7727,8 @@ export const updateRideProfile = /* GraphQL */ `
           state
           city
           country
+          latitude
+          longitude
           startDate
           endDate
           type
@@ -7945,6 +8003,8 @@ export const deleteRideProfile = /* GraphQL */ `
           state
           city
           country
+          latitude
+          longitude
           startDate
           endDate
           type

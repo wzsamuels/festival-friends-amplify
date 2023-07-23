@@ -50,7 +50,6 @@
         "email": {}
       },
       "analytics": {
-        "eventfriends": {},
         "Pinpoint": {
           "Name": "eventfriends-staging",
           "Id": "d5f9d4eb51a745bcbf04940649499be1",

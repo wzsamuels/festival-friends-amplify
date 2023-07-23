@@ -1,10 +1,5 @@
 {
-  "analytics": {
-    "eventfriends": {
-      "providerPlugin": "awscloudformation",
-      "service": "Pinpoint"
-    }
-  },
+  "analytics": {},
   "api": {
     "email": {
       "dependsOn": [
@@ -166,14 +161,7 @@
       "service": "Lambda"
     }
   },
-  "notifications": {
-    "eventfriends": {
-      "channels": [
-        "FCM"
-      ],
-      "service": "Pinpoint"
-    }
-  },
+  "notifications": {},
   "parameters": {
     "AMPLIFY_analytics_Pinpoint_Id": {
       "usedBy": [

@@ -72,6 +72,8 @@ export const getProfile = /* GraphQL */ `
             state
             city
             country
+            latitude
+            longitude
             startDate
             endDate
             type
@@ -401,6 +403,8 @@ export const getProfile = /* GraphQL */ `
             state
             city
             country
+            latitude
+            longitude
             startDate
             endDate
             type
@@ -1256,6 +1260,8 @@ export const getEvent = /* GraphQL */ `
       state
       city
       country
+      latitude
+      longitude
       startDate
       endDate
       type
@@ -1284,6 +1290,8 @@ export const getEvent = /* GraphQL */ `
             state
             city
             country
+            latitude
+            longitude
             startDate
             endDate
             type
@@ -1400,6 +1408,8 @@ export const getEvent = /* GraphQL */ `
             state
             city
             country
+            latitude
+            longitude
             startDate
             endDate
             type
@@ -1444,6 +1454,8 @@ export const getEvent = /* GraphQL */ `
             state
             city
             country
+            latitude
+            longitude
             startDate
             endDate
             type
@@ -1512,6 +1524,8 @@ export const listEvents = /* GraphQL */ `
         state
         city
         country
+        latitude
+        longitude
         startDate
         endDate
         type
@@ -1619,6 +1633,8 @@ export const syncEvents = /* GraphQL */ `
         state
         city
         country
+        latitude
+        longitude
         startDate
         endDate
         type
@@ -1728,6 +1744,8 @@ export const eventsBySubscriptionID = /* GraphQL */ `
         state
         city
         country
+        latitude
+        longitude
         startDate
         endDate
         type
@@ -1837,6 +1855,8 @@ export const eventsByGroupID = /* GraphQL */ `
         state
         city
         country
+        latitude
+        longitude
         startDate
         endDate
         type
@@ -1935,6 +1955,8 @@ export const getRide = /* GraphQL */ `
         state
         city
         country
+        latitude
+        longitude
         startDate
         endDate
         type
@@ -2110,6 +2132,8 @@ export const listRides = /* GraphQL */ `
           state
           city
           country
+          latitude
+          longitude
           startDate
           endDate
           type
@@ -2212,6 +2236,8 @@ export const syncRides = /* GraphQL */ `
           state
           city
           country
+          latitude
+          longitude
           startDate
           endDate
           type
@@ -2316,6 +2342,8 @@ export const ridesByEventID = /* GraphQL */ `
           state
           city
           country
+          latitude
+          longitude
           startDate
           endDate
           type
@@ -5567,6 +5595,8 @@ export const getGroup = /* GraphQL */ `
           state
           city
           country
+          latitude
+          longitude
           startDate
           endDate
           type
@@ -5741,6 +5771,8 @@ export const listGroups = /* GraphQL */ `
             state
             city
             country
+            latitude
+            longitude
             startDate
             endDate
             type
@@ -5844,6 +5876,8 @@ export const syncGroups = /* GraphQL */ `
             state
             city
             country
+            latitude
+            longitude
             startDate
             endDate
             type
@@ -6107,6 +6141,8 @@ export const getEventProfile = /* GraphQL */ `
         state
         city
         country
+        latitude
+        longitude
         startDate
         endDate
         type
@@ -6306,6 +6342,8 @@ export const listEventProfiles = /* GraphQL */ `
           state
           city
           country
+          latitude
+          longitude
           startDate
           endDate
           type
@@ -6479,6 +6517,8 @@ export const syncEventProfiles = /* GraphQL */ `
           state
           city
           country
+          latitude
+          longitude
           startDate
           endDate
           type
@@ -6654,6 +6694,8 @@ export const eventProfilesByProfileId = /* GraphQL */ `
           state
           city
           country
+          latitude
+          longitude
           startDate
           endDate
           type
@@ -6829,6 +6871,8 @@ export const eventProfilesByEventId = /* GraphQL */ `
           state
           city
           country
+          latitude
+          longitude
           startDate
           endDate
           type
@@ -7075,6 +7119,8 @@ export const getRideProfile = /* GraphQL */ `
           state
           city
           country
+          latitude
+          longitude
           startDate
           endDate
           type
@@ -7269,6 +7315,8 @@ export const listRideProfiles = /* GraphQL */ `
             state
             city
             country
+            latitude
+            longitude
             startDate
             endDate
             type
@@ -7440,6 +7488,8 @@ export const syncRideProfiles = /* GraphQL */ `
             state
             city
             country
+            latitude
+            longitude
             startDate
             endDate
             type
@@ -7613,6 +7663,8 @@ export const rideProfilesByProfileId = /* GraphQL */ `
             state
             city
             country
+            latitude
+            longitude
             startDate
             endDate
             type
@@ -7786,6 +7838,8 @@ export const rideProfilesByRideId = /* GraphQL */ `
             state
             city
             country
+            latitude
+            longitude
             startDate
             endDate
             type

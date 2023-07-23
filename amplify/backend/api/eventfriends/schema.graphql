@@ -21,6 +21,7 @@ type Profile @model @auth(rules: [{ allow: public }]) {
   birthDate: String
   hobbies: String
   gender: String
+  lastEventNotification: AWSDate
   events: [Event] @manyToMany(relationName: "EventProfile")
   rides: [Ride] @manyToMany(relationName: "RideProfile")
   friends: [Friendship] @hasMany(indexName: "byProfile", fields: ["id"])
@@ -58,6 +59,8 @@ type Event @model @auth(rules: [{ allow: public }]) {
   state: String
   city: String!
   country: String
+  latitude: Float
+  longitude: Float
   startDate: AWSDate!
   endDate: AWSDate!
   type: EventType!

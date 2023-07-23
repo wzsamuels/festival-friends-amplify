@@ -593,6 +593,20 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "latitude": {
+                    "name": "latitude",
+                    "isArray": false,
+                    "type": "Float",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "longitude": {
+                    "name": "longitude",
+                    "isArray": false,
+                    "type": "Float",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "startDate": {
                     "name": "startDate",
                     "isArray": false,
@@ -1729,5 +1743,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "9fb777a963b33992f5431a52c9933204"
+    "version": "b9fbe7371541fff7e4d81b6a2527b120"
 };
