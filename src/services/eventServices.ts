@@ -38,7 +38,11 @@ export const getEventByRide = async (ride: Ride) => {
   }
 }
 
-export const joinEvent = async (event: Event, profile: Profile) => {
+export const joinEvent = async (event: Event | null | undefined, profile: Profile) => {
+  if(!event) {
+    console.error("No event provided")
+    return null;
+  }
   try {
     return await DataStore.save(
       new EventProfile({
@@ -149,11 +153,18 @@ export const updateEvent = async (eventID: string, data: EventInputs) => {
       })
       newImage = `event-images/${id}`;
     }
+
+    const geocoder = new google.maps.Geocoder();
+    const geocode = await geocoder.geocode({address: `${latestEvent.city}, ${latestEvent.state}`})
+    const latitude = geocode.results[0].geometry.location.lat();
+    const longitude = geocode.results[0].geometry.location.lng();
+
     return await DataStore.save(Event.copyOf(latestEvent, updatedEvent => {
       updatedEvent.name = data.name;
       updatedEvent.genre = data.genre;
       updatedEvent.state = data.state;
       updatedEvent.city = data.city;
+      updatedEvent.country = data.country;
       updatedEvent.address = data.address;
       updatedEvent.startDate = data.startDate;
       updatedEvent.endDate = data.endDate;
@@ -162,6 +173,8 @@ export const updateEvent = async (eventID: string, data: EventInputs) => {
       updatedEvent.url = data.url;
       updatedEvent.ticketURL = data.ticketURL;
       newImage && (updatedEvent.image = newImage);
+      updatedEvent.latitude = latitude;
+      updatedEvent.longitude = longitude;
     }))
   } catch (e) {
     console.log("Error updating event", e)
