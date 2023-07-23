@@ -43,36 +43,6 @@ const LandingPage = () => {
     });
   }, []);
 
-  const scheduleNotification = async () => {
-    const notif = {
-      title: 'Hello',
-      body: 'This is a local notification',
-      id: 1,
-      schedule: { at: new Date(Date.now() + 1000 * 5) }, // 5 seconds from now
-    };
-
-    await LocalNotifications.requestPermissions();
-    await LocalNotifications.schedule({ notifications: [notif] });
-    const notification = new Notification("To do list", { body: "test", icon: logo });
-  };
-
-
-  useEffect(() => {
-    LocalNotifications.schedule({
-      notifications: [
-        {
-          title: "Title",
-          body: "Body",
-          id: 1,
-         // schedule: { at: new Date(Date.now()) }, // 5 seconds from now
-          actionTypeId: "",
-          extra: null
-        }
-      ]
-    }).then(res => {
-      console.log(res);
-    });
-  }, [])
 
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
@@ -87,9 +57,9 @@ const LandingPage = () => {
     return <AuthComponent/>
   }
 
-  // snap-mandatory snap-y
+  //snap-mandatory snap-y
   return (
-    <div ref={ref} className=" relative overflow-y-scroll h-full scroll-smooth bg-black overflow-x-hidden">
+    <div ref={ref} className=" relative overflow-y-scroll h-full scroll-smooth bg-black overflow-x-hidden ">
 
       <div className="w-full h-screen bg-black snap-start">
         <div className="flex flex-col items-center h-full">
@@ -146,7 +116,8 @@ const LandingPage = () => {
             </motion.svg>
             <div className=" bg-lightYellow rounded-full h-[200px] md:h-[300px] w-[200px] md:w-[300px] absolute top z-0"/>
           </div>
-          <div className="flex">
+          <Button className="text-2xl my-8" onClick={() => setLoggingIn(true)}>Login</Button>
+          <div className="flex gap-4">
             <div className="flex-1 ">
               <img className="h-full max-h-[75px]" src={googleBadge}/>
             </div>
@@ -154,13 +125,17 @@ const LandingPage = () => {
               <img className="h-full max-h-[150px]" src={appleBadge}/>
             </div>
           </div>
-          <Button onClick={() => setLoggingIn(true)}>Login</Button>
-          <Button onClick={scheduleNotification}>Schedule Notification</Button>
+            <div className="text-lightYellow text-2xl my-4">Mobile Apps Coming soon!</div>
+
+          {/*<Button onClick={scheduleNotification}>Schedule Notification</Button>*/}
         </div>
       </div>
+      {/*
       <Div2/>
       <Div3/>
+      <Div4/>
       <motion.div className="fixed left-0 right-0 h-2 bottom-0 bg-darkGreen z-50" style={{ scaleX }} />
+      */}
     </div>
   );
 }
@@ -172,10 +147,10 @@ const Div2 = () => {
   return (
     <ScrollTrackDiv progress={setProgress1}>
       <motion.div
-        className="bg-lightYellow min-h-[800px] relative z-20 snap-start w-full"
+        className="bg-lightYellow min-h-[800px] relative z-20 snap-center w-full"
         transition={{ ease: "linear", duration: 1, delay: .7}}
         ref={ref}
-        style={{opacity: progress1}}
+       style={{opacity: progress1}}
       >
         <motion.div className="text-5xl text-center m-4 w-full"
         >
@@ -195,14 +170,14 @@ const Div2 = () => {
             className="text-lightYellow" style={{textShadow: "-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black"}}>Upcoming Events</motion.div>
         </motion.div>
         <motion.img
-          className="w-full max-w-[300px] absolute border border-black mt-8"
-          initial={{left: "-300px", top: "50%", rotate: 45}}
-          whileInView={{left:  "50%", top: "10%", rotate: 45}}
+          className="w-full  max-w-[200px] md:max-w-[300px] absolute border border-black mt-8"
+          initial={{left: "0%", top: "50%", rotate: 45}}
+          whileInView={{left:  "50%", top: "15%", rotate: 45}}
           transition={{duration: 1, ease: "linear"}}
           src={ss1}/>
         <motion.img
           className="w-full max-w-[300px] absolute border border-black mt-8"
-          initial={{right: "-300px", rotate: 45}}
+          initial={{right: "-5%", rotate: 45}}
           whileInView={{right:  "50%", rotate: 45}}
           transition={{duration: 1, ease: "linear"}}
           src={ss2}/>
@@ -212,82 +187,36 @@ const Div2 = () => {
   )
 }
 
-const Div4 = () => {
-  const ref = useRef(null);
-  const [progress, setProgress] = useState(0);
-
-  return (
-    <ScrollTrackDiv progress={setProgress} className="flex justify-center">
-    <motion.div
-      className="my-8 min-h-[800px] w-full max-w-[1000px] bg-black snap-start text-5xl relative z-30 text-lightYellow"
-      ref={ref}
-      style={{opacity: progress}}
-    >
-      <motion.div
-        className="left-1/2"
-        whileInView={{opacity:1, transform: "translateX(0%)"}}
-        initial={{opacity: 0, transform: "translateX(-100%)"}}
-        transition={{duration: 1, ease: "circIn"}}
-      >
-        Discover
-      </motion.div>
-      <motion.div
-        whileInView={{opacity:1, transform: "translateX(0%)"}}
-        initial={{opacity: 0, transform: "translateX(-100%)"}}
-        transition={{duration: 1.3, ease: "circIn", delay: 0.5}}
-        className="text-lightYellow" style={{textShadow: "-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black"}}>
-        Upcoming Events
-      </motion.div>
-      <motion.img
-        className="w-full max-w-[200px] md:max-w-[300px] absolute  border border-black mt-8"
-        initial={{rotateY: 180, left: "95%"}}
-        whileInView={{rotateY: 0, left: "5%"}}
-        transition={{duration: 1, ease: "easeOut"}}
-        src={ss1}
-      />
-      <motion.img
-        className="w-full max-w-[200px] md:max-w-[300px] absolute border border-black mt-8"
-        initial={{rotateY: 180, right: "95%"}}
-        whileInView={{rotateY: 0, right: "5%"}}
-        transition={{duration: 1, ease: "easeOut"}}
-        src={ss2}
-      />
-    </motion.div>
-    </ScrollTrackDiv>
-  )
-}
-
 const Div3 = () => {
   const ref = useRef(null);
-  const {scrollYProgress} = useScroll()
   const [progress, setProgress] = useState(0);
+
   return (
     <ScrollTrackDiv progress={setProgress} className="flex justify-center">
       <motion.div
-        className="my-8 min-h-[800px] w-full max-w-[1000px] bg-black snap-start text-5xl relative z-30 text-lightYellow"
+        className="my-8 min-h-[800px] max-w-[1000px] text-center w-full bg-black snap-start text-5xl relative z-30 text-lightYellow"
         ref={ref}
         style={{opacity: progress}}
       >
         <motion.div
-          className="left-1/2"
-          whileInView={{opacity:1, transform: "translateX(0%)"}}
-          initial={{opacity: 0, transform: "translateX(-100%)"}}
-          transition={{duration: 1, ease: "circIn"}}
+          initial={{ opacity: 0, transform: "translateY(100%)" }}
+          whileInView={{ opacity:1, transform: "translateY(0%)", repeatCount: 2}}
+          transition={{ duration: 1, ease: "backIn" }}
         >
-          Discover
+          Connect
         </motion.div>
         <motion.div
-          whileInView={{opacity:1, transform: "translateX(0%)"}}
-          initial={{opacity: 0, transform: "translateX(-100%)"}}
-          transition={{duration: 1.3, ease: "circIn", delay: 0.5}}
+          initial={{ opacity: 0, transform: "translateY(-100%)" }}
+          whileInView={{ opacity:1, transform: "translateY(0%)", repeatCount: 2}}
+          transition={{duration: 1, ease: "backIn"}}
           className="text-lightYellow" style={{textShadow: "-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black"}}>
-          Upcoming Events
+          With Friends
         </motion.div>
         <motion.img
           className="w-full max-w-[200px] md:max-w-[300px] absolute  border border-black mt-8"
           initial={{rotateY: 180, left: "95%"}}
           whileInView={{rotateY: 0, left: "5%"}}
-          transition={{duration: 1, ease: "easeOut"}}
+          transition={{duration: 1}}
           src={ss1}
         />
         <motion.img
@@ -301,6 +230,52 @@ const Div3 = () => {
     </ScrollTrackDiv>
   )
 }
+
+const Div4 = () => {
+  const ref = useRef(null);
+  const [progress, setProgress] = useState(0);
+
+  return (
+    <ScrollTrackDiv progress={setProgress} className="flex justify-center">
+      <motion.div
+        className="mt-8 min-h-[800px] w-full bg-lightYellow snap-start text-5xl relative z-30"
+        ref={ref}
+        style={{opacity: progress}}
+      >
+        <motion.div
+          whileInView={{opacity:1, transform: "translateX(0%)"}}
+          initial={{opacity: 0, transform: "translateX(-100%)"}}
+          transition={{duration: 1, ease: "circIn"}}
+        >
+          Promote
+        </motion.div>
+        <motion.div
+          whileInView={{opacity:1, transform: "translateX(0%)"}}
+          initial={{opacity: 0, transform: "translateX(-100%)"}}
+          transition={{duration: 1.3, ease: "circIn", delay: 0.25}}
+          className="text-lightYellow" style={{textShadow: "-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black"}}>
+          Your Event
+        </motion.div>
+        <motion.img
+          className="w-full max-w-[200px] md:max-w-[300px] absolute  border border-black mt-8"
+          initial={{transform: "translateY(-100%)"}}
+          whileInView={{transform: "translateY(0)"}}
+          transition={{duration: 1, ease: "easeOut"}}
+          src={ss1}
+        />
+        <motion.img
+          className="w-full max-w-[200px] md:max-w-[300px] absolute border border-black mt-8"
+          initial={{transform: "translateY(100%)"}}
+          whileInView={{transform: "translateY(0)"}}
+          transition={{duration: 1, ease: "easeOut"}}
+          src={ss2}
+        />
+      </motion.div>
+    </ScrollTrackDiv>
+  )
+}
+
+
 
 interface ParallaxProps {
   children: ReactNode;
