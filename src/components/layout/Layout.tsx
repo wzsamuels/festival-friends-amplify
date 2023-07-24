@@ -43,7 +43,7 @@ const Layout = () => {
     const userCoords = await Geolocation.getCurrentPosition();
     const events = await getAllEvents();
     const now = new Date();
- //   console.log(`${userCoords.coords.latitude}, ${userCoords.coords.longitude}`)
+    console.log(`Current cords: ${userCoords.coords.latitude}, ${userCoords.coords.longitude}`)
 
 // Set the current date time to the start of the day
     now.setHours(0, 0, 0, 0);
@@ -66,7 +66,7 @@ const Layout = () => {
       return now >= startDate && now <= endDate && miles < 100;
     }));
     const filteredEvents = events.filter((_, idx) => eventMap[idx]);
-    console.log("Filtered Events: ", filteredEvents);
+    console.log(`${filteredEvents.length} Filtered Events: `, filteredEvents);
     if(filteredEvents.length === 0) return;
 
     let text = ""
@@ -81,7 +81,7 @@ const Layout = () => {
             title: "There are events in your area!",
             body: text,
             id: 1,
-            // schedule: { at: new Date(Date.now()) }, // 5 seconds from now
+            //schedule: { at: new Date(Date.now() + 5) }, // 5 seconds from now
             actionTypeId: "",
             extra: null
           }

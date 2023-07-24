@@ -15,8 +15,7 @@ import {AnimatePresence, motion} from "framer-motion";
 import {XMarkIcon} from "@heroicons/react/24/solid";
 import {ModalProps} from "../../@types/modal";
 import Modal from "../../components/common/Modal/Modal";
-
-import promoteImage from "../../assests/images/promote_image.jpg"
+import Button from "../../components/common/Button/Button";
 
 const segmentItems = [
   {
@@ -201,10 +200,13 @@ const EventPage = () => {
 const PromoteModal = ({isOpen, setIsOpen} : ModalProps) => {
   return (
     <Modal isOpen={isOpen} setIsOpen={setIsOpen} className="max-w-xl" title="Share Events Friends and Promote Your Event!">
-      <img src={promoteImage} className="w-full h-full"/>
+      <img src={"https://twinsilver.mo.cloudinary.net/eventfriends/public/website/promote_image.jpg?tx=q_auto,f_auto"} className="w-full h-full"/>
       <div className="p-4">
         <h1 className="text-xl my-4">Want to share your event with friends and help build our community?</h1>
         <p className="">Send us a link to a social media post sharing https://www.eventfriends.app and we'll give you a free event posting!</p>
+        <div className="flex justify-center mt-4">
+          <Button onClick={() => setIsOpen(false)}>OK</Button>
+        </div>
       </div>
     </Modal>
   )

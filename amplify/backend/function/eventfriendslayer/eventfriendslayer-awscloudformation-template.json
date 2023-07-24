@@ -20,48 +20,7 @@
     }
   },
   "Resources": {
-    "LambdaLayerVersiona928b312": {
-      "Type": "AWS::Lambda::LayerVersion",
-      "Properties": {
-        "CompatibleRuntimes": {
-          "Ref": "runtimes"
-        },
-        "Content": {
-          "S3Bucket": {
-            "Ref": "deploymentBucketName"
-          },
-          "S3Key": {
-            "Ref": "s3Key"
-          }
-        },
-        "Description": {
-          "Ref": "description"
-        },
-        "LayerName": {
-          "Fn::Sub": [
-            "eventfriendslayer-${env}",
-            {
-              "env": {
-                "Ref": "env"
-              }
-            }
-          ]
-        }
-      },
-      "DeletionPolicy": "Delete",
-      "UpdateReplacePolicy": "Retain"
-    },
-    "LambdaLayerPermissionPublica928b312": {
-      "Type": "AWS::Lambda::LayerVersionPermission",
-      "Properties": {
-        "Action": "lambda:GetLayerVersion",
-        "LayerVersionArn": {
-          "Ref": "LambdaLayerVersiona928b312"
-        },
-        "Principal": "*"
-      }
-    },
-    "LambdaLayerVersion5f6e44a1": {
+    "LambdaLayerVersion38ea5a9c": {
       "Type": "AWS::Lambda::LayerVersion",
       "Properties": {
         "CompatibleRuntimes": [
@@ -71,9 +30,9 @@
           "S3Bucket": {
             "Ref": "deploymentBucketName"
           },
-          "S3Key": "amplify-builds/eventfriendslayer-LambdaLayerVersion5f6e44a1-build.zip"
+          "S3Key": "amplify-builds/eventfriendslayer-LambdaLayerVersion38ea5a9c-build.zip"
         },
-        "Description": "Updated layer version 2023-07-08T01:08:59.135Z",
+        "Description": "Updated layer version 2023-07-23T02:45:37.338Z",
         "LayerName": {
           "Fn::Sub": [
             "eventfriendslayer-${env}",
@@ -88,11 +47,11 @@
       "DeletionPolicy": "Delete",
       "UpdateReplacePolicy": "Retain"
     },
-    "LambdaLayerPermissionPublic5f6e44a1": {
+    "LambdaLayerPermissionPublic38ea5a9c": {
       "Type": "AWS::Lambda::LayerVersionPermission",
       "Properties": {
         "Action": "lambda:GetLayerVersion",
-        "LayerVersionArn": "arn:aws:lambda:us-east-1:642956558393:layer:eventfriendslayer-staging:46",
+        "LayerVersionArn": "arn:aws:lambda:us-east-1:642956558393:layer:eventfriendslayer-staging:48",
         "Principal": "*"
       }
     }
@@ -100,7 +59,7 @@
   "Outputs": {
     "Arn": {
       "Value": {
-        "Ref": "LambdaLayerVersiona928b312"
+        "Ref": "LambdaLayerVersion38ea5a9c"
       }
     }
   }
