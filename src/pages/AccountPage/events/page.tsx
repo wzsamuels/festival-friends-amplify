@@ -1,15 +1,15 @@
 import {useEffect, useState} from "react";
-import {Event, Profile} from "../../models";
-import {getUserEvents} from "../../services/profileServices";
-import useProfileStore from "../../stores/profileStore";
+import {Event, Profile} from "../../../models";
+import {getUserEvents} from "../../../services/profileServices";
+import useProfileStore from "../../../stores/profileStore";
 import React from "react";
-import Button from "../../components/common/Button/Button";
+import Button from "../../../components/common/Button/Button";
 import {API} from "@aws-amplify/api";
 import {DataStore} from "@aws-amplify/datastore";
-import {ToastData} from "../../types";
-import Toast from "../../components/common/Toast/Toast";
+import {ToastData} from "../../../types";
+import Toast from "../../../components/common/Toast/Toast";
 import {Link} from "react-router-dom";
-import {deleteEvent} from "../../services/eventServices";
+import {deleteEvent} from "../../../services/eventServices";
 
 const AccountEventPage = () => {
   const [events, setEvents] = useState<Event[]>([])

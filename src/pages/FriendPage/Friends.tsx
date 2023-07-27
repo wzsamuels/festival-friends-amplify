@@ -5,13 +5,11 @@ import { Profile } from "../../models";
 import FriendCard, { FriendCardButton } from "../../components/ui/FriendCard";
 import FriendSearchModal from "./Modals/FriendSearchModal";
 import Header from "../../components/layout/Header";
-import Segment from "../../components/common/Segment/Segment";
 import {
   acceptFriendRequest,
   createFriendRequest,
   rejectFriendRequest,
 } from "../../services/friendsService";
-import UnverifiedState from "../../components/ui/UnverifiedState";
 import LoadingState from "../../components/ui/LoadingState";
 import { ToastData } from "../../types";
 import Toast from "../../components/common/Toast/Toast";
@@ -20,10 +18,9 @@ import useDataClearedStore from "../../stores/dataClearedStore";
 import useProfileStore from "../../stores/profileStore";
 import {shallow} from "zustand/shallow";
 import useFriendStore from "../../stores/friendProfileStore";
-import {Link} from "react-router-dom";
-import Button from "../../components/common/Button/Button";
 import { useErrorBoundary } from "react-error-boundary";
 import SegmentSlide from "../../components/common/Segment/SegmentSlide";
+import {IonContent, IonPage} from "@ionic/react";
 
 type FriendType = "accepted" | "sent" | "suggestions" | "pending";
 
@@ -289,6 +286,8 @@ const FriendsPage: React.FC = () => {
   ];
 
   return (
+    <IonPage>
+      <IonContent>
     <div className="flex flex-wrap w-full">
       <Header
         className="min-[375px]:shadow-xl"
@@ -322,6 +321,8 @@ const FriendsPage: React.FC = () => {
         />
       )}
     </div>
+      </IonContent>
+    </IonPage>
   );
 };
 

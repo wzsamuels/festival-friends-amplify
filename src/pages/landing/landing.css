@@ -1,0 +1,7 @@
+.div2 {
+  clip-path: polygon(0 0,100% 0,100% 100%,0 calc(100% - 32px));
+}
+.div3 {
+  clip-path: polygon(0 0,100% 32px,100% 100%,0 100%);
+  margin-top: -22px;
+}

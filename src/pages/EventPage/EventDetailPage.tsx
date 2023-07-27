@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {Profile} from "../../models";
 import FriendCard from "../../components/ui/FriendCard";
-import { Link, useParams } from "react-router-dom";
+import {Link, RouteComponentProps, useParams} from "react-router-dom";
 import Header from "../../components/layout/Header";
 import NewRideModal from "./Modals/NewRideModal";
 import useFriendStore from "../../stores/friendProfileStore";
@@ -14,8 +14,12 @@ import Spinner from "../../components/common/Spinner/Spinner";
 import {useQuery} from "react-query";
 import getErrorMessage from "../../lib/getErrorMessage";
 
-const EventDetailPage = () => {
-  const { id } = useParams();
+type EventPageProps = RouteComponentProps<{
+  id: string;
+}>
+
+const EventDetailPage = ({match} : EventPageProps) => {
+  const id = match.params.id;
   const { route } = useAuthenticator(context => [context.route])
   const { authStatus } = useAuthenticator(context => [context.authStatus])
   const friendProfiles = useFriendStore(state => state.acceptedFriendProfiles)

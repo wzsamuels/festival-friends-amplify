@@ -8,13 +8,11 @@ const config: CapacitorConfig = {
   "ios": {
     "contentInset": "always"
   },
-  /*
   "server": {
+    "url": "http://localhost",
     cleartext: true,
     "androidScheme": "eventfriends",
   }
-
-   */
 };
 
 export default config;

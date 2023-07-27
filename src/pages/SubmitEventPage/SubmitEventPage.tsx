@@ -10,7 +10,7 @@ import getErrorMessage from "../../lib/getErrorMessage";
 import Header from "../../components/layout/Header";
 import {useAuthenticator} from "@aws-amplify/ui-react";
 import useProfileStore from "../../stores/profileStore";
-import {Link, useSearchParams} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 import EventForm from "../../components/ui/EventForm";
 import {EventInputs} from "../../types";
 import {Capacitor} from "@capacitor/core";
@@ -19,11 +19,17 @@ import {CheckIcon} from "@heroicons/react/24/solid";
 type EventPlan = "monthly" | "daily"
 type FormState = "plan" | "details" | "success"
 
+function useQuery() {
+  const { search } = useLocation();
+
+  return React.useMemo(() => new URLSearchParams(search), [search]);
+}
+
 const SubmitEventPage = () => {
   const [plan, setPlan] = useState<EventPlan>("monthly")
   const [formState, setFormState] = useState<FormState>("plan")
   const [sessionID, setSessionID] = useState("")
-  const [searchParams] = useSearchParams();
+  const searchParams = useQuery();
   const [submitting, setSubmitting] = useState(false);
   const { route } = useAuthenticator((context) => [context.route]);
   const userProfile = useProfileStore((state) => state.userProfile);

@@ -1,12 +1,10 @@
-import { Link, useParams } from "react-router-dom";
+import {Link, RouteComponentProps, useParams} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import {Event, Photo, PrivacySetting, Profile} from "../../models";
 import PhotoImage from "../../components/ui/PhotoImage";
 import Header from "../../components/layout/Header";
 import PhotoModal from "../AccountPage/Modals/PhotoModal";
-import { useNavigate } from "react-router-dom";
 import {BsFlag, BsPerson} from "react-icons/bs";
-import { IoMdArrowBack} from "react-icons/io"
 import getErrorMessage from "../../lib/getErrorMessage";
 import useDataClearedStore from "../../stores/dataClearedStore";
 import {getProfile} from "../../services/profileServices";
@@ -16,7 +14,11 @@ import {getEventsByProfile} from "../../services/eventServices";
 import ReportModal from "./Modals/ReportModal";
 import Image from "../../components/ui/Image";
 
-const ProfilePage = () => {
+type ProfilePageProps = RouteComponentProps<{
+    id: string;
+  }>
+
+const ProfilePage = ({match}: ProfilePageProps) => {
   const [profile, setProfile] = useState<Profile | null | undefined>();
   const [privacySetting, setPrivacySetting] = useState<PrivacySetting>();
   const [profileImage, setProfileImage] = useState("");
@@ -26,10 +28,8 @@ const ProfilePage = () => {
   const [reportModalOpen, setReportModalOpen] = useState(false);
   const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
   const [eventsAttending, setEventsAttending] = useState<Event[]>([]);
-  //const [rides, setRides] = useState<Ride[]>([]);
   const dataCleared = useDataClearedStore(state => state.dataCleared);
-  const { profileId } = useParams();
-  const navigate = useNavigate();
+  const profileId = match.params.id
 
   useEffect(() => {
     if(!dataCleared) return;
@@ -81,9 +81,11 @@ const ProfilePage = () => {
   return (
     <>
       <Header>
+        {/*
         <button className="mx-4 text-xl flex items-center" onClick={() => navigate(-1)}>
           <IoMdArrowBack className="mr-2" />Back
         </button>
+         */}
       </Header>
       <section
         className="flex justify-center flex-col relative w-full h-screen  max-h-[500px]">

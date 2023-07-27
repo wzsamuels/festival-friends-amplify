@@ -16,6 +16,7 @@ import {XMarkIcon} from "@heroicons/react/24/solid";
 import {ModalProps} from "../../@types/modal";
 import Modal from "../../components/common/Modal/Modal";
 import Button from "../../components/common/Button/Button";
+import {IonContent, IonPage} from "@ionic/react";
 
 const segmentItems = [
   {
@@ -117,7 +118,8 @@ const EventPage = () => {
   const numColumns = window.innerWidth > 1400 ? 4 : window.innerWidth > 1200 ? 3 : window.innerWidth > 800 ? 2 : 1; // replace these values with actual breakpoint widths
 
   return (
-    <>
+    <IonPage>
+      <IonContent>
       <Header
         className="min-[400px]:shadow-xl"
         onSearch={() => setIsSearchModalOpen(true)}>
@@ -193,7 +195,8 @@ const EventPage = () => {
         isOpen={isSearchModalOpen}
         setIsOpen={setIsSearchModalOpen}
       />
-    </>
+      </IonContent>
+    </IonPage>
   );
 };
 

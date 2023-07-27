@@ -1,6 +1,10 @@
 import React from "react";
-import { Outlet} from "react-router-dom";
 import Nav from "../../../components/layout/Nav";
+import {IonRouterOutlet} from "@ionic/react";
+import {Route} from "react-router-dom";
+import CreateEventPage from "./CreateEventPage";
+import UpdateEventPage from "./UpdateEventPage";
+import DeleteEventPage from "./DeleteEventPage";
 
 const navItems = [
   //{ content: 'Approve', link: '/admin/events'},
@@ -16,7 +20,11 @@ const AdminEventLayout = () => {
     <>
       <Nav items={navItems} className="shadow-xl flex pt-4 fixed"/>
       <div className="mt-4">
-        <Outlet/>
+        <IonRouterOutlet>
+          <Route path="/admin/events" exact component={CreateEventPage} />
+          <Route path="/admin/events/update" exact component={UpdateEventPage} />
+          <Route path="/admin/events/delete" exact component={DeleteEventPage} />
+        </IonRouterOutlet>
       </div>
     </>
   )

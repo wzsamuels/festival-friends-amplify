@@ -1,14 +1,16 @@
 import React, {useCallback, useEffect} from "react";
-import {NavLink, Outlet, useNavigate} from "react-router-dom";
+import {NavLink, Route} from "react-router-dom";
 import {
   BsEmojiSmile,
   BsFillChatSquareDotsFill,
   BsFillPeopleFill,
 } from "react-icons/bs";
 import PulseButton from "../common/PulseButton/PulseButton";
+
 import {CalendarDaysIcon} from "@heroicons/react/24/outline";
 import { useAuthenticator } from "@aws-amplify/ui-react";
 import LandingPage from "../../pages/landing/page";
+import AccountLayout from "../../pages/AccountPage/layout";
 import useProfileStore from "../../stores/profileStore";
 import LoadingState from "../ui/LoadingState";
 import AccountUnverified from "../../pages/AccountPage/AccountUnverified";
@@ -20,18 +22,61 @@ import {Geolocation} from "@capacitor/geolocation";
 import calculateDistance from "../../lib/calculateDistance";
 import {App} from "@capacitor/app";
 import {Auth} from "@aws-amplify/auth";
+import EventPage from "../../pages/EventPage/EventPage";
 
+import useFriendStore from "../../stores/friendProfileStore";
+import useDataClearedStore from "../../stores/dataClearedStore";
+import useEventStore from "../../stores/eventStore";
+import useQueueStore from "../../stores/queueStore";
+import {DataStore} from "@aws-amplify/datastore";
+import {IonLabel, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs} from "@ionic/react";
+import GroupLayout from "../../pages/GroupPage/layout";
+import AdminLayout from "../../pages/Admin/AdminLayout";
+import Friends from "../../pages/FriendPage/Friends";
+import "../../index.css";
+import '@aws-amplify/ui-react/styles.css';
+import '@ionic/react/css/core.css';
+import '../../variables.css'
 const Layout = () => {
-  const { route } = useAuthenticator((context) => [context.route]);
   const { loadingUserProfile, userProfile } = useProfileStore();
-  const navigate = useNavigate();
+  const { user } = useAuthenticator((context) => [context.user]);
+  const fetchUserProfile = useProfileStore(state => state.fetchUserProfile)
+  const fetchFriendProfiles = useFriendStore(state => state.fetchFriends)
+  const email = user?.attributes?.email;
+  const dataCleared = useDataClearedStore(state => state.dataCleared)
+  const { route } = useAuthenticator((context) => [context.route]);
+  const fetchEvents = useEventStore(state => state.fetchEvents)
+  const { dataStoreQueue } = useQueueStore();
+
+  useEffect(() => {
+    DataStore.start().then(() => console.log("DataStore started"))
+    fetchEvents()
+  }, []);
+
+  useEffect(() => {
+    if(!dataCleared || !email || route !== 'authenticated') return;
+    console.log("Data cleared: ", dataCleared, ", email: ", email, ", route: ", route)
+    dataStoreQueue.enqueue(async () => {
+      //
+      fetchUserProfile(email, route);
+    });
+  }, [email, dataCleared, route]);
+
+  useEffect(() => {
+    if(!dataCleared || !userProfile) return;
+
+    fetchFriendProfiles(userProfile);
+  }, [dataCleared, userProfile])
+
+  console.log("In layout")
+
   useEffect(() => {
     document.body.focus();
   }, []);
 
   App.addListener('appUrlOpen', (data) => {
     console.log("App URL Open: ", data.url)
-    navigate("/")
+//    navigate("/")
     // Check if URL contains 'myapp'
     if (data.url.includes('eventfriends')) {
       // Handle auth response
@@ -40,6 +85,9 @@ const Layout = () => {
   });
 
   const notificationEffect = useCallback(async () => {
+    const permissions = await Geolocation.checkPermissions();
+    if(permissions.location !== "granted") return;
+    console.log("Permissions: ", permissions);
     const userCoords = await Geolocation.getCurrentPosition();
     const events = await getAllEvents();
     const now = new Date();
@@ -103,74 +151,46 @@ const Layout = () => {
     return (
       <div className="relative min-h-screen max-w-[100vw] overflow-hidden">
         <div className="pt-9 md:pt-10 pb-footer">
-          <Outlet />
-        </div>
-        <footer className="shadow-dropdown max-h-[56px] fixed  bottom-0 left-0 right-0 flex justify-around items-center p-2 bg-lightYellow">
-          <div className="flex flex-1 flex-shrink">
-            <NavLink
-              to="/"
-              className={({ isActive }) =>
-                `${isActive ? "text-black" : "text-gray-600"} flex-1`
-              }
-            >
-              <PulseButton className="w-full flex flex-col justify-center items-center">
+          <IonTabs>
+            <IonRouterOutlet>
+              <Route path="/" exact component={EventPage}/>
+              <Route path="/account" component={AccountLayout} />
+              <Route path="/admin" component={AdminLayout}/>
+              <Route path="/friends" component={Friends} />
+              <Route path="/groups" component={GroupLayout} />
+            </IonRouterOutlet>
+            <IonTabBar slot="bottom" className="shadow-dropdown max-h-[56px] fixed  bottom-0 left-0 right-0 flex justify-around items-center p-2 bg-lightYellow text-black">
+              <IonTabButton tab="tab1" href="/" className="flex flex-1 flex-shrink visited:text-black">
                 <CalendarDaysIcon
                   className="h-5"
                   aria-hidden="true"
                 />
-                <div className="text-xs sm:text-sm md:text-base">Events</div>
-              </PulseButton>
-            </NavLink>
-          </div>
-          <div className="flex flex-1 flex-shrink">
-            <NavLink
-              to="/friends"
-              className={({ isActive }) =>
-                `${isActive ? "text-black" : "text-gray-600"} flex-1`
-              }
-            >
-              <PulseButton className="w-full flex flex-col justify-center items-center">
+                <IonLabel>Events</IonLabel>
+              </IonTabButton>
+              <IonTabButton tab="tab2" href="/friends">
                 <BsEmojiSmile
                   className="text-base sm:text-lg"
                   aria-hidden="true"
                 />
-                <div className="text-xs sm:text-sm md:text-base">Friends</div>
-              </PulseButton>
-            </NavLink>
-          </div>
-          <div className="flex flex-1 flex-shrink">
-            <NavLink
-              to="/messages"
-              className={({ isActive }) =>
-                `${isActive ? "text-black" : "text-gray-600"} flex-1`
-              }
-            >
-              <PulseButton className="w-full flex flex-col justify-center items-center">
+                <IonLabel>Friends</IonLabel>
+              </IonTabButton>
+              <IonTabButton tab="tab3" href="/messages">
                 <BsFillChatSquareDotsFill
                   className="text-base sm:text-lg"
                   aria-hidden="true"
                 />
-                <div className="text-xs sm:text-sm md:text-base">Messages</div>
-              </PulseButton>
-            </NavLink>
-          </div>
-          <div className="flex flex-1 flex-shrink">
-            <NavLink
-              to="/groups"
-              className={({ isActive }) =>
-                `${isActive ? "text-black" : "text-gray-600"} flex-1`
-              }
-            >
-              <PulseButton className="w-full flex flex-col justify-center items-center">
+                <IonLabel>Messages</IonLabel>
+              </IonTabButton>
+              <IonTabButton tab="tab4" href="/groups">
                 <BsFillPeopleFill
                   className="text-base sm:text-lg"
                   aria-hidden="true"
                 />
-                <div className="text-xs sm:text-sm md:text-base">Groups</div>
-              </PulseButton>
-            </NavLink>
-          </div>
-        </footer>
+                <IonLabel>Groups</IonLabel>
+              </IonTabButton>
+            </IonTabBar>
+          </IonTabs>
+        </div>
       </div>
     );
   }
@@ -221,3 +241,71 @@ const Layout = () => {
 };
 
 export default Layout;
+
+/*
+<footer className="shadow-dropdown max-h-[56px] fixed  bottom-0 left-0 right-0 flex justify-around items-center p-2 bg-lightYellow">
+                <div className="flex flex-1 flex-shrink">
+                  <NavLink
+                    to="/"
+                    className={({ isActive }) =>
+                      `${isActive ? "text-black" : "text-gray-600"} flex-1`
+                    }
+                  >
+                    <PulseButton className="w-full flex flex-col justify-center items-center">
+                      <CalendarDaysIcon
+                        className="h-5"
+                        aria-hidden="true"
+                      />
+                      <div className="text-xs sm:text-sm md:text-base">Events</div>
+                    </PulseButton>
+                  </NavLink>
+                </div>
+                <div className="flex flex-1 flex-shrink">
+                  <NavLink
+                    to="/friends"
+                    className={({ isActive }) =>
+                      `${isActive ? "text-black" : "text-gray-600"} flex-1`
+                    }
+                  >
+                    <PulseButton className="w-full flex flex-col justify-center items-center">
+                      <BsEmojiSmile
+                        className="text-base sm:text-lg"
+                        aria-hidden="true"
+                      />
+                      <div className="text-xs sm:text-sm md:text-base">Friends</div>
+                    </PulseButton>
+                  </NavLink>
+                </div>
+                <div className="flex flex-1 flex-shrink">
+                  <NavLink
+                    to="/messages"
+                    className="active:text-black text-gray-600 flex-1"
+                  >
+                    <PulseButton className="w-full flex flex-col justify-center items-center">
+                      <BsFillChatSquareDotsFill
+                        className="text-base sm:text-lg"
+                        aria-hidden="true"
+                      />
+                      <div className="text-xs sm:text-sm md:text-base">Messages</div>
+                    </PulseButton>
+                  </NavLink>
+                </div>
+                <div className="flex flex-1 flex-shrink">
+                  <NavLink
+                    to="/groups"
+                    className={({ isActive }) =>
+                      `${isActive ? "text-black" : "text-gray-600"} flex-1`
+                    }
+                  >
+                    <PulseButton className="w-full flex flex-col justify-center items-center">
+                      <BsFillPeopleFill
+                        className="text-base sm:text-lg"
+                        aria-hidden="true"
+                      />
+                      <div className="text-xs sm:text-sm md:text-base">Groups</div>
+                    </PulseButton>
+                  </NavLink>
+                </div>
+              </footer>
+
+ */
