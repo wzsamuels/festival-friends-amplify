@@ -16,6 +16,7 @@ import NewConversationModal from "./Modals/NewConversationModal";
 import {PlusIcon} from "@heroicons/react/24/outline";
 import useQueueStore from "../../stores/queueStore";
 import {DataStore} from "@aws-amplify/datastore";
+import {IonContent, IonPage} from "@ionic/react";
 
 const MessagePage: React.FC = () => {
   const [currentConversation, setCurrentConversation] = useState<Conversation>();
@@ -94,7 +95,8 @@ const MessagePage: React.FC = () => {
   };
 
   return (
-    <>
+    <IonPage>
+      <IonContent>
       <Header
         className=" shadow-xl"
         onSearch={() => setConversationSearchModalOpen(true)}
@@ -129,7 +131,8 @@ const MessagePage: React.FC = () => {
           conversations={conversations}
         />
       </div>
-    </>
+      </IonContent>
+    </IonPage>
   );
 };
 

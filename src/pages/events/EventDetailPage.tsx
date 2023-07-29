@@ -13,6 +13,7 @@ import dayjs from "dayjs";
 import Spinner from "../../components/common/Spinner/Spinner";
 import {useQuery} from "react-query";
 import getErrorMessage from "../../lib/getErrorMessage";
+import {IonContent, IonPage} from "@ionic/react";
 
 type EventPageProps = RouteComponentProps<{
   id: string;
@@ -20,6 +21,7 @@ type EventPageProps = RouteComponentProps<{
 
 const EventDetailPage = ({match} : EventPageProps) => {
   const id = match.params.id;
+  console.log("id: ", id);
   const { route } = useAuthenticator(context => [context.route])
   const { authStatus } = useAuthenticator(context => [context.authStatus])
   const friendProfiles = useFriendStore(state => state.acceptedFriendProfiles)
@@ -190,7 +192,8 @@ const EventDetailPage = ({match} : EventPageProps) => {
   }
 
   return (
-    <>
+    <IonPage>
+      <IonContent>
       <Header>
         <span className="mx-4 ">
           <Link className="underline text-primary-default " to="/">
@@ -227,7 +230,8 @@ const EventDetailPage = ({match} : EventPageProps) => {
           event={event}
         />
       )}
-    </>
+      </IonContent>
+    </IonPage>
   );
 };
 

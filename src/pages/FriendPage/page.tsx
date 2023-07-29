@@ -20,7 +20,12 @@ import {shallow} from "zustand/shallow";
 import useFriendStore from "../../stores/friendProfileStore";
 import { useErrorBoundary } from "react-error-boundary";
 import SegmentSlide from "../../components/common/Segment/SegmentSlide";
-import {IonContent, IonPage} from "@ionic/react";
+import {IonContent, IonHeader, IonPage} from "@ionic/react";
+import {Link} from "react-router-dom";
+import icon from "../../assests/images/logo.svg";
+import logo from "../../assests/images/logo1.png";
+import SearchButton from "../../components/ui/SearchButton";
+import AccountButton from "../../components/ui/AccountButton";
 
 type FriendType = "accepted" | "sent" | "suggestions" | "pending";
 
@@ -79,7 +84,7 @@ const FriendsPage: React.FC = () => {
         });
         setSuggestedFriends(suggestedFriends);
       } catch (e) {
-        console.log("Error observing friendships in Friends.tsx: ", getErrorMessage(e));
+        console.log("Error observing friendships in page.tsx: ", getErrorMessage(e));
       }
     }
     fetchSuggestedFriends();
@@ -287,11 +292,19 @@ const FriendsPage: React.FC = () => {
 
   return (
     <IonPage>
-      <IonContent>
-    <div className="flex flex-wrap w-full">
       <Header
-        className="min-[375px]:shadow-xl"
-        onSearch={() => setIsFriendsModalOpen(true)}>
+        onSearch={() => setIsFriendsModalOpen(true)}
+        secondChild={
+          <div className="min-[375px]:hidden">
+            <SegmentSlide
+              selected={friendType}
+              setSelected={setFriendType}
+              items={segmentItems}
+              className="flex"
+            />
+          </div>
+        }
+      >
         <SegmentSlide
           selected={friendType}
           setSelected={setFriendType}
@@ -299,28 +312,22 @@ const FriendsPage: React.FC = () => {
           className="hidden min-[375px]:flex "
         />
       </Header>
-      <div className="fixed w-full z-10 min-[400px]:hidden shadow-xl min-[375px]:hidden">
-      <SegmentSlide
-        selected={friendType}
-        setSelected={setFriendType}
-        items={segmentItems}
-        className="flex"
-      />
-      </div>
-      {renderFriends()}
-      <FriendSearchModal
-        isOpen={isFriendsModalOpen}
-        setIsOpen={setIsFriendsModalOpen}
-      />
-      {toastData && (
-        <Toast
-          toastData={toastData}
-          onClose={() => {
-            setToastData(null);
-          }}
+      <IonContent>
+        <div className="flex flex-wrap w-full">
+          {renderFriends()}
+        </div>
+        <FriendSearchModal
+          isOpen={isFriendsModalOpen}
+          setIsOpen={setIsFriendsModalOpen}
         />
-      )}
-    </div>
+        {toastData && (
+          <Toast
+            toastData={toastData}
+            onClose={() => {
+              setToastData(null);
+            }}
+          />
+        )}
       </IonContent>
     </IonPage>
   );

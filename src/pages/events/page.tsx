@@ -119,10 +119,18 @@ const EventPage = () => {
 
   return (
     <IonPage>
-      <IonContent>
       <Header
-        className="min-[400px]:shadow-xl"
-        onSearch={() => setIsSearchModalOpen(true)}>
+        secondChild={
+          <div className="min-[400px]:hidden">
+            <SegmentSlide
+              selected={eventType}
+              setSelected={setEventType}
+              items={segmentItems}
+              className="flex"
+            />
+          </div>
+        }
+      >
         <SegmentSlide
           selected={eventType}
           setSelected={setEventType}
@@ -130,71 +138,64 @@ const EventPage = () => {
           className="hidden min-[400px]:flex"
         />
       </Header>
-      <div className="fixed w-full z-10 min-[400px]:hidden shadow-xl">
-        <SegmentSlide
-          selected={eventType}
-          setSelected={setEventType}
-          items={segmentItems}
-          className="flex"
-        />
-      </div>
-      <div className="pt-10 min-[400px]:pt-0 h-full min-h-[calc(100vh-6rem)] overflow-hidded">
-        <AutoSizer>
-          {({ height, width }: {height: number; width: number}) => {
-            const numColumns = width > 1600 ? 4 : width > 1200 ? 3 : width > 800 ? 2 : 1; // replace these values with actual breakpoint widths
-            return (
-              <Grid
-                key={eventType}
-                columnCount={numColumns}
-                columnWidth={width / numColumns}
-                height={height}
-                rowCount={Math.ceil(filteredEvents.length / numColumns)}
-                rowHeight={700} // replace with the actual row height
-                width={width}
-                className="flex justify-center"
-                style={{overflowX: "hidden"}}
-                overscanRowCount={2}
-              >
-                {renderCell}
-              </Grid>
-            );
-          }}
-        </AutoSizer>
-      </div>
-      <AnimatePresence>
-        {shareOpen && (
-          <motion.div
-            className="fixed w-full flex justify-center"
-            initial={{opacity: 0, bottom:  -50}}
-            animate={{opacity: 1, bottom:  60}}
-            exit={{opacity: 0, bottom:  -50}}
-            transition={{duration: 1, type: "spring"}}
-          >
-            <div className="max-w-xl z-10 shadow-xl bg-darkYellow px-2 md:px-4 md:py-2 py-1 text-base md:text-lg flex flex-nowrap">
-              <div>
-                Share Event Friends and receive a free event posting!
-                <span
-                  className="underline cursor-pointer"
-                  onClick={() => {setPromoteModalOpen(true); setShareOpen(false)}}
+      <IonContent>
+        <div className="h-full">
+          <AutoSizer>
+            {({ height, width }: {height: number; width: number}) => {
+              const numColumns = width > 1600 ? 4 : width > 1200 ? 3 : width > 800 ? 2 : 1; // replace these values with actual breakpoint widths
+              return (
+                <Grid
+                  key={eventType}
+                  columnCount={numColumns}
+                  columnWidth={width / numColumns}
+                  height={height}
+                  rowCount={Math.ceil(filteredEvents.length / numColumns)}
+                  rowHeight={700} // replace with the actual row height
+                  width={width}
+                  className="flex justify-center"
+                  style={{overflowX: "hidden"}}
+                  overscanRowCount={2}
                 >
-                  {' '}Learn more.
-                </span>
+                  {renderCell}
+                </Grid>
+              );
+            }}
+          </AutoSizer>
+        </div>
+        <AnimatePresence>
+          {shareOpen && (
+            <motion.div
+              className="fixed w-full flex justify-center"
+              initial={{opacity: 0, bottom:  -50}}
+              animate={{opacity: 1, bottom:  0}}
+              exit={{opacity: 0, bottom:  -50}}
+              transition={{duration: 1, type: "spring"}}
+            >
+              <div className="max-w-xl z-10 shadow-xl bg-darkYellow px-2 md:px-4 md:py-2 py-1 text-base md:text-lg flex flex-nowrap">
+                <div>
+                  Share Event Friends and receive a free event posting!
+                  <span
+                    className="underline cursor-pointer"
+                    onClick={() => {setPromoteModalOpen(true); setShareOpen(false)}}
+                  >
+                    {' '}Learn more.
+                  </span>
+                </div>
+                <div className="px-2 cursor-pointer" onClick={() => setShareOpen(false)}>
+                  <XMarkIcon height={20} />
+                </div>
               </div>
-              <div className="px-2 cursor-pointer" onClick={() => setShareOpen(false)}>
-                <XMarkIcon height={20} />
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-      <PromoteModal
-        isOpen={promoteModalOpen}
-        setIsOpen={setPromoteModalOpen}
-      />
-      <EventSearchModal
-        isOpen={isSearchModalOpen}
-        setIsOpen={setIsSearchModalOpen}
-      />
+            </motion.div>
+          )}
+        </AnimatePresence>
+        <PromoteModal
+          isOpen={promoteModalOpen}
+          setIsOpen={setPromoteModalOpen}
+        />
+        <EventSearchModal
+          isOpen={isSearchModalOpen}
+          setIsOpen={setIsSearchModalOpen}
+        />
       </IonContent>
     </IonPage>
   );
