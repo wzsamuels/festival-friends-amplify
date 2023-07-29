@@ -96,7 +96,7 @@ const AccountButton = () => {
 
   return (
     <>
-      <Menu as="div" className="relative">
+      <Menu as="div" className="relative mr-2 sm:mx-4 md:mx-4">
         <Menu.Button className="flex justify-center items-center rounded-full">
           <UserIcon className="hover:text-darkGreen h-5" />
         </Menu.Button>
