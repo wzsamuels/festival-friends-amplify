@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect} from "react";
-import {NavLink, Route} from "react-router-dom";
+import {NavLink, Redirect, Route, RouteComponentProps, useHistory} from "react-router-dom";
 import {
   BsEmojiSmile,
   BsFillChatSquareDotsFill,
@@ -10,10 +10,10 @@ import PulseButton from "../common/PulseButton/PulseButton";
 import {CalendarDaysIcon} from "@heroicons/react/24/outline";
 import { useAuthenticator } from "@aws-amplify/ui-react";
 import LandingPage from "../../pages/landing/page";
-import AccountLayout from "../../pages/AccountPage/layout";
+import AccountLayout from "../../pages/account/layout";
 import useProfileStore from "../../stores/profileStore";
 import LoadingState from "../ui/LoadingState";
-import AccountUnverified from "../../pages/AccountPage/AccountUnverified";
+import AccountUnverified from "../../pages/account/AccountUnverified";
 import Header from "./Header";
 import {LocalNotifications} from "@capacitor/local-notifications";
 import logo from "../../assests/images/logo.svg";
@@ -22,7 +22,7 @@ import {Geolocation} from "@capacitor/geolocation";
 import calculateDistance from "../../lib/calculateDistance";
 import {App} from "@capacitor/app";
 import {Auth} from "@aws-amplify/auth";
-import EventPage from "../../pages/EventPage/EventPage";
+import EventPage from "../../pages/events/page";
 
 import useFriendStore from "../../stores/friendProfileStore";
 import useDataClearedStore from "../../stores/dataClearedStore";
@@ -32,11 +32,14 @@ import {DataStore} from "@aws-amplify/datastore";
 import {IonLabel, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs} from "@ionic/react";
 import GroupLayout from "../../pages/GroupPage/layout";
 import AdminLayout from "../../pages/Admin/AdminLayout";
-import Friends from "../../pages/FriendPage/Friends";
+import Friends from "../../pages/FriendPage/page";
 import "../../index.css";
 import '@aws-amplify/ui-react/styles.css';
 import '@ionic/react/css/core.css';
 import '../../variables.css'
+import MessagePage from "../../pages/MessagePage/page";
+import EventDetailPage from "../../pages/events/EventDetailPage";
+
 const Layout = () => {
   const { loadingUserProfile, userProfile } = useProfileStore();
   const { user } = useAuthenticator((context) => [context.user]);
@@ -51,6 +54,9 @@ const Layout = () => {
   useEffect(() => {
     DataStore.start().then(() => console.log("DataStore started"))
     fetchEvents()
+    App.addListener('appUrlOpen', (data) => {
+      console.log("App URL Open: ", data.url)
+    });
   }, []);
 
   useEffect(() => {
@@ -74,15 +80,7 @@ const Layout = () => {
     document.body.focus();
   }, []);
 
-  App.addListener('appUrlOpen', (data) => {
-    console.log("App URL Open: ", data.url)
-//    navigate("/")
-    // Check if URL contains 'myapp'
-    if (data.url.includes('eventfriends')) {
-      // Handle auth response
-      Auth.federatedSignIn();
-    }
-  });
+
 
   const notificationEffect = useCallback(async () => {
     const permissions = await Geolocation.checkPermissions();
@@ -148,19 +146,24 @@ const Layout = () => {
   }, [userProfile])
 
   if(userProfile?.verified) {
+
+//    history.push("/events");
     return (
       <div className="relative min-h-screen max-w-[100vw] overflow-hidden">
         <div className="pt-9 md:pt-10 pb-footer">
           <IonTabs>
             <IonRouterOutlet>
-              <Route path="/" exact component={EventPage}/>
+              <Route path="/events" exact component={EventPage}/>
+              <Redirect exact from="/" to="/events" />
               <Route path="/account" component={AccountLayout} />
               <Route path="/admin" component={AdminLayout}/>
               <Route path="/friends" component={Friends} />
               <Route path="/groups" component={GroupLayout} />
+              <Route path="/messages" component={MessagePage} />
+              <Route path="/events/:id" component={EventDetailPage} />
             </IonRouterOutlet>
-            <IonTabBar slot="bottom" className="shadow-dropdown max-h-[56px] fixed  bottom-0 left-0 right-0 flex justify-around items-center p-2 bg-lightYellow text-black">
-              <IonTabButton tab="tab1" href="/" className="flex flex-1 flex-shrink visited:text-black">
+            <IonTabBar slot="bottom" className="shadow-dropdown flex justify-around items-center bg-lightYellow text-black">
+              <IonTabButton tab="tab1" href="/events" className="flex flex-1 flex-shrink visited:text-black">
                 <CalendarDaysIcon
                   className="h-5"
                   aria-hidden="true"

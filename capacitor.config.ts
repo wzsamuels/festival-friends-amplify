@@ -7,11 +7,6 @@ const config: CapacitorConfig = {
   bundledWebRuntime: false,
   "ios": {
     "contentInset": "always"
-  },
-  "server": {
-    "url": "http://localhost",
-    cleartext: true,
-    "androidScheme": "eventfriends",
   }
 };
 

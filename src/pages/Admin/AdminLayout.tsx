@@ -5,12 +5,12 @@ import {Auth} from "@aws-amplify/auth";
 import Nav from "../../components/layout/Nav";
 import AdminEventLayout from "./Events/AdminEventLayout";
 import {Route} from "react-router-dom";
-import {IonRouterOutlet} from "@ionic/react";
+import {IonContent, IonPage, IonRouterOutlet} from "@ionic/react";
 import VerifyAccounts from "./VerifyAccounts";
 import AdminDatabasePage from "./AdminDatabasePage";
 
 const NavItems = [
-  { content: "Events", link: "/admin" },
+  { content: "Events", link: "/admin/events" },
   { content: "Accounts", link: "/admin/accounts" },
  // { content: "Database", link: "/admin/database" }
 ]
@@ -39,16 +39,18 @@ const AdminLayout = () => {
   }
 
   return (
-    <>
+    <IonPage>
       <Header>
         <Nav items={NavItems} className="flex"/>
       </Header>
-      <IonRouterOutlet>
-        <Route exact path="/admin" component={AdminEventLayout}/>
-        <Route exact path="/admin/accounts" component={VerifyAccounts}/>
-        <Route exact path="/admin/database" component={AdminDatabasePage}/>
-      </IonRouterOutlet>
-    </>
+      <IonContent>
+        <IonRouterOutlet>
+          <Route path="/admin/events" component={AdminEventLayout}/>
+          <Route exact path="/admin/accounts" component={VerifyAccounts}/>
+          <Route exact path="/admin/database" component={AdminDatabasePage}/>
+        </IonRouterOutlet>
+      </IonContent>
+    </IonPage>
   )
 }
 

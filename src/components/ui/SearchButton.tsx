@@ -9,7 +9,7 @@ interface SearchButtonProps {
 const SearchButton = ({ onClick, className }: SearchButtonProps) => {
   return (
     <button
-      className={`hover:text-darkGreen h-9 w-9 flex justify-center items-center rounded-full ${className}`}
+      className={`mx-2 hover:text-darkGreen h-9 w-9 flex justify-center items-center rounded-full ${className}`}
       onClick={onClick}
     >
       <MagnifyingGlassIcon className='h-5'/>

@@ -83,7 +83,6 @@ const UniversityPage = () => {
             />
           ))}
         </div>
-
       </div>
       {collegeGroup && (
         <CreateEventModal

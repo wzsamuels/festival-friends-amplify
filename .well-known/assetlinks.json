@@ -1,0 +1,10 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "app.eventfriends.www",
+      "sha256_cert_fingerprints": ["23:46:EC:FF:81:7A:B4:C4:5A:BD:0E:44:B3:0D:A0:70:99:F2:62:83:6F:7E:71:AB:4E:94:AB:01:FD:87:AD:32"]
+    }
+  }
+]

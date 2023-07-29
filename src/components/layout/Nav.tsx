@@ -26,7 +26,6 @@ const Nav = ({ items, className }: NavProps) => {
     }
   };
 
-
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;

@@ -121,7 +121,7 @@ const LandingPage = () => {
               </div>
               <Button
                 className="text-2xl my-8"
-                //onClick={() => setLoggingIn(true)}
+                onClick={() => setLoggingIn(true)}
               >Login</Button>
               <div className="flex gap-4">
                 <div className="flex-1 ">

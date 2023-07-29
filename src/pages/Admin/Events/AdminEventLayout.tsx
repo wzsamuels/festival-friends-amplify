@@ -17,16 +17,18 @@ const AdminEventLayout = () => {
 
 
   return (
-    <>
-      <Nav items={navItems} className="shadow-xl flex pt-4 fixed"/>
+    <div className="">
+      <div>
+        <Nav items={navItems} className="shadow-xl flex pt-4 z-50"/>
+      </div>
       <div className="mt-4">
         <IonRouterOutlet>
           <Route path="/admin/events" exact component={CreateEventPage} />
-          <Route path="/admin/events/update" exact component={UpdateEventPage} />
-          <Route path="/admin/events/delete" exact component={DeleteEventPage} />
+          <Route path="/admin/events/update" component={UpdateEventPage} />
+          <Route path="/admin/events/delete" component={DeleteEventPage} />
         </IonRouterOutlet>
       </div>
-    </>
+    </div>
   )
 }
 

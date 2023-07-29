@@ -3,7 +3,7 @@ import useProfileStore from "../../stores/profileStore";
 import LoadingState from "../../components/ui/LoadingState";
 import React from "react";
 import Header from "../../components/layout/Header";
-import AccountUnverified from "../AccountPage/AccountUnverified";
+import AccountUnverified from "../account/AccountUnverified";
 
 const AuthComponent = () => {
   const { route } = useAuthenticator((context) => [context.route]);

@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react";
 import {Event, Photo, PrivacySetting, Profile} from "../../models";
 import PhotoImage from "../../components/ui/PhotoImage";
 import Header from "../../components/layout/Header";
-import PhotoModal from "../AccountPage/Modals/PhotoModal";
+import PhotoModal from "../account/Modals/PhotoModal";
 import {BsFlag, BsPerson} from "react-icons/bs";
 import getErrorMessage from "../../lib/getErrorMessage";
 import useDataClearedStore from "../../stores/dataClearedStore";
