@@ -16,16 +16,6 @@ import ImageUpload from "../../components/common/ImageUpload";
 import {getPhotoURL} from "../../services/photoServices";
 import Image from "../../components/ui/Image";
 import {UserCircleIcon} from "@heroicons/react/24/solid";
-import {IonContent, IonPage} from "@ionic/react";
-import Header from "../../components/layout/Header";
-import Nav from "../../components/layout/Nav";
-
-
-const NavItems = [
-  { content: "Profile", link: "/account" },
-  { content: "Events", link: "/account/events" },
-  { content: "Settings", link: "/account/settings" }
-]
 
 const AccountProfilePage = () => {
   const [profileImage, setProfileImage] = useState("");
@@ -39,7 +29,6 @@ const AccountProfilePage = () => {
   const [isPhotoModalOpen, setPhotoModalOpen] = useState(false);
   const [isBannerModalOpen, setIsBannerModalOpen] = useState(false);
   const [eventsAttending, setEventsAttending] = useState<Event[]>([]);
-  //const [rides, setRides] = useState<Ride[]>([]);
   const userProfile = useProfileStore((state) => state.userProfile);
   const dataCleared = useDataClearedStore((state) => state.dataCleared);
 
@@ -101,11 +90,7 @@ const AccountProfilePage = () => {
   }, [selectedFile]);
 
   return (
-    <IonPage>
-      <IonContent>
-        <Header className="shadow-xl">
-          <Nav items={NavItems} className="flex"/>
-        </Header>
+  <>
       <section
         className={
           "flex justify-center flex-col relative w-full h-screen max-h-[500px]"
@@ -240,8 +225,7 @@ const AccountProfilePage = () => {
           />
         </>
       )}
-      </IonContent>
-    </IonPage>
+</>
   )
 };
 
