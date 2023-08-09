@@ -5,7 +5,7 @@ import getErrorMessage from "../lib/getErrorMessage";
 
 type ProfileStore = {
   userProfile: Profile | null,
-  fetchUserProfile: (sub: string, route: string) => void,
+  fetchUserProfile: (sub: string) => void,
   clearUserProfile: () => void,
   loadingUserProfile: boolean,
   error: string | null,
@@ -20,10 +20,10 @@ const useProfileStore = create<ProfileStore>((set: SetState<ProfileStore>,  get)
   loadingUserProfile: false,
   error: null,
   subscription: null,
-  fetchUserProfile: async (email: string, route: string) => {
+  fetchUserProfile: async (email: string) => {
     set({loadingUserProfile: true})
     try {
-      console.log("Fetching profile, ", email, route)
+      console.log("Fetching profile: ", email)
       /*
       const profileSub = DataStore.observeQuery(Profile, c => c.email.eq(email)).subscribe(({items}) =>
       {
