@@ -1,6 +1,4 @@
-import React, {Fragment, useEffect} from "react";
-import { useAuthenticator } from "@aws-amplify/ui-react";
-import {Auth} from "@aws-amplify/auth";
+import React, {Fragment} from "react";
 import {DataStore} from "@aws-amplify/datastore";
 import { Link } from "react-router-dom";
 import { Menu, Transition } from "@headlessui/react";
@@ -11,26 +9,19 @@ import useProfileStore from "../../stores/profileStore";
 import useFriendStore from "../../stores/friendProfileStore";
 import {UserIcon} from "@heroicons/react/24/solid";
 import useQueueStore from "../../stores/queueStore";
+import {useAuth0} from "@auth0/auth0-react";
+import {Browser} from "@capacitor/browser";
+import {callbackUri} from "../../auth.config";
 const AccountButton = () => {
-  const { user, signOut } = useAuthenticator((context) => [context.user]);
-  const { route } = useAuthenticator((context) => [context.route]);
-  const [ group, setGroup] = React.useState("");
+  const { user, logout, isAuthenticated } = useAuth0();
+  const [ group] = React.useState("");
   const setDataCleared = useDataClearedStore(state => state.setDataCleared);
   const [alertIsOpen, setAlertIsOpen] = React.useState(false);
-  const { authStatus } = useAuthenticator((context) => [context.authStatus]);
   const clearProfile = useProfileStore(state => state.clearUserProfile);
   const clearFriendProfiles = useFriendStore(state => state.clearFriends);
   const friendUnsubscribe = useFriendStore(state => state.friendUnsubscribe);
   const unsubscribeProfile = useProfileStore(state => state.unsubscribeProfile);
   const { dataStoreQueue } = useQueueStore();
-
-  useEffect(() => {
-    if(route !== "authenticated") return;
-    Auth.currentAuthenticatedUser()
-      .then(user => {
-        setGroup(user.signInUserSession.accessToken.payload["cognito:groups"]?.find((group: string) => group === "admin")?.toString() ?? "")
-      })
-  }, [route])
 
   const clearStores = () => {
     clearProfile();
@@ -39,15 +30,7 @@ const AccountButton = () => {
 
   // TODO: Move to  a separate file
   const handleSignOut = async () => {
-    try {
-      console.log("Attempting sign out...");
-      setAlertIsOpen(true);
-      await signOut();
-      console.log("Sign out successful.");
-    } catch (e) {
-      console.log("Error signing out: ", e);
-      return;
-    }
+    setAlertIsOpen(true);
 
     try {
       console.log("Stopping subscriptions...");
@@ -88,11 +71,32 @@ const AccountButton = () => {
       console.log("Datastore started.");
       console.log("Setting dataCleared to true...");
       setDataCleared(true);
-      setAlertIsOpen(false);
+
     } catch (e) {
       console.log("Error starting datastore: ", e);
     }
+
+    console.log("Attempting sign out...");
+    try {
+      await logout({
+        async openUrl(url) {
+          await Browser.open({
+            url,
+            windowName: "_self",
+          });
+        },
+        logoutParams: {
+          returnTo: callbackUri
+        }
+      });
+    } catch(e) {
+      console.log("Error logging out: ", e);
+    }
+
+    setAlertIsOpen(false);
   };
+
+
 
   return (
     <>
@@ -110,13 +114,13 @@ const AccountButton = () => {
           leaveTo="transform opacity-0 scale-95"
         >
           <Menu.Items className="text-base md:text-lg flex flex-col absolute right-0 top-6 bg-white transition-all z-20 shadow-dropdown min-w-[15rem]">
-            {authStatus === "authenticated" ? (
+            {isAuthenticated && user ? (
               <>
                 <Menu.Item
                   className="border-b border-b-brandYellow p-2"
                   as="div"
                 >
-                  {user?.attributes?.email}
+                  {user?.email}
                 </Menu.Item>
                 <Menu.Item>
                   <Link
