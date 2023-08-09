@@ -102,7 +102,7 @@ const LandingPage = () => {
                 </motion.svg>
                 <div className=" bg-lightYellow rounded-full h-[200px] md:h-[300px] w-[200px] md:w-[300px] absolute top z-0"/>
               </div>
-              <div className="relative z-50">
+              <div className="relative z-50 my-6">
                 <LoginButton/>
               </div>
               <div className="flex gap-4">
