@@ -62,7 +62,7 @@
       "LoginWithAmazon"
     ],
     "hostedUIProviderMeta": "[{\"ProviderName\":\"Facebook\",\"authorize_scopes\":\"public_profile\",\"AttributeMapping\":{\"username\":\"id\"}},{\"ProviderName\":\"Google\",\"authorize_scopes\":\"openid profile\",\"AttributeMapping\":{\"username\":\"sub\"}},{\"ProviderName\":\"LoginWithAmazon\",\"authorize_scopes\":\"profile:user_id\",\"AttributeMapping\":{\"username\":\"user_id\"}}]",
-    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://www.eventfriends.app/\",\"http://localhost:5173/\"],\"LogoutURLs\":[\"http://localhost:5173/\",\"https://www.eventfriends.app/\"]}",
-    "authProviders": []
+    "authProviders": [],
+    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://www.eventfriends.app/\",\"http://localhost:5173/\",\"eventfriends://localhost/\",\"capacitor://localhost/\"],\"LogoutURLs\":[\"http://localhost:5173/\",\"https://www.eventfriends.app/\",\"eventfriends://localhost/\",\"capacitor://localhost/\"]}"
   }
 }

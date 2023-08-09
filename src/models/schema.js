@@ -157,6 +157,13 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "lastEventNotification": {
+                    "name": "lastEventNotification",
+                    "isArray": false,
+                    "type": "AWSDate",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "events": {
                     "name": "events",
                     "isArray": true,
@@ -998,14 +1005,14 @@ export const schema = {
                     "name": "isPrivate",
                     "isArray": false,
                     "type": "Boolean",
-                    "isRequired": true,
+                    "isRequired": false,
                     "attributes": []
                 },
                 "identityId": {
                     "name": "identityId",
                     "isArray": false,
                     "type": "String",
-                    "isRequired": true,
+                    "isRequired": false,
                     "attributes": []
                 },
                 "description": {
@@ -1743,5 +1750,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "b9fbe7371541fff7e4d81b6a2527b120"
+    "version": "396d3080f2c0bf53f5c5865762422068"
 };

@@ -44,6 +44,7 @@ type EagerProfile = {
   readonly birthDate?: string | null;
   readonly hobbies?: string | null;
   readonly gender?: string | null;
+  readonly lastEventNotification?: string | null;
   readonly events?: (EventProfile | null)[] | null;
   readonly rides?: (RideProfile | null)[] | null;
   readonly friends?: (Friendship | null)[] | null;
@@ -85,6 +86,7 @@ type LazyProfile = {
   readonly birthDate?: string | null;
   readonly hobbies?: string | null;
   readonly gender?: string | null;
+  readonly lastEventNotification?: string | null;
   readonly events: AsyncCollection<EventProfile>;
   readonly rides: AsyncCollection<RideProfile>;
   readonly friends: AsyncCollection<Friendship>;
@@ -308,8 +310,8 @@ type EagerPhoto = {
   readonly profileID: string;
   readonly profile?: Profile | null;
   readonly s3Key: string;
-  readonly isPrivate: boolean;
-  readonly identityId: string;
+  readonly isPrivate?: boolean | null;
+  readonly identityId?: string | null;
   readonly description?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
@@ -324,8 +326,8 @@ type LazyPhoto = {
   readonly profileID: string;
   readonly profile: AsyncItem<Profile | undefined>;
   readonly s3Key: string;
-  readonly isPrivate: boolean;
-  readonly identityId: string;
+  readonly isPrivate?: boolean | null;
+  readonly identityId?: string | null;
   readonly description?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;

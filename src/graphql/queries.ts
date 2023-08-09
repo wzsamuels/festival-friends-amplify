@@ -27,6 +27,7 @@ export const getProfile = /* GraphQL */ `
       birthDate
       hobbies
       gender
+      lastEventNotification
       events {
         items {
           id
@@ -55,6 +56,7 @@ export const getProfile = /* GraphQL */ `
             birthDate
             hobbies
             gender
+            lastEventNotification
             groupID
             createdAt
             updatedAt
@@ -135,6 +137,7 @@ export const getProfile = /* GraphQL */ `
             birthDate
             hobbies
             gender
+            lastEventNotification
             groupID
             createdAt
             updatedAt
@@ -196,6 +199,7 @@ export const getProfile = /* GraphQL */ `
             birthDate
             hobbies
             gender
+            lastEventNotification
             groupID
             createdAt
             updatedAt
@@ -229,6 +233,7 @@ export const getProfile = /* GraphQL */ `
             birthDate
             hobbies
             gender
+            lastEventNotification
             groupID
             createdAt
             updatedAt
@@ -279,6 +284,7 @@ export const getProfile = /* GraphQL */ `
             birthDate
             hobbies
             gender
+            lastEventNotification
             groupID
             createdAt
             updatedAt
@@ -311,6 +317,7 @@ export const getProfile = /* GraphQL */ `
             birthDate
             hobbies
             gender
+            lastEventNotification
             groupID
             createdAt
             updatedAt
@@ -364,6 +371,7 @@ export const getProfile = /* GraphQL */ `
             birthDate
             hobbies
             gender
+            lastEventNotification
             groupID
             createdAt
             updatedAt
@@ -455,6 +463,7 @@ export const getProfile = /* GraphQL */ `
             birthDate
             hobbies
             gender
+            lastEventNotification
             groupID
             createdAt
             updatedAt
@@ -549,6 +558,7 @@ export const listProfiles = /* GraphQL */ `
         birthDate
         hobbies
         gender
+        lastEventNotification
         events {
           items {
             id
@@ -741,6 +751,7 @@ export const syncProfiles = /* GraphQL */ `
         birthDate
         hobbies
         gender
+        lastEventNotification
         events {
           items {
             id
@@ -935,6 +946,7 @@ export const profilesByGroupID = /* GraphQL */ `
         birthDate
         hobbies
         gender
+        lastEventNotification
         events {
           items {
             id
@@ -1342,6 +1354,7 @@ export const getEvent = /* GraphQL */ `
             birthDate
             hobbies
             gender
+            lastEventNotification
             groupID
             createdAt
             updatedAt
@@ -1391,6 +1404,7 @@ export const getEvent = /* GraphQL */ `
             birthDate
             hobbies
             gender
+            lastEventNotification
             groupID
             createdAt
             updatedAt
@@ -2067,6 +2081,7 @@ export const getRide = /* GraphQL */ `
             birthDate
             hobbies
             gender
+            lastEventNotification
             groupID
             createdAt
             updatedAt
@@ -2451,6 +2466,7 @@ export const getPhoto = /* GraphQL */ `
         birthDate
         hobbies
         gender
+        lastEventNotification
         events {
           items {
             id
@@ -2647,6 +2663,7 @@ export const listPhotos = /* GraphQL */ `
           birthDate
           hobbies
           gender
+          lastEventNotification
           events {
             nextToken
             startedAt
@@ -2771,6 +2788,7 @@ export const syncPhotos = /* GraphQL */ `
           birthDate
           hobbies
           gender
+          lastEventNotification
           events {
             nextToken
             startedAt
@@ -2897,6 +2915,7 @@ export const photosByProfileID = /* GraphQL */ `
           birthDate
           hobbies
           gender
+          lastEventNotification
           events {
             nextToken
             startedAt
@@ -3009,6 +3028,7 @@ export const getFriendship = /* GraphQL */ `
         birthDate
         hobbies
         gender
+        lastEventNotification
         events {
           items {
             id
@@ -3183,6 +3203,7 @@ export const getFriendship = /* GraphQL */ `
         birthDate
         hobbies
         gender
+        lastEventNotification
         events {
           items {
             id
@@ -3376,6 +3397,7 @@ export const listFriendships = /* GraphQL */ `
           birthDate
           hobbies
           gender
+          lastEventNotification
           events {
             nextToken
             startedAt
@@ -3468,6 +3490,7 @@ export const listFriendships = /* GraphQL */ `
           birthDate
           hobbies
           gender
+          lastEventNotification
           events {
             nextToken
             startedAt
@@ -3589,6 +3612,7 @@ export const syncFriendships = /* GraphQL */ `
           birthDate
           hobbies
           gender
+          lastEventNotification
           events {
             nextToken
             startedAt
@@ -3681,6 +3705,7 @@ export const syncFriendships = /* GraphQL */ `
           birthDate
           hobbies
           gender
+          lastEventNotification
           events {
             nextToken
             startedAt
@@ -3804,6 +3829,7 @@ export const friendshipsByProfileID = /* GraphQL */ `
           birthDate
           hobbies
           gender
+          lastEventNotification
           events {
             nextToken
             startedAt
@@ -3896,6 +3922,7 @@ export const friendshipsByProfileID = /* GraphQL */ `
           birthDate
           hobbies
           gender
+          lastEventNotification
           events {
             nextToken
             startedAt
@@ -4019,6 +4046,7 @@ export const friendshipsByFriendProfileID = /* GraphQL */ `
           birthDate
           hobbies
           gender
+          lastEventNotification
           events {
             nextToken
             startedAt
@@ -4111,6 +4139,7 @@ export const friendshipsByFriendProfileID = /* GraphQL */ `
           birthDate
           hobbies
           gender
+          lastEventNotification
           events {
             nextToken
             startedAt
@@ -4223,6 +4252,7 @@ export const getConversation = /* GraphQL */ `
         birthDate
         hobbies
         gender
+        lastEventNotification
         events {
           items {
             id
@@ -4396,6 +4426,7 @@ export const getConversation = /* GraphQL */ `
         birthDate
         hobbies
         gender
+        lastEventNotification
         events {
           items {
             id
@@ -4609,6 +4640,7 @@ export const listConversations = /* GraphQL */ `
           birthDate
           hobbies
           gender
+          lastEventNotification
           events {
             nextToken
             startedAt
@@ -4700,6 +4732,7 @@ export const listConversations = /* GraphQL */ `
           birthDate
           hobbies
           gender
+          lastEventNotification
           events {
             nextToken
             startedAt
@@ -4841,6 +4874,7 @@ export const syncConversations = /* GraphQL */ `
           birthDate
           hobbies
           gender
+          lastEventNotification
           events {
             nextToken
             startedAt
@@ -4932,6 +4966,7 @@ export const syncConversations = /* GraphQL */ `
           birthDate
           hobbies
           gender
+          lastEventNotification
           events {
             nextToken
             startedAt
@@ -5075,6 +5110,7 @@ export const conversationsByProfileID = /* GraphQL */ `
           birthDate
           hobbies
           gender
+          lastEventNotification
           events {
             nextToken
             startedAt
@@ -5166,6 +5202,7 @@ export const conversationsByProfileID = /* GraphQL */ `
           birthDate
           hobbies
           gender
+          lastEventNotification
           events {
             nextToken
             startedAt
@@ -5309,6 +5346,7 @@ export const conversationsByFriendProfileID = /* GraphQL */ `
           birthDate
           hobbies
           gender
+          lastEventNotification
           events {
             nextToken
             startedAt
@@ -5400,6 +5438,7 @@ export const conversationsByFriendProfileID = /* GraphQL */ `
           birthDate
           hobbies
           gender
+          lastEventNotification
           events {
             nextToken
             startedAt
@@ -5669,6 +5708,7 @@ export const getGroup = /* GraphQL */ `
           birthDate
           hobbies
           gender
+          lastEventNotification
           events {
             nextToken
             startedAt
@@ -5823,6 +5863,7 @@ export const listGroups = /* GraphQL */ `
             birthDate
             hobbies
             gender
+            lastEventNotification
             groupID
             createdAt
             updatedAt
@@ -5928,6 +5969,7 @@ export const syncGroups = /* GraphQL */ `
             birthDate
             hobbies
             gender
+            lastEventNotification
             groupID
             createdAt
             updatedAt
@@ -5983,6 +6025,7 @@ export const getEventProfile = /* GraphQL */ `
         birthDate
         hobbies
         gender
+        lastEventNotification
         events {
           items {
             id
@@ -6266,6 +6309,7 @@ export const listEventProfiles = /* GraphQL */ `
           birthDate
           hobbies
           gender
+          lastEventNotification
           events {
             nextToken
             startedAt
@@ -6441,6 +6485,7 @@ export const syncEventProfiles = /* GraphQL */ `
           birthDate
           hobbies
           gender
+          lastEventNotification
           events {
             nextToken
             startedAt
@@ -6618,6 +6663,7 @@ export const eventProfilesByProfileId = /* GraphQL */ `
           birthDate
           hobbies
           gender
+          lastEventNotification
           events {
             nextToken
             startedAt
@@ -6795,6 +6841,7 @@ export const eventProfilesByEventId = /* GraphQL */ `
           birthDate
           hobbies
           gender
+          lastEventNotification
           events {
             nextToken
             startedAt
@@ -6959,6 +7006,7 @@ export const getRideProfile = /* GraphQL */ `
         birthDate
         hobbies
         gender
+        lastEventNotification
         events {
           items {
             id
@@ -7237,6 +7285,7 @@ export const listRideProfiles = /* GraphQL */ `
           birthDate
           hobbies
           gender
+          lastEventNotification
           events {
             nextToken
             startedAt
@@ -7410,6 +7459,7 @@ export const syncRideProfiles = /* GraphQL */ `
           birthDate
           hobbies
           gender
+          lastEventNotification
           events {
             nextToken
             startedAt
@@ -7585,6 +7635,7 @@ export const rideProfilesByProfileId = /* GraphQL */ `
           birthDate
           hobbies
           gender
+          lastEventNotification
           events {
             nextToken
             startedAt
@@ -7760,6 +7811,7 @@ export const rideProfilesByRideId = /* GraphQL */ `
           birthDate
           hobbies
           gender
+          lastEventNotification
           events {
             nextToken
             startedAt

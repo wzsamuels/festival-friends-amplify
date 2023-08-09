@@ -30,6 +30,7 @@ export const createProfile = /* GraphQL */ `
       birthDate
       hobbies
       gender
+      lastEventNotification
       events {
         items {
           id
@@ -58,6 +59,7 @@ export const createProfile = /* GraphQL */ `
             birthDate
             hobbies
             gender
+            lastEventNotification
             groupID
             createdAt
             updatedAt
@@ -138,6 +140,7 @@ export const createProfile = /* GraphQL */ `
             birthDate
             hobbies
             gender
+            lastEventNotification
             groupID
             createdAt
             updatedAt
@@ -199,6 +202,7 @@ export const createProfile = /* GraphQL */ `
             birthDate
             hobbies
             gender
+            lastEventNotification
             groupID
             createdAt
             updatedAt
@@ -232,6 +236,7 @@ export const createProfile = /* GraphQL */ `
             birthDate
             hobbies
             gender
+            lastEventNotification
             groupID
             createdAt
             updatedAt
@@ -282,6 +287,7 @@ export const createProfile = /* GraphQL */ `
             birthDate
             hobbies
             gender
+            lastEventNotification
             groupID
             createdAt
             updatedAt
@@ -314,6 +320,7 @@ export const createProfile = /* GraphQL */ `
             birthDate
             hobbies
             gender
+            lastEventNotification
             groupID
             createdAt
             updatedAt
@@ -367,6 +374,7 @@ export const createProfile = /* GraphQL */ `
             birthDate
             hobbies
             gender
+            lastEventNotification
             groupID
             createdAt
             updatedAt
@@ -458,6 +466,7 @@ export const createProfile = /* GraphQL */ `
             birthDate
             hobbies
             gender
+            lastEventNotification
             groupID
             createdAt
             updatedAt
@@ -550,6 +559,7 @@ export const updateProfile = /* GraphQL */ `
       birthDate
       hobbies
       gender
+      lastEventNotification
       events {
         items {
           id
@@ -578,6 +588,7 @@ export const updateProfile = /* GraphQL */ `
             birthDate
             hobbies
             gender
+            lastEventNotification
             groupID
             createdAt
             updatedAt
@@ -658,6 +669,7 @@ export const updateProfile = /* GraphQL */ `
             birthDate
             hobbies
             gender
+            lastEventNotification
             groupID
             createdAt
             updatedAt
@@ -719,6 +731,7 @@ export const updateProfile = /* GraphQL */ `
             birthDate
             hobbies
             gender
+            lastEventNotification
             groupID
             createdAt
             updatedAt
@@ -752,6 +765,7 @@ export const updateProfile = /* GraphQL */ `
             birthDate
             hobbies
             gender
+            lastEventNotification
             groupID
             createdAt
             updatedAt
@@ -802,6 +816,7 @@ export const updateProfile = /* GraphQL */ `
             birthDate
             hobbies
             gender
+            lastEventNotification
             groupID
             createdAt
             updatedAt
@@ -834,6 +849,7 @@ export const updateProfile = /* GraphQL */ `
             birthDate
             hobbies
             gender
+            lastEventNotification
             groupID
             createdAt
             updatedAt
@@ -887,6 +903,7 @@ export const updateProfile = /* GraphQL */ `
             birthDate
             hobbies
             gender
+            lastEventNotification
             groupID
             createdAt
             updatedAt
@@ -978,6 +995,7 @@ export const updateProfile = /* GraphQL */ `
             birthDate
             hobbies
             gender
+            lastEventNotification
             groupID
             createdAt
             updatedAt
@@ -1070,6 +1088,7 @@ export const deleteProfile = /* GraphQL */ `
       birthDate
       hobbies
       gender
+      lastEventNotification
       events {
         items {
           id
@@ -1098,6 +1117,7 @@ export const deleteProfile = /* GraphQL */ `
             birthDate
             hobbies
             gender
+            lastEventNotification
             groupID
             createdAt
             updatedAt
@@ -1178,6 +1198,7 @@ export const deleteProfile = /* GraphQL */ `
             birthDate
             hobbies
             gender
+            lastEventNotification
             groupID
             createdAt
             updatedAt
@@ -1239,6 +1260,7 @@ export const deleteProfile = /* GraphQL */ `
             birthDate
             hobbies
             gender
+            lastEventNotification
             groupID
             createdAt
             updatedAt
@@ -1272,6 +1294,7 @@ export const deleteProfile = /* GraphQL */ `
             birthDate
             hobbies
             gender
+            lastEventNotification
             groupID
             createdAt
             updatedAt
@@ -1322,6 +1345,7 @@ export const deleteProfile = /* GraphQL */ `
             birthDate
             hobbies
             gender
+            lastEventNotification
             groupID
             createdAt
             updatedAt
@@ -1354,6 +1378,7 @@ export const deleteProfile = /* GraphQL */ `
             birthDate
             hobbies
             gender
+            lastEventNotification
             groupID
             createdAt
             updatedAt
@@ -1407,6 +1432,7 @@ export const deleteProfile = /* GraphQL */ `
             birthDate
             hobbies
             gender
+            lastEventNotification
             groupID
             createdAt
             updatedAt
@@ -1498,6 +1524,7 @@ export const deleteProfile = /* GraphQL */ `
             birthDate
             hobbies
             gender
+            lastEventNotification
             groupID
             createdAt
             updatedAt
@@ -1786,6 +1813,7 @@ export const createEvent = /* GraphQL */ `
             birthDate
             hobbies
             gender
+            lastEventNotification
             groupID
             createdAt
             updatedAt
@@ -1835,6 +1863,7 @@ export const createEvent = /* GraphQL */ `
             birthDate
             hobbies
             gender
+            lastEventNotification
             groupID
             createdAt
             updatedAt
@@ -2048,6 +2077,7 @@ export const updateEvent = /* GraphQL */ `
             birthDate
             hobbies
             gender
+            lastEventNotification
             groupID
             createdAt
             updatedAt
@@ -2097,6 +2127,7 @@ export const updateEvent = /* GraphQL */ `
             birthDate
             hobbies
             gender
+            lastEventNotification
             groupID
             createdAt
             updatedAt
@@ -2310,6 +2341,7 @@ export const deleteEvent = /* GraphQL */ `
             birthDate
             hobbies
             gender
+            lastEventNotification
             groupID
             createdAt
             updatedAt
@@ -2359,6 +2391,7 @@ export const deleteEvent = /* GraphQL */ `
             birthDate
             hobbies
             gender
+            lastEventNotification
             groupID
             createdAt
             updatedAt
@@ -2604,6 +2637,7 @@ export const createRide = /* GraphQL */ `
             birthDate
             hobbies
             gender
+            lastEventNotification
             groupID
             createdAt
             updatedAt
@@ -2779,6 +2813,7 @@ export const updateRide = /* GraphQL */ `
             birthDate
             hobbies
             gender
+            lastEventNotification
             groupID
             createdAt
             updatedAt
@@ -2954,6 +2989,7 @@ export const deleteRide = /* GraphQL */ `
             birthDate
             hobbies
             gender
+            lastEventNotification
             groupID
             createdAt
             updatedAt
@@ -3033,6 +3069,7 @@ export const createPhoto = /* GraphQL */ `
         birthDate
         hobbies
         gender
+        lastEventNotification
         events {
           items {
             id
@@ -3227,6 +3264,7 @@ export const updatePhoto = /* GraphQL */ `
         birthDate
         hobbies
         gender
+        lastEventNotification
         events {
           items {
             id
@@ -3421,6 +3459,7 @@ export const deletePhoto = /* GraphQL */ `
         birthDate
         hobbies
         gender
+        lastEventNotification
         events {
           items {
             id
@@ -3614,6 +3653,7 @@ export const createFriendship = /* GraphQL */ `
         birthDate
         hobbies
         gender
+        lastEventNotification
         events {
           items {
             id
@@ -3788,6 +3828,7 @@ export const createFriendship = /* GraphQL */ `
         birthDate
         hobbies
         gender
+        lastEventNotification
         events {
           items {
             id
@@ -3979,6 +4020,7 @@ export const updateFriendship = /* GraphQL */ `
         birthDate
         hobbies
         gender
+        lastEventNotification
         events {
           items {
             id
@@ -4153,6 +4195,7 @@ export const updateFriendship = /* GraphQL */ `
         birthDate
         hobbies
         gender
+        lastEventNotification
         events {
           items {
             id
@@ -4344,6 +4387,7 @@ export const deleteFriendship = /* GraphQL */ `
         birthDate
         hobbies
         gender
+        lastEventNotification
         events {
           items {
             id
@@ -4518,6 +4562,7 @@ export const deleteFriendship = /* GraphQL */ `
         birthDate
         hobbies
         gender
+        lastEventNotification
         events {
           items {
             id
@@ -4711,6 +4756,7 @@ export const createConversation = /* GraphQL */ `
         birthDate
         hobbies
         gender
+        lastEventNotification
         events {
           items {
             id
@@ -4884,6 +4930,7 @@ export const createConversation = /* GraphQL */ `
         birthDate
         hobbies
         gender
+        lastEventNotification
         events {
           items {
             id
@@ -5095,6 +5142,7 @@ export const updateConversation = /* GraphQL */ `
         birthDate
         hobbies
         gender
+        lastEventNotification
         events {
           items {
             id
@@ -5268,6 +5316,7 @@ export const updateConversation = /* GraphQL */ `
         birthDate
         hobbies
         gender
+        lastEventNotification
         events {
           items {
             id
@@ -5479,6 +5528,7 @@ export const deleteConversation = /* GraphQL */ `
         birthDate
         hobbies
         gender
+        lastEventNotification
         events {
           items {
             id
@@ -5652,6 +5702,7 @@ export const deleteConversation = /* GraphQL */ `
         birthDate
         hobbies
         gender
+        lastEventNotification
         events {
           items {
             id
@@ -5987,6 +6038,7 @@ export const createGroup = /* GraphQL */ `
           birthDate
           hobbies
           gender
+          lastEventNotification
           events {
             nextToken
             startedAt
@@ -6161,6 +6213,7 @@ export const updateGroup = /* GraphQL */ `
           birthDate
           hobbies
           gender
+          lastEventNotification
           events {
             nextToken
             startedAt
@@ -6335,6 +6388,7 @@ export const deleteGroup = /* GraphQL */ `
           birthDate
           hobbies
           gender
+          lastEventNotification
           events {
             nextToken
             startedAt
@@ -6448,6 +6502,7 @@ export const createEventProfile = /* GraphQL */ `
         birthDate
         hobbies
         gender
+        lastEventNotification
         events {
           items {
             id
@@ -6729,6 +6784,7 @@ export const updateEventProfile = /* GraphQL */ `
         birthDate
         hobbies
         gender
+        lastEventNotification
         events {
           items {
             id
@@ -7010,6 +7066,7 @@ export const deleteEventProfile = /* GraphQL */ `
         birthDate
         hobbies
         gender
+        lastEventNotification
         events {
           items {
             id
@@ -7291,6 +7348,7 @@ export const createRideProfile = /* GraphQL */ `
         birthDate
         hobbies
         gender
+        lastEventNotification
         events {
           items {
             id
@@ -7567,6 +7625,7 @@ export const updateRideProfile = /* GraphQL */ `
         birthDate
         hobbies
         gender
+        lastEventNotification
         events {
           items {
             id
@@ -7843,6 +7902,7 @@ export const deleteRideProfile = /* GraphQL */ `
         birthDate
         hobbies
         gender
+        lastEventNotification
         events {
           items {
             id
