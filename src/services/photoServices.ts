@@ -1,4 +1,3 @@
-import {Auth} from "@aws-amplify/auth";
 import {Storage} from "@aws-amplify/storage";
 import {v4 as uuidv4} from "uuid";
 import {Photo, Profile} from "../models";
@@ -19,7 +18,10 @@ export const getPhotoURL = async (photoID: string | null | undefined) => {
   try {
     const photo = await DataStore.query(Photo, photoID);
     if(!photo) return "";
-    return `${import.meta.env.VITE_CLOUDINARY_URL}/protected/${photo.identityId}/${photo.s3Key}${import.meta.env.VITE_CLOUDINARY_TRANSFORM}`
+    if(photo.identityId) {
+      return `${import.meta.env.VITE_CLOUDINARY_URL}/protected/${photo.identityId}/${photo.s3Key}${import.meta.env.VITE_CLOUDINARY_TRANSFORM}`
+    }
+    return `${import.meta.env.VITE_CLOUDINARY_URL}/public/${photo.s3Key}${import.meta.env.VITE_CLOUDINARY_TRANSFORM}`
   } catch (e) {
     console.log("Error getting photo URL:", e);
     return "";
@@ -28,13 +30,11 @@ export const getPhotoURL = async (photoID: string | null | undefined) => {
 
 export const createNewPhoto = async (sub: string, photoFile: File, profileID: string) => {
   const id = uuidv4();
-  const credentials = await Auth.currentCredentials();
-  const identityId = credentials.identityId;
 
   try {
     await Storage.put(`${sub}/${id}`, photoFile, {
       contentType: photoFile.type,
-      level: "protected",
+      level: "public"
     });
   } catch (e) {
     console.log("Error uploading file:", e);
@@ -44,9 +44,7 @@ export const createNewPhoto = async (sub: string, photoFile: File, profileID: st
     return await DataStore.save(
       new Photo({
         s3Key: `${sub}/${id}`,
-        isPrivate: false,
         profileID: profileID,
-        identityId: identityId
       }));
   } catch (e) {
     console.log("Error saving photo:", e);
