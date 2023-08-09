@@ -1,6 +1,4 @@
 import React, {ReactNode, useEffect, useRef, useState} from "react";
-import AuthComponent from "./AuthComponent";
-import Button from "../../components/common/Button/Button";
 import {
   motion,
   MotionValue,
@@ -17,10 +15,10 @@ import textCircle from "../../assests/images/yellow-text-circle.svg"
 import appleBadge from "../../assests/images/apple-store-badge.svg"
 import googleBadge from "../../assests/images/google-store-badge.png"
 import textLogo from "../../assests/images/text-logo-black.jpg"
-import logo from "../../assests/images/logo.svg"
 
 import "./landing.css"
 import {IonContent, IonPage} from "@ionic/react";
+import LoginButton from "../../components/ui/LoginButton";
 
 const icon = {
   hidden: {
@@ -36,9 +34,6 @@ const icon = {
 }
 
 const LandingPage = () => {
-  const [loggingIn, setLoggingIn] = useState(false);
-  const ref = useRef(null)
-  const { scrollYProgress } = useScroll();
 
   useEffect(() => {
     LocalNotifications.requestPermissions().then(res => {
@@ -46,21 +41,9 @@ const LandingPage = () => {
     });
   }, []);
 
-
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001
-  });
-
   const time = useTime();
   const rotate = useTransform(time, [0, 16000], [0, 360], { clamp: false });
 
-  if(loggingIn) {
-    return <AuthComponent/>
-  }
-
-  //snap-mandatory snap-y
   return (
     <IonPage>
       <IonContent >
@@ -119,10 +102,9 @@ const LandingPage = () => {
                 </motion.svg>
                 <div className=" bg-lightYellow rounded-full h-[200px] md:h-[300px] w-[200px] md:w-[300px] absolute top z-0"/>
               </div>
-              <Button
-                className="text-2xl my-8"
-                onClick={() => setLoggingIn(true)}
-              >Login</Button>
+              <div className="relative z-50">
+                <LoginButton/>
+              </div>
               <div className="flex gap-4">
                 <div className="flex-1 ">
                   <img className="h-full max-h-[75px]" src={googleBadge}/>
@@ -149,7 +131,6 @@ const LandingPage = () => {
 
 const Div2 = () => {
   const ref = useRef(null);
-  const [progress1, setProgress1] = useState(0);
 
   return (
     <div>
@@ -157,8 +138,6 @@ const Div2 = () => {
         className="bg-lightYellow min-h-[800px] relative z-20 snap-center w-full div2 div3 py-16"
         transition={{ ease: "linear", duration: 1, delay: .7}}
         ref={ref}
-        //style={{opacity: progress1}}
- //       style={{borderRadius: "0 0 50% 50%"}}
       >
         <div className="text-5xl text-center m-4 w-full">
 
@@ -205,7 +184,6 @@ const Div2 = () => {
 
 const Div3 = () => {
   const ref = useRef(null);
-  const [progress, setProgress] = useState(0);
 
   return (
     <motion.div
