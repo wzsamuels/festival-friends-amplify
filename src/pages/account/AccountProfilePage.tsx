@@ -10,13 +10,17 @@ import Button from "../../components/common/Button/Button";
 import PhotoModal from "./Modals/PhotoModal";
 import useDataClearedStore from "../../stores/dataClearedStore";
 import useProfileStore from "../../stores/profileStore";
-import {getRidesByProfile} from "../../services/rideServices";
 import EventCard from "../../components/ui/EventCard";
 import ImageUpload from "../../components/common/ImageUpload";
 import {getPhotoURL} from "../../services/photoServices";
 import Image from "../../components/ui/Image";
 import {UserCircleIcon} from "@heroicons/react/24/solid";
-
+import {IonContent} from "@ionic/react";
+const NavItems = [
+  { content: "Profile", link: "/account" },
+  { content: "Events", link: "/account/events" },
+  { content: "Settings", link: "/account/settings" }
+]
 const AccountProfilePage = () => {
   const [profileImage, setProfileImage] = useState("");
   const [bannerImage, setBannerImage] = useState("");
@@ -35,26 +39,16 @@ const AccountProfilePage = () => {
   useEffect(() => {
     if (!dataCleared || !userProfile) return;
 
-    const fetchRides = async () => {
-      return await getRidesByProfile(userProfile);
-    };
-
     try {
       getPhotoURL(userProfile.profilePhotoID)
         .then(image => setProfileImage(image));
       getPhotoURL(userProfile.bannerPhotoID)
         .then(image => setBannerImage(image));
-      /*
-      fetchRides()
-        .then(rides => setRides(rides));
-
-       */
     } catch (e) {
       console.log(e);
     }
 
     // Use DataStore subs to get immediate updates
-
     try {
       const photoSub = DataStore.observeQuery(Photo, (photo) =>
         photo.profileID.eq(userProfile.id)
@@ -90,7 +84,7 @@ const AccountProfilePage = () => {
   }, [selectedFile]);
 
   return (
-  <>
+      <IonContent>
       <section
         className={
           "flex justify-center flex-col relative w-full h-screen max-h-[500px]"
@@ -225,7 +219,8 @@ const AccountProfilePage = () => {
           />
         </>
       )}
-</>
+      </IonContent>
+
   )
 };
 

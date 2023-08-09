@@ -13,6 +13,7 @@ import SocialMediaList from "./SocialMediaList";
 import {getEventsByProfile} from "../../services/eventServices";
 import ReportModal from "./Modals/ReportModal";
 import Image from "../../components/ui/Image";
+import {IonContent, IonPage} from "@ionic/react";
 
 type ProfilePageProps = RouteComponentProps<{
     id: string;
@@ -79,7 +80,7 @@ const ProfilePage = ({match}: ProfilePageProps) => {
   }, [dataCleared, profile]);
 
   return (
-    <>
+    <IonPage>
       <Header>
         {/*
         <button className="mx-4 text-xl flex items-center" onClick={() => navigate(-1)}>
@@ -87,6 +88,7 @@ const ProfilePage = ({match}: ProfilePageProps) => {
         </button>
          */}
       </Header>
+      <IonContent>
       <section
         className="flex justify-center flex-col relative w-full h-screen  max-h-[500px]">
         {bannerImage ? (
@@ -216,7 +218,8 @@ const ProfilePage = ({match}: ProfilePageProps) => {
         deletePhoto={false}
       />
       { profile && <ReportModal profile={profile} isOpen={reportModalOpen} setIsOpen={setReportModalOpen} />}
-    </>
+      </IonContent>
+    </IonPage>
   );
 };
 
