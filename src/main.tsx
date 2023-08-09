@@ -19,6 +19,7 @@ root.render(
       // it's important to use refresh tokens without the fallback
       useRefreshTokens={true}
       useRefreshTokensFallback={false}
+      cacheLocation="localstorage"
     >
       <App />
     </Auth0Provider>
