@@ -1,5 +1,5 @@
 import { Authenticator } from "@aws-amplify/ui-react";
-import React, {lazy, Suspense} from "react";
+import React, {Suspense, useEffect} from "react";
 import awsExports from "./aws-exports";
 import Amplify from "@aws-amplify/core";
 import {AuthModeStrategyType} from "@aws-amplify/datastore";
@@ -7,7 +7,8 @@ import {QueryClient, QueryClientProvider} from "react-query";
 import {ErrorBoundary} from "react-error-boundary";
 import {IonApp, IonRouterOutlet, setupIonicReact} from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-
+import {App as CapApp} from "@capacitor/app";
+import {Capacitor} from "@capacitor/core";
 
 const isLocalhost = Boolean(
   window.location.hostname === "localhost" ||
@@ -30,12 +31,25 @@ const [
   productionRedirectSignOut,
 ] = awsExports.oauth.redirectSignOut.split(",");
 
+let redirectSignIn;
+let redirectSignOut;
+
+if (Capacitor.getPlatform() === 'ios' || Capacitor.getPlatform() === "android" || Capacitor.getPlatform() === "hybrid") {
+  redirectSignIn = "capacitor://localhost/"
+  redirectSignOut = "capacitor://localhost/"
+} else {
+  redirectSignIn = isLocalhost ? localRedirectSignIn : productionRedirectSignIn;
+  redirectSignOut = isLocalhost ? localRedirectSignOut : productionRedirectSignOut;
+}
+
+
 const updatedAwsConfig = {
   ...awsExports,
+
   oauth: {
     ...awsExports.oauth,
-    redirectSignIn: isLocalhost ? localRedirectSignIn : productionRedirectSignIn,
-    redirectSignOut: isLocalhost ? localRedirectSignOut : productionRedirectSignOut,
+    redirectSignIn,
+    redirectSignOut
   },
   DataStore: {
     authModeStrategyType: AuthModeStrategyType.MULTI_AUTH,
@@ -47,23 +61,44 @@ const queryClient = new QueryClient();
 import Fallback from "./components/ui/Fallback";
 import LoadingState from "./components/ui/LoadingState";
 import Layout from "./components/layout/Layout";
+import {useAuth0} from "@auth0/auth0-react";
+import {callbackUri} from "./auth.config";
+import {Browser} from "@capacitor/browser";
 
 setupIonicReact();
 
 const App = () => {
+  const { handleRedirectCallback } = useAuth0();
+
+  useEffect(() => {
+    CapApp.addListener("appUrlOpen", async ({ url }) => {
+      console.log("URL OPENED, ", url)
+      if (url.startsWith(callbackUri)) {
+        if (
+          url.includes("state") &&
+          (url.includes("code") || url.includes("error"))
+        ) {
+          await handleRedirectCallback(url);
+        }
+
+        await Browser.close();
+      }
+    });
+  }, [handleRedirectCallback]);
+
   return (
     <Authenticator.Provider>
       <QueryClientProvider client={queryClient}>
         <IonApp>
-        <ErrorBoundary FallbackComponent={Fallback}>
-          <Suspense fallback={<div className='flex justify-center items-center h-screen'><LoadingState/></div>}>
-            <IonReactRouter>
-              <IonRouterOutlet>
-                <Layout/>
-              </IonRouterOutlet>
-            </IonReactRouter>
-          </Suspense>
-        </ErrorBoundary>
+          <ErrorBoundary FallbackComponent={Fallback}>
+            <Suspense fallback={<div className='flex justify-center items-center h-screen'><LoadingState/></div>}>
+              <IonReactRouter>
+                <IonRouterOutlet>
+                  <Layout/>
+                </IonRouterOutlet>
+              </IonReactRouter>
+            </Suspense>
+          </ErrorBoundary>
         </IonApp>
       </QueryClientProvider>
     </Authenticator.Provider>
@@ -71,42 +106,3 @@ const App = () => {
 };
 
 export default App;
-
-/*
- {
-                  path: "events/:id",
-                  element: <EventDetailPage />,
-                },
-                {
-                  path: "friends",
-                  element: <FriendsPage />,
-                },
-                {
-                  path: "messages",
-                  element: <MessagePage />,
-                },
-
-
-                  path: "submit-event",
-                  element: <SubmitEventPage />,
-                },
-                {
-                  path: "privacy-policy",
-                  element: <PolicyPage/>,
-                },
-
-                  ]
-                },
-                {
-                  path: "support",
-                  element: <SupportPage/>
-                },
-                {
-                  path: "friends/profile/:profileId",
-                  element: <ProfilePage />,
-                },
-                  ],
-                },
-
-                ]);
- */
