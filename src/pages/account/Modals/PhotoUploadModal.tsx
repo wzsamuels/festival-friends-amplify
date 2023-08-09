@@ -14,8 +14,9 @@ export interface PhotoUploadModalProps extends ProfileModalProps {
 
 const PhotoUploadModal = ({profile, isOpen, setIsOpen, photoFile, setPhotoFile}: PhotoUploadModalProps) => {
   const [preview, setPreview] = useState("");
-  const { user } = useAuthenticator((context) => [context.user]);
-  const sub = user?.username as string;
+  const sub = profile?.id;
+  //const { user } = useAuthenticator((context) => [context.user]);
+  //const sub = user?.username as string;
 
   const handlePhotoUpload = async () => {
     if (photoFile && profile) {
