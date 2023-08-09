@@ -1,6 +1,5 @@
-import {Event, Photo, Profile} from "../models";
+import {Event, Profile} from "../models";
 import {DataStore} from "@aws-amplify/datastore";
-import {S3Levels} from "../@types/s3";
 
 export const getProfile = async (userID: string) => {
   try {
@@ -10,57 +9,6 @@ export const getProfile = async (userID: string) => {
     return null;
   }
 }
-
-export const getProfilePhoto = async (
-  profile: Profile | null | undefined,
-  getSignedURL: (s3Key: string, level: S3Levels, identityId?: string | undefined) => Promise<string>) => {
-  if(!profile || !profile.profilePhotoID) return "";
-
-  try {
-    const photo = await DataStore.query(Photo, profile.profilePhotoID)
-    if (photo) {
-      return await getSignedURL(photo.s3Key, "protected", photo.identityId)
-    }
-  } catch (e) {
-    console.log("Error getting profile photo", profile, e)
-  }
-
-  return "";
-};
-
-export const getBannerPhoto = async (
-  profile: Profile | null | undefined,
-  getSignedURL: (s3Key: string, level: S3Levels, identityId?: string | undefined) => Promise<string>) => {
-  if(!profile || !profile.bannerPhotoID) return "";
-
-  try {
-    const photo = await DataStore.query(Photo, profile.bannerPhotoID)
-    if (photo) {
-      return await getSignedURL(photo.s3Key, "protected", photo.identityId)
-    }
-  } catch (e) {
-    console.log("Error getting banner photo", profile, e)
-  }
-
-  return "";
-};
-
-export const getVerifyPhoto = async (
-  profile: Profile | null | undefined,
-  getSignedURL: (s3Key: string, level: S3Levels, identityId?: string | undefined) => Promise<string>) => {
-  if(!profile || !profile.verifyPhotoID) return "";
-
-  try {
-    const photo = await DataStore.query(Photo, profile.verifyPhotoID)
-    if (photo) {
-      return await getSignedURL(photo.s3Key, "protected", photo.identityId)
-    }
-  } catch (e) {
-    console.log("Error getting profile photo", profile, e)
-  }
-
-  return "";
-};
 
 export const updateProfilePhoto = async (profile: Profile, photoID: string) => {
   try {
