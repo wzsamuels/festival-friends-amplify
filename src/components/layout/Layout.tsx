@@ -1,14 +1,11 @@
 import React, {useCallback, useEffect} from "react";
-import {NavLink, Redirect, Route, RouteComponentProps, useHistory} from "react-router-dom";
+import {Redirect, Route} from "react-router-dom";
 import {
   BsEmojiSmile,
   BsFillChatSquareDotsFill,
   BsFillPeopleFill,
 } from "react-icons/bs";
-import PulseButton from "../common/PulseButton/PulseButton";
-
 import {CalendarDaysIcon} from "@heroicons/react/24/outline";
-import { useAuthenticator } from "@aws-amplify/ui-react";
 import LandingPage from "../../pages/landing/page";
 import AccountLayout from "../../pages/account/layout";
 import useProfileStore from "../../stores/profileStore";
@@ -20,8 +17,6 @@ import logo from "../../assests/images/logo.svg";
 import {getAllEvents} from "../../services/eventServices";
 import {Geolocation} from "@capacitor/geolocation";
 import calculateDistance from "../../lib/calculateDistance";
-import {App} from "@capacitor/app";
-import {Auth} from "@aws-amplify/auth";
 import EventPage from "../../pages/events/page";
 
 import useFriendStore from "../../stores/friendProfileStore";
@@ -29,7 +24,7 @@ import useDataClearedStore from "../../stores/dataClearedStore";
 import useEventStore from "../../stores/eventStore";
 import useQueueStore from "../../stores/queueStore";
 import {DataStore} from "@aws-amplify/datastore";
-import {IonLabel, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs} from "@ionic/react";
+import {IonContent, IonLabel, IonPage, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs} from "@ionic/react";
 import GroupLayout from "../../pages/GroupPage/layout";
 import AdminLayout from "../../pages/Admin/AdminLayout";
 import Friends from "../../pages/FriendPage/page";
@@ -39,34 +34,37 @@ import '@ionic/react/css/core.css';
 import '../../variables.css'
 import MessagePage from "../../pages/MessagePage/page";
 import EventDetailPage from "../../pages/events/EventDetailPage";
+import {useAuth0} from "@auth0/auth0-react";
+import ProfilePage from "../../pages/ProfilePage/ProfilePage";
+import {useAuthenticator} from "@aws-amplify/ui-react";
 
 const Layout = () => {
   const { loadingUserProfile, userProfile } = useProfileStore();
-  const { user } = useAuthenticator((context) => [context.user]);
+  const { route } = useAuthenticator((context) => [context.route]);
   const fetchUserProfile = useProfileStore(state => state.fetchUserProfile)
   const fetchFriendProfiles = useFriendStore(state => state.fetchFriends)
-  const email = user?.attributes?.email;
   const dataCleared = useDataClearedStore(state => state.dataCleared)
-  const { route } = useAuthenticator((context) => [context.route]);
   const fetchEvents = useEventStore(state => state.fetchEvents)
   const { dataStoreQueue } = useQueueStore();
+  const { user, isLoading, isAuthenticated } = useAuth0();
+  //const email = user?.email;
+  //const { user, signOut } = useAuthenticator((context) => [context.user]);
+  const email = user?.email;
+
+  console.log("User: ", user)
 
   useEffect(() => {
     DataStore.start().then(() => console.log("DataStore started"))
     fetchEvents()
-    App.addListener('appUrlOpen', (data) => {
-      console.log("App URL Open: ", data.url)
-    });
   }, []);
 
   useEffect(() => {
-    if(!dataCleared || !email || route !== 'authenticated') return;
-    console.log("Data cleared: ", dataCleared, ", email: ", email, ", route: ", route)
+    if(!dataCleared || !email || !isAuthenticated || isLoading) return;
+    console.log("Data cleared: ", dataCleared, ", email: ", email)
     dataStoreQueue.enqueue(async () => {
-      //
-      fetchUserProfile(email, route);
+      fetchUserProfile(email);
     });
-  }, [email, dataCleared, route]);
+  }, [email, dataCleared, isAuthenticated, isLoading]);
 
   useEffect(() => {
     if(!dataCleared || !userProfile) return;
@@ -74,13 +72,9 @@ const Layout = () => {
     fetchFriendProfiles(userProfile);
   }, [dataCleared, userProfile])
 
-  console.log("In layout")
-
   useEffect(() => {
     document.body.focus();
   }, []);
-
-
 
   const notificationEffect = useCallback(async () => {
     const permissions = await Geolocation.checkPermissions();
@@ -107,7 +101,7 @@ const Layout = () => {
       endDate.setHours(23, 59, 59, 999);
 
       // Now check if the 'now' is between the start and end dates
-   //   console.log(`Event: ${event.name}, Start Date ${startDate}, End Date ${endDate}, Miles ${miles}`);
+      //   console.log(`Event: ${event.name}, Start Date ${startDate}, End Date ${endDate}, Miles ${miles}`);
 
       return now >= startDate && now <= endDate && miles < 100;
     }));
@@ -146,21 +140,20 @@ const Layout = () => {
   }, [userProfile])
 
   if(userProfile?.verified) {
-
-//    history.push("/events");
     return (
       <div className="relative min-h-screen max-w-[100vw] overflow-hidden">
         <div className="pt-9 md:pt-10 pb-footer">
           <IonTabs>
             <IonRouterOutlet>
-              <Route path="/events" exact component={EventPage}/>
               <Redirect exact from="/" to="/events" />
+              <Route exact path="/events" component={EventPage}/>
+              <Route path="/events/:id" component={EventDetailPage} />
               <Route path="/account" component={AccountLayout} />
               <Route path="/admin" component={AdminLayout}/>
-              <Route path="/friends" component={Friends} />
+              <Route exact path="/friends" component={Friends} />
+              <Route path="/friends/profile/:id" component={ProfilePage} />
               <Route path="/groups" component={GroupLayout} />
               <Route path="/messages" component={MessagePage} />
-              <Route path="/events/:id" component={EventDetailPage} />
             </IonRouterOutlet>
             <IonTabBar slot="bottom" className="shadow-dropdown flex justify-around items-center bg-lightYellow text-black">
               <IonTabButton tab="tab1" href="/events" className="flex flex-1 flex-shrink visited:text-black">
@@ -198,11 +191,11 @@ const Layout = () => {
     );
   }
 
-  if (loadingUserProfile || route === "idle") {
+  if (loadingUserProfile || isLoading) {
     return <LoadingState />;
   }
 
-  if(route !== 'authenticated') {
+  if(!isAuthenticated) {
     return (
       <LandingPage/>
     )
@@ -211,7 +204,15 @@ const Layout = () => {
 
 
   if (!userProfile) {
-    return <AccountUnverified />
+    return (
+      <IonPage>
+        <Header/>
+        <IonContent>
+          <AccountUnverified />
+        </IonContent>
+      </IonPage>
+
+    )
   }
 
   if (!userProfile?.verified && userProfile?.submitted) {
@@ -310,5 +311,45 @@ export default Layout;
                   </NavLink>
                 </div>
               </footer>
+
+
+              useEffect(() => {
+    const handleRedirect = async () => {
+      const redirectUrl = window.location.href;
+      const code = new URL(redirectUrl).searchParams.get('code');
+      if (!code) return;
+      const clientId = "803934289038-qie999ke55id6ss44mdjc3ljtre9n5qv.apps.googleusercontent.com";
+      const redirectUri = "http://localhost:5173";
+      //const redirectUri = "https://www.eventfriends.app"
+
+      const data = {
+        code: code,
+        client_id: clientId,
+        client_secret: "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",
+        redirect_uri: redirectUri,
+        grant_type: 'authorization_code'
+      };
+
+      const response = await fetch('https://oauth2.googleapis.com/token', {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      })
+      const result = await response.json();
+      const {id_token} = result;
+      const decodedToken = jwtDecode(id_token);
+      const {name, email, exp} = decodedToken as {name: string, email: string, exp: number};
+      try {
+        await Auth.federatedSignIn('accounts.google.com', {token: id_token, expires_at: exp * 1000}, {name: name, email: email});
+       // setLogged(true)
+      } catch (e) {
+        console.log("Error: ", e);
+      }
+    };
+
+    handleRedirect();
+  }, []);
 
  */
