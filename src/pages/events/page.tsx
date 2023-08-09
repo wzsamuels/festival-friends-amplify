@@ -34,10 +34,6 @@ const segmentItems = [
   {
     id: 3,
     type: "business", label: "Business"
-  },
-  {
-    id: 4,
-    type: "travel", label: "Travel"
   }
 ];
 
