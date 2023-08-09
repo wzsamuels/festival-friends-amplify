@@ -1,4 +1,4 @@
-package com.twinsilverdesign.www;
+package app.eventfriends.www;
 
 import com.getcapacitor.BridgeActivity;
 

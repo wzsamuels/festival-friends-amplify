@@ -2,6 +2,6 @@
 <resources>
     <string name="app_name">Event Friends</string>
     <string name="title_activity_main">Event Friends</string>
-    <string name="package_name">com.twinsilverdesign.www</string>
-    <string name="custom_url_scheme">com.twinsilverdesign.www</string>
+    <string name="package_name">app.eventfriends.www</string>
+    <string name="custom_url_scheme">app.eventfriends.www</string>
 </resources>
