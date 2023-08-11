@@ -20,7 +20,7 @@
     }
   },
   "Resources": {
-    "LambdaLayerVersionfa517b64": {
+    "LambdaLayerVersion890773a6": {
       "Type": "AWS::Lambda::LayerVersion",
       "Properties": {
         "CompatibleRuntimes": [
@@ -30,9 +30,9 @@
           "S3Bucket": {
             "Ref": "deploymentBucketName"
           },
-          "S3Key": "amplify-builds/eventfriendslayer-LambdaLayerVersionfa517b64-build.zip"
+          "S3Key": "amplify-builds/eventfriendslayer-LambdaLayerVersion890773a6-build.zip"
         },
-        "Description": "Updated layer version 2023-07-30T00:46:35.766Z",
+        "Description": "Updated layer version 2023-08-09T15:24:04.054Z",
         "LayerName": {
           "Fn::Sub": [
             "eventfriendslayer-${env}",
@@ -47,11 +47,11 @@
       "DeletionPolicy": "Delete",
       "UpdateReplacePolicy": "Retain"
     },
-    "LambdaLayerPermissionPublicfa517b64": {
+    "LambdaLayerPermissionPublic890773a6": {
       "Type": "AWS::Lambda::LayerVersionPermission",
       "Properties": {
         "Action": "lambda:GetLayerVersion",
-        "LayerVersionArn": "arn:aws:lambda:us-east-1:642956558393:layer:eventfriendslayer-staging:53",
+        "LayerVersionArn": "arn:aws:lambda:us-east-1:642956558393:layer:eventfriendslayer-staging:54",
         "Principal": "*"
       }
     }
@@ -59,7 +59,7 @@
   "Outputs": {
     "Arn": {
       "Value": {
-        "Ref": "LambdaLayerVersionfa517b64"
+        "Ref": "LambdaLayerVersion890773a6"
       }
     }
   }
