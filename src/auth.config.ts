@@ -11,4 +11,4 @@ const iosOrAndroid = isPlatform('hybrid');
 
 export const callbackUri = iosOrAndroid
   ? `${appId}://${auth0Domain}/capacitor/${appId}/callback`
-  : 'http://localhost:5173';
+  : import.meta.env.VITE_DOMAIN;
