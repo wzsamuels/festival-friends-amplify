@@ -6,7 +6,6 @@ export const getProfile = /* GraphQL */ `
   query GetProfile($id: ID!) {
     getProfile(id: $id) {
       id
-      sub
       firstName
       lastName
       verified
@@ -35,7 +34,6 @@ export const getProfile = /* GraphQL */ `
           eventId
           profile {
             id
-            sub
             firstName
             lastName
             verified
@@ -116,7 +114,6 @@ export const getProfile = /* GraphQL */ `
           rideId
           profile {
             id
-            sub
             firstName
             lastName
             verified
@@ -178,7 +175,6 @@ export const getProfile = /* GraphQL */ `
           id
           profile {
             id
-            sub
             firstName
             lastName
             verified
@@ -212,7 +208,6 @@ export const getProfile = /* GraphQL */ `
           profileID
           friendProfile {
             id
-            sub
             firstName
             lastName
             verified
@@ -263,7 +258,6 @@ export const getProfile = /* GraphQL */ `
           friendProfileID
           profile {
             id
-            sub
             firstName
             lastName
             verified
@@ -296,7 +290,6 @@ export const getProfile = /* GraphQL */ `
           }
           friendProfile {
             id
-            sub
             firstName
             lastName
             verified
@@ -350,7 +343,6 @@ export const getProfile = /* GraphQL */ `
           profileID
           profile {
             id
-            sub
             firstName
             lastName
             verified
@@ -442,7 +434,6 @@ export const getProfile = /* GraphQL */ `
         members {
           items {
             id
-            sub
             firstName
             lastName
             verified
@@ -537,7 +528,6 @@ export const listProfiles = /* GraphQL */ `
     listProfiles(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        sub
         firstName
         lastName
         verified
@@ -730,7 +720,6 @@ export const syncProfiles = /* GraphQL */ `
     ) {
       items {
         id
-        sub
         firstName
         lastName
         verified
@@ -925,7 +914,6 @@ export const profilesByGroupID = /* GraphQL */ `
     ) {
       items {
         id
-        sub
         firstName
         lastName
         verified
@@ -1333,7 +1321,6 @@ export const getEvent = /* GraphQL */ `
         members {
           items {
             id
-            sub
             firstName
             lastName
             verified
@@ -1383,7 +1370,6 @@ export const getEvent = /* GraphQL */ `
           eventId
           profile {
             id
-            sub
             firstName
             lastName
             verified
@@ -2060,7 +2046,6 @@ export const getRide = /* GraphQL */ `
           rideId
           profile {
             id
-            sub
             firstName
             lastName
             verified
@@ -2445,7 +2430,6 @@ export const getPhoto = /* GraphQL */ `
       profileID
       profile {
         id
-        sub
         firstName
         lastName
         verified
@@ -2642,7 +2626,6 @@ export const listPhotos = /* GraphQL */ `
         profileID
         profile {
           id
-          sub
           firstName
           lastName
           verified
@@ -2767,7 +2750,6 @@ export const syncPhotos = /* GraphQL */ `
         profileID
         profile {
           id
-          sub
           firstName
           lastName
           verified
@@ -2894,7 +2876,6 @@ export const photosByProfileID = /* GraphQL */ `
         profileID
         profile {
           id
-          sub
           firstName
           lastName
           verified
@@ -3007,7 +2988,6 @@ export const getFriendship = /* GraphQL */ `
       id
       profile {
         id
-        sub
         firstName
         lastName
         verified
@@ -3182,7 +3162,6 @@ export const getFriendship = /* GraphQL */ `
       profileID
       friendProfile {
         id
-        sub
         firstName
         lastName
         verified
@@ -3376,7 +3355,6 @@ export const listFriendships = /* GraphQL */ `
         id
         profile {
           id
-          sub
           firstName
           lastName
           verified
@@ -3469,7 +3447,6 @@ export const listFriendships = /* GraphQL */ `
         profileID
         friendProfile {
           id
-          sub
           firstName
           lastName
           verified
@@ -3591,7 +3568,6 @@ export const syncFriendships = /* GraphQL */ `
         id
         profile {
           id
-          sub
           firstName
           lastName
           verified
@@ -3684,7 +3660,6 @@ export const syncFriendships = /* GraphQL */ `
         profileID
         friendProfile {
           id
-          sub
           firstName
           lastName
           verified
@@ -3808,7 +3783,6 @@ export const friendshipsByProfileID = /* GraphQL */ `
         id
         profile {
           id
-          sub
           firstName
           lastName
           verified
@@ -3901,7 +3875,6 @@ export const friendshipsByProfileID = /* GraphQL */ `
         profileID
         friendProfile {
           id
-          sub
           firstName
           lastName
           verified
@@ -4025,7 +3998,6 @@ export const friendshipsByFriendProfileID = /* GraphQL */ `
         id
         profile {
           id
-          sub
           firstName
           lastName
           verified
@@ -4118,7 +4090,6 @@ export const friendshipsByFriendProfileID = /* GraphQL */ `
         profileID
         friendProfile {
           id
-          sub
           firstName
           lastName
           verified
@@ -4231,7 +4202,6 @@ export const getConversation = /* GraphQL */ `
       friendProfileID
       profile {
         id
-        sub
         firstName
         lastName
         verified
@@ -4405,7 +4375,6 @@ export const getConversation = /* GraphQL */ `
       }
       friendProfile {
         id
-        sub
         firstName
         lastName
         verified
@@ -4619,7 +4588,6 @@ export const listConversations = /* GraphQL */ `
         friendProfileID
         profile {
           id
-          sub
           firstName
           lastName
           verified
@@ -4711,7 +4679,6 @@ export const listConversations = /* GraphQL */ `
         }
         friendProfile {
           id
-          sub
           firstName
           lastName
           verified
@@ -4853,7 +4820,6 @@ export const syncConversations = /* GraphQL */ `
         friendProfileID
         profile {
           id
-          sub
           firstName
           lastName
           verified
@@ -4945,7 +4911,6 @@ export const syncConversations = /* GraphQL */ `
         }
         friendProfile {
           id
-          sub
           firstName
           lastName
           verified
@@ -5089,7 +5054,6 @@ export const conversationsByProfileID = /* GraphQL */ `
         friendProfileID
         profile {
           id
-          sub
           firstName
           lastName
           verified
@@ -5181,7 +5145,6 @@ export const conversationsByProfileID = /* GraphQL */ `
         }
         friendProfile {
           id
-          sub
           firstName
           lastName
           verified
@@ -5325,7 +5288,6 @@ export const conversationsByFriendProfileID = /* GraphQL */ `
         friendProfileID
         profile {
           id
-          sub
           firstName
           lastName
           verified
@@ -5417,7 +5379,6 @@ export const conversationsByFriendProfileID = /* GraphQL */ `
         }
         friendProfile {
           id
-          sub
           firstName
           lastName
           verified
@@ -5687,7 +5648,6 @@ export const getGroup = /* GraphQL */ `
       members {
         items {
           id
-          sub
           firstName
           lastName
           verified
@@ -5842,7 +5802,6 @@ export const listGroups = /* GraphQL */ `
         members {
           items {
             id
-            sub
             firstName
             lastName
             verified
@@ -5948,7 +5907,6 @@ export const syncGroups = /* GraphQL */ `
         members {
           items {
             id
-            sub
             firstName
             lastName
             verified
@@ -6004,7 +5962,6 @@ export const getEventProfile = /* GraphQL */ `
       eventId
       profile {
         id
-        sub
         firstName
         lastName
         verified
@@ -6288,7 +6245,6 @@ export const listEventProfiles = /* GraphQL */ `
         eventId
         profile {
           id
-          sub
           firstName
           lastName
           verified
@@ -6464,7 +6420,6 @@ export const syncEventProfiles = /* GraphQL */ `
         eventId
         profile {
           id
-          sub
           firstName
           lastName
           verified
@@ -6642,7 +6597,6 @@ export const eventProfilesByProfileId = /* GraphQL */ `
         eventId
         profile {
           id
-          sub
           firstName
           lastName
           verified
@@ -6820,7 +6774,6 @@ export const eventProfilesByEventId = /* GraphQL */ `
         eventId
         profile {
           id
-          sub
           firstName
           lastName
           verified
@@ -6985,7 +6938,6 @@ export const getRideProfile = /* GraphQL */ `
       rideId
       profile {
         id
-        sub
         firstName
         lastName
         verified
@@ -7264,7 +7216,6 @@ export const listRideProfiles = /* GraphQL */ `
         rideId
         profile {
           id
-          sub
           firstName
           lastName
           verified
@@ -7438,7 +7389,6 @@ export const syncRideProfiles = /* GraphQL */ `
         rideId
         profile {
           id
-          sub
           firstName
           lastName
           verified
@@ -7614,7 +7564,6 @@ export const rideProfilesByProfileId = /* GraphQL */ `
         rideId
         profile {
           id
-          sub
           firstName
           lastName
           verified
@@ -7790,7 +7739,6 @@ export const rideProfilesByRideId = /* GraphQL */ `
         rideId
         profile {
           id
-          sub
           firstName
           lastName
           verified

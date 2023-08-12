@@ -6,7 +6,6 @@ export const onCreateProfile = /* GraphQL */ `
   subscription OnCreateProfile($filter: ModelSubscriptionProfileFilterInput) {
     onCreateProfile(filter: $filter) {
       id
-      sub
       firstName
       lastName
       verified
@@ -35,7 +34,6 @@ export const onCreateProfile = /* GraphQL */ `
           eventId
           profile {
             id
-            sub
             firstName
             lastName
             verified
@@ -116,7 +114,6 @@ export const onCreateProfile = /* GraphQL */ `
           rideId
           profile {
             id
-            sub
             firstName
             lastName
             verified
@@ -178,7 +175,6 @@ export const onCreateProfile = /* GraphQL */ `
           id
           profile {
             id
-            sub
             firstName
             lastName
             verified
@@ -212,7 +208,6 @@ export const onCreateProfile = /* GraphQL */ `
           profileID
           friendProfile {
             id
-            sub
             firstName
             lastName
             verified
@@ -263,7 +258,6 @@ export const onCreateProfile = /* GraphQL */ `
           friendProfileID
           profile {
             id
-            sub
             firstName
             lastName
             verified
@@ -296,7 +290,6 @@ export const onCreateProfile = /* GraphQL */ `
           }
           friendProfile {
             id
-            sub
             firstName
             lastName
             verified
@@ -350,7 +343,6 @@ export const onCreateProfile = /* GraphQL */ `
           profileID
           profile {
             id
-            sub
             firstName
             lastName
             verified
@@ -442,7 +434,6 @@ export const onCreateProfile = /* GraphQL */ `
         members {
           items {
             id
-            sub
             firstName
             lastName
             verified
@@ -532,7 +523,6 @@ export const onUpdateProfile = /* GraphQL */ `
   subscription OnUpdateProfile($filter: ModelSubscriptionProfileFilterInput) {
     onUpdateProfile(filter: $filter) {
       id
-      sub
       firstName
       lastName
       verified
@@ -561,7 +551,6 @@ export const onUpdateProfile = /* GraphQL */ `
           eventId
           profile {
             id
-            sub
             firstName
             lastName
             verified
@@ -642,7 +631,6 @@ export const onUpdateProfile = /* GraphQL */ `
           rideId
           profile {
             id
-            sub
             firstName
             lastName
             verified
@@ -704,7 +692,6 @@ export const onUpdateProfile = /* GraphQL */ `
           id
           profile {
             id
-            sub
             firstName
             lastName
             verified
@@ -738,7 +725,6 @@ export const onUpdateProfile = /* GraphQL */ `
           profileID
           friendProfile {
             id
-            sub
             firstName
             lastName
             verified
@@ -789,7 +775,6 @@ export const onUpdateProfile = /* GraphQL */ `
           friendProfileID
           profile {
             id
-            sub
             firstName
             lastName
             verified
@@ -822,7 +807,6 @@ export const onUpdateProfile = /* GraphQL */ `
           }
           friendProfile {
             id
-            sub
             firstName
             lastName
             verified
@@ -876,7 +860,6 @@ export const onUpdateProfile = /* GraphQL */ `
           profileID
           profile {
             id
-            sub
             firstName
             lastName
             verified
@@ -968,7 +951,6 @@ export const onUpdateProfile = /* GraphQL */ `
         members {
           items {
             id
-            sub
             firstName
             lastName
             verified
@@ -1058,7 +1040,6 @@ export const onDeleteProfile = /* GraphQL */ `
   subscription OnDeleteProfile($filter: ModelSubscriptionProfileFilterInput) {
     onDeleteProfile(filter: $filter) {
       id
-      sub
       firstName
       lastName
       verified
@@ -1087,7 +1068,6 @@ export const onDeleteProfile = /* GraphQL */ `
           eventId
           profile {
             id
-            sub
             firstName
             lastName
             verified
@@ -1168,7 +1148,6 @@ export const onDeleteProfile = /* GraphQL */ `
           rideId
           profile {
             id
-            sub
             firstName
             lastName
             verified
@@ -1230,7 +1209,6 @@ export const onDeleteProfile = /* GraphQL */ `
           id
           profile {
             id
-            sub
             firstName
             lastName
             verified
@@ -1264,7 +1242,6 @@ export const onDeleteProfile = /* GraphQL */ `
           profileID
           friendProfile {
             id
-            sub
             firstName
             lastName
             verified
@@ -1315,7 +1292,6 @@ export const onDeleteProfile = /* GraphQL */ `
           friendProfileID
           profile {
             id
-            sub
             firstName
             lastName
             verified
@@ -1348,7 +1324,6 @@ export const onDeleteProfile = /* GraphQL */ `
           }
           friendProfile {
             id
-            sub
             firstName
             lastName
             verified
@@ -1402,7 +1377,6 @@ export const onDeleteProfile = /* GraphQL */ `
           profileID
           profile {
             id
-            sub
             firstName
             lastName
             verified
@@ -1494,7 +1468,6 @@ export const onDeleteProfile = /* GraphQL */ `
         members {
           items {
             id
-            sub
             firstName
             lastName
             verified
@@ -1774,7 +1747,6 @@ export const onCreateEvent = /* GraphQL */ `
         members {
           items {
             id
-            sub
             firstName
             lastName
             verified
@@ -1824,7 +1796,6 @@ export const onCreateEvent = /* GraphQL */ `
           eventId
           profile {
             id
-            sub
             firstName
             lastName
             verified
@@ -2035,7 +2006,6 @@ export const onUpdateEvent = /* GraphQL */ `
         members {
           items {
             id
-            sub
             firstName
             lastName
             verified
@@ -2085,7 +2055,6 @@ export const onUpdateEvent = /* GraphQL */ `
           eventId
           profile {
             id
-            sub
             firstName
             lastName
             verified
@@ -2296,7 +2265,6 @@ export const onDeleteEvent = /* GraphQL */ `
         members {
           items {
             id
-            sub
             firstName
             lastName
             verified
@@ -2346,7 +2314,6 @@ export const onDeleteEvent = /* GraphQL */ `
           eventId
           profile {
             id
-            sub
             firstName
             lastName
             verified
@@ -2589,7 +2556,6 @@ export const onCreateRide = /* GraphQL */ `
           rideId
           profile {
             id
-            sub
             firstName
             lastName
             verified
@@ -2762,7 +2728,6 @@ export const onUpdateRide = /* GraphQL */ `
           rideId
           profile {
             id
-            sub
             firstName
             lastName
             verified
@@ -2935,7 +2900,6 @@ export const onDeleteRide = /* GraphQL */ `
           rideId
           profile {
             id
-            sub
             firstName
             lastName
             verified
@@ -3012,7 +2976,6 @@ export const onCreatePhoto = /* GraphQL */ `
       profileID
       profile {
         id
-        sub
         firstName
         lastName
         verified
@@ -3204,7 +3167,6 @@ export const onUpdatePhoto = /* GraphQL */ `
       profileID
       profile {
         id
-        sub
         firstName
         lastName
         verified
@@ -3396,7 +3358,6 @@ export const onDeletePhoto = /* GraphQL */ `
       profileID
       profile {
         id
-        sub
         firstName
         lastName
         verified
@@ -3589,7 +3550,6 @@ export const onCreateFriendship = /* GraphQL */ `
       id
       profile {
         id
-        sub
         firstName
         lastName
         verified
@@ -3764,7 +3724,6 @@ export const onCreateFriendship = /* GraphQL */ `
       profileID
       friendProfile {
         id
-        sub
         firstName
         lastName
         verified
@@ -3955,7 +3914,6 @@ export const onUpdateFriendship = /* GraphQL */ `
       id
       profile {
         id
-        sub
         firstName
         lastName
         verified
@@ -4130,7 +4088,6 @@ export const onUpdateFriendship = /* GraphQL */ `
       profileID
       friendProfile {
         id
-        sub
         firstName
         lastName
         verified
@@ -4321,7 +4278,6 @@ export const onDeleteFriendship = /* GraphQL */ `
       id
       profile {
         id
-        sub
         firstName
         lastName
         verified
@@ -4496,7 +4452,6 @@ export const onDeleteFriendship = /* GraphQL */ `
       profileID
       friendProfile {
         id
-        sub
         firstName
         lastName
         verified
@@ -4689,7 +4644,6 @@ export const onCreateConversation = /* GraphQL */ `
       friendProfileID
       profile {
         id
-        sub
         firstName
         lastName
         verified
@@ -4863,7 +4817,6 @@ export const onCreateConversation = /* GraphQL */ `
       }
       friendProfile {
         id
-        sub
         firstName
         lastName
         verified
@@ -5074,7 +5027,6 @@ export const onUpdateConversation = /* GraphQL */ `
       friendProfileID
       profile {
         id
-        sub
         firstName
         lastName
         verified
@@ -5248,7 +5200,6 @@ export const onUpdateConversation = /* GraphQL */ `
       }
       friendProfile {
         id
-        sub
         firstName
         lastName
         verified
@@ -5459,7 +5410,6 @@ export const onDeleteConversation = /* GraphQL */ `
       friendProfileID
       profile {
         id
-        sub
         firstName
         lastName
         verified
@@ -5633,7 +5583,6 @@ export const onDeleteConversation = /* GraphQL */ `
       }
       friendProfile {
         id
-        sub
         firstName
         lastName
         verified
@@ -5957,7 +5906,6 @@ export const onCreateGroup = /* GraphQL */ `
       members {
         items {
           id
-          sub
           firstName
           lastName
           verified
@@ -6129,7 +6077,6 @@ export const onUpdateGroup = /* GraphQL */ `
       members {
         items {
           id
-          sub
           firstName
           lastName
           verified
@@ -6301,7 +6248,6 @@ export const onDeleteGroup = /* GraphQL */ `
       members {
         items {
           id
-          sub
           firstName
           lastName
           verified
@@ -6414,7 +6360,6 @@ export const onCreateEventProfile = /* GraphQL */ `
       eventId
       profile {
         id
-        sub
         firstName
         lastName
         verified
@@ -6695,7 +6640,6 @@ export const onUpdateEventProfile = /* GraphQL */ `
       eventId
       profile {
         id
-        sub
         firstName
         lastName
         verified
@@ -6976,7 +6920,6 @@ export const onDeleteEventProfile = /* GraphQL */ `
       eventId
       profile {
         id
-        sub
         firstName
         lastName
         verified
@@ -7257,7 +7200,6 @@ export const onCreateRideProfile = /* GraphQL */ `
       rideId
       profile {
         id
-        sub
         firstName
         lastName
         verified
@@ -7533,7 +7475,6 @@ export const onUpdateRideProfile = /* GraphQL */ `
       rideId
       profile {
         id
-        sub
         firstName
         lastName
         verified
@@ -7809,7 +7750,6 @@ export const onDeleteRideProfile = /* GraphQL */ `
       rideId
       profile {
         id
-        sub
         firstName
         lastName
         verified

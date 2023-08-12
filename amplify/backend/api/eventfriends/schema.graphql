@@ -1,6 +1,5 @@
 type Profile @model @auth(rules: [{ allow: public }]) {
   id: ID!
-  sub: String!
   firstName: String
   lastName: String
   verified: Boolean @default(value: "false")

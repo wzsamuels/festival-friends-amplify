@@ -23,7 +23,6 @@ type EagerProfile = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly sub: string;
   readonly firstName?: string | null;
   readonly lastName?: string | null;
   readonly verified?: boolean | null;
@@ -65,7 +64,6 @@ type LazyProfile = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly sub: string;
   readonly firstName?: string | null;
   readonly lastName?: string | null;
   readonly verified?: boolean | null;
