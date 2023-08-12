@@ -27,7 +27,7 @@ const PhotoImage = ({ photo, className, onClick, level }: PhotoProps) => {
       <img
         onLoad={handleImageLoad}
         onClick={onClick}
-        className={`w-full h-full ${loading ? 'hidden' : 'block'} ${className}`}
+        className={`w-full h-full object-cover ${loading ? 'hidden' : 'block'} ${className}`}
         src={`${import.meta.env.VITE_CLOUDINARY_URL}/${level && photo.identityId ? level : "public"}/${photo.identityId ? `${photo.identityId}/` : ''}${photo.s3Key}${import.meta.env.VITE_CLOUDINARY_TRANSFORM}`}
         alt={`${photo.description ? photo.description : "Photo"}`}
       />
