@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import { Conversation, Profile } from "../../models";
-import { useAuthenticator } from "@aws-amplify/ui-react";
 import ConversationModal from "./Modals/ConversationModal";
 import Header from "../../components/layout/Header";
 import ConservationSearchModal from "./Modals/ConservationSearchModal";
@@ -15,19 +14,20 @@ import {PlusIcon} from "@heroicons/react/24/outline";
 import useQueueStore from "../../stores/queueStore";
 import {DataStore} from "@aws-amplify/datastore";
 import {IonContent, IonPage} from "@ionic/react";
+import {useAuth0} from "@auth0/auth0-react";
 
 const MessagePage: React.FC = () => {
   const [currentConversation, setCurrentConversation] = useState<Conversation>();
   const [isNewConversationModalOpen, setNewConversationModalOpen] = useState(false);
   const [isConversationSearchModalOpen, setConversationSearchModalOpen] = useState(false);
   const [isConversationModalOpen, setConversationModalOpen] = useState(false);
-  const { route } = useAuthenticator((context) => [context.route]);
   const userProfile = useProfileStore((state) => state.userProfile);
   const loadingUserProfile = useProfileStore((state) => state.loadingUserProfile);
   const friendProfiles = useFriendStore((state) => state.acceptedFriendProfiles);
   const [conversations, setConversations] = useState<Conversation[]>([])
   const [loadingConversations, setLoadingConversations] = useState(false)
   const dataCleared = useDataClearedStore(state => state.dataCleared)
+  const {isLoading} = useAuth0();
   const { dataStoreQueue } = useQueueStore()
 
   console.log("MessagePage friends: ", friendProfiles)
@@ -70,7 +70,7 @@ const MessagePage: React.FC = () => {
   };
 
   const renderMessages = () => {
-    if (loadingUserProfile || loadingConversations || route === "idle") {
+    if (loadingUserProfile || loadingConversations || isLoading) {
       return <LoadingState />;
     }
 
@@ -101,17 +101,14 @@ const MessagePage: React.FC = () => {
       />
       <div className="min-h-full h-full relative">
         {renderMessages()}
-        {
-          route === "authenticated" &&
-          <div className="fixed bottom-20 right-16">
-            <button
-              className="flex flex-col items-center rounded-[100%] bg-lightYellow p-3"
-              onClick={() => setNewConversationModalOpen(true)}
-            >
-              <PlusIcon className="h-6" />
-            </button>
-          </div>
-        }
+        <div className="fixed bottom-20 right-16">
+          <button
+            className="flex flex-col items-center rounded-[100%] bg-lightYellow p-3"
+            onClick={() => setNewConversationModalOpen(true)}
+          >
+            <PlusIcon className="h-6" />
+          </button>
+        </div>
 
         <NewConversationModal
           friendProfiles={friendProfiles}

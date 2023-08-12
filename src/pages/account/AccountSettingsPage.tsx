@@ -1,11 +1,8 @@
 import React, {useEffect, useState} from "react";
-import {AccountSettings, useAuthenticator} from "@aws-amplify/ui-react";
 import {SubmitHandler, useForm} from "react-hook-form";
 import Button from "../../components/common/Button/Button";
 import {DataStore} from "@aws-amplify/datastore";
 import {PrivacySetting, Profile} from "../../models";
-import LoggedOutState from "../../components/ui/LoggedOutState";
-import UnverifiedState from "../../components/ui/UnverifiedState";
 import useProfileStore from "../../stores/profileStore";
 import LoadingState from "../../components/ui/LoadingState";
 import Toast from "../../components/common/Toast/Toast";
@@ -25,10 +22,6 @@ interface Inputs {
 
 const AccountSettingsPage = () => {
   const userProfile = useProfileStore(state => state.userProfile);
-  const { route } = useAuthenticator(context => [context.route])
-  if(route !== 'authenticated') return <LoggedOutState/>
-
-  if(!userProfile?.verified) return <UnverifiedState/>
 
   return (
     <>
@@ -45,19 +38,6 @@ const AccountSettingsPage = () => {
           <div>
             <PrivacySettingForm userProfile={userProfile}/>
           </div>
-        </section>
-        <section className="my-8 min-w-4xl  max-w-[600px] w-full">
-          <h1 className="text-2xl md:text-3xl my-6">Change Password</h1>
-          <AccountSettings.ChangePassword />
-        </section>
-        <section className="my-8 min-w-4xl  max-w-[600px] w-full">
-          <h1 className="text-2xl md:text-3xl my-6">Delete Account</h1>
-          <div className="my-6 flex justify-center">
-            <AccountSettings.DeleteUser />
-          </div>
-          <h3 className="text-danger-default my-4 text-xl text-center">
-            This action cannot be undone!
-          </h3>
         </section>
       </div>
     </>

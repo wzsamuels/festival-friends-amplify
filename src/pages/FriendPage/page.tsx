@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useAuthenticator } from "@aws-amplify/ui-react";
 import { DataStore } from "@aws-amplify/datastore";
 import { Profile } from "../../models";
 import FriendCard, { FriendCardButton } from "../../components/ui/FriendCard";
@@ -20,17 +19,10 @@ import {shallow} from "zustand/shallow";
 import useFriendStore from "../../stores/friendProfileStore";
 import { useErrorBoundary } from "react-error-boundary";
 import SegmentSlide from "../../components/common/Segment/SegmentSlide";
-import {IonContent, IonHeader, IonPage} from "@ionic/react";
-import {Link} from "react-router-dom";
-import icon from "../../assests/images/logo.svg";
-import logo from "../../assests/images/logo1.png";
-import SearchButton from "../../components/ui/SearchButton";
-import AccountButton from "../../components/ui/AccountButton";
-
+import {IonContent, IonPage} from "@ionic/react";
 type FriendType = "accepted" | "sent" | "suggestions" | "pending";
 
 const FriendsPage: React.FC = () => {
-  const { route } = useAuthenticator((context) => [context.route]);
   const { userProfile, loadingUserProfile } = useProfileStore((state) =>
     ({ userProfile: state.userProfile, loadingUserProfile: state.loadingUserProfile }), shallow)
   const loadingFriends = useFriendStore(state => state.loadingFriends);
@@ -46,7 +38,7 @@ const FriendsPage: React.FC = () => {
   const { showBoundary } = useErrorBoundary();
 
   useEffect(() => {
-    if (route !== "authenticated" || !userProfile || !dataCleared) {
+    if (!userProfile || !dataCleared) {
       return;
     }
 
@@ -88,7 +80,7 @@ const FriendsPage: React.FC = () => {
       }
     }
     fetchSuggestedFriends();
-  }, [route, userProfile, dataCleared]);
+  }, [userProfile, dataCleared]);
 
   useEffect(() => {
     console.log(
@@ -152,7 +144,7 @@ const FriendsPage: React.FC = () => {
   );
 
   const renderFriends = () => {
-    if (loadingFriends || loadingUserProfile || route === "idle") {
+    if (loadingFriends || loadingUserProfile) {
       return <LoadingState />;
     }
 

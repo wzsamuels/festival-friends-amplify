@@ -3,7 +3,6 @@ import React, {useState} from "react";
 import {PrivacySetting, SocialMedia, Profile} from "../../models";
 import { DataStore } from "@aws-amplify/datastore";
 import { ProfileInputs } from "../../types";
-import { useAuthenticator } from "@aws-amplify/ui-react";
 import InputWrapper from "../../components/common/InputWrapper/InputWrapper";
 import Input from "../../components/common/Input/Input";
 import Label from "../../components/common/Label/Label";
@@ -19,9 +18,9 @@ import useFilePreview from "../../hooks/useFilePreview";
 import {getGroupByEmail} from "../../services/groupServices";
 import {API} from "@aws-amplify/api";
 import {PlusIcon} from "@heroicons/react/24/outline";
+import {useAuth0} from "@auth0/auth0-react";
 
 const AccountUnverified = () => {
-  const { user } = useAuthenticator((context) => [context.user]);
   const userProfile = useProfileStore((state) => state.userProfile);
   const setProfile = useProfileStore((state) => state.setProfile);
   const { phone, inputRef, handlePhoneChange } = useFormattedPhoneInput();
@@ -31,6 +30,7 @@ const AccountUnverified = () => {
   const { register, handleSubmit, control, formState: { errors } } = useForm<ProfileInputs>();
   const { fields, append, remove } = useFieldArray({name: "socialMedia", control})
   const [errorMessage, setErrorMessage] = useState("");
+  const {user} = useAuth0();
 
   const createNewProfile: SubmitHandler<ProfileInputs> = async (data) => {
     if(!selectedFile) {
@@ -40,8 +40,7 @@ const AccountUnverified = () => {
 
     setIsSubmitting(true);
     try {
-      const sub = user?.attributes?.sub as string;
-      const email = user?.attributes?.email as string;
+      const email = user?.email as string;
       const group = await getGroupByEmail(email);
       console.log("College Group: ", group)
 
@@ -55,7 +54,6 @@ const AccountUnverified = () => {
         ...(group && {groupID: group?.id}),
         submitted: true,
         privacySetting: newPrivacySetting,
-        sub: sub
       }));
 
       socialMedia.map(async (account) =>
@@ -65,7 +63,7 @@ const AccountUnverified = () => {
           profileSocialMediaId: newUserProfile.id
         })));
 
-      const verifyPhoto = await createNewPhoto(sub, selectedFile, newUserProfile.id);
+      const verifyPhoto = await createNewPhoto(selectedFile, newUserProfile.id);
       verifyPhoto && await DataStore.save(Profile.copyOf(newUserProfile, (updated) => {
         updated.verifyPhotoID = verifyPhoto.id;
       }));

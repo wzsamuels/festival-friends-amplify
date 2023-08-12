@@ -10,7 +10,6 @@ import useProfileStore from "../../../stores/profileStore";
 import {updateProfilePhoto} from "../../../services/profileServices";
 import ImageUpload from "../../../components/common/ImageUpload";
 import useFilePreview from "../../../hooks/useFilePreview";
-import {useAuthenticator} from "@aws-amplify/ui-react";
 
 export interface ProfileImageModalProps extends ProfileModalProps {
   photos: Photo[];
@@ -19,14 +18,12 @@ export interface ProfileImageModalProps extends ProfileModalProps {
 const ProfileImageModal = ({profile, isOpen, setIsOpen, photos }: ProfileImageModalProps) => {
   const { selectedFile, setSelectedFile, preview} = useFilePreview();
   const setProfile = useProfileStore(state => state.setProfile)
-  const { user } = useAuthenticator((context) => [context.user]);
-  const sub = user?.username as string;
 
   // Upload new profile image to S3 bucket, create new Photo, and update user profile image
   const handleProfileImageUpdate = async () => {
     if (selectedFile) {
       try {
-        const newPhoto = await createNewPhoto(sub, selectedFile, profile.id);
+        const newPhoto = await createNewPhoto(selectedFile, profile.id);
         if(!newPhoto) throw new Error("Error creating new photo");
         const updatedProfile = await updateProfilePhoto(profile, newPhoto.id);
         setProfile(updatedProfile);

@@ -12,7 +12,6 @@ import ImageUpload from "../../../components/common/ImageUpload";
 import useFilePreview from "../../../hooks/useFilePreview";
 import {ToastData} from "../../../types";
 import Toast from "../../../components/common/Toast/Toast";
-import {useAuthenticator} from "@aws-amplify/ui-react";
 
 export interface ProfileImageModalProps extends ProfileModalProps {
   photos: Photo[];
@@ -22,13 +21,11 @@ const BannerPhotoModal = ({profile, isOpen, setIsOpen, photos}: ProfileImageModa
   const { selectedFile, setSelectedFile, preview } = useFilePreview();
   const setProfile = useProfileStore(state => state.setProfile)
   const [toastData, setToastData] = useState<ToastData>();
-  const { user } = useAuthenticator((context) => [context.user]);
-  const sub = user?.username as string;
 
   const handleProfileBannerUpdate = async () => {
     if (!selectedFile || !profile) return;
     try {
-      const newPhoto = await createNewPhoto(sub, selectedFile, profile.id)
+      const newPhoto = await createNewPhoto(selectedFile, profile.id)
       if(!newPhoto) throw new Error("Error creating new photo");
 
       updateBannerPhoto(profile, newPhoto?.id)
