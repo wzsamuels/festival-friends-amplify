@@ -1,6 +1,5 @@
 import {SubmitHandler, useFieldArray, useForm} from "react-hook-form";
-
-import React, { useEffect, useState} from "react";
+import React, { useEffect } from "react";
 import {SocialMedia, Profile} from "../../models";
 import { ProfileInputs } from "../../types";
 import states from "../../data/states";
@@ -19,7 +18,6 @@ interface ProfileFormProps {
 }
 
 const AccountEditForm = ({ onSubmit, profile }: ProfileFormProps) => {
-  const [message, setMessage] = useState("");
   const dataCleared = useDataClearedStore(state => state.dataCleared)
   const {
     register,
@@ -203,7 +201,6 @@ const AccountEditForm = ({ onSubmit, profile }: ProfileFormProps) => {
           Update Profile
         </Button>
       </div>
-      {message}
     </form>
   );
 };
