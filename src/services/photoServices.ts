@@ -28,11 +28,11 @@ export const getPhotoURL = async (photoID: string | null | undefined) => {
   }
 }
 
-export const createNewPhoto = async (sub: string, photoFile: File, profileID: string) => {
+export const createNewPhoto = async (photoFile: File, profileID: string) => {
   const id = uuidv4();
 
   try {
-    await Storage.put(`${sub}/${id}`, photoFile, {
+    await Storage.put(`${profileID}/${id}`, photoFile, {
       contentType: photoFile.type,
       level: "public"
     });
@@ -43,7 +43,7 @@ export const createNewPhoto = async (sub: string, photoFile: File, profileID: st
   try {
     return await DataStore.save(
       new Photo({
-        s3Key: `${sub}/${id}`,
+        s3Key: `${profileID}/${id}`,
         profileID: profileID,
       }));
   } catch (e) {

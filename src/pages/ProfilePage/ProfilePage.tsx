@@ -67,11 +67,6 @@ const ProfilePage = ({match}: ProfilePageProps) => {
         setEventsAttending(eventsAttending)
       });
 
-    /*
-    getRidesByProfile(profile)
-      .then(rides => setRides(rides));
-     */
-
     profile.privacySetting
       .then(privacySetting => {
         console.log(privacySetting)
@@ -103,7 +98,7 @@ const ProfilePage = ({match}: ProfilePageProps) => {
         <div className="flex flex-col justify-center items-center w-full h-full absolute top-0 left-0">
           {profileImage ? (
             <Image
-              className="aspect-square max-w-[350px] w-full rounded-full"
+              className="max-h-[350px]  max-w-[350px] w-full rounded-full"
               src={profileImage}
               alt="Profile Image"
             />

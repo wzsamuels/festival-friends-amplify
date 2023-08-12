@@ -3,7 +3,6 @@ import {createNewPhoto} from '../../../services/photoServices'
 import { ProfileModalProps } from "../../../@types/profile";
 import Modal from "../../../components/common/Modal/Modal";
 import Button from "../../../components/common/Button/Button";
-import {useAuthenticator} from "@aws-amplify/ui-react";
 
 export interface PhotoUploadModalProps extends ProfileModalProps {
   photoFile: File | null;
@@ -14,14 +13,11 @@ export interface PhotoUploadModalProps extends ProfileModalProps {
 
 const PhotoUploadModal = ({profile, isOpen, setIsOpen, photoFile, setPhotoFile}: PhotoUploadModalProps) => {
   const [preview, setPreview] = useState("");
-  const sub = profile?.id;
-  //const { user } = useAuthenticator((context) => [context.user]);
-  //const sub = user?.username as string;
 
   const handlePhotoUpload = async () => {
     if (photoFile && profile) {
       try {
-        const newPhoto = createNewPhoto(sub, photoFile, profile.id);
+        const newPhoto = createNewPhoto(photoFile, profile.id);
         console.log(newPhoto)
       } catch (error) {
         console.log("Error uploading file: ", error);
