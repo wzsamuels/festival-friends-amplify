@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {Redirect, Route} from "react-router-dom";
 import {
   BsEmojiSmile,
@@ -18,7 +18,6 @@ import {getAllEvents} from "../../services/eventServices";
 import {Geolocation} from "@capacitor/geolocation";
 import calculateDistance from "../../lib/calculateDistance";
 import EventPage from "../../pages/events/page";
-
 import useFriendStore from "../../stores/friendProfileStore";
 import useDataClearedStore from "../../stores/dataClearedStore";
 import useEventStore from "../../stores/eventStore";
@@ -32,39 +31,49 @@ import "../../index.css";
 import '@aws-amplify/ui-react/styles.css';
 import '@ionic/react/css/core.css';
 import '../../variables.css'
-import MessagePage from "../../pages/MessagePage/page";
+import MessagePage from "../../pages/messages/page";
 import EventDetailPage from "../../pages/events/EventDetailPage";
 import {useAuth0} from "@auth0/auth0-react";
 import ProfilePage from "../../pages/ProfilePage/ProfilePage";
-import {useAuthenticator} from "@aws-amplify/ui-react";
+import {Hub} from "aws-amplify";
 
 const Layout = () => {
   const { loadingUserProfile, userProfile } = useProfileStore();
-  const { route } = useAuthenticator((context) => [context.route]);
   const fetchUserProfile = useProfileStore(state => state.fetchUserProfile)
   const fetchFriendProfiles = useFriendStore(state => state.fetchFriends)
   const dataCleared = useDataClearedStore(state => state.dataCleared)
   const fetchEvents = useEventStore(state => state.fetchEvents)
   const { dataStoreQueue } = useQueueStore();
+  const [dataStoreReady, setDataStoreReady] = useState(false);
   const { user, isLoading, isAuthenticated } = useAuth0();
-  //const email = user?.email;
-  //const { user, signOut } = useAuthenticator((context) => [context.user]);
   const email = user?.email;
-
-  console.log("User: ", user)
 
   useEffect(() => {
     DataStore.start().then(() => console.log("DataStore started"))
-    fetchEvents()
+
+    // Create listener
+    const listener = Hub.listen("datastore", async hubData => {
+      const  { event, data } = hubData.payload;
+      if (event === "ready") {
+        console.log("DataStore ready");
+        setDataStoreReady(true);
+        fetchEvents();
+      }
+    })
+
+// Remove listener
+    return () => {
+      listener();
+    }
   }, []);
 
   useEffect(() => {
-    if(!dataCleared || !email || !isAuthenticated || isLoading) return;
+    if(!dataCleared || !email || !isAuthenticated || isLoading || !dataStoreReady) return;
     console.log("Data cleared: ", dataCleared, ", email: ", email)
     dataStoreQueue.enqueue(async () => {
       fetchUserProfile(email);
     });
-  }, [email, dataCleared, isAuthenticated, isLoading]);
+  }, [email, dataCleared, isAuthenticated, isLoading, dataStoreReady])
 
   useEffect(() => {
     if(!dataCleared || !userProfile) return;
@@ -191,7 +200,7 @@ const Layout = () => {
     );
   }
 
-  if (loadingUserProfile || isLoading) {
+  if (loadingUserProfile || isLoading || !dataStoreReady) {
     return <LoadingState />;
   }
 
@@ -200,8 +209,6 @@ const Layout = () => {
       <LandingPage/>
     )
   }
-
-
 
   if (!userProfile) {
     return (
