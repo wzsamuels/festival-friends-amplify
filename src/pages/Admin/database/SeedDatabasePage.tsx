@@ -1,9 +1,9 @@
 import {DataStore} from "@aws-amplify/datastore";
-import {Group, PrivacySetting, Profile} from "../../models";
-import mockUserProfiles from "../../data/profiles.json";
-import {getGroupByEmail} from "../../services/groupServices";
-import getErrorMessage from "../../lib/getErrorMessage";
-import Button from "../../components/common/Button/Button";
+import {Group, PrivacySetting, Profile} from "../../../models";
+import mockUserProfiles from "../../../data/profiles.json";
+import {getGroupByEmail} from "../../../services/groupServices";
+import getErrorMessage from "../../../lib/getErrorMessage";
+import Button from "../../../components/common/Button/Button";
 import React, {useEffect, useState} from "react";
 
 const SeedDatabasePage = () => {
