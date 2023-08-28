@@ -46,7 +46,7 @@ const DeleteEventPage = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center pt-20">
+    <div className="flex flex-col items-center justify-center">
       <h1 className="text-xl md:text-2xl text-center">Delete Events</h1>
       <Select
         onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSelectedEvent(e.target.value)}

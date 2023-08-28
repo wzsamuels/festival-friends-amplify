@@ -27,7 +27,7 @@ const CreateEventPage = () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center pt-20">
+    <div className="flex flex-col items-center justify-center">
       <h1 className="text-xl md:text-2xl">Create Event</h1>
       <EventForm onSubmit={handleEventCreate} submitting={submitting}/>
       {toastData &&
