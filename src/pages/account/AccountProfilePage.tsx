@@ -16,11 +16,7 @@ import {getPhotoURL} from "../../services/photoServices";
 import Image from "../../components/ui/Image";
 import {UserCircleIcon} from "@heroicons/react/24/solid";
 import {IonContent} from "@ionic/react";
-const NavItems = [
-  { content: "Profile", link: "/account" },
-  { content: "Events", link: "/account/events" },
-  { content: "Settings", link: "/account/settings" }
-]
+
 const AccountProfilePage = () => {
   const [profileImage, setProfileImage] = useState("");
   const [bannerImage, setBannerImage] = useState("");
@@ -84,7 +80,7 @@ const AccountProfilePage = () => {
   }, [selectedFile]);
 
   return (
-      <IonContent>
+    <IonContent>
       <section
         className={
           "flex justify-center flex-col relative w-full h-screen max-h-[500px]"
@@ -141,20 +137,6 @@ const AccountProfilePage = () => {
             <div>Not attending any events.</div>
           }</div>
       </section>
-      {/*
-      <hr className="my-8 border border-primary-default w-full" />
-      <section className="p-4">
-        <h1 className="text-2xl my-4">Rides</h1>
-        <div className="grid gap-0 sm:gap-2 md:gap-4 justify-items-center grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 items-center">
-          {rides.length > 0 ? rides?.map((ride) => (
-              <RideCard ride={ride} key={ride.id} className='m-4'/>
-            ))
-            :
-            <div>Not part of any rides.</div>
-          }
-        </div>
-      </section>
-      */}
       <hr className="my-4 border border-primary-default w-full" />
       <section className="p-4">
         <div className="flex justify-between items-center w-full">
@@ -219,8 +201,7 @@ const AccountProfilePage = () => {
           />
         </>
       )}
-      </IonContent>
-
+    </IonContent>
   )
 };
 
