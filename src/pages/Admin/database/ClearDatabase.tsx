@@ -9,9 +9,9 @@ import {
   Ride,
   RideProfile,
   Profile
-} from "../../models";
-import Button from "../../components/common/Button/Button";
-import LoadingState from "../../components/ui/LoadingState";
+} from "../../../models";
+import Button from "../../../components/common/Button/Button";
+import LoadingState from "../../../components/ui/LoadingState";
 
 const ClearDatabase = () => {
   const [clearing, setClearing] = useState(false);
