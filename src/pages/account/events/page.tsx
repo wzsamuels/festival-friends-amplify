@@ -10,6 +10,7 @@ import {ToastData} from "../../../types";
 import Toast from "../../../components/common/Toast/Toast";
 import {Link} from "react-router-dom";
 import {deleteEvent} from "../../../services/eventServices";
+import { IonContent } from "@ionic/react";
 
 const AccountEventPage = () => {
   const [events, setEvents] = useState<Event[]>([])
@@ -81,36 +82,38 @@ const AccountEventPage = () => {
   }
 
   return (
-    <div className="my-6 flex flex-col items-center justify-center">
-      <Link to="/submit-event" className="my-4"><Button>Submit New Event</Button></Link>
-      <div className="flex flex-wrap justify-center ">
-        { events.length ? events.map(event =>
-          <div className="m-4 shadow-xl rounded-xl p-4" key={event.id}>
-            <div>Event: {event.name}</div>
-            <div>Event SubID: {event.subscriptionID}</div>
-            <div>Event CustomerID: {event.customerID}</div>
-            {event.cancelled && <div className="text-red-500">Event Cancelled</div>}
-            <Button
-              disabled={cancelling === event.id || event.cancelled}
-              className="disabled:opacity-50"
-              onClick={() => cancelSubscription(event.subscriptionID, event.id)}
-            >
-              {renderButtonText(event)}
-            </Button>
-          </div>
-          )
-          :
-          <div>
-            <div>No events found</div>
-          </div>
-        }
+    <IonContent>
+      <div className="my-6 flex flex-col items-center justify-center">
+        <Link to="/submit-event" className="my-4"><Button>Submit New Event</Button></Link>
+        <div className="flex flex-wrap justify-center ">
+          { events.length ? events.map(event =>
+            <div className="m-4 shadow-xl rounded-xl p-4" key={event.id}>
+              <div>Event: {event.name}</div>
+              <div>Event SubID: {event.subscriptionID}</div>
+              <div>Event CustomerID: {event.customerID}</div>
+              {event.cancelled && <div className="text-red-500">Event Cancelled</div>}
+              <Button
+                disabled={cancelling === event.id || event.cancelled}
+                className="disabled:opacity-50"
+                onClick={() => cancelSubscription(event.subscriptionID, event.id)}
+              >
+                {renderButtonText(event)}
+              </Button>
+            </div>
+            )
+            :
+            <div>
+              <div>No events found</div>
+            </div>
+          }
+        </div>
+        {/*
+        <Button onClick={deleteAllEvents}>Delete All Events</Button>
+        <Button onClick={clearCustomerID}>Clear Customer ID</Button>
+        */}
+        { toastData && <Toast toastData={toastData} />}
       </div>
-      {/*
-      <Button onClick={deleteAllEvents}>Delete All Events</Button>
-      <Button onClick={clearCustomerID}>Clear Customer ID</Button>
-      */}
-      { toastData && <Toast toastData={toastData} />}
-    </div>
+    </IonContent>
   )
 }
 

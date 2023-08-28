@@ -8,6 +8,7 @@ import LoadingState from "../../components/ui/LoadingState";
 import Toast from "../../components/common/Toast/Toast";
 import {ToastData} from "../../types";
 import Toggle from "../../components/common/Toggle";
+import { IonContent } from "@ionic/react";
 
 interface Inputs {
   city: boolean
@@ -24,7 +25,7 @@ const AccountSettingsPage = () => {
   const userProfile = useProfileStore(state => state.userProfile);
 
   return (
-    <>
+    <IonContent>
       <div className="flex flex-col items-center p-4">
         <section className="my-8 min-w-4xl  max-w-[600px] w-full">
           <h1 className="text-2xl md:text-3xl my-6">Privacy Settings</h1>
@@ -40,7 +41,7 @@ const AccountSettingsPage = () => {
           </div>
         </section>
       </div>
-    </>
+    </IonContent>
   );
 };
 

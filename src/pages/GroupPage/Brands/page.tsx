@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import {Event, Group, Profile} from "../../../models";
-import {useAuthenticator} from "@aws-amplify/ui-react";
 import useProfileStore from "../../../stores/profileStore";
 import useDataClearedStore from "../../../stores/dataClearedStore";
 import {DataStore} from "@aws-amplify/datastore";
@@ -18,7 +17,6 @@ const BrandPage = () => {
   const [group, setGroup] = useState<Group | null>(null);
   const [events, setGroupEvents] = useState<Event[]>([]);
   const [isCreateEventModalOpen, setIsCreateEventModalOpen] = useState(false);
-  const { authStatus } = useAuthenticator((context) => [context.authStatus]);
   const userProfile = useProfileStore((state) => state.userProfile);
   const dataCleared = useDataClearedStore((state) => state.dataCleared);
   const { register, handleSubmit, formState: { errors }} = useForm<brandInputs>();
@@ -88,7 +86,6 @@ const BrandPage = () => {
     };
 
     if (
-      authStatus === "authenticated" &&
       userProfile?.group !== undefined &&
       dataCleared
     ) {

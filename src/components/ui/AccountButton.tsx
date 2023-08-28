@@ -14,7 +14,6 @@ import {Browser} from "@capacitor/browser";
 import {callbackUri} from "../../auth.config";
 const AccountButton = () => {
   const { user, logout, isAuthenticated } = useAuth0();
-  const [ group] = React.useState("");
   const setDataCleared = useDataClearedStore(state => state.setDataCleared);
   const [alertIsOpen, setAlertIsOpen] = React.useState(false);
   const clearProfile = useProfileStore(state => state.clearUserProfile);
@@ -130,7 +129,7 @@ const AccountButton = () => {
                     Account
                   </Link>
                 </Menu.Item>
-                { group === "admin" &&
+                { user?.email === "wzsamuels@gmail.com" &&
 
                   <Menu.Item>
                     <Link
