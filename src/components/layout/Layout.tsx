@@ -25,7 +25,6 @@ import useQueueStore from "../../stores/queueStore";
 import {DataStore} from "@aws-amplify/datastore";
 import {IonContent, IonLabel, IonPage, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs} from "@ionic/react";
 import GroupLayout from "../../pages/GroupPage/layout";
-import AdminLayout from "../../pages/Admin/AdminLayout";
 import Friends from "../../pages/FriendPage/page";
 import "../../index.css";
 import '@aws-amplify/ui-react/styles.css';
@@ -34,8 +33,10 @@ import '../../variables.css'
 import MessagePage from "../../pages/messages/page";
 import EventDetailPage from "../../pages/events/EventDetailPage";
 import {useAuth0} from "@auth0/auth0-react";
-import ProfilePage from "../../pages/ProfilePage/ProfilePage";
+import ProfilePage from "../../pages/ProfilePage/page";
 import {Hub} from "aws-amplify";
+import AdminLayout from "../../pages/Admin/layout";
+import {Capacitor} from "@capacitor/core";
 
 const Layout = () => {
   const { loadingUserProfile, userProfile } = useProfileStore();
@@ -86,8 +87,19 @@ const Layout = () => {
   }, []);
 
   const notificationEffect = useCallback(async () => {
-    const permissions = await Geolocation.checkPermissions();
-    if(permissions.location !== "granted") return;
+    console.log("Notification effect")
+    let permissions;
+    if (Capacitor.getPlatform() === 'ios' || Capacitor.getPlatform() === "android") {
+      permissions = await Geolocation.requestPermissions();
+    } else {
+      permissions = await Geolocation.checkPermissions();
+    }
+    
+    console.log("Permissions: ", permissions)
+    if(permissions.location !== "granted") {
+      console.log("Permissions not found")
+      return;
+    }
     console.log("Permissions: ", permissions);
     const userCoords = await Geolocation.getCurrentPosition();
     const events = await getAllEvents();
@@ -103,6 +115,7 @@ const Layout = () => {
       const latitude = event.latitude;
       const longitude = event.longitude;
       const miles = calculateDistance(userCoords.coords.latitude, userCoords.coords.longitude, latitude, longitude)
+      console.log(event.name, miles)
       const startDate = new Date(event.startDate);
       const endDate = new Date(event.endDate);
 
@@ -112,7 +125,7 @@ const Layout = () => {
       // Now check if the 'now' is between the start and end dates
       //   console.log(`Event: ${event.name}, Start Date ${startDate}, End Date ${endDate}, Miles ${miles}`);
 
-      return now >= startDate && now <= endDate && miles < 100;
+      return now >= startDate && now <= endDate && miles < 200;
     }));
     const filteredEvents = events.filter((_, idx) => eventMap[idx]);
     console.log(`${filteredEvents.length} Filtered Events: `, filteredEvents);
@@ -161,7 +174,7 @@ const Layout = () => {
               <Route path="/admin" component={AdminLayout}/>
               <Route exact path="/friends" component={Friends} />
               <Route path="/friends/profile/:id" component={ProfilePage} />
-              <Route path="/groups" component={GroupLayout} />
+              <Route path="/groups" component={GroupLayout}/>
               <Route path="/messages" component={MessagePage} />
             </IonRouterOutlet>
             <IonTabBar slot="bottom" className="shadow-dropdown flex justify-around items-center bg-lightYellow text-black">
@@ -243,120 +256,6 @@ const Layout = () => {
       </>
     );
   }
-
-
-
-
-
-
 };
 
 export default Layout;
-
-/*
-<footer className="shadow-dropdown max-h-[56px] fixed  bottom-0 left-0 right-0 flex justify-around items-center p-2 bg-lightYellow">
-                <div className="flex flex-1 flex-shrink">
-                  <NavLink
-                    to="/"
-                    className={({ isActive }) =>
-                      `${isActive ? "text-black" : "text-gray-600"} flex-1`
-                    }
-                  >
-                    <PulseButton className="w-full flex flex-col justify-center items-center">
-                      <CalendarDaysIcon
-                        className="h-5"
-                        aria-hidden="true"
-                      />
-                      <div className="text-xs sm:text-sm md:text-base">Events</div>
-                    </PulseButton>
-                  </NavLink>
-                </div>
-                <div className="flex flex-1 flex-shrink">
-                  <NavLink
-                    to="/friends"
-                    className={({ isActive }) =>
-                      `${isActive ? "text-black" : "text-gray-600"} flex-1`
-                    }
-                  >
-                    <PulseButton className="w-full flex flex-col justify-center items-center">
-                      <BsEmojiSmile
-                        className="text-base sm:text-lg"
-                        aria-hidden="true"
-                      />
-                      <div className="text-xs sm:text-sm md:text-base">Friends</div>
-                    </PulseButton>
-                  </NavLink>
-                </div>
-                <div className="flex flex-1 flex-shrink">
-                  <NavLink
-                    to="/messages"
-                    className="active:text-black text-gray-600 flex-1"
-                  >
-                    <PulseButton className="w-full flex flex-col justify-center items-center">
-                      <BsFillChatSquareDotsFill
-                        className="text-base sm:text-lg"
-                        aria-hidden="true"
-                      />
-                      <div className="text-xs sm:text-sm md:text-base">Messages</div>
-                    </PulseButton>
-                  </NavLink>
-                </div>
-                <div className="flex flex-1 flex-shrink">
-                  <NavLink
-                    to="/groups"
-                    className={({ isActive }) =>
-                      `${isActive ? "text-black" : "text-gray-600"} flex-1`
-                    }
-                  >
-                    <PulseButton className="w-full flex flex-col justify-center items-center">
-                      <BsFillPeopleFill
-                        className="text-base sm:text-lg"
-                        aria-hidden="true"
-                      />
-                      <div className="text-xs sm:text-sm md:text-base">Groups</div>
-                    </PulseButton>
-                  </NavLink>
-                </div>
-              </footer>
-
-
-              useEffect(() => {
-    const handleRedirect = async () => {
-      const redirectUrl = window.location.href;
-      const code = new URL(redirectUrl).searchParams.get('code');
-      if (!code) return;
-      const clientId = "803934289038-qie999ke55id6ss44mdjc3ljtre9n5qv.apps.googleusercontent.com";
-      const redirectUri = "http://localhost:5173";
-      //const redirectUri = "https://www.eventfriends.app"
-
-      const data = {
-        code: code,
-        client_id: clientId,
-        client_secret: "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",
-        redirect_uri: redirectUri,
-        grant_type: 'authorization_code'
-      };
-
-      const response = await fetch('https://oauth2.googleapis.com/token', {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: {
-          'Content-Type': 'application/json'
-        },
-      })
-      const result = await response.json();
-      const {id_token} = result;
-      const decodedToken = jwtDecode(id_token);
-      const {name, email, exp} = decodedToken as {name: string, email: string, exp: number};
-      try {
-        await Auth.federatedSignIn('accounts.google.com', {token: id_token, expires_at: exp * 1000}, {name: name, email: email});
-       // setLogged(true)
-      } catch (e) {
-        console.log("Error: ", e);
-      }
-    };
-
-    handleRedirect();
-  }, []);
-
- */
