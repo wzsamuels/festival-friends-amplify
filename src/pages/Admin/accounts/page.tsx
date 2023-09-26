@@ -122,11 +122,6 @@ const VerifyAccounts = () => {
   }
 
   return (
-    <IonPage>
-      <Header>
-        <Nav items={adminNavItems} className="flex"/>
-      </Header>
-      <IonContent>
         <div className="flex flex-col items-center justify-center pt-8">
           <h1 className="text-xl md:text-2xl">Profiles Needing Verification</h1>
           <h2 className="text-lg text-center my-4">
@@ -152,8 +147,6 @@ const VerifyAccounts = () => {
             />
           )}
         </div>
-      </IonContent>
-    </IonPage>
   );
 }
 
