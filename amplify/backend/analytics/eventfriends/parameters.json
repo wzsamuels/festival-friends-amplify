@@ -1,0 +1,22 @@
+{
+  "appName": "eventfriends",
+  "roleName": "pinpointLambdaRolee50086c9",
+  "cloudformationPolicyName": "cloudformationPolicye50086c9",
+  "cloudWatchPolicyName": "cloudWatchPolicye50086c9",
+  "pinpointPolicyName": "pinpointPolicye50086c9",
+  "authPolicyName": "pinpoint_amplify_e50086c9",
+  "unauthPolicyName": "pinpoint_amplify_e50086c9",
+  "authRoleName": {
+    "Ref": "AuthRoleName"
+  },
+  "unauthRoleName": {
+    "Ref": "UnauthRoleName"
+  },
+  "authRoleArn": {
+    "Fn::GetAtt": [
+      "AuthRole",
+      "Arn"
+    ]
+  },
+  "pinpointInAppMessagingPolicyName": "pinpointInAppMessagingPolicyNamee50086c9"
+}

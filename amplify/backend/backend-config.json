@@ -1,5 +1,10 @@
 {
-  "analytics": {},
+  "analytics": {
+    "eventfriends": {
+      "providerPlugin": "awscloudformation",
+      "service": "Pinpoint"
+    }
+  },
   "api": {
     "email": {
       "dependsOn": [
@@ -163,7 +168,9 @@
   },
   "notifications": {
     "eventfriends": {
-      "channels": [],
+      "channels": [
+        "InAppMessaging"
+      ],
       "service": "Pinpoint"
     }
   },
@@ -177,6 +184,14 @@
       ]
     },
     "AMPLIFY_analytics_Pinpoint_Name": {
+      "usedBy": [
+        {
+          "category": "analytics",
+          "resourceName": "Pinpoint"
+        }
+      ]
+    },
+    "AMPLIFY_analytics_Pinpoint_Region": {
       "usedBy": [
         {
           "category": "analytics",
@@ -297,6 +312,14 @@
       ]
     },
     "AMPLIFY_notifications_Pinpoint_Name": {
+      "usedBy": [
+        {
+          "category": "notifications",
+          "resourceName": "Pinpoint"
+        }
+      ]
+    },
+    "AMPLIFY_notifications_Pinpoint_Region": {
       "usedBy": [
         {
           "category": "notifications",

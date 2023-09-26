@@ -52,13 +52,16 @@
       "analytics": {
         "Pinpoint": {
           "Name": "eventfriends-staging",
-          "Id": "d5f9d4eb51a745bcbf04940649499be1"
-        }
+          "Id": "97abe858c2004dc3bcfd07d1324dd684",
+          "Region": "us-east-1"
+        },
+        "eventfriends": {}
       },
       "notifications": {
         "Pinpoint": {
           "Name": "eventfriends-staging",
-          "Id": "d5f9d4eb51a745bcbf04940649499be1"
+          "Id": "97abe858c2004dc3bcfd07d1324dd684",
+          "Region": "us-east-1"
         }
       }
     }
