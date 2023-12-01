@@ -1,5 +1,6 @@
 import React, {useCallback, useEffect, useState} from "react";
 import {Redirect, Route} from "react-router-dom";
+
 import {
   BsEmojiSmile,
   BsFillChatSquareDotsFill,
@@ -8,7 +9,7 @@ import {
 import {CalendarDaysIcon} from "@heroicons/react/24/outline";
 import LandingPage from "../../pages/landing/page";
 import AccountLayout from "../../pages/account/layout";
-import useProfileStore from "../../stores/profileStore";
+
 import LoadingState from "../ui/LoadingState";
 import AccountUnverified from "../../pages/account/AccountUnverified";
 import Header from "./Header";
@@ -18,14 +19,21 @@ import {getAllEvents} from "../../services/eventServices";
 import {Geolocation} from "@capacitor/geolocation";
 import calculateDistance from "../../lib/calculateDistance";
 import EventPage from "../../pages/events/page";
+
+// Store imports
+import useProfileStore from "../../stores/profileStore";
 import useFriendStore from "../../stores/friendProfileStore";
 import useDataClearedStore from "../../stores/dataClearedStore";
 import useEventStore from "../../stores/eventStore";
 import useQueueStore from "../../stores/queueStore";
+
 import {DataStore} from "@aws-amplify/datastore";
 import {IonContent, IonLabel, IonPage, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs} from "@ionic/react";
 import GroupLayout from "../../pages/GroupPage/layout";
 import Friends from "../../pages/FriendPage/page";
+
+// Style imports
+
 import "../../index.css";
 import '@aws-amplify/ui-react/styles.css';
 import '@ionic/react/css/core.css';
@@ -38,17 +46,25 @@ import {Hub} from "aws-amplify";
 import AdminLayout from "../../pages/Admin/layout";
 import {Capacitor} from "@capacitor/core";
 
+// Other 3rd party imports
+
 const Layout = () => {
+  // Loclal store
   const { loadingUserProfile, userProfile } = useProfileStore();
+
+  // Store hooks
   const fetchUserProfile = useProfileStore(state => state.fetchUserProfile)
   const fetchFriendProfiles = useFriendStore(state => state.fetchFriends)
   const dataCleared = useDataClearedStore(state => state.dataCleared)
   const fetchEvents = useEventStore(state => state.fetchEvents)
   const { dataStoreQueue } = useQueueStore();
+
+  // Auth
   const [dataStoreReady, setDataStoreReady] = useState(false);
   const { user, isLoading, isAuthenticated } = useAuth0();
   const email = user?.email;
 
+  // Initialize AWS DataStore
   useEffect(() => {
     DataStore.start().then(() => console.log("DataStore started"))
 
@@ -62,11 +78,12 @@ const Layout = () => {
       }
     })
 
-// Remove listener
+    // Remove listener
     return () => {
       listener();
     }
   }, []);
+
 
   useEffect(() => {
     if(!dataCleared || !email || !isAuthenticated || isLoading || !dataStoreReady) return;
@@ -76,15 +93,18 @@ const Layout = () => {
     });
   }, [email, dataCleared, isAuthenticated, isLoading, dataStoreReady])
 
+  // Fetch friend profiles if user profile exists and data store is ready
   useEffect(() => {
     if(!dataCleared || !userProfile) return;
 
     fetchFriendProfiles(userProfile);
   }, [dataCleared, userProfile])
 
+  // Focus on document body
   useEffect(() => {
     document.body.focus();
   }, []);
+
 
   const notificationEffect = useCallback(async () => {
     console.log("Notification effect")

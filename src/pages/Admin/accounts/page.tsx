@@ -119,33 +119,31 @@ const VerifyAccounts = () => {
   }
 
   return (
-    <IonContent>
-      <div className="flex flex-col items-center justify-center pt-8">
-        <h1 className="text-xl md:text-2xl">Profiles Needing Verification</h1>
-        <h2 className="text-lg text-center my-4">
-          {unverifiedProfiles.length} profile(s) to verify
-        </h2>
-        {unverifiedProfiles.map((profile) =>
-          <AccountInfo key={profile.id} profile={profile} onVerify={verifyProfile} />
-        )}
-        <h1 className="text-xl md:text-2xl">Brands / Influencers Needing Verification</h1>
-        <h2 className="text-lg text-center my-4">
-          {brandProfiles.length} application(s) to approve
-        </h2>
-        {brandProfiles.map((profile) =>
-          <AccountInfo key={profile.id} profile={profile} onVerify={approveApplication} />
-        )}
+        <div className="flex flex-col items-center justify-center pt-8">
+          <h1 className="text-xl md:text-2xl">Profiles Needing Verification</h1>
+          <h2 className="text-lg text-center my-4">
+            {unverifiedProfiles.length} profile(s) to verify
+          </h2>
+          {unverifiedProfiles.map((profile) =>
+            <AccountInfo key={profile.id} profile={profile} onVerify={verifyProfile} />
+          )}
+          <h1 className="text-xl md:text-2xl">Brands / Influencers Needing Verification</h1>
+          <h2 className="text-lg text-center my-4">
+            {brandProfiles.length} application(s) to approve
+          </h2>
+          {brandProfiles.map((profile) =>
+            <AccountInfo key={profile.id} profile={profile} onVerify={approveApplication} />
+          )}
 
-        {toastData && (
-          <Toast
-            toastData={toastData}
-            onClose={() => {
-              setToastData(null);
-            }}
-          />
-        )}
-      </div>
-    </IonContent>
+          {toastData && (
+            <Toast
+              toastData={toastData}
+              onClose={() => {
+                setToastData(null);
+              }}
+            />
+          )}
+        </div>
   );
 }
 
